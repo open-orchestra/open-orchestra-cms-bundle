@@ -44,7 +44,7 @@ class AreaController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function showInNodeAction($areaId, $nodeId, $language, $version, $siteId, $areaParentId)
+    public function showAreaNodeAction($areaId, $nodeId, $language, $version, $siteId, $areaParentId)
     {
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
@@ -67,7 +67,7 @@ class AreaController extends BaseController
      *
      * @return Response
      */
-    public function updateBlockInAreaAction(Request $request, $nodeId, $language, $version, $siteId)
+    public function updateBlockAreaAction(Request $request, $nodeId, $language, $version, $siteId)
     {
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
@@ -143,7 +143,7 @@ class AreaController extends BaseController
      *
      * @return Response
      */
-    public function moveAreaInTemplateAction(Request $request, $areaParentId, $templateId)
+    public function moveAreaTemplateAction(Request $request, $areaParentId, $templateId)
     {
         $areaFacade = $this->get('jms_serializer')->deserialize($request->getContent(), 'OpenOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
 
@@ -169,7 +169,7 @@ class AreaController extends BaseController
      *
      * @return Response
      */
-    public function moveAreaInNodeAction(Request $request, $areaParentId, $nodeId, $language, $version, $siteId)
+    public function moveAreaNodeAction(Request $request, $areaParentId, $nodeId, $language, $version, $siteId)
     {
         $areaFacade = $this->get('jms_serializer')->deserialize($request->getContent(), 'OpenOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
 

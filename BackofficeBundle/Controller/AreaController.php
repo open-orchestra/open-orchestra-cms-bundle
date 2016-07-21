@@ -32,7 +32,7 @@ class AreaController extends AbstractEditionRoleController
      *
      * @return Response
      */
-    public function newRowFromTemplateAction(Request $request, $templateId, $areaParentId)
+    public function createRowFromTemplateAction(Request $request, $templateId, $areaParentId)
     {
         $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
         $areaParent = $this->get('open_orchestra_model.repository.template')->findAreaInTemplateByAreaId($template, $areaParentId);
@@ -40,7 +40,7 @@ class AreaController extends AbstractEditionRoleController
             'templateId' => $templateId,
             'areaParentId' => $areaParentId,
         ));
-        $form = $this->createNewRowForm($areaParent, $url);
+        $form = $this->createRowForm($areaParent, $url);
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
         if ($this->handleForm($form, $message)) {
@@ -63,7 +63,7 @@ class AreaController extends AbstractEditionRoleController
      *
      * @return Response
      */
-    public function newRowFromNodeAction(Request $request, $nodeId, $language, $version, $siteId, $areaParentId)
+    public function createRowFromNodeAction(Request $request, $nodeId, $language, $version, $siteId, $areaParentId)
     {
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
@@ -76,7 +76,7 @@ class AreaController extends AbstractEditionRoleController
         ));
 
         $areaParent = $this->get('open_orchestra_model.repository.node')->findAreaInNodeByAreaId($node, $areaParentId);
-        $form = $this->createNewRowForm($areaParent, $url);
+        $form = $this->createRowForm($areaParent, $url);
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
         if ($this->handleForm($form, $message)) {
@@ -97,7 +97,7 @@ class AreaController extends AbstractEditionRoleController
      *
      * @return Response
      */
-    public function formTemplateAreaRowAction(Request $request, $templateId, $areaId)
+    public function editTemplateAreaRowAction(Request $request, $templateId, $areaId)
     {
         $url = 'open_orchestra_backoffice_area_form_row';
 
@@ -117,7 +117,7 @@ class AreaController extends AbstractEditionRoleController
      *
      * @return Response
      */
-    public function formNodeAreaRowAction(Request $request, $nodeId, $language, $version, $siteId, $areaId)
+    public function editNodeAreaRowAction(Request $request, $nodeId, $language, $version, $siteId, $areaId)
     {
         $url = 'open_orchestra_backoffice_node_area_form_row';
 
@@ -135,7 +135,7 @@ class AreaController extends AbstractEditionRoleController
      *
      * @return Response
      */
-    public function formTemplateAreaColumnAction(Request $request, $templateId, $areaId)
+    public function editTemplateAreaColumnAction(Request $request, $templateId, $areaId)
     {
         $url = 'open_orchestra_backoffice_area_form_column';
 
@@ -155,7 +155,7 @@ class AreaController extends AbstractEditionRoleController
      *
      * @return Response
      */
-    public function formNodeAreaColumnAction(Request $request, $nodeId, $language, $version, $siteId, $areaId)
+    public function editNodeAreaColumnAction(Request $request, $nodeId, $language, $version, $siteId, $areaId)
     {
         $url = 'open_orchestra_backoffice_node_area_form_column';
 
@@ -234,7 +234,7 @@ class AreaController extends AbstractEditionRoleController
      *
      * @return \Symfony\Component\Form\Form
      */
-    protected function createNewRowForm(AreaInterface $areaParent, $url)
+    protected function createRowForm(AreaInterface $areaParent, $url)
     {
         $areaManager = $this->get('open_orchestra_backoffice.manager.area');
         /** @var AreaInterface $areaRow */

@@ -109,84 +109,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
         }
 
         if ($facade->editable) {
-            $facade->addLink('_self_form_new_row', $this->generateRoute('open_orchestra_backoffice_node_new_row_area', array(
-                'nodeId' => $node->getNodeId(),
-                'language' => $node->getLanguage(),
-                'version' => $node->getVersion(),
-                'siteId' => $node->getSiteId(),
-                'areaParentId' => $area->getAreaId(),
-            )));
-            $facade->addLink('_self_move_area', $this->generateRoute('open_orchestra_api_area_move_in_node', array(
-                'areaParentId' => $area->getAreaId(),
-                'nodeId' => $node->getNodeId(),
-                'language' => $node->getLanguage(),
-                'version' => $node->getVersion(),
-                'siteId' => $node->getSiteId(),
-            )));
-
-            if (AreaInterface::TYPE_COLUMN === $area->getAreaType()) {
-                $facade->addLink('_self_form_column', $this->generateRoute('open_orchestra_backoffice_node_area_form_column', array(
-                    'nodeId' => $node->getNodeId(),
-                    'language' => $node->getLanguage(),
-                    'version' => $node->getVersion(),
-                    'siteId' => $node->getSiteId(),
-                    'areaId' => $area->getAreaId(),
-                )));
-
-                $facade->addLink('_self_form_row', $this->generateRoute('open_orchestra_backoffice_node_area_form_row', array(
-                    'nodeId' => $node->getNodeId(),
-                    'language' => $node->getLanguage(),
-                    'version' => $node->getVersion(),
-                    'siteId' => $node->getSiteId(),
-                    'areaId' => $parentAreaId,
-                )));
-
-                $facade->addLink('_self_delete_column', $this->generateRoute('open_orchestra_api_area_column_delete_in_node', array(
-                    'nodeId' => $node->getNodeId(),
-                    'language' => $node->getLanguage(),
-                    'version' => $node->getVersion(),
-                    'siteId' => $node->getSiteId(),
-                    'areaId' => $area->getAreaId(),
-                    'areaParentId' => $parentAreaId,
-                )));
-
-                $facade->addLink('_self_delete_row', $this->generateRoute('open_orchestra_api_area_row_delete_in_node', array(
-                    'nodeId' => $node->getNodeId(),
-                    'language' => $node->getLanguage(),
-                    'version' => $node->getVersion(),
-                    'siteId' => $node->getSiteId(),
-                    'areaId' => $parentAreaId,
-                )));
-
-                $routeName = 'open_orchestra_api_block_list_without_transverse';
-                if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
-                    $routeName = 'open_orchestra_api_block_list_with_transverse';
-                }
-                $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
-
-                $facade->addLink('_self_update_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
-                    'nodeId' => $node->getNodeId(),
-                    'language' => $node->getLanguage(),
-                    'version' => $node->getVersion(),
-                    'siteId' => $node->getSiteId(),
-                )));
-
-                $facade->addLink('_self_move_block', $this->generateRoute('open_orchestra_api_area_move_block', array(
-                    'nodeId' => $node->getNodeId(),
-                    'language' => $node->getLanguage(),
-                    'version' => $node->getVersion(),
-                    'siteId' => $node->getSiteId(),
-                )));
-
-                $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
-                    'areaId' => $area->getAreaId(),
-                    'nodeId' => $node->getNodeId(),
-                    'language' => $node->getLanguage(),
-                    'version' => $node->getVersion(),
-                    'siteId' => $node->getSiteId(),
-                    'areaParentId' => $parentAreaId
-                )));
-            }
+            $this->addLinksFromNode($facade, $node, $area, $parentAreaId);
         }
 
         return $facade;
@@ -223,37 +146,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
         }
 
         if ($facade->editable) {
-            $facade->addLink('_self_form_new_row', $this->generateRoute('open_orchestra_backoffice_template_new_row_area', array(
-                'templateId' => $template->getTemplateId(),
-                'areaParentId' => $area->getAreaId(),
-            )));
-            $facade->addLink('_self_move_area', $this->generateRoute('open_orchestra_api_area_move_in_template', array(
-                'areaParentId' => $area->getAreaId(),
-                'templateId' => $template->getTemplateId(),
-            )));
-
-            if (AreaInterface::TYPE_COLUMN === $area->getAreaType()) {
-                $facade->addLink('_self_form_column', $this->generateRoute('open_orchestra_backoffice_area_form_column', array(
-                    'templateId' => $template->getTemplateId(),
-                    'areaId' => $area->getAreaId(),
-                )));
-
-                $facade->addLink('_self_form_row', $this->generateRoute('open_orchestra_backoffice_area_form_row', array(
-                    'templateId' => $template->getTemplateId(),
-                    'areaId' => $parentAreaId,
-                )));
-
-                $facade->addLink('_self_delete_column', $this->generateRoute('open_orchestra_api_area_column_delete_in_template', array(
-                    'templateId' => $template->getTemplateId(),
-                    'areaId' => $area->getAreaId(),
-                    'areaParentId' => $parentAreaId,
-                )));
-
-                $facade->addLink('_self_delete_row', $this->generateRoute('open_orchestra_api_area_row_delete_in_template', array(
-                    'templateId' => $template->getTemplateId(),
-                    'areaId' => $parentAreaId,
-                )));
-            }
+            $this->addLinksFromTemplate($facade, $template, $area, $parentAreaId);
         }
 
         return $facade;
@@ -287,15 +180,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
             $blocks = $facade->getBlocks();
             $blockDocument = array();
             foreach ($blocks as $position => $blockFacade) {
-                $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
-                $blockDocument[$position] = $blockArray;
-                $block = $node->getBlock($blockArray['blockId']);
-                if ($blockArray['nodeId'] !== 0) {
-                    $nodeTransverse = $this->nodeRepository
-                        ->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $node->getSiteId());
-                    $block = $nodeTransverse->getBlock($blockArray['blockId']);
-                }
-                $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $source->getAreaId()));
+                $blockDocument[$position] = $this->reverseTransformBlockInNode($source, $blockFacade, $node);
             }
 
             $this->areaManager
@@ -324,6 +209,30 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
     }
 
     /**
+     * @param AreaInterface   $areaSource
+     * @param FacadeInterface $blockFacade
+     * @param NodeInterface   $node
+     *
+     * @return array
+     */
+    protected function reverseTransformBlockInNode(
+        AreaInterface $areaSource,
+        FacadeInterface $blockFacade,
+        NodeInterface $node
+    ) {
+        $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
+        $block = $node->getBlock($blockArray['blockId']);
+        if ($blockArray['nodeId'] !== 0) {
+            $nodeTransverse = $this->nodeRepository
+                ->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $node->getSiteId());
+            $block = $nodeTransverse->getBlock($blockArray['blockId']);
+        }
+        $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $areaSource->getAreaId()));
+
+        return $blockArray;
+    }
+
+    /**
      * @param NodeInterface $node
      *
      * @return string
@@ -337,6 +246,143 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
         }
 
         return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param NodeInterface   $node
+     * @param AreaInterface   $area
+     * @param string          $parentAreaId
+     */
+    protected function addLinksFromNode(
+        FacadeInterface $facade,
+        NodeInterface $node,
+        AreaInterface $area,
+        $parentAreaId
+    ) {
+        $facade->addLink('_self_form_new_row', $this->generateRoute('open_orchestra_backoffice_node_new_row_area', array(
+            'nodeId' => $node->getNodeId(),
+            'language' => $node->getLanguage(),
+            'version' => $node->getVersion(),
+            'siteId' => $node->getSiteId(),
+            'areaParentId' => $area->getAreaId(),
+        )));
+        $facade->addLink('_self_move_area', $this->generateRoute('open_orchestra_api_area_move_in_node', array(
+            'areaParentId' => $area->getAreaId(),
+            'nodeId' => $node->getNodeId(),
+            'language' => $node->getLanguage(),
+            'version' => $node->getVersion(),
+            'siteId' => $node->getSiteId(),
+        )));
+
+        if (AreaInterface::TYPE_COLUMN === $area->getAreaType()) {
+            $facade->addLink('_self_form_column', $this->generateRoute('open_orchestra_backoffice_node_area_form_column', array(
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+                'siteId' => $node->getSiteId(),
+                'areaId' => $area->getAreaId(),
+            )));
+
+            $facade->addLink('_self_form_row', $this->generateRoute('open_orchestra_backoffice_node_area_form_row', array(
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+                'siteId' => $node->getSiteId(),
+                'areaId' => $parentAreaId,
+            )));
+
+            $facade->addLink('_self_delete_column', $this->generateRoute('open_orchestra_api_area_column_delete_in_node', array(
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+                'siteId' => $node->getSiteId(),
+                'areaId' => $area->getAreaId(),
+                'areaParentId' => $parentAreaId,
+            )));
+
+            $facade->addLink('_self_delete_row', $this->generateRoute('open_orchestra_api_area_row_delete_in_node', array(
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+                'siteId' => $node->getSiteId(),
+                'areaId' => $parentAreaId,
+            )));
+
+            $routeName = 'open_orchestra_api_block_list_without_transverse';
+            if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
+                $routeName = 'open_orchestra_api_block_list_with_transverse';
+            }
+            $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
+
+            $facade->addLink('_self_update_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+                'siteId' => $node->getSiteId(),
+            )));
+
+            $facade->addLink('_self_move_block', $this->generateRoute('open_orchestra_api_area_move_block', array(
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+                'siteId' => $node->getSiteId(),
+            )));
+
+            $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
+                'areaId' => $area->getAreaId(),
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+                'siteId' => $node->getSiteId(),
+                'areaParentId' => $parentAreaId
+            )));
+        }
+    }
+
+    /**
+     * @param FacadeInterface   $facade
+     * @param TemplateInterface $template
+     * @param AreaInterface     $area
+     * @param string            $parentAreaId
+     */
+    protected function addLinksFromTemplate(
+        FacadeInterface $facade,
+        TemplateInterface $template,
+        AreaInterface $area,
+        $parentAreaId
+    ) {
+        $facade->addLink('_self_form_new_row', $this->generateRoute('open_orchestra_backoffice_template_new_row_area', array(
+            'templateId' => $template->getTemplateId(),
+            'areaParentId' => $area->getAreaId(),
+        )));
+        $facade->addLink('_self_move_area', $this->generateRoute('open_orchestra_api_area_move_in_template', array(
+            'areaParentId' => $area->getAreaId(),
+            'templateId' => $template->getTemplateId(),
+        )));
+
+        if (AreaInterface::TYPE_COLUMN === $area->getAreaType()) {
+            $facade->addLink('_self_form_column', $this->generateRoute('open_orchestra_backoffice_area_form_column', array(
+                'templateId' => $template->getTemplateId(),
+                'areaId' => $area->getAreaId(),
+            )));
+
+            $facade->addLink('_self_form_row', $this->generateRoute('open_orchestra_backoffice_area_form_row', array(
+                'templateId' => $template->getTemplateId(),
+                'areaId' => $parentAreaId,
+            )));
+
+            $facade->addLink('_self_delete_column', $this->generateRoute('open_orchestra_api_area_column_delete_in_template', array(
+                'templateId' => $template->getTemplateId(),
+                'areaId' => $area->getAreaId(),
+                'areaParentId' => $parentAreaId,
+            )));
+
+            $facade->addLink('_self_delete_row', $this->generateRoute('open_orchestra_api_area_row_delete_in_template', array(
+                'templateId' => $template->getTemplateId(),
+                'areaId' => $parentAreaId,
+            )));
+        }
     }
 
     /**
