@@ -41,12 +41,19 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
     viewContext = @
     fields = {}
     for i of @options.fields
-      fieldName = @formName + '[' + i.replace('_', '][') + ']'
-      fields[fieldName] = @options.fields[i]
+      fieldNames = i.split('_')
+      j = 0
+      index = ''
+      while j < fieldNames.length - 1
+        index += '["' + fieldNames[j] + '"]'
+        eval('fields' + index + ' = fields' + index + ' || {};');
+        j++
+      index += '["' + fieldNames[j] + '"]'
+      eval('fields' + index + ' = fields' + index + ' = this.options.fields[i];');
     $.ajax
       url: @options.url
       context: @
-      method: 'PATCH'
+      method: 'GET'
       data: fields
       success: (response) ->
         $('.spin', @$el).replaceWith(response)

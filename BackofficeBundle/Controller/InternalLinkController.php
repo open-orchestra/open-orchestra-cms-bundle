@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 /**
  * Class InternalLinkController
  */
@@ -22,14 +24,12 @@ class InternalLinkController extends AbstractAdminController
 
         $option["method"] = "POST";
         if ("PATCH" === $request->getMethod()) {
-            $option["csrf_protection"] = false;
             $option["validation_groups"] = false;
             $option["method"] = "PATCH";
         }
-
         $form = $this->createForm(
             'oo_internal_link',
-            null,
+            $request->query->all(),
             $option
         );
 
