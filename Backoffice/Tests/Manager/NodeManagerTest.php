@@ -96,7 +96,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         $siteId = 'fakeSiteId';
         $language = 'fakeLanguage';
         $version = 1;
-        $boDirection = 'h';
 
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
@@ -109,7 +108,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node0)->getArea()->thenReturn($rootArea);
         Phake::when($node0)->getBlocks()->thenReturn(array(2 => $block));
-        Phake::when($node0)->getBoDirection()->thenReturn($boDirection);
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
@@ -188,6 +186,12 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals(false, $newNode->isInMenu());
         $this->assertEquals(1, $newNode->getVersion());
 
+        $area = $newNode->getArea();
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
+        $this->assertEquals(AreaInterface::TYPE_ROOT, $area->getAreaType());
+        $this->assertEquals(AreaInterface::ROOT_AREA_ID, $area->getAreaId());
+        $this->assertEquals(AreaInterface::ROOT_AREA_LABEL, $area->getLabel());
+
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
@@ -247,11 +251,9 @@ class NodeManagerTest extends AbstractBaseTestCase
         $blocks = new ArrayCollection();
         $blocks->set(5, $block);
         $oldNodeId = 'oldNodeId';
-        $boDirection = 'v';
         $oldNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($oldNode)->getArea()->thenReturn($rootArea);
         Phake::when($oldNode)->getBlocks()->thenReturn($blocks);
-        Phake::when($oldNode)->getBoDirection()->thenReturn($boDirection);
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($oldNode);
 
         $this->manager->hydrateNodeFromNodeId($newNode, $oldNodeId);

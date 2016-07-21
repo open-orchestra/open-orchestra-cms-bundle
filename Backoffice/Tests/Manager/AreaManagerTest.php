@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\Backoffice\Manager\AreaManager;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use Phake;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
@@ -22,6 +23,8 @@ class AreaManagerTest extends AbstractBaseTestCase
     protected $nodeRepository;
     protected $block;
     protected $node;
+    protected $parentArea;
+    protected $fakeParentId = 'fake_parent_id';
 
     /**
      * Set up the test
@@ -35,6 +38,10 @@ class AreaManagerTest extends AbstractBaseTestCase
         Phake::when($this->node)->getLanguage()->thenReturn($this->language);
 
         $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+
+        $this->parentArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($this->parentArea)->getAreas()->thenReturn(array());
+        Phake::when($this->parentArea)->getAreaId()->thenReturn($this->fakeParentId);
 
         $this->manager = new AreaManager($this->nodeRepository, $this->blockParameterManager, 'OpenOrchestra\ModelBundle\Document\Area');
     }
@@ -371,5 +378,37 @@ class AreaManagerTest extends AbstractBaseTestCase
             array($node, $node2),
             array($node3, $node2),
         );
+    }
+
+    /**
+     * Test initialize new area row
+     */
+    public function testInitializeNewAreaRow()
+    {
+        $area = $this->manager->initializeNewAreaRow($this->parentArea);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
+        $this->assertEquals($area->getAreaType(), AreaInterface::TYPE_ROW);
+        $this->assertEquals($area->getAreaId(), $this->fakeParentId.'_'.AreaInterface::TYPE_ROW.'_1');
+    }
+    /**
+     * Test initialize new area column
+     */
+    public function testInitializeNewAreaColumn()
+    {
+        $area = $this->manager->initializeNewAreaColumn($this->parentArea);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
+        $this->assertEquals($area->getAreaType(), AreaInterface::TYPE_COLUMN);
+        $this->assertEquals($area->getAreaId(), $this->fakeParentId.'_'.AreaInterface::TYPE_COLUMN.'_1');
+    }
+    /**
+     * Test initialize new area root
+     */
+    public function testInitializeNewAreaRoot()
+    {
+        $area = $this->manager->initializeNewAreaRoot();
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
+        $this->assertEquals($area->getAreaType(), AreaInterface::TYPE_ROOT);
+        $this->assertEquals($area->getAreaId(), AreaInterface::ROOT_AREA_ID);
+        $this->assertEquals($area->getLabel(), AreaInterface::ROOT_AREA_LABEL);
     }
 }

@@ -137,7 +137,7 @@ class NodeManager
         $area->setAreaId(AreaInterface::ROOT_AREA_ID);
         $area->setLabel(AreaInterface::ROOT_AREA_LABEL);
         $area->setAreaType(AreaInterface::TYPE_ROOT);
-        $node->addArea($area);
+        $node->setArea($area);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
@@ -365,8 +365,8 @@ class NodeManager
     {
         $nodeTransverse = $this->nodeRepository
             ->findInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
-
-        foreach($node->getArea()->getAreas() as $area) {
+        $areas = $node->getArea()->getAreas();
+        foreach($areas as $area) {
             foreach ($area->getBlocks() as $areaBlock) {
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);

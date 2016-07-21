@@ -9,8 +9,8 @@ use OpenOrchestra\Backoffice\Form\Type\AreaType;
 
 /**
  * Description of AreaTypeTest
- * @deprecated will be removed in 2.0
  *
+ * @deprecated will be removed in 2.0
  */
 class AreaTypeTest extends AbstractBaseTestCase
 {

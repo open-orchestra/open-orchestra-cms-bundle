@@ -280,4 +280,14 @@ class AreaTransformerTest extends AbstractBaseTestCase
     {
         $this->assertSame('area', $this->areaTransformer->getName());
     }
+
+    /**
+     * Test exception reverse transform
+     */
+    public function testExceptionReverseTransform()
+    {
+        $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
+        $this->expectException('\UnexpectedValueException');
+        $this->areaTransformer->reverseTransform($facade);
+    }
 }
