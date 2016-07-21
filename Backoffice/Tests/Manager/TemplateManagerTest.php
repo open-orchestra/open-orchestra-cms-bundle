@@ -55,7 +55,7 @@ class TemplateManagerTest extends AbstractBaseTestCase
         Phake::verify($this->areaManager)->initializeNewAreaRoot();
         $this->assertEquals($template->getSiteId(), $this->siteId);
 
-        $area = $template->getArea();
+        $area = $template->getRootArea();
         $this->assertEquals($area->getLabel(), AreaInterface::ROOT_AREA_LABEL);
         $this->assertEquals($area->getAreaId(), AreaInterface::ROOT_AREA_ID);
         $this->assertEquals($area->getAreaType(), AreaInterface::TYPE_ROOT);

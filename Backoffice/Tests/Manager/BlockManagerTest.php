@@ -122,19 +122,19 @@ class BlockManagerTest extends AbstractBaseTestCase
         Phake::when($areaRootMain2)->getAreas()->thenReturn(array($areaMain2));
 
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node)->getArea()->thenReturn($areaRootMain);
+        Phake::when($node)->getRootArea()->thenReturn($areaRootMain);
         Phake::when($node)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         Phake::when($node)->getId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         Phake::when($node)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node)->getBlock(0)->thenReturn($block1);
         Phake::when($node)->getBlock(1)->thenReturn($block2);
         $node->setNodeId(NodeInterface::ROOT_NODE_ID);
-        $node->setArea($areaRootMain);
+        $node->setRootArea($areaRootMain);
         $node->addBlock($block1);
         $node->addBlock($block2);
 
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node2)->getArea()->thenReturn($areaRootMain2);
+        Phake::when($node2)->getRootArea()->thenReturn($areaRootMain2);
         Phake::when($node2)->getId()->thenReturn('home');
         Phake::when($node2)->getNodeId()->thenReturn('home');
         Phake::when($node2)->getBlocks()->thenReturn(array($block1, $block2, $block3));
@@ -142,7 +142,7 @@ class BlockManagerTest extends AbstractBaseTestCase
         Phake::when($node2)->getBlock(1)->thenReturn($block2);
         Phake::when($node2)->getBlock(2)->thenReturn($block3);
         $node2->setNodeId('home');
-        $node2->setArea($areaRootMain2);
+        $node2->setRootArea($areaRootMain2);
         $node2->addBlock($block1);
         $node2->addBlock($block2);
         $node2->addBlock($block3);

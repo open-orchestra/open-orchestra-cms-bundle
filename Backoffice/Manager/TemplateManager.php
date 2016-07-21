@@ -37,7 +37,7 @@ class TemplateManager
 
         $template = new $this->templateClass();
         $template->setSiteId($this->contextManager->getCurrentSiteId());
-        $template->setArea($rootArea);
+        $template->setRootArea($rootArea);
 
         return $template;
     }

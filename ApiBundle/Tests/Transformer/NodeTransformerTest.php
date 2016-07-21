@@ -99,7 +99,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
 
-        Phake::when($this->node)->getArea()->thenReturn($area);
+        Phake::when($this->node)->getRootArea()->thenReturn($area);
         $facade = $this->nodeTransformer->transform($this->node);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
@@ -125,7 +125,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
 
-        Phake::when($this->node)->getArea()->thenReturn($area);
+        Phake::when($this->node)->getRootArea()->thenReturn($area);
         $facade = $this->nodeTransformer->transform($this->node);
 
         $this->assertSame($facade->editable, false);
@@ -152,7 +152,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
 
-        Phake::when($this->node)->getArea()->thenReturn($area);
+        Phake::when($this->node)->getRootArea()->thenReturn($area);
         Phake::when($this->node)->getNodeType()->thenReturn(NodeInterface::TYPE_TRANSVERSE);
 
         $facade = $this->nodeTransformer->transform($this->node);

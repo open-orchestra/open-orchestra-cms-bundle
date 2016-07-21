@@ -34,7 +34,6 @@ module.exports = {
 
     //--[ BACKBONE ROUTER ]--//
     'web/built/openorchestrabackoffice/js/backboneRouter.js',
-    //'web/built/openorchestrabackoffice/js/page-old/LoadTemplateConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/table/LoadTableConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/dashboard/LoadDashboardConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/underscoreTemplateLoader.js',
@@ -69,10 +68,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/dashboard/widget/DraftNodesView.js',
     'web/built/openorchestrabackoffice/js/dashboard/widget/LastContentsView.js',
     'web/built/openorchestrabackoffice/js/dashboard/widget/DraftContentsView.js',
-
-    //--[ OLD PAGE ]--//
-    'web/built/openorchestrabackoffice/js/page-old/orderNode.js',
-
 
     //--[ PAGE ]--//
     'web/built/openorchestrabackoffice/js/page/common/AbstractPageView.js',
@@ -109,7 +104,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/page/node/NodeView.js',
     'web/built/openorchestrabackoffice/js/page/node/NodeFormView.js',
     'web/built/openorchestrabackoffice/js/page/node/NodeLayoutButtonView.js',
-    'web/built/openorchestrabackoffice/js/page-old/orderNode.js',
+    'web/built/openorchestrabackoffice/js/page/node/orderNode.js',
 
     //--[ TAB ]--//
     'web/built/openorchestrabackoffice/js/tab/TabView.js',

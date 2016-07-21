@@ -46,7 +46,7 @@ class TemplateFacade extends AbstractFacade
     /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFacade")
      */
-    public $area;
+    public $rootArea;
 
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")

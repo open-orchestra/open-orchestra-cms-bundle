@@ -29,7 +29,6 @@ class OpenOrchestra.Page.Node.NodeView extends OpenOrchestra.Page.Common.Abstrac
       'multiVersion': 'showNodeWithLanguageAndVersion'
       'duplicate': 'showNodeWithLanguage'
     @options.configuration = @options.node
-    @options.template = @options.node
     @options.entityType = 'node'
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/node/nodeView"
@@ -49,6 +48,6 @@ class OpenOrchestra.Page.Node.NodeView extends OpenOrchestra.Page.Common.Abstrac
       element: @options.node
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    @addArea($('.page-container', @$el), @options.template.get('area'))
+    @addArea($('.page-container', @$el), @options.node.get('root_area'))
     @addConfigurationButton()
     return

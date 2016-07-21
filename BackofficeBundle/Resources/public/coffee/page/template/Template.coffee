@@ -15,5 +15,5 @@ class OpenOrchestra.Page.Template.Template extends Backbone.Model
   ###
   set: (models) ->
     super(models)
-    @attributes.area = new OpenOrchestra.Page.Area.Area(models.area) if models.area?
+    @attributes.root_area = new OpenOrchestra.Page.Area.Area(models.root_area) if models.root_area?
     @attributes.blocks = new OpenOrchestra.Page.Block.BlockCollection(models.blocks) if models.blocks?

@@ -137,7 +137,7 @@ class NodeManager
         $area->setAreaId(AreaInterface::ROOT_AREA_ID);
         $area->setLabel(AreaInterface::ROOT_AREA_LABEL);
         $area->setAreaType(AreaInterface::TYPE_ROOT);
-        $node->setArea($area);
+        $node->setRootArea($area);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
@@ -234,7 +234,7 @@ class NodeManager
     {
         $newRootArea = clone $sourceRootArea;
         $this->duplicateArea($sourceRootArea, $newRootArea);
-        $node->setArea($newRootArea);
+        $node->setRootArea($newRootArea);
     }
 
     /**
@@ -245,9 +245,9 @@ class NodeManager
      */
     protected function duplicateBlockAndArea(NodeInterface $node, NodeInterface $newNode)
     {
-        $newRootArea = clone $node->getArea();
-        $this->duplicateArea($node->getArea(), $newRootArea);
-        $newNode->setArea($newRootArea);
+        $newRootArea = clone $node->getRootArea();
+        $this->duplicateArea($node->getRootArea(), $newRootArea);
+        $newNode->setRootArea($newRootArea);
 
         foreach ($node->getBlocks() as $key => $block) {
             $newBlock = clone $block;
@@ -279,7 +279,7 @@ class NodeManager
     {
         if (is_array($nodes)) {
             foreach ($nodes as $node) {
-                if (!$this->areaManager->areaConsistency($node->getArea(), $node) || !$this->blockManager->blockConsistency($node)) {
+                if (!$this->areaManager->areaConsistency($node->getRootArea(), $node) || !$this->blockManager->blockConsistency($node)) {
                     return false;
                 }
             }
@@ -312,7 +312,7 @@ class NodeManager
         $node->setInFooter(true);
         $node->setLanguage($language);
 
-        $this->hydrateAreaFromTemplate($node, $template->getArea());
+        $this->hydrateAreaFromTemplate($node, $template->getRootArea());
 
         return $node;
     }
@@ -365,7 +365,7 @@ class NodeManager
     {
         $nodeTransverse = $this->nodeRepository
             ->findInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
-        $areas = $node->getArea()->getAreas();
+        $areas = $node->getRootArea()->getAreas();
         foreach($areas as $area) {
             foreach ($area->getBlocks() as $areaBlock) {
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
@@ -430,7 +430,7 @@ class NodeManager
         $node->setBoLabel(NodeInterface::TRANSVERSE_BO_LABEL);
         $node->setNodeType(NodeInterface::TYPE_TRANSVERSE);
         $node->setSiteId($siteId);
-        $node->setArea($area);
+        $node->setRootArea($area);
 
         return $node;
     }

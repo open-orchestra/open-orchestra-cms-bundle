@@ -55,7 +55,7 @@ class TemplateController extends AbstractAdminController
      *
      * @return Response
      */
-    public function newTemplateAction(Request $request)
+    public function createTemplateAction(Request $request)
     {
         $templateManager = $this->container->get('open_orchestra_backoffice.manager.template');
         $template = $templateManager->initializeNewTemplate();

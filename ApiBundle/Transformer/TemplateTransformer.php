@@ -27,7 +27,7 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         $facade = $this->newFacade();
-        $facade->area = $this->getTransformer('area')->transformFromTemplate($template->getArea(), $template);
+        $facade->rootArea = $this->getTransformer('area')->transformFromTemplate($template->getRootArea(), $template);
         $facade->id = $template->getId();
         $facade->name = $template->getName();
         $facade->siteId = $template->getSiteId();

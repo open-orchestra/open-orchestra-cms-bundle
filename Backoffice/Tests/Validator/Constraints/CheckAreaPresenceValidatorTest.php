@@ -53,7 +53,7 @@ class CheckAreaPresenceValidatorTest extends AbstractBaseTestCase
     public function testAddNotViolation()
     {
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($this->node)->getArea()->thenReturn($area);
+        Phake::when($this->node)->getRootArea()->thenReturn($area);
 
         $this->validator->validate($this->node, $this->constraint);
 
@@ -68,7 +68,7 @@ class CheckAreaPresenceValidatorTest extends AbstractBaseTestCase
     {
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::when($this->node)->getArea()->thenReturn(null);
+        Phake::when($this->node)->getRootArea()->thenReturn(null);
 
         Phake::verify($this->constraintViolationBuilder)->atPath('nodeSource');
         Phake::verify($this->constraintViolationBuilder)->atPath('templateId');

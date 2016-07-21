@@ -106,7 +106,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($rootArea)->getAreas()->thenReturn(array($area));
 
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node0)->getArea()->thenReturn($rootArea);
+        Phake::when($node0)->getRootArea()->thenReturn($rootArea);
         Phake::when($node0)->getBlocks()->thenReturn(array(2 => $block));
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
@@ -120,7 +120,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::verify($this->nodeRepository)->findVersion($nodeId, $language, $siteId, $version);
         Phake::verify($this->versionableSaver)->saveDuplicated($node0);
         Phake::verify($newNode)->setBlock(2, $block);
-        Phake::verify($newNode)->setArea($rootArea);
+        Phake::verify($newNode)->setRootArea($rootArea);
     }
 
     /**
@@ -151,12 +151,12 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node0)->getVersion()->thenReturn(0);
-        Phake::when($node0)->getArea()->thenReturn($rootArea);
+        Phake::when($node0)->getRootArea()->thenReturn($rootArea);
         Phake::when($node0)->getBlocks()->thenReturn(new ArrayCollection());
 
         $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node1)->getVersion()->thenReturn(1);
-        Phake::when($node1)->getArea()->thenReturn($rootArea);
+        Phake::when($node1)->getRootArea()->thenReturn($rootArea);
         Phake::when($node1)->getBlocks()->thenReturn(new ArrayCollection());
 
         return array(
@@ -186,7 +186,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals(false, $newNode->isInMenu());
         $this->assertEquals(1, $newNode->getVersion());
 
-        $area = $newNode->getArea();
+        $area = $newNode->getRootArea();
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
         $this->assertEquals(AreaInterface::TYPE_ROOT, $area->getAreaType());
         $this->assertEquals(AreaInterface::ROOT_AREA_ID, $area->getAreaId());
@@ -252,14 +252,14 @@ class NodeManagerTest extends AbstractBaseTestCase
         $blocks->set(5, $block);
         $oldNodeId = 'oldNodeId';
         $oldNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($oldNode)->getArea()->thenReturn($rootArea);
+        Phake::when($oldNode)->getRootArea()->thenReturn($rootArea);
         Phake::when($oldNode)->getBlocks()->thenReturn($blocks);
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($oldNode);
 
         $this->manager->hydrateNodeFromNodeId($newNode, $oldNodeId);
 
         Phake::verify($newNode)->setBlock(5, $block);
-        Phake::verify($newNode)->setArea($rootArea);
+        Phake::verify($newNode)->setRootArea($rootArea);
     }
 
     /**
@@ -284,7 +284,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $rootArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($node)->getArea()->thenReturn($rootArea);
+        Phake::when($node)->getRootArea()->thenReturn($rootArea);
 
         return array(
             array(array($node, $node, $node)),
@@ -393,7 +393,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $areaRoot = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($node)->getArea()->thenReturn($areaRoot);
+        Phake::when($node)->getRootArea()->thenReturn($areaRoot);
 
         Phake::when($this->areaManager)->areaConsistency(Phake::anyParameters())->thenReturn($areaConsistency);
         Phake::when($this->blockManager)->blockConsistency(Phake::anyParameters())->thenReturn($blockConsistency);
@@ -450,7 +450,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($newNode)->getId()->thenReturn($newId);
         Phake::when($newNode)->getBlock(0)->thenReturn($block2);
         Phake::when($newNode)->getBlock(1)->thenReturn($block3);
-        Phake::when($newNode)->getArea()->thenReturn($areaRoot);
+        Phake::when($newNode)->getRootArea()->thenReturn($areaRoot);
 
         $oldNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($oldNode)->getId()->thenReturn($oldId);
@@ -539,8 +539,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertSame(NodeInterface::TYPE_TRANSVERSE, $node->getNodeType());
         $this->assertSame(1, $node->getVersion());
         $this->assertSame($language, $node->getLanguage());
-        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $node->getArea());
-        $this->assertSame(AreaInterface::TYPE_ROOT, $node->getArea()->getAreaType());
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $node->getRootArea());
+        $this->assertSame(AreaInterface::TYPE_ROOT, $node->getRootArea()->getAreaType());
     }
 
     /**

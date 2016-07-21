@@ -41,13 +41,13 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
         ) {
             if (
                 array_key_exists('templateId', $data['nodeTemplateSelection']) &&
-                null === $formData->getArea() &&
+                null === $formData->getRootArea() &&
                 0 === $formData->getBlocks()->count()&&
                 '' != $data['nodeTemplateSelection']['templateId']
             ) {
                 $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
                 if (null !== $template) {
-                    $this->nodeManager->hydrateAreaFromTemplate($formData, $template->getArea());
+                    $this->nodeManager->hydrateAreaFromTemplate($formData, $template->getRootArea());
                 }
             } elseif (
                 array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&

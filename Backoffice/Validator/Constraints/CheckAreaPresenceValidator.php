@@ -19,7 +19,7 @@ class CheckAreaPresenceValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (null === $value->getArea()) {
+        if (null === $value->getRootArea()) {
             $this->context->buildViolation($constraint->message)
                           ->atPath('nodeSource')
                           ->addViolation();

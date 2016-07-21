@@ -49,7 +49,7 @@ class AreaController extends BaseController
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
-        $rootArea = $node->getArea();
+        $rootArea = $node->getRootArea();
         $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($rootArea, $areaId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($area, $node, $areaParentId);
@@ -122,7 +122,7 @@ class AreaController extends BaseController
     {
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
-        $rootArea = $node->getArea();
+        $rootArea = $node->getRootArea();
         $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($rootArea, $facade->areaId);
 
         $this->get('open_orchestra_api.transformer_manager')
@@ -201,7 +201,7 @@ class AreaController extends BaseController
     {
         $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
 
-        $rootArea = $template->getArea();
+        $rootArea = $template->getRootArea();
         $removedArea = $areaId;
         if (null !== $areaParentId) {
             $parentArea = $this->get('open_orchestra_model.repository.template')->findAreaInTemplateByAreaId($template, $areaParentId);
@@ -237,7 +237,7 @@ class AreaController extends BaseController
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
 
-        $rootArea = $node->getArea();
+        $rootArea = $node->getRootArea();
         $removedArea = $areaId;
         if (null !== $areaParentId) {
             $parentArea = $this->get('open_orchestra_model.repository.node')->findAreaInNodeByAreaId($node, $areaParentId);

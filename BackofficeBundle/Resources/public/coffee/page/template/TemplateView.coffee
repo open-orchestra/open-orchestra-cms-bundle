@@ -40,6 +40,6 @@ class OpenOrchestra.Page.Template.TemplateView extends OpenOrchestra.Page.Common
     )
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    @addArea($('.page-container', @$el), @options.template.get('area'))
+    @addArea($('.page-container', @$el), @options.template.get('root_area'))
     @addConfigurationButton()
     return

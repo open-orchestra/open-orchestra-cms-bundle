@@ -32,7 +32,7 @@ class BlockNodePatternValidator extends ConstraintValidator
     {
         if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
             $blocks = $node->getBlocks();
-            $blockReferences = $this->getRefBlock($node->getArea());
+            $blockReferences = $this->getRefBlock($node->getRootArea());
             $routePattern = $node->getRoutePattern();
             foreach ($blockReferences as $blockRef) {
                 $block = $blocks[$blockRef];
