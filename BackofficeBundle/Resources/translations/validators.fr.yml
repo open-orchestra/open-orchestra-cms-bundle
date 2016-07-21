@@ -20,3 +20,5 @@ open_orchestra_backoffice_validators:
         exists_main_alias: Un alias doit être principal
     trashitem:
         remove_node_date: Vous devez attendre 7 jours pour pouvoir supprimer définitivement une page
+    boolean_condition:
+        pattern: La condition booléenne n'est pas correctement formatée

@@ -39,7 +39,6 @@ class SiteSiteAliasType extends AbstractType
             ),
             'required' => false,
         ));
-
         if ($options['refresh']) {
             $builder->addEventSubscriber(
                 new SiteSubscriber(

@@ -50,6 +50,12 @@ parameters:
         tinymce_jquery: false
         include_jquery: false
         selector: .tinymce
+        tinymce_buttons:
+            linkmanager:
+                title: open_orchestra_backoffice.internal_link
+                image: false
+                icon: internallink
+                stateSelector: a[href][data-options]
         theme:
             simple:
                 theme: modern

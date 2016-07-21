@@ -18,13 +18,19 @@ class InternalLinkController extends AbstractAdminController
      */
     public function formAction(Request $request)
     {
+        $option = array('action' => $this->generateUrl('open_orchestra_backoffice_internal_link_form'));
+
+        $option["method"] = "POST";
+        if ("PATCH" === $request->getMethod()) {
+            $option["validation_groups"] = false;
+            $option["method"] = "PATCH";
+        }
         $form = $this->createForm(
             'oo_internal_link',
-            null,
-            array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_internal_link_form'),
-            )
+            $request->query->all(),
+            $option
         );
+
         $form->handleRequest($request);
 
         return $this->renderAdminForm($form);

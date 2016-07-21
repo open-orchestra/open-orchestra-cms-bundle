@@ -31,26 +31,28 @@ class BooleanConditionValidator extends ConstraintValidator
     protected function validateCondition($condition)
     {
         $is_boolean = true;
-        $encapsuledElements = array();
-        preg_match_all(
-            KeywordableTraitInterface::GET_BALANCED_BRACKETS,
-            $condition,
-            $encapsuledElements
-        );
-        if (count($encapsuledElements[0]) > 0) {
-            foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
-                $is_boolean = (preg_match(KeywordableTraitInterface::IS_AND_BOOLEAN, $encapsuledElements[1][$key]) ||
-                    preg_match(KeywordableTraitInterface::IS_OR_BOOLEAN, $encapsuledElements[1][$key])) &&
-                    $is_boolean;
-                $condition = preg_replace('/'.preg_quote($encapsuledElement).'/', '##', $condition, 1);
-                if (count($encapsuledElements[0]) > 0) {
-                    $is_boolean = $is_boolean  && $this->validateCondition($condition);
+        if (!empty($condition)) {
+            $encapsuledElements = array();
+            preg_match_all(
+                KeywordableTraitInterface::GET_BALANCED_BRACKETS,
+                $condition,
+                $encapsuledElements
+            );
+            if (count($encapsuledElements[0]) > 0) {
+                foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
+                    $is_boolean = (preg_match(KeywordableTraitInterface::IS_AND_BOOLEAN, $encapsuledElements[1][$key]) ||
+                        preg_match(KeywordableTraitInterface::IS_OR_BOOLEAN, $encapsuledElements[1][$key])) &&
+                        $is_boolean;
+                    $condition = preg_replace('/'.preg_quote($encapsuledElement).'/', '##', $condition, 1);
+                    if (count($encapsuledElements[0]) > 0) {
+                        $is_boolean = $is_boolean  && $this->validateCondition($condition);
+                    }
                 }
+            } else {
+                $is_boolean = (preg_match(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition) ||
+                    preg_match(KeywordableTraitInterface::IS_OR_BOOLEAN, $condition)) &&
+                    $is_boolean;
             }
-        } else {
-            $is_boolean = (preg_match(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition) ||
-                preg_match(KeywordableTraitInterface::IS_OR_BOOLEAN, $condition)) &&
-                $is_boolean;
         }
 
         return $is_boolean;
