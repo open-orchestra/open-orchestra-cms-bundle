@@ -76,6 +76,10 @@ class UserController extends AbstractAdminController
      */
     public function formSelfAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         return $this->renderForm($request, $user, false);
@@ -132,6 +136,10 @@ class UserController extends AbstractAdminController
      */
     public function selfChangePasswordAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         return $this->renderChangePassword($request, $user);
@@ -141,7 +149,7 @@ class UserController extends AbstractAdminController
      * @param Request       $request
      * @param UserInterface $user
      */
-    public function renderChangePassword(Request $request, UserInterface $user)
+    protected function renderChangePassword(Request $request, UserInterface $user)
     {
         $form = $this->createForm('oo_user_change_password', $user, array(
             'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $user->getId()))
