@@ -240,7 +240,7 @@ class DataTableView extends OrchestraView
   ###
   draw: (tableId) ->
     if tableId == @options.tableId and @api?
-        @api.draw()
+        @api.draw(false)
 
   ###*
   * @param {string} tableId
