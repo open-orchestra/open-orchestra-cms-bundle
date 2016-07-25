@@ -83,6 +83,7 @@ class ContentManagerTest extends AbstractBaseTestCase
         Phake::verify($newContent)->setVersion($expectedVersion);
         Phake::verify($newContent)->setStatus(null);
         Phake::verify($newContent)->addKeyword($this->keyword);
+        Phake::verify($newContent)->setCurrentlyPublished(false);
         Phake::verify($newContent)->addAttribute($this->contentAttribute);
     }
 
