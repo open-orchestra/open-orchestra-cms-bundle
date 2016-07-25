@@ -46,13 +46,37 @@ class NodeTypeTest extends AbstractBaseTestCase
         $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
-        $this->nodeType->buildForm($formBuilderMock, array());
+        $this->nodeType->buildForm($formBuilderMock, array('activateBoLabel' => true));
 
         Phake::verify($formBuilderMock, Phake::times(16))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(4))->addEventSubscriber(Phake::anyParameters());
     }
+
+    /**
+     * test build without bo label form
+     */
+    public function testBuildFormWithoutBoLabel()
+    {
+        $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
+
+        $this->nodeType->buildForm($formBuilderMock, array('activateBoLabel' => false));
+
+        Phake::verify($formBuilderMock, Phake::times(15))->add(Phake::anyParameters());
+
+        Phake::verify($formBuilderMock, Phake::never())->add('boLabel', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.node.boLabel.name',
+            'attr' => array(
+                'class' => 'generate-id-dest',
+                'help_text' => 'open_orchestra_backoffice.form.node.boLabel.helper',
+            )
+        ));
+        Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(4))->addEventSubscriber(Phake::anyParameters());
+    }
+
 
     /**
      * Test configureOptions
@@ -64,7 +88,8 @@ class NodeTypeTest extends AbstractBaseTestCase
         $this->nodeType->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'data_class' => $this->nodeClass
+            'data_class' => $this->nodeClass,
+            'activateBoLabel' => true,
         ));
     }
 
