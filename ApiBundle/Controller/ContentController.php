@@ -135,8 +135,8 @@ class ContentController extends BaseController
 
         $configuration->setDescriptionEntity($mapping);
         $contentCollection = $repository->findPaginatedLastVersionByContentTypeAndSite($contentType, $configuration, $siteId);
-        $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
-        $recordsFiltered = $repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
+        $recordsTotal = $repository->countByContentTypeAndSiteInLastVersion($contentType, $siteId);
+        $recordsFiltered = $repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration, $siteId);
 
         $facade = $transformer->transform($contentCollection, $contentType);
         $facade->recordsTotal = $recordsTotal;
