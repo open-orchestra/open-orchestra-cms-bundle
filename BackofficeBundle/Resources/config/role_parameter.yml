@@ -3,186 +3,248 @@ parameters:
         role_access_tree_general_node :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_general_node
+            order: 900
         role_access_update_general_node :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_general_node
+            order: 1000
         role_access_tree_node :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_node
+            order: 100
         role_access_create_node :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_node
+            order: 200
         role_access_update_node :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_node
+            order: 300
         role_access_delete_node :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_node
+            order: 400
         role_access_move_tree :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_node
+            order: 500
         role_access_error_node:
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_error_node
+            order: 600
         role_access_create_error_node:
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_error_node
+            order: 700
         role_access_update_error_node:
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_error_node
+            order: 800
         role_access_content_type_for_content :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_for_content
+            order: 1100
         role_access_create_content_type_for_content :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_for_content
+            order: 1200
         role_access_update_content_type_for_content :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_for_content
+            order: 1300
         role_access_delete_content_type_for_content :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_for_content
+            order: 1400
         role_access_content_type :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_content_type
+            order: 2500
         role_access_create_content_type :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_content_type
+            order: 2600
         role_access_update_content_type :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_content_type
+            order: 2700
         role_access_delete_content_type :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_content_type
+            order: 2800
         role_access_redirection :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_redirection
+            order: 4900
         role_access_create_redirection :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_redirection
+            order: 5000
         role_access_update_redirection :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_redirection
+            order: 5100
         role_access_delete_redirection :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_redirection
+            order: 5200
         role_access_api_client :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_api_client
+            order: 5300
         role_access_create_api_client :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_api_client
+            order: 5400
         role_access_update_api_client :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_api_client
+            order: 5500
         role_access_delete_api_client :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_api_client
+            order: 5600
         role_access_keyword :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_keyword
+            order: 2900
         role_access_create_keyword :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_keyword
+            order: 3000
         role_access_update_keyword :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_keyword
+            order: 3100
         role_access_delete_keyword :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_keyword
+            order: 3200
         role_access_deleted :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_deleted
+            order: 2200
         role_access_restore :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_deleted
+            order: 2300
         role_access_removed_trashcan :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_deleted
+            order: 2400
         role_access_status :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_status
+            order: 6200
         role_access_create_status :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_status
+            order: 6300
         role_access_update_status :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_status
+            order: 6400
         role_access_delete_status :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_status
+            order: 6500
         role_access_theme :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_theme
+            order: 4500
         role_access_create_theme :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_theme
+            order: 4600
         role_access_update_theme :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_theme
+            order: 4700
         role_access_delete_theme :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_theme
+            order: 4800
         role_access_site :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_site
+            order: 3300
         role_access_create_site :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_site
+            order: 3400
         role_access_update_site :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_site
+            order: 3500
         role_access_delete_site :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_site
+            order: 3600
         role_access_tree_template :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template
+            order: 3700
         role_access_create_template :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template
+            order: 3800
         role_access_update_template :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template
+            order: 3900
         role_access_delete_template :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template
+            order: 4000
         role_access_tree_template_flex :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template_flex
+            order: 4100
         role_access_create_template_flex :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template_flex
+            order: 4200
         role_access_update_template_flex :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template_flex
+            order: 4300
         role_access_delete_template_flex :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template_flex
+            order: 4400
         role_access_group :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_group
+            order: 7000
         role_access_create_group :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_group
+            order: 7100
         role_access_update_group :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_group
+            order: 7200
         role_access_delete_group :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_group
+            order: 7300
         role_access_role :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_role
+            order: 6600
         role_access_create_role :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_role
+            order: 6700
         role_access_update_role :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_role
+            order: 6800
         role_access_delete_role :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_role
+            order: 6900
         role_user :
             category: open_orchestra_backoffice.form.group.role_front_title
             label: open_orchestra_role.role_user
+            order: 7800
