@@ -6,7 +6,6 @@ $(document).ready ->
   $(document).ajaxError (event, jqXHR, settings) ->
     errors = {error : {message :$('#content').data('error-txt')}}
     statusCode = jqXHR.status
-    console.log jqXHR.statusText
     # check if xhr is an abort or if an error callback is override for the xhr status code
     if jqXHR.statusText != 'abort' && not (settings.statusCode? && settings.statusCode[statusCode]?)
       if isAccessDenied(jqXHR)
