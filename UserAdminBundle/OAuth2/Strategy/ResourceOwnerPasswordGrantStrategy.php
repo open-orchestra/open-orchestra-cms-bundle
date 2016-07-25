@@ -57,7 +57,7 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
     public function supportRequestToken(Request $request)
     {
         $clientExist = $request->getUser() && $request->getPassword();
-        $oauthParams = $request->get('grant_type') === 'password' && $request->get('username') && $request->get('password');
+        $oauthParams = $request->get('grant_type') === 'password' && $request->headers->get('username') && $request->headers->get('password');
 
         return $oauthParams && $clientExist;
     }
@@ -103,14 +103,14 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
     protected function getUser(Request $request)
     {
         // find the user
-        $user = $this->userRepository->findOneByUsername($request->get('username'));
+        $user = $this->userRepository->findOneByUsername($request->headers->get('username'));
         if (!$user) {
             throw new BadUserCredentialsHttpException();
         }
 
         // Check the validity of the password
         $encoder = $this->encoderFactory->getEncoder($user);
-        if (!$encoder->isPasswordValid($user->getPassword(), $request->get('password'), $user->getSalt())) {
+        if (!$encoder->isPasswordValid($user->getPassword(), $request->headers->get('password'), $user->getSalt())) {
             throw new BadUserCredentialsHttpException();
         }
 
