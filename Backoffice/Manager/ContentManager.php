@@ -83,6 +83,7 @@ class ContentManager
         $lastVersion = $lastContent !== null ? $lastContent->getVersion() : 0;
         $newContent = clone $content;
         $newContent->setVersion($lastVersion + 1);
+        $newContent->setCurrentlyPublished(false);
         $newContent->setStatus(null);
         foreach ($content->getKeywords() as $keyword) {
             $newContent->addKeyword($keyword);
