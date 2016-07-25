@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -31,8 +32,15 @@ class NodeController extends AbstractEditionRoleController
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
+        $options = array(
+            'action' => $url,
+            'validation_groups' => array($node->getNodeType()),
+        );
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            $options['activateBoLabel'] = false;
+        }
 
-        $form = $this->createForm('oo_node', $node, array('action' => $url), $this->getEditionRole($node));
+        $form = $this->createForm('oo_node', $node, $options, $this->getEditionRole($node));
 
         $form->handleRequest($request);
 

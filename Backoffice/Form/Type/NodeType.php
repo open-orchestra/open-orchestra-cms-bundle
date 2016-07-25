@@ -72,15 +72,19 @@ class NodeType extends AbstractAreaContainerType
                 'attr' => array(
                     'class' => 'generate-id-source',
                 )
-            ))
-            ->add('boLabel', 'text', array(
+            ));
+
+        if (true === $options['activateBoLabel']) {
+            $builder->add('boLabel', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.node.boLabel.name',
                 'attr' => array(
                     'class' => 'generate-id-dest',
                     'help_text' => 'open_orchestra_backoffice.form.node.boLabel.helper',
                 )
-            ))
-            ->add('routePattern', 'text', array(
+            ));
+        }
+
+        $builder->add('routePattern', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.node.route_pattern.name',
                 'attr' => array(
                     'class' => 'generate-id-dest',
@@ -167,7 +171,8 @@ class NodeType extends AbstractAreaContainerType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->nodeClass
+            'data_class' => $this->nodeClass,
+            'activateBoLabel' => true,
         ));
     }
 
