@@ -27,7 +27,7 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
         $this->roleCollector2 = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
 
-        $this->form = new RoleChoiceType(array($this->roleCollector, $this->roleCollector2), 'oo_role_choice', array ('role_test' => array('category' => 'role_test_category', 'label' => 'role_test_label')));
+        $this->form = new RoleChoiceType(array($this->roleCollector, $this->roleCollector2), 'oo_role_choice', array ('role_test' => array('category' => 'role_test_category', 'label' => 'role_test_label', 'order' => 0)));
     }
 
     /**

@@ -37,9 +37,14 @@ class RoleChoiceType extends AbstractType
     {
         $rolesOrdered = array();
         $choices = $this->getRolesInRoleCollectors();
+        $order = array();
+        foreach($this->rolesClassification as $key => $classification) {
+            $order[$key] = $classification['order'];
+        }
+        array_multisort($order, $this->rolesClassification);
         foreach($this->rolesClassification as $key => $classification) {
             if(($rank = array_search(strtoupper($key), array_keys($choices))) !== false) {
-                $rolesOrdered[$classification['category']][$classification['label']][] = $rank;
+                $rolesOrdered[$classification['category']][$classification['label']][$classification['order']] = $rank;
             }
         }
         $view->vars['rolesOrdered'] = $rolesOrdered;
