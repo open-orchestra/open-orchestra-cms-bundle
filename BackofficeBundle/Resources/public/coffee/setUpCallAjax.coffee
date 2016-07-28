@@ -1,14 +1,8 @@
 $(document).ready ->
   $.ajaxSetup
-    url: 'defaultUrl',
     beforeSend: (xhr, settings) ->
-      if settings.url == 'defaultUrl'
-        xhr.abort()
-        redirectUrl = appRouter.generateUrl 'showDashboard'
-        displayMenu(redirectUrl)
-      else
-        context = settings.context
-        displayLoader(context.button) if context != undefined && context.button != undefined
+      context = settings.context
+      displayLoader(context.button) if context != undefined && context.button != undefined
   $(document).ajaxError (event, jqXHR, settings) ->
     errors = {error : {message :$('#content').data('error-txt')}}
     statusCode = jqXHR.status
