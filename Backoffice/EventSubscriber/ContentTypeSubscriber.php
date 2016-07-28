@@ -72,12 +72,21 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      */
     public function preSetData(FormEvent $event)
     {
+        $form = $event->getForm();
         $data = $event->getData();
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($data->getContentType());
 
         if ($contentType instanceof ContentTypeInterface) {
             $data->setContentTypeVersion($contentType->getVersion());
-            $this->addContentTypeFieldsToForm($contentType->getFields(), $event->getForm(), $data);
+
+            if (null === $data->getId()) {
+                $form->add('linkedToSite', 'checkbox', array(
+                    'label' => 'open_orchestra_backoffice.form.content.linked_to_site',
+                    'required' => false,
+                ));
+            }
+
+            $this->addContentTypeFieldsToForm($contentType->getFields(), $form, $data);
         }
     }
 
