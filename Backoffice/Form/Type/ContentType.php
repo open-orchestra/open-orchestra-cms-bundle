@@ -38,10 +38,6 @@ class ContentType extends AbstractType
             ->add('keywords', 'oo_keywords_choice', array(
                 'label' => 'open_orchestra_backoffice.form.content.keywords',
                 'required' => false
-            ))
-            ->add('linkedToSite', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content.linked_to_site',
-                'required' => false,
             ));
 
         $builder->addEventSubscriber($this->contentTypeSubscriber);
