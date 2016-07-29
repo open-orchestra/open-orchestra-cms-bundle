@@ -87,6 +87,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         $children = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($children)->getNodeId()->thenReturn($childrenId);
         Phake::when($this->nodeRepository)->findByPathCurrentlyPublished($node->getPath(), $this->siteId)->thenReturn(array($node, $children));
+        Phake::when($this->nodeRepository)->findByIncludedPathAndSiteId($node->getPath(), $this->siteId)->thenReturn(array($node, $children));
 
         $routeDocuments = $this->manager->createForNode($node);
 
@@ -147,6 +148,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         Phake::when($this->nodeRepository)->findByPathCurrentlyPublished(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->nodeRepository)->findByIncludedPathAndSiteId(Phake::anyParameters())->thenReturn(array());
 
         $routes = $this->manager->createForNode($node);
 
@@ -172,6 +174,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         Phake::when($children)->getNodeId()->thenReturn($childrenId);
 
         Phake::when($this->nodeRepository)->findByPathCurrentlyPublished($node->getPath(), $this->siteId)->thenReturn(array($node, $children));
+        Phake::when($this->nodeRepository)->findByIncludedPathAndSiteId($node->getPath(), $this->siteId)->thenReturn(array($node, $children));
 
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         $routes = array($route);
