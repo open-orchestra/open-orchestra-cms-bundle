@@ -35,15 +35,20 @@ class SiteSubscriberTest extends AbstractBaseTestCase
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
 
-        $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
+        $this->configForm = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($this->configForm)->getOption(Phake::anyParameters())->thenReturn(array());
+
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
+        Phake::when($this->form)->getConfig()->thenReturn($this->configForm);
+
+        $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
+        Phake::when($this->event)->getForm()->thenReturn($this->form);
+        Phake::when($this->event)->getData()->thenReturn(array('siteId' => 'fakeSiteId'));
+
         $this->attributes = array(
             'fakeAttributes' => 'fakeAttributes'
         );
-
-        Phake::when($this->event)->getForm()->thenReturn($this->form);
-
-        Phake::when($this->event)->getData()->thenReturn(array('siteId' => 'fakeSiteId'));
 
         $this->subscriber = new SiteSubscriber($this->siteRepository, $this->attributes);
     }
@@ -87,8 +92,8 @@ class SiteSubscriberTest extends AbstractBaseTestCase
             'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
             'attr' => $this->attributes,
             'choices' => array(
-                        0 => $this->siteDomain1,
-                        1 => $this->siteDomain2,
+                        0 => $this->siteDomain1 . '()',
+                        1 => $this->siteDomain2 . '()',
                    ),
             'required' => false,
         ));

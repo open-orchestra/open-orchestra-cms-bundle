@@ -9,6 +9,7 @@ use OpenOrchestra\Backoffice\EventSubscriber\SiteSubscriber;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class SiteSiteAliasType
@@ -19,10 +20,12 @@ class SiteSiteAliasType extends AbstractType
 
     /**
      * @param SiteRepositoryInterface $siteRepository
+     * @param CurrentSiteIdInterface  $currentSiteManager
      */
-    public function __construct(SiteRepositoryInterface $siteRepository)
+    public function __construct(SiteRepositoryInterface $siteRepository, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->siteRepository = $siteRepository;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -33,19 +36,18 @@ class SiteSiteAliasType extends AbstractType
     {
         $builder->add('siteId', 'oo_site_choice', array(
             'label' => false,
+            'empty_data' => $this->currentSiteManager->getCurrentSiteId(),
             'attr' => array(
                 'class' => 'to-tinyMce',
                 'data-key' => 'site'
             ),
-            'required' => false,
+            'required' => true,
         ));
-        if ($options['refresh']) {
-            $builder->addEventSubscriber(
-                new SiteSubscriber(
-                    $this->siteRepository,
-                    $options['attr']
-            ));
-        }
+        $builder->addEventSubscriber(
+            new SiteSubscriber(
+                $this->siteRepository,
+                $options['attr']
+        ));
     }
 
     /**
@@ -55,7 +57,7 @@ class SiteSiteAliasType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['refresh'] = $options['refresh'];
+        $view->vars['refresh'] = true;
     }
 
     /**
@@ -65,7 +67,6 @@ class SiteSiteAliasType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'refresh' => false,
                 'attr' => array()
             )
         );

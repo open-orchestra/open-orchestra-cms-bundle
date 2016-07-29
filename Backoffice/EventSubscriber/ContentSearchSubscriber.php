@@ -7,6 +7,7 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
 
 /**
  * Class ContentSearchSubscriber
@@ -71,8 +72,10 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         }
         $choices = array();
         if (!is_null($data)) {
-            if ($data['contentType'] != '' || $data['keywords'] != '') {
-                $choices = array_merge($choices, $this->getChoices($data['contentType'], $data['choiceType'], $data['keywords']));
+            if (array_key_exists('contentType', $data) && $data['contentType'] != '') {
+                $choices = array_merge($choices, $this->getChoices($data['contentType'],
+                    array_key_exists('choiceType', $data) && $data['choiceType'] != '' ? $data['choiceType']: ReadContentRepositoryInterface::CHOICE_AND,
+                    array_key_exists('keywords', $data) && $data['keywords'] ? $data['keywords']: null));
             }
             if (array_key_exists('contentId', $data) && $data['contentId'] != '') {
                 $choices = array_merge($choices, $this->getChoice($data['contentId']));

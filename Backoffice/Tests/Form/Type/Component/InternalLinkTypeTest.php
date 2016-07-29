@@ -50,6 +50,6 @@ class InternalLinkTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
     }
 }

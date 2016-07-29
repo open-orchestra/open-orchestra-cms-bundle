@@ -87,12 +87,17 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
       fields = {}
       for i of serializeFields
         field = serializeFields[i]
-        fieldName = field.name.replace(@formName, '').replace(/\]\[/g, '_').replace(/(\]|\[)/g, '')
-        if fieldName != '_token'
-          fields[fieldName] = field.value
+        if field.value != ''
+          fieldName = field.name.replace(@formName, '').replace(/\]\[/g, '_').replace(/(\]|\[)/g, '')
+          if fieldName != '_token'
+            fields[fieldName] = field.value
       link = $('<a href="#">').html(inputText.val()).attr('data-options', JSON.stringify(fields))
       div = $('<div>').append(link)
-      tinymce.get(@options.editor.id).insertContent div.html()
+      sourceNode = $(tinymce.get(@options.editor.id).selection.getNode())
+      if typeof sourceNode.data('options') != 'undefined'
+        sourceNode.replaceWith(div.html())
+      else
+        tinymce.get(@options.editor.id).insertContent div.html()
     else
       inputText.parent().addClass 'has-error'
       inputText.focus()
