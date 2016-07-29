@@ -49,6 +49,8 @@ class NodeChoiceType extends AbstractType
     }
 
     /**
+     * @param string $siteId
+     *
      * @return array
      */
     protected function getChoices($siteId)
