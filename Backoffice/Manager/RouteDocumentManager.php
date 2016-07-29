@@ -170,7 +170,8 @@ class RouteDocumentManager
      */
     public function clearForNode(NodeInterface $node)
     {
-        $nodes = $this->getTreeNode($node);
+        $nodes = $this->getTreeNode($node, null, true);
+
         $routes = array();
 
         foreach ($nodes as $node) {
@@ -183,16 +184,17 @@ class RouteDocumentManager
     /**
      * @param NodeInterface      $node
      * @param SiteInterface|null $site
+     * @param boolean            $all
      *
      * @return Collection
      */
-    protected function getTreeNode(NodeInterface $node, $site = null)
+    protected function getTreeNode(NodeInterface $node, $site = null, $all = false)
     {
         if (null === $site) {
             $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
         }
 
-        return $this->nodeRepository->findByPathCurrentlyPublished($node->getPath(), $site->getSiteId());
+        return $all ? $this->nodeRepository->findByIncludedPathAndSiteId($node->getPath(), $site->getSiteId()) : $this->nodeRepository->findByPathCurrentlyPublished($node->getPath(), $site->getSiteId());
 
     }
 
