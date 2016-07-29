@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
+use Symfony\Component\OptionsResolver\Options;
 
 /**
  * Class NodeChoiceType
@@ -36,7 +37,10 @@ class NodeChoiceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'choices' => $this->getChoices(),
+                'choices' => function(Options $options) {
+                    return $this->getChoices($options['siteId']);
+                },
+                'siteId' => $this->currentSiteManager->getCurrentSiteId(),
                 'attr' => array(
                     'class' => 'orchestra-node-choice'
                 )
@@ -47,9 +51,8 @@ class NodeChoiceType extends AbstractType
     /**
      * @return array
      */
-    protected function getChoices()
+    protected function getChoices($siteId)
     {
-        $siteId = $this->currentSiteManager->getCurrentSiteId();
         $nodes = $this->nodeRepository->findLastVersionByType($siteId);
         $orderedNodes = $this->treeManager->generateTree($nodes);
 

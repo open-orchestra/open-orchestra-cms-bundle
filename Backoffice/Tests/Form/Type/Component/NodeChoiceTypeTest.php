@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\Tests\Form\Type\Component;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\Type\Component\NodeChoiceType;
+use Symfony\Component\OptionsResolver\Options;
 
 /**
  * Class NodeChoiceType
@@ -85,10 +86,10 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
         $this->orchestraNodeChoiceType->configureOptions($resolver);
         Phake::verify($resolver)->setDefaults(
             array(
-                'choices' => array(
-                    $this->nodeNodeId1 => ''.$this->nodeName1,
-                    $this->nodeNodeId2 => '&#x2514;'.$this->nodeName2,
-                ),
+                'choices' => function(Options $options) {
+                    return $this->getChoices($options['siteId']);
+                },
+                'siteId' => null,
                 'attr' => array(
                     'class' => 'orchestra-node-choice'
                 )
