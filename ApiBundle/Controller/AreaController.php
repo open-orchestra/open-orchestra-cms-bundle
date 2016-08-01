@@ -101,7 +101,6 @@ class AreaController extends BaseController
             $request->get('_format', 'json')
         );
         $areas = $facade->getAreas();
-        dump($areas);
 
         $this->updateArea($areas[0], $nodeId, $language, $version, $siteId);
         $this->updateArea($areas[1], $nodeId, $language, $version, $siteId);
