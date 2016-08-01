@@ -74,7 +74,7 @@ class NodeTypeTest extends AbstractBaseTestCase
             )
         ));
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(4))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
 
