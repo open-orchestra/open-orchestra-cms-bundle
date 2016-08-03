@@ -298,6 +298,7 @@ open_orchestra_backoffice:
             role_front_title: Front Office
             site: Site
             title: Édition de groupe
+            user_list: Liste des utilisateurs
             node_role_edition: Liste des rôles par page
             node_role_no_site: Le groupe doit être lié a un site pour gérer les rôles page par page
             page_list: Liste des pages
