@@ -63,6 +63,28 @@ class UserController extends BaseController
     }
 
     /**
+     * @param string $groupId
+     *
+     * @Config\Route("/list-by-group/{groupId}", name="open_orchestra_api_user_list_by_group")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_USER')")
+     *
+     * @return FacadeInterface
+     */
+    public function listByGroupAction($groupId)
+    {
+        $group =  $this->get('open_orchestra_user.repository.group')->find($groupId);
+        if (null !== $group) {
+            $users = $this->get('open_orchestra_user.repository.user')->findByGroup($group);
+
+            return $this->get('open_orchestra_api.transformer_manager')->get('user_list_group_collection')->transform($users);
+        }
+
+        return array();
+    }
+
+    /**
      * @param int $userId
      *
      * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")

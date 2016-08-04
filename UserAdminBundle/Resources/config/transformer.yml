@@ -1,6 +1,8 @@
 parameters:
     open_orchestra_user_admin.transformer.user.class: OpenOrchestra\UserAdminBundle\Transformer\UserTransformer
     open_orchestra_user_admin.transformer.user_collection.class: OpenOrchestra\UserAdminBundle\Transformer\UserCollectionTransformer
+    open_orchestra_user_admin.transformer.user_list_group.class: OpenOrchestra\UserAdminBundle\Transformer\UserListGroupTransformer
+    open_orchestra_user_admin.transformer.user_list_group_collection.class: OpenOrchestra\UserAdminBundle\Transformer\UserListGroupCollectionTransformer
 
 services:
     open_orchestra_user_admin.transformer.user:
@@ -16,6 +18,23 @@ services:
         class: '%open_orchestra_user_admin.transformer.user_collection.class%'
         arguments:
             - '%open_orchestra_user_admin.facade.user_collection.class%'
+            - '@security.authorization_checker'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+
+    open_orchestra_user_admin.transformer.user_list_group:
+        class: '%open_orchestra_user_admin.transformer.user_list_group.class%'
+        arguments:
+            - '%open_orchestra_user_admin.facade.user_list_group.class%'
+            - '@event_dispatcher'
+            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@security.authorization_checker'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_user_admin.transformer.user_list_group_collection:
+        class: '%open_orchestra_user_admin.transformer.user_list_group_collection.class%'
+        arguments:
+            - '%open_orchestra_user_admin.facade.user_list_group_collection.class%'
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
