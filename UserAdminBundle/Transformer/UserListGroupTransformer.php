@@ -2,60 +2,48 @@
 
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\UserBundle\Document\User;
-use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
-use OpenOrchestra\UserAdminBundle\Event\UserFacadeEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class UserListGroupTransformer
  */
 class UserListGroupTransformer extends AbstractSecurityCheckerAwareTransformer
 {
-    protected $eventDispatcher;
-    protected $translationChoiceManager;
-
     /**
-     * @param string                   $facadeClass
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param TranslationChoiceManager $translationChoiceManager
-     */
-    public function __construct(
-        $facadeClass,
-        EventDispatcherInterface $eventDispatcher,
-        TranslationChoiceManager $translationChoiceManager,
-        AuthorizationCheckerInterface $authorizationChecker
-    ) {
-        parent::__construct($facadeClass, $authorizationChecker);
-        $this->eventDispatcher = $eventDispatcher;
-        $this->translationChoiceManager = $translationChoiceManager;
-    }
-
-    /**
-     * @param User $mixed
+     * @param User                $mixed
+     * @param GroupInterface|null $group
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($mixed, GroupInterface $group = null)
     {
         $facade = $this->newFacade();
 
+        $facade->username = $mixed->getUsername();
         $facade->firstName = $mixed->getFirstName();
         $facade->lastName = $mixed->getLastName();
         $facade->email = $mixed->getEmail();
 
-
-      /*  if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_USER)) {
+        if (null !== $group && $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
             $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_user_delete',
-                array('userId' => $mixed->getId())
+                'open_orchestra_api_user_remove_group',
+                array(
+                    'userId' => $mixed->getId(),
+                    'groupId' => $group->getId()
+                )
             ));
-        }*/
+            $facade->addLink('_self_add', $this->generateRoute(
+                'open_orchestra_api_user_add_group',
+                array(
+                    'userId' => $mixed->getId(),
+                    'groupId' => $group->getId()
+                )
+            ));
+        }
 
         return $facade;
     }

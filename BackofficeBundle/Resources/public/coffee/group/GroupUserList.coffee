@@ -14,6 +14,7 @@ class OpenOrchestra.Group.GroupUserList extends OrchestraView
   ###
   initialize: (options) ->
     @options = options
+    @options.tableId = @options.entityType+'_list_user'
     @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/group/groupUserList',
@@ -31,8 +32,59 @@ class OpenOrchestra.Group.GroupUserList extends OrchestraView
     table = @getDisplayListUser()
     $('.table-container', @$el).html table
 
+    @initSelectAddUser($('.add-user-select2', @$el), $('.table-container table', @$el))
+
     @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
       listUrl : @options.listUrl
+    )
+
+  ###*
+   * Init input to add an user in group
+   *
+   * @param {Object} selector
+   * @param {Object} table datatable instance
+  ###
+  initSelectAddUser: (selector, table) ->
+    viewContainer = @
+    selector.select2(
+      minimumInputLength: 1,
+      ajax:
+        url: @options.response.links._list_without_group,
+        dataType: 'json',
+        quietMillis: 250,
+        cache: true
+        data: (term) ->
+          return {username: term}
+        results: (data) ->
+          return {results: data.users}
+      formatResult: (result, container) ->
+        $(container).click({user: result, table: table, selector: selector}, viewContainer.addUser)
+        return result.username + ' (' + result.email + ')'
+      formatSelection: (result) ->
+        result.username
+      formatResultCssClass: () ->
+        return 'list-group-item'
+      dropdownCssClass: 'list-group'
+    )
+
+  ###*
+   * Click on a user in select2 result
+   *
+   * @param {Object} event
+  ###
+  addUser: (event) ->
+    displayLoader($(event.target))
+    user = event.data.user
+    table = event.data.table
+    inputSelect2 = event.data.selector
+    url = user.links._self_add
+    $.ajax(
+      method: 'POST'
+      url: url
+      success: () ->
+        table.DataTable().row.add(user).draw()
+      complete: () ->
+        inputSelect2.select2('close')
     )
 
   ###*
@@ -62,7 +114,6 @@ class OpenOrchestra.Group.GroupUserList extends OrchestraView
 
     datatableViewClass = appConfigurationView.getConfiguration(@options.entityType,'addDataTable')
     datatable = new datatableViewClass(
-      page: if @options.page? then parseInt(@options.page) - 1 else 0
       serverSide: false
       globalSearch: false
       searching: false
@@ -72,8 +123,9 @@ class OpenOrchestra.Group.GroupUserList extends OrchestraView
       processing: false
       columnDefs: columnDefs
       columns: columns
-      tableId: @options.entityType
+      tableId: @options.tableId
       tableClassName: 'table table-striped table-bordered table-hover smart-form'
+      stateSave: false
       language:
         url: appRouter.generateUrl('loadTranslationDatatable')
       data: @options.response.users
@@ -89,10 +141,9 @@ class OpenOrchestra.Group.GroupUserList extends OrchestraView
     elementModel = new TableviewModel
     elementModel.set rowData
     tableActionViewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'groupRemoveUserButton')
-
     new tableActionViewClass(viewContext.addOption(
       element: elementModel
-      tableId: @options.entityType
+      tableId: @options.tableId
       domContainer : $(td)
     ))
 

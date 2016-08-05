@@ -12,6 +12,8 @@ open_orchestra_user_admin:
         email: Email
         first_name: Prénom
         last_name: Nom
+        delete_confirm:
+            title: Supprimer cette utilisateur du groupe ?
     form:
         title: Général
         super_admin_help_text: Cet utilisateur est super admin, il est donc impossible de sélectionner des droits car il possède déjà tous les accès.

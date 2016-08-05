@@ -19,7 +19,7 @@ class OpenOrchestra.Group.TableUserListActionView extends OrchestraView
     @options = options
     _.bindAll this, "render"
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/group/TableUserListAction'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/group/tableUserListAction'
     ]
     return
 
@@ -28,11 +28,14 @@ class OpenOrchestra.Group.TableUserListActionView extends OrchestraView
   ###
   render: ->
     @setElement $('<p />')
-    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/group/TableUserListAction',
+    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/group/tableUserListAction',
       links: @options.element.get('links')
     )
     @options.domContainer.html(@$el)
 
+  ###*
+   * Delete user of group
+  ###
   clickDelete: (event) ->
     event.preventDefault()
     options = @options
@@ -53,3 +56,6 @@ class OpenOrchestra.Group.TableUserListActionView extends OrchestraView
             OpenOrchestra.DataTable.Channel.trigger 'draw', options.tableId
             OpenOrchestra.Table.Channel.trigger 'removeEntity', options.tableId
     )
+
+jQuery ->
+  appConfigurationView.setConfiguration 'group', 'groupRemoveUserButton',  OpenOrchestra.Group.TableUserListActionView

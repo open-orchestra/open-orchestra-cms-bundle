@@ -13,6 +13,11 @@ class UserListGroupFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
+    public $username;
+
+    /**
+     * @Serializer\Type("string")
+     */
     public $firstName;
 
     /**
