@@ -88,10 +88,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_api_group_edit',
                 array('groupId' => $group->getId())
             ));
-            $facade->addLink('_self_panel_user_list', $this->generateRoute(
-                'open_orchestra_api_user_list_by_group',
-                array('groupId' => $group->getId())
-            ));
+
             $this->eventDispatcher->dispatch(
                 GroupFacadeEvents::POST_GROUP_TRANSFORMATION,
                 new GroupFacadeEvent($group, $facade)
