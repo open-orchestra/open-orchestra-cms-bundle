@@ -117,14 +117,7 @@ class NodeGroupRoleVoter implements VoterInterface
         }
         $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $attribute);
         if ($nodeGroupRole instanceof ModelGroupRoleInterface) {
-            if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
-                $nodeParent = $this->nodeRepository->findInLastVersion($node->getParentId(), $node->getLanguage(), $node->getSiteId());
-                if (null !== $nodeParent) {
-                    return $this->isGrantedNodeGroupRole($nodeParent, $group, $attribute);
-                }
-            } elseif (ModelGroupRoleInterface::ACCESS_GRANTED === $nodeGroupRole->getAccessType()) {
-                return true;
-            }
+            return $nodeGroupRole->isGranted();
         }
 
         return false;
