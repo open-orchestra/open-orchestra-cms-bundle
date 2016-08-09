@@ -88,6 +88,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_api_group_edit',
                 array('groupId' => $group->getId())
             ));
+
             $this->eventDispatcher->dispatch(
                 GroupFacadeEvents::POST_GROUP_TRANSFORMATION,
                 new GroupFacadeEvent($group, $facade)

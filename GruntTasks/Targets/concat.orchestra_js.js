@@ -135,7 +135,9 @@ module.exports = {
     //--[ WEBSITE ]--//
     'web/built/openorchestrabackoffice/js/webSite/WebSiteFormView.js',
 
-    //--[ GROUP TREE ]--//
+    //--[ GROUP ]--//
+    'web/built/openorchestrabackoffice/js/group/TableUserListActionView.js',
+    'web/built/openorchestrabackoffice/js/group/GroupUserList.js',
     'web/built/openorchestrabackoffice/js/groupTree/*.js',
 
     //--[ INTERNAL LINK ]--//

@@ -109,12 +109,12 @@ class DataTableView extends OrchestraView
    * @param {Object} json DataTable data retrieved from server
   ###
   initComplete: (e, settings, json) ->
-    api = $(e.target).DataTable()
-    headerViewClass = appConfigurationView.getConfiguration(@options.tableId,'showTableHeader')
-    new headerViewClass(
-      api : api
-      domContainer : $('thead', @$el)
-    )
+    if settings.searching == true
+      headerViewClass = appConfigurationView.getConfiguration(@options.tableId,'showTableHeader')
+      new headerViewClass(
+        api : api
+        domContainer : $('thead', @$el)
+      )
 
   ###*
    * @param {Object} settings DataTable settings

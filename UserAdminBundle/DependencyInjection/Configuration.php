@@ -24,6 +24,8 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('user')->defaultValue('OpenOrchestra\UserAdminBundle\Facade\UserFacade')->end()
                     ->scalarNode('user_collection')->defaultValue('OpenOrchestra\UserAdminBundle\Facade\UserCollectionFacade')->end()
+                    ->scalarNode('user_list_group')->defaultValue('OpenOrchestra\UserAdminBundle\Facade\UserListGroupFacade')->end()
+                    ->scalarNode('user_list_group_collection')->defaultValue('OpenOrchestra\UserAdminBundle\Facade\UserListGroupCollectionFacade')->end()
                 ->end()
             ->end()
         ->end();

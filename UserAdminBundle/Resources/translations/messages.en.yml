@@ -9,6 +9,11 @@ open_orchestra_user_admin:
     table:
         username: Username
         groups: Groups
+        email: Email
+        first_name: First name
+        last_name: Last name
+        delete_confirm:
+            title: Remove this user of group?
     form:
         title: General
         super_admin_help_text: This user is super admin, so it is impossible to select rights because he already has all the access.
