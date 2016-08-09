@@ -144,7 +144,7 @@ class Group extends BaseGroup implements GroupInterface
      */
     public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
     {
-        $key = md5($id . $type . $role);
+        $key = $this->getKeyModelRoles($id, $type, $role);
         if (true === $this->modelRoles->containsKey($key)) {
             return $this->modelRoles->get($key);
         }
@@ -157,7 +157,7 @@ class Group extends BaseGroup implements GroupInterface
      */
     public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole)
     {
-        $key = md5($modelGroupRole->getId() . $modelGroupRole->getType() . $modelGroupRole->getRole());
+        $key = $this->getKeyModelRoles($modelGroupRole->getId(), $modelGroupRole->getType(), $modelGroupRole->getRole());
         $this->modelRoles->set($key, $modelGroupRole);
     }
 
@@ -190,5 +190,19 @@ class Group extends BaseGroup implements GroupInterface
     public function hasModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
     {
         return null !== $this->getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
+    }
+
+    /**
+     * @param string $id
+     * @param string $type
+     * @param string $role
+     *
+     * @return string
+     */
+    protected function getKeyModelRoles($id, $type, $role)
+    {
+        $key = implode(self::SEPARATOR_KEY_MODEL_ROLES, array($id, $type, $role));
+
+        return md5($key);
     }
 }

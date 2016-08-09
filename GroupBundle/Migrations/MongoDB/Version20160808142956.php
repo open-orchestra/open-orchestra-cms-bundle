@@ -32,7 +32,7 @@ class Version20160808142956 extends AbstractMigration
                 var modelRoles = {};
                 for (var i in item.modelRoles) {
                     var modelRole = item.modelRoles[i];
-                    var key = hex_md5(modelRole.id+modelRole.type+modelRole.role);
+                    var key = hex_md5(modelRole.id+\'##\'+modelRole.type+\'##\'+modelRole.role);
                     modelRoles[key] = modelRole;
                 };
                 item.modelRoles = modelRoles;

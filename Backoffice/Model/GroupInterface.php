@@ -14,6 +14,8 @@ use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
  */
 interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInterface
 {
+    const SEPARATOR_KEY_MODEL_ROLES = '##';
+
     /**
      * @param ReadSiteInterface|null $site
      */
