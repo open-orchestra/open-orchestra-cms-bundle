@@ -24,6 +24,21 @@ class AreaFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
+    public $areaType;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $width;
+
+    /**
+     * @Serializer\Type("integer")
+     */
+    public $order;
+
+    /**
+     * @Serializer\Type("string")
+     */
     public $classes;
 
     /**
@@ -38,6 +53,7 @@ class AreaFacade extends AbstractFacade
 
     /**
      * @Serializer\Type("string")
+     * @deprecated will be removed in 2.0
      */
     public $boDirection;
 
@@ -45,6 +61,11 @@ class AreaFacade extends AbstractFacade
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;
+
+    /**
+     * @Serializer\Type("boolean")
+     */
+    public $editable;
 
     /**
      * @param FacadeInterface $facade

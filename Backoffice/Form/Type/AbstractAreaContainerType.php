@@ -5,9 +5,11 @@ namespace OpenOrchestra\Backoffice\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
 
 /**
  * Class AbstractAreaContainerType
+ * @deprecated will be removed in 2.0
  */
 abstract class AbstractAreaContainerType extends AbstractType
 {

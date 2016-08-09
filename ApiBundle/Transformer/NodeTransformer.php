@@ -70,13 +70,10 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
 
-        foreach ($node->getAreas() as $area) {
-            $facade->addArea($this->getTransformer('area')->transform($area, $node));
-        }
-
         $facade->id = $node->getId();
         $nodeId = $node->getNodeId();
         $facade->nodeId = $nodeId;
+        $facade->rootArea = $this->getTransformer('area')->transform($node->getRootArea(), $node);
         $facade->name = $node->getName();
         $facade->siteId = $node->getSiteId();
         $facade->deleted = $node->isDeleted();
@@ -98,7 +95,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-        $facade->boDirection = $node->getBoDirection();
         $editionRole = $this->getEditionRole($node);
 
         $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);

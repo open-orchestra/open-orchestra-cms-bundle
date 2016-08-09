@@ -5,9 +5,12 @@ namespace OpenOrchestra\Backoffice\Tests\Form\Type;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\Type\AreaType;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
 
 /**
  * Description of AreaTypeTest
+ *
+ * @deprecated will be removed in 2.0
  */
 class AreaTypeTest extends AbstractBaseTestCase
 {

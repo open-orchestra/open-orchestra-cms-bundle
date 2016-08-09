@@ -5,9 +5,11 @@ namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 use OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaIdValidator;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
 
 /**
  * Class UniqueAreaIdValidatorTest
+ * @deprecated will be removed in 2.0
  */
 class UniqueAreaIdValidatorTest extends AbstractBaseTestCase
 {

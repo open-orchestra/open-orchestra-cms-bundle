@@ -97,10 +97,14 @@ class AddTransverseBlockSubscriberTest extends AbstractBaseTestCase
         Phake::when($event)->getNode()->thenReturn($node);
 
         $blockIndex = 8;
+
+        $rootArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         $areas = new ArrayCollection(array($area));
+        Phake::when($rootArea)->getAreas()->thenReturn($areas);
+
         $otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($otherNode)->getAreas()->thenReturn($areas);
+        Phake::when($otherNode)->getRootArea()->thenReturn($rootArea);
         Phake::when($otherNode)->getBlockIndex(Phake::anyParameters())->thenReturn($blockIndex);
 
         $otherNodes = array($otherNode, $node, $otherNode);

@@ -49,7 +49,7 @@ class AddTransverseBlockSubscriber implements EventSubscriberInterface
             $transverseNode->addBlock($newBlock);
             $blockIndex = $transverseNode->getBlockIndex($newBlock);
             /** @var AreaInterface $area */
-            $area = $transverseNode->getAreas()->first();
+            $area = $transverseNode->getRootArea()->getAreas()->first();
             $area->addBlock(array('nodeId' => 0, 'blockId' => $blockIndex));
         }
     }

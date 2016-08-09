@@ -33,16 +33,24 @@ class TemplateFacade extends AbstractFacade
 
     /**
      * @Serializer\Type("string")
+     * @deprecated will be removed in 2.0
      */
     public $language;
 
     /**
      * @Serializer\Type("string")
+     * @deprecated will be removed in 2.0
      */
     public $boDirection;
 
     /**
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFacade")
+     */
+    public $rootArea;
+
+    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
+     * @deprecated will be removed in 2.0
      */
     protected $areas = array();
 
@@ -58,17 +66,23 @@ class TemplateFacade extends AbstractFacade
 
     /**
      * @param FacadeInterface $facade
+     * @deprecated will be removed in 2.0
      */
     public function addArea(FacadeInterface $facade)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->areas[$facade->areaId] = $facade;
     }
 
     /**
      * @return array
+     * @deprecated will be removed in 2.0
      */
     public function getAreas()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         return $this->areas;
     }
 

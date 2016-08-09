@@ -8,7 +8,7 @@ extendView['addArea'] = {
     refreshUl @areaContainer
 
   addAreaToView: (area) ->
-    areaElement = new Area
+    areaElement = new OpenOrchestra.Page.Area.Area()
     areaElement.set area
     areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addArea')
     new areaViewClass(

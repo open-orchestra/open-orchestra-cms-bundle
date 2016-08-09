@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\Backoffice\Manager\AreaManager;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use Phake;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
@@ -22,6 +23,8 @@ class AreaManagerTest extends AbstractBaseTestCase
     protected $nodeRepository;
     protected $block;
     protected $node;
+    protected $parentArea;
+    protected $fakeParentId = 'fake_parent_id';
 
     /**
      * Set up the test
@@ -35,6 +38,10 @@ class AreaManagerTest extends AbstractBaseTestCase
         Phake::when($this->node)->getLanguage()->thenReturn($this->language);
 
         $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+
+        $this->parentArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($this->parentArea)->getAreas()->thenReturn(array());
+        Phake::when($this->parentArea)->getAreaId()->thenReturn($this->fakeParentId);
 
         $this->manager = new AreaManager($this->nodeRepository, $this->blockParameterManager, 'OpenOrchestra\ModelBundle\Document\Area');
     }
@@ -159,7 +166,7 @@ class AreaManagerTest extends AbstractBaseTestCase
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn(array());
 
-        $this->assertTrue($this->manager->areaConsistency($node));
+        $this->assertTrue($this->manager->areaConsistency($node->getRootArea(), $node));
     }
 
     /**
@@ -210,16 +217,23 @@ class AreaManagerTest extends AbstractBaseTestCase
             array('nodeId' => 0, 'blockId' => 2, 'blockParameter' => array()),
         ));
 
+        $areaRootMain = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($areaRootMain)->getAreas()->thenReturn(array($areaMain));
+
+        $areaRootMain2 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($areaRootMain2)->getAreas()->thenReturn(array($areaMain2));
+
+
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
-        Phake::when($node)->getAreas()->thenReturn(array($areaMain));
+        Phake::when($node)->getRootArea()->thenReturn($areaRootMain);
         Phake::when($node)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node)->getBlock(0)->thenReturn($block1);
         Phake::when($node)->getBlock(1)->thenReturn($block2);
 
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node2)->getNodeId()->thenReturn('home');
-        Phake::when($node2)->getAreas()->thenReturn(array($areaMain2));
+        Phake::when($node2)->getRootArea()->thenReturn($areaRootMain2);
         Phake::when($node2)->getBlocks()->thenReturn(array($block1, $block2, $block3));
         Phake::when($node2)->getBlock(0)->thenReturn($block1);
         Phake::when($node2)->getBlock(1)->thenReturn($block2);
@@ -227,7 +241,7 @@ class AreaManagerTest extends AbstractBaseTestCase
 
         $node3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node3)->getNodeId()->thenReturn('home');
-        Phake::when($node3)->getAreas()->thenReturn(array($areaMain2));
+        Phake::when($node3)->getRootArea()->thenReturn($areaRootMain2);
         Phake::when($node3)->getBlocks()->thenReturn(array($block1, $block2, $block3));
         Phake::when($node3)->getBlock(0)->thenReturn($block1);
         Phake::when($node3)->getBlock(1)->thenReturn($block2);
@@ -251,7 +265,7 @@ class AreaManagerTest extends AbstractBaseTestCase
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn(array('newsId'));
 
-        $this->assertFalse($this->manager->areaConsistency($node));
+        $this->assertFalse($this->manager->areaConsistency($node->getRootArea(), $node));
     }
 
     /**
@@ -264,7 +278,7 @@ class AreaManagerTest extends AbstractBaseTestCase
     {
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
 
-        $this->assertFalse($this->manager->areaConsistency($node));
+        $this->assertFalse($this->manager->areaConsistency($node->getRootArea(), $node));
     }
 
     /**
@@ -329,16 +343,25 @@ class AreaManagerTest extends AbstractBaseTestCase
         Phake::when($areaMain3)->getBlocks()->thenReturn(array());
         Phake::when($areaMain3)->getAreas()->thenReturn(array($areaMenu, $areaFooter2));
 
+        $areaRootMain = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($areaRootMain)->getAreas()->thenReturn(array($areaMain));
+
+        $areaRootMain2 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($areaRootMain2)->getAreas()->thenReturn(array($areaMain2));
+
+        $areaRootMain3 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($areaRootMain3)->getAreas()->thenReturn(array($areaMain3));
+
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
-        Phake::when($node)->getAreas()->thenReturn(array($areaMain));
+        Phake::when($node)->getRootArea()->thenReturn($areaRootMain);
         Phake::when($node)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node)->getBlock(0)->thenReturn($block1);
         Phake::when($node)->getBlock(1)->thenReturn($block2);
 
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node2)->getNodeId()->thenReturn(NodeInterface::TRANSVERSE_NODE_ID);
-        Phake::when($node2)->getAreas()->thenReturn(array($areaMain2));
+        Phake::when($node2)->getRootArea()->thenReturn($areaRootMain2);
         Phake::when($node2)->getBlocks()->thenReturn(array($block1, $block2, $block3));
         Phake::when($node2)->getBlock(0)->thenReturn($block1);
         Phake::when($node2)->getBlock(1)->thenReturn($block2);
@@ -346,7 +369,7 @@ class AreaManagerTest extends AbstractBaseTestCase
 
         $node3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node3)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
-        Phake::when($node3)->getAreas()->thenReturn(array($areaMain3));
+        Phake::when($node3)->getRootArea()->thenReturn($areaRootMain3);
         Phake::when($node3)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node3)->getBlock(0)->thenReturn($block1);
         Phake::when($node3)->getBlock(1)->thenReturn($block2);
@@ -355,5 +378,37 @@ class AreaManagerTest extends AbstractBaseTestCase
             array($node, $node2),
             array($node3, $node2),
         );
+    }
+
+    /**
+     * Test initialize new area row
+     */
+    public function testInitializeNewAreaRow()
+    {
+        $area = $this->manager->initializeNewAreaRow($this->parentArea);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
+        $this->assertEquals($area->getAreaType(), AreaInterface::TYPE_ROW);
+        $this->assertEquals($area->getAreaId(), $this->fakeParentId.'_'.AreaInterface::TYPE_ROW.'_1');
+    }
+    /**
+     * Test initialize new area column
+     */
+    public function testInitializeNewAreaColumn()
+    {
+        $area = $this->manager->initializeNewAreaColumn($this->parentArea);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
+        $this->assertEquals($area->getAreaType(), AreaInterface::TYPE_COLUMN);
+        $this->assertEquals($area->getAreaId(), $this->fakeParentId.'_'.AreaInterface::TYPE_COLUMN.'_1');
+    }
+    /**
+     * Test initialize new area root
+     */
+    public function testInitializeNewAreaRoot()
+    {
+        $area = $this->manager->initializeNewAreaRoot();
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $area);
+        $this->assertEquals($area->getAreaType(), AreaInterface::TYPE_ROOT);
+        $this->assertEquals($area->getAreaId(), AreaInterface::ROOT_AREA_ID);
+        $this->assertEquals($area->getLabel(), AreaInterface::ROOT_AREA_LABEL);
     }
 }

@@ -158,19 +158,7 @@ class BlockTransformer extends AbstractTransformer
             'blockParameter' => array()
         );
         $blockElement = null;
-
-        if (!is_null($facade->component)) {
-            $blockClass = $this->blockClass;
-            /** @var BlockInterface $blockElement */
-            $blockElement = new $blockClass();
-            $blockElement->setComponent($facade->component);
-            $blockElement->setAttributes($this->generateFormManager->getDefaultConfiguration($blockElement));
-            $node->addBlock($blockElement);
-            $blockIndex = $node->getBlockIndex($blockElement);
-            $block['blockId'] = $blockIndex;
-            $block['nodeId'] = 0;
-            $this->eventDispatcher->dispatch(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockElement));
-        } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
+        if (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
             $block['nodeId'] = $facade->nodeId;
             if (!is_null($node)) {
@@ -183,6 +171,17 @@ class BlockTransformer extends AbstractTransformer
                     $blockElement = $blockNode->getBlock($facade->blockId);
                 }
             }
+        } elseif (!is_null($facade->component)) {
+            $blockClass = $this->blockClass;
+            /** @var BlockInterface $blockElement */
+            $blockElement = new $blockClass();
+            $blockElement->setComponent($facade->component);
+            $blockElement->setAttributes($this->generateFormManager->getDefaultConfiguration($blockElement));
+            $node->addBlock($blockElement);
+            $blockIndex = $node->getBlockIndex($blockElement);
+            $block['blockId'] = $blockIndex;
+            $block['nodeId'] = 0;
+            $this->eventDispatcher->dispatch(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockElement));
         }
 
         if ($blockElement) {

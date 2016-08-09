@@ -1,0 +1,35 @@
+<div
+    class = "item-block <%= ('generate' == block.get('method')) ? 'bg-orchestra-orange' : 'bg-orchestra-blue' %> "
+    data-delete-confirm-question="{{ 'open_orchestra_backoffice.block.delete_question'|trans }}"
+    data-delete-confirm-explanation="{{ 'open_orchestra_backoffice.block.delete_explanation'|trans }}"
+    data-block-id = "<%= block.cid %>"
+>
+    <div class="toolbar-container">
+        <div class="toolbar">
+        <% if (editable) { %>
+            <span class="tool move-tool">
+                <i class="glyphicon glyphicon-move"></i>
+            </span>
+            <span class="tool block-title"><%= block.get('ui_model').label %></span>
+            <% if ('generate' == block.get('method')) { %>
+                <span class="tool block-param">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </span>
+            <% } %>
+            <% if (block.get('is_deletable')) { %>
+                <span class="tool move-trash">
+                    <i class="block-remove glyphicon glyphicon-trash"></i>
+                </span>
+            <% } %>
+        <% } else { %>
+            <span class="tool block-title"><%= block.get('ui_model').label %></span>
+                <% if ('generate' == block.get('method')) { %>
+                        <span class="tool block-param">
+                            <i class="glyphicon glyphicon-eye-open"></i>
+                        </span>
+                <% } %>
+        <% } %>
+        </div>
+    </div>
+    <%= block.get('ui_model').html %>
+</div>

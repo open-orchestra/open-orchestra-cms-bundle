@@ -5,9 +5,11 @@ namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\BoDirectionChildrenSubscriber;
 use Phake;
 use Symfony\Component\Form\FormEvents;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
 
 /**
  * Class BoDirectionChildrenSubscriberTest
+ * @deprecated will be removed in 2.0
  */
 class BoDirectionChildrenSubscriberTest extends \PHPUnit_Framework_TestCase
 {

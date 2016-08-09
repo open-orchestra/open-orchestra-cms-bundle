@@ -4,7 +4,7 @@ parameters:
     open_orchestra_model.validator.restore_node.class: OpenOrchestra\Backoffice\Validator\Constraints\RestoreNodeValidator
     open_orchestra_model.validator.unique_area_id.class: OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaIdValidator
     open_orchestra_model.validator.unique_node_order.class: OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeOrderValidator
-    open_orchestra_model.validator.area_flex_row_layout.class: OpenOrchestra\Backoffice\Validator\Constraints\AreaFlexRowLayoutValidator
+    open_orchestra_model.validator.area_row_layout.class: OpenOrchestra\Backoffice\Validator\Constraints\AreaRowLayoutValidator
     open_orchestra_model.validator.check_variable_route_pattern_in_menu.class: OpenOrchestra\Backoffice\Validator\Constraints\CheckVariableRoutePatternInMenuValidator
     open_orchestra_model.validator.role_statuses.class: OpenOrchestra\Backoffice\Validator\Constraints\RoleStatusesValidator
     open_orchestra_model.validator.trashitem_remove_node.class: OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveNodeValidator
@@ -31,6 +31,7 @@ services:
             - { name: validator.constraint_validator, alias: restore_node}
     open_orchestra_model.validator.unique_area_id:
         class: '%open_orchestra_model.validator.unique_area_id.class%'
+        deprecated: ~
         tags:
             - { name: validator.constraint_validator, alias: unique_area_id}
     open_orchestra_model.validator.unique_node_order:
@@ -39,10 +40,10 @@ services:
             - '@open_orchestra_model.repository.node'
         tags:
             - { name: validator.constraint_validator, alias: unique_node_order}
-    open_orchestra_model.validator.area_flex_row_layout:
-        class: '%open_orchestra_model.validator.area_flex_row_layout.class%'
+    open_orchestra_model.validator.area_row_layout:
+        class: '%open_orchestra_model.validator.area_row_layout.class%'
         tags:
-            - { name: validator.constraint_validator, alias: area_flex_row_layout}
+            - { name: validator.constraint_validator, alias: area_row_layout}
     open_orchestra_model.validator.check_variable_route_pattern_in_menu:
         class: '%open_orchestra_model.validator.check_variable_route_pattern_in_menu.class%'
         tags:

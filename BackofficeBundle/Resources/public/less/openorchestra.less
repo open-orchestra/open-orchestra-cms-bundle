@@ -54,6 +54,16 @@ input[type=date].datepicker::-webkit-inner-spin-button, input[type=date].datepic
 }
 
 .btn.btn-ribbon.refresh-form {
-	float: right;
-	margin-left: 10px;
+  float: right;
+  margin-left: 10px;
+}
+
+// content after ribbon element
+#content:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }

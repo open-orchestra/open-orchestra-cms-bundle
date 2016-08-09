@@ -173,9 +173,6 @@ open_orchestra_backoffice:
         template:
             success: The template has been saved
             name: Name
-            language: Language
-            status: Status
-            boDirection: Children direction
         node:
             success: The page has been saved
             name: Page
@@ -205,7 +202,6 @@ open_orchestra_backoffice:
             template_selection:
                 name : Template selection
                 helper : One field required
-            boDirection: Children direction
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
         changefreq:
@@ -218,27 +214,14 @@ open_orchestra_backoffice:
             never: Never
         area:
             success: The area has been modified
-            bo_direction: Children direction
-            bo_percent: Children size percent
             html_class: Html class for the area
             label: Area label
             area_id: The area id
-            new_areas: Add new areas
-            new_blocks: Add new blocks
-            existing_block: Existing block
-            existing_blocks: Add an existing block
-            add_sub: Add
-            id_sub: Area id
-            remove_sub: Remove
-            block_exists: Can't add Area, area contains blocks
-        area_flex:
-            success: The area has been modified
-            html_class: Html class for the area
-            label: Area label
+            width: Area width
             new_row_title: New row
+            add_block_title: Add a block
             edit_row_title: Edit row
             edit_column_title: Edit column
-            width: Area width
             column_layout:
                 label: Column Layout
                 helper: Column layout: 10%, auto, 100px
@@ -364,7 +347,6 @@ open_orchestra_backoffice:
             title: Contribution
             nodes: Pages
             templates: Templates
-            templates_flex: Templates Flex
             contents: Contents
             error_nodes:
                 error_404: Error 404
@@ -549,7 +531,6 @@ open_orchestra_backoffice:
         delete_explanation: This operation is not reversible.
         delete_error_title: Area removal
         delete_error_txt: Error while removing area, please reload the page
-    areas_flex:
         delete_column_question: Would you like to delete this column?
         delete_row_question: Would you like to delete this row?
         delete_explanation: This operation is not reversible.
@@ -557,11 +538,8 @@ open_orchestra_backoffice:
         edit_column_label: Edit column
         edit_row_label: Edit Row
         new_row_label: Row
+        add_block_label: Block
     templates:
-        delete:
-            title: Would you like delete this template?
-            text: This operation is not reversible.
-    templates_flex:
         delete:
             title: Would you like delete this template?
             text: This operation is not reversible.

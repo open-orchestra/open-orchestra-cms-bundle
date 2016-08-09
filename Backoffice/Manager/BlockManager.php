@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -24,11 +23,11 @@ class BlockManager
     }
 
     /**
-     * @param AreaContainerInterface $node
+     * @param NodeInterface $node
      *
      * @return bool
      */
-    public function blockConsistency(AreaContainerInterface $node)
+    public function blockConsistency(NodeInterface $node)
     {
         foreach ($node->getBlocks() as $block) {
             if (!$this->checkAreaRef($block->getAreas(), $node, $block)) {
@@ -54,7 +53,7 @@ class BlockManager
                 $otherNode = $this->nodeRepository->find($refArea['nodeId']);
                 $node = $otherNode;
             }
-            $result = $this->findAreaIfExist($refArea['areaId'], $node->getAreas());
+            $result = $this->findAreaIfExist($refArea['areaId'], $node->getRootArea()->getAreas());
 
             if (null === $result || !$this->checkBlock($result->getBlocks(), $block, $node)) {
                 return false;

@@ -3,9 +3,9 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -132,10 +132,12 @@ class NodeManager
         $node->setInMenu(false);
         $node->setVersion(1);
 
+        /** @var AreaInterface $area */
         $area = new $this->areaClass();
-        $area->setLabel('main');
-        $area->setAreaId('main');
-        $node->addArea($area);
+        $area->setAreaId(AreaInterface::ROOT_AREA_ID);
+        $area->setLabel(AreaInterface::ROOT_AREA_LABEL);
+        $area->setAreaType(AreaInterface::TYPE_ROOT);
+        $node->setRootArea($area);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
@@ -225,18 +227,14 @@ class NodeManager
     }
 
     /**
-     * @param AreaContainerInterface $areaContainer
-     * @param Collection             $sourceAreas
+     * @param NodeInterface $node
+     * @param AreaInterface $sourceRootArea
      */
-    public function hydrateAreaFromTemplate(AreaContainerInterface $areaContainer, $sourceAreas)
+    public function hydrateAreaFromTemplate(NodeInterface $node, $sourceRootArea)
     {
-        foreach($sourceAreas as $area) {
-            $newArea = clone $area;
-            if (!empty($area->getAreas())) {
-                $this->hydrateAreaFromTemplate($newArea, $area->getAreas());
-            }
-            $areaContainer->addArea($newArea);
-        }
+        $newRootArea = clone $sourceRootArea;
+        $this->duplicateArea($sourceRootArea, $newRootArea);
+        $node->setRootArea($newRootArea);
     }
 
     /**
@@ -247,8 +245,10 @@ class NodeManager
      */
     protected function duplicateBlockAndArea(NodeInterface $node, NodeInterface $newNode)
     {
-        $newNode->setBoDirection($node->getBoDirection());
-        $this->duplicateArea($node, $newNode);
+        $newRootArea = clone $node->getRootArea();
+        $this->duplicateArea($node->getRootArea(), $newRootArea);
+        $newNode->setRootArea($newRootArea);
+
         foreach ($node->getBlocks() as $key => $block) {
             $newBlock = clone $block;
             $newNode->setBlock($key, $newBlock);
@@ -258,10 +258,10 @@ class NodeManager
     }
 
     /**
-     * @param AreaContainerInterface $areaContainer
-     * @param AreaContainerInterface $newAreaContainer
+     * @param AreaInterface $areaContainer
+     * @param AreaInterface $newAreaContainer
      */
-    protected function duplicateArea(AreaContainerInterface $areaContainer, AreaContainerInterface $newAreaContainer)
+    protected function duplicateArea(AreaInterface $areaContainer, AreaInterface $newAreaContainer)
     {
         foreach ($areaContainer->getAreas() as $area) {
             $newArea = clone $area;
@@ -279,7 +279,7 @@ class NodeManager
     {
         if (is_array($nodes)) {
             foreach ($nodes as $node) {
-                if (!$this->areaManager->areaConsistency($node) || !$this->blockManager->blockConsistency($node)) {
+                if (!$this->areaManager->areaConsistency($node->getRootArea(), $node) || !$this->blockManager->blockConsistency($node)) {
                     return false;
                 }
             }
@@ -312,7 +312,7 @@ class NodeManager
         $node->setInFooter(true);
         $node->setLanguage($language);
 
-        $this->hydrateAreaFromTemplate($node, $template->getAreas());
+        $this->hydrateAreaFromTemplate($node, $template->getRootArea());
 
         return $node;
     }
@@ -365,8 +365,8 @@ class NodeManager
     {
         $nodeTransverse = $this->nodeRepository
             ->findInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
-
-        foreach($node->getAreas() as $area) {
+        $areas = $node->getRootArea()->getAreas();
+        foreach($areas as $area) {
             foreach ($area->getBlocks() as $areaBlock) {
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);
@@ -418,8 +418,9 @@ class NodeManager
     public function createTransverseNode($language, $siteId)
     {
         $area = new $this->areaClass();
-        $area->setLabel('main');
-        $area->setAreaId('main');
+        $area->setLabel(AreaInterface::ROOT_AREA_LABEL);
+        $area->setAreaId(AreaInterface::ROOT_AREA_ID);
+        $area->setAreaType(AreaInterface::TYPE_ROOT);
 
         /** @var NodeInterface $node */
         $node = new $this->nodeClass();
@@ -429,7 +430,7 @@ class NodeManager
         $node->setBoLabel(NodeInterface::TRANSVERSE_BO_LABEL);
         $node->setNodeType(NodeInterface::TYPE_TRANSVERSE);
         $node->setSiteId($siteId);
-        $node->addArea($area);
+        $node->setRootArea($area);
 
         return $node;
     }

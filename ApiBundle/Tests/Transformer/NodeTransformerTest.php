@@ -98,10 +98,8 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        $areas = new ArrayCollection();
-        $areas->add($area);
 
-        Phake::when($this->node)->getAreas()->thenReturn($areas);
+        Phake::when($this->node)->getRootArea()->thenReturn($area);
         $facade = $this->nodeTransformer->transform($this->node);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
@@ -126,10 +124,8 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        $areas = new ArrayCollection();
-        $areas->add($area);
 
-        Phake::when($this->node)->getAreas()->thenReturn($areas);
+        Phake::when($this->node)->getRootArea()->thenReturn($area);
         $facade = $this->nodeTransformer->transform($this->node);
 
         $this->assertSame($facade->editable, false);
@@ -155,10 +151,8 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        $areas = new ArrayCollection();
-        $areas->add($area);
 
-        Phake::when($this->node)->getAreas()->thenReturn($areas);
+        Phake::when($this->node)->getRootArea()->thenReturn($area);
         Phake::when($this->node)->getNodeType()->thenReturn(NodeInterface::TYPE_TRANSVERSE);
 
         $facade = $this->nodeTransformer->transform($this->node);
@@ -208,7 +202,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
      */
     public function testExceptionTransform()
     {
-        $this->setExpectedException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
+        $this->expectException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->nodeTransformer->transform(Phake::mock('stdClass'));
     }
 
@@ -224,7 +218,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
         Phake::when($this->eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
 
-        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException');
+        $this->expectException('OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException');
         $this->nodeTransformer->reverseTransform($facade, $source);
     }
 

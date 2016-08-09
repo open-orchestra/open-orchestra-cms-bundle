@@ -17,7 +17,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/ContentTypeFormView.js',
     'web/built/openorchestrabackoffice/js/FullPagePanelView.js',
     'web/built/openorchestrabackoffice/js/createNew.js',
-    'web/built/openorchestrabackoffice/js/page/BlocksPanelView.js',
+    'web/built/openorchestrabackoffice/js/page-old/BlocksPanelView.js',
     'web/built/openorchestrabackoffice/js/security.js',
     'web/built/openorchestrabackoffice/js/SmartConfirmView.js',
     'web/built/openorchestrabackoffice/js/AdminFormView.js',
@@ -34,8 +34,6 @@ module.exports = {
 
     //--[ BACKBONE ROUTER ]--//
     'web/built/openorchestrabackoffice/js/backboneRouter.js',
-    'web/built/openorchestrabackoffice/js/page/LoadNodeConfigurationRoute.js',
-    'web/built/openorchestrabackoffice/js/page/LoadTemplateConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/table/LoadTableConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/dashboard/LoadDashboardConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/underscoreTemplateLoader.js',
@@ -72,35 +70,41 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/dashboard/widget/DraftContentsView.js',
 
     //--[ PAGE ]--//
-    'web/built/openorchestrabackoffice/js/page/makeSortable.js',
-    'web/built/openorchestrabackoffice/js/page/AreaView.js',
-    'web/built/openorchestrabackoffice/js/page/GSAreaView.js',
-    'web/built/openorchestrabackoffice/js/page/BlockView.js',
-    'web/built/openorchestrabackoffice/js/page/NodeView.js',
-    'web/built/openorchestrabackoffice/js/page/NodeFormView.js',
-    'web/built/openorchestrabackoffice/js/page/TemplateView.js',
-    'web/built/openorchestrabackoffice/js/page/GSTemplateView.js',
-    'web/built/openorchestrabackoffice/js/page/TemplateFormView.js',
-    'web/built/openorchestrabackoffice/js/page/SubElementFormView.js',
-    'web/built/openorchestrabackoffice/js/page/showNode.js',
-    'web/built/openorchestrabackoffice/js/page/showTemplate.js',
-    'web/built/openorchestrabackoffice/js/page/orderNode.js',
-    'web/built/openorchestrabackoffice/js/page/PageLayoutButtonView.js',
-    'web/built/openorchestrabackoffice/js/page/NodeLayoutButtonView.js',
-    'web/built/openorchestrabackoffice/js/page/viewportChannel.js',
+    'web/built/openorchestrabackoffice/js/page/common/AbstractPageView.js',
+    'web/built/openorchestrabackoffice/js/page/common/PageLayoutButtonView.js',
 
-    //--[ AREA FLEX ]--//
-    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexChannel.js',
-    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexAddRowExtendView.js',
-    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexFormView.js',
-    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexFormRowView.js',
-    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexView.js',
-    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexToolbarView.js',
+    //----- Block -----//
+    'web/built/openorchestrabackoffice/js/page/block/Block.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockCollection.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockChannel.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockFormAddView.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockFormEditView.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockView.js',
 
-    //--[ TEMPLATE FLEX ]--//
-      'web/built/openorchestrabackoffice/js/templateFlex/TemplateFlexFormView.js',
-      'web/built/openorchestrabackoffice/js/templateFlex/TemplateFlexView.js',
-      'web/built/openorchestrabackoffice/js/templateFlex/TemplateFlexRouter.js',
+      //----- AREA  -----//
+    'web/built/openorchestrabackoffice/js/page/area/Area.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaCollection.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaChannel.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaAddRowExtendView.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaAddBlockExtendView.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaFormView.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaFormRowView.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaView.js',
+    'web/built/openorchestrabackoffice/js/page/area/AreaToolbarView.js',
+
+    //----- TEMPLATE  -----//
+    'web/built/openorchestrabackoffice/js/page/template/Template.js',
+    'web/built/openorchestrabackoffice/js/page/template/TemplateFormView.js',
+    'web/built/openorchestrabackoffice/js/page/template/TemplateView.js',
+    'web/built/openorchestrabackoffice/js/page/template/TemplateRouter.js',
+
+    //----- NODE -----//
+    'web/built/openorchestrabackoffice/js/page/node/Node.js',
+    'web/built/openorchestrabackoffice/js/page/node/NodeRouter.js',
+    'web/built/openorchestrabackoffice/js/page/node/NodeView.js',
+    'web/built/openorchestrabackoffice/js/page/node/NodeFormView.js',
+    'web/built/openorchestrabackoffice/js/page/node/NodeLayoutButtonView.js',
+    'web/built/openorchestrabackoffice/js/page/node/orderNode.js',
 
     //--[ TAB ]--//
     'web/built/openorchestrabackoffice/js/tab/TabView.js',
@@ -155,7 +159,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/ErrorView.js',
 
     //--[ VIEWS CONFIGURATION ]--//
-    'web/built/openorchestrabackoffice/js/viewConfigurator.js',
+    'web/built/openorchestrabackoffice/js/viewConfigurator.js'
   ],
   dest: 'web/built/orchestra.js'
 };

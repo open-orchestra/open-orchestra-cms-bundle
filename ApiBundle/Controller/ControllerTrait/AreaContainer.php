@@ -4,9 +4,11 @@ namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
 
 /**
  * Trait AreaContainer
+ * @deprecated will be removed in 2.0
  */
 trait AreaContainer
 {
@@ -17,7 +19,8 @@ trait AreaContainer
      * @param AreaContainerInterface $areaContainer
      * @param TransformerInterface   $transformerManager
      *
-     *  @return AreaContainerInterface
+     * @return AreaContainerInterface
+     * @deprecated will be removed in 2.0
      */
     protected function updateAreasFromContainer($areas, AreaContainerInterface $areaContainer, TransformerInterface $transformerManager)
     {

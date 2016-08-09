@@ -5,9 +5,11 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
 
 /**
  * Class BoDirectionChildrenSubscriber
+ * @deprecated will be removed in 2.0
  */
 class BoDirectionChildrenSubscriber implements EventSubscriberInterface
 {

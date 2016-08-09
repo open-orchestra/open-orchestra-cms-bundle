@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\Backoffice\Validator\Constraints;
 
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Class BlockNodePatternValidator
@@ -32,7 +32,7 @@ class BlockNodePatternValidator extends ConstraintValidator
     {
         if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
             $blocks = $node->getBlocks();
-            $blockReferences = $this->getRefBlock($node);
+            $blockReferences = $this->getRefBlock($node->getRootArea());
             $routePattern = $node->getRoutePattern();
             foreach ($blockReferences as $blockRef) {
                 $block = $blocks[$blockRef];

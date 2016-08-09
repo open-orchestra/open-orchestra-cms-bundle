@@ -5,9 +5,11 @@ namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 use OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaId;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
 
 /**
  * Class UniqueAreaIdTest
+ * @deprecated will be removed in 2.0
  */
 class UniqueAreaIdTest extends AbstractBaseTestCase
 {

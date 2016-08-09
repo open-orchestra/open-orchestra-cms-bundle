@@ -1,10 +1,9 @@
 parameters:
     open_orchestra_backoffice.type.template.class: OpenOrchestra\Backoffice\Form\Type\TemplateType
-    open_orchestra_backoffice.type.template_flex.class: OpenOrchestra\Backoffice\Form\Type\TemplateFlexType
     open_orchestra_backoffice.type.node.class: OpenOrchestra\Backoffice\Form\Type\NodeType
     open_orchestra_backoffice.type.area.class: OpenOrchestra\Backoffice\Form\Type\AreaType
-    open_orchestra_backoffice.type.area_flex_row.class: OpenOrchestra\Backoffice\Form\Type\AreaFlexRowType
-    open_orchestra_backoffice.type.area_flex_column.class: OpenOrchestra\Backoffice\Form\Type\AreaFlexColumnType
+    open_orchestra_backoffice.type.area_row.class: OpenOrchestra\Backoffice\Form\Type\AreaRowType
+    open_orchestra_backoffice.type.area_column.class: OpenOrchestra\Backoffice\Form\Type\AreaColumnType
     open_orchestra_backoffice.type.column_layout_row.class: OpenOrchestra\Backoffice\Form\Type\Component\ColumnLayoutRowType
     open_orchestra_backoffice.type.block.class: OpenOrchestra\Backoffice\Form\Type\BlockType
     open_orchestra_backoffice.type.existing_block_choice.class: OpenOrchestra\Backoffice\Form\Type\ExistingBlockChoiceType
@@ -78,17 +77,8 @@ services:
         arguments:
             - '%open_orchestra_model.document.template.class%'
             - '%open_orchestra_model.document.area.class%'
-            - '@translator'
         tags:
             - { name: form.type, alias: oo_template }
-    # Template Flex form type
-    open_orchestra_backoffice.type.template_flex:
-        class: '%open_orchestra_backoffice.type.template_flex.class%'
-        arguments:
-            - '%open_orchestra_model.document.template_flex.class%'
-            - '%open_orchestra_model.document.area.class%'
-        tags:
-            - { name: form.type, alias: oo_template_flex }
     # Node form type
     open_orchestra_backoffice.type.node:
         class: '%open_orchestra_backoffice.type.node.class%'
@@ -97,8 +87,6 @@ services:
             - '@open_orchestra_model.repository.template'
             - '@open_orchestra_model.repository.site'
             - '@open_orchestra_backoffice.manager.node'
-            - '%open_orchestra_model.document.area.class%'
-            - '@translator'
         tags:
             - { name: form.type, alias: oo_node }
     # Area form type
@@ -107,21 +95,22 @@ services:
         arguments:
             - '%open_orchestra_model.document.area.class%'
             - '@translator'
+        deprecated: 'The "%service_id%" service is deprecated will be removed in 2.0'
         tags:
             - { name: form.type, alias: oo_area }
-    # Area flex row form type
-    open_orchestra_backoffice.type.area_flex_row:
-        class: '%open_orchestra_backoffice.type.area_flex_row.class%'
+    # Area row form type
+    open_orchestra_backoffice.type.area_row:
+        class: '%open_orchestra_backoffice.type.area_row.class%'
         arguments:
-            - '%open_orchestra_model.document.area_flex.class%'
-            - '@open_orchestra_backoffice.manager.area_flex'
+            - '%open_orchestra_model.document.area.class%'
+            - '@open_orchestra_backoffice.subscriber.area_row'
         tags:
             - { name: form.type}
-    # Area flex column form type
-    open_orchestra_backoffice.type.area_flex_column:
-        class: '%open_orchestra_backoffice.type.area_flex_column.class%'
+    # Area column form type
+    open_orchestra_backoffice.type.area_column:
+        class: '%open_orchestra_backoffice.type.area_column.class%'
         arguments:
-            - '%open_orchestra_model.document.area_flex.class%'
+            - '%open_orchestra_model.document.area.class%'
         tags:
             - { name: form.type}
     # Column layout row type
@@ -245,6 +234,7 @@ services:
         arguments:
             - '%open_orchestra_backoffice.orchestra_choice.direction%'
             - 'orchestra_direction'
+        deprecated: 'The "%service_id%" service is deprecated will be removed in 2.0'
         tags:
             - { name: form.type, alias: orchestra_direction }
 
