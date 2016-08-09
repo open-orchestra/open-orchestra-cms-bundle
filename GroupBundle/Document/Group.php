@@ -36,7 +36,7 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @var Collection $modelRoles
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface", strategy="set")
      */
     protected $modelRoles;
 
@@ -136,19 +136,33 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
+     * @param string $type
+     * @param string $id
+     * @param string $role
+     *
+     * @return ModelGroupRoleInterface|null
+     */
+    public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
+    {
+        $key = $this->getKeyModelRoles($id, $type, $role);
+        if (true === $this->modelRoles->containsKey($key)) {
+            return $this->modelRoles->get($key);
+        }
+
+        return null;
+    }
+
+    /**
      * @param ModelGroupRoleInterface $modelGroupRole
      */
     public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole)
     {
-        if ($this->modelRoles->contains($modelGroupRole)) {
-            $this->modelRoles->set($this->modelRoles->indexOf($modelGroupRole), $modelGroupRole);
-        } else {
-            $this->modelRoles->add($modelGroupRole);
-        }
+        $key = $this->getKeyModelRoles($modelGroupRole->getId(), $modelGroupRole->getType(), $modelGroupRole->getRole());
+        $this->modelRoles->set($key, $modelGroupRole);
     }
 
     /**
-     * @param ArrayCollection <ModelGroupRoleInterface> $modelGroupRole
+     * @param ArrayCollection<ModelGroupRoleInterface> $modelGroupRole
      */
     public function setModelGroupRoles(ArrayCollection $modelGroupRoles)
     {
@@ -166,25 +180,6 @@ class Group extends BaseGroup implements GroupInterface
         }
     }
 
-/**
-     * @param string $type
-     * @param string $id
-     * @param string $role
-     *
-     * @return ModelGroupRoleInterface|null
-     */
-    public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
-    {
-        /** @var ModelGroupRoleInterface $modelRole */
-        foreach ($this->modelRoles as $modelRole) {
-            if ($modelRole->getType() == $type && $modelRole->getId() == $id && $modelRole->getRole() == $role) {
-                return $modelRole;
-            }
-        }
-
-        return null;
-    }
-
     /**
      * @param string $type
      * @param string $id
@@ -195,5 +190,19 @@ class Group extends BaseGroup implements GroupInterface
     public function hasModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
     {
         return null !== $this->getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
+    }
+
+    /**
+     * @param string $id
+     * @param string $type
+     * @param string $role
+     *
+     * @return string
+     */
+    protected function getKeyModelRoles($id, $type, $role)
+    {
+        $key = implode(self::SEPARATOR_KEY_MODEL_ROLES, array($id, $type, $role));
+
+        return md5($key);
     }
 }
