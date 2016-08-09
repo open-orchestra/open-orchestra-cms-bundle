@@ -100,7 +100,7 @@ class UserController extends BaseController
         $userName = $request->get('username');
         $group =  $this->get('open_orchestra_user.repository.group')->find($groupId);
         if (null !== $group) {
-            $users = $this->get('open_orchestra_user.repository.user')->findByUsernameWithoutGroup($userName, $group);
+            $users = $this->get('open_orchestra_user.repository.user')->findByIncludedUsernameWithoutGroup($userName, $group);
 
             return $this->get('open_orchestra_api.transformer_manager')->get('user_list_group_collection')->transform($users, $group);
         }
