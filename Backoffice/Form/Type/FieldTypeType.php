@@ -90,6 +90,10 @@ class FieldTypeType extends AbstractType
                 'choices' => $this->getChoicesOrder(),
                 'label' => 'open_orchestra_backoffice.form.field_type.orderDirection',
                 'required' => false,
+            ))
+            ->add('position', 'integer', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.position',
+                'required' => false,
             ));
 
         $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeParameters));
