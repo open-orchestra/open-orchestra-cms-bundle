@@ -94,6 +94,9 @@ class FieldTypeType extends AbstractType
             ->add('position', 'integer', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.position',
                 'required' => false,
+                'attr' => array(
+                    'class' => 'oo-field-position'
+                )
             ));
 
         $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeParameters));
