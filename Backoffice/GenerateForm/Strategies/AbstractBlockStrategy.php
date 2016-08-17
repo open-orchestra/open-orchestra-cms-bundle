@@ -27,7 +27,9 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
      */
     public function getDefaultConfiguration()
     {
-        return array();
+        return array(
+            'maxAge' => 600
+        );
     }
 
     /**

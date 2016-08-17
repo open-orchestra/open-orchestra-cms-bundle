@@ -31,6 +31,16 @@ class LoginStrategy extends AbstractBlockStrategy
     }
 
     /**
+     * @return array
+     */
+    public function getDefaultConfiguration()
+    {
+        return array(
+            'maxAge' => 0
+        );
+    }
+
+    /**
      * @return string
      */
     public function getName()

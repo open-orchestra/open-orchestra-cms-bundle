@@ -59,10 +59,13 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function getDefaultConfiguration()
     {
-        return array(
+        return array_merge(
+            parent::getDefaultConfiguration(),
+            array(
             'contentNodeId' => NodeInterface::ROOT_NODE_ID,
             'characterNumber' => 50,
             'contentTemplate' => '',
+            )
         );
     }
 
