@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -97,5 +98,33 @@ class ContentTypeController extends AbstractAdminController
         $option["method"] = $method;
 
         return $this->createForm('oo_content_type', $contentType, $option);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param string        $successMessage
+     * @param mixed|null    $itemToPersist
+     *
+     * @return bool
+     */
+    protected function handleForm(FormInterface $form, $successMessage, $itemToPersist = null)
+    {
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+
+            $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_PRE_PERSIST, new ContentTypeEvent($contentType));
+
+            if ($itemToPersist) {
+                $documentManager->persist($itemToPersist);
+            }
+
+            $documentManager->flush();
+
+            $this->get('session')->getFlashBag()->add('success', $successMessage);
+
+            return true;
+        }
+
+        return false;
     }
 }
