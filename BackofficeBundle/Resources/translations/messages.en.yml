@@ -54,7 +54,7 @@ open_orchestra_backoffice:
             name: Name
             published: Published status
             initial: Initial status
-            auto_publish_from: Status allowing the automatic publication
+            auto_publish_from: Status allowing the automatic publishing
             auto_unpublish_to: Automatic unpublish status
             labels: Label
             from_role: Role needed to change the status from this one

@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\Backoffice\Manager\NodePublisherInterface;
 
 /**
  * Class OrchestraunpublishNodeCommand
@@ -69,9 +70,16 @@ class OrchestraUnpublishNodeCommand extends ContainerAwareCommand
 
         $output->writeln("\n<info>Unpublishing nodes for siteId " . $site->getSiteId() . "</info>");
 
-        $nodes = $nodePublisherManager->unpublishNodes($site);
-        if (is_array($nodes)) {
-            foreach ($nodes as $node) {
+        $unpublishResult = $nodePublisherManager->unpublishNodes($site);
+
+        if (NodePublisherInterface::ERROR_NO_PUBLISHED_STATUS == $unpublishResult) {
+            $output->writeln("<error>There is no published status defined.</error>");
+
+        } elseif (NodePublisherInterface::ERROR_NO_UNPUBLISHED_STATUS == $unpublishResult) {
+            $output->writeln("<error>There is no status defined to unpublish nodes.</error>");
+
+        } elseif (is_array($unpublishResult)) {
+            foreach ($unpublishResult as $node) {
                 $output->writeln("<comment>-> " . $node['BOLabel'] . " (v" . $node['version'] . " " . $node['language'] . ") unpublished</comment>");
             }
         }

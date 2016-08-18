@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\Backoffice\Manager\NodePublisherInterface;
 
 /**
  * Class OrchestraPublishNodeCommand
@@ -69,9 +70,16 @@ class OrchestraPublishNodeCommand extends ContainerAwareCommand
 
         $output->writeln("\n<info>Publishing nodes for siteId " . $site->getSiteId() . "</info>");
 
-        $nodes = $nodePublisherManager->publishNodes($site);
-        if (is_array($nodes)) {
-            foreach ($nodes as $node) {
+        $publishResult = $nodePublisherManager->publishNodes($site);
+
+        if (NodePublisherInterface::ERROR_NO_PUBLISH_FROM_STATUS == $publishResult) {
+            $output->writeln("<error>There is no defined status to initiate the nodes auto-publishing process.</error>");
+
+        } elseif (NodePublisherInterface::ERROR_NO_PUBLISHED_STATUS == $publishResult) {
+            $output->writeln("<error>There is no published status defined.</error>");
+
+        } elseif (is_array($publishResult)) {
+            foreach ($publishResult as $node) {
                 $output->writeln("<comment>-> " . $node['BOLabel'] . " (v" . $node['version'] . " " . $node['language'] . ") published</comment>");
             }
         }

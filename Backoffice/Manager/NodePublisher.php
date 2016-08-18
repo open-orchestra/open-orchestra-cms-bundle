@@ -6,11 +6,12 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class NodePublisher
  */
-class NodePublisher
+class NodePublisher implements NodePublisherInterface
 {
     protected $fromStatus;
     protected $publishedStatus;
@@ -39,10 +40,20 @@ class NodePublisher
     /**
      * @param ReadSiteInterface $site
      *
-     * @return array
+     * @return array | int   A published node list or an error code
      */
     public function publishNodes(ReadSiteInterface $site)
     {
+        if (0 == count($this->fromStatus)) {
+
+            return self::ERROR_NO_PUBLISH_FROM_STATUS;
+        }
+
+        if (!$this->publishedStatus instanceof StatusInterface) {
+
+            return self::ERROR_NO_PUBLISHED_STATUS;
+        }
+
         $nodes = $this->nodeRepository->findNodeToAutoPublish($site->getSiteId(), $this->fromStatus);
 
         $publishedNodes = array();
@@ -57,16 +68,26 @@ class NodePublisher
         }
         $this->objectManager->flush();
 
-        return $publishedNodes;
+       return $publishedNodes;
     }
 
     /**
      * @param ReadSiteInterface $site
      *
-     * @return array
+     * @return array | int   An unpublished node list or an error code
      */
     public function unpublishNodes(ReadSiteInterface $site)
     {
+        if (!$this->publishedStatus instanceof StatusInterface) {
+
+            return self::ERROR_NO_PUBLISHED_STATUS;
+        }
+
+        if (!$this->unpublishedStatus instanceof StatusInterface) {
+
+            return self::ERROR_NO_UNPUBLISHED_STATUS;
+        }
+
         $nodes = $this->nodeRepository->findNodeToAutoUnpublish($site->getSiteId(), $this->publishedStatus);
 
         $unpublishedNodes = array();
