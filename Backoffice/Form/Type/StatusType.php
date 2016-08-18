@@ -33,25 +33,34 @@ class StatusType extends AbstractType
         $builder->add('name', null, array(
             'label' => 'open_orchestra_backoffice.form.status.name'
         ))
-            ->add('published', null, array(
-                'required' => false,
-                'label' => 'open_orchestra_backoffice.form.status.published'
-            ))
-            ->add('blockedEdition', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.status.blocked_edition',
-                'required' => false,
-            ))
-            ->add('initial', null, array(
-                'required' => false,
-                'label' => 'open_orchestra_backoffice.form.status.initial'
-            ))
-            ->add('labels', 'oo_multi_languages', array(
-                'label' => 'open_orchestra_backoffice.form.status.labels',
-                'languages' => $this->backOfficeLanguages
-            ))
-            ->add('displayColor', 'orchestra_color_choice', array(
-                'label' => 'open_orchestra_backoffice.form.status.display_color'
-            ));
+        ->add('published', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.published'
+        ))
+        ->add('blockedEdition', 'checkbox', array(
+            'label' => 'open_orchestra_backoffice.form.status.blocked_edition',
+            'required' => false,
+        ))
+        ->add('initial', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.initial'
+        ))
+        ->add('autoPublishFrom', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.auto_publish_from'
+        ))
+        ->add('autoUnpublishTo', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.auto_unpublish_to'
+        ))
+        ->add('labels', 'oo_multi_languages', array(
+            'label' => 'open_orchestra_backoffice.form.status.labels',
+            'languages' => $this->backOfficeLanguages
+        ))
+        ->add('displayColor', 'orchestra_color_choice', array(
+            'label' => 'open_orchestra_backoffice.form.status.display_color'
+        ));
+
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }

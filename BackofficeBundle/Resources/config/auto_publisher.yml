@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_backoffice.node_publisher.class: OpenOrchestra\Backoffice\Manager\NodePublisher
+
+services:
+    open_orchestra_cms.manager.node_publisher:
+        class: '%open_orchestra_backoffice.node_publisher.class%'
+        arguments:
+            - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_model.repository.node'
+            - '@object_manager'

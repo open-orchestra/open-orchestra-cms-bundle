@@ -52,8 +52,10 @@ open_orchestra_backoffice:
             draft: Draft
             pending: Pending
             name: Name
-            published: Published
-            initial: Initial
+            published: Published status
+            initial: Initial status
+            auto_publish_from: Status allowing the automatic publication
+            auto_unpublish_to: Automatic unpublish status
             labels: Label
             from_role: Role needed to change the status from this one
             to_role: Role needed to get to this status
@@ -185,6 +187,8 @@ open_orchestra_backoffice:
             name: Page
             scheme: Scheme
             default_scheme: Default (Alias configuration)
+            publish_date: Automatic publish date
+            unpublish_date: Automatic unpublish date
             node_type: Type of Node
             priority:
                 label: Relative importance compared to the other pages of the site (for the sitemap)

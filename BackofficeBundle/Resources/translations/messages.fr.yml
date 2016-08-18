@@ -53,7 +53,9 @@ open_orchestra_backoffice:
             pending: En attente
             name: Nom
             published: Publié
-            initial: Initial
+            initial: Statut initial
+            auto_publish_from: Statut permettant la publication automatique
+            auto_unpublish_to: Status de dépublication automatique
             labels: Libellé
             from_role: Rôle requis pour partir de ce statut
             to_role: Rôle requis pour arriver sur ce statut
@@ -185,6 +187,8 @@ open_orchestra_backoffice:
             name: Page
             scheme: Protocol
             default_scheme: Par défaut (Configuration de l'alias)
+            publish_date: Date de publication automatique
+            unpublish_date: Date de dépublication automatique
             node_type: Type de page
             priority:
                 label: Importance relative par rapport aux autres pages du site (pour le sitemap)

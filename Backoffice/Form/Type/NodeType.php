@@ -83,6 +83,16 @@ class NodeType extends AbstractType
                 'choices' => $this->schemeChoices,
                 'label' => 'open_orchestra_backoffice.form.node.scheme'
             ))
+            ->add('publishDate', 'date', array(
+                'widget' => 'single_text',
+                'label' => 'open_orchestra_backoffice.form.node.publish_date',
+                'required' => false
+            ))
+            ->add('unpublishDate', 'date', array(
+                'widget' => 'single_text',
+                'label' => 'open_orchestra_backoffice.form.node.unpublish_date',
+                'required' => false
+            ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
                 'label' => 'open_orchestra_backoffice.form.node.changefreq.title',
                 'required' => false
