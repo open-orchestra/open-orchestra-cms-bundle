@@ -5,9 +5,12 @@ getCurrentLocale = ->
 # SHOW CONTENT TITLE
 renderPageTitle = ->
   if ($('#left-panel nav li.active:first > a > i').length > 0)
-    $('#title-logo').addClass($('#left-panel nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
+    setPageLogo($('#left-panel nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
   $('#title-universe').text($('.breadcrumb li:nth-child(2)').text())
-  $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
+  $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text()) if $('.breadcrumb li').length > 2
+
+setPageLogo = (logo) ->
+  $('#title-logo').addClass(logo)
 
 # ADD CUSTOM JARVIS WIDGET
 addCustomJarvisWidget = (newWidget, container) ->

@@ -37,6 +37,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/table/LoadTableConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/dashboard/LoadDashboardConfigurationRoute.js',
     'web/built/openorchestrabackoffice/js/underscoreTemplateLoader.js',
+    'web/built/openorchestrabackoffice/js/user/LoadUserInfoRoute.js',
 
     //--[ EXTEND VIEWS ]--//
     'web/built/openorchestrabackoffice/js/extendView/addArea.js',

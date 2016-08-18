@@ -40,12 +40,34 @@ class UserTypeTest extends AbstractUserTypeTest
 
     /**
      * Test builder
+     *
+     * @param array   $options
+     * @param boolean $expectSubscriber
+     *
+     * @dataProvider provideOptions
      */
-    public function testBuilder()
+    public function testBuilder(array $options, $expectSubscriber)
     {
-        $this->form->buildForm($this->builder, array());
+        $this->form->buildForm($this->builder, $options);
 
         Phake::verify($this->builder, Phake::times(5))->add(Phake::anyParameters());
+
+        if ($expectSubscriber) {
+            Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
+        }
+    }
+
+    /**
+     * Provide form type options
+     *
+     * @return array
+     */
+    public function provideOptions()
+    {
+        return array(
+            'without_groups_edition' => array(array(), false),
+            'with_groups_edition' => array(array('edit_groups' => 'true'), true)
+        );
     }
 
     /**
@@ -55,7 +77,8 @@ class UserTypeTest extends AbstractUserTypeTest
     {
         $this->form->configureOptions($this->resolver);
         Phake::verify($this->resolver)->setDefaults(array(
-            'data_class' => $this->class
+            'data_class' => $this->class,
+            'edit_groups' => true
         ));
         Phake::verify($this->resolver)->setDefaults(Phake::anyParameters());
     }
