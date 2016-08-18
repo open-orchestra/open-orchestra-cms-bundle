@@ -48,14 +48,19 @@ open_orchestra_backoffice:
         allowed_characters:
           helper: "Caractères autorisés : a-z, 0-9, _, -"
         status:
-            published: Publié
-            draft: Brouillon
-            pending: En attente
             name: Nom
-            published: Publié
-            initial: Statut initial
-            auto_publish_from: Statut permettant la publication automatique
-            auto_unpublish_to: Status de dépublication automatique
+            published:
+                label: Publié
+                helper: Si réglé à "Oui", les contenus et noeuds avec ce statut seront considérés comme "Publiés"
+            initial:
+                label: Statut initial
+                helper: Si réglé à "Oui", ce statut sera utilisé pour initier les nouveaux contenus et noeuds. Le régler à "Oui" supprimera ce réglage des autres statuts car un seul statut peut être "Initial".
+            auto_publish_from:
+                label: Statut permettant la publication automatique
+                helper: Un noeud avec ce statut est automatiquement publié quand sa date de publication est venue.
+            auto_unpublish_to:
+                label: Statut de dépublication automatique
+                helper: Si réglé à "Oui", ce statut sera utilisé pour dépublier les noeuds par le processus de dépublication automatique. Le régler à "Oui" supprimera ce réglage des autres statuts car un seul statut peut avoir cette fonctionnalité.
             labels: Libellé
             from_role: Rôle requis pour partir de ce statut
             to_role: Rôle requis pour arriver sur ce statut

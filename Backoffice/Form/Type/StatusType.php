@@ -35,7 +35,8 @@ class StatusType extends AbstractType
         ))
         ->add('published', null, array(
             'required' => false,
-            'label' => 'open_orchestra_backoffice.form.status.published'
+            'label' => 'open_orchestra_backoffice.form.status.published.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.published.helper')
         ))
         ->add('blockedEdition', 'checkbox', array(
             'label' => 'open_orchestra_backoffice.form.status.blocked_edition',
@@ -43,15 +44,18 @@ class StatusType extends AbstractType
         ))
         ->add('initial', null, array(
             'required' => false,
-            'label' => 'open_orchestra_backoffice.form.status.initial'
+            'label' => 'open_orchestra_backoffice.form.status.initial.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.initial.helper')
         ))
         ->add('autoPublishFrom', null, array(
             'required' => false,
-            'label' => 'open_orchestra_backoffice.form.status.auto_publish_from'
+            'label' => 'open_orchestra_backoffice.form.status.auto_publish_from.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.auto_publish_from.helper')
         ))
         ->add('autoUnpublishTo', null, array(
             'required' => false,
-            'label' => 'open_orchestra_backoffice.form.status.auto_unpublish_to'
+            'label' => 'open_orchestra_backoffice.form.status.auto_unpublish_to.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.auto_unpublish_to.helper')
         ))
         ->add('labels', 'oo_multi_languages', array(
             'label' => 'open_orchestra_backoffice.form.status.labels',

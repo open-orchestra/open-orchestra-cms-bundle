@@ -48,14 +48,19 @@ open_orchestra_backoffice:
         allowed_characters:
           helper: "Allowed characters: a-z, 0-9, _, -"
         status:
-            published: Published
-            draft: Draft
-            pending: Pending
             name: Name
-            published: Published status
-            initial: Initial status
-            auto_publish_from: Status allowing the automatic publishing
-            auto_unpublish_to: Automatic unpublish status
+            published:
+                label: Published status
+                helper: If set to "Yes", contents and nodes with this status will be considered as "Published"
+            initial:
+                label: Initial status
+                helper: If set to "Yes", this status will be used to initiate new contents and nodes. Setting it to "Yes" will remove this setting from other status as only one status can be Initial.
+            auto_publish_from:
+                label: Status allowing the automatic publishing
+                helper: A node with this status is auomatically published when its publishing date has come
+            auto_unpublish_to:
+                label: Automatic unpublish status
+                helper: If set to "Yes", this status will be used to unpublish nodes by the auto-unpublish process. Setting it to "Yes" will remove this setting from other status as only one status can have this feature.
             labels: Label
             from_role: Role needed to change the status from this one
             to_role: Role needed to get to this status
