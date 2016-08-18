@@ -221,12 +221,14 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
     ) {
         $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
         $block = $node->getBlock($blockArray['blockId']);
+        $nodeId = 0;
         if ($blockArray['nodeId'] !== 0) {
             $nodeTransverse = $this->nodeRepository
                 ->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $node->getSiteId());
             $block = $nodeTransverse->getBlock($blockArray['blockId']);
+            $nodeId = $node->getId();
         }
-        $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $areaSource->getAreaId()));
+        $block->addArea(array('nodeId' => $nodeId, 'areaId' => $areaSource->getAreaId()));
 
         return $blockArray;
     }

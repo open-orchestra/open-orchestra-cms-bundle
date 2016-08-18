@@ -3,6 +3,7 @@ parameters:
     open_orchestra_backoffice.subscriber.update_redirection_node.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRedirectionNodeSubscriber
     open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\Backoffice\EventSubscriber\FlushNodeCacheSubscriber
     open_orchestra_backoffice.subscriber.block_menu_cache.class: OpenOrchestra\Backoffice\EventSubscriber\BlockMenuCacheSubscriber
+    open_orchestra_backoffice.subscriber.block_transverse_cache.class: OpenOrchestra\Backoffice\EventSubscriber\BlockTransverseCacheSubscriber
     open_orchestra_backoffice.subscriber.content_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type_order_field.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeOrderFieldSubscriber
@@ -43,6 +44,13 @@ services:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.block_menu_cache:
         class: '%open_orchestra_backoffice.subscriber.block_menu_cache.class%'
+        arguments:
+            - '@open_orchestra_display.manager.cacheable'
+            - '@open_orchestra_base.manager.tag'
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.block_transverse_cache:
+        class: '%open_orchestra_backoffice.subscriber.block_transverse_cache.class%'
         arguments:
             - '@open_orchestra_display.manager.cacheable'
             - '@open_orchestra_base.manager.tag'
