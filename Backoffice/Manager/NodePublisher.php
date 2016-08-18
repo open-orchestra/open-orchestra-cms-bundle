@@ -13,9 +13,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
  */
 class NodePublisher implements NodePublisherInterface
 {
-    protected $fromStatus;
-    protected $publishedStatus;
-    protected $unpublishedStatus;
+    protected $statusRepository;
     protected $nodeRepository;
     protected $objectManager;
 
@@ -29,12 +27,9 @@ class NodePublisher implements NodePublisherInterface
         NodeRepositoryInterface $nodeRepository,
         ObjectManager $objectManager
     ) {
+        $this->statusRepository = $statusRepository;
         $this->nodeRepository = $nodeRepository;
         $this->objectManager = $objectManager;
-
-        $this->fromStatus = $statusRepository->findByAutoPublishFrom();
-        $this->publishedStatus = $statusRepository->findOneByPublished();
-        $this->unpublishedStatus = $statusRepository->findOneByAutoUnpublishTo();
     }
 
     /**
@@ -44,24 +39,26 @@ class NodePublisher implements NodePublisherInterface
      */
     public function publishNodes(ReadSiteInterface $site)
     {
-        if (0 == count($this->fromStatus)) {
+        $fromStatus = $this->statusRepository->findByAutoPublishFrom();
+        if (0 == count($fromStatus)) {
 
             return self::ERROR_NO_PUBLISH_FROM_STATUS;
         }
 
-        if (!$this->publishedStatus instanceof StatusInterface) {
+        $publishedStatus = $this->statusRepository->findOneByPublished();
+        if (!$publishedStatus instanceof StatusInterface) {
 
             return self::ERROR_NO_PUBLISHED_STATUS;
         }
 
-        $nodes = $this->nodeRepository->findNodeToAutoPublish($site->getSiteId(), $this->fromStatus);
+        $nodes = $this->nodeRepository->findNodeToAutoPublish($site->getSiteId(), $fromStatus);
 
         $publishedNodes = array();
         foreach ($nodes as $node) {
-            $node->setStatus($this->publishedStatus);
+            $node->setStatus($publishedStatus);
             $this->objectManager->persist($node);
             $publishedNodes[] = array(
-                'BOLabel' => $node->getBOLabel(),
+                'BOLabel' => $node->getBoLabel(),
                 'version' => $node->getVersion(),
                 'language' => $node->getLanguage()
             );
@@ -78,24 +75,26 @@ class NodePublisher implements NodePublisherInterface
      */
     public function unpublishNodes(ReadSiteInterface $site)
     {
-        if (!$this->publishedStatus instanceof StatusInterface) {
+        $publishedStatus = $this->statusRepository->findOneByPublished();
+        if (!$publishedStatus instanceof StatusInterface) {
 
             return self::ERROR_NO_PUBLISHED_STATUS;
         }
 
-        if (!$this->unpublishedStatus instanceof StatusInterface) {
+        $unpublishedStatus = $this->statusRepository->findOneByAutoUnpublishTo();
+        if (!$unpublishedStatus instanceof StatusInterface) {
 
             return self::ERROR_NO_UNPUBLISHED_STATUS;
         }
 
-        $nodes = $this->nodeRepository->findNodeToAutoUnpublish($site->getSiteId(), $this->publishedStatus);
+        $nodes = $this->nodeRepository->findNodeToAutoUnpublish($site->getSiteId(), $publishedStatus);
 
         $unpublishedNodes = array();
         foreach ($nodes as $node) {
-            $node->setStatus($this->unpublishedStatus);
+            $node->setStatus($unpublishedStatus);
             $this->objectManager->persist($node);
             $unpublishedNodes[] = array(
-                'BOLabel' => $node->getBOLabel(),
+                'BOLabel' => $node->getBoLabel(),
                 'version' => $node->getVersion(),
                 'language' => $node->getLanguage()
             );
