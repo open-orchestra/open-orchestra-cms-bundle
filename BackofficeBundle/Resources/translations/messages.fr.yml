@@ -612,6 +612,8 @@ open_orchestra_backoffice:
             published: Publié
             display_color: Couleur
             initial: Initial
+            auto_publish_from: Autorise la publication automatique
+            auto_unpublish_to: Etat de dépublication automatique
         api_client:
             name: Nom
             trusted: Confiance
