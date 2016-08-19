@@ -255,7 +255,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
             0 => array('nodeId' => 0, 'blockId' => $blockId)
         ));
         Phake::verify($this->node)->getBlock($blockId);
-        Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
+        Phake::verify($this->block)->addArea(array('nodeId' => 0, 'areaId' => $this->areaId));
         Phake::verify($this->nodeRepository, Phake::never())->find(Phake::anyParameters());
     }
 
