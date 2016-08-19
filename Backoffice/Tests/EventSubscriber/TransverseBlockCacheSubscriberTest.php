@@ -2,16 +2,16 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
-use OpenOrchestra\Backoffice\EventSubscriber\BlockTransverseCacheSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\TransverseBlockCacheSubscriber;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use OpenOrchestra\ModelInterface\NodeEvents;
 
 /**
- * Class BlockTransverseCacheSubscriberTest
+ * Class TransverseBlockCacheSubscriberTest
  */
-class BlockTransverseCacheSubscriberTest extends AbstractBaseTestCase
+class TransverseBlockCacheSubscriberTest extends AbstractBaseTestCase
 {
     protected $cacheableManager;
     protected $tagManager;
@@ -36,7 +36,7 @@ class BlockTransverseCacheSubscriberTest extends AbstractBaseTestCase
         $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
 
-        $this->subscriber = new BlockTransverseCacheSubscriber($this->cacheableManager, $this->tagManager);
+        $this->subscriber = new TransverseBlockCacheSubscriber($this->cacheableManager, $this->tagManager);
     }
 
     /**
@@ -61,10 +61,10 @@ class BlockTransverseCacheSubscriberTest extends AbstractBaseTestCase
      *
      * @dataProvider provideNodeTypeAndCount
      */
-    public function testInvalidateNodeWithBlockTransverseTag($nodeType, $count)
+    public function testInvalidateNodeWithTransverseBlockTag($nodeType, $count)
     {
         Phake::when($this->node)->getNodeType()->thenReturn($nodeType);
-        $this->subscriber->invalidateNodeWithBlockTransverseTag($this->nodeEvent);
+        $this->subscriber->invalidateNodeWithTransverseBlockTag($this->nodeEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($count))->invalidateTags(array($this->nodeTag));
     }

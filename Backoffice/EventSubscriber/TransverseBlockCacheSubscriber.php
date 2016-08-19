@@ -10,9 +10,9 @@ use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
 use OpenOrchestra\BaseBundle\Manager\TagManager;
 
 /**
- * Class BlockTransverseCacheSubscriber
+ * Class TransverseBlockCacheSubscriber
  */
-class BlockTransverseCacheSubscriber implements EventSubscriberInterface
+class TransverseBlockCacheSubscriber implements EventSubscriberInterface
 {
     protected $cacheableManager;
     protected $tagManager;
@@ -32,7 +32,7 @@ class BlockTransverseCacheSubscriber implements EventSubscriberInterface
      *
      * @param NodeEvent $event
      */
-    public function invalidateNodeWithBlockTransverseTag(NodeEvent $event)
+    public function invalidateNodeWithTransverseBlockTag(NodeEvent $event)
     {
         $node = $event->getNode();
         if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
@@ -50,7 +50,7 @@ class BlockTransverseCacheSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            NodeEvents::NODE_UPDATE_BLOCK => 'invalidateNodeWithBlockTransverseTag',
+            NodeEvents::NODE_UPDATE_BLOCK => 'invalidateNodeWithTransverseBlockTag',
         );
     }
 }
