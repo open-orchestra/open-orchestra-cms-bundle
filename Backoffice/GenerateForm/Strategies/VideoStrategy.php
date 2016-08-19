@@ -229,32 +229,29 @@ class VideoStrategy extends AbstractBlockStrategy
      */
     public function getDefaultConfiguration()
     {
-        return array_merge(
-            parent::getDefaultConfiguration(),
-            array(
-                'youtubeAutoplay' => false,
-                'youtubeShowinfo' => false,
-                'youtubeFs' => false,
-                'youtubeRel' => false,
-                'youtubeDisablekb' => false,
-                'youtubeLoop' => false,
-                'youtubeControls' => false,
-                'youtubeTheme' => false,
-                'youtubeColor' => false,
-                'dailymotionAutoplay' => false,
-                'dailymotionInfo' => false,
-                'dailymotionLogo' => false,
-                'dailymotionRelated' => false,
-                'dailymotionChromeless' => false,
-                'vimeoAutoplay' => false,
-                'vimeoTitle' => false,
-                'vimeoFullscreen' => false,
-                'vimeoByline' => false,
-                'vimeoPortrait' => false,
-                'vimeoLoop' => false,
-                'vimeoBadge' => false,
-                'vimeoColor' => false,
-            )
+        return array(
+            'youtubeAutoplay' => false,
+            'youtubeShowinfo' => false,
+            'youtubeFs' => false,
+            'youtubeRel' => false,
+            'youtubeDisablekb' => false,
+            'youtubeLoop' => false,
+            'youtubeControls' => false,
+            'youtubeTheme' => false,
+            'youtubeColor' => false,
+            'dailymotionAutoplay' => false,
+            'dailymotionInfo' => false,
+            'dailymotionLogo' => false,
+            'dailymotionRelated' => false,
+            'dailymotionChromeless' => false,
+            'vimeoAutoplay' => false,
+            'vimeoTitle' => false,
+            'vimeoFullscreen' => false,
+            'vimeoByline' => false,
+            'vimeoPortrait' => false,
+            'vimeoLoop' => false,
+            'vimeoBadge' => false,
+            'vimeoColor' => false,
         );
     }
 

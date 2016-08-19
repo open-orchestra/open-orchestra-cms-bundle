@@ -10,6 +10,16 @@ use Symfony\Component\Form\AbstractType;
  */
 abstract class AbstractBlockStrategy extends AbstractType implements GenerateFormInterface
 {
+    protected $basicConfigurationBlock;
+
+    /**
+     * @param array $basicConfigurationBlock
+     */
+    public function __construct(array $basicConfigurationBlock)
+    {
+        $this->basicConfigurationBlock = $basicConfigurationBlock;
+    }
+
     /**
      * Get block form template
      *
@@ -21,15 +31,26 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
     }
 
     /**
+     * Get merge the default configuration and basic configuration for the block
+     *
+     * @return array
+     */
+    public function getMergeDefaultConfiguration()
+    {
+        return array_merge(
+            $this->basicConfigurationBlock,
+            $this->getDefaultConfiguration()
+        );
+    }
+
+    /**
      * Get the default configuration for the block
      *
      * @return array
      */
     public function getDefaultConfiguration()
     {
-        return array(
-            'maxAge' => 600
-        );
+        return array();
     }
 
     /**

@@ -35,6 +35,13 @@ class Configuration implements ConfigurationInterface
                 ->info('Set the available block types for this application')
                 ->prototype('scalar')->end()
             ->end()
+            ->arrayNode('block_default_configuration')
+                ->useAttributeAsKey('key')
+                ->defaultValue(array(
+                    'maxAge'=>'600',
+                ))
+                ->prototype('scalar')->end()
+            ->end()
             ->arrayNode('fixed_attributes')
                 ->info('Add the global block attributes')
                 ->prototype('scalar')->end()

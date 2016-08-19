@@ -55,8 +55,8 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
     {
         $this->manager->getDefaultConfiguration($this->block);
 
-        Phake::verify($this->strategy1)->getDefaultConfiguration();
-        Phake::verify($this->strategy2, Phake::never())->getDefaultConfiguration();
+        Phake::verify($this->strategy1)->getMergeDefaultConfiguration();
+        Phake::verify($this->strategy2, Phake::never())->getMergeDefaultConfiguration();
     }
 
     /**

@@ -22,17 +22,20 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $context;
 
     /**
+     * @param array                          $basicConfigurationBlock
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param ContentRepositoryInterface     $contentRepository
      * @param UrlGeneratorInterface          $router
      * @param ContextManager                 $context
      */
     public function __construct(
+        array $basicConfigurationBlock,
         ContentTypeRepositoryInterface $contentTypeRepository,
         ContentRepositoryInterface $contentRepository,
         $router,
         ContextManager $context
     ) {
+        parent::__construct($basicConfigurationBlock);
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
         $this->router = $router;

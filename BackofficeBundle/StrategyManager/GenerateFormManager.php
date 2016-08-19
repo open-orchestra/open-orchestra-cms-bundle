@@ -35,7 +35,7 @@ class GenerateFormManager
         /** @var GenerateFormInterface $strategy */
         foreach ($this->strategies as $strategy) {
             if ($strategy->support($block)) {
-                return $strategy->getDefaultConfiguration();
+                return $strategy->getMergeDefaultConfiguration();
             }
         }
 

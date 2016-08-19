@@ -24,6 +24,13 @@ interface GenerateFormInterface
     public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
+     * Get merge the default configuration and basic configuration for the block
+     *
+     * @return array
+     */
+    public function getMergeDefaultConfiguration();
+
+    /**
      * Get the default configuration for the block
      *
      * @return array
