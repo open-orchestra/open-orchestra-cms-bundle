@@ -112,9 +112,8 @@ class ContentTypeController extends AbstractAdminController
         if ($form->isValid()) {
             $documentManager = $this->get('object_manager');
 
-            $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_PRE_PERSIST, new ContentTypeEvent($itemToPersist));
-
             if ($itemToPersist) {
+                $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_PRE_PERSIST, new ContentTypeEvent($itemToPersist));
                 $documentManager->persist($itemToPersist);
             }
 
