@@ -80,6 +80,7 @@ open_orchestra_backoffice:
             searchable: Searchable
             orderable: Orderable
             orderDirection: Order direction
+            position: Position
             additionalParameters: Additional parameters
             order_direction_choice:
               asc: Ascending

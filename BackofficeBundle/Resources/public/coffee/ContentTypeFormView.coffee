@@ -12,6 +12,26 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     'change .content_type_change_type': 'changeContentTypeChange'
 
   ###*
+   * Render content type form
+  ###
+  render: ->
+    super
+    @sortableFields()
+
+  ###*
+   * Activate sortable fields
+  ###
+  sortableFields: ->
+    $('#oo_content_type_fields', @$el).sortable(
+      items: '> .form-group'
+      update: (event) ->
+        for field in $('> .form-group', $(event.target))
+          $field = $(field)
+          index = $field.index()
+          $('.oo-field-position', $field).val(index)
+    )
+
+  ###*
    * Refresh the navigation when a content type is created
   ###
   onElementCreated: ->

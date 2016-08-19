@@ -93,7 +93,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(8))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
@@ -110,7 +110,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
 
-        Phake::verify($this->builder, Phake::times(8))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
