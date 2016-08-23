@@ -1,6 +1,7 @@
 .area {
   min-height: 100px;
   flex: 1;
+  flex-basis: auto; // fix IE
   display: flex;
   flex-direction: column;
 
@@ -10,11 +11,13 @@
   .area-container {
     display: flex;
     flex: 1;
+    flex-basis: auto;  // fix IE
 
     .block-container {
       display:flex;
       flex-direction: column;
       flex: 1;
+      flex-basis: auto; // fix IE
     }
   }
   .area-container.area-root {
