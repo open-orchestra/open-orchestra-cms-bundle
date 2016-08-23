@@ -10,14 +10,14 @@ use Symfony\Component\Form\AbstractType;
  */
 abstract class AbstractBlockStrategy extends AbstractType implements GenerateFormInterface
 {
-    protected $basicConfigurationBlock;
+    protected $basicBlockConfiguration;
 
     /**
-     * @param array $basicConfigurationBlock
+     * @param array $basicBlockConfiguration
      */
-    public function __construct(array $basicConfigurationBlock)
+    public function __construct(array $basicBlockConfiguration)
     {
-        $this->basicConfigurationBlock = $basicConfigurationBlock;
+        $this->basicBlockConfiguration = $basicBlockConfiguration;
     }
 
     /**
@@ -35,10 +35,10 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
      *
      * @return array
      */
-    public function getMergeDefaultConfiguration()
+    public function getMergedDefaultConfiguration()
     {
         return array_merge(
-            $this->basicConfigurationBlock,
+            $this->basicBlockConfiguration,
             $this->getDefaultConfiguration()
         );
     }

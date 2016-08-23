@@ -28,7 +28,7 @@ interface GenerateFormInterface
      *
      * @return array
      */
-    public function getMergeDefaultConfiguration();
+    public function getMergedDefaultConfiguration();
 
     /**
      * Get the default configuration for the block
