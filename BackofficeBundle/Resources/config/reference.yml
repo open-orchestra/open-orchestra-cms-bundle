@@ -1,0 +1,8 @@
+parameters:
+    open_orchestra_backoffice.reference.manager.class: OpenOrchestra\Backoffice\Reference\ReferenceManager
+
+services:
+    open_orchestra_backoffice.reference.manager:
+        class: '%open_orchestra_backoffice.reference.manager.class%'
+        arguments:
+            - '@object_manager'

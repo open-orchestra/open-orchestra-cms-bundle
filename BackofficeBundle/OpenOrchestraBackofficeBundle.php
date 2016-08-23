@@ -15,6 +15,7 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerP
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AuthorizeStatusChangeCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ReferenceCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -31,6 +32,7 @@ class OpenOrchestraBackofficeBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new GenerateFormCompilerPass());
+        $container->addCompilerPass(new ReferenceCompilerPass());
         $container->addCompilerPass(new TwigGlobalsCompilerPass());
         $container->addCompilerPass(new TinymceCompilerPass());
         $container->addCompilerPass(new DisplayIconCompilerPass());
