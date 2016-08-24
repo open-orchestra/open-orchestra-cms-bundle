@@ -62,8 +62,7 @@ class AuthorizeStatusChangeManager
         if (null === ($token = $this->tokenStorage->getToken())) {
             throw new AuthenticationCredentialsNotFoundException('The token storage contains no authentication token. One possible reason may be that there is no firewall configured for this URL.');
         }
-        var_dump(($user = $token->getUser()) instanceof UserInterface);
-        var_dump($user->isSuperAdmin());
+
         if (($user = $token->getUser()) instanceof UserInterface && $user->isSuperAdmin()) {
             return true;
         }
