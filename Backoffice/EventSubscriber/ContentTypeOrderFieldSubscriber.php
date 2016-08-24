@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
+use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -19,7 +20,7 @@ class ContentTypeOrderFieldSubscriber implements EventSubscriberInterface
     {
         $contentType = $event->getContentType();
         $fields = $contentType->getFields()->toArray();
-        uasort($fields, function ($field1, $field2) {
+        uasort($fields, function (FieldTypeInterface $field1, FieldTypeInterface $field2) {
             return $field1->getPosition() >= $field2->getPosition() ? 1 : -1;
         });
         $fields = array_values($fields);
