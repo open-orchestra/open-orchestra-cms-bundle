@@ -2,9 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Reference;
 
-use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\Reference\Strategie\ReferenceStrategyInterface;
+use OpenOrchestra\Backoffice\Reference\Strategies\ReferenceStrategyInterface;
 
 /**
  * Class ReferenceManager
@@ -33,13 +32,13 @@ class ReferenceManager
     /**
      * Update Keyword References
      *
-     * @param StatusableInterface $statusableElement
+     * @param mixed $entity
      */
-    public function addReferencesToEntity(StatusableInterface $statusableElement)
+    public function addReferencesToEntity($entity)
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->support($statusableElement)) {
-                $strategy->addReferencesToEntity($statusableElement);
+            if ($strategy->support($entity)) {
+                $strategy->addReferencesToEntity($entity);
             }
         }
 
@@ -47,13 +46,13 @@ class ReferenceManager
     }
 
     /**
-     * @param StatusableInterface $statusableElement
+     * @param mixed $entity
      */
-    public function removeReferencesToEntity(StatusableInterface $statusableElement)
+    public function removeReferencesToEntity($entity)
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->support($statusableElement)) {
-                $strategy->removeReferencesToEntity($statusableElement);
+            if ($strategy->support($entity)) {
+                $strategy->removeReferencesToEntity($entity);
             }
         }
 
@@ -61,11 +60,11 @@ class ReferenceManager
     }
 
     /**
-     * @param StatusableInterface $statusableElement
+     * @param mixed $entity
      */
-    public function updateReferencesToEntity(StatusableInterface $statusableElement)
+    public function updateReferencesToEntity($entity)
     {
-        $this->removeReferencesToEntity($statusableElement);
-        $this->addReferencesToEntity($statusableElement);
+        $this->removeReferencesToEntity($entity);
+        $this->addReferencesToEntity($entity);
     }
 }
