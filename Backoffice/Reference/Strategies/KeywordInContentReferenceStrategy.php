@@ -40,7 +40,8 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
     {
         $contentId = $entity->getId();
 
-        $keywordsUsedInContent = $this->keywordRepository->findUsedInContent($contentId);
+        $keywordsUsedInContent = $this->keywordRepository
+            ->findByUsedInEntity($contentId, ContentInterface::ENTITY_TYPE);
 
         foreach ($keywordsUsedInContent as $keyword) {
             $keyword->removeUseInContent($contentId);

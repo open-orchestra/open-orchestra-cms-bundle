@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Reference\Strategies;
 
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class KeywordInNodeReferenceStrategy
@@ -40,7 +41,7 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
     {
         $nodeId = $entity->getId();
 
-        $keywordsUsedInNode = $this->keywordRepository->findUsedInNode($nodeId);
+        $keywordsUsedInNode = $this->keywordRepository->findByUsedInEntity($nodeId, NodeInterface::ENTITY_TYPE);
 
         foreach ($keywordsUsedInNode as $keyword) {
             $keyword->removeUseInNode($nodeId);
