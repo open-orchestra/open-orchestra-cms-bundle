@@ -27,7 +27,7 @@ class OpenOrchestra.Page.Node.NodeView extends OpenOrchestra.Page.Common.Abstrac
     @completeOptions @options.node,
       'multiLanguage': 'showNodeWithLanguage'
       'multiVersion': 'showNodeWithLanguageAndVersion'
-      'duplicate': 'showNodeWithLanguage'
+      'newVersion': 'showNodeWithLanguage'
     @options.configuration = @options.node
     @options.entityType = 'node'
     @loadTemplates [

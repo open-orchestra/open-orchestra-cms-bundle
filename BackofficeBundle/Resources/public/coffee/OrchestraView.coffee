@@ -95,9 +95,9 @@ OrchestraView = Backbone.View.extend(
       path: path.multiVersion
     ) if element.get('links')._self_version
 
-    @options = $.extend(@options, duplicate:
+    @options = $.extend(@options, newVersion:
       language: element.get('language')
-      self_duplicate: element.get('links')._self_duplicate
-      path: path.duplicate
-    ) if element.get('links')._self_duplicate
+      self_new_version: element.get('links')._self_new_version
+      path: path.newVersion
+    ) if element.get('links')._self_new_version
 )

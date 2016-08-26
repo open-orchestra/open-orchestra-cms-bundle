@@ -18,7 +18,7 @@ OrchestraViewConfigurator = ->
     'showTemplate': OpenOrchestra.Page.Template.TemplateView
     'showNode': OpenOrchestra.Page.Node.NodeView
     'showLanguage': LanguageView
-    'showDuplicate': DuplicateView
+    'showNewVersion': NewVersionView
     'showPreviewLinks': PreviewLinkView
     'showStatus': StatusView
     'showVersion': VersionView

@@ -31,6 +31,7 @@ open_orchestra_backoffice:
         personnal_account: My account
         submit: Save
         edit: Edit
+        duplicate: Duplicate
         delete: Delete
         global_error: There are errors in the form
         delete_confirm:

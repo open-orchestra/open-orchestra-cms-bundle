@@ -13,7 +13,7 @@ DisplayApiErrorView = OrchestraView.extend(
     else
       for key,error of errors
         launchNotification 'warning', error.message
-    if (errors.error.code == 'duplicate_not_granted')
+    if (errors.error.code == 'new_version_not_granted')
       Backbone.history.loadUrl()
     return
 )

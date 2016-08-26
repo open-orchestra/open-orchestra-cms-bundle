@@ -139,7 +139,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             )));
 
             if ($this->authorizationChecker->isGranted($editionRole)) {
-                $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
+                $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_node_new_version', array(
                     'nodeId' => $nodeId,
                     'language' => $node->getLanguage(),
                     'version' => $node->getVersion(),

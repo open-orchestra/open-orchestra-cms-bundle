@@ -104,7 +104,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
-        $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
+        $this->assertArrayHasKey('_self_new_version', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
         $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
@@ -133,7 +133,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
-        $this->assertArrayNotHasKey('_self_duplicate', $facade->getLinks());
+        $this->assertArrayNotHasKey('_self_new_version', $facade->getLinks());
         $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
         $this->assertArrayNotHasKey('_self_delete', $facade->getLinks());
         $this->assertArrayHasKey('_block_list', $facade->getLinks());
@@ -159,7 +159,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         $this->assertArrayNotHasKey('_self_form', $facade->getLinks());
-        $this->assertArrayNotHasKey('_self_duplicate', $facade->getLinks());
+        $this->assertArrayNotHasKey('_self_new_version', $facade->getLinks());
         $this->assertArrayNotHasKey('_self_version', $facade->getLinks());
         $this->assertArrayNotHasKey('_self_status_change', $facade->getLinks());
         $this->assertArrayHasKey('_language_list', $facade->getLinks());

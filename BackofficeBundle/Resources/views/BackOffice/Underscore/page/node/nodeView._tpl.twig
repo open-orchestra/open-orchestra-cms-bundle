@@ -5,7 +5,7 @@
     {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
     <ul id="entity-languages" class="nav nav-tabs">
     </ul>
-    <span id="entity-duplicate" data-text="{{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}"></span>
+    <span id="entity-new-version" data-text="{{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}"></span>
     <% if (typeof(node.attributes.links._self_version) !== "undefined") { %>
     <div id="additionalContent" class="smart-form">
         <label class="select">

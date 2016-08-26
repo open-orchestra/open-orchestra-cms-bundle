@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\DuplicateNodeNotGrantedHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -126,17 +126,18 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param string  $nodeId
+     * @param Request      $request
+     * @param string       $nodeId
+     * @param string|null  $version
      *
-     * @Config\Route("/{nodeId}/duplicate/{version}", name="open_orchestra_api_node_duplicate", defaults={"version": null})
+     * @Config\Route("/{nodeId}/new-version/{version}", name="open_orchestra_api_node_new_version", defaults={"version": null})
      * @Config\Method({"POST"})
      *
      * @return Response
      *
-     * @throws DuplicateNodeNotGrantedHttpException
+     * @throws NewVersionNodeNotGrantedHttpException
      */
-    public function duplicateAction(Request $request, $nodeId, $version = null)
+    public function newVersionAction(Request $request, $nodeId, $version = null)
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
@@ -145,7 +146,7 @@ class NodeController extends BaseController
         try{
             $this->denyAccessUnlessGranted($this->getEditionRole($newNode), $newNode);
         } catch(AccessDeniedException $exception) {
-            throw new DuplicateNodeNotGrantedHttpException();
+            throw new NewVersionNodeNotGrantedHttpException();
         }
         $nodeManager->saveDuplicatedNode($newNode);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));

@@ -2,6 +2,7 @@ TableviewAction = OrchestraView.extend(
   events:
     'click a.ajax-delete': 'clickDelete'
     'click a.ajax-edit' : 'clickEdit'
+    'click a.ajax-duplicate': 'clickDuplicate'
 
   initialize: (options) ->
     @options = options
@@ -39,6 +40,19 @@ TableviewAction = OrchestraView.extend(
             OpenOrchestra.DataTable.Channel.trigger 'draw', options.tableId
             OpenOrchestra.Table.Channel.trigger 'removeEntity', options.tableId
     )
+
+  ###*
+   * Duplicate content
+  ###
+  clickDuplicate: (event) ->
+    event.preventDefault()
+    options = @options
+    OpenOrchestra.DataTable.Channel.trigger 'clearCache', options.tableId
+    $.ajax
+      url: @options.element.get('links')._self_duplicate
+      method: 'POST'
+      complete: () ->
+        OpenOrchestra.DataTable.Channel.trigger 'draw', options.tableId
 
   clickEdit: (event) ->
     event.preventDefault()

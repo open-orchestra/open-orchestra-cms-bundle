@@ -37,20 +37,6 @@ class ContentManager
     }
 
     /**
-     * @param ContentInterface $contentSource
-     * @param string           $language
-     *
-     * @return ContentInterface
-     */
-    public function createNewLanguageContent($contentSource, $language)
-    {
-        $content = $this->duplicateContent($contentSource);
-        $content->setLanguage($language);
-
-        return $content;
-    }
-
-    /**
      * @param string $contentType
      *
      * @return ContentInterface
@@ -71,6 +57,39 @@ class ContentManager
     }
 
     /**
+     * @param ContentInterface $contentSource
+     * @param string           $language
+     *
+     * @return ContentInterface
+     */
+    public function createNewLanguageContent($contentSource, $language)
+    {
+        $content = $this->newVersionContent($contentSource);
+        $content->setLanguage($language);
+
+        return $content;
+    }
+
+    /**
+     * Duplicate a content
+     *
+     * @param ContentInterface $content
+     * @param string|null      $contentId
+     *
+     * @return ContentInterface
+     */
+    public function duplicateContent(ContentInterface $content, $contentId = null)
+    {
+        $newContent = $this->cloneContent($content);
+        $newContent->setVersion(1);
+        $newContent->setContentId($contentId);
+
+        $this->versionableSaver->saveDuplicated($newContent);
+
+        return $newContent;
+    }
+
+    /**
      * Duplicate a content
      *
      * @param ContentInterface $content
@@ -78,11 +97,26 @@ class ContentManager
      *
      * @return ContentInterface
      */
-    public function duplicateContent(ContentInterface $content, ContentInterface $lastContent = null)
+    public function newVersionContent(ContentInterface $content, ContentInterface $lastContent = null)
     {
+        $newContent = $this->cloneContent($content);
+
         $lastVersion = $lastContent !== null ? $lastContent->getVersion() : 0;
-        $newContent = clone $content;
         $newContent->setVersion($lastVersion + 1);
+
+        $this->versionableSaver->saveDuplicated($newContent);
+
+        return $newContent;
+    }
+
+    /**
+     * @param ContentInterface $content
+     *
+     * @return ContentInterface
+     */
+    protected function cloneContent(ContentInterface $content)
+    {
+        $newContent = clone $content;
         $newContent->setCurrentlyPublished(false);
         $newContent->setStatus(null);
         foreach ($content->getKeywords() as $keyword) {
@@ -92,8 +126,6 @@ class ContentManager
             $newAttribute = clone $attribute;
             $newContent->addAttribute($newAttribute);
         }
-
-        $this->versionableSaver->saveDuplicated($newContent);
 
         return $newContent;
     }
