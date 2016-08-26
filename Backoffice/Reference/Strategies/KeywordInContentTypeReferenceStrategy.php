@@ -31,7 +31,7 @@ class KeywordInContentTypeReferenceStrategy extends AbstractKeywordReferenceStra
                 /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
                 $keyword = $this->keywordRepository->find($keywordId);
                 if ($keyword) {
-                    $keyword->addUseInEntity($entity->getId(), ContentTypeInterface::ENTITY_TYPE);
+                    $keyword->addUseInEntity($entity->getContentTypeId(), ContentTypeInterface::ENTITY_TYPE);
                 }
             }
         }
@@ -43,7 +43,7 @@ class KeywordInContentTypeReferenceStrategy extends AbstractKeywordReferenceStra
     public function removeReferencesToEntity($entity)
     {
         if ($this->support($entity)) {
-            $contentTypeId = $entity->getId();
+            $contentTypeId = $entity->getContentTypeId();
 
             $keywordsUsedInContentType = $this->keywordRepository
                 ->findByUsedInEntity($contentTypeId, ContentTypeInterface::ENTITY_TYPE);
