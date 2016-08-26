@@ -5,7 +5,8 @@ parameters:
 services:
     open_orchestra_backoffice.authorize_status_change_manager:
         class: %open_orchestra_backoffice.authorize_status_change_manager.class%
-
+        arguments:
+            - @security.token_storage
     open_orchestra_backoffice.authorize_status_change.node:
         class: %open_orchestra_backoffice.authorize_status_change.node.class%
         arguments:

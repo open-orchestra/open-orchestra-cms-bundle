@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormEvents;
 class SiteSubscriber implements EventSubscriberInterface
 {
     protected $siteRepository;
+    protected $attributes;
 
     /**
      * @param SiteRepositoryInterface $siteRepository
@@ -52,7 +53,9 @@ class SiteSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string $siteId
+     * @param $siteId
+     *
+     * @return array
      */
     protected function getChoices($siteId)
     {
