@@ -46,6 +46,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $container->setParameter('open_orchestra_backoffice.collector.backoffice_role.workflow_role_in_group', $config['collector']['workflow_role_in_group']);
         $fixedAttributes = array_merge($config['fixed_attributes'], $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
+        $container->setParameter('open_orchestra_backoffice.block_default_configuration', $config['block_default_configuration']);
 
         $loader->load('services.yml');
         $loader->load('form.yml');

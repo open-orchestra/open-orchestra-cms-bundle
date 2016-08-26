@@ -10,6 +10,16 @@ use Symfony\Component\Form\AbstractType;
  */
 abstract class AbstractBlockStrategy extends AbstractType implements GenerateFormInterface
 {
+    protected $basicBlockConfiguration;
+
+    /**
+     * @param array $basicBlockConfiguration
+     */
+    public function __construct(array $basicBlockConfiguration)
+    {
+        $this->basicBlockConfiguration = $basicBlockConfiguration;
+    }
+
     /**
      * Get block form template
      *
@@ -18,6 +28,19 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
     public function getTemplate()
     {
         return 'OpenOrchestraBackofficeBundle::form.html.twig';
+    }
+
+    /**
+     * Get merge the default configuration and basic configuration for the block
+     *
+     * @return array
+     */
+    public function getMergedDefaultConfiguration()
+    {
+        return array_merge(
+            $this->basicBlockConfiguration,
+            $this->getDefaultConfiguration()
+        );
     }
 
     /**

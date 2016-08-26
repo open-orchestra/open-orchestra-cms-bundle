@@ -36,6 +36,17 @@ class ContactStrategy extends AbstractBlockStrategy
             'label' => 'open_orchestra_backoffice.block.contact.signature',
             'constraints' => new NotBlank(),
         ));
+        $builder->add('maxAge', 'hidden');
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultConfiguration()
+    {
+        return array(
+            'maxAge' => 0
+        );
     }
 
     /**

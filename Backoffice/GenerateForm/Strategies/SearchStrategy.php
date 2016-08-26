@@ -36,9 +36,7 @@ class SearchStrategy extends AbstractBlockStrategy
      */
     public function getDefaultConfiguration()
     {
-        return array(
-            'limit' => 7,
-        );
+        return array('limit' => 7);
     }
 
     /**
