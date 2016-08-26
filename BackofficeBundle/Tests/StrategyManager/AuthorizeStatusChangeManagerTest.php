@@ -106,7 +106,8 @@ class AuthorizeStatusChangeManagerTest extends AbstractBaseTestCase
 
         Phake::when($this->tokenStorage)->getToken()->thenReturn(null);
 
-        $this->expectException(AuthenticationCredentialsNotFoundException::class);
+
+        $this->setExpectedException(AuthenticationCredentialsNotFoundException::class);
 
         $this->assertTrue($this->manager->isGranted($document, $toStatus));
     }
