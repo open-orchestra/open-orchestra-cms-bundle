@@ -24,13 +24,15 @@ class KeywordInContentTypeReferenceStrategy extends AbstractKeywordReferenceStra
      */
     public function addReferencesToEntity($entity)
     {
-        $keywordIds = $this->extractKeywordsFromContentType($entity);
+        if ($this->support($entity)) {
+            $keywordIds = $this->extractKeywordsFromContentType($entity);
 
-        foreach ($keywordIds as $keywordId) {
-            /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
-            $keyword = $this->keywordRepository->find($keywordId);
-            if ($keyword) {
-                $keyword->addUseInEntity($entity->getId(), ContentTypeInterface::ENTITY_TYPE);
+            foreach ($keywordIds as $keywordId) {
+                /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
+                $keyword = $this->keywordRepository->find($keywordId);
+                if ($keyword) {
+                    $keyword->addUseInEntity($entity->getId(), ContentTypeInterface::ENTITY_TYPE);
+                }
             }
         }
     }
@@ -40,13 +42,15 @@ class KeywordInContentTypeReferenceStrategy extends AbstractKeywordReferenceStra
      */
     public function removeReferencesToEntity($entity)
     {
-        $contentTypeId = $entity->getId();
+        if ($this->support($entity)) {
+            $contentTypeId = $entity->getId();
 
-        $keywordsUsedInContentType = $this->keywordRepository
-            ->findByUsedInEntity($contentTypeId, ContentTypeInterface::ENTITY_TYPE);
+            $keywordsUsedInContentType = $this->keywordRepository
+                ->findByUsedInEntity($contentTypeId, ContentTypeInterface::ENTITY_TYPE);
 
-        foreach ($keywordsUsedInContentType as $keyword) {
-            $keyword->removeUseInEntity($contentTypeId, ContentTypeInterface::ENTITY_TYPE);
+            foreach ($keywordsUsedInContentType as $keyword) {
+                $keyword->removeUseInEntity($contentTypeId, ContentTypeInterface::ENTITY_TYPE);
+            }
         }
     }
 

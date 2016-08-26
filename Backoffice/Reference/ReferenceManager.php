@@ -37,9 +37,7 @@ class ReferenceManager
     public function addReferencesToEntity($entity)
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->support($entity)) {
-                $strategy->addReferencesToEntity($entity);
-            }
+            $strategy->addReferencesToEntity($entity);
         }
 
          $this->objectManager->flush();
@@ -51,9 +49,7 @@ class ReferenceManager
     public function removeReferencesToEntity($entity)
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->support($entity)) {
-                $strategy->removeReferencesToEntity($entity);
-            }
+            $strategy->removeReferencesToEntity($entity);
         }
 
          $this->objectManager->flush();
