@@ -6,7 +6,6 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * Class SiteSubscriber
@@ -14,6 +13,7 @@ use Symfony\Component\Form\FormInterface;
 class SiteSubscriber implements EventSubscriberInterface
 {
     protected $siteRepository;
+    protected $attributes;
 
     /**
      * @param SiteRepositoryInterface $siteRepository
@@ -90,7 +90,9 @@ class SiteSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string $siteId
+     * @param $siteId
+     *
+     * @return array
      */
     protected function getChoices($siteId)
     {

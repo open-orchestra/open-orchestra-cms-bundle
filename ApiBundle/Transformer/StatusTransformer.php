@@ -31,6 +31,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param RoleRepositoryInterface       $roleRepository
      * @param TranslationChoiceManager      $translationChoiceManager
      * @param TranslatorInterface           $translator
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         $facadeClass,

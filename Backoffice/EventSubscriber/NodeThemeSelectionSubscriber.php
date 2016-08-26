@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -37,7 +36,7 @@ class NodeThemeSelectionSubscriber implements EventSubscriberInterface
 
         if (NodeInterface::THEME_DEFAULT === $data->getTheme()) {
             $siteId = $data->getSiteId();
-            /* @var $site SiteInterface */
+            /* @var $site \OpenOrchestra\ModelInterface\Model\SiteInterface */
             $site = $this->siteRepository->findOneBySiteId($siteId);
             $theme = $site->getTheme()->getName();
 
