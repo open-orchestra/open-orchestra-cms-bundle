@@ -412,6 +412,7 @@ open_orchestra_backoffice:
         tiny_mce_wysiwyg:
             title: Bloc texte riche
             description: Affiche un bloc de text riche.
+            searchable: Indexable
         sub_menu:
             title: Bloc sous-menu
             description: Affiche un menu à partir d'un noeud racine.

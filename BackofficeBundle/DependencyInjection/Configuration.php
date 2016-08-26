@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('key')
                 ->defaultValue(array(
                     'maxAge'=>'600',
+                    'searchable'=>'false',
                 ))
                 ->prototype('scalar')->end()
             ->end()
