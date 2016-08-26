@@ -28,9 +28,11 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
         $keywordIds = $this->extractKeywordsFromNode($entity);
 
         foreach ($keywordIds as $keywordId) {
-            /** @var KeywordInterface $keyword */
+            /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
             $keyword = $this->keywordRepository->find($keywordId);
-            $keyword->addUseInNode($entity->getId());
+            if ($keyword) {
+                $keyword->addUseInEntity($entity->getId(), NodeInterface::ENTITY_TYPE);
+            }
         }
     }
 
@@ -44,7 +46,7 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
         $keywordsUsedInNode = $this->keywordRepository->findByUsedInEntity($nodeId, NodeInterface::ENTITY_TYPE);
 
         foreach ($keywordsUsedInNode as $keyword) {
-            $keyword->removeUseInNode($nodeId);
+            $keyword->removeUseInEntity($nodeId, NodeInterface::ENTITY_TYPE);
         }
     }
 

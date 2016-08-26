@@ -27,9 +27,11 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
         $keywordIds = $this->extractKeywordsFromKeywordableEntity($entity);
 
         foreach ($keywordIds as $keywordId) {
-            /** @var KeywordInterface $keyword */
+            /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
             $keyword = $this->keywordRepository->find($keywordId);
-            $keyword->addUseInContent($entity->getId());
+            if ($keyword) {
+                $keyword->addUseInEntity($entity->getId(), ContentInterface::ENTITY_TYPE);
+            }
         }
     }
 
@@ -44,7 +46,7 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
             ->findByUsedInEntity($contentId, ContentInterface::ENTITY_TYPE);
 
         foreach ($keywordsUsedInContent as $keyword) {
-            $keyword->removeUseInContent($contentId);
+            $keyword->removeUseEntity($contentId, ContentInterface::ENTITY_TYPE);
         }
     }
 }
