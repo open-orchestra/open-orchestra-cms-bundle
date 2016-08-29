@@ -27,6 +27,8 @@ class BlockTransformer extends AbstractTransformer
     protected $blockParameterManager;
     protected $generateFormManager;
     protected $displayBlockManager;
+    protected $displayBlockFrontManager;
+    protected $displayIconManager;
     protected $currentSiteManager;
     protected $eventDispatcher;
     protected $nodeRepository;
@@ -37,6 +39,7 @@ class BlockTransformer extends AbstractTransformer
     /**
      * @param string                   $facadeClass
      * @param DisplayBlockManager      $displayBlockManager
+     * @param DisplayBlockManager      $displayBlockFrontManager
      * @param DisplayManager           $displayManager
      * @param string                   $blockClass
      * @param BlockParameterManager    $blockParameterManager
@@ -49,6 +52,7 @@ class BlockTransformer extends AbstractTransformer
     public function __construct(
         $facadeClass,
         DisplayBlockManager $displayBlockManager,
+        DisplayBlockManager $displayBlockFrontManager,
         DisplayManager $displayManager,
         $blockClass,
         BlockParameterManager $blockParameterManager,
@@ -63,6 +67,7 @@ class BlockTransformer extends AbstractTransformer
         $this->blockParameterManager = $blockParameterManager;
         $this->generateFormManager = $generateFormManager;
         $this->displayBlockManager = $displayBlockManager;
+        $this->displayBlockFrontManager = $displayBlockFrontManager;
         $this->displayIconManager = $displayManager;
         $this->nodeRepository = $nodeRepository;
         $this->blockClass = $blockClass;
@@ -186,6 +191,7 @@ class BlockTransformer extends AbstractTransformer
 
         if ($blockElement) {
             $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($blockElement);
+            $block['blockPrivate'] = !$this->displayBlockFrontManager->isPublic($blockElement);
         }
 
         return $block;

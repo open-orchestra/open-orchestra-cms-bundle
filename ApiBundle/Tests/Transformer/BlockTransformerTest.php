@@ -60,6 +60,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
         $this->blockTransformer = new BlockTransformer(
             $this->facadeClass,
             $this->displayBlockManager,
+            $this->displayBlockManager,
             $this->displayIconManager,
             $this->blockClass,
             $this->blockParameterManager,
@@ -209,6 +210,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
         $this->blockFacade->nodeId = $facadeNodeId;
         $this->blockFacade->blockId = $blockId;
 
+        Phake::when($this->displayBlockManager)->isPublic(Phake::anyParameters())->thenReturn(false);
         $nodeTransverse = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
@@ -229,10 +231,10 @@ class BlockTransformerTest extends AbstractBaseTestCase
     public function blockReverseTransformProvider()
     {
         return array(
-            array('fixture_full', array('blockParameter' => array(), 'blockId' => 5, 'nodeId' => 0), 'fixture_full', 5),
-            array('fixture_full', array('blockParameter' => array(), 'blockId' => 0, 'nodeId' => 0), 'fixture_full', 0),
-            array('fixture_about_us', array('blockParameter' => array(), 'blockId' => 3, 'nodeId' => 'fixture_full'), 'fixture_full', 3),
-            array('fixture_about_us', array('blockParameter' => array('newsId'), 'blockId' => 3, 'nodeId' => 'fixture_full'), 'fixture_full', 3, array('newsId')),
+            array('fixture_full', array('blockParameter' => array(), 'blockId' => 5, 'nodeId' => 0, 'blockPrivate' => true), 'fixture_full', 5),
+            array('fixture_full', array('blockParameter' => array(), 'blockId' => 0, 'nodeId' => 0, 'blockPrivate' => true), 'fixture_full', 0),
+            array('fixture_about_us', array('blockParameter' => array(), 'blockId' => 3, 'nodeId' => 'fixture_full', 'blockPrivate' => true), 'fixture_full', 3),
+            array('fixture_about_us', array('blockParameter' => array('newsId'), 'blockId' => 3, 'nodeId' => 'fixture_full', 'blockPrivate' => true), 'fixture_full', 3, array('newsId')),
         );
     }
 
@@ -249,6 +251,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
         $this->blockFacade->component = $component;
         Phake::when($this->node)->getBlockIndex(Phake::anyParameters())->thenReturn($blockId);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
+        Phake::when($this->displayBlockManager)->isPublic(Phake::anyParameters())->thenReturn(false);
 
         $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 
@@ -264,9 +267,9 @@ class BlockTransformerTest extends AbstractBaseTestCase
     public function blockReverseTransformProvider2()
     {
         return array(
-            array(array('blockParameter' => array(), 'blockId' => 2, 'nodeId' => 0), 'sample', 2),
-            array(array('blockParameter' => array(), 'blockId' => 3, 'nodeId' => 0), 'menu', 3),
-            array(array('blockParameter' => array('newsId'), 'blockId' => 3, 'nodeId' => 0), 'news', 3, array('newsId')),
+            array(array('blockParameter' => array(), 'blockId' => 2, 'nodeId' => 0, 'blockPrivate' => true), 'sample', 2),
+            array(array('blockParameter' => array(), 'blockId' => 3, 'nodeId' => 0, 'blockPrivate' => true), 'menu', 3),
+            array(array('blockParameter' => array('newsId'), 'blockId' => 3, 'nodeId' => 0, 'blockPrivate' => true), 'news', 3, array('newsId')),
         );
     }
 
@@ -310,10 +313,11 @@ class BlockTransformerTest extends AbstractBaseTestCase
         $this->blockFacade->component = $component;
         Phake::when($this->node)->getBlockIndex(Phake::anyParameters())->thenReturn($blockIndex);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
+        Phake::when($this->displayBlockManager)->isPublic(Phake::anyParameters())->thenReturn(true);
 
         $result = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 
-        $this->assertSame(array('blockParameter' => $blockParameter, 'blockId' => $blockIndex, 'nodeId' => 0), $result);
+        $this->assertSame(array('blockParameter' => $blockParameter, 'blockId' => $blockIndex, 'nodeId' => 0, 'blockPrivate' => false), $result);
         Phake::verify($this->node)->addBlock(Phake::anyParameters());
         Phake::verify($this->node)->getBlockIndex(Phake::anyParameters());
         Phake::verify($this->generateFormManager)->getDefaultConfiguration(Phake::anyParameters());
@@ -340,7 +344,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
      */
     public function testExceptionTransform()
     {
-        $this->setExpectedException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
+        $this->expectException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->blockTransformer->transform(Phake::mock('stdClass'));
     }
 }
