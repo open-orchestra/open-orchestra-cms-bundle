@@ -101,7 +101,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
-        $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
+        $this->assertArrayHasKey('_self_new_version', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
         $this->assertArrayHasKey('_self', $facade->getLinks());

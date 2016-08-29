@@ -5,14 +5,14 @@ namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
 
 /**
- * Class DuplicateNodeNotGrantedHttpException
+ * Class NewVersionNodeNotGrantedHttpException
  */
-class DuplicateNodeNotGrantedHttpException extends ApiException
+class NewVersionNodeNotGrantedHttpException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'open_orchestra_api.node.duplicate_not_granted';
-    const HUMAN_MESSAGE      = 'open_orchestra_api.node.duplicate_not_granted';
+    const DEVELOPER_MESSAGE  = 'open_orchestra_api.node.new_version_not_granted';
+    const HUMAN_MESSAGE      = 'open_orchestra_api.node.new_version_not_granted';
     const STATUS_CODE        = '403';
-    const ERROR_CODE         = 'duplicate_not_granted';
+    const ERROR_CODE         = 'new_version_not_granted';
 
     /**
      * Constructor

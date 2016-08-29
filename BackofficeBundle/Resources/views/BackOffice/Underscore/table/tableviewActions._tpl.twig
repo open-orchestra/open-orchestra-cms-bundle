@@ -1,4 +1,9 @@
 <% if (deleted != true) { %>
+    <% if (typeof links._self_duplicate !== 'undefined' ) { %>
+    <a href="#" class="btn btn-default btn-xs ajax-duplicate" title="{{ 'open_orchestra_backoffice.form.duplicate'|trans({}, 'messages', language) }}">
+        <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+    </a>
+    <% } %>
     <% if (typeof links._self_form !== 'undefined') { %>
         <a href="#" class="btn btn-warning btn-xs ajax-edit" title="{{ 'open_orchestra_backoffice.form.edit'|trans({}, 'messages', language) }}">
     <% } else { %>

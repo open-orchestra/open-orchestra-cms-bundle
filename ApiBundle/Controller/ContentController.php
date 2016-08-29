@@ -169,6 +169,28 @@ class ContentController extends BaseController
      * @param Request $request
      * @param string  $contentId
      *
+     * @Config\Route("/{contentId}/new-version", name="open_orchestra_api_content_new_version")
+     * @Config\Method({"POST"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT')")
+     *
+     * @return Response
+     */
+    public function newVersionAction(Request $request, $contentId)
+    {
+        /** @var ContentInterface $content */
+        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
+        $lastContent = $this->findOneContent($contentId, $request->get('language'));
+        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content, $lastContent);
+
+        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
+
+        return array();
+    }
+
+    /**
+     * @param string  $contentId
+     *
      * @Config\Route("/{contentId}/duplicate", name="open_orchestra_api_content_duplicate")
      * @Config\Method({"POST"})
      *
@@ -176,14 +198,18 @@ class ContentController extends BaseController
      *
      * @return Response
      */
-    public function duplicateAction(Request $request, $contentId)
+    public function duplicateAction($contentId)
     {
-        /** @var ContentInterface $content */
-        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
-        $lastContent = $this->findOneContent($contentId, $request->get('language'));
-        $newContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $lastContent);
-
-        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
+        $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
+        $newContentId = null;
+        foreach (array_keys($frontLanguages) as $language) {
+            $content = $this->findOneContent($contentId, $language);
+            if ($content instanceof ContentInterface) {
+                $duplicateContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $newContentId);
+                $newContentId = $duplicateContent->getContentId();
+                $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
+            }
+        }
 
         return array();
     }

@@ -73,12 +73,12 @@ class ContentManagerTest extends AbstractBaseTestCase
      *
      * @dataProvider provideVersionsAndExpected
      */
-    public function testDuplicateNode($version, $lastVersion, $expectedVersion)
+    public function testNewVersionContent($version, $lastVersion, $expectedVersion)
     {
         Phake::when($this->content)->getVersion()->thenReturn($version);
         $lastContent = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($lastContent)->getVersion()->thenReturn($lastVersion);
-        $newContent = $this->manager->duplicateContent($this->content, $lastContent);
+        $newContent = $this->manager->newVersionContent($this->content, $lastContent);
 
         Phake::verify($newContent)->setVersion($expectedVersion);
         Phake::verify($newContent)->setStatus(null);
@@ -95,6 +95,34 @@ class ContentManagerTest extends AbstractBaseTestCase
         return array(
             array(1, 1, 2),
             array(5, 6, 7),
+        );
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @dataProvider provideContentId
+     */
+    public function testDuplicateContent($contentId)
+    {
+        $newContent = $this->manager->duplicateContent($this->content, $contentId);
+
+        Phake::verify($newContent)->setVersion(1);
+        Phake::verify($newContent)->setStatus(null);
+        Phake::verify($newContent)->addKeyword($this->keyword);
+        Phake::verify($newContent)->setCurrentlyPublished(false);
+        Phake::verify($newContent)->addAttribute($this->contentAttribute);
+        Phake::verify($newContent)->setContentId($contentId);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContentId()
+    {
+        return array(
+            array(null),
+            array('fakeContentId'),
         );
     }
 

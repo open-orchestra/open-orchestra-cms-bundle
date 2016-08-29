@@ -48,8 +48,8 @@ module.exports = {
 
     //--[ WIDGETS ]--//
     'web/built/openorchestrabackoffice/js/widget/widgetChannel.js',
-    'web/built/openorchestrabackoffice/js/widget/duplicateChannel.js',
-    'web/built/openorchestrabackoffice/js/widget/DuplicateView.js',
+    'web/built/openorchestrabackoffice/js/widget/newVersionChannel.js',
+    'web/built/openorchestrabackoffice/js/widget/NewVersionView.js',
     'web/built/openorchestrabackoffice/js/widget/languageChannel.js',
     'web/built/openorchestrabackoffice/js/widget/LanguageView.js',
     'web/built/openorchestrabackoffice/js/widget/previewLinkChannel.js',

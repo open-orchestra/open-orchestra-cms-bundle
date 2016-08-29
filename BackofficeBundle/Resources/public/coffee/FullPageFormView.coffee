@@ -17,7 +17,7 @@ FullPageFormView = OrchestraView.extend(
       @completeOptions @options.element,
         'multiLanguage': 'showEntityWithLanguageAndSourceLanguage'
         'multiVersion': 'showEntity'
-        'duplicate': 'showEntity'
+        'newVersion': 'showEntity'
     @options.formView = 'editEntity'
     @events = @events || {}
 

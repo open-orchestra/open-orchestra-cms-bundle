@@ -2,5 +2,5 @@ open_orchestra_api:
     status:
         change_not_granted: Vous ne pouvez pas modifier le status en raison de limitation de droits
     node:
-        duplicate_not_granted: Vous ne pouvez pas dupliquer cette page en raison de limitation de droits
+        new_version_not_granted: Vous ne pouvez pas créer une nouvelle version de cette page en raison de limitation de droits
         access_language_not_granted: Cette langue n'est pas autorisée pour ce node sur le site courant

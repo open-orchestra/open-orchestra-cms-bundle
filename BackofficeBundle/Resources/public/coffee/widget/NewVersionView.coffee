@@ -1,16 +1,16 @@
 ###*
- * @class DuplicateView
+ * @class NewVersionView
 ###
-class DuplicateView extends OrchestraView
+class NewVersionView extends OrchestraView
 
   events:
-    'click a': 'duplicateElement'
+    'click a': 'newVersionElement'
 
   ###*
    * required options
    * {
    *   domContainer: {Object}
-   *   currentDuplicate: {Object}
+   *   currentNewVersion: {Object}
    *   tableId : {string}
    * }
    *
@@ -19,36 +19,36 @@ class DuplicateView extends OrchestraView
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetDuplicate"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetNewVersion"
     ]
     return
 
   ###*
-   * Render button duplicate
+   * Render button new version
   ###
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetDuplicate',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetNewVersion',
       text: @options.domContainer.data('text')
     )
     @options.domContainer.append @$el
     return
 
   ###*
-   * Event click button duplicate
+   * Event click button new version
    *
    * @param {event} event
   ###
-  duplicateElement: (event) ->
+  newVersionElement: (event) ->
     event.preventDefault()
     displayLoader(@$el)
     parameter = appRouter.addParametersToRoute(
-      language: @options.currentDuplicate.language
+      language: @options.currentNewVersion.language
     )
     delete parameter.version if parameter.version
-    redirectUrl = appRouter.generateUrl(@options.currentDuplicate.path, parameter)
+    redirectUrl = appRouter.generateUrl(@options.currentNewVersion.path, parameter)
     view = @
     $.ajax
-      url: @options.currentDuplicate.self_duplicate
+      url: @options.currentNewVersion.self_new_version
       method: 'POST'
       success: ->
         if (redirectUrl != Backbone.history.fragment)

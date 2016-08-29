@@ -86,10 +86,13 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             }
 
             if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT)) {
-                $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
+                $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_content_new_version', array(
                     'contentId' => $content->getContentId(),
                     'language' => $content->getLanguage(),
                     'version' => $content->getVersion(),
+                )));
+                $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
+                    'contentId' => $content->getContentId(),
                 )));
             }
 
