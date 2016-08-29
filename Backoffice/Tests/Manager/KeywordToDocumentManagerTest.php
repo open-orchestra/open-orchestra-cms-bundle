@@ -111,13 +111,34 @@ class FakeKeyword implements KeywordInterface
 {
     protected $label;
 
-    public function getId(){}
+    public function getId()
+    {
+    }
 
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label;
     }
 
-    public function setLabel($label) {
+    public function setLabel($label)
+    {
         $this->label = $label;
+    }
+
+    public function addUseInEntity($entityId, $entityType)
+    {
+        
+    }
+
+    public function removeUseInEntity($entityId, $entitytype)
+    {
+    }
+
+    public function getUseReferences()
+    {
+    }
+
+    public function isUsed()
+    {
     }
 }
