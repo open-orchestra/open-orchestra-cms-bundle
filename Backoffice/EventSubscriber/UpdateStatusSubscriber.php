@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use OpenOrchestra\ModelInterface\Model\IsStatusableInterface;
 
 /**
  * Class UpdateStatusSubscriber
@@ -33,7 +34,9 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
         $document = $event->getStatusableElement();
         $toStatus = $event->getToStatus();
         if ($this->authorizeStatusChangeManager->isGranted($document, $toStatus)) {
-            $document->setStatus($toStatus);
+            if (!$document instanceof IsStatusableInterface || $document->isStatusable()) {
+                $document->setStatus($toStatus);
+            }
         } else {
             throw new StatusChangeNotGrantedException();
         }

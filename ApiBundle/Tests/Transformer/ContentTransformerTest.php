@@ -65,10 +65,12 @@ class ContentTransformerTest extends AbstractBaseTestCase
      * @param DateTime $updateDate
      * @param bool     $deleted
      * @param bool     $linkedToSite
+     * @param bool     $isStatusable
+     * @param int      $nbrCall
      *
      * @dataProvider provideContentData
      */
-    public function testTransform($contentId, $contentType, $name, $version, $contentTypeVersion, $language, $creationDate, $updateDate, $deleted, $linkedToSite)
+    public function testTransform($contentId, $contentType, $name, $version, $contentTypeVersion, $language, $creationDate, $updateDate, $deleted, $linkedToSite, $isStatusable, $nbrCall)
     {
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
@@ -83,6 +85,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::when($content)->getUpdatedAt()->thenReturn($updateDate);
         Phake::when($content)->isDeleted()->thenReturn($deleted);
         Phake::when($content)->isLinkedToSite()->thenReturn($linkedToSite);
+        Phake::when($content)->isStatusable()->thenReturn($isStatusable);
 
         $facade = $this->contentTransformer->transform($content);
 
@@ -96,8 +99,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertSame($updateDate, $facade->updatedAt);
         $this->assertSame($deleted, $facade->deleted);
         $this->assertSame($linkedToSite, $facade->linkedToSite);
-        $this->assertSame($facade->status->label, $facade->statusLabel);
-        Phake::verify($content, Phake::times(1))->getStatus();
+        Phake::verify($content, Phake::times($nbrCall))->getStatus();
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
@@ -107,8 +109,9 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertArrayHasKey('_self', $facade->getLinks());
         $this->assertArrayHasKey('_self_without_parameters', $facade->getLinks());
         $this->assertArrayHasKey('_self_delete', $facade->getLinks());
-        $this->assertArrayHasKey('_status_list', $facade->getLinks());
-        $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
+
+        $this->assertEquals((int) array_key_exists('_status_list', $facade->getLinks()), $nbrCall);
+        $this->assertEquals((int) array_key_exists('_self_status_change', $facade->getLinks()), $nbrCall);
     }
 
     /**
@@ -120,8 +123,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $date2 = new DateTime();
 
         return array(
-            array('foo', 'bar', 'baz', 1, 2, 'fr', $date1, $date2, true, false),
-            array('bar', 'baz', 'foo', 2, 1, 'en', $date2, $date1, false, true),
+            array('foo', 'bar', 'baz', 1, 2, 'fr', $date1, $date2, true, false, true, 1),
+            array('bar', 'baz', 'foo', 2, 1, 'en', $date2, $date1, false, true, false, 0),
         );
     }
 

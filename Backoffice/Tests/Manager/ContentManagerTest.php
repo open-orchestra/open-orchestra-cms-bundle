@@ -131,12 +131,14 @@ class ContentManagerTest extends AbstractBaseTestCase
      * @param string $language
      * @param bool   $linkedToSite
      * @param string $siteId
+     * @param bool   $isStatusable
      *
      * @dataProvider provideContentTypeAndLanguage
      */
-    public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId)
+    public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId, $isStatusable)
     {
         Phake::when($this->contentType)->isLinkedToSite()->thenReturn($linkedToSite);
+        Phake::when($this->contentType)->isStatusable()->thenReturn($isStatusable);
         Phake::when($this->contextManager)->getDefaultLocale()->thenReturn($language);
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
 
@@ -146,6 +148,7 @@ class ContentManagerTest extends AbstractBaseTestCase
         $this->assertSame($language, $content->getLanguage());
         $this->assertSame($contentType, $content->getContentType());
         $this->assertSame($linkedToSite, $content->isLinkedToSite());
+        $this->assertSame($isStatusable, $content->isStatusable());
         $this->assertSame($siteId, $content->getSiteId());
     }
 
@@ -155,10 +158,10 @@ class ContentManagerTest extends AbstractBaseTestCase
     public function provideContentTypeAndLanguage()
     {
         return array(
-            array('news', 'fr', true, '1'),
-            array('car', 'en', true, '2'),
-            array('news', 'fr', false, '3'),
-            array('car', 'en', false, '4'),
+            array('news', 'fr', true, '1', 1),
+            array('car', 'en', true, '2', 0),
+            array('news', 'fr', false, '3', 1),
+            array('car', 'en', false, '4', 0),
         );
     }
 }
