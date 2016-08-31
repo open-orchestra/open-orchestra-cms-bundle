@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -9,7 +10,6 @@ use OpenOrchestra\UserBundle\Document\User;
 use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
 use OpenOrchestra\UserAdminBundle\Event\UserFacadeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -18,22 +18,23 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class UserTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $eventDispatcher;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
 
     /**
-     * @param string                   $facadeClass
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param TranslationChoiceManager $translationChoiceManager
+     * @param string                               $facadeClass
+     * @param EventDispatcherInterface             $eventDispatcher
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      */
     public function __construct(
         $facadeClass,
         EventDispatcherInterface $eventDispatcher,
-        TranslationChoiceManager $translationChoiceManager,
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->eventDispatcher = $eventDispatcher;
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
     }
 
     /**
@@ -52,7 +53,7 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
         $groups = $mixed->getGroups();
         $labels = array();
         foreach($groups as $group){
-            $labels[] = $this->translationChoiceManager->choose($group->getLabels());
+            $labels[] = $this->multiLanguagesChoiceManager->choose($group->getLabels());
         }
 
         $facade->groups = implode(',', $labels);

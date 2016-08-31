@@ -18,16 +18,13 @@ class RoleTypeTest extends AbstractBaseTestCase
     protected $form;
 
     protected $roleClass = 'roleClass';
-    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
-
-        $this->form = new RoleType($this->translateValueInitializer, $this->roleClass);
+        $this->form = new RoleType(array(), $this->roleClass);
     }
 
     /**
@@ -58,10 +55,6 @@ class RoleTypeTest extends AbstractBaseTestCase
         $this->form->buildForm($builder, array());
 
         Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
-        Phake::verify($builder)->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            array($this->translateValueInitializer, 'preSetData')
-        );
     }
 
     /**

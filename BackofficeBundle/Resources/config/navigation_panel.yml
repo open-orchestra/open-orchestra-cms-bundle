@@ -58,7 +58,7 @@ services:
             - 240
             - '%open_orchestra_backoffice.navigation_panel.content_type.parameters%'
             - '@translator'
-            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.trashcan:

@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Form\Type;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\Type\StatusType;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class StatusTypeTest
@@ -18,15 +17,13 @@ class StatusTypeTest extends AbstractBaseTestCase
     protected $form;
 
     protected $statusClass = 'status';
-    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
-        $this->form = new StatusType($this->statusClass, $this->translateValueInitializer);
+        $this->form = new StatusType($this->statusClass, array());
     }
 
     /**
@@ -57,10 +54,6 @@ class StatusTypeTest extends AbstractBaseTestCase
         $this->form->buildForm($builder, array());
 
         Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
-        Phake::verify($builder)->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            array($this->translateValueInitializer, 'preSetData')
-        );
     }
 
     /**

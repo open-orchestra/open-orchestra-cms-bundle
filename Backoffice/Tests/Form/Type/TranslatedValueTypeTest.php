@@ -8,6 +8,7 @@ use OpenOrchestra\Backoffice\Form\Type\TranslatedValueType;
 
 /**
  * Class TranslatedValueTypeTest
+ * @deprecated will be removed in 2.0
  */
 class TranslatedValueTypeTest extends AbstractBaseTestCase
 {

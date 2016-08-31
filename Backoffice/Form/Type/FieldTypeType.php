@@ -2,11 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 use OpenOrchestra\Backoffice\EventSubscriber\FieldTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -14,32 +12,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FieldTypeType extends AbstractType
 {
-    protected $translateValueInitializer;
     protected $fieldOptionClass;
     protected $fieldTypeClass;
     protected $fieldOptions;
     protected $fieldTypeParameters;
+    protected $backOfficeLanguages;
 
     /**
-     * @param TranslateValueInitializerListener $translateValueInitializer
-     * @param array                             $fieldOptions
-     * @param string                            $fieldOptionClass
-     * @param string                            $fieldTypeClass
-     * @param array                             $fieldTypeParameters
+     * @param array  $fieldOptions
+     * @param string $fieldOptionClass
+     * @param string $fieldTypeClass
+     * @param array  $fieldTypeParameters
+     * @param array  $backOfficeLanguages
      */
     public function __construct(
-        TranslateValueInitializerListener $translateValueInitializer,
         array $fieldOptions,
         $fieldOptionClass,
         $fieldTypeClass,
-        array $fieldTypeParameters
+        array $fieldTypeParameters,
+        array  $backOfficeLanguages
     )
     {
-        $this->translateValueInitializer = $translateValueInitializer;
         $this->fieldOptions = $fieldOptions;
         $this->fieldOptionClass = $fieldOptionClass;
         $this->fieldTypeClass = $fieldTypeClass;
         $this->fieldTypeParameters = $fieldTypeParameters;
+        $this->backOfficeLanguages = $backOfficeLanguages;
     }
 
     /**
@@ -48,8 +46,6 @@ class FieldTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this->translateValueInitializer, 'preSubmitFieldType'));
         if (array_key_exists('property_path', $options) && is_null($options['property_path'])){
             $builder->setData($options['prototype_data']());
         }
@@ -60,8 +56,9 @@ class FieldTypeType extends AbstractType
                     'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
                 )
             ))
-            ->add('labels', 'oo_translated_value_collection', array(
-                'label' => 'open_orchestra_backoffice.form.field_type.labels'
+            ->add('labels', 'oo_multi_languages', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.labels',
+                'languages' => $this->backOfficeLanguages
             ))
             ->add('type', 'choice', array(
                 'choices' => $this->getChoicesType(),

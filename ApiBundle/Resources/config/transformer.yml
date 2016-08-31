@@ -117,7 +117,7 @@ services:
         class: '%open_orchestra_api.transformer.content_type.class%'
         arguments:
             - '%open_orchestra_api.facade.content_type.class%'
-            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
@@ -182,7 +182,7 @@ services:
         class: '%open_orchestra_api.transformer.role.class%'
         arguments:
             - '%open_orchestra_api.facade.role.class%'
-            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
@@ -211,7 +211,7 @@ services:
         arguments:
             - '%open_orchestra_api.facade.group.class%'
             - '@security.authorization_checker'
-            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@event_dispatcher'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
@@ -265,7 +265,7 @@ services:
         class: '%open_orchestra_api.transformer.field_type.class%'
         arguments:
             - '%open_orchestra_api.facade.field_type.class%'
-            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
         tags:
             - { name: open_orchestra_api.transformer.strategy }
     open_orchestra_api.transformer.status:
@@ -274,7 +274,7 @@ services:
             - '%open_orchestra_api.facade.status.class%'
             - '@open_orchestra_backoffice.authorize_status_change_manager'
             - '@open_orchestra_model.repository.role'
-            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@translator'
             - '@security.authorization_checker'
         tags:

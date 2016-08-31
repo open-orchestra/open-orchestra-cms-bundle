@@ -7,9 +7,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class MultiLanguagesTextType
+ * Class MultiLanguagesType
  */
-class MultiLanguagesTextType extends AbstractType
+class MultiLanguagesType extends AbstractType
 {
     /**
      * @param OptionsResolver $resolver
@@ -65,6 +65,6 @@ class MultiLanguagesTextType extends AbstractType
      */
     public function getName()
     {
-        return 'oo_multi_languages_text';
+        return 'oo_multi_languages';
     }
 }

@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -15,20 +15,20 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
 {
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
 
     /**
-     * @param string $facadeClass
-     * @param TranslationChoiceManager $translationChoiceManager
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param string                               $facadeClass
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      */
     public function __construct(
         $facadeClass,
-        TranslationChoiceManager $translationChoiceManager,
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         AuthorizationCheckerInterface $authorizationChecker
     ){
         parent::__construct($facadeClass, $authorizationChecker);
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
     }
 
     /**
@@ -48,7 +48,7 @@ class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->id = $role->getId();
         $facade->name = $role->getName();
-        $facade->description = $this->translationChoiceManager->choose($role->getDescriptions());
+        $facade->description = $this->multiLanguagesChoiceManager->choose($role->getDescriptions());
         $facade->fromStatus = $role->getFromStatus();
         $facade->toStatus = $role->getToStatus();
 

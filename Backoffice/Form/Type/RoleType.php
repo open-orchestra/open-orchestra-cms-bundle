@@ -2,10 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -13,16 +11,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RoleType extends AbstractType
 {
-    protected $translateValueInitializer;
+    protected $backOfficeLanguages;
     protected $roleClass;
 
     /**
-     * @param TranslateValueInitializerListener $translateValueInitializer
-     * @param string                            $roleClass
+     * @param array  $backOfficeLanguages
+     * @param string $roleClass
      */
-    public function __construct(TranslateValueInitializerListener $translateValueInitializer, $roleClass)
+    public function __construct(array $backOfficeLanguages, $roleClass)
     {
-        $this->translateValueInitializer = $translateValueInitializer;
+        $this->backOfficeLanguages = $backOfficeLanguages;
         $this->roleClass = $roleClass;
     }
 
@@ -32,13 +30,12 @@ class RoleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
-
         $builder->add('name', null, array(
             'label' => 'open_orchestra_backoffice.form.role.name',
         ));
-        $builder->add('descriptions', 'oo_translated_value_collection', array(
-            'label' => 'open_orchestra_backoffice.form.role.descriptions'
+        $builder->add('descriptions', 'oo_multi_languages', array(
+            'label' => 'open_orchestra_backoffice.form.role.descriptions',
+            'languages' => $this->backOfficeLanguages
         ));
         $builder->add('fromStatus', 'oo_status_choice', array(
             'embedded' => false,

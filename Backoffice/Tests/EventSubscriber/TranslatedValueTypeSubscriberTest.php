@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormEvents;
 
 /**
  * Class TranslatedValueTypeSubscriberTest
+ * @deprecated will be removed in 2.0
  */
 class TranslatedValueTypeSubscriberTest extends AbstractBaseTestCase
 {

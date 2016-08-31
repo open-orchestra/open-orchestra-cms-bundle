@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 
 /**
@@ -13,16 +13,16 @@ use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
  */
 class FieldTypeTransformer extends AbstractTransformer
 {
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManagerInterface;
 
     /**
-     * @param string                   $facadeClass
-     * @param TranslationChoiceManager $translationChoiceManager
+     * @param string                               $facadeClass
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManagerInterface
      */
-    public function __construct($facadeClass, TranslationChoiceManager $translationChoiceManager)
+    public function __construct($facadeClass, MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManagerInterface)
     {
         parent::__construct($facadeClass);
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManagerInterface = $multiLanguagesChoiceManagerInterface;
     }
 
     /**
@@ -41,7 +41,7 @@ class FieldTypeTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         $facade->fieldId = $fieldType->getFieldId();
-        $facade->label = $this->translationChoiceManager->choose($fieldType->getLabels());
+        $facade->label = $this->multiLanguagesChoiceManagerInterface->choose($fieldType->getLabels());
         $facade->defaultValue = $fieldType->getDefaultValue();
         $facade->searchable = $fieldType->isSearchable();
         $facade->listable = $fieldType->getListable();

@@ -21,7 +21,6 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
     protected $resolver;
     protected $fieldOptions;
     protected $fieldTypeSearchable;
-    protected $translateValueInitializer;
     protected $fieldOptionClass = 'fieldOptionClass';
     protected $fieldTypeClass = 'fieldTypeClass';
 
@@ -48,13 +47,11 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
-
         $this->form = new FieldTypeType(
-            $this->translateValueInitializer,
             $this->fieldOptions, $this->fieldOptionClass,
             $this->fieldTypeClass,
-            $this->fieldTypeSearchable
+            $this->fieldTypeSearchable,
+            array()
         );
     }
 
@@ -94,10 +91,6 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
         $this->form->buildForm($this->builder, array());
 
         Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
-        Phake::verify($this->builder)->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            array($this->translateValueInitializer, 'preSetData')
-        );
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
 
@@ -111,10 +104,6 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
         $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
 
         Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
-        Phake::verify($this->builder)->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            array($this->translateValueInitializer, 'preSetData')
-        );
         Phake::verify($this->builder)->setData($closure());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }

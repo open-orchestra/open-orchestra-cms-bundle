@@ -2,17 +2,14 @@
 
 namespace OpenOrchestra\Backoffice\Model;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
-use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
-use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 
 /**
  * Interface GroupInterface
  */
-interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInterface
+interface GroupInterface extends BaseGroupInterface
 {
     const SEPARATOR_KEY_MODEL_ROLES = '##';
 
@@ -27,26 +24,32 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
     public function getSite();
 
     /**
-     * @param TranslatedValueInterface $label
+     * @param string $language
+     * @param string $label
      */
-    public function addLabel(TranslatedValueInterface $label);
+    public function addLabel($language, $label);
 
     /**
-     * @param TranslatedValueInterface $label
+     * @param string $language
      */
-    public function removeLabel(TranslatedValueInterface $label);
+    public function removeLabel($language);
 
     /**
      * @param string $language
      *
      * @return string
      */
-    public function getLabel($language = 'en');
+    public function getLabel($language);
 
     /**
-     * @return Collection
+     * @return array
      */
     public function getLabels();
+
+    /**
+     * @param array $labels
+     */
+    public function setLabels(array $labels);
 
     /**
      * @return array

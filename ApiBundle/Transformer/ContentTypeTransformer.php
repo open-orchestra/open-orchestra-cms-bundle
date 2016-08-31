@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -15,20 +15,20 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 {
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
 
     /**
-     * @param string                        $facadeClass
-     * @param TranslationChoiceManager      $translationChoiceManager
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param string                               $facadeClass
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      */
     public function __construct(
         $facadeClass,
-        TranslationChoiceManager $translationChoiceManager,
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
     }
 
     /**
@@ -48,7 +48,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->id = $contentType->getId();
         $facade->contentTypeId = $contentType->getContentTypeId();
-        $facade->name = $this->translationChoiceManager->choose($contentType->getNames());
+        $facade->name = $this->multiLanguagesChoiceManager->choose($contentType->getNames());
         $facade->version = $contentType->getVersion();
         $facade->linkedToSite = $contentType->isLinkedToSite();
 

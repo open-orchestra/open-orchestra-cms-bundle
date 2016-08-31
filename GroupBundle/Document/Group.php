@@ -9,7 +9,6 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
-use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -28,8 +27,8 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @var Collection $labels
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
-     * @ORCHESTRA\Search(key="label", type="translatedValue")
+     * @ODM\Field(type="hash")
+     * @ORCHESTRA\Search(key="label", type="multiLanguages")
      */
     protected $labels;
 
@@ -46,6 +45,8 @@ class Group extends BaseGroup implements GroupInterface
      */
     public function __construct()
     {
+        parent::__construct();
+        $this->labels = array();
         $this->initCollections();
     }
 
@@ -62,7 +63,6 @@ class Group extends BaseGroup implements GroupInterface
      */
     protected function initCollections()
     {
-        $this->labels = new ArrayCollection();
         $this->modelRoles = new ArrayCollection();
         $this->roles = array();
     }
@@ -84,19 +84,24 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @param TranslatedValueInterface $label
+     * @param string $language
+     * @param string $label
      */
-    public function addLabel(TranslatedValueInterface $label)
+    public function addLabel($language, $label)
     {
-        $this->labels->set($label->getLanguage(), $label);
+        if (is_string($language) && is_string($label)) {
+            $this->labels[$language] = $label;
+        }
     }
 
     /**
-     * @param TranslatedValueInterface $label
+     * @param string $language
      */
-    public function removeLabel(TranslatedValueInterface $label)
+    public function removeLabel($language)
     {
-        $this->labels->remove($label->getLanguage());
+        if (is_string($language) && isset($this->labels[$language])) {
+            unset($this->labels[$language]);
+        }
     }
 
     /**
@@ -104,13 +109,17 @@ class Group extends BaseGroup implements GroupInterface
      *
      * @return string
      */
-    public function getLabel($language = 'en')
+    public function getLabel($language)
     {
-        return $this->labels->get($language)->getValue();
+        if (isset($this->labels[$language])) {
+            return $this->labels[$language];
+        }
+
+        return '';
     }
 
     /**
-     * @return Collection
+     * @return array
      */
     public function getLabels()
     {
@@ -118,13 +127,13 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @return array
+     * @param array $labels
      */
-    public function getTranslatedProperties()
+    public function setLabels(array $labels)
     {
-        return array(
-            'getLabels'
-        );
+        foreach ($labels as $language => $label) {
+            $this->addLabel($language, $label);
+        }
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Transformer\GroupTransformer;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
@@ -22,7 +21,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
     protected $context;
     protected $transformerInterface;
     protected $authorizationChecker;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
     protected $eventDispatcher;
 
     /**
@@ -31,9 +30,9 @@ class GroupTransformerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn('foo');
+        Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn('foo');
 
         $this->transformerInterface = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupInterface');
         Phake::when($this->transformerInterface)->transform(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface'));
@@ -45,7 +44,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
         $this->transformer = new GroupTransformer(
             $this->facadeClass,
             $this->authorizationChecker,
-            $this->translationChoiceManager,
+            $this->multiLanguagesChoiceManager,
             $this->eventDispatcher
         );
         $this->transformer->setContext($this->context);
@@ -64,7 +63,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
      */
     public function testTransformWithWrongElement()
     {
-        $this->setExpectedException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
+        $this->expectException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->transformer->transform(Phake::mock('stdClass'));
     }
 
@@ -79,7 +78,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
 
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group)->getRoles()->thenReturn(array());
-        Phake::when($group)->getLabels()->thenReturn(new ArrayCollection());
+        Phake::when($group)->getLabels()->thenReturn(array());
         Phake::when($group)->getModelGroupRoles()->thenReturn(array());
 
         $facade = $this->transformer->transform($group);

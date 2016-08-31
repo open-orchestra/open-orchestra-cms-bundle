@@ -1,4 +1,5 @@
 open_orchestra_backoffice:
+    no_translation: No translation
     modal:
         close: Close
     scheme:

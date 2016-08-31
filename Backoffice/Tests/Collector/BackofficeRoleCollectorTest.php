@@ -18,7 +18,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
 {
     protected $roleRepository;
     protected $translator;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
     protected $fakeTrans = 'fakeTrans';
 
     /**
@@ -28,9 +28,9 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
     {
         $this->roleRepository = \Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         $this->translator = \Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->translationChoiceManager = \Phake::mock('OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface');
+        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->fakeTrans);
-        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($this->fakeTrans);
+        Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($this->fakeTrans);
     }
 
     /**
@@ -40,7 +40,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
     {
         $this->assertInstanceOf(
             'OpenOrchestra\Backoffice\Collector\RoleCollectorInterface',
-            new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false)
+            new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false)
         );
     }
     /**
@@ -51,7 +51,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
      */
     public function testAddAndGetRoles(array $newRoles, array $expectedRoles)
     {
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false);
         foreach ($newRoles as $newRole) {
             $collector->addRole($newRole);
         }
@@ -72,13 +72,13 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
         foreach ($newRoles as $newRole) {
             $role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
             Phake::when($role)->getName()->thenReturn($newRole);
-            Phake::when($role)->getDescriptions()->thenReturn(Phake::mock('Doctrine\Common\Collections\Collection'));
+            Phake::when($role)->getDescriptions()->thenReturn(array());
             $roles->add($role);
         }
 
         Phake::when($this->roleRepository)->findWorkflowRole()->thenReturn($roles);
 
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, true);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, true);
 
         $this->assertSame($expectedRoles, $collector->getRoles());
     }
@@ -105,7 +105,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
      */
     public function testGetRolesByType(array $newRoles, $type, array $expectedRoles)
     {
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false);
         foreach ($newRoles as $newRole) {
             $collector->addRole($newRole);
         }
@@ -187,7 +187,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
      */
     public function testHasTest(array $roles, $roleToCheck, $answer)
     {
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false);
         foreach ($roles as $newRole) {
             $collector->addRole($newRole);
         }

@@ -2,11 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -15,24 +13,24 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class ContentTypeType extends AbstractType
 {
-    protected $translateValueInitializer;
     protected $contentTypeClass;
+    protected $backOfficeLanguages;
     protected $translator;
 
     /**
-     * @param string                            $contentTypeClass
-     * @param TranslatorInterface               $translator
-     * @param TranslateValueInitializerListener $translateValueInitializer
+     * @param string              $contentTypeClass
+     * @param TranslatorInterface $translator
+     * @param array               $backOfficeLanguages
      */
     public function __construct(
         $contentTypeClass,
         TranslatorInterface $translator,
-        TranslateValueInitializerListener $translateValueInitializer
+        array $backOfficeLanguages
     )
     {
-        $this->translateValueInitializer = $translateValueInitializer;
         $this->contentTypeClass = $contentTypeClass;
         $this->translator = $translator;
+        $this->backOfficeLanguages = $backOfficeLanguages;
     }
 
     /**
@@ -41,7 +39,6 @@ class ContentTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
             ->add('contentTypeId', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
@@ -49,8 +46,9 @@ class ContentTypeType extends AbstractType
                     'class' => 'generate-id-dest'
                 )
             ))
-            ->add('names', 'oo_translated_value_collection', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.names'
+            ->add('names', 'oo_multi_languages', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.names',
+                'languages' => $this->backOfficeLanguages
             ))
             ->add('template', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.template.label',

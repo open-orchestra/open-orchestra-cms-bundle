@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\Collector;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 
 /**
  * Class BackofficeRoleCollector
@@ -14,19 +14,19 @@ class BackofficeRoleCollector implements RoleCollectorInterface
     protected $roles = array();
     protected $roleRepository;
     protected $translator;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
 
     /**
-     * @param RoleRepositoryInterface           $roleRepository
-     * @param TranslatorInterface               $translator
-     * @param TranslationChoiceManagerInterface $translationChoiceManager
-     * @param boolean                           $workflowRoleInGroup
+     * @param RoleRepositoryInterface              $roleRepository
+     * @param TranslatorInterface                  $translator
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param boolean                              $workflowRoleInGroup
      */
-    public function __construct(RoleRepositoryInterface $roleRepository, TranslatorInterface $translator, TranslationChoiceManagerInterface $translationChoiceManager, $workflowRoleInGroup)
+    public function __construct(RoleRepositoryInterface $roleRepository, TranslatorInterface $translator, MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager, $workflowRoleInGroup)
     {
         $this->roleRepository = $roleRepository;
         $this->translator = $translator;
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         if ($workflowRoleInGroup) {
             $this->loadWorkflowRole();
         }
@@ -55,7 +55,7 @@ class BackofficeRoleCollector implements RoleCollectorInterface
     {
         $workflowRoles = $this->roleRepository->findWorkflowRole();
         foreach ($workflowRoles as $workflowRole) {
-            $this->addRoleWithTranslation($workflowRole->getName(), $this->translationChoiceManager->choose($workflowRole->getDescriptions()));
+            $this->addRoleWithTranslation($workflowRole->getName(), $this->multiLanguagesChoiceManager->choose($workflowRole->getDescriptions()));
         }
     }
 

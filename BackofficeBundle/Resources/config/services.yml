@@ -2,6 +2,7 @@ parameters:
     open_orchestra_backoffice.manager.context.class: OpenOrchestra\Backoffice\Context\ContextManager
     open_orchestra_backoffice.listener.translate_value_initializer.class: OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener
     open_orchestra_backoffice.manager.translation_choice.class: OpenOrchestra\Backoffice\Manager\TranslationChoiceManager
+    open_orchestra_backoffice.manager.multi_languages_choice.class: OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManager
     open_orchestra_backoffice.manager.area.class: OpenOrchestra\Backoffice\Manager\AreaManager
     open_orchestra_backoffice.manager.node.class: OpenOrchestra\Backoffice\Manager\NodeManager
     open_orchestra_backoffice.manager.site.class: OpenOrchestra\Backoffice\Manager\SiteManager
@@ -26,10 +27,17 @@ services:
         arguments:
             - '@open_orchestra_backoffice.initializer.translated_value'
             - '%open_orchestra_model.document.field_type.class%'
+        deprecated: ~
     open_orchestra_backoffice.manager.translation_choice:
         class: '%open_orchestra_backoffice.manager.translation_choice.class%'
         arguments:
             - '@open_orchestra_backoffice.context_manager'
+        deprecated: ~
+    open_orchestra_backoffice.manager.multi_languages_choice:
+        class: '%open_orchestra_backoffice.manager.multi_languages_choice.class%'
+        arguments:
+            - '@open_orchestra_backoffice.context_manager'
+        deprecated: ~
     open_orchestra_backoffice.manager.area:
         class: '%open_orchestra_backoffice.manager.area.class%'
         arguments:

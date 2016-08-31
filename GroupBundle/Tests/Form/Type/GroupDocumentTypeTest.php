@@ -18,16 +18,16 @@ class GroupDocumentTypeTest extends AbstractBaseTestCase
     protected $type;
 
     protected $groupClass = 'groupClass';
-    protected $translationChoiceManager;
+    protected $multiLanguageChoiceManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->multiLanguageChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
 
-        $this->type = new GroupDocumentType($this->groupClass, $this->translationChoiceManager);
+        $this->type = new GroupDocumentType($this->groupClass, $this->multiLanguageChoiceManager);
     }
 
     /**
@@ -44,14 +44,14 @@ class GroupDocumentTypeTest extends AbstractBaseTestCase
     public function testConfigureOptions()
     {
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-        $translationChoiceManager = $this->translationChoiceManager;
+        $multiLanguageChoiceManager = $this->multiLanguageChoiceManager;
 
         $this->type->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
             'class' => $this->groupClass,
-            'choice_label' => function (GroupInterface $choice) use ($translationChoiceManager) {
-                return $translationChoiceManager->choose($choice->getLabels());
+            'choice_label' => function (GroupInterface $choice) use ($multiLanguageChoiceManager) {
+                return $multiLanguageChoiceManager->choose($choice->getLabels());
             },
         ));
     }

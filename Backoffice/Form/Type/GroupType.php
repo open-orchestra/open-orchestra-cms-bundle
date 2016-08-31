@@ -5,8 +5,6 @@ namespace OpenOrchestra\Backoffice\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class GroupType
@@ -14,18 +12,18 @@ use Symfony\Component\Form\FormEvents;
 class GroupType extends AbstractType
 {
     protected $groupClass;
-    protected $translateValueInitializer;
+    protected $backOfficeLanguages;
 
     /**
-     * @param string                            $groupClass
-     * @param TranslateValueInitializerListener $translateValueInitializer
+     * @param string $groupClass
+     * @param array  $backOfficeLanguages
      */
     public function __construct(
         $groupClass,
-        TranslateValueInitializerListener $translateValueInitializer
+        array $backOfficeLanguages
     ) {
         $this->groupClass = $groupClass;
-        $this->translateValueInitializer = $translateValueInitializer;
+        $this->backOfficeLanguages = $backOfficeLanguages;
     }
 
     /**
@@ -34,13 +32,13 @@ class GroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
             ->add('name', null, array(
                 'label' => 'open_orchestra_backoffice.form.group.name'
             ))
-            ->add('labels', 'oo_translated_value_collection', array(
-                'label' => 'open_orchestra_backoffice.form.group.label'
+            ->add('labels', 'oo_multi_languages', array(
+                'label' => 'open_orchestra_backoffice.form.group.label',
+                'languages' => $this->backOfficeLanguages
             ))
             ->add('site', 'oo_group_site_choice', array(
                 'label' => 'open_orchestra_backoffice.form.group.site',

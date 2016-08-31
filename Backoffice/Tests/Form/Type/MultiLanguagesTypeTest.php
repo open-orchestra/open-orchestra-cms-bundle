@@ -4,15 +4,15 @@ namespace OpenOrchestra\Backoffice\Tests\Form\Type;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesTextType;
+use OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType;
 
 /**
- * Class MultiLanguagesTextTypeTest
+ * Class MultiLanguagesTypeTest
  */
-class MultiLanguagesTextTypeTest extends AbstractBaseTestCase
+class MultiLanguagesTypeTest extends AbstractBaseTestCase
 {
     /**
-     * @var MultiLanguagesTextType
+     * @var MultiLanguagesType
      */
     protected $form;
 
@@ -21,7 +21,7 @@ class MultiLanguagesTextTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->form = new MultiLanguagesTextType();
+        $this->form = new MultiLanguagesType();
     }
 
     /**
@@ -37,7 +37,7 @@ class MultiLanguagesTextTypeTest extends AbstractBaseTestCase
      */
     public function testName()
     {
-        $this->assertSame('oo_multi_languages_text', $this->form->getName());
+        $this->assertSame('oo_multi_languages', $this->form->getName());
     }
 
     /**

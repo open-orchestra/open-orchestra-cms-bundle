@@ -43,7 +43,7 @@ parameters:
     open_orchestra_backoffice.type.internal_link.class: OpenOrchestra\Backoffice\Form\Type\Component\InternalLinkType
     open_orchestra_backoffice.type.site_site_alias.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteSiteAliasType
     open_orchestra_backoffice.type.default_listable_checkbox.class: OpenOrchestra\Backoffice\Form\Type\Component\DefaultListableCheckboxType
-    open_orchestra_backoffice.type.multi_languages_text.class: OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesTextType
+    open_orchestra_backoffice.type.multi_languages.class: OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -162,17 +162,17 @@ services:
         arguments:
             - '%open_orchestra_model.document.content_type.class%'
             - '@translator'
-            - '@open_orchestra_backoffice.listener.translate_value_initializer'
+            - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_content_type }
     open_orchestra_backoffice.type.field_type:
         class: '%open_orchestra_backoffice.type.field_type.class%'
         arguments:
-            - '@open_orchestra_backoffice.listener.translate_value_initializer'
             - '%open_orchestra_backoffice.field_types%'
             - '%open_orchestra_model.document.field_option.class%'
             - '%open_orchestra_model.document.field_type.class%'
             - '%open_orchestra_backoffice.field_types%'
+            - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_field_type }
     open_orchestra_backoffice.type.field_option:
@@ -206,7 +206,7 @@ services:
         class: '%open_orchestra_backoffice.type.status.class%'
         arguments:
             - '%open_orchestra_model.document.status.class%'
-            - '@open_orchestra_backoffice.listener.translate_value_initializer'
+            - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_status }
 
@@ -240,6 +240,7 @@ services:
 
     open_orchestra_backoffice.type.translated_value:
         class: '%open_orchestra_backoffice.type.translated_value.class%'
+        deprecated: ~
         arguments:
             - '%open_orchestra_model.document.translated_value.class%'
             - '%open_orchestra_base.administration_languages%'
@@ -247,6 +248,7 @@ services:
             - { name: form.type, alias: oo_translated_value }
     open_orchestra_backoffice.type.translated_value_collection:
         class: '%open_orchestra_backoffice.type.translated_value_collection.class%'
+        deprecated: ~
         tags:
             - { name: form.type, alias: oo_translated_value_collection }
     open_orchestra_backoffice.type.theme_choice:
@@ -328,7 +330,7 @@ services:
     open_orchestra_backoffice.type.role:
         class: '%open_orchestra_backoffice.type.role.class%'
         arguments:
-            - '@open_orchestra_backoffice.listener.translate_value_initializer'
+            - '%open_orchestra_base.administration_languages%'
             - '%open_orchestra_model.document.role.class%'
         tags:
             - { name: form.type, alias: oo_role }
@@ -336,7 +338,7 @@ services:
         class: '%open_orchestra_backoffice.type.group.class%'
         arguments:
             - '%open_orchestra_user.document.group.class%'
-            - '@open_orchestra_backoffice.listener.translate_value_initializer'
+            - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_group }
     open_orchestra_backoffice.type.redirection:
@@ -403,7 +405,7 @@ services:
         class: '%open_orchestra_backoffice.type.default_listable_checkbox.class%'
         tags:
             - { name: form.type, alias: oo_default_listable_checkbox}
-    open_orchestra_backoffice.type.multi_languages_text:
-        class: '%open_orchestra_backoffice.type.multi_languages_text.class%'
+    open_orchestra_backoffice.type.multi_languages:
+        class: '%open_orchestra_backoffice.type.multi_languages.class%'
         tags:
-            - { name: form.type, alias: oo_multi_languages_text}
+            - { name: form.type, alias: oo_multi_languages}

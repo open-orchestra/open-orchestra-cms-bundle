@@ -4,11 +4,14 @@ namespace OpenOrchestra\Backoffice\Tests\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use Phake;
 use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 
 /**
  * Class TranslateValueInitializerListenerTest
+ *
+ * @deprecated will be removed in 2.0
  */
 class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
 {
@@ -26,7 +29,7 @@ class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
     protected $event;
     protected $object;
     protected $fields;
-    protected $fieldTypeClass;
+    protected $fakeClass;
     protected $translatedValueDefaultValueInitializer;
 
     /**
@@ -34,11 +37,11 @@ class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->fieldTypeClass = 'OpenOrchestra\ModelBundle\Document\FieldType';
+        $this->fakeClass = 'OpenOrchestra\Backoffice\Tests\EventListener\FakeClassWithTranslatedProperties';
         $this->translatedValueDefaultValueInitializer = Phake::mock('OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer');
         $this->names = new ArrayCollection();
         $this->fields = new ArrayCollection();
-        $this->object = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        $this->object = Phake::mock('OpenOrchestra\Backoffice\Tests\EventListener\FakeClassWithTranslatedProperties');
         Phake::when($this->object)->getNames()->thenReturn($this->names);
         Phake::when($this->object)->getFields()->thenReturn($this->fields);
 
@@ -47,7 +50,7 @@ class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
         Phake::when($this->event)->getData()->thenReturn($this->object);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->listener = new TranslateValueInitializerListener($this->translatedValueDefaultValueInitializer, $this->fieldTypeClass);
+        $this->listener = new TranslateValueInitializerListener($this->translatedValueDefaultValueInitializer, $this->fakeClass);
     }
 
     /**
@@ -70,7 +73,7 @@ class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
 
         $this->listener->preSetData($this->event);
 
-        Phake::verify($this->translatedValueDefaultValueInitializer)->generate($this->names);
+        Phake::verify($this->translatedValueDefaultValueInitializer)->generate(Phake::anyParameters());
     }
 
     /**
@@ -134,6 +137,26 @@ class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
         return array(
             array('stdClass'),
             array('OpenOrchestra\ModelInterface\Model\FieldTypeInterface'),
+        );
+    }
+}
+
+class FakeClassWithTranslatedProperties implements TranslatedValueContainerInterface
+{
+    public function getNames()
+    {
+        return new ArrayCollection();
+    }
+
+    public function getFields()
+    {
+        return new ArrayCollection();
+    }
+
+    public function getTranslatedProperties()
+    {
+        return array(
+            "getNames"
         );
     }
 }

@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use OpenOrchestra\BackofficeBundle\StrategyManager\authorizeStatusChangeManager;
@@ -22,29 +22,29 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $authorizeStatusChangeManager;
     protected $roleRepository;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
     protected $translator;
 
     /**
-     * @param string                        $facadeClass
-     * @param AuthorizeStatusChangeManager  $authorizeStatusChangeManager
-     * @param RoleRepositoryInterface       $roleRepository
-     * @param TranslationChoiceManager      $translationChoiceManager
-     * @param TranslatorInterface           $translator
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param string                               $facadeClass
+     * @param AuthorizeStatusChangeManager         $authorizeStatusChangeManager
+     * @param RoleRepositoryInterface              $roleRepository
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param TranslatorInterface                  $translator
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      */
     public function __construct(
         $facadeClass,
         AuthorizeStatusChangeManager $authorizeStatusChangeManager,
         RoleRepositoryInterface $roleRepository,
-        TranslationChoiceManager $translationChoiceManager,
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         TranslatorInterface $translator,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
         $this->roleRepository = $roleRepository;
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->translator = $translator;
     }
 
@@ -66,7 +66,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->published = $status->isPublished();
         $facade->initial = $status->isInitial();
-        $facade->label = $this->translationChoiceManager->choose($status->getLabels());
+        $facade->label = $this->multiLanguagesChoiceManager->choose($status->getLabels());
         $facade->displayColor = $this->translator->trans('open_orchestra_backoffice.form.status.color.' . $status->getDisplayColor());
         $facade->codeColor = $status->getDisplayColor();
         $facade->id = $status->getId();

@@ -6,8 +6,12 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 
+@trigger_error('The '.__NAMESPACE__.'\EmbedKeyword class is deprecated since version 1.2.0 and will be removed in 2.0, use MultiLanguagesChoiceManager', E_USER_DEPRECATED);
+
 /**
  * Class TranslationChoiceManager
+ *
+ * @deprecated will be removed in 2.0, use MultiLanguagesChoiceManager
  */
 class TranslationChoiceManager implements TranslationChoiceManagerInterface
 {

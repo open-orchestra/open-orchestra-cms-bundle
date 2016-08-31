@@ -5,8 +5,12 @@ namespace OpenOrchestra\Backoffice\Initializer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 
+@trigger_error('The '.__NAMESPACE__.'\EmbedKeyword class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
+
 /**
  * Class TranslatedValueDefaultValueInitializer
+ *
+ * @deprecated will be removed in 2.0
  */
 class TranslatedValueDefaultValueInitializer implements DefaultValueInitializerInterface
 {

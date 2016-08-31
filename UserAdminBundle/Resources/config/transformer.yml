@@ -10,7 +10,7 @@ services:
         arguments:
             - '%open_orchestra_user_admin.facade.user.class%'
             - '@event_dispatcher'
-            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
