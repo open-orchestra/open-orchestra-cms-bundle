@@ -50,6 +50,28 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
         if ($status instanceof StatusInterface) {
             $this->invalidateTagsContent($content, $status);
         }
+        if (!$content->isStatusable()) {
+            $this->cacheableManager->invalidateTags(
+                array(
+                    $this->tagManager->formatContentIdTag($content->getContentId())
+                )
+            );
+        }
+    }
+
+   /**
+     * @param ContentEvent $event
+     */
+    public function invalidateNonStatusableContent(ContentEvent $event)
+    {
+        $content = $event->getContent();
+        if (!$content->isStatusable()) {
+            $this->cacheableManager->invalidateTags(
+                array(
+                    $this->tagManager->formatContentIdTag($content->getContentId())
+                )
+            );
+        }
     }
 
     /**
@@ -74,7 +96,10 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     {
         return array(
             ContentEvents::CONTENT_CHANGE_STATUS => 'invalidateCacheOnStatusChanged',
-            ContentEvents::CONTENT_DELETE => 'invalidateCacheOnDeletePublishedContent'
+            ContentEvents::CONTENT_DELETE => 'invalidateCacheOnDeletePublishedContent',
+            ContentEvents::CONTENT_UPDATE => 'invalidateNonStatusableContent',
+            ContentEvents::CONTENT_RESTORE => 'invalidateNonStatusableContent',
+            ContentEvents::CONTENT_DUPLICATE => 'invalidateNonStatusableContent',
         );
     }
 }
