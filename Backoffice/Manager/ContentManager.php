@@ -52,6 +52,7 @@ class ContentManager
 
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($contentType);
         $content->setLinkedToSite($contentType->isLinkedToSite());
+        $content->setStatusable($contentType->isStatusable());
 
         return $content;
     }

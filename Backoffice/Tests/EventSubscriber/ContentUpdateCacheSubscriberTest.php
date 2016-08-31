@@ -66,6 +66,10 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
         return array(
             array(ContentEvents::CONTENT_CHANGE_STATUS),
             array(ContentEvents::CONTENT_DELETE),
+            array(ContentEvents::CONTENT_UPDATE),
+            array(ContentEvents::CONTENT_DELETE),
+            array(ContentEvents::CONTENT_RESTORE),
+            array(ContentEvents::CONTENT_DUPLICATE),
         );
     }
 
@@ -102,13 +106,38 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
      *
      * @dataProvider provideCountInvalidateAndStatus
      */
-    public function testDeleteContent($countInvalidate, $isPublished)
+    public function testDeleteStatusableContent($countInvalidate, $isPublished)
     {
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn($isPublished);
         Phake::when($this->content)->getStatus()->thenReturn($status);
+        Phake::when($this->content)->isStatusable()->thenReturn(true);
         $this->subscriber->invalidateCacheOnDeletePublishedContent($this->contentEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
+    }
+
+    /**
+     * test invalidate on deleting non statusable content
+     */
+    public function testDeleteNonStatusableContent()
+    {
+        Phake::when($this->content)->getStatus()->thenReturn(null);
+        Phake::when($this->content)->isStatusable()->thenReturn(false);
+        $this->subscriber->invalidateCacheOnDeletePublishedContent($this->contentEvent);
+
+        Phake::verify($this->cacheableManager)->invalidateTags(array($this->contentIdTag));
+    }
+
+    /**
+     * test invalidate on non statusable content
+     */
+    public function testInvalidateNonStatusableContent()
+    {
+        Phake::when($this->content)->getStatus()->thenReturn(null);
+        Phake::when($this->content)->isStatusable()->thenReturn(false);
+        $this->subscriber->invalidateNonStatusableContent($this->contentEvent);
+
+        Phake::verify($this->cacheableManager)->invalidateTags(array($this->contentIdTag));
     }
 }

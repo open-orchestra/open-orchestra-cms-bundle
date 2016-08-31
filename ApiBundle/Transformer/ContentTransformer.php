@@ -62,8 +62,10 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $content->getVersion();
         $facade->contentTypeVersion = $content->getContentTypeVersion();
         $facade->language = $content->getLanguage();
-        $facade->status = $this->getTransformer('status')->transform($content->getStatus());
-        $facade->statusLabel = $facade->status->label;
+        if ($content->isStatusable()) {
+            $facade->status = $this->getTransformer('status')->transform($content->getStatus());
+            $facade->statusLabel = $facade->status->label;
+        }
         $facade->createdAt = $content->getCreatedAt();
         $facade->updatedAt = $content->getUpdatedAt();
         $facade->createdBy = $content->getCreatedBy();
@@ -120,13 +122,16 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_parameter_languages_show'));
 
-        $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_content_list_status', array(
-            'contentMongoId' => $content->getId()
-        )));
 
-        $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_content_update', array(
-            'contentMongoId' => $content->getId()
-        )));
+        if ($content->isStatusable()) {
+            $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_content_list_status', array(
+                'contentMongoId' => $content->getId()
+            )));
+
+            $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_content_update', array(
+                'contentMongoId' => $content->getId()
+            )));
+        }
 
         return $facade;
     }
