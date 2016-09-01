@@ -34,6 +34,7 @@ class ContentManagerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
 
@@ -68,17 +69,29 @@ class ContentManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int $version
-     * @param int $expectedVersion
+     * @param int  $version
+     * @param int  $version
+     * @param bool $getVersion
      *
      * @dataProvider provideVersionsAndExpected
      */
-    public function testNewVersionContent($version, $lastVersion, $expectedVersion)
+    public function testNewVersionContent($version, $getVersion, $lastVersion, $expectedVersion)
     {
-        Phake::when($this->content)->getVersion()->thenReturn($version);
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+
+        $contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        Phake::when($contentType)->isVersionable()->thenReturn($getVersion);
+
+        $contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
+        Phake::when($contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($contentType);
+
+        $manager = new ContentManager($this->contextManager, $this->contentClass, $contentTypeRepository, $this->versionableSaver);
+
+        Phake::when($content)->getVersion()->thenReturn($version);
         $lastContent = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($lastContent)->getVersion()->thenReturn($lastVersion);
-        $newContent = $this->manager->newVersionContent($this->content, $lastContent);
+
+        $newContent = $manager->newVersionContent($this->content, $lastContent);
 
         Phake::verify($newContent)->setVersion($expectedVersion);
         Phake::verify($newContent)->setStatus(null);
@@ -93,8 +106,10 @@ class ContentManagerTest extends AbstractBaseTestCase
     public function provideVersionsAndExpected()
     {
         return array(
-            array(1, 1, 2),
-            array(5, 6, 7),
+            array(1, true, 1, 2),
+            array(5, true, 6, 7),
+            array(1, false, 1, 1),
+            array(5, false, 6, 1),
         );
     }
 
