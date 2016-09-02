@@ -412,6 +412,7 @@ open_orchestra_backoffice:
         tiny_mce_wysiwyg:
             title: Rich text block
             description: Display a rich text area.
+            searchable: Indexable
         sub_menu:
             title: SubMenu Block
             description: Display a menu.

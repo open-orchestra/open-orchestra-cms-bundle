@@ -28,9 +28,23 @@ class TinyMCEWysiwygStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('searchable', 'checkbox', array(
+            'label' => 'open_orchestra_backoffice.block.tiny_mce_wysiwyg.searchable',
+            'required' => false,
+        ));
         $builder->add('htmlContent', 'oo_tinymce', array(
             'constraints' => new NotBlank(),
         ));
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultConfiguration()
+    {
+        return array(
+            'searchable' => true
+        );
     }
 
     /**
