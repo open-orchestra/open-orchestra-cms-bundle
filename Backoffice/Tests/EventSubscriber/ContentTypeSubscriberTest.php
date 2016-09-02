@@ -94,7 +94,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
-        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
+        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         $this->constraintsNotBlank =  new NotBlank();
 
         $this->contentAttributeClass = 'OpenOrchestra\ModelBundle\Document\ContentAttribute';

@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;

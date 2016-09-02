@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**

@@ -30,7 +30,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
+        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn('foo');
 

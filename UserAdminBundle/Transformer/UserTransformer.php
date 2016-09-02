@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\UserBundle\Document\User;
 use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
 use OpenOrchestra\UserAdminBundle\Event\UserFacadeEvent;

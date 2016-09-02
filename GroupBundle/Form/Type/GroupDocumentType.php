@@ -3,7 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Form\Type;
 
 use OpenOrchestra\Backoffice\Form\Type\AbstractGroupChoiceType;
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 

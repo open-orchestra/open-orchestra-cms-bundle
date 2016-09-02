@@ -28,7 +28,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
     {
         $this->roleRepository = \Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         $this->translator = \Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
+        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->fakeTrans);
         Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($this->fakeTrans);
     }

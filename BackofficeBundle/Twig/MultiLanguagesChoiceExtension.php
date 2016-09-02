@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Twig;
 
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 
 /**
  * Class MultiLanguagesChoiceExtension
