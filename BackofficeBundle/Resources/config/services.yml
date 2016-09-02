@@ -38,7 +38,6 @@ services:
         arguments:
             - '@open_orchestra_backoffice.context_manager'
             - '@translator'
-        deprecated: ~
     open_orchestra_backoffice.manager.area:
         class: '%open_orchestra_backoffice.manager.area.class%'
         arguments:
