@@ -40,7 +40,7 @@ class ReferenceManager
             $strategy->addReferencesToEntity($entity);
         }
 
-         $this->objectManager->flush();
+        $this->objectManager->flush();
     }
 
     /**
@@ -52,7 +52,7 @@ class ReferenceManager
             $strategy->removeReferencesToEntity($entity);
         }
 
-         $this->objectManager->flush();
+        $this->objectManager->flush();
     }
 
     /**

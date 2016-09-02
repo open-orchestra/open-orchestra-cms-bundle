@@ -49,7 +49,7 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
                 ->findByUsedInEntity($contentId, ContentInterface::ENTITY_TYPE);
 
             foreach ($keywordsUsedInContent as $keyword) {
-                $keyword->removeUseEntity($contentId, ContentInterface::ENTITY_TYPE);
+                $keyword->removeUseInEntity($contentId, ContentInterface::ENTITY_TYPE);
             }
         }
     }
