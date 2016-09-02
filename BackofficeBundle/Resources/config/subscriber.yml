@@ -9,6 +9,7 @@ parameters:
     open_orchestra_backoffice.subscriber.content_type_order_field.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeOrderFieldSubscriber
     open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
     open_orchestra_backoffice.subscriber.update_status.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber
+    open_orchestra_backoffice.subscriber.update_nodes_theme.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateNodesThemeSubscriber
     open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
     open_orchestra_backoffice.subscriber.delete_content.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteContentSubscriber
     open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
@@ -86,6 +87,13 @@ services:
         class: '%open_orchestra_backoffice.subscriber.update_status.class%'
         arguments:
             - '@open_orchestra_backoffice.authorize_status_change_manager'
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.update_nodes_theme:
+        class: '%open_orchestra_backoffice.subscriber.update_nodes_theme.class%'
+        arguments:
+            - '@open_orchestra_model.repository.node'
+            - '@object_manager'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.delete_node:
