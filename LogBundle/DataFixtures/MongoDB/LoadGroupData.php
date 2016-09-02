@@ -7,7 +7,6 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\GroupBundle\Document\Group;
 use OpenOrchestra\LogBundle\NavigationPanel\Strategies\LogPanelStrategy;
-use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
@@ -27,23 +26,6 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
     }
 
     /**
-     * Generate a translatedValue
-     *
-     * @param string $language
-     * @param string $value
-     *
-     * @return TranslatedValue
-     */
-    protected function generateTranslatedValue($language, $value)
-    {
-        $label = new TranslatedValue();
-        $label->setLanguage($language);
-        $label->setValue($value);
-
-        return $label;
-    }
-
-    /**
      * @param string $name
      * @param string $enLabel
      * @param string $frLabel
@@ -58,10 +40,8 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
         $group = new Group();
         $group->setName($name);
 
-        $enLabel = $this->generateTranslatedValue('en', $enLabel);
-        $frLabel = $this->generateTranslatedValue('fr', $frLabel);
-        $group->addLabel($enLabel);
-        $group->addLabel($frLabel);
+        $group->addLabel('en', $enLabel);
+        $group->addLabel('fr', $frLabel);
 
         if (!is_null($role)) {
             $group->addRole($role);

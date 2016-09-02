@@ -6,8 +6,12 @@ use OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use Symfony\Component\Form\FormEvent;
 
+@trigger_error('The '.__NAMESPACE__.'\EmbedKeyword class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
+
 /**
  * Class TranslateValueInitializerListener
+ *
+ * @deprecated will be removed in 2.0
  */
 class TranslateValueInitializerListener
 {

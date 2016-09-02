@@ -23,7 +23,6 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
     protected $subForm;
     protected $event;
     protected $content;
-    protected $collection;
     protected $repository;
     protected $fieldType1;
     protected $fieldType2;
@@ -35,7 +34,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
     protected $contentAttribute;
     protected $contentAttributClass;
     protected $contentTypeVersion = 1;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
     protected $fieldTypesConfiguration;
     protected $constraintsNotBlank;
     protected $valueTransformerManager;
@@ -59,8 +58,6 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
                 )
         );
 
-        $this->collection = Phake::mock('Doctrine\Common\Collections\Collection');
-
         $this->contentAttributClass = 'OpenOrchestra\ModelBundle\Document\ContentAttribute';
 
         $this->formConfig = Phake::mock('Symfony\Component\Form\FormConfigInterface');
@@ -83,11 +80,11 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->event)->getData()->thenReturn($this->content);
 
         $this->fieldType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
-        Phake::when($this->fieldType1)->getLabels()->thenReturn($this->collection);
+        Phake::when($this->fieldType1)->getLabels()->thenReturn(array());
         $this->fieldType2 = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
-        Phake::when($this->fieldType2)->getLabels()->thenReturn($this->collection);
+        Phake::when($this->fieldType2)->getLabels()->thenReturn(array());
         $this->fieldType3 = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
-        Phake::when($this->fieldType3)->getLabels()->thenReturn($this->collection);
+        Phake::when($this->fieldType3)->getLabels()->thenReturn(array());
         $this->fieldCollection = new ArrayCollection();
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->contentType)->getFields()->thenReturn($this->fieldCollection);
@@ -97,7 +94,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
-        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
         $this->constraintsNotBlank =  new NotBlank();
 
         $this->contentAttributeClass = 'OpenOrchestra\ModelBundle\Document\ContentAttribute';
@@ -109,7 +106,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,
             $this->contentAttributClass,
-            $this->translationChoiceManager,
+            $this->multiLanguagesChoiceManager,
             $this->fieldTypesConfiguration,
             $this->valueTransformerManager,
             $translator
@@ -161,7 +158,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
+        Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
         Phake::when($this->fieldType1)->getId()->thenReturn(null);
@@ -217,7 +214,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
+        Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
         Phake::when($this->fieldType1)->getId()->thenReturn('fake-id');
@@ -265,7 +262,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
             'required' => true
         );
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
+        Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);

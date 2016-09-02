@@ -7,8 +7,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+@trigger_error('The '.__NAMESPACE__.'\EmbedKeyword class is deprecated since version 1.2.0 and will be removed in 2.0. use MultiLanguagesType', E_USER_DEPRECATED);
+
 /**
  * Class TranslatedValueType
+ *
+ * @deprecated will be removed in 2.0, use MultiLanguagesType
  */
 class TranslatedValueType extends AbstractType
 {

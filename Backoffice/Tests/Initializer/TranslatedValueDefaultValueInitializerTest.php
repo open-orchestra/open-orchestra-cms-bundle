@@ -9,6 +9,7 @@ use Phake;
 
 /**
  * Test TranslatedValueDefaultValueInitializerTest
+ * @deprecated will be removed in 2.0
  */
 class TranslatedValueDefaultValueInitializerTest extends AbstractBaseTestCase
 {

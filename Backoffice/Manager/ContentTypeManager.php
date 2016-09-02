@@ -41,16 +41,8 @@ class ContentTypeManager
     {
         $newContentType = clone $contentType;
 
-        foreach ($contentType->getNames() as $name) {
-            $newName = clone $name;
-            $newContentType->addName($newName);
-        }
         foreach ($contentType->getFields() as $field) {
             $newField = clone $field;
-            foreach ($field->getLabels() as $label) {
-                $newLabel = clone $label;
-                $newField->addLabel($newLabel);
-            }
             foreach ($field->getOptions() as $option) {
                 $newOption = clone $option;
                 $newField->addOption($newOption);

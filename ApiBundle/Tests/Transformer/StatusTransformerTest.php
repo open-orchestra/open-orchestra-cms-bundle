@@ -30,10 +30,10 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->authorizeStatusChangeManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager');
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
-        $this->translator = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
-        $translationChoiceManager = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         $statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         $roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
@@ -48,7 +48,14 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($transformerManager)->getGroupContext()->thenReturn($this->groupContext);
         Phake::when($transformerManager)->getRouter()->thenReturn($router);
 
-        $this->transformer = new StatusTransformer($this->facadeClass, $this->authorizeStatusChangeManager, $roleRepository, $this->translator, $translationChoiceManager, $this->authorizationChecker);
+        $this->transformer = new StatusTransformer(
+            $this->facadeClass,
+            $this->authorizeStatusChangeManager,
+            $roleRepository,
+            $multiLanguagesChoiceManager,
+            $this->translator,
+            $this->authorizationChecker
+        );
         $this->transformer->setContext($transformerManager);
     }
 
@@ -65,7 +72,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
-        $labels = Phake::mock('Doctrine\Common\Collections\Collection');
         $role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
 
         $roles = new ArrayCollection();
@@ -82,7 +88,7 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($this->status)->isInitial()->thenReturn($initial);
         Phake::when($this->status)->getFromRoles()->thenReturn($roles);
         Phake::when($this->status)->getToRoles()->thenReturn($roles);
-        Phake::when($this->status)->getLabels()->thenReturn($labels);
+        Phake::when($this->status)->getLabels()->thenReturn(array());
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
 
         $facade = $this->transformer->transform($this->status, $document);

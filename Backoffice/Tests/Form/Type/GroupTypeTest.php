@@ -17,15 +17,13 @@ class GroupTypeTest extends AbstractBaseTestCase
     protected $form;
 
     protected $groupClass = 'groupClass';
-    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
-        $this->form = new GroupType($this->groupClass, $this->translateValueInitializer);
+        $this->form = new GroupType($this->groupClass, array());
     }
 
     /**

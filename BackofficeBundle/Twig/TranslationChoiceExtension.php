@@ -5,8 +5,12 @@ namespace OpenOrchestra\BackofficeBundle\Twig;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
+@trigger_error('The '.__NAMESPACE__.'\EmbedKeyword class is deprecated since version 1.2.0 and will be removed in 2.0, use MultiLanguagesChoiceExtension', E_USER_DEPRECATED);
+
 /**
  * Class TranslationChoiceExtension
+ *
+ * @deprecated will be removed in 2.0, use MultiLanguagesChoiceExtension
  */
 class TranslationChoiceExtension extends \Twig_Extension
 {

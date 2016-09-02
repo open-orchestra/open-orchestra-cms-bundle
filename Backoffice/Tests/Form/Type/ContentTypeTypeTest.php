@@ -15,7 +15,6 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
     protected $form;
     protected $translator;
     protected $class = 'content_type';
-    protected $translateValueInitializer;
     protected $translatedLabel = 'existing option';
 
     /**
@@ -23,12 +22,10 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
-
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
 
-        $this->form = new ContentTypeType($this->class, $this->translator, $this->translateValueInitializer);
+        $this->form = new ContentTypeType($this->class, $this->translator, array());
     }
 
     /**
@@ -55,10 +52,6 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.add');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.new');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.delete');
-        Phake::verify($builder)->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            array($this->translateValueInitializer, 'preSetData')
-        );
     }
 
     /**

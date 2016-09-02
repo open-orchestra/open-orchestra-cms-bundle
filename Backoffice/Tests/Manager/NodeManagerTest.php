@@ -340,6 +340,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->getToRoles()->thenReturn(array());
         Phake::when($status)->getFromRoles()->thenReturn(array());
+        Phake::when($status)->getLabels()->thenReturn(array());
 
         return array(
             array('fake_language', 'fake_site_Id', $parentNode0, null),

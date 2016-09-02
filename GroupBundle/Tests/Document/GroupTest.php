@@ -44,10 +44,7 @@ class GroupTest extends AbstractBaseTestCase
      */
     public function testLabels($language, $value)
     {
-        $label = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
-        Phake::when($label)->getLanguage()->thenReturn($language);
-        Phake::when($label)->getValue()->thenReturn($value);
-        $this->group->addLabel($label);
+        $this->group->addLabel($language, $value);
 
         $this->assertSame($value, $this->group->getLabel($language));
     }
@@ -61,14 +58,6 @@ class GroupTest extends AbstractBaseTestCase
             array('en', 'foo'),
             array('fr', 'bar'),
         );
-    }
-
-    /**
-     * test getTranslatedProperties
-     */
-    public function testGetTranslatedProperties()
-    {
-        $this->assertSame(array('getLabels'), $this->group->getTranslatedProperties());
     }
 
     /**

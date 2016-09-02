@@ -123,7 +123,7 @@
                 data-add="{{ path('open_orchestra_backoffice_content_new', {'contentType': contentType.contentTypeId}) }}"
                 data-datatable-parameter-name="{{ datatableParameterNames[loop.index0] }}"
             >
-                {{ contentType.names| trans_choose }}
+                {{ contentType.names| multi_languages_choose }}
             </a>
         </li>
     {% endfor %}

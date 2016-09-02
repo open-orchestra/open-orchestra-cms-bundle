@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFacadeEvent;
@@ -11,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class GroupTransformer
@@ -19,22 +19,22 @@ use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $eventDispatcher;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
 
     /**
-     * @param string                        $facadeClass
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TranslationChoiceManager      $translationChoiceManager
-     * @param EventDispatcherInterface      $eventDispatcher
+     * @param string                               $facadeClass
+     * @param AuthorizationCheckerInterface        $authorizationChecker
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param EventDispatcherInterface             $eventDispatcher
      */
     public function __construct(
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
-        TranslationChoiceManager $translationChoiceManager,
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         EventDispatcherInterface $eventDispatcher
     ){
         parent::__construct($facadeClass, $authorizationChecker);
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -55,7 +55,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->id = $group->getId();
         $facade->name = $group->getName();
-        $facade->label = $this->translationChoiceManager->choose($group->getLabels());
+        $facade->label = $this->multiLanguagesChoiceManager->choose($group->getLabels());
 
         foreach ($group->getRoles() as $role) {
             $facade->addRole($role);

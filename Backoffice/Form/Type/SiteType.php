@@ -84,12 +84,12 @@ class SiteType extends AbstractType
                 'precision' => 2,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.priority.helper'),
             ))
-            ->add('metaKeywords', 'oo_multi_languages_text', array(
+            ->add('metaKeywords', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
                 'languages' => $this->frontLanguages
             ))
-            ->add('metaDescriptions', 'oo_multi_languages_text', array(
+            ->add('metaDescriptions', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
                 'languages' => $this->frontLanguages

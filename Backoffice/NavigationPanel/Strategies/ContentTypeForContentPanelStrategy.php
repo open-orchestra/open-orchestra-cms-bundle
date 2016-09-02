@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -19,16 +19,16 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationStrategy
     const ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT = 'ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT';
 
     protected $contentTypes;
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
 
     /**
-     * @param ContentTypeRepositoryInterface $contentTypeRepository
-     * @param ContextManager                 $contextManager
-     * @param string                         $parent
-     * @param int                            $weight
-     * @param array                          $defaultDatatableParameter
-     * @param TranslatorInterface            $translator
-     * @param TranslationChoiceManager       $translationChoiceManager
+     * @param ContentTypeRepositoryInterface       $contentTypeRepository
+     * @param ContextManager                       $contextManager
+     * @param string                               $parent
+     * @param int                                  $weight
+     * @param array                                $dataParameter
+     * @param TranslatorInterface                  $translator
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
@@ -37,10 +37,10 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationStrategy
         $weight,
         array $dataParameter,
         TranslatorInterface $translator,
-        TranslationChoiceManager $translationChoiceManager
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
     ) {
         $this->contentTypes = $contentTypeRepository->findAllNotDeletedInLastVersion($contextManager->getCurrentLocale());
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
 
         parent::__construct('content_type_for_content', $weight, $parent, self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $dataParameter, $translator);
     }
@@ -88,7 +88,7 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationStrategy
             foreach ($fields as $field) {
                 $dataParameter[$contentTypeId][] = array(
                     'name'           => 'attributes.' . $field->getFieldId() . '.string_value',
-                    'title'          => $this->translationChoiceManager->choose($field->getLabels()),
+                    'title'          => $this->multiLanguagesChoiceManager->choose($field->getLabels()),
                     'visible'        => $field->getListable() === true,
                     'activateColvis' => true,
                     'orderable'      => $field->isOrderable(),

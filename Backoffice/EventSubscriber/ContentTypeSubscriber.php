@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
@@ -14,7 +15,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ContentTypeSubscriber implements EventSubscriberInterface
 {
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
     protected $contentTypeRepository;
     protected $contentAttributeClass;
     protected $fieldTypesConfiguration;
@@ -31,17 +31,17 @@ class ContentTypeSubscriber implements EventSubscriberInterface
     protected $translator;
 
     /**
-     * @param ContentTypeRepositoryInterface $contentTypeRepository
-     * @param string                         $contentAttributeClass
-     * @param TranslationChoiceManager       $translationChoiceManager
-     * @param array                          $fieldTypesConfiguration
-     * @param ValueTransformerManager        $valueTransformerManager
-     * @param TranslatorInterface            $translator
+     * @param ContentTypeRepositoryInterface       $contentTypeRepository
+     * @param string                               $contentAttributeClass
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param array                                $fieldTypesConfiguration
+     * @param ValueTransformerManager              $valueTransformerManager
+     * @param TranslatorInterface                  $translator
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
         $contentAttributeClass,
-        TranslationChoiceManager $translationChoiceManager,
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         $fieldTypesConfiguration,
         ValueTransformerManager $valueTransformerManager,
         TranslatorInterface $translator
@@ -49,7 +49,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentAttributeClass = $contentAttributeClass;
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->fieldTypesConfiguration = $fieldTypesConfiguration;
         $this->valueTransformerManager = $valueTransformerManager;
         $this->translator = $translator;
@@ -86,7 +86,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
                 ));
             }
 
-            $this->addContentTypeFieldsToForm($contentType->getFields(), $form, $data);
+            $this->addContentTypeFieldsToForm($contentType->getFields(), $form);
         }
     }
 
@@ -149,9 +149,8 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      *
      * @param array<FieldTypeInterface> $contentTypeFields
      * @param FormInterface             $form
-     * @param ContentInterface          $data
      */
-    protected function addContentTypeFieldsToForm($contentTypeFields, FormInterface $form, ContentInterface $data)
+    protected function addContentTypeFieldsToForm($contentTypeFields, FormInterface $form)
     {
         /** @var FieldTypeInterface $contentTypeField */
         foreach ($contentTypeFields as $contentTypeField) {
@@ -174,7 +173,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
 
         $fieldParameters = array_merge(
             array(
-                'label' => $this->translationChoiceManager->choose($contentTypeField->getLabels()),
+                'label' => $this->multiLanguagesChoiceManager->choose($contentTypeField->getLabels()),
                 'mapped' => false,
             ),
             $this->getFieldOptions($contentTypeField)

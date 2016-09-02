@@ -2,10 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -14,15 +12,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class StatusType extends AbstractType
 {
     protected $statusClass;
-    protected $translateValueInitializer;
+    protected $backOfficeLanguages;
 
     /**
-     * @param string                            $statusClass
-     * @param TranslateValueInitializerListener $translateValueInitializer
+     * @param string $statusClass
+     * @param array  $backOfficeLanguages
      */
-    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer)
+    public function __construct($statusClass, array $backOfficeLanguages)
     {
-        $this->translateValueInitializer = $translateValueInitializer;
+        $this->backOfficeLanguages = $backOfficeLanguages;
         $this->statusClass = $statusClass;
     }
 
@@ -32,8 +30,6 @@ class StatusType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
-
         $builder->add('name', null, array(
             'label' => 'open_orchestra_backoffice.form.status.name'
         ));
@@ -45,8 +41,9 @@ class StatusType extends AbstractType
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.status.initial'
         ));
-        $builder->add('labels', 'oo_translated_value_collection', array(
-            'label' => 'open_orchestra_backoffice.form.status.labels'
+        $builder->add('labels', 'oo_multi_languages', array(
+            'label' => 'open_orchestra_backoffice.form.status.labels',
+            'languages' => $this->backOfficeLanguages
         ));
         $builder->add('displayColor', 'orchestra_color_choice', array(
             'label' => 'open_orchestra_backoffice.form.status.display_color'
