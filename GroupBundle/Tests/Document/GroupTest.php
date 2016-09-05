@@ -89,7 +89,7 @@ class GroupTest extends AbstractBaseTestCase
         return array(
             array('name', 'name_2', array('en' => 'labelen'), array('en' => 'labelen_2')),
             array('name_2', 'name_3', array('en' => 'labelen_2'), array('en' => 'labelen_3')),
-            array('name_2_55', 'name_2_56', array('en' => 'labelen2_5'), array('en' => 'labelen2_5')),
+            array('name_2_55', 'name_2_56', array('en' => 'labelen2_5'), array('en' => 'labelen2_6')),
         );
     }
 
