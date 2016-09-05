@@ -14,6 +14,7 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTransformer
@@ -21,22 +22,26 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $statusRepository;
+    protected $contentTypeRepository;
     protected $eventDispatcher;
 
     /**
-     * @param string                        $facadeClass
-     * @param StatusRepositoryInterface     $statusRepository
-     * @param EventDispatcherInterface      $eventDispatcher
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param string                         $facadeClass
+     * @param StatusRepositoryInterface      $statusRepository
+     * @param ContentTypeRepositoryInterface $contentTypeRepository,
+     * @param EventDispatcherInterface       $eventDispatcher
+     * @param AuthorizationCheckerInterface  $authorizationChecker
      */
     public function __construct(
         $facadeClass,
         StatusRepositoryInterface $statusRepository,
+        ContentTypeRepositoryInterface $contentTypeRepository,
         EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->statusRepository = $statusRepository;
+        $this->contentTypeRepository = $contentTypeRepository;
         $this->eventDispatcher = $eventDispatcher;
         parent::__construct($facadeClass, $authorizationChecker);
     }
@@ -53,6 +58,8 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         if (!$content instanceof ContentInterface) {
             throw new TransformerParameterTypeException();
         }
+
+        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
 
         $facade = $this->newFacade();
 
@@ -85,7 +92,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 )));
             }
 
-            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT)) {
+            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT) && $contentType->isVersionable()) {
                 $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_content_new_version', array(
                     'contentId' => $content->getContentId(),
                     'language' => $content->getLanguage(),
@@ -102,11 +109,12 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 )));
             }
         }
-
-        $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
-            'contentId' => $content->getContentId(),
-            'language' => $content->getLanguage(),
-        )));
+        if ($contentType->isVersionable()) {
+            $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
+                'contentId' => $content->getContentId(),
+                'language' => $content->getLanguage(),
+            )));
+        }
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
             'contentId' => $content->getContentId(),

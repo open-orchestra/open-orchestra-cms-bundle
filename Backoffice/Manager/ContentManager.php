@@ -99,11 +99,11 @@ class ContentManager
      */
     public function newVersionContent(ContentInterface $content, ContentInterface $lastContent = null)
     {
+        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
+
+        $lastVersion = ($contentType->isVersionable() && $lastContent !== null) ? $lastContent->getVersion() : 0;
         $newContent = $this->cloneContent($content);
-
-        $lastVersion = $lastContent !== null ? $lastContent->getVersion() : 0;
         $newContent->setVersion($lastVersion + 1);
-
         $this->versionableSaver->saveDuplicated($newContent);
 
         return $newContent;

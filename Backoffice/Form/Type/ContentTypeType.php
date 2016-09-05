@@ -64,6 +64,10 @@ class ContentTypeType extends AbstractType
                 'type' => 'oo_default_listable_checkbox',
                 'label' => 'open_orchestra_backoffice.form.content_type.default_display',
             ))
+            ->add('versionable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.versionable',
+                'required' => false,
+            ))
             ->add('fields', 'collection', array(
                 'type' => 'oo_field_type',
                 'allow_add' => true,

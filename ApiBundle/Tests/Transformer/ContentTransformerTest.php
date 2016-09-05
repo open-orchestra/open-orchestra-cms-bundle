@@ -22,6 +22,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\ContentFacade';
     protected $transformerManager;
     protected $statusRepository;
+    protected $contentTypeRepository;
     protected $eventDispatcher;
     protected $authorizationChecker;
 
@@ -31,6 +32,15 @@ class ContentTransformerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+
+        $contentType0 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        Phake::when($contentType0)->isVersionable()->thenReturn(true);
+        $contentType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        Phake::when($contentType1)->isVersionable()->thenReturn(false);
+
+        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
+        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion('bar')->thenReturn($contentType0);
+        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion('baz')->thenReturn($contentType1);
 
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
@@ -50,7 +60,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->contentTransformer = new ContentTransformer($this->facadeClass, $this->statusRepository, $this->eventDispatcher, $this->authorizationChecker);
+        $this->contentTransformer = new ContentTransformer($this->facadeClass, $this->statusRepository, $this->contentTypeRepository, $this->eventDispatcher, $this->authorizationChecker);
         $this->contentTransformer->setContext($this->transformerManager);
     }
 
@@ -65,10 +75,11 @@ class ContentTransformerTest extends AbstractBaseTestCase
      * @param DateTime $updateDate
      * @param bool     $deleted
      * @param bool     $linkedToSite
+     * @param bool     $getVersion
      *
      * @dataProvider provideContentData
      */
-    public function testTransform($contentId, $contentType, $name, $version, $contentTypeVersion, $language, $creationDate, $updateDate, $deleted, $linkedToSite)
+    public function testTransform($contentId, $contentType, $name, $version, $contentTypeVersion, $language, $creationDate, $updateDate, $deleted, $linkedToSite, $getVersion)
     {
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
@@ -101,8 +112,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
-        $this->assertArrayHasKey('_self_new_version', $facade->getLinks());
-        $this->assertArrayHasKey('_self_version', $facade->getLinks());
+        $this->assertSame($getVersion, array_key_exists('_self_new_version', $facade->getLinks()));
+        $this->assertSame($getVersion, array_key_exists('_self_version', $facade->getLinks()));
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
         $this->assertArrayHasKey('_self', $facade->getLinks());
         $this->assertArrayHasKey('_self_without_parameters', $facade->getLinks());
@@ -120,8 +131,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $date2 = new DateTime();
 
         return array(
-            array('foo', 'bar', 'baz', 1, 2, 'fr', $date1, $date2, true, false),
-            array('bar', 'baz', 'foo', 2, 1, 'en', $date2, $date1, false, true),
+            array('foo', 'bar', 'baz', 1, 2, 'fr', $date1, $date2, true, false, true),
+            array('bar', 'baz', 'foo', 2, 1, 'en', $date2, $date1, false, true, false),
         );
     }
 
