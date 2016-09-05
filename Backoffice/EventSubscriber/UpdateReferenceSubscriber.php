@@ -23,7 +23,7 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     protected $objectManager;
 
     /**
-     * @param referenceManager $referenceManager
+     * @param ReferenceManager $referenceManager
      * @param ObjectManager    $objectManager
      */
     public function __construct(ReferenceManager $referenceManager, ObjectManager $objectManager)

@@ -12,6 +12,9 @@ class KeywordInContentStrategyTest extends AbstractReferenceStrategyTest
 {
     protected $keywordRepository;
 
+    /**
+     * setUp
+     */
     public function setUp()
     {
         $this->keywordRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');

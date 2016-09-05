@@ -23,7 +23,7 @@ abstract class AbstractKeywordReferenceStrategy
     /**
      * Recursively extract keyword ids from elements (bloc, attribute, collection attribute, etc ...)
      *
-     * @param array $element
+     * @param mixed $element
      * @param array $references
      *
      * @return array
