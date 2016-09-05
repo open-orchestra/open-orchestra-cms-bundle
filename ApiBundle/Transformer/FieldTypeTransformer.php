@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 
 /**

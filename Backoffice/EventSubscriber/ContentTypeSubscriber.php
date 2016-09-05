@@ -2,9 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;

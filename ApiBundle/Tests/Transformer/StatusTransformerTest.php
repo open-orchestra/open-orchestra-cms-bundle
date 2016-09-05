@@ -30,7 +30,7 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->authorizeStatusChangeManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager');
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
-        $multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
+        $multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');

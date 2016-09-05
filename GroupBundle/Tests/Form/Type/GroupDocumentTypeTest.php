@@ -25,7 +25,7 @@ class GroupDocumentTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->multiLanguageChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
+        $this->multiLanguageChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
 
         $this->type = new GroupDocumentType($this->groupClass, $this->multiLanguageChoiceManager);
     }

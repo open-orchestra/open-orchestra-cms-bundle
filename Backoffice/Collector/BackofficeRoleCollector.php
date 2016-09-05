@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Collector;
 
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
