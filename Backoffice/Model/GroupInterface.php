@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 
@@ -64,7 +64,7 @@ interface GroupInterface extends BaseGroupInterface
     /**
      * @param ArrayCollection <ModelGroupRoleInterface> $modelGroupRole
      */
-    public function setModelGroupRoles(ArrayCollection $modelGroupRoles);
+    public function setModelGroupRoles(Collection $modelGroupRoles);
 
     /**
      * @param string $type

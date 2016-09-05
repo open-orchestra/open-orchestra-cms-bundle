@@ -85,7 +85,7 @@ class GroupController extends BaseController
     }
 
     /**
-     * @param int $groupId
+     * @param string $groupId
      *
      * @Config\Route("/{groupId}/delete", name="open_orchestra_api_group_delete")
      * @Config\Method({"DELETE"})
@@ -101,6 +101,29 @@ class GroupController extends BaseController
         $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
         $dm->remove($group);
         $dm->flush();
+
+        return array();
+    }
+
+    /**
+     * @param string $groupId
+     *
+     * @Config\Route("/{groupId}/duplicate", name="open_orchestra_api_group_duplicate")
+     * @Config\Method({"POST"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_GROUP')")
+     *
+     * @return Response
+     */
+    public function duplicateAction($groupId)
+    {
+        $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
+
+        $newGroup = clone $group;
+
+        $objectManager = $this->get('object_manager');
+        $objectManager->persist($newGroup);
+        $objectManager->flush();
 
         return array();
     }

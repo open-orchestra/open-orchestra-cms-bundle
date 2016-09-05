@@ -60,6 +60,39 @@ class GroupTest extends AbstractBaseTestCase
         );
     }
 
+
+    /**
+     * @param string $name
+     * @param string $expectedName
+     * @param array  $labels
+     * @param array  $expectedLabels
+     *
+     * @dataProvider provideLabelLanguageAndName
+     */
+    public function testClone($name, $expectedName, array $labels, array $expectedLabels)
+    {
+        $this->group->setName($name);
+        $this->group->setLabels($labels);
+
+        $cloneGroup = clone $this->group;
+
+        $this->assertNull($cloneGroup->getId());
+        $this->assertSame($cloneGroup->getName(), $expectedName);
+        $this->assertSame($cloneGroup->getLabels(), $expectedLabels);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideLabelLanguageAndName()
+    {
+        return array(
+            array('name', 'name_2', array('en' => 'labelen'), array('en' => 'labelen_2')),
+            array('name_2', 'name_3', array('en' => 'labelen_2'), array('en' => 'labelen_3')),
+            array('name_2_55', 'name_2_56', array('en' => 'labelen2_5'), array('en' => 'labelen2_5')),
+        );
+    }
+
     /**
      * @param array  $datas
      * @param string $type

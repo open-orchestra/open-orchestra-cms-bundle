@@ -47,7 +47,8 @@ class Group extends BaseGroup implements GroupInterface
     {
         parent::__construct();
         $this->labels = array();
-        $this->initCollections();
+        $this->roles = array();
+        $this->modelRoles = new ArrayCollection();
     }
 
     /**
@@ -55,16 +56,18 @@ class Group extends BaseGroup implements GroupInterface
      */
     public function __clone()
     {
-        $this->initCollections();
-    }
+        $this->id = null;
+        $modelGroupRoles = $this->modelRoles;
+        foreach ($modelGroupRoles as $groupRole) {
+            $newGroupRole = clone $groupRole;
+            $this->addModelGroupRole($newGroupRole);
+        }
 
-    /**
-     * Initialize collections
-     */
-    protected function initCollections()
-    {
-        $this->modelRoles = new ArrayCollection();
-        $this->roles = array();
+        $this->setName($this->cloneLabel($this->name));
+
+        foreach ($this->getLabels() as $language => $label) {
+            $this->addLabel($language, $this->cloneLabel($label));
+        }
     }
 
     /**
@@ -173,7 +176,7 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @param ArrayCollection<ModelGroupRoleInterface> $modelGroupRole
      */
-    public function setModelGroupRoles(ArrayCollection $modelGroupRoles)
+    public function setModelGroupRoles(Collection $modelGroupRoles)
     {
         $correctCollection = true;
 
@@ -213,5 +216,21 @@ class Group extends BaseGroup implements GroupInterface
         $key = implode(self::SEPARATOR_KEY_MODEL_ROLES, array($id, $type, $role));
 
         return md5($key);
+    }
+
+    /**
+     * @param string $label
+     *
+     * @return string
+     */
+    protected function cloneLabel($label)
+    {
+        $patternNameVersion = '/.*_([0-9]+$)/';
+        if (0 !== preg_match_all($patternNameVersion, $label, $matches)) {
+            $version = (int) $matches[1][0] + 1;
+            return preg_replace('/[0-9]+$/', $version, $label);
+        }
+
+        return $label . '_2';
     }
 }
