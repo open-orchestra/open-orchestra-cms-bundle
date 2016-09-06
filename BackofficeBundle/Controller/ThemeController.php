@@ -27,7 +27,7 @@ class ThemeController extends AbstractAdminController
     public function formAction(Request $request, $themeId)
     {
         $theme = $this->get('open_orchestra_model.repository.theme')->find($themeId);
-
+        $oldTheme = clone $theme;
         $form = $this->createForm(
             'oo_theme',
             $theme,
@@ -40,9 +40,8 @@ class ThemeController extends AbstractAdminController
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.theme.success');
-
         if ($this->handleForm($form, $message)) {
-            $this->dispatchEvent(ThemeEvents::THEME_UPDATE, new ThemeEvent($theme));
+            $this->dispatchEvent(ThemeEvents::THEME_UPDATE, new ThemeEvent($theme, $oldTheme));
         }
 
         return $this->renderAdminForm($form);
