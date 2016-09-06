@@ -35,7 +35,7 @@ class NodePublisher implements NodePublisherInterface
     /**
      * @param ReadSiteInterface $site
      *
-     * @return array | int   A published node list or an error code
+     * @return array|int   A published node list or an error code
      */
     public function publishNodes(ReadSiteInterface $site)
     {
@@ -71,7 +71,7 @@ class NodePublisher implements NodePublisherInterface
     /**
      * @param ReadSiteInterface $site
      *
-     * @return array | int   An unpublished node list or an error code
+     * @return array|int   An unpublished node list or an error code
      */
     public function unpublishNodes(ReadSiteInterface $site)
     {
