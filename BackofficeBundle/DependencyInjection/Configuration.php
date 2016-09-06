@@ -98,7 +98,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return NodeDefinition
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
      */
     public function addFieldTypesSearchableView()
     {
@@ -120,7 +120,7 @@ class Configuration implements ConfigurationInterface
 
 
     /**
-     * @return NodeDefinition
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
      */
     public function addFieldTypesParameter()
     {
@@ -134,6 +134,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('label')->isRequired()->end()
                     ->scalarNode('type')->isRequired()->end()
+                    ->scalarNode('deserialize_type')->end()
                     ->arrayNode('default_value')
                         ->children()
                             ->scalarNode('type')->end()
