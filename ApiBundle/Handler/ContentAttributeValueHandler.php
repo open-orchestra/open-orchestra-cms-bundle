@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Handler;
 
+use JMS\Serializer\GenericDeserializationVisitor;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\JsonDeserializationVisitor;
@@ -33,20 +34,26 @@ class ContentAttributeValueHandler implements SubscribingHandlerInterface
                 'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                 'format' => 'json',
                 'type' => 'ContentAttributeValue',
-                'method' => 'deserializeFieldTypeToJson',
+                'method' => 'deserializeFieldType',
+            ),
+            array(
+                'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+                'format' => 'xml',
+                'type' => 'ContentAttributeValue',
+                'method' => 'deserializeFieldType',
             ),
         );
     }
 
     /**
-     * @param JsonDeserializationVisitor $visitor
-     * @param string                     $contentAttributeValue
-     * @param array                      $type
-     * @param Context                    $context
+     * @param GenericDeserializationVisitor $visitor
+     * @param string                        $contentAttributeValue
+     * @param array                         $type
+     * @param Context                       $context
      *
-     * @return mixed|string
+     * @return null|string
      */
-    public function deserializeFieldTypeToJson(JsonDeserializationVisitor $visitor, $contentAttributeValue, array $type, Context $context)
+    public function deserializeFieldType(GenericDeserializationVisitor $visitor, $contentAttributeValue, array $type, Context $context)
     {
         $facade = $visitor->getCurrentObject();
         if ($facade instanceof ContentAttributeFacade && null !== $facade->type) {

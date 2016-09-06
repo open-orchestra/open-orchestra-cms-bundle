@@ -43,7 +43,13 @@ class ContentAttributeValueHandlerTest extends AbstractBaseTestCase
                     'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                     'format' => 'json',
                     'type' => 'ContentAttributeValue',
-                    'method' => 'deserializeFieldTypeToJson',
+                    'method' => 'deserializeFieldType',
+                ),
+                array(
+                    'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+                    'format' => 'xml',
+                    'type' => 'ContentAttributeValue',
+                    'method' => 'deserializeFieldType',
                 ),
             ),
             ContentAttributeValueHandler::getSubscribingMethods()
@@ -59,7 +65,7 @@ class ContentAttributeValueHandlerTest extends AbstractBaseTestCase
      */
     public function testDeserializeFieldTypeToJson($type, $contentAttributeValue, $expected)
     {
-        $visitor = Phake::mock('JMS\Serializer\JsonDeserializationVisitor');
+        $visitor = Phake::mock('JMS\Serializer\GenericDeserializationVisitor');
         $context = Phake::mock('JMS\Serializer\Context');
         $contentAttributeFacade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade');
         $contentAttributeFacade->type = $type;
@@ -67,7 +73,7 @@ class ContentAttributeValueHandlerTest extends AbstractBaseTestCase
         Phake::when($visitor)->getCurrentObject()->thenReturn($contentAttributeFacade);
         Phake::when($visitor)->getNavigator()->thenReturn(new FakeGraphNavigator());
 
-        $this->assertEquals($expected, $this->handler->deserializeFieldTypeToJson($visitor, $contentAttributeValue, array(), $context));
+        $this->assertEquals($expected, $this->handler->deserializeFieldType($visitor, $contentAttributeValue, array(), $context));
     }
 
     /**
