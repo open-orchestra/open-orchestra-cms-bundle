@@ -13,8 +13,6 @@ class ReferenceCompilerPass extends AbstractTaggedCompiler implements CompilerPa
 {
     /**
      * @param ContainerBuilder $container
-     *
-     * @api
      */
     public function process(ContainerBuilder $container)
     {

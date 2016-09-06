@@ -127,7 +127,6 @@ class FakeKeyword implements KeywordInterface
 
     public function addUseInEntity($entityId, $entityType)
     {
-        
     }
 
     public function removeUseInEntity($entityId, $entitytype)
