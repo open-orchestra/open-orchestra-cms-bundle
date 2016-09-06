@@ -73,7 +73,9 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->id = $node->getId();
         $nodeId = $node->getNodeId();
         $facade->nodeId = $nodeId;
-        $facade->rootArea = $this->getTransformer('area')->transform($node->getRootArea(), $node);
+        if (null !== $node->getRootArea()) {
+            $facade->rootArea = $this->getTransformer('area')->transform($node->getRootArea(), $node);
+        }
         $facade->name = $node->getName();
         $facade->siteId = $node->getSiteId();
         $facade->deleted = $node->isDeleted();

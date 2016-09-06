@@ -95,6 +95,12 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             );
         }
 
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_GROUP)) {
+            $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_group_duplicate', array(
+                'groupId' => $group->getId(),
+            )));
+        }
+
         return $facade;
     }
 
