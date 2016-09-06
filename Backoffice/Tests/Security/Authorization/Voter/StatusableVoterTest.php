@@ -109,10 +109,10 @@ class StatusableVoterTest extends AbstractBaseTestCase
      *
      * @dataProvider provideStatusAndResponse
      */
-    public function testVoteWithStatusableElement($published, $response)
+    public function testVoteWithStatusableElement($blockedEdition, $response)
     {
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($status)->isPublished()->thenReturn($published);
+        Phake::when($status)->isBlockedEdition()->thenReturn($blockedEdition);
         $object = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($object)->getStatus()->thenReturn($status);
 
