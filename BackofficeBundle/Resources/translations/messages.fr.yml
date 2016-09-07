@@ -61,9 +61,11 @@ open_orchestra_backoffice:
                 red: Rouge
                 orange: Orange
                 green: Vert
+                grayDark: Gris
             display_color: Couleur du statut
             creation: Le nouveau statut a été créé
             success: Le statut a été modifié
+            blocked_edition: édition bloqué
         field_option:
             label: Option existante
             new: Nouvelle option

@@ -71,6 +71,7 @@ class Configuration implements ConfigurationInterface
                     'red' => 'open_orchestra_backoffice.form.status.color.red',
                     'green' => 'open_orchestra_backoffice.form.status.color.green',
                     'orange' => 'open_orchestra_backoffice.form.status.color.orange',
+                    'grayDark' => 'open_orchestra_backoffice.form.status.color.grayDark',
                 ))
                 ->prototype('scalar')->end()
             ->end()

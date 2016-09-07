@@ -71,15 +71,21 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
 
     /**
      * @param int  $countInvalidate
+     * @param bool $isPublishedPrevious
      * @param bool $isPublished
      *
-     * @dataProvider provideCountInvalidateAndStatus
+     * @dataProvider provideCountInvalidateAndStatusOnChange
      */
-    public function testContentChangeStatus($countInvalidate, $isPublished)
+    public function testContentChangeStatus($countInvalidate, $isPublishedPrevious, $isPublished)
     {
+        $previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($previousStatus)->isPublished()->thenReturn($isPublishedPrevious);
+        Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($previousStatus);
+
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn($isPublished);
-        Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($status);
+        Phake::when($this->content)->getStatus()->thenReturn($status);
+
         $this->subscriber->invalidateCacheOnStatusChanged($this->contentEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
@@ -88,11 +94,13 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
     /**
      * @return array
      */
-    public function provideCountInvalidateAndStatus()
+    public function provideCountInvalidateAndStatusOnChange()
     {
         return array(
-            "status not published status" => array(0, false),
-            "status is published status" =>  array(1, true)
+            array(0, false, true),
+            array(0, true, true),
+            array(0, false, false),
+            array(1, true, false),
         );
     }
 
@@ -100,7 +108,7 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
      * @param int  $countInvalidate
      * @param bool $isPublished
      *
-     * @dataProvider provideCountInvalidateAndStatus
+     * @dataProvider provideCountInvalidateAndStatusOnDelete
      */
     public function testDeleteContent($countInvalidate, $isPublished)
     {
@@ -110,5 +118,18 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->invalidateCacheOnDeletePublishedContent($this->contentEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCountInvalidateAndStatusOnDelete()
+    {
+        return array(
+            array(0, false, true),
+            array(1, true, true),
+            array(0, false, false),
+            array(1, true, false),
+        );
     }
 }

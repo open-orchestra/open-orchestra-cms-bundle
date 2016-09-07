@@ -61,9 +61,11 @@ open_orchestra_backoffice:
                 red: Red
                 orange: Orange
                 green: Green
+                grayDark: Grey
             display_color: Diplay color
             creation: The new status has been created
             success: The status has been modified
+            blocked_edition: Blocked edition
         field_option:
             label: Existing option
             new: New option

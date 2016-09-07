@@ -66,6 +66,6 @@ class StatusableVoter implements VoterInterface
             return self::ACCESS_ABSTAIN;
         }
 
-        return $object->getStatus()->isPublished()?self::ACCESS_DENIED: self::ACCESS_GRANTED;
+        return $object->getStatus()->isBlockedEdition()?self::ACCESS_DENIED: self::ACCESS_GRANTED;
     }
 }
