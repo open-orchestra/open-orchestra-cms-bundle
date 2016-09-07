@@ -35,8 +35,16 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     {
         $content = $event->getContent();
         $previousStatus = $event->getPreviousStatus();
-        if ($previousStatus instanceof StatusInterface) {
-            $this->invalidateTagsContent($content, $previousStatus);
+        $status = $content->getStatus();
+        if ($previousStatus instanceof StatusInterface &&
+            $status instanceof StatusInterface &&
+            $previousStatus->isPublished() &&
+            !$status->isPublished()) {
+            $this->cacheableManager->invalidateTags(
+                array(
+                    $this->tagManager->formatContentIdTag($content->getContentId())
+                )
+            );
         }
     }
 
@@ -47,18 +55,7 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     {
         $content = $event->getContent();
         $status = $content->getStatus();
-        if ($status instanceof StatusInterface) {
-            $this->invalidateTagsContent($content, $status);
-        }
-    }
-
-    /**
-     * @param ContentInterface $content
-     * @param StatusInterface  $status
-     */
-    protected function invalidateTagsContent(ContentInterface $content, StatusInterface $status)
-    {
-        if ($status->isPublished()) {
+        if ($status instanceof StatusInterface && $status->isPublished()) {
             $this->cacheableManager->invalidateTags(
                 array(
                     $this->tagManager->formatContentIdTag($content->getContentId())
