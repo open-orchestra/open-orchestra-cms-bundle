@@ -63,7 +63,7 @@ class UserController extends AbstractAdminController
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
 
-        return $this->renderForm($request, $user, true);
+        return $this->renderForm($request, $user, false);
     }
 
     /**
@@ -82,7 +82,7 @@ class UserController extends AbstractAdminController
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        return $this->renderForm($request, $user, false);
+        return $this->renderForm($request, $user, true);
     }
 
     /**
@@ -90,10 +90,18 @@ class UserController extends AbstractAdminController
      * @param UserInterface $user
      * @param boolean       $editGroups
      */
-    protected function renderForm(Request $request, UserInterface $user, $editGroups)
+    protected function renderForm(Request $request, UserInterface $user, $selfEdit)
     {
+        $action = $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $user->getId()));
+        $editGroups = true;
+
+        if ($selfEdit) {
+            $action = $this->generateUrl('open_orchestra_user_admin_user_self_form');
+            $editGroups = false;
+        }
+
         $form = $this->createForm('oo_user', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $user->getId())),
+            'action' => $action,
             'validation_groups' => array('Profile'),
             'edit_groups' => $editGroups
         ));

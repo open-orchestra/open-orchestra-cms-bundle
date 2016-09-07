@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Form\Type;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\Type\ContentTypeType;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class ContentTypeTypeTest
