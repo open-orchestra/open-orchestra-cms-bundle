@@ -65,7 +65,7 @@ class NodePublisher implements NodePublisherInterface
         }
         $this->objectManager->flush();
 
-       return $publishedNodes;
+        return $publishedNodes;
     }
 
     /**
