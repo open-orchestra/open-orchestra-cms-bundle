@@ -36,6 +36,7 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
         $content = $event->getContent();
         $previousStatus = $event->getPreviousStatus();
         $status = $content->getStatus();
+
         if ($previousStatus instanceof StatusInterface &&
             $status instanceof StatusInterface &&
             $previousStatus->isPublished() &&
