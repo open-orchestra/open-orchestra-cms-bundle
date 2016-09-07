@@ -133,7 +133,7 @@ class FakeKeyword implements KeywordInterface
     {
     }
 
-    public function getUseReferences()
+    public function getUseReferences($entityType = array())
     {
     }
 

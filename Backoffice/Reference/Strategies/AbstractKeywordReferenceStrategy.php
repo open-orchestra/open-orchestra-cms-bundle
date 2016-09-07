@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Reference\Strategies;
 
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\KeywordableInterface;
+use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 
 /**
  * Class AbstractKeywordReferenceStrategy
@@ -69,11 +70,12 @@ abstract class AbstractKeywordReferenceStrategy
             return array();
         }
 
-        $string = $attribute['keywords'];
-        $parsedString = str_replace(' ', '', $string);
-        $parsedString = str_replace(array('(',')', 'AND', 'OR', 'NOT'), ' ', $parsedString);
+        $condition = $attribute['keywords'];
+        $patterns = explode('|', KeywordableTraitInterface::OPERATOR_SPLIT);
+        $conditionWithoutOperator = preg_replace($patterns, ' ', $condition);
+        $keywordArray = explode(' ', $conditionWithoutOperator);
 
-        return explode(' ', $parsedString);
+        return $keywordArray;
     }
 
     /**
