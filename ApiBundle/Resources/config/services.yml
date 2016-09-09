@@ -1,15 +1,8 @@
 parameters:
     open_orchestra_api.mapping.content_attribute.class: OpenOrchestra\ApiBundle\Mapping\MappingContentAttribute
-    open_orchestra_api.handler.content_attribute_value.class: OpenOrchestra\ApiBundle\Handler\ContentAttributeValueHandler
 
 services:
     open_orchestra_api.mapping.content_attribute:
         class: '%open_orchestra_api.mapping.content_attribute.class%'
         arguments:
             - '@open_orchestra_model.repository.content_type'
-    open_orchestra_api.handler.content_attribute_value:
-        class: '%open_orchestra_api.handler.content_attribute_value.class%'
-        arguments:
-            - '%open_orchestra_backoffice.field_types%'
-        tags:
-            - { name: jms_serializer.subscribing_handler }

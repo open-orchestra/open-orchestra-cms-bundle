@@ -5,7 +5,6 @@ parameters:
         text:
             label: open_orchestra_backoffice.form.field_type.custom_type.text
             type: text
-            deserialize_type: string
             search: text
             default_value:
                 type: text
@@ -20,7 +19,6 @@ parameters:
         textarea:
             label: open_orchestra_backoffice.form.field_type.custom_type.textarea
             type: textarea
-            deserialize_type: string
             search: text
             default_value:
                 type: textarea
@@ -35,7 +33,6 @@ parameters:
         tinymce:
             label: open_orchestra_backoffice.form.field_type.custom_type.wysiwyg
             type: oo_tinymce
-            deserialize_type: string
             search: text
             default_value:
                 type: oo_tinymce
@@ -50,7 +47,6 @@ parameters:
         integer:
             label: open_orchestra_backoffice.form.field_type.custom_type.integer
             type: integer
-            deserialize_type: integer
             search: number
             default_value:
                 type: integer
@@ -67,7 +63,6 @@ parameters:
         email:
             label: open_orchestra_backoffice.form.field_type.custom_type.email
             type: email
-            deserialize_type: string
             search: text
             default_value:
                 type: email
@@ -80,7 +75,6 @@ parameters:
         choice:
             label: open_orchestra_backoffice.form.field_type.custom_type.choice
             type: oo_field_choice
-            deserialize_type: array
             search: text
             default_value:
                 type: oo_choices_option
@@ -98,7 +92,6 @@ parameters:
         money:
             label: open_orchestra_backoffice.form.field_type.custom_type.money
             type: money
-            deserialize_type: float
             search: text
             default_value:
                 type: money
@@ -124,7 +117,6 @@ parameters:
             label: open_orchestra_backoffice.form.field_type.custom_type.date
             type: oo_date_picker
             search: date
-            deserialize_type: DateTime
             default_value:
                 type: date
                 options:
@@ -145,7 +137,6 @@ parameters:
         embedded_content:
             label: open_orchestra_backoffice.form.field_type.custom_type.content
             type: oo_content_choice
-            deserialize_type: OpenOrchestra\ApiBundle\Facade\ContentFacade
             search: text
             options:
                 required:
