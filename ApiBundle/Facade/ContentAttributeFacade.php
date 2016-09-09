@@ -15,18 +15,10 @@ class ContentAttributeFacade extends AbstractFacade
      */
     public $name;
 
-    /**
-     * @Serializer\Type("string")
-     */
-    public $type;
+    public $value;
 
     /**
      * @Serializer\Type("string")
      */
     public $stringValue;
-
-    /**
-     * @Serializer\Type("ContentAttributeValue")
-     */
-    public $value;
 }
