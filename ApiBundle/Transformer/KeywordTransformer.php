@@ -36,7 +36,9 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
             array('keywordId' => $keyword->getId())
         ));
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_KEYWORD)) {
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_KEYWORD)
+            && !$keyword->isUsed()
+        ) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_keyword_delete',
                 array('keywordId' => $keyword->getId())
