@@ -30,6 +30,7 @@ class ContentAttributeTransformer extends AbstractTransformer
         $facade->name = $contentAttribute->getName();
         $facade->value = $contentAttribute->getValue();
         $facade->stringValue = $contentAttribute->getStringValue();
+        $facade->type = $contentAttribute->getType();
 
         return $facade;
     }
