@@ -73,6 +73,7 @@ open_orchestra_backoffice:
             creation: The new status has been created
             success: The status has been modified
             blocked_edition: Blocked edition
+            out_of_workflow: Out of validation workflow
         field_option:
             label: Existing option
             new: New option
@@ -184,6 +185,7 @@ open_orchestra_backoffice:
                 label: Edit form custom template
                 helper: Advanced usage only.\nAlternate template to render the current content form.\nUse the Symfony2 format:\nMyBundle::myTemplate.html.twig
             versionable: Versionable
+            defining_non_statusable: Defines non statusable contents
         template:
             success: The template has been saved
             name: Name

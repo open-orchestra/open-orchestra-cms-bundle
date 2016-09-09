@@ -73,6 +73,7 @@ open_orchestra_backoffice:
             creation: Le nouveau statut a été créé
             success: Le statut a été modifié
             blocked_edition: édition bloqué
+            out_of_workflow: En dehors du workflow de validation
         field_option:
             label: Option existante
             new: Nouvelle option
@@ -184,6 +185,7 @@ open_orchestra_backoffice:
                 label: Template personnalisé de formulaire d'édition
                 helper: "Utilisation avancée.\nTempate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig"
             versionable: Versionable
+            defining_non_statusable: Définit des contenus non-versionnable
         template:
             success: Le gabarit a été sauvegardé
             name: Nom

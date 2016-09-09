@@ -46,7 +46,7 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(7))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.add');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.new');
