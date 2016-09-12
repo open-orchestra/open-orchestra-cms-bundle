@@ -101,17 +101,17 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
 
     /**
      * @param int  $countInvalidate
-     * @param bool $isOutOfWorkflow
+     * @param bool $isPublished
      *
      * @dataProvider provideCountInvalidateAndStatusOnUpdate
      */
-    public function testInvalidateCacheOnUpdateOutOfWorkflowContent($countInvalidate, $isOutOfWorkflow)
+    public function testInvalidateCacheOnUpdatePublishedContent($countInvalidate, $isPublished)
     {
         $previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($previousStatus)->isOutOfWorkflow()->thenReturn($isOutOfWorkflow);
+        Phake::when($previousStatus)->isPublished()->thenReturn($isPublished);
         Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($previousStatus);
 
-        $this->subscriber->invalidateCacheOnUpdateOutOfWorkflowContent($this->contentEvent);
+        $this->subscriber->invalidateCacheOnUpdatePublishedContent($this->contentEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
     }

@@ -39,12 +39,14 @@ class StatusType extends AbstractType
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.published.helper')
             ))
             ->add('blockedEdition', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.status.blocked_edition',
+                'label' => 'open_orchestra_backoffice.form.status.blocked_edition.label',
                 'required' => false,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.blocked_edition.helper'),
             ))
             ->add('outOfWorkflow', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.status.out_of_workflow',
+                'label' => 'open_orchestra_backoffice.form.status.out_of_workflow.label',
                 'required' => false,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.out_of_workflow.helper'),
             ))
             ->add('initial', null, array(
                 'required' => false,

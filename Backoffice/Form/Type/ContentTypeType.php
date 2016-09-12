@@ -60,8 +60,9 @@ class ContentTypeType extends AbstractType
                 'required' => false,
             ))
             ->add('definingNonStatusable', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.defining_non_statusable',
+                'label' => 'open_orchestra_backoffice.form.content_type.defining_non_statusable.label',
                 'required' => false,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_type.defining_non_statusable.helper'),
             ))
             ->add('versionable', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.versionable',
