@@ -42,7 +42,7 @@ OrchestraBORouter = Backbone.Router.extend(
     return true
 
   afterRouteChanges: (selector) ->
-    $('#left-panel *:has(a' + selector + ')').addClass 'active'
+    $('#left-panel *:has(>a' + selector + ')').addClass 'active'
     $('#left-panel *.current').removeClass 'current'
     $('#left-panel *:has(>a' + selector + ')').addClass 'current'
     openMenu $("#left-panel nav").data('opts').speed, $("#left-panel nav").data('opts').openedSign
