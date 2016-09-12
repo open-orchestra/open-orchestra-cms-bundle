@@ -83,6 +83,7 @@ class ContentManager
         $newContent = $this->cloneContent($content);
         $newContent->setVersion(1);
         $newContent->setContentId($contentId);
+        $newContent->setName($this->duplicateLabel($content->getName()));
 
         $this->versionableSaver->saveDuplicated($newContent);
 
@@ -128,5 +129,22 @@ class ContentManager
         }
 
         return $newContent;
+    }
+
+
+    /**
+     * @param string $label
+     *
+     * @return string
+     */
+    protected function duplicateLabel($label)
+    {
+        $patternNameVersion = '/.*_([0-9]+$)/';
+        if (0 !== preg_match_all($patternNameVersion, $label, $matches)) {
+            $version = (int) $matches[1][0] + 1;
+            return preg_replace('/[0-9]+$/', $version, $label);
+        }
+
+        return $label . '_2';
     }
 }
