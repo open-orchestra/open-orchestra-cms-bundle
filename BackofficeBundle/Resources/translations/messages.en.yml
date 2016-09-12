@@ -48,12 +48,19 @@ open_orchestra_backoffice:
         allowed_characters:
           helper: "Allowed characters: a-z, 0-9, _, -"
         status:
-            published: Published
-            draft: Draft
-            pending: Pending
             name: Name
-            published: Published
-            initial: Initial
+            published:
+                label: Published status
+                helper: If set to "Yes", contents and nodes with this status will be considered as "Published"
+            initial:
+                label: Initial status
+                helper: If set to "Yes", this status will be used to initiate new contents and nodes. Setting it to "Yes" will remove this setting from other status as only one status can be Initial.
+            auto_publish_from:
+                label: Status allowing the automatic publishing
+                helper: A node with this status is auomatically published when its publishing date has come
+            auto_unpublish_to:
+                label: Automatic unpublish status
+                helper: If set to "Yes", this status will be used to unpublish nodes by the auto-unpublish process. Setting it to "Yes" will remove this setting from other status as only one status can have this feature.
             labels: Label
             from_role: Role needed to change the status from this one
             to_role: Role needed to get to this status
@@ -185,6 +192,8 @@ open_orchestra_backoffice:
             name: Page
             scheme: Scheme
             default_scheme: Default (Alias configuration)
+            publish_date: Automatic publish date
+            unpublish_date: Automatic unpublish date
             node_type: Type of Node
             priority:
                 label: Relative importance compared to the other pages of the site (for the sitemap)
@@ -603,6 +612,8 @@ open_orchestra_backoffice:
             published: Published
             display_color: Display Color
             initial: Initial
+            auto_publish_from: Allow the auto publishing
+            auto_unpublish_to: State of auto unpublishing
         api_client:
             name: Name
             trusted: Trusted

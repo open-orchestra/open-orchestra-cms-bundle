@@ -33,25 +33,38 @@ class StatusType extends AbstractType
         $builder->add('name', null, array(
             'label' => 'open_orchestra_backoffice.form.status.name'
         ))
-            ->add('published', null, array(
-                'required' => false,
-                'label' => 'open_orchestra_backoffice.form.status.published'
-            ))
-            ->add('blockedEdition', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.status.blocked_edition',
-                'required' => false,
-            ))
-            ->add('initial', null, array(
-                'required' => false,
-                'label' => 'open_orchestra_backoffice.form.status.initial'
-            ))
-            ->add('labels', 'oo_multi_languages', array(
-                'label' => 'open_orchestra_backoffice.form.status.labels',
-                'languages' => $this->backOfficeLanguages
-            ))
-            ->add('displayColor', 'orchestra_color_choice', array(
-                'label' => 'open_orchestra_backoffice.form.status.display_color'
-            ));
+        ->add('published', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.published.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.published.helper')
+        ))
+        ->add('blockedEdition', 'checkbox', array(
+            'label' => 'open_orchestra_backoffice.form.status.blocked_edition',
+            'required' => false,
+        ))
+        ->add('initial', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.initial.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.initial.helper')
+        ))
+        ->add('autoPublishFrom', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.auto_publish_from.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.auto_publish_from.helper')
+        ))
+        ->add('autoUnpublishTo', null, array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.status.auto_unpublish_to.label',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.auto_unpublish_to.helper')
+        ))
+        ->add('labels', 'oo_multi_languages', array(
+            'label' => 'open_orchestra_backoffice.form.status.labels',
+            'languages' => $this->backOfficeLanguages
+        ))
+        ->add('displayColor', 'orchestra_color_choice', array(
+            'label' => 'open_orchestra_backoffice.form.status.display_color'
+        ));
+
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }

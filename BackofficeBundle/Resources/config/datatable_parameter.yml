@@ -180,6 +180,18 @@ parameters:
           visible : true
           activateColvis : true
           searchField : boolean
+        -
+          name : auto_publish_from
+          title : open_orchestra_backoffice.table.status.auto_publish_from
+          visible : true
+          activateColvis : true
+          searchField : boolean
+        -
+          name : auto_unpublish_to
+          title : open_orchestra_backoffice.table.status.auto_unpublish_to
+          visible : true
+          activateColvis : true
+          searchField : boolean
     open_orchestra_backoffice.navigation_panel.role.parameters :
         -
           name : description

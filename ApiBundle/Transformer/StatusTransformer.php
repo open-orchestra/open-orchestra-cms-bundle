@@ -66,6 +66,8 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->published = $status->isPublished();
         $facade->initial = $status->isInitial();
+        $facade->autoPublishFrom = $status->isAutoPublishFrom();
+        $facade->autoUnpublishTo = $status->isAutoUnpublishTo();
         $facade->label = $this->multiLanguagesChoiceManager->choose($status->getLabels());
         $facade->displayColor = $this->translator->trans('open_orchestra_backoffice.form.status.color.' . $status->getDisplayColor());
         $facade->codeColor = $status->getDisplayColor();
