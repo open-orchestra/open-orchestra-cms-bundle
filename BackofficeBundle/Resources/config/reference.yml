@@ -3,6 +3,7 @@ parameters:
     open_orchestra_backoffice.reference.strategy.keyword_in_node.class: OpenOrchestra\Backoffice\Reference\Strategies\KeywordInNodeReferenceStrategy
     open_orchestra_backoffice.reference.strategy.keyword_in_content.class: OpenOrchestra\Backoffice\Reference\Strategies\KeywordInContentReferenceStrategy
     open_orchestra_backoffice.reference.strategy.keyword_in_content_type.class: OpenOrchestra\Backoffice\Reference\Strategies\KeywordInContentTypeReferenceStrategy
+    open_orchestra_backoffice.reference.strategy.content_in_node.class: OpenOrchestra\Backoffice\Reference\Strategies\ContentInNodeReferenceStrategy
 
 services:
     open_orchestra_backoffice.reference.manager:
@@ -25,5 +26,11 @@ services:
         class: '%open_orchestra_backoffice.reference.strategy.keyword_in_content_type.class%'
         arguments:
             - '@open_orchestra_model.repository.keyword'
+        tags:
+            - { name: open_orchestra_backoffice.reference.strategy }
+    open_orchestra_backoffice.reference.strategy.content_in_node:
+        class: '%open_orchestra_backoffice.reference.strategy.content_in_node.class%'
+        arguments:
+            - '@open_orchestra_model.repository.content'
         tags:
             - { name: open_orchestra_backoffice.reference.strategy }
