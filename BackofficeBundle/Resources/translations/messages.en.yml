@@ -74,7 +74,7 @@ open_orchestra_backoffice:
             success: The status has been modified
             blocked_edition:
                 label: Blocked edition
-                helper: If set to "Yes", the contents with this status could not be changed.
+                helper: If set to "Yes", the contents with this status can not be changed.
             out_of_workflow:
                 label: Out of validation workflow
                 helper: If set to "Yes", this status will be used to characterize contents with no validation workflow.

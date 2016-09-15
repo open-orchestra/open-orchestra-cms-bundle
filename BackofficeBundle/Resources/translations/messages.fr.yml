@@ -73,11 +73,11 @@ open_orchestra_backoffice:
             creation: Le nouveau statut a été créé
             success: Le statut a été modifié
             blocked_edition:
-                label: édition bloqué
+                label: édition bloquée
                 helper: Si réglé à "Oui", les contenus ayant ce statut ne peuvent être modifiés.
             out_of_workflow:
                 label: En dehors du workflow de validation
-                helper: Si réglé à "Oui", ce statut sera utiliser pour caractériser des contenus n'ayant pas de workflow de validation.
+                helper: Si réglé à "Oui", ce statut sera utilisé pour caractériser des contenus n'ayant pas de workflow de validation.
         field_option:
             label: Option existante
             new: Nouvelle option
