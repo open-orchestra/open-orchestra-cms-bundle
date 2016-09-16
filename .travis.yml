@@ -18,7 +18,7 @@ before_install:
 
 install:
   - export COMPOSER_ROOT_VERSION=dev-master
-  - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
+  - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist --profile
 
 script:
   - ./bin/phpunit
