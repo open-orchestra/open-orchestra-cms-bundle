@@ -22,12 +22,15 @@ NodeView = OrchestraView.extend(
     @options.editable = @options.node.get('editable')
     @options.redirectUrl = appRouter.generateUrl "showNode",
       nodeId: @options.configuration.get('parent_id')
+
+    # This view not needed widgetLanguage template, there is loaded here to optimize number of request
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blocksPanel"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetLanguage"
     ]
     return
 
