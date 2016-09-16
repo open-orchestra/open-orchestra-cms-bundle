@@ -34,12 +34,8 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     {
         $content = $event->getContent();
         $previousStatus = $event->getPreviousStatus();
-        $status = $content->getStatus();
 
-        if ($previousStatus instanceof StatusInterface &&
-            $status instanceof StatusInterface &&
-            $previousStatus->isPublished() &&
-            !$status->isPublished()) {
+        if ($previousStatus instanceof StatusInterface && $previousStatus->isPublished()) {
             $this->cacheableManager->invalidateTags(
                 array(
                     $this->tagManager->formatContentIdTag($content->getContentId())
@@ -64,6 +60,23 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
         }
     }
 
+   /**
+     * @param ContentEvent $event
+     */
+    public function invalidateCacheOnUpdatePublishedContent(ContentEvent $event)
+    {
+        $content = $event->getContent();
+        $previousStatus = $event->getPreviousStatus();
+
+        if ($previousStatus instanceof StatusInterface && $previousStatus->isPublished()) {
+            $this->cacheableManager->invalidateTags(
+                array(
+                    $this->tagManager->formatContentIdTag($content->getContentId())
+                )
+            );
+        }
+    }
+
     /**
      * @return array The event names to listen to
      */
@@ -71,7 +84,9 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     {
         return array(
             ContentEvents::CONTENT_CHANGE_STATUS => 'invalidateCacheOnStatusChanged',
-            ContentEvents::CONTENT_DELETE => 'invalidateCacheOnDeletePublishedContent'
+            ContentEvents::CONTENT_DELETE => 'invalidateCacheOnDeletePublishedContent',
+            ContentEvents::CONTENT_UPDATE => 'invalidateCacheOnUpdatePublishedContent',
+            ContentEvents::CONTENT_RESTORE => 'invalidateCacheOnUpdatePublishedContent'
         );
     }
 }

@@ -66,25 +66,22 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
         return array(
             array(ContentEvents::CONTENT_CHANGE_STATUS),
             array(ContentEvents::CONTENT_DELETE),
+            array(ContentEvents::CONTENT_UPDATE),
+            array(ContentEvents::CONTENT_RESTORE),
         );
     }
 
     /**
      * @param int  $countInvalidate
      * @param bool $isPublishedPrevious
-     * @param bool $isPublished
      *
      * @dataProvider provideCountInvalidateAndStatusOnChange
      */
-    public function testContentChangeStatus($countInvalidate, $isPublishedPrevious, $isPublished)
+    public function testContentChangeStatus($countInvalidate, $isPublishedPrevious)
     {
         $previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($previousStatus)->isPublished()->thenReturn($isPublishedPrevious);
         Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($previousStatus);
-
-        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($status)->isPublished()->thenReturn($isPublished);
-        Phake::when($this->content)->getStatus()->thenReturn($status);
 
         $this->subscriber->invalidateCacheOnStatusChanged($this->contentEvent);
 
@@ -97,10 +94,36 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
     public function provideCountInvalidateAndStatusOnChange()
     {
         return array(
-            array(0, false, true),
-            array(0, true, true),
-            array(0, false, false),
-            array(1, true, false),
+            array(0, false),
+            array(1, true),
+        );
+    }
+
+    /**
+     * @param int  $countInvalidate
+     * @param bool $isPublished
+     *
+     * @dataProvider provideCountInvalidateAndStatusOnUpdate
+     */
+    public function testInvalidateCacheOnUpdatePublishedContent($countInvalidate, $isPublished)
+    {
+        $previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($previousStatus)->isPublished()->thenReturn($isPublished);
+        Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($previousStatus);
+
+        $this->subscriber->invalidateCacheOnUpdatePublishedContent($this->contentEvent);
+
+        Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCountInvalidateAndStatusOnUpdate()
+    {
+        return array(
+            array(1, true),
+            array(0, false),
         );
     }
 

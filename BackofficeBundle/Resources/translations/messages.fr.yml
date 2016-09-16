@@ -72,7 +72,12 @@ open_orchestra_backoffice:
             display_color: Couleur du statut
             creation: Le nouveau statut a été créé
             success: Le statut a été modifié
-            blocked_edition: édition bloqué
+            blocked_edition:
+                label: édition bloquée
+                helper: Si réglé à "Oui", les contenus ayant ce statut ne peuvent être modifiés.
+            out_of_workflow:
+                label: En dehors du workflow de validation
+                helper: Si réglé à "Oui", ce statut sera utilisé pour caractériser des contenus n'ayant pas de workflow de validation.
         field_option:
             label: Option existante
             new: Nouvelle option
@@ -184,6 +189,9 @@ open_orchestra_backoffice:
                 label: Template personnalisé de formulaire d'édition
                 helper: "Utilisation avancée.\nTempate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig"
             versionable: Versionable
+            defining_non_statusable:
+                label: Définit des contenus non-versionnables
+                helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition n'intégreront pas de workflow de publication.
         template:
             success: Le gabarit a été sauvegardé
             name: Nom
