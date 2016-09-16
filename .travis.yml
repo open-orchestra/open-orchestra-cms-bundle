@@ -18,6 +18,7 @@ before_install:
 
 install:
   - export COMPOSER_ROOT_VERSION=1.1.x-dev
+  - php ./composer.phar self-update
   - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
 
 script:
