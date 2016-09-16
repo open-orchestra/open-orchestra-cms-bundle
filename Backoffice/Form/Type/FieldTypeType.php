@@ -96,7 +96,7 @@ class FieldTypeType extends AbstractType
                 )
             ));
 
-        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeParameters));
+        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeClass, $this->fieldTypeParameters));
     }
 
     /**

@@ -23,6 +23,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
     protected $options;
     protected $fieldType;
     protected $fieldOptionClass;
+    protected $fieldTypeClass;
     protected $fieldTypeSearchable;
 
     /**
@@ -31,6 +32,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->fieldOptionClass = 'OpenOrchestra\ModelBundle\Document\FieldOption';
+        $this->fieldTypeClass = 'OpenOrchestra\ModelBundle\Document\FieldType';
         $this->form = Phake::mock('Symfony\Component\Form\Form');
         $this->fieldType = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
@@ -66,7 +68,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
             )
         );
 
-        $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass, $this->fieldTypeSearchable);
+        $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass, $this->fieldTypeClass, $this->fieldTypeSearchable);
     }
 
     /**

@@ -16,16 +16,20 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
 {
     protected $options = array();
     protected $fieldOptionClass;
+    protected $fieldTypeClass;
     protected $fieldTypeParameters;
 
     /**
      * @param array  $options
      * @param string $fieldOptionClass
+     * @param string $fieldTypeClass
+     * @param array  $fieldTypeParameters
      */
-    public function __construct(array $options, $fieldOptionClass, array $fieldTypeParameters)
+    public function __construct(array $options, $fieldOptionClass, $fieldTypeClass, array $fieldTypeParameters)
     {
         $this->options = $options;
         $this->fieldOptionClass = $fieldOptionClass;
+        $this->fieldTypeClass = $fieldTypeClass;
         $this->fieldTypeParameters = $fieldTypeParameters;
    }
 
@@ -53,13 +57,16 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         /** @var FieldTypeInterface $data */
         $form = $event->getForm();
         $data = $form->getData();
+
+        if (is_null($data)) {
+            $data = new $this->fieldTypeClass();
+            $event->getForm()->setData($data);
+        }
+
         $dataSend = $event->getData();
         $type = $dataSend['type'];
-
-        if ($data instanceof FieldTypeInterface) {
-            $this->checkFieldType($data, $type, $form);
-            $this->addDefaultValueField($data, $type, $form);
-        }
+        $this->checkFieldType($data, $type, $form);
+        $this->addDefaultValueField($data, $type, $form);
 
         foreach ($this->fieldTypeParameters as $fieldTypeParameters) {
             if (array_key_exists('type', $this->options[$type]) &&
@@ -78,7 +85,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::PRE_SUBMIT => 'preSubmit',
+            FormEvents::PRE_SUBMIT => 'preSubmit'
         );
     }
 
