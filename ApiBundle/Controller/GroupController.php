@@ -121,6 +121,10 @@ class GroupController extends BaseController
 
         $newGroup = clone $group;
 
+        if (! $this->isValid($newGroup)) {
+            return $this->getViolations();
+        }
+
         $objectManager = $this->get('object_manager');
         $objectManager->persist($newGroup);
         $objectManager->flush();

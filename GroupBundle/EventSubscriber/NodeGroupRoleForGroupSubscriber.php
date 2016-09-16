@@ -5,6 +5,7 @@ namespace OpenOrchestra\GroupBundle\EventSubscriber;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -72,8 +73,10 @@ class NodeGroupRoleForGroupSubscriber extends AbstractNodeGroupRoleSubscriber
             $node = $element['node'];
             $accessType = $this->getNodeAccessType($node);
             foreach ($nodesRoles as $role => $translation) {
-                $nodeGroupRole = $this->createNodeGroupRole($node, $group, $role, $accessType);
-                $group->addModelGroupRole($nodeGroupRole);
+                if (!$group->hasModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $role)) {
+                    $nodeGroupRole = $this->createNodeGroupRole($node, $group, $role, $accessType);
+                    $group->addModelGroupRole($nodeGroupRole);
+                }
             }
             if (array_key_exists('child', $element) && ! empty($element['child'])) {
                 $this->createNodeGroupRoleForTree($element['child'], $group);
