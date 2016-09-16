@@ -1,8 +1,11 @@
 NodeTreeElementView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
+
+    # This view not needed groupTreeForm template, there is loaded here to optimize number of request
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/nodeTreeElement',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/groupTreeForm',
     ]
     return
 

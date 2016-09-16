@@ -30,9 +30,12 @@ class OpenOrchestra.Page.Node.NodeView extends OpenOrchestra.Page.Common.Abstrac
       'newVersion': 'showNodeWithLanguage'
     @options.configuration = @options.node
     @options.entityType = 'node'
+
+    # This view not needed widgetLanguage template, there is loaded here to optimize number of request
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/node/nodeView"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetLanguage"
     ]
     return
 

@@ -31,8 +31,11 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
       'domContainer'
       'toolbarContainer'
     ])
+
+    # This view not needed blockView template, there is loaded here to optimize number of request
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/area/areaView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/block/blockView"
     ]
     @options.entityType = 'area'
     OpenOrchestra.Page.Area.Channel.bind 'activateEditArea', @activateEditArea, @
