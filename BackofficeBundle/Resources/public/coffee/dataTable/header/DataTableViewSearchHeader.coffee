@@ -20,8 +20,15 @@ class DataTableViewSearchHeader extends OrchestraView
       'api'
       'domContainer'
     ])
-    @doRender()
-    @options.api.on 'column-visibility.dt', @toggleColumn
+    @options.api.on 'column-visibility.dt', @toggleColumn*
+
+    # This view not needed these templates, there are loaded here to optimize number of request
+    @loadTemplates [
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/booleanField'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/textField'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/numberField'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/dateField'
+    ]
 
   ###*
    * @return {this}
