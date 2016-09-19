@@ -41,27 +41,29 @@ class KeywordInContentTypetrategyTest extends AbstractReferenceStrategyTest
     }
 
     /**
-     * @param mixed $entity
-     * @param array $keywords
+     * @param mixed  $entity
+     * @param string $entityId
+     * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
      */
-    public function testAddReferencesToEntity($entity, array $keywords)
+    public function testAddReferencesToEntity($entity, $entityId, array $keywords)
     {
         Phake::when($entity)->getKeywords()->thenReturn($keywords);
 
-        parent::checkAddReferencesToEntity($entity, $keywords, ContentTypeInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkAddReferencesToEntity($entity, $entityId, $keywords, ContentTypeInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
-     * @param mixed $entity
-     * @param array $keywords
+     * @param mixed  $entity
+     * @param string $entityId
+     * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
      */
-    public function testRemoveReferencesToEntity($entity, array $keywords)
+    public function testRemoveReferencesToEntity($entity, $entityId, array $keywords)
     {
-        parent::checkRemoveReferencesToEntity($entity, $keywords, ContentTypeInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkRemoveReferencesToEntity($entity, $entityId, $keywords, ContentTypeInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
@@ -69,8 +71,10 @@ class KeywordInContentTypetrategyTest extends AbstractReferenceStrategyTest
      */
     public function provideEntityAndKeywords()
     {
-        $node = $this->createPhakeNode();
-        $content = $this->createPhakeContent();
+        $nodeId = 'nodeId';
+        $node = $this->createPhakeNode($nodeId);
+        $contentId = 'contentId';
+        $content = $this->createPhakeContent($contentId);
 
         $keywordId = 'keyword';
         $keyword = $this->createPhakeKeyword($keywordId);
@@ -81,21 +85,23 @@ class KeywordInContentTypetrategyTest extends AbstractReferenceStrategyTest
         $optionWithKeyword = Phake::Mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
         Phake::when($optionWithKeyword)->getValue()->thenReturn(array('keywords' => 'keyword AND fake'));
 
-        $contentTypeWithoutKeyword = $this->createPhakeContentType();
+        $contentTypeWithoutKeywordId = 'contentTypeWithoutKeywordId';
+        $contentTypeWithoutKeyword = $this->createPhakeContentType($contentTypeWithoutKeywordId);
         $fieldWithoutKeyword = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($fieldWithoutKeyword)->getOptions()->thenReturn(array($optionWithoutKeyword));
         Phake::when($contentTypeWithoutKeyword)->getFields()->thenReturn(array($fieldWithoutKeyword));
 
-        $contentTypeWithKeyword = $this->createPhakeContentType();
+        $contentTypeWithKeywordId = 'contentTypeWithKeywordId';
+        $contentTypeWithKeyword = $this->createPhakeContentType($contentTypeWithKeywordId);
         $fieldWithKeyword = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($fieldWithKeyword)->getOptions()->thenReturn(array($optionWithoutKeyword, $optionWithKeyword));
         Phake::when($contentTypeWithKeyword)->getFields()->thenReturn(array($fieldWithoutKeyword, $fieldWithKeyword));
 
         return array(
-            'Node'                           => array($node, array()),
-            'Content'                        => array($content, array()),
-            'Content type with no keyword'   => array($contentTypeWithoutKeyword, array()),
-            'Content type with one keyword'  => array($contentTypeWithKeyword, array($keywordId => $keyword))
+            'Node'                           => array($node, $nodeId, array()),
+            'Content'                        => array($content, $contentId, array()),
+            'Content type with no keyword'   => array($contentTypeWithoutKeyword, $contentTypeWithoutKeywordId, array()),
+            'Content type with one keyword'  => array($contentTypeWithKeyword, $contentTypeWithKeywordId, array($keywordId => $keyword))
         );
     }
 }

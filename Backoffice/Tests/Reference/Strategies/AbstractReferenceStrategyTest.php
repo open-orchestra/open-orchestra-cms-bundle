@@ -31,23 +31,26 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
     abstract public function provideEntity();
 
     /**
-     * @param mixed $entity
-     * @param array $usedItems
+     * @param mixed  $entity
+     * @apram string $entityId
+     * @param array  $usedItems
      */
-    abstract function testAddReferencesToEntity($entity, array $usedItems);
-
-    /**
-     * @param mixed $entity
-     * @param array $usedItems
-     */
-    abstract function testRemoveReferencesToEntity($entity, array $usedItems);
+    abstract function testAddReferencesToEntity($entity, $entityId, array $usedItems);
 
     /**
      * @param mixed  $entity
+     * @apram string $entityId
+     * @param array  $usedItems
+     */
+    abstract function testRemoveReferencesToEntity($entity, $entityId, array $usedItems);
+
+    /**
+     * @param mixed  $entity
+     * @param string $entityId
      * @param array  $usedItems
      * @param string $entityType
      */
-    protected function checkAddReferencesToEntity($entity, array $usedItems, $entityType, $itemRepository)
+    protected function checkAddReferencesToEntity($entity, $entityId, array $usedItems, $entityType, $itemRepository)
     {
         foreach ($usedItems as $itemId => $item) {
             Phake::when($itemRepository)->find($itemId)->thenReturn($item);
@@ -56,23 +59,24 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
         $this->strategy->addReferencesToEntity($entity);
 
         foreach ($usedItems as $itemId => $item) {
-            Phake::verify($item)->addUseInEntity($entity->getId(), $entityType);
+            Phake::verify($item)->addUseInEntity($entityId, $entityType);
         }
     }
 
     /**
      * @param mixed  $entity
+     * @apram string $entityId
      * @param array  $usedItems
      * @param string $entityType
      */
-    protected function checkRemoveReferencesToEntity($entity, array $usedItems, $entityType, $itemRepository)
+    protected function checkRemoveReferencesToEntity($entity, $entityId, array $usedItems, $entityType, $itemRepository)
     {
         Phake::when($itemRepository)->findByUsedInEntity(Phake::anyParameters())->thenReturn($usedItems);
 
         $this->strategy->removeReferencesToEntity($entity);
 
         foreach ($usedItems as $item) {
-            Phake::verify($item)->removeUseInEntity($entity->getId(), $entityType);
+            Phake::verify($item)->removeUseInEntity($entityId, $entityType);
         }
     }
 
@@ -98,9 +102,12 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      *
      * @return Phake_IMock
      */
-    protected function createPhakeNode()
+    protected function createPhakeNode($nodeId = 'nodeId')
     {
-        return Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getId()->thenReturn($nodeId);
+
+        return $node;
     }
 
     /**
@@ -108,9 +115,12 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      *
      * @return Phake_IMock
      */
-    protected function createPhakeContentType()
+    protected function createPhakeContentType($contentTypeId = 'contentTypeId')
     {
-        return Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        $contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        Phake::when($contentType)->getContentTypeId()->thenReturn($contentTypeId);
+
+        return $contentType;
     }
 
     /**

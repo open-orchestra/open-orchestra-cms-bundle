@@ -41,27 +41,29 @@ class ContentInNodeStrategyTest extends AbstractReferenceStrategyTest
     }
 
     /**
-     * @param mixed $entity
-     * @param array $contents
+     * @param mixed  $entity
+     * @param string $entityId
+     * @param array  $contents
      *
      * @dataProvider provideEntityAndContents
      */
-    public function testAddReferencesToEntity($entity, array $contents)
+    public function testAddReferencesToEntity($entity, $entityId, array $contents)
     {
         Phake::when($this->contentRepository)->findByContentId(Phake::anyParameters())->thenReturn($contents);
 
-        parent::checkAddReferencesToEntity($entity, $contents, NodeInterface::ENTITY_TYPE, $this->contentRepository);
+        parent::checkAddReferencesToEntity($entity, $entityId, $contents, NodeInterface::ENTITY_TYPE, $this->contentRepository);
     }
 
     /**
-     * @param mixed $entity
-     * @param array $contents
+     * @param mixed  $entity
+     * @param string $entityId
+     * @param array  $contents
      *
      * @dataProvider provideEntityAndContents
      */
-    public function testRemoveReferencesToEntity($entity, array $contents)
+    public function testRemoveReferencesToEntity($entity, $entityId, array $contents)
     {
-        parent::checkRemoveReferencesToEntity($entity, $contents, NodeInterface::ENTITY_TYPE, $this->contentRepository);
+        parent::checkRemoveReferencesToEntity($entity, $entityId, $contents, NodeInterface::ENTITY_TYPE, $this->contentRepository);
     }
 
     /**
@@ -69,11 +71,10 @@ class ContentInNodeStrategyTest extends AbstractReferenceStrategyTest
      */
     public function provideEntityAndContents()
     {
-        $content = $this->createPhakeContent();
-        $contentType = $this->createPhakeContentType();
-
-        $contentId = 'content';
+        $contentId = 'contentId';
         $content = $this->createPhakeContent($contentId);
+        $contentTypeId = 'contentTypeId';
+        $contentType = $this->createPhakeContentType($contentTypeId);
 
         $blockWithoutContent = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($blockWithoutContent)->getAttributes()->thenReturn(array());
@@ -88,17 +89,19 @@ class ContentInNodeStrategyTest extends AbstractReferenceStrategyTest
             )
         );
 
-        $nodeWithoutContent = $this->createPhakeNode('NodeNoContent');
+        $nodeWithoutContentId = 'NodeNoContent';
+        $nodeWithoutContent = $this->createPhakeNode($nodeWithoutContentId);
         Phake::when($nodeWithoutContent)->getBlocks()->thenReturn(array($blockWithoutContent));
 
-        $nodeWithContent = $this->createPhakeNode('NodeWithContent');
+        $nodeWithContentId = 'NodeWithContent';
+        $nodeWithContent = $this->createPhakeNode($nodeWithContentId);
         Phake::when($nodeWithContent)->getBlocks()->thenReturn(array($blockWithoutContent, $blockWithContent));
 
         return array(
-            'Content'              => array($content, array()),
-            'Content type'         => array($contentType, array()),
-            'Node with no content' => array($nodeWithoutContent, array()),
-            'Node with content'    => array($nodeWithContent, array($contentId => $content)),
+            'Content'              => array($content, $contentId, array()),
+            'Content type'         => array($contentType, $contentTypeId, array()),
+            'Node with no content' => array($nodeWithoutContent, $nodeWithoutContentId, array()),
+            'Node with content'    => array($nodeWithContent, $nodeWithContentId, array($contentId => $content)),
         );
     }
 }
