@@ -382,3 +382,13 @@
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block oo_gmap_widget %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_row(form.latitude) }}
+            {{ form_row(form.longitude) }}
+            {{ form_row(form.zoom) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}

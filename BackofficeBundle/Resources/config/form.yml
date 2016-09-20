@@ -44,6 +44,7 @@ parameters:
     open_orchestra_backoffice.type.site_site_alias.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteSiteAliasType
     open_orchestra_backoffice.type.default_listable_checkbox.class: OpenOrchestra\Backoffice\Form\Type\Component\DefaultListableCheckboxType
     open_orchestra_backoffice.type.multi_languages.class: OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType
+    open_orchestra_backoffice.type.gmap.class: OpenOrchestra\Backoffice\Form\Type\Component\GoogleMapType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -409,6 +410,10 @@ services:
         class: '%open_orchestra_backoffice.type.multi_languages.class%'
         tags:
             - { name: form.type, alias: oo_multi_languages}
+    open_orchestra_backoffice.type.gmap:
+        class: '%open_orchestra_backoffice.type.gmap.class%'
+        tags:
+            - { name: form.type, alias: oo_gmap}
     open_orchestra_backoffice.type.status_choice:
         class: '%open_orchestra_model.type.status_choice.class%'
         arguments:
