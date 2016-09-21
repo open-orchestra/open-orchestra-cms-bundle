@@ -41,27 +41,29 @@ class KeywordInContentStrategyTest extends AbstractReferenceStrategyTest
     }
 
     /**
-     * @param mixed $entity
-     * @param array $keywords
+     * @param mixed  $entity
+     * @param string $entityId
+     * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
      */
-    public function testAddReferencesToEntity($entity, array $keywords)
+    public function testAddReferencesToEntity($entity, $entityId, array $keywords)
     {
         Phake::when($entity)->getKeywords()->thenReturn($keywords);
 
-        parent::checkAddReferencesToEntity($entity, $keywords, ContentInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkAddReferencesToEntity($entity, $entityId, $keywords, ContentInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
-     * @param mixed $entity
-     * @param array $keywords
+     * @param mixed  $entity
+     * @param string $entityId
+     * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
      */
-    public function testRemoveReferencesToEntity($entity, array $keywords)
+    public function testRemoveReferencesToEntity($entity, $entityId, array $keywords)
     {
-        parent::checkRemoveReferencesToEntity($entity, $keywords, ContentInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkRemoveReferencesToEntity($entity, $entityId, $keywords, ContentInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
@@ -69,9 +71,12 @@ class KeywordInContentStrategyTest extends AbstractReferenceStrategyTest
      */
     public function provideEntityAndKeywords()
     {
-        $node = $this->createPhakeNode();
-        $content = $this->createPhakeContent();
-        $contentType = $this->createPhakeContentType();
+        $nodeId = 'nodeId';
+        $node = $this->createPhakeNode($nodeId);
+        $contentId = 'contentId';
+        $content = $this->createPhakeContent($contentId);
+        $contentTypeId = 'contentTypeId';
+        $contentType = $this->createPhakeContentType($contentTypeId);
 
         $keyword1Id = 'keyword1';
         $keyword2Id = 'keyword2';
@@ -82,11 +87,11 @@ class KeywordInContentStrategyTest extends AbstractReferenceStrategyTest
         $keyword3 = $this->createPhakeKeyword($keyword3Id);
 
         return array(
-            'Node'                      => array($node, array()),
-            'Content type'              => array($contentType, array()),
-            'Content with no keyword'   => array($content, array()),
-            'Content with one keyword'  => array($content, array($keyword1Id => $keyword1)),
-            'Content with two keywords' => array($content, array($keyword2Id => $keyword2, $keyword3Id => $keyword3))
+            'Node'                      => array($node, $nodeId, array()),
+            'Content type'              => array($contentType, $contentTypeId, array()),
+            'Content with no keyword'   => array($content, $contentId, array()),
+            'Content with one keyword'  => array($content, $contentId, array($keyword1Id => $keyword1)),
+            'Content with two keywords' => array($content, $contentId, array($keyword2Id => $keyword2, $keyword3Id => $keyword3))
         );
     }
 }

@@ -41,27 +41,29 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
     }
 
     /**
-     * @param mixed $entity
-     * @param array $keywords
+     * @param mixed  $entity
+     * @param string entityId
+     * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
      */
-    public function testAddReferencesToEntity($entity, array $keywords)
+    public function testAddReferencesToEntity($entity, $entityId, array $keywords)
     {
         Phake::when($entity)->getKeywords()->thenReturn($keywords);
 
-        parent::checkAddReferencesToEntity($entity, $keywords, NodeInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkAddReferencesToEntity($entity, $entityId, $keywords, NodeInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
-     * @param mixed $entity
-     * @param array $keywords
+     * @param mixed  $entity
+     * @param string entityId
+     * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
      */
-    public function testRemoveReferencesToEntity($entity, array $keywords)
+    public function testRemoveReferencesToEntity($entity, $entityId, array $keywords)
     {
-        parent::checkRemoveReferencesToEntity($entity, $keywords, NodeInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkRemoveReferencesToEntity($entity, $entityId, $keywords, NodeInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
@@ -69,8 +71,10 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
      */
     public function provideEntityAndKeywords()
     {
-        $content = $this->createPhakeContent();
-        $contentType = $this->createPhakeContentType();
+        $contentId = 'contentId';
+        $content = $this->createPhakeContent($contentId);
+        $contentTypeId = 'contentTypeId';
+        $contentType = $this->createPhakeContentType($contentTypeId);
 
         $keywordId = 'keyword';
         $keyword = $this->createPhakeKeyword($keywordId);
@@ -81,17 +85,19 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
         $blockWithKeyword = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($blockWithKeyword)->getAttributes()->thenReturn(array('keywords' => 'keyword AND fake'));
 
-        $nodeWithoutKeyword = $this->createPhakeNode('NodeNoKeyword');
+        $nodeWithoutKeywordId = 'NodeNoKeyword';
+        $nodeWithoutKeyword = $this->createPhakeNode($nodeWithoutKeywordId);
         Phake::when($nodeWithoutKeyword)->getBlocks()->thenReturn(array($blockWithoutKeyword));
 
-        $nodeWithKeyword = $this->createPhakeNode('NodeWithKeyword');
+        $nodeWithKeywordId = 'NodeWithKeyword';
+        $nodeWithKeyword = $this->createPhakeNode($nodeWithKeywordId);
         Phake::when($nodeWithKeyword)->getBlocks()->thenReturn(array($blockWithoutKeyword, $blockWithKeyword));
 
         return array(
-            'Content'              => array($content, array()),
-            'Content type'         => array($contentType, array()),
-            'Node with no keyword' => array($nodeWithoutKeyword, array()),
-            'Node with keyword'    => array($nodeWithKeyword, array($keywordId => $keyword)),
+            'Content'              => array($content, $contentId, array()),
+            'Content type'         => array($contentType, $contentTypeId, array()),
+            'Node with no keyword' => array($nodeWithoutKeyword, $nodeWithoutKeywordId, array()),
+            'Node with keyword'    => array($nodeWithKeyword, $nodeWithKeywordId, array($keywordId => $keyword)),
         );
     }
 }

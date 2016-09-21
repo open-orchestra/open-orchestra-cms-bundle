@@ -49,7 +49,7 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
         $content = $event->getContent();
         $this->referenceManager->updateReferencesToEntity($content);
     }
-    
+
     /**
      * @param ContentEvent $event
      */
