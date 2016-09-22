@@ -13,6 +13,28 @@
     {% endspaceless %}
 {% endblock form %}
 
+{% block form_widget %}
+    {% set tabulations = {} %}
+    {% if true == form.vars.tabulation_enabled and compound %}
+        {% for child in form %}
+            {% set key = child.vars.tabulation_rank~'_' %}
+            {% set value = '' %}
+            {% if tabulations[key] is defined %}
+                {% set value = tabulations[key] %}
+            {% endif %}
+            {% set value = value~form_row(child) %}
+            {% set tabulations = tabulations|merge({(child.vars.tabulation_rank~'_'):value}) %}
+        {% endfor %}
+        {% for key, entry in tabulations %}
+            <div class="tabulation_{{ key }}">
+            {{ entry|raw }}
+            </div>
+        {% endfor %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block checkbox_widget %}
     {% spaceless %}
         <div class="smart-form">
