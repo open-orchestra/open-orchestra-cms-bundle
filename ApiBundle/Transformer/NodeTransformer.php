@@ -70,12 +70,25 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
 
+        $facade = $this->addMainAttributes($facade, $node);
+        $facade = $this->addAreas($facade, $node);
+        $facade = $this->addStatus($facade, $node);
+        $facade = $this->addLinks($facade, $node);
+        $facade = $this->addGeneralNodeLinks($facade, $node);
+
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param NodeInterface   $node
+     *
+     * @return FacadeInterface
+     */
+    protected function addMainAttributes(FacadeInterface $facade, NodeInterface $node)
+    {
         $facade->id = $node->getId();
-        $nodeId = $node->getNodeId();
-        $facade->nodeId = $nodeId;
-        if (null !== $node->getRootArea()) {
-            $facade->rootArea = $this->getTransformer('area')->transform($node->getRootArea(), $node);
-        }
+        $facade->nodeId = $node->getNodeId();
         $facade->name = $node->getName();
         $facade->siteId = $node->getSiteId();
         $facade->deleted = $node->isDeleted();
@@ -89,7 +102,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->metaDescription = $node->getMetaDescription();
         $facade->metaIndex = $node->getMetaIndex();
         $facade->metaFollow = $node->getMetaFollow();
-        $facade->status = $this->getTransformer('status')->transform($node->getStatus());
         $facade->theme = $node->getTheme();
         $facade->themeSiteDefault = $node->hasDefaultSiteTheme();
         $facade->version = $node->getVersion();
@@ -97,16 +109,53 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-        $editionRole = $this->getEditionRole($node);
+        $facade->editable = $this->authorizationChecker->isGranted($this->getEditionRole($node), $node);
 
-        $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
-        
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param NodeInterface   $node
+     *
+     * @return FacadeInterface
+     */
+    protected function addAreas(FacadeInterface $facade, NodeInterface $node)
+    {
+        if ($this->hasGroup('AREAS') && null !== $node->getRootArea()) {
+            $facade->rootArea = $this->getTransformer('area')->transform($node->getRootArea(), $node);
+        }
+
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param NodeInterface   $node
+     *
+     * @return FacadeInterface
+     */
+    protected function addStatus(FacadeInterface $facade, NodeInterface $node)
+    {
+        $facade->status = $this->getTransformer('status')->transform($node->getStatus());
+
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param NodeInterface   $node
+     *
+     * @return FacadeInterface
+     */
+    protected function addLinks(FacadeInterface $facade, NodeInterface $node)
+    {
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $nodeId
+            'nodeId' => $node->getNodeId()
         )));
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $nodeId,
+            'nodeId' => $node->getNodeId(),
             'version' => $node->getVersion(),
             'language' => $node->getLanguage(),
         )));
@@ -115,18 +164,26 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             'siteId' => $node->getSiteId()
         )));
 
+        $routeName = 'open_orchestra_api_block_list_without_transverse';
         if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
-            if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
-                /** @var SiteAliasInterface $alias */
-                $encryptedId = $this->encrypter->encrypt($node->getId());
-                foreach ($site->getAliases() as $aliasId => $alias) {
-                    if ($alias->getLanguage() == $node->getLanguage()) {
-                        $facade->addPreviewLink(
-                            $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $nodeId)
-                        );
-                    }
-                }
-            }
+            $routeName = 'open_orchestra_api_block_list_with_transverse';
+        }
+        $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
+
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param NodeInterface   $node
+     *
+     * @return FacadeInterface
+     */
+    protected function addGeneralNodeLinks(FacadeInterface $facade, NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
+
+            $facade = $this->addPreviewLinks($facade, $node);
 
             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
                 'id' => $node->getId(),
@@ -140,16 +197,16 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 'nodeMongoId' => $node->getId()
             )));
 
-            if ($this->authorizationChecker->isGranted($editionRole)) {
+            if ($this->authorizationChecker->isGranted($this->getEditionRole($node))) {
                 $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_node_new_version', array(
-                    'nodeId' => $nodeId,
+                    'nodeId' => $node->getNodeId(),
                     'language' => $node->getLanguage(),
                     'version' => $node->getVersion(),
                 )));
             }
 
             $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
-                'nodeId' => $nodeId,
+                'nodeId' => $node->getNodeId(),
                 'language' => $node->getLanguage(),
             )));
 
@@ -157,16 +214,34 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node)
             ) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
-                    'nodeId' => $nodeId
+                    'nodeId' => $node->getNodeId()
                 )));
             }
         }
 
-        $routeName = 'open_orchestra_api_block_list_without_transverse';
-        if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
-            $routeName = 'open_orchestra_api_block_list_with_transverse';
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param NodeInterface   $node
+     *
+     * @return FacadeInterface
+     */
+    protected function addPreviewLinks(FacadeInterface $facade, NodeInterface $node)
+    {
+        if ($this->hasGroup('PREVIEW') && $site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
+            /** @var SiteAliasInterface $alias */
+            $encryptedId = $this->encrypter->encrypt($node->getId());
+
+            foreach ($site->getAliases() as $aliasId => $alias) {
+                if ($alias->getLanguage() == $node->getLanguage()) {
+                    $facade->addPreviewLink(
+                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $node->getNodeId())
+                    );
+                }
+            }
         }
-        $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
 
         return $facade;
     }

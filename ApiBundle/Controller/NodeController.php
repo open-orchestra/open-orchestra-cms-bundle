@@ -55,12 +55,14 @@ class NodeController extends BaseController
      * @param string  $nodeId
      * @param bool    $errorNode
      *
+     * @return FacadeInterface
+     * @throws AccessLanguageForNodeNotGrantedHttpException
+     *
      * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create", defaults={"errorNode" = false})
      * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      *
-     * @return FacadeInterface
-     * @throws AccessLanguageForNodeNotGrantedHttpException
+     * @Api\Groups({"AREAS", "PREVIEW"})
      */
     public function showOrCreateAction(Request $request, $nodeId, $errorNode)
     {
