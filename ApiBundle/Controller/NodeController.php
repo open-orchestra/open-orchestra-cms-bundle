@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AccessLanguageForNodeNotGrantedHttpException;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class NodeController
@@ -62,7 +63,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      *
-     * @Api\Groups({"AREAS", "PREVIEW"})
+     * @Api\Groups({CMSGroupContext::AREAS, CMSGroupContext::PREVIEW})
      */
     public function showOrCreateAction(Request $request, $nodeId, $errorNode)
     {

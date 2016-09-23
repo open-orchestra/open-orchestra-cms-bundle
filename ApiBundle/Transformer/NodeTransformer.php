@@ -20,6 +20,7 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class NodeTransformer
@@ -122,7 +123,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     protected function addAreas(FacadeInterface $facade, NodeInterface $node)
     {
-        if ($this->hasGroup('AREAS') && null !== $node->getRootArea()) {
+        if ($this->hasGroup(CMSGroupContext::AREAS) && null !== $node->getRootArea()) {
             $facade->rootArea = $this->getTransformer('area')->transform($node->getRootArea(), $node);
         }
 
@@ -230,7 +231,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     protected function addPreviewLinks(FacadeInterface $facade, NodeInterface $node)
     {
-        if ($this->hasGroup('PREVIEW') && $site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
+        if ($this->hasGroup(CMSGroupContext::PREVIEW) && $site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
             /** @var SiteAliasInterface $alias */
             $encryptedId = $this->encrypter->encrypt($node->getId());
 
