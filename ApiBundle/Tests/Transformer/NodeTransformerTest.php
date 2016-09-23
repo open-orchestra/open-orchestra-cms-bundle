@@ -74,6 +74,10 @@ class NodeTransformerTest extends AbstractBaseTestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
+        $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
+        Phake::when($this->transformerManager)->getGroupContext()->thenReturn($groupContext);
+        Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
+
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
