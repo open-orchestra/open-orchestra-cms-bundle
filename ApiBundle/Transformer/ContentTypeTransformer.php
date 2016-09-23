@@ -9,6 +9,7 @@ use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
  * Class ContentTypeTransformer
@@ -16,19 +17,23 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $multiLanguagesChoiceManager;
+    protected $contentRepository;
 
     /**
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param AuthorizationCheckerInterface        $authorizationChecker
+     * @param ContentRepositoryInterface           $contentRepository
      */
     public function __construct(
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        ContentRepositoryInterface $contentRepository
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
+        $this->contentRepository = $contentRepository;
     }
 
     /**
@@ -61,7 +66,9 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
             array('contentTypeId' => $contentType->getContentTypeId())
         ));
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE)) {
+        if (0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()) 
+            && $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE)
+        ) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_content_type_delete',
                 array('contentTypeId' => $contentType->getContentTypeId())
