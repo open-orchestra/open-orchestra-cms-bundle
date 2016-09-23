@@ -17,12 +17,14 @@
     {% set tabulations = {} %}
     {% if true == form.vars.tabulation_enabled and compound %}
         {% for child in form %}
+        	{# ajouter nom + explicite pour éviter les conflits #}
             {% set key = child.vars.tabulation_rank~'_' %}
             {% set value = '' %}
             {% if tabulations[key] is defined %}
                 {% set value = tabulations[key] %}
             {% endif %}
             {% set value = value~form_row(child) %}
+            {# ajouter required + error #}
             {% set tabulations = tabulations|merge({(child.vars.tabulation_rank~'_'):value}) %}
         {% endfor %}
         {% for key, entry in tabulations %}
