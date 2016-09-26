@@ -11,7 +11,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 class DatatableCollectionParameterFacade implements FacadeInterface
 {
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\DatatableEntityParameterFacade>")
+     * @Serializer\Type("array<string, OpenOrchestra\ApiBundle\Facade\DatatableEntityParameterFacade>")
      */
     protected $entityParameter = array();
 
