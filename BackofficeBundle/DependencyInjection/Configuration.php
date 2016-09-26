@@ -125,6 +125,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('label')->isRequired()->end()
                     ->scalarNode('type')->isRequired()->end()
+                    ->scalarNode('search')->end()
                     ->arrayNode('default_value')
                         ->children()
                             ->scalarNode('type')->end()
