@@ -58,6 +58,7 @@ class Group extends BaseGroup implements GroupInterface
     {
         $this->id = null;
         $modelGroupRoles = $this->modelRoles;
+        $this->modelRoles = new ArrayCollection();
         foreach ($modelGroupRoles as $groupRole) {
             $newGroupRole = clone $groupRole;
             $this->addModelGroupRole($newGroupRole);
