@@ -3,12 +3,9 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
-use OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldTransformer;
-use OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldViewTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -20,21 +17,25 @@ class ContentTypeType extends AbstractType
     protected $contentTypeClass;
     protected $backOfficeLanguages;
     protected $translator;
+    protected $contentTypeOrderFieldTransformer;
 
     /**
-     * @param string              $contentTypeClass
-     * @param TranslatorInterface $translator
-     * @param array               $backOfficeLanguages
+     * @param string                   $contentTypeClass
+     * @param TranslatorInterface      $translator
+     * @param array                    $backOfficeLanguages
+     * @param DataTransformerInterface $contentTypeOrderFieldTransformer
      */
     public function __construct(
         $contentTypeClass,
         TranslatorInterface $translator,
-        array $backOfficeLanguages
+        array $backOfficeLanguages,
+        DataTransformerInterface $contentTypeOrderFieldTransformer
     )
     {
         $this->contentTypeClass = $contentTypeClass;
         $this->translator = $translator;
         $this->backOfficeLanguages = $backOfficeLanguages;
+        $this->contentTypeOrderFieldTransformer = $contentTypeOrderFieldTransformer;
     }
 
     /**
@@ -91,7 +92,7 @@ class ContentTypeType extends AbstractType
             ));
 
         $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
-        $builder->get('fields')->addModelTransformer(new ContentTypeOrderFieldTransformer());
+        $builder->get('fields')->addModelTransformer($this->contentTypeOrderFieldTransformer);
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }

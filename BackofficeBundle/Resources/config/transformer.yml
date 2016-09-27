@@ -7,7 +7,8 @@ parameters:
     open_orchestra_backoffice.transformer.block_to_array.class: OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer
     open_orchestra_backoffice.transformer.csv_to_reference_keyword.class: OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer
     open_orchestra_backoffice.transformer.condition_to_reference_keyword.class: OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer
-    
+    open_orchestra_backoffice.transformer.content_type_order_field.class: OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldTransformer
+
 services:
     open_orchestra_backoffice.transformer.embedkeywords_to_keywords:
         class: '%open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%'
@@ -46,3 +47,5 @@ services:
         arguments:
             - '@open_orchestra_backoffice.manager.keyword_to_document'
             - '@open_orchestra_model.repository.keyword'
+    open_orchestra_backoffice.transformer.content_type_order_field:
+        class: '%open_orchestra_backoffice.transformer.content_type_order_field.class%'
