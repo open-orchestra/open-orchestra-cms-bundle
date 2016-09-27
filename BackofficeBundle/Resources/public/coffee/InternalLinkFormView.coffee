@@ -90,7 +90,7 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
         if field.value != ''
           fieldName = field.name.replace(@formName, '').replace(/\]\[/g, '_').replace(/(\]|\[)/g, '')
           if fieldName != '_token'
-            fields[fieldName] = field.value
+            fields[fieldName] = $("<div/>").text(field.value).html()
       link = $('<a href="#">').html(inputText.val()).attr('data-options', JSON.stringify(fields))
       div = $('<div>').append(link)
       sourceNode = $(tinymce.get(@options.editor.id).selection.getNode())
