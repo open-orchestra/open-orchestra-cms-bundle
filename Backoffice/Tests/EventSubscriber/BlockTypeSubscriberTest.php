@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormEvents;
 
 /**
  * Class BlockTypeSubscriberTest
- * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0, use BlockFormTypeSubscriber
+ * @deprecated  deprecated since version 1.2.0 and will be removed in version 2.0, use BlockFormTypeSubscriber
  */
 class BlockTypeSubscriberTest extends AbstractBaseTestCase
 {

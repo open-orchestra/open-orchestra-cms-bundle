@@ -92,7 +92,7 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
 
     /**
      * Test Create form
-     * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0, use getFormType
+     * @deprecated  deprecated since version 1.2.0 and will be removed in version 2.0, use getFormType
      */
     public function testCreateForm()
     {
@@ -102,7 +102,7 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
 
     /**
      * Test Create form with Exception
-     * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0, use getFormType
+     * @deprecated  deprecated since version 1.2.0 and will be removed in version 2.0, use getFormType
      * @expectedException \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
      */
     public function testCreateFormWithException()

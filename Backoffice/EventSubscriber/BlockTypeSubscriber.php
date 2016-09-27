@@ -8,11 +8,11 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormFactoryInterface;
 
-@trigger_error('The '.__NAMESPACE__.'\BlockTypeSubscriber class is deprecated since version 1.2.0 and will be removed in 1.3.0.  use BlockFormTypeSubscriber', E_USER_DEPRECATED);
+@trigger_error('The '.__NAMESPACE__.'\BlockTypeSubscriber class is deprecated since version 1.2.0 and will be removed in 2.0.  use BlockFormTypeSubscriber', E_USER_DEPRECATED);
 
 /**
  * Class BlockTypeSubscriber
- * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0, use BlockFormTypeSubscriber
+ * @deprecated  deprecated since version 1.2.0 and will be removed in version 2.0, use BlockFormTypeSubscriber
  */
 class BlockTypeSubscriber extends AbstractModulableTypeSubscriber
 {
