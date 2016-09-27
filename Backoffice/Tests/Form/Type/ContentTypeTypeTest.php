@@ -43,6 +43,8 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->addModelTransformer(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
 
         $this->form->buildForm($builder, array());
 

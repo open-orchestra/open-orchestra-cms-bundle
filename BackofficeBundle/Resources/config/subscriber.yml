@@ -6,7 +6,6 @@ parameters:
     open_orchestra_backoffice.subscriber.transverse_block_cache.class: OpenOrchestra\Backoffice\EventSubscriber\TransverseBlockCacheSubscriber
     open_orchestra_backoffice.subscriber.content_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
-    open_orchestra_backoffice.subscriber.content_type_order_field.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeOrderFieldSubscriber
     open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
     open_orchestra_backoffice.subscriber.update_status.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber
     open_orchestra_backoffice.subscriber.update_nodes_theme.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateNodesThemeSubscriber
@@ -70,10 +69,6 @@ services:
         arguments:
             - '@open_orchestra_display.manager.cacheable'
             - '@open_orchestra_base.manager.tag'
-            - { name: kernel.event_subscriber }
-    open_orchestra_backoffice.subscriber.content_type_order_field:
-        class: '%open_orchestra_backoffice.subscriber.content_type_order_field.class%'
-        tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.content_type:
         class: '%open_orchestra_backoffice.subscriber.content_type.class%'

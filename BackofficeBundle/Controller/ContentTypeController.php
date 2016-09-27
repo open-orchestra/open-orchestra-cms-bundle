@@ -37,6 +37,7 @@ class ContentTypeController extends AbstractAdminController
         if ('PATCH' !== $request->getMethod()) {
             if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.success'), $newContentType)) {
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_UPDATE, new ContentTypeEvent($newContentType));
+                $form = $this->createContentTypeForm($request, array('action' => $action), $newContentType);
             }
         }
 
@@ -97,32 +98,5 @@ class ContentTypeController extends AbstractAdminController
         $option["method"] = $method;
 
         return $this->createForm('oo_content_type', $contentType, $option);
-    }
-
-    /**
-     * @param FormInterface $form
-     * @param string        $successMessage
-     * @param mixed|null    $itemToPersist
-     *
-     * @return bool
-     */
-    protected function handleForm(FormInterface $form, $successMessage, $itemToPersist = null)
-    {
-        if ($form->isValid()) {
-            $documentManager = $this->get('object_manager');
-
-            if ($itemToPersist) {
-                $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_PRE_PERSIST, new ContentTypeEvent($itemToPersist));
-                $documentManager->persist($itemToPersist);
-            }
-
-            $documentManager->flush();
-
-            $this->get('session')->getFlashBag()->add('success', $successMessage);
-
-            return true;
-        }
-
-        return false;
     }
 }

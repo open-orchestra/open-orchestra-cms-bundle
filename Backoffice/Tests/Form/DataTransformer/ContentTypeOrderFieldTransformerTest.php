@@ -1,31 +1,28 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
+namespace OpenOrchestra\Backoffice\Tests\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeOrderFieldSubscriber;
-use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\ModelInterface\ContentTypeEvents;
+use OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 use Phake;
 
 /**
- * Class ContentTypeOrderFieldSubscriberTest
+ * Class ContentTypeOrderFieldTransformerTest
  */
-class ContentTypeOrderFieldSubscriberTest extends AbstractBaseTestCase
+class ContentTypeOrderFieldTransformerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ContentTypeOrderFieldSubscriber
+     * @var ContentTypeOrderFieldTransformer
      */
-    protected $subscriber;
-    protected $event;
+    protected $transformer;
 
     /**
-     * setUp
+     * Set up the test
      */
     public function setUp()
     {
-        $this->event = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentTypeEvent');
-        $this->subscriber = new ContentTypeOrderFieldSubscriber();
+        $this->transformer = new ContentTypeOrderFieldTransformer();
     }
 
     /**
@@ -33,32 +30,45 @@ class ContentTypeOrderFieldSubscriberTest extends AbstractBaseTestCase
      */
     public function testInstance()
     {
-        $this->assertInstanceOf('Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->subscriber);
+        $this->assertInstanceOf(DataTransformerInterface::CLASS, $this->transformer);
     }
 
     /**
-     * Test event subscribed
+     * Test transform
+     *
+     * @param mixed $data
+     *
+     * @dataProvider provideDataToTransform
      */
-    public function testEventSubscribed()
+    public function testTransform($data)
     {
-        $this->assertArrayHasKey(ContentTypeEvents::CONTENT_TYPE_PRE_PERSIST, $this->subscriber->getSubscribedEvents());
+        $this->assertSame($data, $this->transformer->transform($data));
     }
 
     /**
-     * @param $fields
-     * @param $expectedFields
+     * @return array
+     */
+    public function provideDataToTransform()
+    {
+        return array(
+            array(new ArrayCollection(array("test"))),
+            array('bar'),
+            array(1),
+        );
+    }
+
+    /**
+     * @param ArrayCollection $data
+     * @param ArrayCollection $expected
      *
      * @dataProvider provideFields
      */
-    public function testOrderFields($fields, $expectedFields)
+    public function testReverseTransform($data, ArrayCollection $expected)
     {
-        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($this->event)->getContentType()->thenReturn($content);
-        Phake::when($content)->getFields()->thenReturn($fields);
-
-        $this->subscriber->orderFields($this->event);
-
-        Phake::verify($content)->setFields($expectedFields);
+        $fields = $this->transformer->reverseTransform($data);
+        foreach ($fields as $key => $field) {
+            $this->assertSame($field, $expected->get($key));
+        }
     }
 
     /**

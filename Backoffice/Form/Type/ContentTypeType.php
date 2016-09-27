@@ -3,8 +3,12 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
+use OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldTransformer;
+use OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldViewTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -87,6 +91,7 @@ class ContentTypeType extends AbstractType
             ));
 
         $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
+        $builder->get('fields')->addModelTransformer(new ContentTypeOrderFieldTransformer());
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
