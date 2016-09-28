@@ -170,12 +170,12 @@ class NodeController extends BaseController
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByAuthorAndSiteId(
-            $user->getUsername(),
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByReportAndSiteId(
+            $user->getId(),
             $siteId,
             $published,
             10,
-            array('createdAt' => -1)
+            array('reports.updatedAt' => -1)
         );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
