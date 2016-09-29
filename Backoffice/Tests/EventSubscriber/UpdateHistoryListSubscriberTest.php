@@ -60,9 +60,9 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param mixed $document
+     * @param mixed               $document
      * @param TokenInterface|null $user
-     * @param integer            $nbrUpdate
+     * @param integer             $nbrUpdate
      *
      * @dataProvider provideDocument
      */
@@ -76,7 +76,6 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->addHistory($event);
 
         Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
-
     }
 
     /**
@@ -84,15 +83,14 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
      */
     public function provideDocument()
     {
-
         $token0 = null;
 
         $token1 = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         Phake::when($token1)->getUser()->thenReturn(Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface'));
 
         return array(
-            //array(new \stdClass(), $token1, 0),
-            //array(Phake::mock('OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeHistorisableInterfaceClass'), $token0, 0),
+            array(new \stdClass(), $token1, 0),
+            array(Phake::mock('OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeHistorisableInterfaceClass'), $token0, 0),
             array(Phake::mock('OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeHistorisableInterfaceClass'), $token1, 1),
         );
     }

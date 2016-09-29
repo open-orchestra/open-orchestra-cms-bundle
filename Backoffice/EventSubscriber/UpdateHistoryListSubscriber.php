@@ -31,7 +31,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NodeEvent $event
+     * @param ContentEvent $event
      */
     public function addHistory(ContentEvent $event)
     {
@@ -44,7 +44,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
             $history->setUpdatedAt(new \DateTime());
             $history->setUser($user);
             $document->addHistory($history);
-            $this->objectManager->flush($document);
+            $this->objectManager->flush();
         }
     }
 
