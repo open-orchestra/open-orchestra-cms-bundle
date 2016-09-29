@@ -23,8 +23,9 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
+        $contentTypeOrderFieldTransformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
 
-        $this->form = new ContentTypeType($this->class, $this->translator, array());
+        $this->form = new ContentTypeType($this->class, $this->translator, array(), $contentTypeOrderFieldTransformer);
     }
 
     /**
@@ -43,6 +44,8 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->addModelTransformer(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
 
         $this->form->buildForm($builder, array());
 

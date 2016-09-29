@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\Form\BBcodeToHtmlTrandformerTest;
+namespace OpenOrchestra\Backoffice\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;

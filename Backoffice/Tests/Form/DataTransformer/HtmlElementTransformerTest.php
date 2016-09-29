@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\Form\BBcodeToHtmlTrandformerTest;
+namespace OpenOrchestra\Backoffice\Tests\Form\DataTransformer;
 
 use OpenOrchestra\Backoffice\Form\DataTransformer\HtmlElementTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
