@@ -4,25 +4,25 @@ namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\EventSubscriber\UpdateReportListSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\UpdateHistoryListSubscriber;
 use OpenOrchestra\ModelInterface\ContentEvents;
-use OpenOrchestra\ModelInterface\Model\ReportableInterface;
-use OpenOrchestra\ModelInterface\Model\ReportInterface;
+use OpenOrchestra\ModelInterface\Model\HistorisableInterface;
+use OpenOrchestra\ModelInterface\Model\HistoryInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
- * Test UpdateReportListSubscriberTest
+ * Test UpdateHistoryListSubscriberTest
  */
-class UpdateReportListSubscriberTest extends AbstractBaseTestCase
+class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
 {
     /**
-     * @var UpdateReportListSubscriber
+     * @var UpdateHistoryListSubscriber
      */
     protected $subscriber;
 
     protected $tokenManager;
     protected $objectManager;
-    protected $reportClass;
+    protected $historyClass;
     protected $token;
 
     /**
@@ -32,9 +32,9 @@ class UpdateReportListSubscriberTest extends AbstractBaseTestCase
     {
         $this->tokenManager = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
-        $this->reportClass = 'OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeReportClass';
+        $this->historyClass = 'OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeHistoryClass';
 
-        $this->subscriber = new UpdateReportListSubscriber($this->tokenManager, $this->objectManager, $this->reportClass);
+        $this->subscriber = new UpdateHistoryListSubscriber($this->tokenManager, $this->objectManager, $this->historyClass);
 
     }
 
@@ -66,14 +66,14 @@ class UpdateReportListSubscriberTest extends AbstractBaseTestCase
      *
      * @dataProvider provideDocument
      */
-    public function testAddReport($document, $token, $nbrUpdate)
+    public function testAddHistory($document, $token, $nbrUpdate)
     {
         Phake::when($this->tokenManager)->getToken()->thenReturn($token);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentEvent');
         Phake::when($event)->getContent()->thenReturn($document);
 
-        $this->subscriber->addReport($event);
+        $this->subscriber->addHistory($event);
 
         Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
 
@@ -92,23 +92,23 @@ class UpdateReportListSubscriberTest extends AbstractBaseTestCase
 
         return array(
             //array(new \stdClass(), $token1, 0),
-            //array(Phake::mock('OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeReportableInterfaceClass'), $token0, 0),
-            array(Phake::mock('OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeReportableInterfaceClass'), $token1, 1),
+            //array(Phake::mock('OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeHistorisableInterfaceClass'), $token0, 0),
+            array(Phake::mock('OpenOrchestra\Backoffice\Tests\EventSubscriber\FakeHistorisableInterfaceClass'), $token1, 1),
         );
     }
 }
 
-class FakeReportableInterfaceClass implements ReportableInterface
+class FakeHistorisableInterfaceClass implements HistorisableInterface
 {
     /**
-     * Add report
+     * Add history
      *
-     * @param ReportInterface $report
+     * @param HistoryInterface $history
      */
-    public function addReport(ReportInterface $report){}
+    public function addHistory(HistoryInterface $history){}
 }
 
-class FakeReportClass implements ReportInterface
+class FakeHistoryClass implements HistoryInterface
 {
     /**
      * Set user
