@@ -53,7 +53,7 @@ class SiteType extends AbstractType
         $builder->add('siteId', 'text', array(
             'label' => 'open_orchestra_backoffice.form.website.site_id',
             'attr' => array('class' => 'generate-id-dest'),
-            'tabulation_rank' => 1,
+            'tabulation_rank' => 0,
         ));
         $builder
             ->add('aliases', 'collection', array(
@@ -67,17 +67,17 @@ class SiteType extends AbstractType
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
                 ),
                 'options' => array( 'label' => false ),
-                'tabulation_rank' => 0,
+                'tabulation_rank' => 4,
             ))
             ->add('blocks', 'oo_block_choice', array(
                 'multiple' => true,
                 'label' => 'open_orchestra_backoffice.form.website.blocks',
                 'required' => false,
-                'tabulation_rank' => 2,
+                'tabulation_rank' => 3,
             ))
             ->add('theme', 'oo_site_theme_choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.theme',
-                'tabulation_rank' => 0,
+                'tabulation_rank' => 1,
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.changefreq.title',
@@ -89,28 +89,29 @@ class SiteType extends AbstractType
                 'type' => 'fractional',
                 'precision' => 2,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.priority.helper'),
-                'tabulation_rank' => 1,
+                'tabulation_rank' => 2,
             ))
             ->add('metaKeywords', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
                 'languages' => $this->frontLanguages,
-                'tabulation_rank' => 0,
+                'tabulation_rank' => 2,
             ))
             ->add('metaDescriptions', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
-                'languages' => $this->frontLanguages
+                'languages' => $this->frontLanguages,
+                'tabulation_rank' => 2,
             ))
             ->add('metaIndex', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_index',
                 'required' => false,
-                'tabulation_rank' => 1,
+                'tabulation_rank' => 2,
             ))
             ->add('metaFollow', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_follow',
                 'required' => false,
-                'tabulation_rank' => 0,
+                'tabulation_rank' => 2,
             ))
             ->add('robotsTxt', 'textarea', array(
                 'label' => 'open_orchestra_backoffice.form.website.robots_txt',
@@ -133,7 +134,8 @@ class SiteType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => $this->siteClass,
-                'tabulation_enabled' => true
+                'tabulation_enabled' => true,
+                'tabulation_label' => array('Informations', 'Gabarit', 'Référencement', 'Contenu', 'Alias'),
             )
         );
     }

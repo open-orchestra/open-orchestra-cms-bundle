@@ -16,17 +16,20 @@ class FormTypeTabulationExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->setAttribute('tabulation_enabled', $options['tabulation_enabled']);
+        $builder->setAttribute('tabulation_label', $options['tabulation_label']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['tabulation_enabled'] = $form->getConfig()->getAttribute('tabulation_enabled');
+        $view->vars['tabulation_label'] = $form->getConfig()->getAttribute('tabulation_label');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'tabulation_enabled' => false,
+            'tabulation_label' => array(),
         ));
     }
 
