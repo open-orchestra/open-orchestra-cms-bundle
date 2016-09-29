@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotDeletableException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -114,12 +115,17 @@ class NodeController extends BaseController
      * @Config\Method({"DELETE"})
      *
      * @return Response
+     * @throws NodeNotDeletableException
      */
     public function deleteAction($nodeId)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSiteSortedByVersion($nodeId, $siteId);
         $node = !empty($nodes) ? $nodes[0] : null;
+        if ($node->isUsed()) {
+            throw new NodeNotDeletableException();
+        }
+
         $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node);
 
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
