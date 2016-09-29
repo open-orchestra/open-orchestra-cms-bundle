@@ -74,7 +74,9 @@ class SiteTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteClass
+                'data_class' => $this->siteClass,
+                'tabulation_enabled' => true,
+                'tabulation_label' => array('Informations', 'Gabarit', 'Référencement', 'Contenu', 'Alias'),
         ));
     }
 }

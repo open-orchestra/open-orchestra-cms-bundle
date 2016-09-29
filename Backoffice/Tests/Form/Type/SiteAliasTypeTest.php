@@ -65,7 +65,8 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteAliasClass
+                'data_class' => $this->siteAliasClass,
+                'tabulation_enabled' => true
         ));
     }
 }
