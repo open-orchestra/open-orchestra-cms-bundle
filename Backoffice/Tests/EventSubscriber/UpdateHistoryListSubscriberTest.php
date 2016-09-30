@@ -6,9 +6,10 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\EventSubscriber\UpdateHistoryListSubscriber;
 use OpenOrchestra\ModelInterface\ContentEvents;
+use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\HistorisableInterface;
 use OpenOrchestra\ModelInterface\Model\HistoryInterface;
-use OpenOrchestra\UserBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Test UpdateHistoryListSubscriberTest
@@ -57,6 +58,19 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
         $this->assertArrayHasKey(ContentEvents::CONTENT_RESTORE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_DUPLICATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::PATH_UPDATED, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_BLOCK, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_BLOCK_POSITION, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_CREATION, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_DELETE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_RESTORE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_DUPLICATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_ADD_LANGUAGE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_DELETE_BLOCK, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_DELETE_AREA, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_AREA, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -66,14 +80,33 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
      *
      * @dataProvider provideDocument
      */
-    public function testAddHistory($document, $token, $nbrUpdate)
+    public function testAddContentHistory($document, $token, $nbrUpdate)
     {
         Phake::when($this->tokenManager)->getToken()->thenReturn($token);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentEvent');
         Phake::when($event)->getContent()->thenReturn($document);
 
-        $this->subscriber->addHistory($event);
+        $this->subscriber->addContentHistory($event);
+
+        Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
+    }
+
+    /**
+     * @param mixed               $document
+     * @param TokenInterface|null $user
+     * @param integer             $nbrUpdate
+     *
+     * @dataProvider provideDocument
+     */
+    public function testAddNodeHistory($document, $token, $nbrUpdate)
+    {
+        Phake::when($this->tokenManager)->getToken()->thenReturn($token);
+
+        $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
+        Phake::when($event)->getNode()->thenReturn($document);
+
+        $this->subscriber->addNodeHistory($event);
 
         Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
     }
