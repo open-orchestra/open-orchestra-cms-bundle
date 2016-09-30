@@ -87,7 +87,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addPathUpdatedHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::PATH_UPDATED);
+        $this->addNodeHistory($event, NodeEvents::PATH_UPDATED);
     }
 
     /**
@@ -95,7 +95,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeUpdateHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_UPDATE);
+        $this->addNodeHistory($event, NodeEvents::NODE_UPDATE);
     }
 
     /**
@@ -103,7 +103,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeUpdateBlockHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_UPDATE_BLOCK);
+        $this->addNodeHistory($event, NodeEvents::NODE_UPDATE_BLOCK);
     }
 
     /**
@@ -111,7 +111,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeUpdateBlockPositionHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_UPDATE_BLOCK_POSITION);
+        $this->addNodeHistory($event, NodeEvents::NODE_UPDATE_BLOCK_POSITION);
     }
 
     /**
@@ -119,7 +119,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeCreationHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_CREATION);
+        $this->addNodeHistory($event, NodeEvents::NODE_CREATION);
     }
 
     /**
@@ -127,7 +127,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeDeleteHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_DELETE);
+        $this->addNodeHistory($event, NodeEvents::NODE_DELETE);
     }
 
     /**
@@ -135,7 +135,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeRestoreHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_RESTORE);
+        $this->addNodeHistory($event, NodeEvents::NODE_RESTORE);
     }
 
     /**
@@ -143,7 +143,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeDuplicateHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_DUPLICATE);
+        $this->addNodeHistory($event, NodeEvents::NODE_DUPLICATE);
     }
 
     /**
@@ -151,7 +151,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeAddLanguageHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_ADD_LANGUAGE);
+        $this->addNodeHistory($event, NodeEvents::NODE_ADD_LANGUAGE);
     }
 
     /**
@@ -159,7 +159,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeDeleteBlockHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_DELETE_BLOCK);
+        $this->addNodeHistory($event, NodeEvents::NODE_DELETE_BLOCK);
     }
 
     /**
@@ -167,7 +167,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeDeleteAreaHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_DELETE_AREA);
+        $this->addNodeHistory($event, NodeEvents::NODE_DELETE_AREA);
     }
 
     /**
@@ -175,7 +175,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeUpdateAreaHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_UPDATE_AREA);
+        $this->addNodeHistory($event, NodeEvents::NODE_UPDATE_AREA);
     }
 
     /**
@@ -183,7 +183,7 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
      */
     public function addNodeChangeStatusHistory(NodeEvent $event)
     {
-        $this->addContentHistory($event, NodeEvents::NODE_CHANGE_STATUS);
+        $this->addNodeHistory($event, NodeEvents::NODE_CHANGE_STATUS);
     }
 
     /**

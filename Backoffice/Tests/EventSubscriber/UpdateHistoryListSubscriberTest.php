@@ -82,27 +82,29 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
      */
     public function testAddHistory($document, $token, $nbrUpdate)
     {
-        $this->addContentHistory('addContentUpdateHistory', $document, $token, $nbrUpdate);
-        $this->addContentHistory('addContentCreationHistory', $document, $token, $nbrUpdate);
-        $this->addContentHistory('addContentDeleteHistory', $document, $token, $nbrUpdate);
-        $this->addContentHistory('addContentRestoreHistory', $document, $token, $nbrUpdate);
-        $this->addContentHistory('addContentDuplicateHistory', $document, $token, $nbrUpdate);
-        $this->addContentHistory('addContentChangeStatusHistory', $document, $token, $nbrUpdate);
+        $this->addContentHistory('addContentUpdateHistory', $document, $token);
+        $this->addContentHistory('addContentCreationHistory', $document, $token);
+        $this->addContentHistory('addContentDeleteHistory', $document, $token);
+        $this->addContentHistory('addContentRestoreHistory', $document, $token);
+        $this->addContentHistory('addContentDuplicateHistory', $document, $token);
+        $this->addContentHistory('addContentChangeStatusHistory', $document, $token);
 
-        $this->addNodeHistory('addPathUpdatedHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeUpdateHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeUpdateBlockHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeCreationHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeDeleteHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeRestoreHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeDuplicateHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeAddLanguageHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeDeleteBlockHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeDeleteAreaHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeUpdateAreaHistory', $document, $token, $nbrUpdate);
-        $this->addNodeHistory('addNodeChangeStatusHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addPathUpdatedHistory', $document, $token);
+        $this->addNodeHistory('addNodeUpdateHistory', $document, $token);
+        $this->addNodeHistory('addNodeUpdateBlockHistory', $document, $token);
+        $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token);
+        $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token);
+        $this->addNodeHistory('addNodeCreationHistory', $document, $token);
+        $this->addNodeHistory('addNodeDeleteHistory', $document, $token);
+        $this->addNodeHistory('addNodeRestoreHistory', $document, $token);
+        $this->addNodeHistory('addNodeDuplicateHistory', $document, $token);
+        $this->addNodeHistory('addNodeAddLanguageHistory', $document, $token);
+        $this->addNodeHistory('addNodeDeleteBlockHistory', $document, $token);
+        $this->addNodeHistory('addNodeDeleteAreaHistory', $document, $token);
+        $this->addNodeHistory('addNodeUpdateAreaHistory', $document, $token);
+        $this->addNodeHistory('addNodeChangeStatusHistory', $document, $token);
+
+        Phake::verify($this->objectManager, Phake::times($nbrUpdate * 20))->flush();
     }
 
     /**
@@ -111,7 +113,7 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
      * @param TokenInterface|null $user
      * @param integer             $nbrUpdate
      */
-    protected function addContentHistory($method, $document, $token, $nbrUpdate)
+    protected function addContentHistory($method, $document, $token)
     {
         Phake::when($this->tokenManager)->getToken()->thenReturn($token);
 
@@ -120,7 +122,6 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
 
         $this->subscriber->$method($event);
 
-        Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
     }
 
     /**
@@ -129,7 +130,7 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
      * @param TokenInterface|null $user
      * @param integer             $nbrUpdate
      */
-    protected function addNodeHistory($method, $document, $token, $nbrUpdate)
+    protected function addNodeHistory($method, $document, $token)
     {
         Phake::when($this->tokenManager)->getToken()->thenReturn($token);
 
@@ -137,8 +138,6 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
         Phake::when($event)->getNode()->thenReturn($document);
 
         $this->subscriber->$method($event);
-
-        Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
     }
 
     /**
