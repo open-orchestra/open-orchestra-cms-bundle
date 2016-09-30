@@ -303,7 +303,7 @@ class ContentController extends BaseController
         $content = $this->get('open_orchestra_model.repository.content')->findByHistoryAndSiteId(
             $user->getId(),
             $siteId,
-            ContentEvents::CONTENT_CREATION,
+            array(ContentEvents::CONTENT_CREATION, ContentEvents::CONTENT_UPDATE),
             $published,
             10,
             array('histories.updatedAt' => -1)
