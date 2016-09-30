@@ -40,10 +40,12 @@ services:
             - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.search_result:
         class: '%open_orchestra_backoffice.display.search_result.class%'
+        deprecated: ~
         tags:
             - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.search:
         class: '%open_orchestra_backoffice.display.search.class%'
+        deprecated: ~
         tags:
             - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.login:

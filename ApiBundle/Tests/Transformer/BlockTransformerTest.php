@@ -60,7 +60,6 @@ class BlockTransformerTest extends AbstractBaseTestCase
         $this->blockTransformer = new BlockTransformer(
             $this->facadeClass,
             $this->displayBlockManager,
-            $this->displayBlockManager,
             $this->displayIconManager,
             $this->blockClass,
             $this->blockParameterManager,
