@@ -173,6 +173,7 @@ class NodeController extends BaseController
         $nodes = $this->get('open_orchestra_model.repository.node')->findByHistoryAndSiteId(
             $user->getId(),
             $siteId,
+            NodeEvents::NODE_CREATION,
             $published,
             10,
             array('histories.updatedAt' => -1)

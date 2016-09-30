@@ -33,41 +33,198 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
         $this->historyClass = $historyClass;
     }
 
+
     /**
      * @param ContentEvent $event
      */
-    public function addContentHistory(ContentEvent $event)
+    public function addContentUpdateHistory(ContentEvent $event)
     {
-        $document = $event->getContent();
-        $token = $this->tokenManager->getToken();
-        if ($document instanceof HistorisableInterface && !is_null($token)) {
-            $this->addDocumentHistory($document, $token);
-        }
+        $this->addContentHistory($event, ContentEvents::CONTENT_UPDATE);
+    }
+
+    /**
+     * @param ContentEvent $event
+     */
+    public function addContentCreationHistory(ContentEvent $event)
+    {
+        $this->addContentHistory($event, ContentEvents::CONTENT_CREATION);
+    }
+
+    /**
+     * @param ContentEvent $event
+     */
+    public function addContentDeleteHistory(ContentEvent $event)
+    {
+        $this->addContentHistory($event, ContentEvents::CONTENT_DELETE);
+    }
+
+    /**
+     * @param ContentEvent $event
+     */
+    public function addContentRestoreHistory(ContentEvent $event)
+    {
+        $this->addContentHistory($event, ContentEvents::CONTENT_RESTORE);
+    }
+
+    /**
+     * @param ContentEvent $event
+     */
+    public function addContentDuplicateHistory(ContentEvent $event)
+    {
+        $this->addContentHistory($event, ContentEvents::CONTENT_DUPLICATE);
+    }
+
+    /**
+     * @param ContentEvent $event
+     */
+    public function addContentChangeStatusHistory(ContentEvent $event)
+    {
+        $this->addContentHistory($event, ContentEvents::CONTENT_CHANGE_STATUS);
     }
 
     /**
      * @param NodeEvent $event
      */
-    public function addNodeHistory(NodeEvent $event)
+    public function addPathUpdatedHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::PATH_UPDATED);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeUpdateHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_UPDATE);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeUpdateBlockHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_UPDATE_BLOCK);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeUpdateBlockPositionHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_UPDATE_BLOCK_POSITION);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeCreationHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_CREATION);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeDeleteHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_DELETE);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeRestoreHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_RESTORE);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeDuplicateHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_DUPLICATE);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeAddLanguageHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_ADD_LANGUAGE);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeDeleteBlockHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_DELETE_BLOCK);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeDeleteAreaHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_DELETE_AREA);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeUpdateAreaHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_UPDATE_AREA);
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function addNodeChangeStatusHistory(NodeEvent $event)
+    {
+        $this->addContentHistory($event, NodeEvents::NODE_CHANGE_STATUS);
+    }
+
+    /**
+     * @param ContentEvent $event
+     * @param string       $eventType
+     */
+    protected function addContentHistory(ContentEvent $event, $eventType)
+    {
+        $document = $event->getContent();
+        $token = $this->tokenManager->getToken();
+        if ($document instanceof HistorisableInterface && !is_null($token)) {
+            $this->addDocumentHistory($document, $token, $eventType);
+        }
+    }
+
+    /**
+     * @param NodeEvent $event
+     * @param string    $eventType
+     */
+    protected function addNodeHistory(NodeEvent $event, $eventType)
     {
         $document = $event->getNode();
         $token = $this->tokenManager->getToken();
         if ($document instanceof HistorisableInterface && !is_null($token)) {
-            $this->addDocumentHistory($document, $token);
+            $this->addDocumentHistory($document, $token, $eventType);
         }
     }
 
     /**
      * @param HistorisableInterface $document
      * @param TokenInterface        $token
+     * @param string                $eventType
      */
-    protected function addDocumentHistory(HistorisableInterface $document, TokenInterface $token)
+    protected function addDocumentHistory(HistorisableInterface $document, TokenInterface $token, $eventType)
     {
         $user = $token->getUser();
         $historyClass = $this->historyClass;
         $history = new $historyClass();
         $history->setUpdatedAt(new \DateTime());
         $history->setUser($user);
+        $history->setEventType($eventType);
         $document->addHistory($history);
         $this->objectManager->flush();
     }
@@ -78,25 +235,25 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            ContentEvents::CONTENT_UPDATE => 'addContentHistory',
-            ContentEvents::CONTENT_CREATION => 'addContentHistory',
-            ContentEvents::CONTENT_DELETE => 'addContentHistory',
-            ContentEvents::CONTENT_RESTORE => 'addContentHistory',
-            ContentEvents::CONTENT_DUPLICATE => 'addContentHistory',
-            ContentEvents::CONTENT_CHANGE_STATUS => 'addContentHistory',
-            NodeEvents::PATH_UPDATED => 'addNodeHistory',
-            NodeEvents::NODE_UPDATE => 'addNodeHistory',
-            NodeEvents::NODE_UPDATE_BLOCK => 'addNodeHistory',
-            NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'addNodeHistory',
-            NodeEvents::NODE_CREATION => 'addNodeHistory',
-            NodeEvents::NODE_DELETE => 'addNodeHistory',
-            NodeEvents::NODE_RESTORE => 'addNodeHistory',
-            NodeEvents::NODE_DUPLICATE => 'addNodeHistory',
-            NodeEvents::NODE_ADD_LANGUAGE => 'addNodeHistory',
-            NodeEvents::NODE_DELETE_BLOCK => 'addNodeHistory',
-            NodeEvents::NODE_DELETE_AREA => 'addNodeHistory',
-            NodeEvents::NODE_UPDATE_AREA => 'addNodeHistory',
-            NodeEvents::NODE_CHANGE_STATUS => 'addNodeHistory',
+            ContentEvents::CONTENT_UPDATE => 'addContentUpdateHistory',
+            ContentEvents::CONTENT_CREATION => 'addContentCreationHistory',
+            ContentEvents::CONTENT_DELETE => 'addContentDeleteHistory',
+            ContentEvents::CONTENT_RESTORE => 'addContentRestoreHistory',
+            ContentEvents::CONTENT_DUPLICATE => 'addContentDuplicateHistory',
+            ContentEvents::CONTENT_CHANGE_STATUS => 'addContentChangeStatusHistory',
+            NodeEvents::PATH_UPDATED => 'addPathUpdatedHistory',
+            NodeEvents::NODE_UPDATE => 'addNodeUpdateHistory',
+            NodeEvents::NODE_UPDATE_BLOCK => 'addNodeUpdateBlockHistory',
+            NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'addNodeUpdateBlockPositionHistory',
+            NodeEvents::NODE_CREATION => 'addNodeCreationHistory',
+            NodeEvents::NODE_DELETE => 'addNodeDeleteHistory',
+            NodeEvents::NODE_RESTORE => 'addNodeRestoreHistory',
+            NodeEvents::NODE_DUPLICATE => 'addNodeDuplicateHistory',
+            NodeEvents::NODE_ADD_LANGUAGE => 'addNodeAddLanguageHistory',
+            NodeEvents::NODE_DELETE_BLOCK => 'addNodeDeleteBlockHistory',
+            NodeEvents::NODE_DELETE_AREA => 'addNodeDeleteAreaHistory',
+            NodeEvents::NODE_UPDATE_AREA => 'addNodeUpdateAreaHistory',
+            NodeEvents::NODE_CHANGE_STATUS => 'addNodeChangeStatusHistory',
         );
     }
 }

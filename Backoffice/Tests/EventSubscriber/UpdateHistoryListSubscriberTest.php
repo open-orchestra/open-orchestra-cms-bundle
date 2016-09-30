@@ -80,33 +80,63 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
      *
      * @dataProvider provideDocument
      */
-    public function testAddContentHistory($document, $token, $nbrUpdate)
+    public function testAddHistory($document, $token, $nbrUpdate)
+    {
+        $this->addContentHistory('addContentUpdateHistory', $document, $token, $nbrUpdate);
+        $this->addContentHistory('addContentCreationHistory', $document, $token, $nbrUpdate);
+        $this->addContentHistory('addContentDeleteHistory', $document, $token, $nbrUpdate);
+        $this->addContentHistory('addContentRestoreHistory', $document, $token, $nbrUpdate);
+        $this->addContentHistory('addContentDuplicateHistory', $document, $token, $nbrUpdate);
+        $this->addContentHistory('addContentChangeStatusHistory', $document, $token, $nbrUpdate);
+
+        $this->addNodeHistory('addPathUpdatedHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeUpdateHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeUpdateBlockHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeCreationHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeDeleteHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeRestoreHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeDuplicateHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeAddLanguageHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeDeleteBlockHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeDeleteAreaHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeUpdateAreaHistory', $document, $token, $nbrUpdate);
+        $this->addNodeHistory('addNodeChangeStatusHistory', $document, $token, $nbrUpdate);
+    }
+
+    /**
+     * @param string              $method
+     * @param mixed               $document
+     * @param TokenInterface|null $user
+     * @param integer             $nbrUpdate
+     */
+    protected function addContentHistory($method, $document, $token, $nbrUpdate)
     {
         Phake::when($this->tokenManager)->getToken()->thenReturn($token);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentEvent');
         Phake::when($event)->getContent()->thenReturn($document);
 
-        $this->subscriber->addContentHistory($event);
+        $this->subscriber->$method($event);
 
         Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
     }
 
     /**
+     * @param string              $method
      * @param mixed               $document
      * @param TokenInterface|null $user
      * @param integer             $nbrUpdate
-     *
-     * @dataProvider provideDocument
      */
-    public function testAddNodeHistory($document, $token, $nbrUpdate)
+    protected function addNodeHistory($method, $document, $token, $nbrUpdate)
     {
         Phake::when($this->tokenManager)->getToken()->thenReturn($token);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($event)->getNode()->thenReturn($document);
 
-        $this->subscriber->addNodeHistory($event);
+        $this->subscriber->$method($event);
 
         Phake::verify($this->objectManager, Phake::times($nbrUpdate))->flush(Phake::anyParameters());
     }
