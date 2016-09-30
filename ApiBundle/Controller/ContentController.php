@@ -299,12 +299,14 @@ class ContentController extends BaseController
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $content = $this->get('open_orchestra_model.repository.content')->findByAuthorAndSiteId(
-            $user->getUsername(),
+
+        $content = $this->get('open_orchestra_model.repository.content')->findByHistoryAndSiteId(
+            $user->getId(),
             $siteId,
+            array(ContentEvents::CONTENT_CREATION, ContentEvents::CONTENT_UPDATE),
             $published,
             10,
-            array('createdAt' => -1)
+            array('histories.updatedAt' => -1)
         );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);

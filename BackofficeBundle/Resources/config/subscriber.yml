@@ -19,6 +19,7 @@ parameters:
     open_orchestra_backoffice.subscriber.block_form_type.class: OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber
     open_orchestra_backoffice.subscriber.area_row.class: OpenOrchestra\Backoffice\EventSubscriber\AreaRowSubscriber
     open_orchestra_backoffice.subscriber.update_reference.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateReferenceSubscriber
+    open_orchestra_backoffice.subscriber.update_history_list.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateHistoryListSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -161,5 +162,13 @@ services:
         arguments:
             - '@open_orchestra_backoffice.reference.manager'
             - '@object_manager'
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.update_history_list:
+        class: '%open_orchestra_backoffice.subscriber.update_history_list.class%'
+        arguments:
+            - '@security.token_storage'
+            - '@object_manager'
+            - '%open_orchestra_model.document.history.class%'
         tags:
             - { name: kernel.event_subscriber }
