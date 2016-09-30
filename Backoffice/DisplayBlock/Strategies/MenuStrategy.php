@@ -45,11 +45,23 @@ class MenuStrategy extends AbstractStrategy
     /**
      * @param ReadBlockInterface $block
      *
-     * @return Array
+     * @return array
      */
     public function getCacheTags(ReadBlockInterface $block)
     {
         return array();
+    }
+
+    /**
+     * Indicate if the block is public or private
+     *
+     * @param ReadBlockInterface $block
+     *
+     * @return bool
+     */
+    public function isPublic(ReadBlockInterface $block)
+    {
+        return true;
     }
 
     /**

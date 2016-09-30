@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SearchStrategy
+ *
+ * @deprecated will be removed in 2.0
  */
 class SearchStrategy extends AbstractStrategy
 {
@@ -49,7 +51,7 @@ class SearchStrategy extends AbstractStrategy
     /**
      * @param ReadBlockInterface $block
      *
-     * @return Array
+     * @return array
      */
     public function getCacheTags(ReadBlockInterface $block)
     {

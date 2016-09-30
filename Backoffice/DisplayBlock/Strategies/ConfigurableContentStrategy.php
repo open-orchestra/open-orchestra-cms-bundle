@@ -63,7 +63,7 @@ class ConfigurableContentStrategy extends AbstractStrategy
     /**
      * @param ReadBlockInterface $block
      *
-     * @return Array
+     * @return array
      */
     public function getCacheTags(ReadBlockInterface $block)
     {
@@ -78,5 +78,17 @@ class ConfigurableContentStrategy extends AbstractStrategy
     public function getName()
     {
         return 'configurable_content';
+    }
+
+    /**
+     * Indicate if the block is public or private
+     *
+     * @param ReadBlockInterface $block
+     *
+     * @return boolean
+     */
+    public function isPublic(ReadBlockInterface $block)
+    {
+        return true;
     }
 }

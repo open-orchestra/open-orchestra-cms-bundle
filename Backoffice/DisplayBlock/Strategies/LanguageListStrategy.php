@@ -43,9 +43,21 @@ class LanguageListStrategy extends AbstractStrategy
     }
 
     /**
+     * Indicate if the block is public or private
+     *
      * @param ReadBlockInterface $block
      *
-     * @return Array
+     * @return boolean
+     */
+    public function isPublic(ReadBlockInterface $block)
+    {
+        return true;
+    }
+
+    /**
+     * @param ReadBlockInterface $block
+     *
+     * @return array
      */
     public function getCacheTags(ReadBlockInterface $block)
     {

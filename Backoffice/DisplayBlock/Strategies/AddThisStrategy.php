@@ -44,7 +44,7 @@ class AddThisStrategy extends AbstractStrategy
     /**
      * @param ReadBlockInterface $block
      *
-     * @return Array
+     * @return array
      */
     public function getCacheTags(ReadBlockInterface $block)
     {
@@ -59,5 +59,17 @@ class AddThisStrategy extends AbstractStrategy
     public function getName()
     {
         return 'add_this';
+    }
+
+    /**
+     * Indicate if the block is public or private
+     *
+     * @param ReadBlockInterface $block
+     *
+     * @return boolean
+     */
+    public function isPublic(ReadBlockInterface $block)
+    {
+        return true;
     }
 }
