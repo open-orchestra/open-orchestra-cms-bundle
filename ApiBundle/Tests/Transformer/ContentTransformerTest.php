@@ -34,9 +34,9 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
         $contentType0 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($contentType0)->isVersionable()->thenReturn(true);
+        Phake::when($contentType0)->isDefiningVersionable()->thenReturn(true);
         $contentType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($contentType1)->isVersionable()->thenReturn(false);
+        Phake::when($contentType1)->isDefiningVersionable()->thenReturn(false);
 
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion('bar')->thenReturn($contentType0);

@@ -80,7 +80,7 @@ class ContentManagerTest extends AbstractBaseTestCase
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
 
         $contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($contentType)->isVersionable()->thenReturn($getVersion);
+        Phake::when($contentType)->isDefiningVersionable()->thenReturn($getVersion);
 
         $contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($contentType);
