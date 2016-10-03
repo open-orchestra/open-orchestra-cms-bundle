@@ -188,10 +188,12 @@ open_orchestra_backoffice:
             template:
                 label: Template personnalisé de formulaire d'édition
                 helper: "Utilisation avancée.\nTempate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig"
-            versionable: Versionable
-            defining_non_statusable:
-                label: Définit des contenus non-versionnables
-                helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition n'intégreront pas de workflow de publication.
+            defining_versionable:
+                label: Définit des contenus versionables
+                helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition seront versionables.
+            defining_statusable:
+                label: Définit des contenus ayant un workflow de validation
+                helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition intégreront un workflow de publication.
         template:
             success: Le gabarit a été sauvegardé
             name: Nom

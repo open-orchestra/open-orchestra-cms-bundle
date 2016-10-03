@@ -92,7 +92,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 )));
             }
 
-            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT) && $contentType->isVersionable()) {
+            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT) && $contentType->isDefiningVersionable()) {
                 $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_content_new_version', array(
                     'contentId' => $content->getContentId(),
                     'language' => $content->getLanguage(),
@@ -109,7 +109,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 )));
             }
         }
-        if ($contentType->isVersionable()) {
+        if ($contentType->isDefiningVersionable()) {
             $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
                 'contentId' => $content->getContentId(),
                 'language' => $content->getLanguage(),
