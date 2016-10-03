@@ -1,7 +1,7 @@
 extendView = extendView || {}
 extendView['showVideo'] = {
   events:
-    'change #oo_block_videoType': 'showVideoForm'
+    'change #video_videoType': 'showVideoForm'
 
   showVideoForm: (event) ->
     $('#form-youtube, #form-dailymotion, #form-vimeo').appendTo $('#inactive-form-part')
