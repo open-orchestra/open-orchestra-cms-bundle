@@ -111,8 +111,6 @@ class OpenOrchestraBackofficeExtension extends Extension
             ConfigurableContentStrategy::NAME,
             TinyMCEWysiwygStrategy::NAME,
             VideoStrategy::NAME,
-            GmapStrategy::NAME,
-            AddThisStrategy::NAME,
             AudienceAnalysisStrategy::NAME,
             ContactStrategy::NAME,
         );
