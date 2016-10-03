@@ -20,7 +20,7 @@ class DataTableViewSearchHeader extends OrchestraView
       'api'
       'domContainer'
     ])
-    @options.api.on 'column-visibility.dt', @toggleColumn*
+    @options.api.on 'column-visibility.dt', @toggleColumn
 
     # This view not needed these templates, there are loaded here to optimize number of request
     @loadTemplates [
