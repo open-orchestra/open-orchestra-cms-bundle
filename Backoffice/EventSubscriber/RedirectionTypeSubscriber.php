@@ -22,8 +22,8 @@ class RedirectionTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         if ($data instanceof RedirectionInterface) {
-            if (array_key_exists($data->getSiteId(), $form->get('siteId')->getConfig()->getOption('choices'))) {
-                $data->setSiteName($form->get('siteId')->getConfig()->getOption('choices')[$data->getSiteId()]);
+            if (false !== ($siteName = array_search($data->getSiteId(), $form->get('siteId')->getConfig()->getOption('choices')))) {
+                $data->setSiteName($siteName);
             }
         }
     }

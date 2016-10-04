@@ -61,12 +61,13 @@ class RedirectionTypeSubscriberTest extends AbstractBaseTestCase
 
     /**
      * @param string $siteId
+     * @param string  $siteName
      * @param array  $options
      * @param int    $callNumber
      *
      * @dataProvider provideSiteIdOptionsAndCallNumber
      */
-    public function testPostSubmitWithDatas($siteId, array $options, $callNumber)
+    public function testPostSubmitWithDatas($siteId, $siteName, array $options, $callNumber)
     {
         $data = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
         Phake::when($data)->getSiteId()->thenReturn($siteId);
@@ -79,7 +80,7 @@ class RedirectionTypeSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->postSubmit($this->event);
 
         if ($callNumber > 0) {
-            Phake::verify($data)->setSiteName($options[$siteId]);
+            Phake::verify($data)->setSiteName($siteName);
         } else {
             Phake::verify($data, Phake::never())->setSiteName(Phake::anyParameters());
         }
@@ -91,8 +92,8 @@ class RedirectionTypeSubscriberTest extends AbstractBaseTestCase
     public function provideSiteIdOptionsAndCallNumber()
     {
         return array(
-            array('1', array('1' => 'foo'), 1),
-            array('2', array('1' => 'foo'), 0),
+            array('1', 'foo', array( 'foo' => '1'), 1),
+            array('2', 'foo', array( 'foo' => '1'), 0),
         );
     }
 }
