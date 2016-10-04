@@ -17,7 +17,7 @@ before_install:
   - cp composer.phar ~/composer/composer.phar
 
 install:
-  - export COMPOSER_ROOT_VERSION=dev-master
+  - export COMPOSER_ROOT_VERSION=1.2.x-dev
   - php ./composer.phar self-update
   - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
 
