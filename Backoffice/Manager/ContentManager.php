@@ -102,7 +102,7 @@ class ContentManager
     {
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
 
-        $lastVersion = ($contentType->isVersionable() && $lastContent !== null) ? $lastContent->getVersion() : 0;
+        $lastVersion = ($contentType->isDefiningVersionable() && $lastContent !== null) ? $lastContent->getVersion() : 0;
         $newContent = $this->cloneContent($content);
         $newContent->setVersion($lastVersion + 1);
         $this->versionableSaver->saveDuplicated($newContent);
