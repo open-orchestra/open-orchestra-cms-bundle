@@ -88,7 +88,9 @@ class UserController extends AbstractAdminController
     /**
      * @param Request       $request
      * @param UserInterface $user
-     * @param boolean       $editGroups
+     * @param boolean       $selfEdit
+     *
+     * @return Response
      */
     protected function renderForm(Request $request, UserInterface $user, $selfEdit)
     {
@@ -156,11 +158,14 @@ class UserController extends AbstractAdminController
     /**
      * @param Request       $request
      * @param UserInterface $user
+     *
+     * @return Response
      */
     protected function renderChangePassword(Request $request, UserInterface $user)
     {
         $form = $this->createForm('oo_user_change_password', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $user->getId()))
+            'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $user->getId())),
+            'validation_groups' => array('UpdatePassword'),
         ));
         $form->handleRequest($request);
 
