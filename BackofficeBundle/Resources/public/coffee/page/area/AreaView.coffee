@@ -20,6 +20,7 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
     'sortupdate .block-container': 'stopBlock'
     'sortreceive .block-container': 'receiveBlock'
     'sortremove .block-container': 'removeBlock'
+    'remove': 'remove'
 
   ###*
    * @param {Object} options
@@ -247,3 +248,11 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
     else
       @$el.children('.area-action').hide()
       @$el.removeClass('active')
+
+  ###*
+    * Call when view is removed, unbind area channel event
+  ###
+  remove: () ->
+    OpenOrchestra.Page.Area.Channel.unbind 'activateEditArea', @activateEditArea
+    OpenOrchestra.Page.Area.Channel.unbind 'activateSortableArea', @activateSortableArea
+    OpenOrchestra.Page.Area.Channel.unbind 'updateArea', @reloadArea
