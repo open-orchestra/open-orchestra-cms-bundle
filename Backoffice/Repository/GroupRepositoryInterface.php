@@ -18,10 +18,10 @@ interface GroupRepositoryInterface extends PaginationRepositoryInterface
     public function findAllWithSite();
 
     /**
-     * Find all groups linked to $siteId
+     * Find all groups linked to site with $id
      *
-     * @param string $siteId
+     * @param string $id   The site id
      * @return array
      */
-    public function findAllWithSiteId($siteId);
+    public function findAllWithSiteId($id);
 }

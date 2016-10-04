@@ -30,16 +30,16 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
     }
 
     /**
-     * Find all groups linked to $siteId
+     * Find all groups linked to site with $id
      * 
-     * @param string $siteId
+     * @param string $id   The site id
      * @return array
      */
-    public function findAllWithSiteId($siteId)
+    public function findAllWithSiteId($id)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
-            'site.$id' => new \MongoId($siteId)
+            'site.$id' => new \MongoId($id)
         );
         $qa->match($filter);
 
