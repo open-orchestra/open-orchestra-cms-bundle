@@ -29,7 +29,8 @@ class SiteChoiceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'choices' => $this->getChoices()
+                'choices' => $this->getChoices(),
+                'choices_as_values' => true,
             )
         );
     }
@@ -45,7 +46,7 @@ class SiteChoiceType extends AbstractType
 
         /** @var SiteInterface $site */
         foreach ($sites as $site) {
-            $choices[$site->getSiteId()] = $site->getName();
+            $choices[$site->getName()] = $site->getSiteId();
         }
 
         return $choices;
