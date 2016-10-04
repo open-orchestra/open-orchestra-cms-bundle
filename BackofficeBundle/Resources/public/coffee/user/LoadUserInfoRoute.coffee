@@ -20,11 +20,21 @@
         url: panelUrl
         success: (response) ->
           elementTabViewClass = appConfigurationView.getConfiguration(tabViewType, 'editEntityTab')
-          panelView = new elementTabViewClass
+
+          elementTabViewClass::onViewReady = ->
+            if !@options.submitted
+              @options.callback this
+
+          callback = ((tabView, tabId, tabIndex, isTabActive) ->
+            (view) ->
+              tabView.addPanel $('[data-title]', view.$el).data('title'), tabId, view, isTabActive, tabIndex
+              return
+          )(tabView, tabId, tabIndex, isTabActive)
+
+          new elementTabViewClass
             'response': response
             'listUrl': false
-          tabView.addPanel $('[data-title]', panelView.$el).data('title'), tabId, panelView, isTabActive, tabIndex
-          return
+            'callback': callback
 
     renderPanel tabView, 'user_tab_selfForm', userUrl, 'user-form', 1, true
     renderPanel tabView, 'user_tab_selfPasswordForm', passwordUrl, 'password-form', 2, false
