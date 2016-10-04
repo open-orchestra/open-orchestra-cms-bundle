@@ -64,14 +64,15 @@ class ContentTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.content_type.linked_to_site',
                 'required' => false,
             ))
-            ->add('definingNonStatusable', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.defining_non_statusable.label',
+            ->add('definingStatusable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.defining_statusable.label',
                 'required' => false,
-                'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_type.defining_non_statusable.helper'),
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_type.defining_statusable.helper'),
             ))
-            ->add('versionable', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.versionable',
+            ->add('definingVersionable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.defining_versionable.label',
                 'required' => false,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_type.defining_versionable.helper'),
             ))
             ->add('defaultListable', 'collection', array(
                 'required' => false,
