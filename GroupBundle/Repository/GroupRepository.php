@@ -14,7 +14,7 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
     use PaginationTrait;
 
     /**
-     * find all groups with a site
+     * Find all groups linked to a site
      *
      * @return array
      */
@@ -23,6 +23,23 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
         $qa = $this->createAggregationQuery();
         $filter = array(
             'site' => array('$ne' => null)
+        );
+        $qa->match($filter);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * Find all groups linked to $siteId
+     * 
+     * @param string $siteId
+     * @return array
+     */
+    public function findAllWithSiteId($siteId)
+    {
+        $qa = $this->createAggregationQuery();
+        $filter = array(
+            'site.$id' => new \MongoId($siteId)
         );
         $qa->match($filter);
 
