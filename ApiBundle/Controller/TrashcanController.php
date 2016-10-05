@@ -28,7 +28,7 @@ class TrashcanController extends BaseController
      *
      * @Config\Security("is_granted('ROLE_ACCESS_DELETED')")
      *
-     * @return Response
+     * @return FacadeInterface
      */
     public function listAction(Request $request)
     {
