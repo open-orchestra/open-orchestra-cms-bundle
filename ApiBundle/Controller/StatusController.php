@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class StatusController
@@ -28,12 +29,13 @@ class StatusController extends BaseController
     /**
      * @param Request $request
      *
+     * @return FacadeInterface
+     *
      * @Config\Route("", name="open_orchestra_api_status_list")
      * @Config\Method({"GET"})
-     *
      * @Config\Security("is_granted('ROLE_ACCESS_STATUS')")
      *
-     * @return FacadeInterface
+     * @Api\Groups({CMSGroupContext::STATUS_LINKS})
      */
     public function listAction(Request $request)
     {
@@ -50,12 +52,11 @@ class StatusController extends BaseController
     /**
      * @param int $statusId
      *
+     * @return Response
+     * @throws DeleteStatusNotGrantedHttpException
+     *
      * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
      * @Config\Method({"DELETE"})
-     *
-     * @return Response
-     *
-     * @throws DeleteStatusNotGrantedHttpException
      */
     public function deleteAction($statusId)
     {

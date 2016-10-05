@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
@@ -14,6 +13,7 @@ use OpenOrchestra\BackofficeBundle\StrategyManager\authorizeStatusChangeManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class StatusTransformer
@@ -75,7 +75,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->allowed = $this->authorizeStatusChangeManager->isGranted($document, $status);
         }
 
-        if (!$this->hasGroup(GroupContext::G_HIDE_ROLES)) {
+        if ($this->hasGroup(CMSGroupContext::STATUS_LINKS)) {
             $toRoles = array();
             foreach ($status->getToRoles() as $toRole) {
                 $toRoles[] = $toRole->getName();
