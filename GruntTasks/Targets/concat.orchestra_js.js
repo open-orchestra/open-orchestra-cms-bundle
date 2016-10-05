@@ -124,11 +124,15 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/table/TableviewAction.js',
     'web/built/openorchestrabackoffice/js/table/TableviewTrashcanButtonAction.js',
     'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',
+    'web/built/openorchestrabackoffice/js/table/TableNoLinksviewCollectionView.js',
     'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 
     //--[ USER ]--//
     'web/built/openorchestrabackoffice/js/user/UserFormView.js',
     'web/built/openorchestrauseradmin/js/user/*.js',
+
+    //----- LOG -----//
+    'web/built/openorchestrabackoffice/js/log/TableConfiguration.js',
 
     //--[ CONTENT TYPE ]--//
     'web/built/openorchestrabackoffice/js/contentType/TableviewCollectionView.js',

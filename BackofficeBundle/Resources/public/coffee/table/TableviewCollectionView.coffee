@@ -32,31 +32,24 @@ TableviewCollectionView = OrchestraView.extend(
       @createDatatable()
 
   createDatatable: ->
-    columns = []
-    columnDefs = []
+    viewContext = @
+    @columns = []
+    @columnDefs = []
     columnsParamaters = dataTableConfigurator.getDataTableParameters(@options.datatableParameterName)
     for index, element of columnsParamaters.column_parameter
-      columns.push({'data' : element.name, 'defaultContent': ''});
+      @columns.push({'data' : element.name, 'defaultContent': ''});
       defs = $.extend({}
         element,
-        targets: columnDefs.length
+        targets: @columnDefs.length
       )
-      columnDefs.push(defs);
-    columns.push({'data' : 'links'})
-    columnDefs.push(
-        targets: -1
-        data: 'links'
-        orderable: false
-        createdCell : (td, cellData, rowData, row, col) ->
-          viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
-    )
-    viewContext = @
+      @columnDefs.push(defs);
+    @addLinks()
     datatableViewClass = appConfigurationView.getConfiguration(@options.entityType,'addDataTable')
     datatable = new datatableViewClass(
         url: @options.url
         page: if @options.page? then parseInt(@options.page) - 1 else 0
-        columns: columns
-        columnDefs: columnDefs
+        columns: viewContext.columns
+        columnDefs: viewContext.columnDefs
         globalSearch: @options.displayGlobalSearch
         tableId: @options.entityType
         tableClassName: 'table table-striped table-bordered table-hover smart-form'
@@ -111,6 +104,17 @@ TableviewCollectionView = OrchestraView.extend(
     url = appRouter.generateUrl('listEntities', entityType: @options.entityType, page: page)
     Backbone.history.navigate(url)
 
+  addLinks : (event) ->
+    viewContext = @
+    @columns.push({'data' : 'links'})
+    @columnDefs.push(
+        targets: -1
+        data: 'links'
+        orderable: false
+        createdCell : (td, cellData, rowData, row, col) ->
+          viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
+    )
+  
 )
 
 ((router) ->
