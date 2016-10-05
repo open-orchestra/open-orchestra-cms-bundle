@@ -103,7 +103,10 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 )));
             }
 
-            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT)) {
+            if (
+                $this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT) &&
+                !$content->isUsed()
+            ) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
                     'contentId' => $content->getId()
                 )));
