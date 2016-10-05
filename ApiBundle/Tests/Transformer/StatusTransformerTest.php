@@ -48,6 +48,10 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($transformerManager)->getGroupContext()->thenReturn($this->groupContext);
         Phake::when($transformerManager)->getRouter()->thenReturn($router);
 
+        $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
+        Phake::when($transformerManager)->getGroupContext()->thenReturn($groupContext);
+        Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
+
         $this->transformer = new StatusTransformer($this->facadeClass, $this->authorizeStatusChangeManager, $roleRepository, $this->translator, $translationChoiceManager, $this->authorizationChecker);
         $this->transformer->setContext($transformerManager);
     }
