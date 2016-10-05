@@ -9,7 +9,6 @@ use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\Reference\ReferenceManager;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
@@ -20,16 +19,13 @@ use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 class UpdateReferenceSubscriber implements EventSubscriberInterface
 {
     protected $referenceManager;
-    protected $objectManager;
 
     /**
      * @param ReferenceManager $referenceManager
-     * @param ObjectManager    $objectManager
      */
-    public function __construct(ReferenceManager $referenceManager, ObjectManager $objectManager)
+    public function __construct(ReferenceManager $referenceManager)
     {
         $this->referenceManager = $referenceManager;
-        $this->objectManager = $objectManager;
     }
 
     /**
@@ -51,7 +47,7 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ContentEvent $event
+     * @param ContentTypeEvent $event
      */
     public function updateReferencesToContentType(ContentTypeEvent $event)
     {
@@ -75,10 +71,13 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     {
         return array(
             NodeEvents::NODE_UPDATE_BLOCK => 'updateReferencesToNode',
+            NodeEvents::NODE_DUPLICATE => 'updateReferencesToNode',
+            NodeEvents::NODE_CREATION => 'updateReferencesToNode',
             NodeEvents::NODE_DELETE_BLOCK => 'updateReferencesToNode',
             NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'updateReferencesToNode',
             ContentEvents::CONTENT_UPDATE => 'updateReferencesToContent',
             ContentEvents::CONTENT_CREATION => 'updateReferencesToContent',
+            ContentEvents::CONTENT_DUPLICATE => 'updateReferencesToContent',
             ContentTypeEvents::CONTENT_TYPE_CREATE => 'updateReferencesToContentType',
             ContentTypeEvents::CONTENT_TYPE_UPDATE => 'updateReferencesToContentType',
             TrashcanEvents::TRASHCAN_REMOVE_ENTITY => 'removeReferencesToEntity',
