@@ -4,3 +4,4 @@ open_orchestra_api:
     node:
         new_version_not_granted: You cannot create a new version of this page due to some right limitation
         access_language_not_granted: This language is not allowed for this node on the current site
+    content:

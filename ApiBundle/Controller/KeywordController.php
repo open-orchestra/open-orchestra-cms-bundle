@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\KeywordNotDeletableException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\KeywordEvent;
 use OpenOrchestra\ModelInterface\KeywordEvents;
@@ -91,10 +92,14 @@ class KeywordController extends BaseController
      * @Config\Security("is_granted('ROLE_ACCESS_DELETE_KEYWORD')")
      *
      * @return Response
+     * @throws KeywordNotDeletableException
      */
     public function deleteAction($keywordId)
     {
         $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
+        if ($keyword->isUsed()) {
+            throw new KeywordNotDeletableException();
+        }
         $dm = $this->get('object_manager');
         $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
         $dm->remove($keyword);

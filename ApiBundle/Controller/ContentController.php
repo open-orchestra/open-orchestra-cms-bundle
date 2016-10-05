@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\SourceLanguageNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -154,10 +155,15 @@ class ContentController extends BaseController
      * @Config\Security("is_granted('ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
+     * @throws ContentNotDeletableException
      */
     public function deleteAction($contentId)
     {
         $content = $this->get('open_orchestra_model.repository.content')->find($contentId);
+        if ($content->isUsed()) {
+            throw new ContentNotDeletableException();
+        }
+
         $content->setDeleted(true);
         $this->get('object_manager')->flush();
         $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
