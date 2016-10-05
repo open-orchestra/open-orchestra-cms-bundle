@@ -161,7 +161,6 @@ services:
         class: '%open_orchestra_backoffice.subscriber.update_reference.class%'
         arguments:
             - '@open_orchestra_backoffice.reference.manager'
-            - '@object_manager'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.update_history_list:
