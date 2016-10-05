@@ -239,7 +239,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             foreach ($site->getAliases() as $aliasId => $alias) {
                 if ($alias->getLanguage() == $node->getLanguage()) {
                     $facade->addPreviewLink(
-                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $nodeId)
+                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $node->getId())
                     );
                 }
             }
