@@ -71,10 +71,6 @@ class DeleteStatusVoter implements VoterInterface
             return self::ACCESS_ABSTAIN;
         }
 
-        if ($this->usageFinder->hasUsage($object)) {
-            return self::ACCESS_DENIED;
-        }
-
-        return self::ACCESS_GRANTED;
+        return self::ACCESS_DENIED;
     }
 }
