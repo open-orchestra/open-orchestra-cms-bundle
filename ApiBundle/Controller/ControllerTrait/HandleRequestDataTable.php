@@ -30,7 +30,7 @@ trait HandleRequestDataTable
         }
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
         foreach ($filter as $key => $value) {
-            $configuration->addColumnFilter($key, $value);
+            $configuration->addPrefilterSearch($key, $value);
         }
         $configuration->setDescriptionEntity($mappingEntity);
         $collection = $entityRepository->findForPaginate($configuration);
