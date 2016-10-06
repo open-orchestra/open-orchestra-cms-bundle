@@ -20,7 +20,6 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
     }
 
     /**
-    /**
      * @param mixed $entity
      * @param mixed $subEntity
      */

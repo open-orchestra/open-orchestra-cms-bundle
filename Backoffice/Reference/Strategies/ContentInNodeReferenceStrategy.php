@@ -32,7 +32,6 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
     }
 
     /**
-    /**
      * @param mixed $entity
      * @param mixed $subEntity
      */
