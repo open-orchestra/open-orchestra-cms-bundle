@@ -123,7 +123,9 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     {
         $choices = array();
         $language = $this->contextManager->getCurrentSiteDefaultLanguage();
-        $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition);
+        $siteId = $this->contextManager->getCurrentSiteId();
+
+        $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition, $siteId);
         foreach ($contents as $content) {
             $choices[$content->getContentId()] = $content->getName();
         }

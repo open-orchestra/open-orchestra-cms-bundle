@@ -18,6 +18,7 @@ class ContentChoiceTypeTest extends AbstractBaseTestCase
     protected $contentType = 'fakeContentType';
     protected $keyword = 'fakeKeyword';
     protected $language = 'fakeLanguage';
+    protected $siteId = 'fakeSiteId';
     protected $contentId0 = 'fakeContentId0';
     protected $contentName0 = 'fakeContentName0';
     protected $contentId1 = 'fakeContentId1';
@@ -42,10 +43,11 @@ class ContentChoiceTypeTest extends AbstractBaseTestCase
         $contents->add($content1);
 
         $contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
-        Phake::when($contentRepository)->findByContentTypeAndCondition($this->language, $this->contentType, $this->choiceType, $this->keyword)->thenReturn($contents);
+        Phake::when($contentRepository)->findByContentTypeAndCondition($this->language, $this->contentType, $this->choiceType, $this->keyword, $this->siteId)->thenReturn($contents);
 
         $contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($this->language);
+        Phake::when($contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
 
         $referenceToEmbedTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\ReferenceToEmbedTransformer');
 
