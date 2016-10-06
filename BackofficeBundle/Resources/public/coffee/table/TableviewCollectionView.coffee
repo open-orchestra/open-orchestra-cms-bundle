@@ -48,8 +48,8 @@ TableviewCollectionView = OrchestraView.extend(
         return
     )(@)
     links = @addLinks()
-    columns.push links.columns if typeof links != 'undefined' and typeof links.columns != 'undefined'
-    columnDefs.push links.columnDefs if typeof links != 'undefined' and typeof links.columnDefs != 'undefined'
+    columns.push links.columns if links? and links.columns?
+    columnDefs.push links.columnDefs if links? and links.columnDefs?
     datatableViewClass = appConfigurationView.getConfiguration(@options.entityType,'addDataTable')
     datatable = new datatableViewClass(
         url: @options.url
