@@ -21,7 +21,7 @@ trait HandleRequestDataTable
      *
      * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
-    protected function handleRequestDataTable(Request $request, PaginationRepositoryInterface $entityRepository, $mappingEntity, TransformerInterface $transformerManager, array $filter = array())
+    protected function handleRequestDataTable(Request $request, PaginationRepositoryInterface $entityRepository, $mappingEntity, TransformerInterface $transformerManager, array $prefilter = array())
     {
         if ($entityId = $request->get('entityId')) {
             $element = $entityRepository->find($entityId);
@@ -29,7 +29,7 @@ trait HandleRequestDataTable
             return $transformerManager->transform(array($element));
         }
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        foreach ($filter as $key => $value) {
+        foreach ($prefilter as $key => $value) {
             $configuration->addPrefilterSearch($key, $value);
         }
         $configuration->setDescriptionEntity($mappingEntity);
