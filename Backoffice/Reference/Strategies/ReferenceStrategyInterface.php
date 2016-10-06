@@ -17,10 +17,11 @@ Interface ReferenceStrategyInterface
     /**
      * @param mixed $entity
      */
-    public function addReferencesToEntity($entity);
+    public function addReferencesToEntity($entity, $subEntity);
 
     /**
      * @param mixed $entity
+     * @param mixed $subEntity
      */
     public function removeReferencesToEntity($entity);
 }

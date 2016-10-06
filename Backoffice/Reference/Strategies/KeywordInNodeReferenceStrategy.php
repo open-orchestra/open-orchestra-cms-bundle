@@ -22,11 +22,12 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
 
     /**
      * @param mixed $entity
+     * @param mixed $subEntity
      */
-    public function addreferencesToEntity($entity)
+    public function addReferencesToEntity($entity, $subEntity)
     {
         if ($this->support($entity)) {
-            $keywordIds = $this->extractKeywordsFromNode($entity);
+            $keywordIds = $this->extractKeywordsFromNode($entity, $subEntity);
 
             foreach ($keywordIds as $keywordId) {
                 /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
@@ -56,15 +57,18 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
 
     /**
      * @param ReadNodeInterface $node
+     * @param mixed             $subEntity
      *
      * @return array
      */
-    protected function extractKeywordsFromNode(ReadNodeInterface $node)
+    protected function extractKeywordsFromNode(ReadNodeInterface $node, $subEntity)
     {
         $references = array();
 
+        $blocks = !is_null($subEntity) ? $node->getBlocks() : array($subEntity);
+
         /** @var BlockInterface $block */
-        foreach ($node->getBlocks() as $block) {
+        foreach ($blocks as $block) {
             $references = $this->extractKeywordsFromElement($block->getAttributes(), $references);
         }
 
