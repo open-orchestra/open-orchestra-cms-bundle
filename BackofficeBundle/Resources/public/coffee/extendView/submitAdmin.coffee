@@ -45,10 +45,15 @@ extendView['submitAdmin'] = {
                   $('.tab-content .submit_form.btn-in-ribbon',@.$el).removeClass('btn-in-ribbon')
                   OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
                 $(document).scrollTop 0
-              403: (response) ->
+              403: () ->
                 displayRoute = OpenOrchestra.ForbiddenAccessRedirection[Backbone.history.fragment]
+
                 if typeof displayRoute != 'undefined'
-                  Backbone.history.navigate(displayRoute, {trigger: true})
+                  window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', viewContext, form
+                  if (displayRoute == Backbone.history.fragment)
+                    Backbone.history.loadUrl(displayRoute)
+                  else
+                    Backbone.history.navigate(displayRoute, {trigger: true})
           false
     return
 }
