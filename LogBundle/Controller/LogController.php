@@ -3,11 +3,11 @@
 namespace OpenOrchestra\LogBundle\Controller;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Symfony\Component\HttpFoundation\Request;
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 
 /**
  * Class LogController
@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LogController extends Controller
 {
+    use HandleRequestDataTable;
+
     /**
      * @param Request $request
      *
@@ -30,18 +32,13 @@ class LogController extends Controller
      */
     public function listAction(Request $request)
     {
+        $mapping = $this
+        ->get('open_orchestra.annotation_search_reader')
+        ->extractMapping($this->container->getParameter('open_orchestra_log.document.log.class'));
+
         $repository =  $this->get('open_orchestra_log.repository.log');
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        $mapping = $this->get('open_orchestra.annotation_search_reader')->extractMapping($this->container->getParameter('open_orchestra_log.document.log.class'));
-        $configuration->setDescriptionEntity($mapping);
-        $logCollection = $repository->findForPaginate($configuration);
-        $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countWithFilter($configuration);
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('log_collection');
 
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('log_collection')->transform($logCollection);
-        $facade->recordsTotal = $recordsTotal;
-        $facade->recordsFiltered = $recordsFiltered;
-
-        return $facade;
+        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
     }
 }

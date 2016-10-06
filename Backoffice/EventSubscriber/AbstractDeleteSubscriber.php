@@ -36,6 +36,7 @@ abstract class AbstractDeleteSubscriber implements EventSubscriberInterface
         $trashItem->setEntity($entity);
         $trashItem->setName($name);
         $trashItem->setType($type);
+        $trashItem->setSiteId($entity->getSiteId());
 
         $this->objectManager->persist($trashItem);
         $this->objectManager->flush($trashItem);
