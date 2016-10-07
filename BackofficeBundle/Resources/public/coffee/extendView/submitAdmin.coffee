@@ -17,14 +17,14 @@ extendView['submitAdmin'] = {
       OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
     $(document).scrollTop 0
 
-  http_ok: (response, form) ->
+  httpOk: (response, form) ->
     @openForm(response[0], form)
     
-  http_bad_request: (response, form) ->
+  httpBadRequest: (response, form) ->
     widgetChannel.trigger 'form-error', @
     @openForm(response[0].responseText, form)
   
-  http_created: (response) ->
+  httpCreated: (response) ->
     widgetChannel.trigger 'element-created', @
     displayRoute = $("#nav-" + @options.entityType).attr('href')
     Backbone.history.navigate(displayRoute, {trigger: true})
@@ -35,9 +35,13 @@ extendView['submitAdmin'] = {
     ))
     $(document).scrollTop 0
 
-  http_forbidden: ->
+  httpForbidden: (response, form) ->
     displayRoute = OpenOrchestra.ForbiddenAccessRedirection[Backbone.history.fragment]
     if typeof displayRoute != 'undefined'
+      window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, form
+    if (displayRoute == Backbone.history.fragment)
+      Backbone.history.loadUrl(displayRoute)
+    else
       Backbone.history.navigate(displayRoute, {trigger: true})
   
   addEventOnSave: (event) ->
@@ -54,13 +58,13 @@ extendView['submitAdmin'] = {
         context: @
         statusCode:
           201: ->
-            @http_created(arguments)
+            @httpCreated(arguments)
           200: ->
-            @http_ok(arguments, form);
+            @httpOk(arguments, form);
           400: ->
-            @http_bad_request(arguments, form);
+            @httpBadRequest(arguments, form);
           403: ->
-            @http_forbidden()
+            @httpForbidden(arguments, form);
     else if !form.hasClass('HTML5Validation')
       form.addClass('HTML5Validation')
       form.find(':submit').click()
