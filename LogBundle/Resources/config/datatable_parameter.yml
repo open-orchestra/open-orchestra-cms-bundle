@@ -32,4 +32,3 @@ parameters:
           title : open_orchestra_log.table.log.message
           visible : true
           activateColvis : true
-          searchField : text
