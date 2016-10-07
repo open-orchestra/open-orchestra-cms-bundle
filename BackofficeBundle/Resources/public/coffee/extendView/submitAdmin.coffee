@@ -8,7 +8,7 @@ extendView['submitAdmin'] = {
     window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, form
 
     new viewClass(@addOption(
-      html: response
+      html: response[0]
       submitted: true
     ))
     
@@ -18,24 +18,24 @@ extendView['submitAdmin'] = {
     $(document).scrollTop 0
 
   http_ok: (response, form) ->
-    @openForm(response, form)
+    @openForm(response[0], form)
     
-  http_bad_request: (error, form) ->
+  http_bad_request: (response, form) ->
     widgetChannel.trigger 'form-error', @
-    @openForm(error.responseText, form)
+    @openForm(response[0].responseText, form)
   
-  http_created: (response, form) ->
+  http_created: (response) ->
     widgetChannel.trigger 'element-created', @
     displayRoute = $("#nav-" + @options.entityType).attr('href')
     Backbone.history.navigate(displayRoute, {trigger: true})
     viewClass = appConfigurationView.getConfiguration(@options.entityType, 'showFlashBag')
     new viewClass(@addOption(
-      html: response
+      html: response[0]
       domContainer: $('h1.page-title').parent()
     ))
     $(document).scrollTop 0
 
-  http_forbidden: (response, form) ->
+  http_forbidden: ->
     displayRoute = OpenOrchestra.ForbiddenAccessRedirection[Backbone.history.fragment]
     if typeof displayRoute != 'undefined'
       Backbone.history.navigate(displayRoute, {trigger: true})
@@ -53,13 +53,14 @@ extendView['submitAdmin'] = {
         data: form.serialize()
         context: @
         statusCode:
-          201: (response) ->
-            @http_created(response, form)
-          200: (response) ->
-            @http_ok(response, form);
-          400: (error) ->
-            @http_bad_request(error, form);
-          403: (response) ->
+          201: ->
+            @http_created(arguments)
+          200: ->
+            @http_ok(arguments, form);
+          400: ->
+            @http_bad_request(arguments, form);
+          403: ->
+            @http_forbidden()
     else if !form.hasClass('HTML5Validation')
       form.addClass('HTML5Validation')
       form.find(':submit').click()
