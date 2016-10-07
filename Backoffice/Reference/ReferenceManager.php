@@ -56,12 +56,12 @@ class ReferenceManager
     }
 
     /**
-     * @param mixed $entity
-     * @param mixed $subEntity
+     * @param mixed      $entity
+     * @param mixed|null $scope
      */
-    public function updateReferencesToEntity($entity, $subEntity = null)
+    public function updateReferencesToEntity($entity, $scope = null)
     {
         $this->removeReferencesToEntity($entity);
-        $this->addReferencesToEntity($entity, $subEntity);
+        $this->addReferencesToEntity($entity, $scope);
     }
 }

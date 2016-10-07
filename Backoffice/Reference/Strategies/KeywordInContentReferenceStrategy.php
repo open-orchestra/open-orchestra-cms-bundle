@@ -21,9 +21,9 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
 
     /**
      * @param mixed $entity
-     * @param mixed $subEntity
+     * @param mixed $scope
      */
-    public function addReferencesToEntity($entity, $subEntity)
+    public function addReferencesToEntity($entity, $scope)
     {
         if ($this->support($entity)) {
             $keywordIds = $this->extractKeywordsFromKeywordableEntity($entity);

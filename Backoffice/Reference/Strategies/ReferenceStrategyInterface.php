@@ -16,12 +16,12 @@ Interface ReferenceStrategyInterface
 
     /**
      * @param mixed $entity
+     * @param mixed $scope
      */
-    public function addReferencesToEntity($entity, $subEntity);
+    public function addReferencesToEntity($entity, $scope);
 
     /**
      * @param mixed $entity
-     * @param mixed $subEntity
      */
     public function removeReferencesToEntity($entity);
 }
