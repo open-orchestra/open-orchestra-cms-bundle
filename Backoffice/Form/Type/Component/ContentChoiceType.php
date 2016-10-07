@@ -61,7 +61,8 @@ class ContentChoiceType extends AbstractType
         $choices = array();
 
         $language = $this->contextManager->getCurrentSiteDefaultLanguage();
-        $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $operator, $keywords);
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $operator, $keywords, $siteId);
 
         foreach ($contents as $content) {
             $choices[$content->getId()] = $content->getName();
