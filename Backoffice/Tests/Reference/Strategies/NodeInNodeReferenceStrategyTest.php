@@ -14,7 +14,6 @@ class NodeInNodeStrategyTest extends AbstractReferenceStrategyTest
     protected $nodeRepository;
     protected $bbcodeParser;
     protected $currentSiteManager;
-    protected $bbCodeWithLink;
 
     /**
      * setUp
@@ -24,8 +23,13 @@ class NodeInNodeStrategyTest extends AbstractReferenceStrategyTest
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->bbcodeParser = Phake::mock('OpenOrchestra\BBcodeBundle\Parser\BBcodeParserInterface');
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        $this->bbCodeWithLink = 'Some [b]String[b] with [link={"label":"link","site_siteId":"2","site_nodeId":"nodeId4"}]link[/link]';
-        Phake::when($this->bbcodeParser)->parse($this->bbCodeWithLink)->thenReturn($this->bbcodeParser);
+        Phake::when($this->bbcodeParser)->parse(Phake::anyParameters())->thenReturn($this->bbcodeParser);
+        Phake::when($this->bbcodeParser)->getElementByTagName(Phake::anyParameters())->thenReturn($this->bbcodeParser);
+        $mediaTag = Phake::mock('OpenOrchestra\BBcodeBundle\ElementNode\BBcodeElementNodeInterface');
+        Phake::when($mediaTag)->getAttribute()->thenReturn(array('link'=> '{"label":"link","site_siteId":"2","site_nodeId":"nodeId4"}'));
+        Phake::when($this->bbcodeParser)->getElementByTagName(Phake::anyParameters())->thenReturn(
+            array($mediaTag)
+        );
 
         $this->strategy = new NodeInNodeReferenceStrategy($this->nodeRepository, $this->bbcodeParser, $this->currentSiteManager);
     }
@@ -57,9 +61,8 @@ class NodeInNodeStrategyTest extends AbstractReferenceStrategyTest
      */
     public function testAddReferencesToEntity($entity, $entityId, array $nodes)
     {
-        Phake::when($this->nodeRepository)->findByNodeAndSite(Phake::anyParameters())->thenReturn($nodes);
-
-        parent::checkAddReferencesToEntity($entity, $entityId, $nodes, NodeInterface::ENTITY_TYPE, $this->nodeRepository);
+        $this->strategy->addReferencesToEntity($entity);
+        Phake::verify($this->nodeRepository, Phake::times(count($nodes)))->updateUseReference(Phake::anyParameters());
     }
 
     /**
@@ -90,11 +93,7 @@ class NodeInNodeStrategyTest extends AbstractReferenceStrategyTest
         $node = $this->createPhakeNode($nodeId);
         Phake::when($node)->getBlocks()->thenReturn(array());
 
-        $nodeId2 = 'nodeId2';
-        $node2 = $this->createPhakeNode($nodeId2);
 
-        $nodeId3 = 'nodeId3';
-        $node3 = $this->createPhakeNode($nodeId3);
 
         $blockWithNode1 = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($blockWithNode1)->getAttributes()
@@ -102,14 +101,23 @@ class NodeInNodeStrategyTest extends AbstractReferenceStrategyTest
                     'nodeToLink' => $nodeId
                 )
             );
+
+
+        $nodeId2 = 'nodeId2';
+        $node2 = $this->createPhakeNode($nodeId2);
+
         $blockWithNode2 = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
-        Phake::when($blockWithNode1)->getAttributes()
+        Phake::when($blockWithNode2)->getAttributes()
             ->thenReturn(array(
                     'nodeName' => $nodeId2
                 )
             );
+
+        $nodeId3 = 'nodeId3';
+        $node3 = $this->createPhakeNode($nodeId3);
+
         $blockWithNode3 = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
-        Phake::when($blockWithNode1)->getAttributes()
+        Phake::when($blockWithNode3)->getAttributes()
             ->thenReturn(array(
                     'contentNodeId' => $nodeId3
                 )
@@ -119,9 +127,9 @@ class NodeInNodeStrategyTest extends AbstractReferenceStrategyTest
         $node4 = $this->createPhakeNode($nodeId4);
 
         $blockWithNodeTinymce = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
-        $bbCodeWithLink = 'Some [b]String[b] with [link={"label":"link","site_siteId":"2","site_nodeId":"nodeId4"}]link[/link]';
 
-        Phake::when($blockWithNodeTinymce)->getAttributes()->thenReturn(array($this->bbCodeWithLink));
+        $bbCodeWithLink = 'Some [b]String[b] with [link={"label":"link","site_siteId":"2","site_nodeId":"nodeId4"}]link[/link]';
+        Phake::when($blockWithNodeTinymce)->getAttributes()->thenReturn(array($bbCodeWithLink));
 
         $nodeWithNodeId = 'NodeWithNode';
         $nodeWithNode = $this->createPhakeNode($nodeWithNodeId);
