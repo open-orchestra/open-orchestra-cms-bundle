@@ -132,8 +132,9 @@ class UserController extends AbstractAdminController
     {
         /* @var UserInterface $user */
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $url = 'open_orchestra_user_admin_user_change_password';
 
-        return $this->renderChangePassword($request, $user);
+        return $this->renderChangePassword($request, $user, $url);
     }
 
     /**
@@ -151,21 +152,23 @@ class UserController extends AbstractAdminController
         }
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $url = "open_orchestra_user_admin_user_self_change_password";
 
-        return $this->renderChangePassword($request, $user);
+        return $this->renderChangePassword($request, $user, $url);
     }
 
     /**
      * @param Request       $request
      * @param UserInterface $user
+     * @param string        $url
      *
      * @return Response
      */
-    protected function renderChangePassword(Request $request, UserInterface $user)
+    protected function renderChangePassword(Request $request, UserInterface $user, $url)
     {
         $form = $this->createForm('oo_user_change_password', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $user->getId())),
-            'validation_groups' => array('UpdatePassword'),
+            'action' => $this->generateUrl($url, array('userId' => $user->getId())),
+            'validation_groups' => array('UpdatePassword', 'Default'),
         ));
         $form->handleRequest($request);
 
