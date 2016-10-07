@@ -30,9 +30,9 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         $contentType = 'fakeContentType';
         $choiceType = 'fakeChoiceType';
         $language = 'fakeLanguage';
+        $siteId = 'fakeSiteId';
 
         $condition = 'fakeCondition';
-        $jCondition = json_decode($condition, true);
 
         $content1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content1)->getName()->thenReturn($this->contentName1);
@@ -42,12 +42,13 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         Phake::when($content2)->getContentId()->thenReturn($this->contentId2);
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
 
-        Phake::when($this->contentRepository)->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition)->thenReturn(array(
+        Phake::when($this->contentRepository)->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition, $siteId)->thenReturn(array(
                 $content1,
                 $content2
         ));
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($language);
+        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
 
         $this->attributes = array(
             'fakeAttributes' => 'fakeAttributes'
