@@ -20,7 +20,7 @@ extendView['submitAdmin'] = {
   http_ok: (response, form) ->
     @openForm(response, form)
     
-  http_bad_request: (response, form) ->
+  http_bad_request: (error, form) ->
     widgetChannel.trigger 'form-error', @
     @openForm(error.responseText, form)
   
@@ -58,7 +58,7 @@ extendView['submitAdmin'] = {
           200: (response) ->
             @http_ok(response, form);
           400: (error) ->
-            @http_bad_request(response, form);
+            @http_bad_request(error, form);
           403: (response) ->
     else if !form.hasClass('HTML5Validation')
       form.addClass('HTML5Validation')
