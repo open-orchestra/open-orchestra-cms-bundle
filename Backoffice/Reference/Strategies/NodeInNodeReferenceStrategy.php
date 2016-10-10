@@ -123,8 +123,7 @@ class NodeInNodeReferenceStrategy implements ReferenceStrategyInterface
      */
     protected function hasInternalLinkBBCode($str)
     {
-        $internalLinkBBCode = '/\[' . InternalLinkDefinition::TAG_NAME . '(\=\{.*\})?].*\[\/'
-            . InternalLinkDefinition::TAG_NAME . '\]/m';
+        $internalLinkBBCode = '/\[' . InternalLinkDefinition::TAG_NAME . '[^]]*].*?\[\/'. InternalLinkDefinition::TAG_NAME . '\]/m';
 
         return preg_match($internalLinkBBCode, $str) === 1;
     }
