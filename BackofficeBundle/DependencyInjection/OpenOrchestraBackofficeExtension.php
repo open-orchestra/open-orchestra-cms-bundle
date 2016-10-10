@@ -2,13 +2,11 @@
 
 namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy;
@@ -110,8 +108,6 @@ class OpenOrchestraBackofficeExtension extends Extension
             ConfigurableContentStrategy::NAME,
             TinyMCEWysiwygStrategy::NAME,
             VideoStrategy::NAME,
-            GmapStrategy::NAME,
-            AddThisStrategy::NAME,
             AudienceAnalysisStrategy::NAME,
             ContactStrategy::NAME,
         );
