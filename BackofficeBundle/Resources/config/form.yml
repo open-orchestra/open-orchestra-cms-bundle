@@ -1,7 +1,6 @@
 parameters:
     open_orchestra_backoffice.type.template.class: OpenOrchestra\Backoffice\Form\Type\TemplateType
     open_orchestra_backoffice.type.node.class: OpenOrchestra\Backoffice\Form\Type\NodeType
-    open_orchestra_backoffice.type.area.class: OpenOrchestra\Backoffice\Form\Type\AreaType
     open_orchestra_backoffice.type.area_row.class: OpenOrchestra\Backoffice\Form\Type\AreaRowType
     open_orchestra_backoffice.type.area_column.class: OpenOrchestra\Backoffice\Form\Type\AreaColumnType
     open_orchestra_backoffice.type.column_layout_row.class: OpenOrchestra\Backoffice\Form\Type\Component\ColumnLayoutRowType
@@ -20,8 +19,6 @@ parameters:
     open_orchestra_backoffice.type.field_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\FieldChoiceType
     open_orchestra_backoffice.type.date_widget_option.class: OpenOrchestra\Backoffice\Form\Type\Component\DateWidgetOptionType
     open_orchestra_backoffice.type.date_picker.class: OpenOrchestra\Backoffice\Form\Type\Component\DatePickerType
-    open_orchestra_backoffice.type.translated_value.class: OpenOrchestra\Backoffice\Form\Type\TranslatedValueType
-    open_orchestra_backoffice.type.translated_value_collection.class: OpenOrchestra\Backoffice\Form\Type\TranslatedValueCollectionType
     open_orchestra_backoffice.type.theme_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\ThemeChoiceType
     open_orchestra_backoffice.type.theme.class: OpenOrchestra\Backoffice\Form\Type\ThemeType
     open_orchestra_backoffice.type.node_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\NodeChoiceType
@@ -89,15 +86,6 @@ services:
             - '@open_orchestra_backoffice.manager.node'
         tags:
             - { name: form.type, alias: oo_node }
-    # Area form type
-    open_orchestra_backoffice.type.area:
-        class: '%open_orchestra_backoffice.type.area.class%'
-        arguments:
-            - '%open_orchestra_model.document.area.class%'
-            - '@translator'
-        deprecated: 'The "%service_id%" service is deprecated will be removed in 2.0'
-        tags:
-            - { name: form.type, alias: oo_area }
     # Area row form type
     open_orchestra_backoffice.type.area_row:
         class: '%open_orchestra_backoffice.type.area_row.class%'
@@ -229,29 +217,6 @@ services:
         tags:
             - { name: form.type, alias: orchestra_language }
 
-    # Direction form field type
-    open_orchestra_backoffice.type.direction:
-        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
-        arguments:
-            - '%open_orchestra_backoffice.orchestra_choice.direction%'
-            - 'orchestra_direction'
-        deprecated: 'The "%service_id%" service is deprecated will be removed in 2.0'
-        tags:
-            - { name: form.type, alias: orchestra_direction }
-
-    open_orchestra_backoffice.type.translated_value:
-        class: '%open_orchestra_backoffice.type.translated_value.class%'
-        deprecated: ~
-        arguments:
-            - '%open_orchestra_model.document.translated_value.class%'
-            - '%open_orchestra_base.administration_languages%'
-        tags:
-            - { name: form.type, alias: oo_translated_value }
-    open_orchestra_backoffice.type.translated_value_collection:
-        class: '%open_orchestra_backoffice.type.translated_value_collection.class%'
-        deprecated: ~
-        tags:
-            - { name: form.type, alias: oo_translated_value_collection }
     open_orchestra_backoffice.type.theme_choice:
         class: '%open_orchestra_backoffice.type.theme_choice.class%'
         arguments:

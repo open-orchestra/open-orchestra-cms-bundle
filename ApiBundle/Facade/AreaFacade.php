@@ -52,12 +52,6 @@ class AreaFacade extends AbstractFacade
     protected $areas = array();
 
     /**
-     * @Serializer\Type("string")
-     * @deprecated will be removed in 2.0
-     */
-    public $boDirection;
-
-    /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;

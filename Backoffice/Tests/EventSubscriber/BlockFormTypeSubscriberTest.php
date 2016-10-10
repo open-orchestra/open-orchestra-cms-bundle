@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\EventSubscriber\BlockTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -14,7 +13,7 @@ use Symfony\Component\Form\FormEvents;
 class BlockFormTypeSubscriberTest extends AbstractBaseTestCase
 {
     /**
-     * @var BlockTypeSubscriber
+     * @var BlockFormTypeSubscriber
      */
     protected $subscriber;
 
