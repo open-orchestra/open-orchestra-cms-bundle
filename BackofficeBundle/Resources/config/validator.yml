@@ -2,7 +2,6 @@ parameters:
     open_orchestra_model.validatorcontent_template.class: OpenOrchestra\Backoffice\Validator\Constraints\ContentTemplateValidator
     open_orchestra_model.validator.block_node_pattern.class: OpenOrchestra\Backoffice\Validator\Constraints\BlockNodePatternValidator
     open_orchestra_model.validator.restore_node.class: OpenOrchestra\Backoffice\Validator\Constraints\RestoreNodeValidator
-    open_orchestra_model.validator.unique_area_id.class: OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaIdValidator
     open_orchestra_model.validator.unique_node_order.class: OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeOrderValidator
     open_orchestra_model.validator.area_row_layout.class: OpenOrchestra\Backoffice\Validator\Constraints\AreaRowLayoutValidator
     open_orchestra_model.validator.check_variable_route_pattern_in_menu.class: OpenOrchestra\Backoffice\Validator\Constraints\CheckVariableRoutePatternInMenuValidator
@@ -29,11 +28,6 @@ services:
             - '@open_orchestra_model.repository.node'
         tags:
             - { name: validator.constraint_validator, alias: restore_node}
-    open_orchestra_model.validator.unique_area_id:
-        class: '%open_orchestra_model.validator.unique_area_id.class%'
-        deprecated: ~
-        tags:
-            - { name: validator.constraint_validator, alias: unique_area_id}
     open_orchestra_model.validator.unique_node_order:
         class: '%open_orchestra_model.validator.unique_node_order.class%'
         arguments:

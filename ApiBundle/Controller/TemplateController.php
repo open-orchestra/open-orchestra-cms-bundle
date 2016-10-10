@@ -8,10 +8,8 @@ use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\AreaContainer;
 
 /**
  * Class TemplateController
@@ -22,8 +20,6 @@ use OpenOrchestra\ApiBundle\Controller\ControllerTrait\AreaContainer;
  */
 class TemplateController extends BaseController
 {
-    use AreaContainer;
-
     /**
      * @param string $templateId
      *
@@ -60,25 +56,5 @@ class TemplateController extends BaseController
         $this->get('object_manager')->flush();
 
         return array();
-    }
-
-    /**
-     * @param string|null $templateId
-     *
-     * @Config\Route("/update-area-in-template/{templateId}", name="open_orchestra_api_areas_update_in_template")
-     * @Config\Method({"POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @return Response
-     * @deprecated will be removed in 2.0
-     */
-    public function updateAreasInTemplateAction(Request $request, $templateId)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
-
-        $areaContainer = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
-        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($areaContainer));
-        return $this->updateAreasFromContainer($request->get('areas'), $areaContainer, $this->get('open_orchestra_api.transformer_manager')->get('template'));
     }
 }

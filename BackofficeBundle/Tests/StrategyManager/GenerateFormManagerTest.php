@@ -91,26 +91,6 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test Create form
-     * @deprecated  deprecated since version 1.2.0 and will be removed in version 2.0, use getFormType
-     */
-    public function testCreateForm()
-    {
-        $strategy = $this->manager->createForm($this->block);
-        $this->assertSame($this->strategy1, $strategy);
-    }
-
-    /**
-     * Test Create form with Exception
-     * @deprecated  deprecated since version 1.2.0 and will be removed in version 2.0, use getFormType
-     * @expectedException \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
-     */
-    public function testCreateFormWithException()
-    {
-        $this->exceptionManager->createForm($this->block);
-    }
-
-    /**
      * Test get form
      */
     public function testGetFormType()

@@ -104,12 +104,6 @@ class NodeFacade extends DeletedFacade
     public $editable;
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
-     * @deprecated will be removed in 2.0
-     */
-    protected $areas = array();
-
-    /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFacade")
      */
     public $rootArea;
@@ -123,34 +117,6 @@ class NodeFacade extends DeletedFacade
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\LinkFacade>")
      */
     protected $previewLinks = array();
-
-    /**
-     * @Serializer\Type("string")
-     * @deprecated will be removed in 2.0
-     */
-    public $boDirection;
-
-    /**
-     * @param FacadeInterface $facade
-     *
-     * @deprecated will be removed in 2.0
-     */
-    public function addArea(FacadeInterface $facade)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
-        $this->areas[] = $facade;
-    }
-
-    /**
-     * @return array
-     *
-     * @deprecated will be removed in 2.0
-     */
-    public function getAreas()
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
-        return $this->areas;
-    }
 
     /**
      * @param FacadeInterface $facade

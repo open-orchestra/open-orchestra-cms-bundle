@@ -1,5 +1,4 @@
 parameters:
-    open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class: OpenOrchestra\Backoffice\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer
     open_orchestra_backoffice.transformer.video_url_to_id.class: OpenOrchestra\Backoffice\Form\DataTransformer\VideoUrlToIdTransformer
     open_orchestra_backoffice.transformer.choices_option_to_array.class: OpenOrchestra\Backoffice\Form\DataTransformer\ChoicesOptionToArrayTransformer
     open_orchestra_backoffice.transformer.bbcode_to_html.class: OpenOrchestra\Backoffice\Form\DataTransformer\BBcodeToHtmlTransformer
@@ -10,15 +9,6 @@ parameters:
     open_orchestra_backoffice.transformer.content_type_order_field.class: OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldTransformer
 
 services:
-    open_orchestra_backoffice.transformer.embedkeywords_to_keywords:
-        class: '%open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%'
-        arguments:
-            - '@open_orchestra_model.repository.keyword'
-            - '@open_orchestra_model.helper.suppress_special_character'
-            - '%open_orchestra_model.document.embed_keyword.class%'
-            - '%open_orchestra_model.document.keyword.class%'
-            - '@security.authorization_checker'
-        deprecated: ~
     open_orchestra_backoffice.transformer.video_url_to_id:
         class: '%open_orchestra_backoffice.transformer.video_url_to_id.class%'
     open_orchestra_backoffice.transformer.choices_option_to_array:
