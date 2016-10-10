@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class GroupController
@@ -33,7 +32,10 @@ class GroupController extends BaseController
      * @Config\Method({"GET"})
      * @Config\Security("is_granted('ROLE_ACCESS_GROUP')")
      *
-     * @Api\Groups({CMSGroupContext::GROUP_ROLES, CMSGroupContext::SITE})
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::GROUP_ROLES,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
+     * })
      */
     public function showAction($groupId)
     {
