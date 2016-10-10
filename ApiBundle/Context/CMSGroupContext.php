@@ -9,6 +9,7 @@ class CMSGroupContext
 {
     const AREAS = 'areas';
     const BLOCKS = 'blocks';
+    const FIELD_TYPES = 'field_types';
     const GROUP_ROLES = 'group_roles';
     const NODE_GENERAL_LINKS = 'node_general_links';
     const NODE_LINKS = 'node_links';
