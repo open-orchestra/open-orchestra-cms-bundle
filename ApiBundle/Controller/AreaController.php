@@ -8,7 +8,6 @@ use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;

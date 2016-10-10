@@ -5,7 +5,6 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;

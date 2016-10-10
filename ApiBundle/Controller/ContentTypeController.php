@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use <OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
