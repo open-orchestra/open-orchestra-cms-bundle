@@ -12,4 +12,7 @@ class CMSGroupContext
     const STATUS_LINKS = 'status_links';
     const GROUP_ROLES = 'group_roles';
     const SITE = 'site';
+    const THEME_LINKS = 'theme_links';
+    const THEME = 'theme';
+    const BLOCKS = 'blocks';
 }

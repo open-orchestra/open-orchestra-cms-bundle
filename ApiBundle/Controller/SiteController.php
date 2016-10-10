@@ -27,12 +27,16 @@ class SiteController extends BaseController
     /**
      * @param string $siteId
      *
+     * @return FacadeInterface
+     *
      * @Config\Route("/{siteId}", name="open_orchestra_api_site_show")
      * @Config\Method({"GET"})
-     *
      * @Config\Security("is_granted('ROLE_ACCESS_SITE')")
      *
-     * @return FacadeInterface
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::THEME,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::BLOCKS
+     * })
      */
     public function showAction($siteId)
     {
