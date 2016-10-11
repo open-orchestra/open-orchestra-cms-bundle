@@ -10,6 +10,7 @@ use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class ContentTypeTransformer
@@ -57,8 +58,10 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $contentType->getVersion();
         $facade->linkedToSite = $contentType->isLinkedToSite();
 
-        foreach ($contentType->getFields() as $field) {
-            $facade->addField($this->getTransformer('field_type')->transform($field));
+        if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {
+            foreach ($contentType->getFields() as $field) {
+                $facade->addField($this->getTransformer('field_type')->transform($field));
+            }
         }
 
         $facade->addLink('_self', $this->generateRoute(

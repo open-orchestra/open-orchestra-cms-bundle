@@ -34,7 +34,7 @@ class ContentTypeFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\FieldTypeFacade>")
      */
-    protected $fields = array();
+    protected $fields;
 
     /**
      * @param FacadeInterface $facade
