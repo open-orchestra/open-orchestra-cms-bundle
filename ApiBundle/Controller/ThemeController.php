@@ -26,12 +26,15 @@ class ThemeController extends BaseController
     /**
      * @param int $themeId
      *
+     * @return FacadeInterface
+     *
      * @Config\Route("/{themeId}", name="open_orchestra_api_theme_show")
      * @Config\Method({"GET"})
-     *
      * @Config\Security("is_granted('ROLE_ACCESS_THEME')")
      *
-     * @return FacadeInterface
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::THEME_LINKS
+     * })
      */
     public function showAction($themeId)
     {
@@ -43,12 +46,15 @@ class ThemeController extends BaseController
     /**
      * @param Request $request
      *
+     * @return FacadeInterface
+     *
      * @Config\Route("", name="open_orchestra_api_theme_list")
      * @Config\Method({"GET"})
-     *
      * @Config\Security("is_granted('ROLE_ACCESS_THEME')")
      *
-     * @return FacadeInterface
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::THEME_LINKS
+     * })
      */
     public function listAction(Request $request)
     {
