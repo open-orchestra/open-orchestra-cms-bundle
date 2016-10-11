@@ -138,7 +138,9 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     protected function addStatus(FacadeInterface $facade, NodeInterface $node)
     {
-        $facade->status = $this->getTransformer('status')->transform($node->getStatus());
+        if ($this->hasGroup(CMSGroupContext::STATUS)) {
+            $facade->status = $this->getTransformer('status')->transform($node->getStatus());
+        }
 
         return $facade;
     }
@@ -151,25 +153,27 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     protected function addLinks(FacadeInterface $facade, NodeInterface $node)
     {
-        $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $node->getNodeId()
-        )));
+        if ($this->hasGroup(CMSGroupContext::NODE_LINKS)) {
+            $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
+                'nodeId' => $node->getNodeId()
+            )));
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $node->getNodeId(),
-            'version' => $node->getVersion(),
-            'language' => $node->getLanguage(),
-        )));
+            $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
+                'nodeId' => $node->getNodeId(),
+                'version' => $node->getVersion(),
+                'language' => $node->getLanguage(),
+            )));
 
-        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_languages_show', array(
-            'siteId' => $node->getSiteId()
-        )));
+            $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_languages_show', array(
+                'siteId' => $node->getSiteId()
+            )));
 
-        $routeName = 'open_orchestra_api_block_list_without_transverse';
-        if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
-            $routeName = 'open_orchestra_api_block_list_with_transverse';
+           $routeName = 'open_orchestra_api_block_list_without_transverse';
+           if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
+               $routeName = 'open_orchestra_api_block_list_with_transverse';
+            }
+            $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
         }
-        $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
 
         return $facade;
     }
@@ -182,7 +186,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     protected function addGeneralNodeLinks(FacadeInterface $facade, NodeInterface $node)
     {
-        if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
+        if ($this->hasGroup(CMSGroupContext::NODE_GENERAL_LINKS) && NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
 
             $facade = $this->addPreviewLinks($facade, $node);
 
@@ -358,5 +362,4 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         return 'node';
     }
-
 }

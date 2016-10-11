@@ -8,11 +8,14 @@ namespace OpenOrchestra\ApiBundle\Context;
 class CMSGroupContext
 {
     const AREAS = 'areas';
-    const PREVIEW = 'preview';
-    const STATUS_LINKS = 'status_links';
-    const GROUP_ROLES = 'group_roles';
-    const SITE = 'site';
-    const THEME_LINKS = 'theme_links';
-    const THEME = 'theme';
     const BLOCKS = 'blocks';
+    const GROUP_ROLES = 'group_roles';
+    const NODE_GENERAL_LINKS = 'node_general_links';
+    const NODE_LINKS = 'node_links';
+    const PREVIEW = 'preview';
+    const SITE = 'site';
+    const STATUS = 'status';
+    const STATUS_LINKS = 'status_links';
+    const THEME = 'theme';
+    const THEME_LINKS = 'theme_links';
 }
