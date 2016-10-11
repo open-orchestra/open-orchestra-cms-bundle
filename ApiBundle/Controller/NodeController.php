@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AccessLanguageForNodeNotGrantedHttpException;
-use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class NodeController
@@ -34,10 +33,17 @@ class NodeController extends BaseController
      * @param Request $request
      * @param string $nodeId
      *
+     * @return FacadeInterface
+     *
      * @Config\Route("/{nodeId}", name="open_orchestra_api_node_show")
      * @Config\Method({"GET"})
      *
-     * @return FacadeInterface
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_LINKS
+     * })
      */
     public function showAction(Request $request, $nodeId)
     {
@@ -63,7 +69,13 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      *
-     * @Api\Groups({CMSGroupContext::AREAS, CMSGroupContext::PREVIEW})
+     *  @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_LINKS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_GENERAL_LINKS
+     * })
      */
     public function showOrCreateAction(Request $request, $nodeId, $errorNode)
     {
@@ -160,11 +172,15 @@ class NodeController extends BaseController
     /**
      * @param boolean|null $published
      *
+     * @return FacadeInterface
+     *
      * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_node_list_author_and_site_not_published", defaults={"published": false})
      * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author_and_site", defaults={"published": null})
      * @Config\Method({"GET"})
      *
-     * @return FacadeInterface
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_LINKS
+     * })
      */
     public function listNodeByAuthorAndSiteIdAction($published)
     {

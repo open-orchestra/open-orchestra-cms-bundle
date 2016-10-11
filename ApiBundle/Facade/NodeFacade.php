@@ -111,12 +111,12 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
-    protected $blocks = array();
+    protected $blocks;
 
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\LinkFacade>")
      */
-    protected $previewLinks = array();
+    protected $previewLinks;
 
     /**
      * @param FacadeInterface $facade
