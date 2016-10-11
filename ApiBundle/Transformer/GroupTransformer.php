@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class GroupTransformer
@@ -57,28 +58,71 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->name = $group->getName();
         $facade->label = $this->multiLanguagesChoiceManager->choose($group->getLabels());
 
-        foreach ($group->getRoles() as $role) {
-            $facade->addRole($role);
-        }
-        if ($site = $group->getSite()) {
-            $facade->site = $this->getTransformer('site')->transform($site);
-        }
-        foreach ($group->getModelGroupRoles() as $modelRoles) {
-            $facade->addModelRoles($this->getTransformer('model_group_role')->transform($modelRoles));
+        $facade = $this->addSite($facade, $group);
+        $facade = $this->addRoles($facade, $group);
+        $facade = $this->addLinks($facade, $group);
+
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param GroupInterface  $group
+     *
+     * @return FacadeInterface
+     */
+    protected function addRoles(FacadeInterface $facade, GroupInterface $group)
+    {
+        if ($this->hasGroup(CMSGroupContext::GROUP_ROLES)) {
+            foreach ($group->getRoles() as $role) {
+                $facade->addRole($role);
+            }
+
+            foreach ($group->getModelGroupRoles() as $modelRoles) {
+                $facade->addModelRoles($this->getTransformer('model_group_role')->transform($modelRoles));
+            }
         }
 
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param GroupInterface  $group
+     *
+     * @return FacadeInterface
+     */
+    protected function addSite(FacadeInterface $facade, GroupInterface $group)
+    {
+        if ($this->hasGroup(CMSGroupContext::SITE) && $site = $group->getSite()) {
+            $facade->site = $this->getTransformer('site')->transform($site);
+        }
+
+        return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param GroupInterface  $group
+     *
+     * @return FacadeInterface
+     */
+    protected function addLinks(FacadeInterface $facade, GroupInterface $group)
+    {
         if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {
             $facade->addLink('_self', $this->generateRoute(
                 'open_orchestra_api_group_show',
                 array('groupId' => $group->getId())
             ));
         }
+
         if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_GROUP)) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_group_delete',
                 array('groupId' => $group->getId())
             ));
         }
+
         if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_GROUP)) {
             $facade->addLink('_self_form', $this->generateRoute(
                 'open_orchestra_backoffice_group_form',

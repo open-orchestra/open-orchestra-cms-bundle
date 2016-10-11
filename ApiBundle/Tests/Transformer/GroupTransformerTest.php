@@ -41,6 +41,10 @@ class GroupTransformerTest extends AbstractBaseTestCase
         Phake::when($this->context)->getRouter()->thenReturn($this->router);
         Phake::when($this->context)->get(Phake::anyParameters())->thenReturn($this->transformerInterface);
 
+        $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
+        Phake::when($this->context)->getGroupContext()->thenReturn($groupContext);
+        Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
+
         $this->transformer = new GroupTransformer(
             $this->facadeClass,
             $this->authorizationChecker,
