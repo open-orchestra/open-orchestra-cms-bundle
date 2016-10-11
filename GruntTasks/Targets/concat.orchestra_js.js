@@ -166,7 +166,19 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/ErrorView.js',
 
     //--[ VIEWS CONFIGURATION ]--//
-    'web/built/openorchestrabackoffice/js/viewConfigurator.js'
+    'web/built/openorchestrabackoffice/js/viewConfigurator.js',
+
+    //--[ ROUTING ]--//
+    'web/js/fos_js_routes.js',
+
+    //--[ TRANSLATION ]--//
+    'web/js/translations/*/*.js',
+
+    //--[ LIB ORCHESTRA ]--//
+    'web/built/**/Lib/*.js',
+
+    //--[ APPLICATION ]--//
+    'web/built/oo_application.js'
   ],
   dest: 'web/built/orchestra.js'
 };

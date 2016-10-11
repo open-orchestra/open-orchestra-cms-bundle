@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="utf-8">
 
@@ -57,6 +57,24 @@
 
     {{ tinymce_init() }}
 
+    <script>
+        var config = {
+            debug: '{{ app.debug }}',
+            environment: '{{ app.environment }}',
+            siteId: '{{ context.currentSiteId }}',
+            language: '{{ context.currentLocale }}',
+            template: {
+                baseUrlTemplate: '/bundles/',
+                templateVersion: '{{ asset_version('/') }}'
+            },
+            routing: {
+                baseUrl: '{{ app.request.baseUrl }}',
+                scheme: '{{ app.request.scheme }}',
+                host: '{{ app.request.host }}'
+            }
+        }
+    </script>
+
     {% block javascripts %}
         {% if app.debug %}
             {% javascripts 'js/all.js' %}
@@ -75,6 +93,5 @@
             pageSetUp();
         });
     </script>
-
     </body>
 </html>
