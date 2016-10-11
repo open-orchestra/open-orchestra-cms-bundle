@@ -115,7 +115,7 @@ class DeleteStatusVoterTest extends AbstractBaseTestCase
     {
         return array(
             array(VoterInterface::ACCESS_DENIED, true),
-            array(VoterInterface::ACCESS_DENIED, false),
+            array(VoterInterface::ACCESS_GRANTED, false),
         );
     }
 }
