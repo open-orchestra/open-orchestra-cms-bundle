@@ -26,12 +26,16 @@ class GroupController extends BaseController
     /**
      * @param string $groupId
      *
+     * @return FacadeInterface
+     *
      * @Config\Route("/{groupId}", name="open_orchestra_api_group_show")
      * @Config\Method({"GET"})
-     *
      * @Config\Security("is_granted('ROLE_ACCESS_GROUP')")
      *
-     * @return FacadeInterface
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::GROUP_ROLES,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
+     * })
      */
     public function showAction($groupId)
     {
