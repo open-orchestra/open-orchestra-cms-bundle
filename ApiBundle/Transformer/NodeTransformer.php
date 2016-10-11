@@ -362,5 +362,4 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         return 'node';
     }
-
 }
