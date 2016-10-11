@@ -7,6 +7,7 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrat
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class SiteTransformer
@@ -35,14 +36,19 @@ class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->metaDescriptions = $site->getMetaDescriptions();
         $facade->metaIndex = $site->getMetaIndex();
         $facade->metaFollow = $site->getMetaFollow();
-        $facade->theme = $this->getTransformer('theme')->transform($site->getTheme());
+
+        if ($this->hasGroup(CMSGroupContext::THEME)) {
+            $facade->theme = $this->getTransformer('theme')->transform($site->getTheme());
+        }
 
         foreach ($site->getLanguages() as $language) {
             $facade->addLanguage($language);
         }
 
-        foreach ($site->getBlocks() as $value) {
-            $facade->addBlocks($value);
+        if ($this->hasGroup(CMSGroupContext::BLOCKS)) {
+            foreach ($site->getBlocks() as $value) {
+                $facade->addBlocks($value);
+            }
         }
 
         $facade->addLink('_self', $this->generateRoute(
