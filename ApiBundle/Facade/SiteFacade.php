@@ -48,7 +48,7 @@ class SiteFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<string>")
      */
-    protected $blocks = array();
+    protected $blocks;
 
     /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\ThemeFacade")
