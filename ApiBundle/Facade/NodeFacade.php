@@ -107,7 +107,7 @@ class NodeFacade extends DeletedFacade
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
      * @deprecated will be removed in 2.0
      */
-    protected $areas = array();
+    protected $areas;
 
     /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFacade")
@@ -117,12 +117,12 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
-    protected $blocks = array();
+    protected $blocks;
 
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\LinkFacade>")
      */
-    protected $previewLinks = array();
+    protected $previewLinks;
 
     /**
      * @Serializer\Type("string")
