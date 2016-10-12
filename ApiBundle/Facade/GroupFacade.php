@@ -24,7 +24,7 @@ class GroupFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<string>")
      */
-    protected $roles = array();
+    protected $roles;
 
     /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\SiteFacade")
@@ -34,7 +34,7 @@ class GroupFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade>")
      */
-    protected $modelRoles = array();
+    protected $modelRoles;
 
     /**
      * @param string $role
