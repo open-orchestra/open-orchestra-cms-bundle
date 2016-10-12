@@ -39,7 +39,7 @@ class TemplateFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
-    protected $blocks = array();
+    protected $blocks;
 
     /**
      * @Serializer\Type("boolean")
