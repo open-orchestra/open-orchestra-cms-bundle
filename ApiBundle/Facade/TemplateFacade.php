@@ -52,12 +52,12 @@ class TemplateFacade extends AbstractFacade
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
      * @deprecated will be removed in 2.0
      */
-    protected $areas = array();
+    protected $areas;
 
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
-    protected $blocks = array();
+    protected $blocks;
 
     /**
      * @Serializer\Type("boolean")
