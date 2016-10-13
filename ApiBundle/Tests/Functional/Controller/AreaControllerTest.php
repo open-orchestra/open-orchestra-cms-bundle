@@ -36,7 +36,7 @@ class AreaControllerTest extends AbstractControllerTest
         $this->client->request('GET', '/admin/2/homepage/en');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->client->request('GET', '/api/node/root');
+        $this->client->request('GET', '/api/node/root/show-or-create');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $json = json_decode($this->client->getResponse()->getContent(), true);
@@ -83,7 +83,7 @@ class AreaControllerTest extends AbstractControllerTest
         $this->client->request('GET', '/admin/2/homepage/en');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->client->request('GET', '/api/node/transverse?language=fr');
+        $this->client->request('GET', '/api/node/transverse/show-or-create?language=fr');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $transverseNodeFrJson = json_decode($this->client->getResponse()->getContent(), true);
 
@@ -105,7 +105,7 @@ class AreaControllerTest extends AbstractControllerTest
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         foreach (array('en', 'fr', 'de') as $language) {
-            $this->client->request('GET', '/api/node/transverse?language=' . $language);
+            $this->client->request('GET', '/api/node/transverse/show-or-create?language=' . $language);
             $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
             $newTransverseNodeFrJson = json_decode($this->client->getResponse()->getContent(), true);
 
