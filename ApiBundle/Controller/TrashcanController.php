@@ -8,8 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
-use OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface;
 
 /**
  * Class TrashcanController
