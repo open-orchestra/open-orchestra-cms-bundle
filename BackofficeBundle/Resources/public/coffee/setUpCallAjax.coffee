@@ -1,4 +1,3 @@
-###
 $(document).ready ->
   $.ajaxSetup
     beforeSend: (xhr, settings) ->
@@ -24,4 +23,3 @@ $(document).ready ->
       )
   $(document).ajaxSuccess (event, xhr, settings) ->
     redirectToLogin() if isLoginForm(xhr)
-###

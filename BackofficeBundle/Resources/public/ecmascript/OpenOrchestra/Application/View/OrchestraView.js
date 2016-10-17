@@ -20,4 +20,3 @@ class OrchestraView extends Backbone.View
 }
 
 export default OrchestraView;
-
