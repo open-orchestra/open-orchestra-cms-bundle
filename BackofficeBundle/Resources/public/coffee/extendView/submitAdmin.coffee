@@ -22,7 +22,7 @@ extendView['submitAdmin'] = {
     
   httpBadRequest: (response, form) ->
     widgetChannel.trigger 'form-error', @
-    @openForm(response.responseText, form)
+    @openForm(response[0].responseText, form)
   
   httpCreated: (response) ->
     widgetChannel.trigger 'element-created', @
