@@ -47,9 +47,7 @@ class TemplateManager
 
         if (this._templates.hasOwnProperty(key)) {
             let compiledTemplate = _.template(this._templates[key]);
-
             callback(compiledTemplate);
-
         } else {
             this._loadTemplate(name).then(
                 (template) => {
@@ -91,8 +89,6 @@ class TemplateManager
     _loadTemplatesLocalStorage() {
         if(typeof localStorage!='undefined') {
             if (localStorage.hasOwnProperty(this._localStorageKey)) {
-                console.log(localStorage.getItem(this._localStorageKey));
-                console.log(JSON.parse(localStorage.getItem(this._localStorageKey)));
                 this._templates = JSON.parse(localStorage.getItem(this._localStorageKey));
             }
         }
