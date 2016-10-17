@@ -8,7 +8,7 @@ extendView['submitAdmin'] = {
     window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, form
 
     new viewClass(@addOption(
-      html: response[0]
+      html: response
       submitted: true
     ))
     
@@ -18,7 +18,7 @@ extendView['submitAdmin'] = {
     $(document).scrollTop 0
 
   httpOk: (response, form) ->
-    @openForm(response, form)
+    @openForm(response[0], form)
     
   httpBadRequest: (response, form) ->
     widgetChannel.trigger 'form-error', @
