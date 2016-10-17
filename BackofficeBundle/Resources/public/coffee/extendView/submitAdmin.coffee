@@ -18,11 +18,11 @@ extendView['submitAdmin'] = {
     $(document).scrollTop 0
 
   httpOk: (response, form) ->
-    @openForm(response[0], form)
+    @openForm(response, form)
     
   httpBadRequest: (response, form) ->
     widgetChannel.trigger 'form-error', @
-    @openForm(response[0].responseText, form)
+    @openForm(response.responseText, form)
   
   httpCreated: (response) ->
     widgetChannel.trigger 'element-created', @
