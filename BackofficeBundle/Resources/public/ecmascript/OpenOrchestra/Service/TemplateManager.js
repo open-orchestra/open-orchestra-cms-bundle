@@ -1,4 +1,4 @@
-import ServerError from '../../OpenOrchestra/Application/Error/ServerError'
+import ServerError from './Error/ServerError'
 
 /**
  * @class TemplateManager

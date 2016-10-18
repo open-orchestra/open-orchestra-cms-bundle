@@ -1,7 +1,9 @@
-import NodeController from './Controller/Node/NodeController'
-import ErrorController from './Controller/Error/ErrorController'
-import TemplateManager from '../Service/TemplateManager'
-import ApplicationError from './Error/ApplicationError'
+import NodeRouter       from './Router/Node/NodeRouter'
+import ErrorView        from './View/Error/ErrorView'
+import TemplateManager  from '../Service/TemplateManager'
+import ApplicationError from '../Service/Error/ApplicationError'
+import AjaxError        from '../Service/Error/AjaxError'
+import FormBuilder      from '../Service/Form/FormBuilder'
 
 /**
  * @class Application
@@ -14,17 +16,20 @@ class Application
     constructor() {
         this._regions = {};
         window.addEventListener('error', this._applicationError);
+        Backbone.Events.on('application:error', this._displayError, this);
     }
 
     /**
      * Run Application
      */
     run() {
-
         this._initRouting();
         this._initTranslator();
         this._initTemplateManager();
         this._initController();
+
+
+        FormBuilder.createFormFromUrl(Routing.generate('open_orchestra_backoffice_node_new', {parentId : 'root'}));
 
         if (Routing.generate('fos_user_security_login', true) != document.location.pathname) {
             Backbone.Events.trigger('application:before:start');
@@ -82,12 +87,25 @@ class Application
     }
 
     /**
+     * @param {Error} error
+     * @private
+     */
+    _displayError(error) {
+        if (error instanceof AjaxError && error.getStatusCode() === 401) {
+            window.location.pathname = Routing.generate('fos_user_security_login', true);
+        }
+        if (this.getConfiguration().getParameter('debug')) {
+            let errorView = new ErrorView({error: error});
+            this.getRegion('content').html(errorView.render().$el);
+        }
+    }
+
+    /**
      * Initialize controller
      * @private
      */
     _initController() {
-        new ErrorController();
-        new NodeController();
+        new NodeRouter();
     }
 
     /**

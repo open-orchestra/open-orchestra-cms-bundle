@@ -1,4 +1,7 @@
 import OrchestraRouter from '../OrchestraRouter'
+import NodeTree        from '../../Model/Node/NodeTree'
+import NodeTreeView    from '../../View/Node/NodeTreeView'
+import app             from '../../Application'
 
 /**
  * @class NodeRouter
@@ -10,23 +13,21 @@ class NodeRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'node/tree': 'nodeTree'
+            'node/tree': 'showNodeTree'
         };
-    }
-
-    /**
-     * Initialize router
-     * @param {NodeController} nodeController
-     */
-    initialize({nodeController}) {
-        this._nodeController = nodeController
     }
 
     /**
      * Show node tree
      */
-    nodeTree() {
-        this._nodeController.showNodeTreeAction()
+    showNodeTree() {
+        this._diplayLoader(app.getRegion('content'));
+        new NodeTree().fetch({
+            success: (nodeTree) => {
+                let treeView = new NodeTreeView({nodeTree : nodeTree});
+                app.getRegion('content').html(treeView.render().$el);
+            }
+        });
     }
 }
 

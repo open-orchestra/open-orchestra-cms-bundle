@@ -1,5 +1,5 @@
-import ApiError from '../Error/ApiError';
-import ServerError from '../Error/ServerError';
+import ApiError    from '../../Service/Error/ApiError';
+import ServerError from '../../Service/Error/ServerError';
 
 /**
  * @class OrchestraModel

@@ -1,3 +1,6 @@
+import ApiError    from '../../Service/Error/ApiError';
+import ServerError from '../../Service/Error/ServerError';
+
 /**
  * @class OrchestraCollection
  */

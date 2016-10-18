@@ -1,6 +1,6 @@
 import OrchestraModel from '../OrchestraModel'
-import Node from './Node'
-import App from '../../Application'
+import Node           from './Node'
+import App            from '../../Application'
 
 /**
  * @class NodeTree
@@ -35,7 +35,7 @@ class NodeTree extends OrchestraModel
         let siteId = App.getConfiguration().getParameter('siteId');
 
         return {
-            'read' : '-' + Routing.generate('open_orchestra_api_node_list_tree', {siteId : siteId})
+            'read': Routing.generate('open_orchestra_api_node_list_tree', {siteId : siteId})
         }
     }
 }
