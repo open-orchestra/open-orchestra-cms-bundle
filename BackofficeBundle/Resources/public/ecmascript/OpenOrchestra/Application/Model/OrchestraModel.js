@@ -11,7 +11,7 @@ class OrchestraModel extends Backbone.Model
      */
     constructor() {
         super();
-        this.bind('error', this.syncError);
+        this.on('error', this.syncError);
     }
 
     /**
@@ -36,7 +36,7 @@ class OrchestraModel extends Backbone.Model
     sync(method, model, options) {
         options = options || {};
         let url = model._getSyncUrl()[method.toLowerCase()];
-        if(typeof url != 'undefined') {
+        if (typeof url != 'undefined') {
             options.url = url;
         }
 

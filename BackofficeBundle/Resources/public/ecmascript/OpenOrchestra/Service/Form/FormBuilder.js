@@ -9,25 +9,25 @@ class FormBuilder
     /**
      * Create a form
      *
-     * @param html
-     * @param method
-     * @param url
+     * @param {string} html - form html
      */
-    static createForm(html, method, url) {
-        return new Form(html, method, url);
+    static createForm(html) {
+        return new Form(html);
     }
 
     /**
      *
      * @param {string} url
      * @param {Function} callbackCreate
-     * @param {Function} success
+     * @param {Function} done
      * @param {Function} error
      */
-    static createFormFromUrl(url, callbackCreate, success = null, error = null) {
+    static createFormFromUrl(url, callbackCreate, done = null, error = null) {
         error = error || FormBuilder._errorGetForm;
-        success = success || FormBuilder._successGetForm;
-        Backbone.ajax({method: 'GET',url: url}).done(success).fail(error);
+        done = done || FormBuilder._successGetForm;
+        let promise = Backbone.ajax({method: 'GET',url: url});
+            promise.fail(error);
+            promise.done((data) => done(data, callbackCreate));
     }
 
     /**
@@ -39,12 +39,15 @@ class FormBuilder
         Backbone.Events.trigger('application:error', error);
     }
 
-    static _successGetForm(data) {
-        let $form = $(data);
-        let method = $(data).attr('method');
-        let action = $(data).attr('data-action');
+    /**
+     * @param {string}   data
+     * @param {Function} callbackCreate
+     * @private
+     */
+    static _successGetForm(data, callbackCreate) {
+        let form = FormBuilder.createForm(data);
 
-
+        callbackCreate(form);
     }
 }
 

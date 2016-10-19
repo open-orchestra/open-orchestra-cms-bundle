@@ -28,9 +28,6 @@ class Application
         this._initTemplateManager();
         this._initController();
 
-
-        FormBuilder.createFormFromUrl(Routing.generate('open_orchestra_backoffice_node_new', {parentId : 'root'}));
-
         if (Routing.generate('fos_user_security_login', true) != document.location.pathname) {
             Backbone.Events.trigger('application:before:start');
             Backbone.history.start();
