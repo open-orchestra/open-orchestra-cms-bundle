@@ -8,7 +8,7 @@ extendView['submitAdmin'] = {
     window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, form
 
     new viewClass(@addOption(
-      html: response[0]
+      html: response
       submitted: true
     ))
     
