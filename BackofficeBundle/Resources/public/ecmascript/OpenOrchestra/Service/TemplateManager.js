@@ -30,7 +30,7 @@ class TemplateManager
      */
     clearCache() {
         this._templates = {};
-        if(typeof localStorage!='undefined') {
+        if (typeof localStorage!='undefined') {
             localStorage.removeItem(this._localStorageKey)
         }
     }
@@ -87,7 +87,7 @@ class TemplateManager
      * @private
      */
     _loadTemplatesLocalStorage() {
-        if(typeof localStorage!='undefined') {
+        if (typeof localStorage!='undefined') {
             if (localStorage.hasOwnProperty(this._localStorageKey)) {
                 this._templates = JSON.parse(localStorage.getItem(this._localStorageKey));
             }
@@ -99,7 +99,7 @@ class TemplateManager
      * @private
      */
     _storeTemplateLocalStorage() {
-        if(typeof localStorage!='undefined') {
+        if (typeof localStorage!='undefined') {
             localStorage.setItem(this.localStorageKey, JSON.stringify(this._templates));
         }
     }
