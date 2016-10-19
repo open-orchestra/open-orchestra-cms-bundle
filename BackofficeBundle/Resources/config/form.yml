@@ -79,26 +79,6 @@ services:
             - '%open_orchestra_model.document.node.class%'
         tags:
             - { name: form.type, alias: oo_node }
-    # Area row form type
-    open_orchestra_backoffice.type.area_row:
-        class: '%open_orchestra_backoffice.type.area_row.class%'
-        arguments:
-            - '%open_orchestra_model.document.area.class%'
-            - '@open_orchestra_backoffice.subscriber.area_row'
-        tags:
-            - { name: form.type}
-    # Area column form type
-    open_orchestra_backoffice.type.area_column:
-        class: '%open_orchestra_backoffice.type.area_column.class%'
-        arguments:
-            - '%open_orchestra_model.document.area.class%'
-        tags:
-            - { name: form.type}
-    # Column layout row type
-    open_orchestra_backoffice.type.column_layout_row:
-        class: '%open_orchestra_backoffice.type.column_layout_row.class%'
-        tags:
-            - { name: form.type}
     # Block form type
     open_orchestra_backoffice.type.block:
         class: '%open_orchestra_backoffice.type.block.class%'
