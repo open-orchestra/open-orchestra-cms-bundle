@@ -62,13 +62,6 @@ open_orchestra_log:
         create: Crée un nouveau statut nommé status_name
         delete: Supprime un statut nommé status_name
         update: Met à jour un statut nommé status_name
-    template:
-        create: Crée un nouveau gabarit avec l'id template_id et nommé template_name
-        delete: Supprime un gabarit avec l'id template_id et nommé template_name
-        update: Met à jour un gabarit avec l'id template_id et nommé template_name
-        area:
-            delete: Supprime une zone d'un template avec l'id template_id et nommé template_name
-            update: Met à jour une zone d'un template avec l'id template_id et nommé template_name
     theme:
         create: Crée un nouveau thème nommé theme_name
         delete: Supprime un thème nommé theme_name

@@ -148,6 +148,7 @@ open_orchestra_backoffice:
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
                 helper: Fréquence de modification indicative (pour le sitemap)
+            template_set: ensemble de templates
         theme:
             success: Le thème a été modifié
             creation: Le thème a été créé
@@ -209,7 +210,6 @@ open_orchestra_backoffice:
                 label: Importance relative par rapport aux autres pages du site (pour le sitemap)
                 helper: Importance relative par rapport aux autres pages du site (pour le sitemap)
             theme: Le thème
-            template_id: Id du gabarit
             alias: Alias
             boLabel:
                 name: Label dans le Back Office
@@ -230,6 +230,7 @@ open_orchestra_backoffice:
                 helper : Au moins un champ obligatoire
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
+            template: Template
         changefreq:
             always: Toujours
             hourly: Toutes les heures
@@ -639,3 +640,18 @@ open_orchestra_backoffice:
           remove_confirm_title: Suppression définitive
         themes:
           name: Nom
+    template_set:
+        default:
+            label: Ensemble par défaut
+            template_name:
+                default: Défaut (colonne gauche)
+                full_page: Sans colonne
+            style:
+                highlight: Mise en avant
+                paragraph: Paragraphe rédactionnel
+        custom:
+            label: Ensemble personnalisé
+            template_name:
+                login: Page de connexion
+            style:
+                column: Colonnage

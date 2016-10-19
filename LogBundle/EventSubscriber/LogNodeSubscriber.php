@@ -78,22 +78,6 @@ class LogNodeSubscriber extends AbstractLogSubscriber
     /**
      * @param NodeEvent $event
      */
-    public function nodeDeleteArea(NodeEvent $event)
-    {
-        $this->info('open_orchestra_log.node.area.delete', $event->getNode());
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
-    public function nodeUpdateArea(NodeEvent $event)
-    {
-        $this->info('open_orchestra_log.node.area.update', $event->getNode());
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
     public function nodeChangeStatus(NodeEvent $event)
     {
         $this->info('open_orchestra_log.node.status', $event->getNode());
@@ -110,8 +94,6 @@ class LogNodeSubscriber extends AbstractLogSubscriber
             NodeEvents::NODE_UPDATE => 'nodeUpdate',
             NodeEvents::NODE_CREATION => 'nodeCreation',
             NodeEvents::NODE_DUPLICATE => 'nodeDuplicate',
-            NodeEvents::NODE_DELETE_AREA => 'nodeDeleteArea',
-            NodeEvents::NODE_UPDATE_AREA => 'nodeUpdateArea',
             NodeEvents::NODE_ADD_LANGUAGE => 'nodeAddLanguage',
             NodeEvents::NODE_UPDATE_BLOCK => 'nodeUpdateBlock',
             NodeEvents::NODE_CHANGE_STATUS => 'nodeChangeStatus',

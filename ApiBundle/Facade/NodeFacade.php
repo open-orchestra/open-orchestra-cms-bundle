@@ -26,7 +26,12 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("string")
      */
-    public $templateId;
+    public $templateSet;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $template;
 
     /**
      * @Serializer\Type("string")
@@ -104,14 +109,9 @@ class NodeFacade extends DeletedFacade
     public $editable;
 
     /**
-     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFacade")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
      */
-    public $rootArea;
-
-    /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
-     */
-    protected $blocks;
+    protected $areas = array();
 
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\LinkFacade>")
@@ -121,16 +121,16 @@ class NodeFacade extends DeletedFacade
     /**
      * @param FacadeInterface $facade
      */
-    public function addBlock(FacadeInterface $facade)
+    public function setAreas(FacadeInterface $facade, $key)
     {
-        $this->blocks[] = $facade;
+        $this->areas[$key] = $facade;
     }
     /**
      * @return array
      */
-    public function getBlocks()
+    public function getAreas()
     {
-        return $this->blocks;
+        return $this->areas;
     }
 
     /**

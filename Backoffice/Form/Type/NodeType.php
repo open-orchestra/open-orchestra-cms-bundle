@@ -3,42 +3,44 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
-use OpenOrchestra\Backoffice\Manager\NodeManager;
-use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
 
 /**
  * Class NodeType
  */
 class NodeType extends AbstractType
 {
-    protected $nodeClass;
     protected $nodeManager;
-    protected $templateRepository;
+    protected $contextManager;
     protected $siteRepository;
-    protected $schemeChoices;
+    protected $templateSetparameters;
 
     /**
-     * @param string                      $nodeClass
-     * @param TemplateRepositoryInterface $templateRepository
-     * @param SiteRepositoryInterface     $siteRepository
-     * @param NodeManager                 $nodeManager
+     * @param NodeManager             $nodeManager
+     * @param CurrentSiteIdInterface  $contextManager
+     * @param SiteRepositoryInterface $siteRepository
+     * @param array                   $templateSetparameters
+     * @param string                  $nodeClass
      */
     public function __construct(
-        $nodeClass,
-        TemplateRepositoryInterface $templateRepository,
+        NodeManager $nodeManager,
+        CurrentSiteIdInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
-        NodeManager $nodeManager
+        array $templateSetparameters,
+        $nodeClass
     ) {
-        $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
-        $this->templateRepository = $templateRepository;
+        $this->contextManager = $contextManager;
         $this->siteRepository = $siteRepository;
+        $this->templateSetparameters = $templateSetparameters;
+        $this->nodeClass = $nodeClass;
         $this->schemeChoices = array(
             SchemeableInterface::SCHEME_DEFAULT => 'open_orchestra_backoffice.form.node.default_scheme',
             SchemeableInterface::SCHEME_HTTP => SchemeableInterface::SCHEME_HTTP,
@@ -143,8 +145,13 @@ class NodeType extends AbstractType
             ));
 
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
-            $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository));
             $builder->addEventSubscriber(new NodeThemeSelectionSubscriber($this->siteRepository));
+            $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber(
+                $this->nodeManager,
+                $this->contextManager,
+                $this->siteRepository,
+                $this->templateSetparameters
+            ));
         }
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);

@@ -97,7 +97,6 @@ class StatusableVoterTest extends AbstractBaseTestCase
             array(true, 'OpenOrchestra\ModelInterface\Model\ContentInterface', true),
             array(false, 'OpenOrchestra\ModelInterface\Model\NodeInterface'),
             array(false, 'OpenOrchestra\ModelInterface\Model\ContentInterface'),
-            array(false, 'OpenOrchestra\ModelInterface\Model\TemplateInterface'),
             array(false, 'OpenOrchestra\ModelInterface\Model\BlockInterface'),
             array(false, 'stdClass'),
         );

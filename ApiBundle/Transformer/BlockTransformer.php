@@ -3,20 +3,13 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\DisplayIcon\DisplayManager;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
-use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
-use OpenOrchestra\ModelInterface\BlockNodeEvents;
-use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\Backoffice\DisplayIcon\DisplayManager;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -24,62 +17,36 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class BlockTransformer extends AbstractTransformer
 {
-    protected $blockParameterManager;
-    protected $generateFormManager;
     protected $displayBlockManager;
     protected $displayIconManager;
-    protected $currentSiteManager;
-    protected $eventDispatcher;
     protected $nodeRepository;
-    protected $displayManager;
-    protected $blockClass;
     protected $translator;
 
     /**
      * @param string                   $facadeClass
      * @param DisplayBlockManager      $displayBlockManager
-     * @param DisplayManager           $displayManager
-     * @param string                   $blockClass
-     * @param BlockParameterManager    $blockParameterManager
-     * @param GenerateFormManager      $generateFormManager
-     * @param NodeRepositoryInterface  $nodeRepository
-     * @param CurrentSiteIdInterface   $currentSiteManager
+     * @param DisplayManager           $displayIconManager
      * @param TranslatorInterface      $translator
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param NodeRepositoryInterface  $nodeRepository
      */
     public function __construct(
         $facadeClass,
         DisplayBlockManager $displayBlockManager,
-        DisplayManager $displayManager,
-        $blockClass,
-        BlockParameterManager $blockParameterManager,
-        GenerateFormManager   $generateFormManager,
+        DisplayManager $displayIconManager,
         NodeRepositoryInterface $nodeRepository,
-        CurrentSiteIdInterface $currentSiteManager,
-        TranslatorInterface $translator,
-        EventDispatcherInterface $eventDispatcher
+        TranslatorInterface $translator
     )
     {
         parent::__construct($facadeClass);
-        $this->blockParameterManager = $blockParameterManager;
-        $this->generateFormManager = $generateFormManager;
         $this->displayBlockManager = $displayBlockManager;
-        $this->displayIconManager = $displayManager;
+        $this->displayIconManager = $displayIconManager;
         $this->nodeRepository = $nodeRepository;
-        $this->blockClass = $blockClass;
-        $this->currentSiteManager = $currentSiteManager;
         $this->translator = $translator;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @param BlockInterface $block
      * @param boolean        $isInside
-     * @param string|null    $nodeId
-     * @param int|null       $blockNumber
-     * @param int            $areaId
-     * @param int            $blockPosition
-     * @param string|null    $nodeMongoId
      *
      * @return FacadeInterface
      *
@@ -87,12 +54,7 @@ class BlockTransformer extends AbstractTransformer
      */
     public function transform(
         $block,
-        $isInside = true,
-        $nodeId = null,
-        $blockNumber = null,
-        $areaId = 0,
-        $blockPosition = 0,
-        $nodeMongoId = null
+        $isInside = true
     )
     {
         if (!$block instanceof BlockInterface) {
@@ -106,8 +68,6 @@ class BlockTransformer extends AbstractTransformer
         $facade->label = $block->getLabel();
         $facade->class = $block->getClass();
         $facade->id = $block->getId();
-        $facade->nodeId = $nodeId;
-        $facade->blockId = $blockNumber;
 
         foreach ($block->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
@@ -127,70 +87,25 @@ class BlockTransformer extends AbstractTransformer
             'html' => $html
         ));
 
-        if (!is_null($nodeId) && !is_null($blockNumber) && !is_null($nodeMongoId)) {
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_block_new',
+            array(
+                'component' => $block->getComponent(),
+            )
+        ));
+        if($block->getId()) {
             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_block_form',
                 array(
-                    'nodeId' => $nodeMongoId,
-                    'blockNumber' => $blockNumber
+                    'blockId' => $block->getId()
                 )
             ));
         }
 
-        if (null !== $nodeId &&
-            null !== $nodeMongoId &&
-            NodeInterface::TRANSVERSE_NODE_ID === $nodeId &&
-            $isInside
-        ) {
-            $facade->isDeletable = $this->blockIsDeletable($block, $nodeMongoId);
+        $facade->isDeletable = true;
+        if ($this->nodeRepository->isBlockUsed($block->getId())) {
+            $facade->isDeletable = false;
         }
 
         return $facade;
-    }
-
-    /**
-     * @param FacadeInterface|BlockFacade $facade
-     * @param NodeInterface|null          $node
-     *
-     * @return array
-     */
-    public function reverseTransformToArray(FacadeInterface $facade, NodeInterface $node = null)
-    {
-        $block  = array(
-            'blockParameter' => array()
-        );
-        $blockElement = null;
-        if (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
-            $block['blockId'] = $facade->blockId;
-            $block['nodeId'] = $facade->nodeId;
-            if (!is_null($node)) {
-                if ($facade->nodeId == $node->getNodeId()) {
-                    $block['nodeId'] = 0;
-                    $blockElement = $node->getBlock($facade->blockId);
-                } elseif ($facade->nodeId != $node->getNodeId()) {
-                    $siteId = $this->currentSiteManager->getCurrentSiteId();
-                    $blockNode = $this->nodeRepository->findInLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
-                    $blockElement = $blockNode->getBlock($facade->blockId);
-                }
-            }
-        } elseif (!is_null($facade->component)) {
-            $blockClass = $this->blockClass;
-            /** @var BlockInterface $blockElement */
-            $blockElement = new $blockClass();
-            $blockElement->setComponent($facade->component);
-            $blockElement->setAttributes($this->generateFormManager->getDefaultConfiguration($blockElement));
-            $node->addBlock($blockElement);
-            $blockIndex = $node->getBlockIndex($blockElement);
-            $block['blockId'] = $blockIndex;
-            $block['nodeId'] = 0;
-            $this->eventDispatcher->dispatch(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockElement));
-        }
-
-        if ($blockElement) {
-            $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($blockElement);
-            $block['blockPrivate'] = !$this->displayBlockManager->isPublic($blockElement);
-        }
-
-        return $block;
     }
 
     /**
@@ -199,25 +114,5 @@ class BlockTransformer extends AbstractTransformer
     public function getName()
     {
         return 'block';
-    }
-
-    /**
-     * @param BlockInterface $block
-     * @param string         $nodeMongoId
-     *
-     * @return bool
-     */
-    protected function blockIsDeletable(BlockInterface $block, $nodeMongoId)
-    {
-        foreach ($block->getAreas() as $area) {
-            if (isset($area['nodeId']) &&
-                0 !== $area['nodeId'] &&
-                $nodeMongoId !== $area['nodeId']
-            ) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

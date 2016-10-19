@@ -1,5 +1,4 @@
 parameters:
-    open_orchestra_backoffice.type.template.class: OpenOrchestra\Backoffice\Form\Type\TemplateType
     open_orchestra_backoffice.type.node.class: OpenOrchestra\Backoffice\Form\Type\NodeType
     open_orchestra_backoffice.type.area_row.class: OpenOrchestra\Backoffice\Form\Type\AreaRowType
     open_orchestra_backoffice.type.area_column.class: OpenOrchestra\Backoffice\Form\Type\AreaColumnType
@@ -41,6 +40,7 @@ parameters:
     open_orchestra_backoffice.type.site_site_alias.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteSiteAliasType
     open_orchestra_backoffice.type.default_listable_checkbox.class: OpenOrchestra\Backoffice\Form\Type\Component\DefaultListableCheckboxType
     open_orchestra_backoffice.type.multi_languages.class: OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType
+    open_orchestra_backoffice.type.template_set.class: OpenOrchestra\Backoffice\Form\Type\Component\TemplateSetType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -68,22 +68,15 @@ parameters:
         use_callback_tinymce_init: true
 
 services:
-    # Template form type
-    open_orchestra_backoffice.type.template:
-        class: '%open_orchestra_backoffice.type.template.class%'
-        arguments:
-            - '%open_orchestra_model.document.template.class%'
-            - '%open_orchestra_model.document.area.class%'
-        tags:
-            - { name: form.type, alias: oo_template }
     # Node form type
     open_orchestra_backoffice.type.node:
         class: '%open_orchestra_backoffice.type.node.class%'
         arguments:
-            - '%open_orchestra_model.document.node.class%'
-            - '@open_orchestra_model.repository.template'
-            - '@open_orchestra_model.repository.site'
             - '@open_orchestra_backoffice.manager.node'
+            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_model.repository.site'
+            - '%open_orchestra_backoffice.template_set%'
+            - '%open_orchestra_model.document.node.class%'
         tags:
             - { name: form.type, alias: oo_node }
     # Area row form type
@@ -134,7 +127,7 @@ services:
         arguments:
             - '%open_orchestra_model.document.site.class%'
             - '@translator'
-            - '@open_orchestra_model.repository.template'
+            - '%open_orchestra_backoffice.template_set%'
             - '%open_orchestra_backoffice.orchestra_choice.front_language%'
         tags:
             - { name: form.type, alias: oo_site }
@@ -383,3 +376,9 @@ services:
             - '@?open_orchestra_backoffice.manager.multi_languages_choice'
         tags:
             - { name: form.type, alias: oo_status_choice }
+    open_orchestra_backoffice.type.template_set:
+        class: '%open_orchestra_backoffice.type.template_set.class%'
+        arguments:
+            - '%open_orchestra_backoffice.template_set%'
+        tags:
+            - { name: form.type, alias: oo_template_set }

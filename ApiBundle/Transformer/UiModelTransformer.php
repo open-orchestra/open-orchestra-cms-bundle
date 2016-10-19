@@ -27,10 +27,6 @@ class UiModelTransformer extends AbstractTransformer
             $facade->class = $uiModel['class'];
         }
 
-        if (array_key_exists('id', $uiModel)) {
-            $facade->id = $uiModel['id'];
-        }
-
         if (array_key_exists('html', $uiModel)) {
             $facade->html = $uiModel['html'];
         }

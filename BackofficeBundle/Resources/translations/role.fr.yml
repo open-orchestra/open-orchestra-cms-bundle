@@ -13,11 +13,6 @@ open_orchestra_role:
     role_access_error_node: Accéder
     role_access_create_error_node: Créer
     role_access_update_error_node: Editer
-    label_access_template: Gabarit
-    role_access_tree_template: Accéder
-    role_access_create_template: Créer
-    role_access_update_template: Editer
-    role_access_delete_template: Supprimer
     label_access_for_content: Contenu
     role_access_content_type_for_content: Accéder
     role_access_create_content_type_for_content: Créer

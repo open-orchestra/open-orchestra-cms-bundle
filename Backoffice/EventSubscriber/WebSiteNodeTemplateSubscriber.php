@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -12,14 +11,14 @@ use Symfony\Component\Form\FormEvents;
  */
 class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
 {
-    protected $templateRepository;
+    protected $templateSetParameters;
 
     /**
-     * @param TemplateRepositoryInterface $templateRepository
+     * @param array $templateSetParameters
      */
-    public function __construct(TemplateRepositoryInterface $templateRepository)
+    public function __construct(array $templateSetParameters)
     {
-        $this->templateRepository = $templateRepository;
+        $this->templateSetParameters = $templateSetParameters;
     }
 
     /**
@@ -30,14 +29,27 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
         if (null === $data->getSiteId()) {
-            $form->add('templateId', 'choice', array(
-                'choices' => $this->getTemplateChoices(),
-                'required' => true,
+            $form->add('siteTemplateSelection', 'form', array(
+                'virtual' => true,
+                'label' => false,
+                'attr' => array('class' => 'select-grouping'),
                 'mapped' => false,
+                'required' => false,
+            ));
+            $form->get('siteTemplateSelection')->add('templateSet', 'choice', array(
+                'label' => 'open_orchestra_backoffice.form.website.template_set',
+                'choices' => $this->getTemplateSetChoices(),
+                'attr' => array('class' => 'select-grouping-master'),
+                'required' => true,
+            ));
+            $form->get('siteTemplateSelection')->add('templateRoot', 'choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.template_node_root.label',
+                'choices' => $this->getTemplateChoices(),
                 'attr'  => array(
                     'help_text' => 'open_orchestra_backoffice.form.website.template_node_root.helper',
-                )
+                    'class' => 'select-grouping-slave'
+                ),
+                'required' => true,
             ));
         }
     }
@@ -46,15 +58,28 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
      *
      * @return array
      */
+    protected function getTemplateSetChoices()
+    {
+        $choices = array();
+        foreach ($this->templateSetParameters as $key => $parameter) {
+            $choices[$key] = $parameter['label'];
+        }
+        return $choices;
+    }
+
+    /**
+     *
+     * @return array
+     */
     protected function getTemplateChoices()
     {
-        $templates = $this->templateRepository->findByDeleted(false);
-        $templatesChoices = array();
-        foreach ($templates as $template) {
-            $templatesChoices[$template->getTemplateId()] = $template->getName();
+        $choices = array();
+        foreach ($this->templateSetParameters as $keyTemplateSet => $templateSetParameters) {
+            foreach ($templateSetParameters['templates'] as $key => $template) {
+                $choices[$keyTemplateSet][$key] = $template['label'];
+            }
         }
-
-        return $templatesChoices;
+        return $choices;
     }
 
     /**

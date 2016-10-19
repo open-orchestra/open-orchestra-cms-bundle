@@ -2,11 +2,12 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\Backoffice\Manager\NodeManager;
-use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class NodeTemplateSelectionSubscriber
@@ -14,16 +15,26 @@ use Symfony\Component\Form\FormEvents;
 class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
 {
     protected $nodeManager;
-    protected $templateRepository;
+    protected $contextManager;
+    protected $siteRepository;
+    protected $templateSetparameters;
 
     /**
-     * @param NodeManager                 $nodeManager
-     * @param TemplateRepositoryInterface $templateRepository
+     * @param NodeManager             $nodeManager
+     * @param CurrentSiteIdInterface  $contextManager
+     * @param SiteRepositoryInterface $siteRepository
+     * @param array                   $templateSetparameters
      */
-    public function __construct(NodeManager $nodeManager, TemplateRepositoryInterface $templateRepository)
-    {
+    public function __construct(
+        NodeManager $nodeManager,
+        CurrentSiteIdInterface $contextManager,
+        SiteRepositoryInterface $siteRepository,
+        array $templateSetparameters
+    ) {
         $this->nodeManager = $nodeManager;
-        $this->templateRepository = $templateRepository;
+        $this->contextManager = $contextManager;
+        $this->siteRepository = $siteRepository;
+        $this->templateSetparameters = $templateSetparameters;
     }
 
     /**
@@ -37,24 +48,11 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
 
         if (
             array_key_exists('nodeTemplateSelection', $data) &&
-            null === $formData->getId()
+            null === $formData->getId() &&
+            array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
+            '' != $data['nodeTemplateSelection']['nodeSource']
         ) {
-            if (
-                array_key_exists('templateId', $data['nodeTemplateSelection']) &&
-                null === $formData->getRootArea() &&
-                0 === $formData->getBlocks()->count()&&
-                '' != $data['nodeTemplateSelection']['templateId']
-            ) {
-                $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
-                if (null !== $template) {
-                    $this->nodeManager->hydrateAreaFromTemplate($formData, $template->getRootArea());
-                }
-            } elseif (
-                array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
-                '' != $data['nodeTemplateSelection']['nodeSource']
-            ) {
-                $this->nodeManager->hydrateNodeFromNodeId($formData, $data['nodeTemplateSelection']['nodeSource']);
-            }
+            $this->nodeManager->hydrateNodeFromNodeId($formData, $data['nodeTemplateSelection']['nodeSource']);
         }
     }
 
@@ -82,10 +80,10 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
                 'mapped' => false,
                 'label' => 'open_orchestra_backoffice.form.node.node_source',
             ));
-            $form->get('nodeTemplateSelection')->add('templateId', 'choice', array(
+            $form->get('nodeTemplateSelection')->add('template', 'choice', array(
                 'choices' => $this->getTemplateChoices(),
                 'required' => false,
-                'label' => 'open_orchestra_backoffice.form.node.template_id'
+                'label' => 'open_orchestra_backoffice.form.node.template'
             ));
         }
     }
@@ -107,12 +105,15 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
      */
     protected function getTemplateChoices()
     {
-        $templates = $this->templateRepository->findByDeleted(false);
-        $templatesChoices = array();
-        foreach ($templates as $template) {
-            $templatesChoices[$template->getTemplateId()] = $template->getName();
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $site = $this->siteRepository->findOneBySiteId($siteId);
+        $templateSetId = $site->getTemplateSet();
+
+        $choices = array();
+        foreach ($this->templateSetparameters[$templateSetId]['templates'] as $key => $template) {
+            $choices[$key] = $template['label'];
         }
 
-        return $templatesChoices;
+        return $choices;
     }
 }

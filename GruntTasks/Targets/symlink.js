@@ -145,5 +145,9 @@ module.exports = {
   column_icons: {
     src: 'web/bundles/openorchestrabackoffice/images/column-icons.svg',
     dest: 'web/images/column-icons.svg'
-  }
+  },
+  padlock_icon: {
+      src: 'web/bundles/openorchestrabackoffice/images/padlock.png',
+      dest: 'web/images/padlock.png'
+    }
 };

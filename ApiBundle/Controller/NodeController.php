@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
@@ -108,10 +107,6 @@ class NodeController extends BaseController
 
             $dm = $this->get('object_manager');
             $dm->persist($node);
-
-            if ($oldNode) {
-                $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
-            }
 
             $dm->flush();
         }
@@ -331,9 +326,7 @@ class NodeController extends BaseController
      */
     protected function getAccessRole(NodeInterface $node)
     {
-        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
-            return TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE;
-        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
             return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
         }
 
@@ -347,9 +340,7 @@ class NodeController extends BaseController
      */
     protected function getEditionRole(NodeInterface $node)
     {
-        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
-            return TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
-        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
             return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
         }
 

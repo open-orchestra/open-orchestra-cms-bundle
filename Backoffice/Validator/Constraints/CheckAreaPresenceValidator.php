@@ -23,9 +23,6 @@ class CheckAreaPresenceValidator extends ConstraintValidator
             $this->context->buildViolation($constraint->message)
                           ->atPath('nodeSource')
                           ->addViolation();
-            $this->context->buildViolation($constraint->message)
-                          ->atPath('templateId')
-                          ->addViolation();
         }
     }
 }

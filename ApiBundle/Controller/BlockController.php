@@ -71,21 +71,15 @@ class BlockController extends BaseController
             $blocks[$key]->setComponent($block);
         }
 
-        $node = $this->get('open_orchestra_model.repository.node')->findInLastVersion(
-            NodeInterface::TRANSVERSE_NODE_ID,
-            $language,
-            $currentSiteId
-        );
 
         $transverseBlocks = array();
         if ($withTransverseBlocks) {
-            $transverseBlocks = $node->getBlocks();
+            $transverseBlocks = $this->get('open_orchestra_model.repository.block')->findTransverse();
         }
 
         return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform(
             $transverseBlocks,
-            $blocks,
-            $node->getNodeId()
+            $blocks
         );
     }
 }

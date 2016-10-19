@@ -18,7 +18,6 @@ class CreateNodeRootSubscriberTest extends \PHPUnit_Framework_TestCase
      * @var CreateRootNodeSubscriber
      */
     protected $subscriber;
-    protected $repositoryTemplate;
     protected $siteEvent;
     protected $site;
 
@@ -33,11 +32,9 @@ class CreateNodeRootSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->repositoryTemplate = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
 
         $this->subscriber = new CreateRootNodeSubscriber(
             $this->nodeManager,
-            $this->repositoryTemplate,
             $this->objectManager,
             $this->translator
         );
@@ -52,16 +49,14 @@ class CreateNodeRootSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $fakeTemplateId
+     * @param string $fakeTemplate
      * @param int    $countCreateRootNode
      *
-     * @dataProvider provideTemplateIdAndCountCreateRootNode
+     * @dataProvider provideTemplateAndCountCreateRootNode
      */
-    public function testCreateRootNode($fakeTemplateId, $countCreateRootNode)
+    public function testCreateRootNode($fakeTemplate, $countCreateRootNode)
     {
-        $template = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
-        Phake::when($this->repositoryTemplate)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
-        Phake::when($this->siteEvent)->getRootNodeTemplateId()->thenReturn($fakeTemplateId);
+        Phake::when($this->siteEvent)->getRootNodeTemplate()->thenReturn($fakeTemplate);
 
         $this->subscriber->createRootNode($this->siteEvent);
 
@@ -73,11 +68,10 @@ class CreateNodeRootSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function provideTemplateIdAndCountCreateRootNode()
+    public function provideTemplateAndCountCreateRootNode()
     {
         return array(
-            "with template id" => array('fakeTemplateid', 1),
-            "no template id "  => array(null, 0)
+            "with template id" => array('fakeTemplateid', 1)
         );
     }
 }

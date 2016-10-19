@@ -68,8 +68,6 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
         $this->assertArrayHasKey(NodeEvents::NODE_DUPLICATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_ADD_LANGUAGE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_DELETE_BLOCK, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_DELETE_AREA, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_AREA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
     }
 
@@ -100,11 +98,9 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
         $this->addNodeHistory('addNodeDuplicateHistory', $document, $token);
         $this->addNodeHistory('addNodeAddLanguageHistory', $document, $token);
         $this->addNodeHistory('addNodeDeleteBlockHistory', $document, $token);
-        $this->addNodeHistory('addNodeDeleteAreaHistory', $document, $token);
-        $this->addNodeHistory('addNodeUpdateAreaHistory', $document, $token);
         $this->addNodeHistory('addNodeChangeStatusHistory', $document, $token);
 
-        Phake::verify($this->objectManager, Phake::times($nbrUpdate * 20))->flush();
+        Phake::verify($this->objectManager, Phake::times($nbrUpdate * 18))->flush();
     }
 
     /**

@@ -3,7 +3,6 @@ parameters:
     open_orchestra_backoffice.subscriber.update_redirection_node.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRedirectionNodeSubscriber
     open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\Backoffice\EventSubscriber\FlushNodeCacheSubscriber
     open_orchestra_backoffice.subscriber.block_menu_cache.class: OpenOrchestra\Backoffice\EventSubscriber\BlockMenuCacheSubscriber
-    open_orchestra_backoffice.subscriber.transverse_block_cache.class: OpenOrchestra\Backoffice\EventSubscriber\TransverseBlockCacheSubscriber
     open_orchestra_backoffice.subscriber.content_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
@@ -12,8 +11,6 @@ parameters:
     open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
     open_orchestra_backoffice.subscriber.delete_content.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteContentSubscriber
     open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
-    open_orchestra_backoffice.subscriber.add_transverse_block.class: OpenOrchestra\Backoffice\EventSubscriber\AddTransverseBlockSubscriber
-    open_orchestra_backoffice.subscriber.create_transverse_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateTransverseNodeSubscriber
     open_orchestra_backoffice.subscriber.create_root_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateRootNodeSubscriber
     open_orchestra_backoffice.subscriber.update_site_alias_redirection_site.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateSiteAliasRedirectionSiteSubscriber
     open_orchestra_backoffice.subscriber.block_form_type.class: OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber
@@ -46,13 +43,6 @@ services:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.block_menu_cache:
         class: '%open_orchestra_backoffice.subscriber.block_menu_cache.class%'
-        arguments:
-            - '@open_orchestra_display.manager.cacheable'
-            - '@open_orchestra_base.manager.tag'
-        tags:
-            - { name: kernel.event_subscriber }
-    open_orchestra_backoffice.subscriber.transverse_block_cache:
-        class: '%open_orchestra_backoffice.subscriber.transverse_block_cache.class%'
         arguments:
             - '@open_orchestra_display.manager.cacheable'
             - '@open_orchestra_base.manager.tag'
@@ -114,25 +104,10 @@ services:
             - '@open_orchestra_backoffice.manager.route_document'
         tags:
             - { name: kernel.event_subscriber }
-    open_orchestra_backoffice.subscriber.add_transverse_block:
-        class: '%open_orchestra_backoffice.subscriber.add_transverse_block.class%'
-        arguments:
-            - '@open_orchestra_model.repository.node'
-        tags:
-            - { name: kernel.event_subscriber }
-    open_orchestra_backoffice.subscriber.create_transverse_node:
-        class: '%open_orchestra_backoffice.subscriber.create_transverse_node.class%'
-        arguments:
-            - '@open_orchestra_model.repository.node'
-            - '@open_orchestra_backoffice.manager.node'
-            - '@object_manager'
-        tags:
-            - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.create_root_node:
         class: '%open_orchestra_backoffice.subscriber.create_root_node.class%'
         arguments:
             - '@open_orchestra_backoffice.manager.node'
-            - '@open_orchestra_model.repository.template'
             - '@object_manager'
             - '@translator'
         tags:

@@ -11,13 +11,19 @@ use Symfony\Component\Form\FormEvents;
  */
 class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
 {
-    protected $templateRepository;
     /** @var WebSiteNodeTemplateSubscriber  */
     protected $subscriber;
     protected $data;
     protected $event;
     protected $form;
-    protected $templateChoices = array();
+    protected $templateSet = 'fakeTemplateSet';
+    protected $templateSetData = array(
+        'label' => 'fakeTemplateSet',
+        'templates' => array(
+            'default' => array('label' => 'default'),
+            'full_page' => array('label' => 'full_page'),
+        )
+    );
 
     /**
      * Set up the test
@@ -29,11 +35,11 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->data);
+        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
 
-        $this->templateRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\TemplateRepository');
-        Phake::when($this->templateRepository)->findByDeleted(false)->thenReturn($this->templateChoices);
-
-        $this->subscriber = new WebSiteNodeTemplateSubscriber($this->templateRepository);
+        $this->subscriber = new WebSiteNodeTemplateSubscriber(array(
+            $this->templateSet => $this->templateSetData
+        ));
     }
 
     /**
@@ -42,18 +48,35 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideSiteIdAndCountAddForm
      */
-    public function testOnPreSetData($siteId, $countAddForm)
+    public function testPreSetData($siteId, $countAddForm)
     {
+        $templateSetChoices = array(
+            'fakeTemplateSet' => 'fakeTemplateSet'
+        );
+        $templateChoices = array(
+            'fakeTemplateSet' => array(
+                'default' => 'default',
+                'full_page' => 'full_page',
+            )
+        );
+
         Phake::when($this->data)->getSiteId()->thenReturn($siteId);
+
         $this->subscriber->onPreSetData($this->event);
-        Phake::verify($this->form, Phake::times($countAddForm))->add('templateId', 'choice', array(
-            'choices' => $this->templateChoices,
+        Phake::verify($this->form, Phake::times($countAddForm))->add('templateSet', 'choice', array(
+            'label' => 'open_orchestra_backoffice.form.website.template_set',
+            'choices' => $templateSetChoices,
+            'attr' => array('class' => 'select-grouping-master'),
             'required' => true,
-            'mapped' => false,
+        ));
+        Phake::verify($this->form, Phake::times($countAddForm))->add('templateRoot', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.website.template_node_root.label',
+            'choices' => $templateChoices,
             'attr'  => array(
                 'help_text' => 'open_orchestra_backoffice.form.website.template_node_root.helper',
-            )
+                'class' => 'select-grouping-slave'
+            ),
+            'required' => true,
         ));
     }
 
