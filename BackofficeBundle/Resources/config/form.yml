@@ -1,7 +1,6 @@
 parameters:
     open_orchestra_backoffice.type.node.class: OpenOrchestra\Backoffice\Form\Type\NodeType
     open_orchestra_backoffice.type.block.class: OpenOrchestra\Backoffice\Form\Type\BlockType
-    open_orchestra_backoffice.type.existing_block_choice.class: OpenOrchestra\Backoffice\Form\Type\ExistingBlockChoiceType
     open_orchestra_backoffice.type.orchestra_block.class: OpenOrchestra\Backoffice\Form\Type\BlockChoiceType
     open_orchestra_backoffice.type.site.class: OpenOrchestra\Backoffice\Form\Type\SiteType
     open_orchestra_backoffice.type.site_alias.class: OpenOrchestra\Backoffice\Form\Type\SiteAliasType
@@ -85,13 +84,6 @@ services:
             - '@open_orchestra_backoffice.subscriber.block_form_type'
         tags:
             - { name: form.type, alias: oo_block }
-    open_orchestra_backoffice.type.existing_block_choice:
-        class: '%open_orchestra_backoffice.type.existing_block_choice.class%'
-        arguments:
-            - '@open_orchestra_model.repository.node'
-        tags:
-            - { name: form.type, alias: oo_existing_block }
-
     open_orchestra_backoffice.type.orchestra_block:
         class: '%open_orchestra_backoffice.type.orchestra_block.class%'
         arguments:
