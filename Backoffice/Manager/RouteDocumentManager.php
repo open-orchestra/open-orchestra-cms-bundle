@@ -194,7 +194,7 @@ class RouteDocumentManager
             $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
         }
 
-        return $all ? $this->nodeRepository->findByIncludedPathAndSiteId($node->getPath(), $site->getSiteId()) : $this->nodeRepository->findByPathCurrentlyPublished($node->getPath(), $site->getSiteId());
+        return $all ? $this->nodeRepository->findByIncludedPathSiteIdAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage()) : $this->nodeRepository->findByPathCurrentlyPublishedAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage());
 
     }
 
