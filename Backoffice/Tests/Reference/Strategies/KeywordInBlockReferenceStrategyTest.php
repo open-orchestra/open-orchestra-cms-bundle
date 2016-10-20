@@ -49,7 +49,6 @@ class KeywordInBlockStrategyTest extends AbstractReferenceStrategyTest
      */
     public function testAddReferencesToEntity($entity, $entityId, array $keywords)
     {
-        $this->markTestSkipped();
         Phake::when($entity)->getKeywords()->thenReturn($keywords);
 
         parent::checkAddReferencesToEntity($entity, $entityId, $keywords, BlockInterface::ENTITY_TYPE, $this->keywordRepository);
@@ -64,7 +63,6 @@ class KeywordInBlockStrategyTest extends AbstractReferenceStrategyTest
      */
     public function testRemoveReferencesToEntity($entity, $entityId, array $keywords)
     {
-        $this->markTestSkipped();
         parent::checkRemoveReferencesToEntity($entity, $entityId, $keywords, BlockInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 

@@ -31,53 +31,27 @@ class BlockNodePatternValidator extends ConstraintValidator
     public function validate($node, Constraint $constraint)
     {
         if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
-            $blocks = $node->getBlocks();
-            $blockReferences = $this->getRefBlock($node->getRootArea());
+            $areas = $node->getAreas();
             $routePattern = $node->getRoutePattern();
-            foreach ($blockReferences as $blockRef) {
-                $block = $blocks[$blockRef];
-                $parameters = $this->generateFormManager->getRequiredUriParameter($block);
-                $blockLabel = $block->getLabel();
-                foreach ($parameters as $parameter) {
-                    if (false === strpos($routePattern, '{' . $parameter . '}')) {
-                        $this->context
-                            ->buildViolation($constraint->message)
-                            ->setParameters(array(
-                                '%blockLabel%' => $blockLabel,
-                                '%parameter%' => $parameter
-                            ))
-                            ->atPath('routePattern')
-                            ->addViolation();
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * @param AreaContainerInterface $container
-     *
-     * @return array
-     */
-    protected function getRefBlock(AreaContainerInterface $container)
-    {
-        $blockRef = array();
-        $areas = $container->getAreas();
-        if ($container instanceof NodeInterface || count($areas) > 0){
             foreach ($areas as $area) {
-                $blockRef = array_merge($blockRef, $this->getRefBlock($area));
-            }
-        } else {
-            $blocks = $container->getBlocks();
-            if (count($blocks) > 0){
+                $blocks = $area->getBlocks();
                 foreach ($blocks as $block) {
-                    if($block['nodeId'] === 0) {
-                        $blockRef[] = $block['blockId'];
+                    $blockLabel = $block->getLabel();
+                    $parameters = $this->generateFormManager->getRequiredUriParameter($block);
+                    foreach ($parameters as $parameter) {
+                        if (false === strpos($routePattern, '{' . $parameter . '}')) {
+                            $this->context
+                                ->buildViolation($constraint->message)
+                                ->setParameters(array(
+                                    '%blockLabel%' => $blockLabel,
+                                    '%parameter%' => $parameter
+                                ))
+                                ->atPath('routePattern')
+                                ->addViolation();
+                        }
                     }
                 }
             }
         }
-
-        return array_unique($blockRef);
     }
 }
