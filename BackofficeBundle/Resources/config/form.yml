@@ -1,8 +1,5 @@
 parameters:
     open_orchestra_backoffice.type.node.class: OpenOrchestra\Backoffice\Form\Type\NodeType
-    open_orchestra_backoffice.type.area_row.class: OpenOrchestra\Backoffice\Form\Type\AreaRowType
-    open_orchestra_backoffice.type.area_column.class: OpenOrchestra\Backoffice\Form\Type\AreaColumnType
-    open_orchestra_backoffice.type.column_layout_row.class: OpenOrchestra\Backoffice\Form\Type\Component\ColumnLayoutRowType
     open_orchestra_backoffice.type.block.class: OpenOrchestra\Backoffice\Form\Type\BlockType
     open_orchestra_backoffice.type.existing_block_choice.class: OpenOrchestra\Backoffice\Form\Type\ExistingBlockChoiceType
     open_orchestra_backoffice.type.orchestra_block.class: OpenOrchestra\Backoffice\Form\Type\BlockChoiceType
