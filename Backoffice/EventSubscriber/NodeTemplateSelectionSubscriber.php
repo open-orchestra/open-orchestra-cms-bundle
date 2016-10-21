@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormEvents;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\Backoffice\Manager\TemplateManager;
 
 /**
  * Class NodeTemplateSelectionSubscriber
@@ -17,24 +18,24 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
     protected $nodeManager;
     protected $contextManager;
     protected $siteRepository;
-    protected $templateSetparameters;
+    protected $templateManager;
 
     /**
      * @param NodeManager             $nodeManager
      * @param CurrentSiteIdInterface  $contextManager
      * @param SiteRepositoryInterface $siteRepository
-     * @param array                   $templateSetparameters
+     * @param TemplateManager         $templateManager
      */
     public function __construct(
         NodeManager $nodeManager,
         CurrentSiteIdInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
-        array $templateSetparameters
+        TemplateManager $templateManager
     ) {
         $this->nodeManager = $nodeManager;
         $this->contextManager = $contextManager;
         $this->siteRepository = $siteRepository;
-        $this->templateSetparameters = $templateSetparameters;
+        $this->templateManager = $templateManager;
     }
 
     /**
@@ -108,9 +109,9 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
         $siteId = $this->contextManager->getCurrentSiteId();
         $site = $this->siteRepository->findOneBySiteId($siteId);
         $templateSetId = $site->getTemplateSet();
-
+        $templateSetParameters = $this->templateManager->getTemplateSetParameters();
         $choices = array();
-        foreach ($this->templateSetparameters[$templateSetId]['templates'] as $key => $template) {
+        foreach ($templateSetParameters[$templateSetId]['templates'] as $key => $template) {
             $choices[$key] = $template['label'];
         }
 

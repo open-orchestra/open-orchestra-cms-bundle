@@ -5,20 +5,21 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use OpenOrchestra\Backoffice\Manager\TemplateManager;
 
 /**
  * Class WebSiteNodeTemplateSubscriber
  */
 class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
 {
-    protected $templateSetParameters;
+    protected $templateManager;
 
     /**
      * @param array $templateSetParameters
      */
-    public function __construct(array $templateSetParameters)
+    public function __construct(TemplateManager $templateManager)
     {
-        $this->templateSetParameters = $templateSetParameters;
+        $this->templateManager = $templateManager;
     }
 
     /**
@@ -60,8 +61,9 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
      */
     protected function getTemplateSetChoices()
     {
+        $templateSetParameters = $this->templateManager->getTemplateSetParameters();
         $choices = array();
-        foreach ($this->templateSetParameters as $key => $parameter) {
+        foreach ($templateSetParameters as $key => $parameter) {
             $choices[$key] = $parameter['label'];
         }
         return $choices;
@@ -73,8 +75,9 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
      */
     protected function getTemplateChoices()
     {
+        $templateSetParameters = $this->templateManager->getTemplateSetParameters();
         $choices = array();
-        foreach ($this->templateSetParameters as $keyTemplateSet => $templateSetParameters) {
+        foreach ($templateSetParameters as $keyTemplateSet => $templateSetParameters) {
             foreach ($templateSetParameters['templates'] as $key => $template) {
                 $choices[$keyTemplateSet][$key] = $template['label'];
             }

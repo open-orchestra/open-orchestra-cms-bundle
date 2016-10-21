@@ -92,6 +92,7 @@ class Configuration implements ConfigurationInterface
                 ))
                 ->prototype('scalar')->end()
             ->end()
+            ->append($this->addTemplateSetConfiguration())
         ->end();
 
         return $treeBuilder;
@@ -161,5 +162,54 @@ class Configuration implements ConfigurationInterface
         ;
 
         return $fieldTypes;
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public function addTemplateSetConfiguration()
+    {
+        $builder = new TreeBuilder();
+        $templateSet = $builder->root('template_set');
+
+        $templateSet
+            ->info('Array of template set to describe a template. Used to render a node')
+            ->useAttributeAsKey('name')
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('label')->end()
+                    ->arrayNode('templates')
+                        ->useAttributeAsKey('name')
+                        ->prototype('array')
+                            ->children()
+                                ->scalarNode('label')->end()
+                                ->scalarNode('path')->end()
+                            ->end()
+                        ->end()
+                        ->prototype('scalar')->end()
+                    ->end()
+                    ->arrayNode('styles')
+                        ->useAttributeAsKey('name')
+                        ->prototype('scalar')->end()
+                    ->end()
+                ->end()
+            ->end();
+
+        $templateSet->defaultValue(array(
+            'default' => array(
+                'label' => 'open_orchestra_backoffice.template_set.default.label',
+                'templates' => array(
+                    'default' => array(
+                        'label' => 'open_orchestra_backoffice.template_set.default.template_name.default',
+                        'path' => 'default/default.html'
+                    )
+                ),
+                'styles' => array(
+                    'default' => 'open_orchestra_backoffice.template_set.default.style.default'
+                )
+            )
+        ));
+
+        return $templateSet;
     }
 }

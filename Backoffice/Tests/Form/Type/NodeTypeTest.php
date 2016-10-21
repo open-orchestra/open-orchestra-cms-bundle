@@ -13,6 +13,7 @@ class NodeTypeTest extends AbstractBaseTestCase
 {
     protected $nodeType;
     protected $nodeManager;
+    protected $templateManager;
     protected $contextManager;
     protected $siteRepository;
     protected $nodeClass = 'nodeClass';
@@ -25,12 +26,13 @@ class NodeTypeTest extends AbstractBaseTestCase
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
 
         $this->nodeType = new NodeType(
             $this->nodeManager,
             $this->contextManager,
             $this->siteRepository,
-            array(),
+            $this->templateManager,
             $this->nodeClass
         );
     }

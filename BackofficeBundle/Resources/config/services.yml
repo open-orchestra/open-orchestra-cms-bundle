@@ -8,7 +8,8 @@ parameters:
     open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\Backoffice\Manager\RedirectionManager
     open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\Backoffice\Manager\RouteDocumentManager
     open_orchestra_backoffice.manager.keyword_to_document.class: OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager
-
+    open_orchestra_backoffice.manager.template.class: OpenOrchestra\Backoffice\Manager\TemplateManager
+    
 services:
     open_orchestra_backoffice.context_manager:
         class: '%open_orchestra_backoffice.manager.context.class%'
@@ -72,3 +73,6 @@ services:
             - '@open_orchestra_model.helper.suppress_special_character'
             - '%open_orchestra_model.document.keyword.class%'
             - '@security.authorization_checker'
+    open_orchestra_backoffice.manager.template:
+        class: '%open_orchestra_backoffice.manager.template.class%'
+          

@@ -24,7 +24,6 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
     protected $nodeManager;
     protected $contextManager;
     protected $siteRepository;
-    protected $templateSetparameters;
 
     protected $siteId = 'fakeSiteId';
     protected $templateSet = 'fakeTemplateSet';
@@ -59,15 +58,16 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId($this->siteId)->thenReturn($site);
 
-        $this->templateSetparameters = array(
+        $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
+        Phake::when($this->templateManager)->getTemplateSetParameters()->thenReturn(array(
             $this->templateSet => $this->templateSetData
-        );
+        ));
 
         $this->subscriber = new NodeTemplateSelectionSubscriber(
             $this->nodeManager,
             $this->contextManager,
             $this->siteRepository,
-            $this->templateSetparameters
+            $this->templateManager
         );
     }
 

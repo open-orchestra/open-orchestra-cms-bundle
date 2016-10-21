@@ -25,7 +25,10 @@ class OpenOrchestra.FormBehavior.SelectGrouping extends OpenOrchestra.FormBehavi
       refreshSlave = ((formBehavior, master, slave, source) ->
         ->
           slave.empty()
-          $('optgroup[label="' + master.val() + '"] option', source).clone().appendTo(slave)
+          if $('optgroup', source).length > 0
+            $('optgroup[label="' + master.val() + '"] option', source).clone().appendTo(slave)
+          else
+            $('option', source).clone().appendTo(slave)
           return
       )(@, master, slave, source)
       refreshSlave()

@@ -36,10 +36,12 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->data);
         Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
-
-        $this->subscriber = new WebSiteNodeTemplateSubscriber(array(
+        $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
+        Phake::when($this->templateManager)->getTemplateSetParameters()->thenReturn(array(
             $this->templateSet => $this->templateSetData
         ));
+
+        $this->subscriber = new WebSiteNodeTemplateSubscriber($this->templateManager);
     }
 
     /**
