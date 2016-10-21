@@ -1,6 +1,6 @@
 import OrchestraRouter from '../OrchestraRouter'
 import app             from '../../Application'
-import FormBuilder     from '../../../Service/Form/FormBuilder'
+import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import NodeTree        from '../../Model/Node/NodeTree'
 import NodeTreeView    from '../../View/Node/NodeTreeView'
 import NodeFormView    from '../../View/Node/NodeFormView'

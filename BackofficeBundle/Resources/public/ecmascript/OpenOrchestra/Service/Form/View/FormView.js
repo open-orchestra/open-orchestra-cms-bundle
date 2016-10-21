@@ -1,4 +1,4 @@
-import OrchestraView from '../OrchestraView'
+import OrchestraView from '../../../Application/View/OrchestraView'
 
 /**
  * @class FormView

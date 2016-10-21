@@ -1,4 +1,4 @@
-import FormView from '../Form/FormView'
+import FormView from '../../../Service/Form/View/FormView'
 
 /**
  * @class NodeFormView

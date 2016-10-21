@@ -1,5 +1,5 @@
 import Form        from './Form'
-import ServerError from '../Error/ServerError'
+import ServerError from '../../Error/ServerError'
 
 /**
  * @class FormBuilder
