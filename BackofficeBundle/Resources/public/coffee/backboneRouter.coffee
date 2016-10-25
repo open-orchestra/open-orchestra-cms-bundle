@@ -109,7 +109,9 @@ OrchestraBORouter = Backbone.Router.extend(
 
 appRouter = new OrchestraBORouter
 
-jQuery ->
+###jQuery ->
   if window.location.pathname.indexOf('login') == -1
     Backbone.history.start()
   return
+
+###

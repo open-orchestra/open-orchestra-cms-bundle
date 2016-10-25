@@ -12,7 +12,9 @@ module.exports = {
     'vendor/bower_components/lodash/lodash.js',
     'vendor/bower_components/gridstack/src/gridstack.js',
     'web/bundles/openorchestrabackoffice/js/latinise.js',
-    'vendor/bower_components/jquery-tokeninput/build/jquery.tokeninput.min.js'
+    'vendor/bower_components/jquery-tokeninput/build/jquery.tokeninput.min.js',
+    'web/bundles/fosjsrouting/js/router.js',
+    'web/bundles/bazingajstranslation/js/translator.min.js',
   ],
   dest: 'web/built/lib.js'
 };
