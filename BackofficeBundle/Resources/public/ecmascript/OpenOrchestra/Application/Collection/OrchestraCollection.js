@@ -36,7 +36,7 @@ class OrchestraCollection extends Backbone.Collection
     sync(method, model, options) {
         options = options || {};
         let url = this._getSyncUrl[method.toLowerCase()];
-        if(typeof url != 'undefined') {
+        if (typeof url !== 'undefined') {
             options.url = url;
         }
 

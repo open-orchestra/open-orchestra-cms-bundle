@@ -46,7 +46,6 @@ class Form
             promise.done(this._formSuccess);
             promise.fail(this._formError);
             promise.always(() => {
-                console.log(this);
                 this.trigger('form:post_submit');
             });
 
@@ -84,7 +83,7 @@ class Form
         $html.each((index, tag) => {
             if ("FORM" === $(tag).prop("tagName")) {
                 this.$form = $(tag);
-            } else if($(tag).hasClass('alert')) {
+            } else if ($(tag).hasClass('alert')) {
                 this.$messages.push($(tag));
             }
         });

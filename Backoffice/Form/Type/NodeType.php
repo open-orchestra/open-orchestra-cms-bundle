@@ -83,7 +83,7 @@ class NodeType extends AbstractType
                 'choices' => $this->schemeChoices,
                 'label' => 'open_orchestra_backoffice.form.node.scheme'
             ))
-            ->add('publishDate', 'oo_date_picker', array(
+            ->add('publishDate', 'date', array(
                 'widget' => 'single_text',
                 'label' => 'open_orchestra_backoffice.form.node.publish_date',
                 'required' => false

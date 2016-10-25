@@ -27,8 +27,6 @@ class FormView extends OrchestraView
      * Render a form
      */
     render() {
-        console.log('render');
-        console.log(this);
         this.$el.html('');
         for (let message of this._form.$messages) {
             this.$el.append(message);
