@@ -29,7 +29,7 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
             $keywordIds = $this->extractKeywordsFromNode($entity);
 
             foreach ($keywordIds as $keywordId) {
-                /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
+                /** @var \OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
                 $keyword = $this->keywordRepository->find($keywordId);
                 if ($keyword) {
                     $keyword->addUseInEntity($entity->getId(), NodeInterface::ENTITY_TYPE);
@@ -63,7 +63,7 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
     {
         $references = array();
 
-        /** @var BlockInterface $block */
+        /** @var \OpenOrchestra\ModelInterface\Model\BlockInterface $block */
         foreach ($node->getBlocks() as $block) {
             $references = $this->extractKeywordsFromElement($block->getAttributes(), $references);
         }

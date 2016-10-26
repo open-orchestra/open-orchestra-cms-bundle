@@ -216,6 +216,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             )));
 
             if (NodeInterface::TYPE_ERROR !== $node->getNodeType() &&
+                !$node->isUsed() &&
                 $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node)
             ) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
