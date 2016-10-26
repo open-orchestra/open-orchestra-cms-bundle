@@ -206,12 +206,11 @@ class NodeManager
             $newArea = clone $area;
             $newNode->setArea($areaId, $newArea);
             foreach($area->getBlocks() as $block) {
-                $newBlock = $block;
                 if (!$block->isTransverse()) {
                     $newBlock = clone $block;
                     $this->blockRepository->getDocumentManager()->persist($newBlock);
+                    $newArea->addBlock($newBlock);
                 }
-                $newArea->addBlock($newBlock);
             }
         }
 
