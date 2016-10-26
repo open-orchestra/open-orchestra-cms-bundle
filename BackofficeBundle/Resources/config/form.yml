@@ -42,6 +42,9 @@ parameters:
     open_orchestra_backoffice.type.default_listable_checkbox.class: OpenOrchestra\Backoffice\Form\Type\Component\DefaultListableCheckboxType
     open_orchestra_backoffice.type.multi_languages.class: OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType
 
+    open_orchestra_backoffice.form.type_extension.field.class: OpenOrchestra\Backoffice\Form\Type\Extension\FieldTypeTabulationExtension
+    open_orchestra_backoffice.form.type_extension.form.class: OpenOrchestra\Backoffice\Form\Type\Extension\FormTypeTabulationExtension
+
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
         include_jquery: false
@@ -383,3 +386,14 @@ services:
             - '@?open_orchestra_backoffice.manager.multi_languages_choice'
         tags:
             - { name: form.type, alias: oo_status_choice }
+
+    open_orchestra_backoffice.form.type_extension.field:
+        class: '%open_orchestra_backoffice.form.type_extension.field.class%'
+        tags:
+          - { name: "form.type_extension", alias: "form" }
+    open_orchestra_backoffice.form.type_extension.form:
+        class: '%open_orchestra_backoffice.form.type_extension.form.class%'
+        tags:
+          - { name: "form.type_extension", alias: "form" }
+
+            
