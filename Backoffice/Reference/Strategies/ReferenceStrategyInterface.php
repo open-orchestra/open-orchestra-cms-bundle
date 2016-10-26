@@ -16,8 +16,9 @@ Interface ReferenceStrategyInterface
 
     /**
      * @param mixed $entity
+     * @param mixed $scope
      */
-    public function addReferencesToEntity($entity);
+    public function addReferencesToEntity($entity, $scope);
 
     /**
      * @param mixed $entity

@@ -33,11 +33,12 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
 
     /**
      * @param mixed $entity
+     * @param mixed $scope
      */
-    public function addReferencesToEntity($entity)
+    public function addReferencesToEntity($entity, $scope)
     {
         if ($this->support($entity)) {
-            $contentIds = $this->extractContentsFromNode($entity);
+            $contentIds = $this->extractContentsFromNode($entity, $scope);
 
             foreach ($contentIds as $contentId) {
                 /** @var OpenOrchestra\ModelInterface\Model\ContentInterface $content */
@@ -70,15 +71,18 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
 
     /**
      * @param ReadNodeInterface $node
+     * @param mixed             $scope
      *
      * @return array
      */
-    protected function extractContentsFromNode(ReadNodeInterface $node)
+    protected function extractContentsFromNode(ReadNodeInterface $node, $scope)
     {
         $references = array();
 
+        $blocks = is_null($scope) ? $node->getBlocks() : array($scope);
+
         /** @var BlockInterface $block */
-        foreach ($node->getBlocks() as $block) {
+        foreach ($blocks as $block) {
             $references = $this->extractContentsFromElement($block->getAttributes(), $references);
         }
 

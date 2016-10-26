@@ -37,7 +37,7 @@ class ReferenceManager
     public function addReferencesToEntity($entity)
     {
         foreach ($this->strategies as $strategy) {
-            $strategy->addReferencesToEntity($entity);
+            $strategy->addReferencesToEntity($entity, null);
         }
 
         $this->objectManager->flush();
@@ -56,11 +56,12 @@ class ReferenceManager
     }
 
     /**
-     * @param mixed $entity
+     * @param mixed      $entity
+     * @param mixed|null $scope
      */
-    public function updateReferencesToEntity($entity)
+    public function updateReferencesToEntity($entity, $scope = null)
     {
         $this->removeReferencesToEntity($entity);
-        $this->addReferencesToEntity($entity);
+        $this->addReferencesToEntity($entity, $scope);
     }
 }

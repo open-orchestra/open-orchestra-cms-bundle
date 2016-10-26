@@ -34,7 +34,7 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     public function updateReferencesToNode(NodeEvent $event)
     {
         $node = $event->getNode();
-        $this->referenceManager->updateReferencesToEntity($node);
+        $this->referenceManager->updateReferencesToEntity($node, $event->getBlock());
     }
 
     /**
