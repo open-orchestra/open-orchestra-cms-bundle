@@ -4,7 +4,6 @@ import ErrorView        from './View/Error/ErrorView'
 import TemplateManager  from '../Service/TemplateManager'
 import ApplicationError from '../Service/Error/ApplicationError'
 import AjaxError        from '../Service/Error/AjaxError'
-import FormBuilder      from '../Service/Form/FormBuilder'
 
 /**
  * @class Application
