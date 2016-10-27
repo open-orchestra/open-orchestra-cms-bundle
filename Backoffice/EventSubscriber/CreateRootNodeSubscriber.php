@@ -45,7 +45,7 @@ class CreateRootNodeSubscriber implements EventSubscriberInterface
             $language = $site->getDefaultLanguage();
             $name = $this->translator->trans('open_orchestra_backoffice.node.root_name');
 
-            $node = $this->nodeManager->createRootNode($site->getSiteId(), $language, $name, self::ROOT_NODE_PATTERN, $site->getTemplateRoot());
+            $node = $this->nodeManager->createRootNode($site->getSiteId(), $language, $name, self::ROOT_NODE_PATTERN, $site->getTemplateNodeRoot());
             $this->objectManager->persist($node);
             $this->objectManager->flush();
         }

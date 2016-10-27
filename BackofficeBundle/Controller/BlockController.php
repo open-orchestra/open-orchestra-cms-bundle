@@ -45,7 +45,7 @@ class BlockController extends AbstractEditionRoleController
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');
 
         if ($this->handleForm($form, $message, $redirection)) {
-            $this->dispatchEvent(BlockEvents::BLOCK_CREATE, new BlockEvent($block));
+            $this->dispatchEvent(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($block));
             if (!is_null($nodeId)) {
                 $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($this->get('open_orchestra_model.repository.node')->find($nodeId), $block));
             }
@@ -83,7 +83,7 @@ class BlockController extends AbstractEditionRoleController
         $form->handleRequest($request);
         $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.block.edit.success');
         if ($this->handleForm($form, $message)) {
-            $this->dispatchEvent(BlockEvents::BLOCK_UPDATE, new BlockEvent($block));
+            $this->dispatchEvent(BlockEvents::POST_BLOCK_UPDATE, new BlockEvent($block));
         }
 
         return $this->renderAdminForm($form);

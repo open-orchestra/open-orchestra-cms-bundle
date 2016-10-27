@@ -54,9 +54,9 @@ class UpdateReferenceSubscriberTest extends AbstractBaseTestCase
      */
     public function testEventSubscribed()
     {
-        $this->assertArrayHasKey(BlockEvents::BLOCK_CREATE, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(BlockEvents::BLOCK_UPDATE, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(BlockEvents::BLOCK_DELETE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(BlockEvents::POST_BLOCK_CREATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(BlockEvents::POST_BLOCK_UPDATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(BlockEvents::POST_BLOCK_DELETE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_UPDATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_CREATION, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_DUPLICATE, $this->subscriber->getSubscribedEvents());

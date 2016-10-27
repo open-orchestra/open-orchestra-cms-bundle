@@ -71,7 +71,7 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
             'attr' => array('class' => 'select-grouping-master'),
             'required' => true,
         ));
-        Phake::verify($this->form, Phake::times($countAddForm))->add('templateRoot', 'choice', array(
+        Phake::verify($this->form, Phake::times($countAddForm))->add('templateNodeRoot', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.website.template_node_root.label',
             'choices' => $templateChoices,
             'attr'  => array(

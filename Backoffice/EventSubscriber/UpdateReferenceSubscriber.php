@@ -79,9 +79,9 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            BlockEvents::BLOCK_CREATE => 'updateReferencesToBlock',
-            BlockEvents::BLOCK_UPDATE => 'updateReferencesToBlock',
-            BlockEvents::BLOCK_DELETE => 'removeReferencesToBlock',
+            BlockEvents::POST_BLOCK_CREATE => 'updateReferencesToBlock',
+            BlockEvents::POST_BLOCK_UPDATE => 'updateReferencesToBlock',
+            BlockEvents::POST_BLOCK_DELETE => 'removeReferencesToBlock',
             ContentEvents::CONTENT_UPDATE => 'updateReferencesToContent',
             ContentEvents::CONTENT_CREATION => 'updateReferencesToContent',
             ContentEvents::CONTENT_DUPLICATE => 'updateReferencesToContent',
