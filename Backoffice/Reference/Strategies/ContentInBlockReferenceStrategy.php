@@ -75,9 +75,9 @@ class ContentInBlockReferenceStrategy implements ReferenceStrategyInterface
     protected function isContentSearchAttribute($attributeValue)
     {
         return is_array($attributeValue)
-        && array_key_exists('contentType', $attributeValue)
-        && array_key_exists('choiceType', $attributeValue)
-        && array_key_exists('keywords', $attributeValue)
-        && isset($attributeValue['contentId']);
+            && array_key_exists('contentType', $attributeValue)
+            && array_key_exists('choiceType', $attributeValue)
+            && array_key_exists('keywords', $attributeValue)
+            && isset($attributeValue['contentId']);
     }
 }

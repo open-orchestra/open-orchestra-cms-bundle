@@ -50,6 +50,7 @@ class AreaController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @param string  $nodeId
      * @param string  $language
      * @param string  $version
@@ -65,7 +66,7 @@ class AreaController extends BaseController
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
             $request->get('_format', 'json')
-            );
+        );
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
 
@@ -100,6 +101,7 @@ class AreaController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @param string  $nodeId
      * @param string  $language
      * @param string  $version
@@ -116,7 +118,7 @@ class AreaController extends BaseController
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
             $request->get('_format', 'json')
-            );
+        );
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
 

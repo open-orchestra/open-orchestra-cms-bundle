@@ -176,9 +176,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 'siteId' => $node->getSiteId()
             )));
 
-            $routeName = 'open_orchestra_api_block_list_with_transverse';
-
-            $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
+            $facade->addLink('_block_list', $this->generateRoute('open_orchestra_api_block_list_with_transverse', array('language' => $node->getLanguage())));
         }
 
         return $facade;

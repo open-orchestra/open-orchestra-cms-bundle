@@ -39,6 +39,7 @@ class TemplateManager
     {
         return $this->templateSet;
     }
+
     /**
      * @return array
      */
@@ -63,7 +64,6 @@ class TemplateManager
                 $choices[$keyTemplateSet][$key] = $template['label'];
             }
         }
-        $choices['second group']['toto'] = 'toto';
 
         return $choices;
     }
@@ -107,9 +107,6 @@ class TemplateManager
 
         throw new NonExistingTemplateException();
     }
-
-
-
 
     /**
      * @param array $templateSet

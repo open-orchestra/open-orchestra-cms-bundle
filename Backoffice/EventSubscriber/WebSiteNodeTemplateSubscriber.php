@@ -66,6 +66,7 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
         foreach ($templateSetParameters as $key => $parameter) {
             $choices[$key] = $parameter['label'];
         }
+
         return $choices;
     }
 
@@ -82,6 +83,7 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
                 $choices[$keyTemplateSet][$key] = $template['label'];
             }
         }
+
         return $choices;
     }
 

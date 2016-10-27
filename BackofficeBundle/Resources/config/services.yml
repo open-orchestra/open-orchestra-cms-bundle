@@ -75,4 +75,3 @@ services:
             - '@security.authorization_checker'
     open_orchestra_backoffice.manager.template:
         class: '%open_orchestra_backoffice.manager.template.class%'
-          
