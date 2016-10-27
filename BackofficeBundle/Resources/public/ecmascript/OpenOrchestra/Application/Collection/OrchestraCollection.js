@@ -9,8 +9,8 @@ class OrchestraCollection extends Backbone.Collection
     /**
      * Constructor
      */
-    constructor() {
-        super();
+    constructor(attributes, options) {
+        super(attributes, options);
         this.bind('error', this.syncError);
     }
 
@@ -35,8 +35,8 @@ class OrchestraCollection extends Backbone.Collection
      */
     sync(method, model, options) {
         options = options || {};
-        let url = this._getSyncUrl[method.toLowerCase()];
-        if (typeof url !== 'undefined') {
+        let url = this._getSyncUrl()[method.toLowerCase()];
+        if(typeof url != 'undefined') {
             options.url = url;
         }
 

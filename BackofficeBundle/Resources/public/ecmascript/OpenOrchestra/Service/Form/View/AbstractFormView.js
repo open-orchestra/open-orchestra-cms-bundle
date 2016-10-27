@@ -1,10 +1,20 @@
 import OrchestraView from '../../../Application/View/OrchestraView'
 
 /**
- * @class FormView
+ * @class AbstractFormView
  */
-class FormView extends OrchestraView
+class AbstractFormView extends OrchestraView
 {
+    /**
+     * Constructor
+     */
+    constructor (options) {
+        if (new.target === AbstractFormView) {
+            throw TypeError("Can not construct abstract class");
+        }
+        super(options);
+    }
+
     /**
      * Pre initialize
      * @param {Object} options
@@ -65,4 +75,4 @@ class FormView extends OrchestraView
     }
 }
 
-export default FormView;
+export default AbstractFormView;

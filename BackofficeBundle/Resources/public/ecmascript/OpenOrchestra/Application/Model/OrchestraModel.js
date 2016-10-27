@@ -9,8 +9,8 @@ class OrchestraModel extends Backbone.Model
     /**
      * Constructor
      */
-    constructor() {
-        super();
+    constructor(attributes, options) {
+        super(attributes, options);
         this.on('error', this.syncError);
     }
 

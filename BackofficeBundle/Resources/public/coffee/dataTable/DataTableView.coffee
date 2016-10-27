@@ -82,7 +82,6 @@ class DataTableView extends OrchestraView
 
     @settings = settings
     @api = table.DataTable(settings)
-
     $(this.el).append(table);
 
     return @

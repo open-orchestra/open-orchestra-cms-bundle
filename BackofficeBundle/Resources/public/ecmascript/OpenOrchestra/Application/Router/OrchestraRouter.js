@@ -6,6 +6,14 @@ import LoaderView from '../View/Loader/LoaderView'
 class OrchestraRouter extends Backbone.Router
 {
     /**
+     * @inheritdoc
+     */
+    route(route, name, callback) {
+        super.route(route, name, callback);
+        Backbone.history.addRoutePattern(name, route);
+    }
+
+    /**
      * @param {Object} $region - Jquery selector
      * @private
      */

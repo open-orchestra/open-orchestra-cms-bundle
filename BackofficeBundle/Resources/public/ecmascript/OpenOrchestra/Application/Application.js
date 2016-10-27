@@ -1,4 +1,5 @@
 import NodeRouter       from './Router/Node/NodeRouter'
+import KeywordRouter    from './Router/Keyword/KeywordRouter'
 import ErrorView        from './View/Error/ErrorView'
 import TemplateManager  from '../Service/TemplateManager'
 import ApplicationError from '../Service/Error/ApplicationError'
@@ -26,7 +27,7 @@ class Application
         this._initRouting();
         this._initTranslator();
         this._initTemplateManager();
-        this._initController();
+        this._initRouter();
 
         if (Routing.generate('fos_user_security_login', true) != document.location.pathname) {
             Backbone.Events.trigger('application:before:start');
@@ -98,11 +99,12 @@ class Application
     }
 
     /**
-     * Initialize controller
+     * Initialize router
      * @private
      */
-    _initController() {
+    _initRouter() {
         new NodeRouter();
+        new KeywordRouter();
     }
 
     /**

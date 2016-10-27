@@ -64,6 +64,7 @@ TableviewCollectionView = OrchestraView.extend(
         initComplete: initComplete
     );
     table = datatable.$el
+    console.log(datatable.$el);
     $('.tableviewCollectionTable', @options.domContainer).html table
     return
 
