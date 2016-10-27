@@ -7,8 +7,8 @@ use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
 use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use OpenOrchestra\ModelInterface\NodeEvents;
-use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\BlockEvents;
+use OpenOrchestra\ModelInterface\Event\BlockEvent;
 use OpenOrchestra\Backoffice\Reference\ReferenceManager;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
@@ -29,12 +29,21 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NodeEvent $event
+     * @param BlockEvent $event
      */
-    public function updateReferencesToNode(NodeEvent $event)
+    public function updateReferencesToBlock(BlockEvent $event)
     {
-        $node = $event->getNode();
-        $this->referenceManager->updateReferencesToEntity($node);
+        $block = $event->getBlock();
+        $this->referenceManager->updateReferencesToEntity($block);
+    }
+
+    /**
+     * @param BlockEvent $event
+     */
+    public function removeReferencesToBlock(BlockEvent $event)
+    {
+        $block = $event->getBlock();
+        $this->referenceManager->removeReferencesToEntity($block);
     }
 
     /**
@@ -70,11 +79,9 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            NodeEvents::NODE_UPDATE_BLOCK => 'updateReferencesToNode',
-            NodeEvents::NODE_DUPLICATE => 'updateReferencesToNode',
-            NodeEvents::NODE_CREATION => 'updateReferencesToNode',
-            NodeEvents::NODE_DELETE_BLOCK => 'updateReferencesToNode',
-            NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'updateReferencesToNode',
+            BlockEvents::POST_BLOCK_CREATE => 'updateReferencesToBlock',
+            BlockEvents::POST_BLOCK_UPDATE => 'updateReferencesToBlock',
+            BlockEvents::POST_BLOCK_DELETE => 'removeReferencesToBlock',
             ContentEvents::CONTENT_UPDATE => 'updateReferencesToContent',
             ContentEvents::CONTENT_CREATION => 'updateReferencesToContent',
             ContentEvents::CONTENT_DUPLICATE => 'updateReferencesToContent',

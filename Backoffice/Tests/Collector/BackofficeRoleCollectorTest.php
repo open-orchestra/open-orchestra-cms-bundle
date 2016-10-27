@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Collector;
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
@@ -120,7 +119,6 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
     {
         return array(
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'node', array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans)),
-            array(array(TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE), 'node', array()),
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'template', array()),
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'content', array()),
             array(array(
@@ -131,8 +129,6 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT,
-                TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
-                TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE,
             ), 'node', array(
                 TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans,
                 TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE => $this->fakeTrans,
@@ -144,11 +140,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
                 TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
                 TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
                 TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
-                TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
-                TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE,
             ), 'general_node', array(
-                TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE  => $this->fakeTrans,
-                TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE  => $this->fakeTrans,
             )),
             array(array(
                 TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,

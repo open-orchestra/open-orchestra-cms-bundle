@@ -50,7 +50,7 @@ class NodeVersionVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        return $class instanceof NodeInterface && $class->getNodeType() !== NodeInterface::TYPE_TRANSVERSE;
+        return $class instanceof NodeInterface;
     }
 
     /**

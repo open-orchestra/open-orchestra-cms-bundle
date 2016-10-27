@@ -111,6 +111,19 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
     }
 
     /**
+     * Create a Phake node
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeBlock($blockId = 'blockId')
+    {
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        Phake::when($block)->getId()->thenReturn($blockId);
+
+        return $block;
+    }
+
+    /**
      * Create a Phake Content Type
      *
      * @return Phake_IMock

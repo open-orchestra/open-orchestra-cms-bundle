@@ -13,6 +13,11 @@ class BlockCollectionFacade extends AbstractFacade
 {
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $collectionName = 'blocks';
+
+    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
     protected $blocks = array();

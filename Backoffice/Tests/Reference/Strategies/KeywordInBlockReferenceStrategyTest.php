@@ -2,13 +2,13 @@
 namespace OpenOrchestra\Backoffice\Tests\Reference\Strategies;
 
 use Phake;
-use OpenOrchestra\Backoffice\Reference\Strategies\KeywordInNodeReferenceStrategy;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\Backoffice\Reference\Strategies\KeywordInBlockReferenceStrategy;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
- * Class KeywordInNodeStrategyTest
+ * Class KeywordInBlockStrategyTest
  */
-class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
+class KeywordInBlockStrategyTest extends AbstractReferenceStrategyTest
 {
     protected $keywordRepository;
 
@@ -19,7 +19,7 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
     {
         $this->keywordRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
 
-        $this->strategy = new KeywordInNodeReferenceStrategy($this->keywordRepository);
+        $this->strategy = new KeywordInBlockReferenceStrategy($this->keywordRepository);
     }
 
     /**
@@ -30,12 +30,12 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
     public function provideEntity()
     {
         $content = $this->createPhakeContent();
-        $node = $this->createPhakeNode();
+        $block = $this->createPhakeBlock();
         $contentType = $this->createPhakeContentType();
 
         return array(
             'Content'      => array($content, false),
-            'Node'         => array($node, true),
+            'Block'         => array($block, true),
             'Content Type' => array($contentType, false)
         );
     }
@@ -51,7 +51,7 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
     {
         Phake::when($entity)->getKeywords()->thenReturn($keywords);
 
-        parent::checkAddReferencesToEntity($entity, $entityId, $keywords, NodeInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkAddReferencesToEntity($entity, $entityId, $keywords, BlockInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
@@ -63,7 +63,7 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
      */
     public function testRemoveReferencesToEntity($entity, $entityId, array $keywords)
     {
-        parent::checkRemoveReferencesToEntity($entity, $entityId, $keywords, NodeInterface::ENTITY_TYPE, $this->keywordRepository);
+        parent::checkRemoveReferencesToEntity($entity, $entityId, $keywords, BlockInterface::ENTITY_TYPE, $this->keywordRepository);
     }
 
     /**
@@ -75,29 +75,25 @@ class KeywordInNodeStrategyTest extends AbstractReferenceStrategyTest
         $content = $this->createPhakeContent($contentId);
         $contentTypeId = 'contentTypeId';
         $contentType = $this->createPhakeContentType($contentTypeId);
+        $blockWithoutKeywordId = 'fakeBlockWithoutKeywordId';
+        $blockWithKeywordId = 'fakeBlockWithKeywordId';
 
         $keywordId = 'keyword';
         $keyword = $this->createPhakeKeyword($keywordId);
 
         $blockWithoutKeyword = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($blockWithoutKeyword)->getAttributes()->thenReturn(array());
+        Phake::when($blockWithoutKeyword)->getId()->thenReturn($blockWithoutKeywordId);
 
         $blockWithKeyword = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($blockWithKeyword)->getAttributes()->thenReturn(array('keywords' => 'keyword AND fake'));
-
-        $nodeWithoutKeywordId = 'NodeNoKeyword';
-        $nodeWithoutKeyword = $this->createPhakeNode($nodeWithoutKeywordId);
-        Phake::when($nodeWithoutKeyword)->getBlocks()->thenReturn(array($blockWithoutKeyword));
-
-        $nodeWithKeywordId = 'NodeWithKeyword';
-        $nodeWithKeyword = $this->createPhakeNode($nodeWithKeywordId);
-        Phake::when($nodeWithKeyword)->getBlocks()->thenReturn(array($blockWithoutKeyword, $blockWithKeyword));
+        Phake::when($blockWithKeyword)->getId()->thenReturn($blockWithKeywordId);
 
         return array(
             'Content'              => array($content, $contentId, array()),
             'Content type'         => array($contentType, $contentTypeId, array()),
-            'Node with no keyword' => array($nodeWithoutKeyword, $nodeWithoutKeywordId, array()),
-            'Node with keyword'    => array($nodeWithKeyword, $nodeWithKeywordId, array($keywordId => $keyword)),
+            'Block with no keyword' => array($blockWithoutKeyword, $blockWithoutKeywordId, array()),
+            'Block with keyword'    => array($blockWithKeyword, $blockWithKeywordId, array($keywordId => $keyword)),
         );
     }
 }

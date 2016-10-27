@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Class BlockFacade
@@ -16,12 +17,22 @@ class BlockFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
+    public $id;
+
+    /**
+     * @Serializer\Type("string")
+     */
     public $method;
 
     /**
      * @Serializer\Type("string")
      */
     public $component;
+
+    /**
+     * @Serializer\Type("boolean")
+     */
+    public $transverse;
 
     /**
      * @Serializer\Type("string")
@@ -34,24 +45,9 @@ class BlockFacade extends AbstractFacade
     public $class;
 
     /**
-     * @Serializer\Type("string")
-     */
-    public $id;
-
-    /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $nodeId;
-
-    /**
-     * @Serializer\Type("integer")
-     */
-    public $blockId;
 
     /**
      * @Serializer\Type("boolean")

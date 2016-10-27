@@ -22,7 +22,17 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
     protected $event;
     protected $node;
     protected $nodeManager;
-    protected $templateRepository;
+    protected $contextManager;
+    protected $siteRepository;
+
+    protected $siteId = 'fakeSiteId';
+    protected $templateSet = 'fakeTemplateSet';
+    protected $templateSetData = array(
+        'templates' => array(
+            'default' => array('label' => 'default'),
+            'full_page' => array('label' => 'full_page'),
+        )
+    );
 
     /**
      * Set up the test
@@ -35,11 +45,30 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
 
-        $this->subscriber = new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository);
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site)->getTemplateSet()->thenReturn($this->templateSet);
+
+        $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
+
+        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
+
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        Phake::when($this->siteRepository)->findOneBySiteId($this->siteId)->thenReturn($site);
+
+        $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
+        Phake::when($this->templateManager)->getTemplateSetParameters()->thenReturn(array(
+            $this->templateSet => $this->templateSetData
+        ));
+
+        $this->subscriber = new NodeTemplateSelectionSubscriber(
+            $this->nodeManager,
+            $this->contextManager,
+            $this->siteRepository,
+            $this->templateManager
+        );
     }
 
     /**
@@ -60,23 +89,27 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test the build form with a new node
+     * Test the build form
      *
-     * @param array $templates
-     * @param array $expectedResult
+     * @param string|null $id
+     * @param integer     $nbrCall
      *
-     * @dataProvider getTemplate
+     * @dataProvider getNodeIdAndTemplateSetParameters
      */
-    public function testPreSetDataOnNewNode($templates, $expectedResult)
+    public function testPreSetData($id, $nbrCall)
     {
-        Phake::when($this->node)->getId()->thenReturn(null);
+        $choices = array(
+            'default' => 'default',
+            'full_page' => 'full_page',
+        );
+
+        Phake::when($this->node)->getId()->thenReturn($id);
         Phake::when($this->event)->getData()->thenReturn($this->node);
-        Phake::when($this->templateRepository)->findByDeleted(Phake::anyParameters())->thenReturn($templates);
 
         Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->event->getForm())->add('nodeTemplateSelection', 'form', array(
+        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('nodeTemplateSelection', 'form', array(
             'virtual' => true,
             'label' => 'open_orchestra_backoffice.form.node.template_selection.name',
             'mapped' => false,
@@ -87,36 +120,48 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
             )
         ));
 
-        Phake::verify($this->event->getForm())->add('templateId', 'choice', array(
-            'choices' => $expectedResult,
-            'required' => false,
-            'label' => 'open_orchestra_backoffice.form.node.template_id'
-        ));
-
-        Phake::verify($this->event->getForm())->add('nodeSource', 'oo_node_choice', array(
+        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('nodeSource', 'oo_node_choice', array(
             'required' => false,
             'mapped' => false,
             'label' => 'open_orchestra_backoffice.form.node.node_source'
         ));
+
+        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('template', 'choice', array(
+            'choices' => $choices,
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.node.template'
+        ));
     }
 
     /**
-     * Test the build form with an existing node
+     * Node Id provider
      *
-     * @param array $templates
-     * @param array $expectedResult
-     *
-     * @dataProvider getTemplate
+     * @return array
      */
-    public function testPreSetDataWithExistingNode($templates, $expectedResult)
+    public function getNodeIdAndTemplateSetParameters()
     {
-        Phake::when($this->node)->getId()->thenReturn('fakeId');
-        Phake::when($this->event)->getData()->thenReturn($this->node);
-        Phake::when($this->templateRepository)->findByDeleted(Phake::anyParameters())->thenReturn($templates);
+        return array(
+            array(null, 1),
+            array('fakeNodeId', 0),
+        );
+    }
 
-        $this->subscriber->preSetData($this->event);
+    /**
+     * @param array       $data
+     * @param string|null $id
+     * @param integer     $nbrCall
+     *
+     * @dataProvider getNodeIdAndData
+     */
+    public function testPreSubmit($data, $id, $nbrCall)
+    {
+        Phake::when($this->node)->getId()->thenReturn($id);
 
-        Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
+        Phake::when($this->event)->getData()->thenReturn($data);
+        Phake::when($this->form)->getData()->thenReturn($this->node);
+
+        $this->subscriber->preSubmit($this->event);
+        Phake::verify($this->nodeManager, Phake::times($nbrCall))->hydrateNodeFromNodeId(Phake::anyParameters());
     }
 
     /**
@@ -124,164 +169,12 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
      *
      * @return array
      */
-    public function getTemplate()
+    public function getNodeIdAndData()
     {
-        $id0 = 'fakeId0';
-        $name0 = 'fakeName0';
-        $id1 = 'fakeId1';
-        $name1 = 'fakeName1';
-
-        $template0 = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
-        Phake::when($template0)->getTemplateId()->thenReturn($id0);
-        Phake::when($template0)->getName()->thenReturn($name0);
-
-        $template1 = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
-        Phake::when($template1)->getTemplateId()->thenReturn($id1);
-        Phake::when($template1)->getName()->thenReturn($name1);
-
         return array(
-            array(
-                array($template0, $template1), array($id0 => $name0, $id1 => $name1)
-            )
+            array(array('nodeTemplateSelection' => array('nodeSource' => 'fakeNodeId')), null, 1),
+            array(array('nodeTemplateSelection' => array('nodeSource' => 'fakeNodeId')), 'fakeNodeId', 0),
+            array(array(), null, 0),
         );
-    }
-
-    /**
-     * @param array             $data
-     * @param TemplateInterface $template
-     *
-     * @dataProvider getDataTemplate
-     */
-    public function testPreSubmitTemplate($data, $template)
-    {
-        $emptyCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
-        Phake::when($emptyCollection)->count()->thenReturn(0);
-
-        $templateChoiceContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($templateChoiceContainer)->getAreas()->thenReturn($emptyCollection);
-        Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($emptyCollection);
-
-        Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
-        Phake::when($this->form)->getData()->thenReturn($templateChoiceContainer);
-
-        Phake::when($this->event)->getData()->thenReturn($data);
-        Phake::when($this->templateRepository)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->nodeManager, Phake::times((null === $template)? 0: 1))->hydrateAreaFromTemplate(Phake::anyParameters());
-    }
-
-    /**
-     * @param array             $data
-     * @param TemplateInterface $template
-     *
-     * @dataProvider getDataTemplate
-     */
-    public function testPreSubmitWithExistingAreas($data, $template)
-    {
-        $fullCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
-        Phake::when($fullCollection)->count()->thenReturn(1);
-
-        $templateChoiceContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($templateChoiceContainer)->getAreas()->thenReturn($fullCollection);
-        Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($fullCollection);
-
-        Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
-        Phake::when($this->form)->getData()->thenReturn($templateChoiceContainer);
-
-        Phake::when($this->event)->getData()->thenReturn($data);
-        Phake::when($this->templateRepository)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($templateChoiceContainer, Phake::never())->addArea(Phake::anyParameters());
-    }
-
-    /**
-     * Templates provider
-     *
-     * @return array
-     */
-    public function getDataTemplate()
-    {
-        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area)->getAreas()->thenReturn(array());
-        $areas = array($area);
-
-        $template = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
-        Phake::when($template)->getAreas()->thenReturn($areas);
-
-        return array(
-            array(array('nodeTemplateSelection' => array('templateId' => 1)), $template),
-            array(array('nodeTemplateSelection' => array('templateId' => 1)), null),
-        );
-    }
-
-    /**
-     * @param array             $data
-     * @param TemplateInterface $template
-     *
-     * @dataProvider getDataTemplate
-     */
-    public function testPreSubmitWithExistingNode($data, $template)
-    {
-        $templateChoiceContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-
-        Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
-        Phake::when($templateChoiceContainer)->getId()->thenReturn('nodeId');
-        Phake::when($this->form)->getData()->thenReturn($templateChoiceContainer);
-
-        Phake::when($this->event)->getData()->thenReturn($data);
-        Phake::when($this->templateRepository)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($templateChoiceContainer, Phake::never())->setRootArea(Phake::anyParameters());
-        Phake::verify($templateChoiceContainer, Phake::never())->setBlocks(Phake::anyParameters());
-    }
-
-    /**
-     * Test presubmit on new node
-     */
-    public function testPreSubmitWithNewNode()
-    {
-        $nodeSourceId = 'root';
-        Phake::when($this->node)->getId()->thenReturn(null);
-        Phake::when($this->form)->getData()->thenReturn($this->node);
-        Phake::when($this->event)->getData()->thenReturn(array('nodeTemplateSelection' => array('nodeSource' => $nodeSourceId)));
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->nodeManager)->hydrateNodeFromNodeId($this->node, $nodeSourceId);
-    }
-
-    /**
-     * Test presubmit on old node
-     */
-    public function testPreSubmitWithOldNode()
-    {
-        $nodeSourceId = 'root';
-        Phake::when($this->node)->getId()->thenReturn($nodeSourceId);
-        Phake::when($this->form)->getData()->thenReturn($this->node);
-        Phake::when($this->event)->getData()->thenReturn(array('nodeTemplateSelection' => array('nodeSource' => $nodeSourceId)));
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->nodeManager, Phake::never())->hydrateNodeFromNodeId(Phake::anyParameters());
-    }
-
-    /**
-     * Test presubmit with no source
-     */
-    public function testPreSubmitWithNoSource()
-    {
-        Phake::when($this->node)->getId()->thenReturn(null);
-        Phake::when($this->form)->getData()->thenReturn($this->node);
-        Phake::when($this->event)->getData()->thenReturn(array());
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->nodeManager, Phake::never())->hydrateNodeFromNodeId(Phake::anyParameters());
     }
 }

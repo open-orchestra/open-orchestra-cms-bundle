@@ -69,8 +69,7 @@ class SiteController extends AbstractAdminController
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation');
 
         if ($this->handleForm($form, $message, $site)) {
-            $templateId = $form->get('templateId')->getData();
-            $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site, null, $templateId));
+            $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site, null));
             $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
 
             return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);

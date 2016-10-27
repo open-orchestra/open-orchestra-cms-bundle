@@ -165,22 +165,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     /**
      * @param NodeEvent $event
      */
-    public function addNodeDeleteAreaHistory(NodeEvent $event)
-    {
-        $this->addNodeHistory($event, NodeEvents::NODE_DELETE_AREA);
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
-    public function addNodeUpdateAreaHistory(NodeEvent $event)
-    {
-        $this->addNodeHistory($event, NodeEvents::NODE_UPDATE_AREA);
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
     public function addNodeChangeStatusHistory(NodeEvent $event)
     {
         $this->addNodeHistory($event, NodeEvents::NODE_CHANGE_STATUS);
@@ -251,8 +235,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_DUPLICATE => 'addNodeDuplicateHistory',
             NodeEvents::NODE_ADD_LANGUAGE => 'addNodeAddLanguageHistory',
             NodeEvents::NODE_DELETE_BLOCK => 'addNodeDeleteBlockHistory',
-            NodeEvents::NODE_DELETE_AREA => 'addNodeDeleteAreaHistory',
-            NodeEvents::NODE_UPDATE_AREA => 'addNodeUpdateAreaHistory',
             NodeEvents::NODE_CHANGE_STATUS => 'addNodeChangeStatusHistory',
         );
     }

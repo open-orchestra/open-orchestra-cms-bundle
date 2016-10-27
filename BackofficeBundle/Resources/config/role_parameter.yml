@@ -180,22 +180,6 @@ parameters:
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_site
             order: 3600
-        role_access_tree_template :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template
-            order: 3700
-        role_access_create_template :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template
-            order: 3800
-        role_access_update_template :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template
-            order: 3900
-        role_access_delete_template :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template
-            order: 4000
         role_access_group :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_group

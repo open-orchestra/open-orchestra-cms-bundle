@@ -148,6 +148,7 @@ open_orchestra_backoffice:
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
                 helper: Indicative periodicity of change (for the sitemap)
+            template_set: Template set
         theme:
             success: The theme has been modified
             creation: The theme has been created
@@ -209,7 +210,6 @@ open_orchestra_backoffice:
                 label: Relative importance compared to the other pages of the site (for the sitemap)
                 helper: Relative importance compared to the other pages of the site (for the sitemap)
             theme: The theme
-            template_id: Template id
             alias: Alias
             boLabel:
                 name: Back Office label
@@ -230,6 +230,7 @@ open_orchestra_backoffice:
                 helper : One field required
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
+            template: Template
         changefreq:
             always: Always
             hourly: Hourly
@@ -639,3 +640,18 @@ open_orchestra_backoffice:
           remove_confirm_title: Permanent removal
         themes:
           name: Name
+    template_set:
+        default:
+            label: Default set
+            template_name:
+                default: Default (left column)
+                full_page: Without column
+            style:
+                highlight: Highlight
+                paragraph: Editorial section
+        custom:
+            label: Custom set
+            template_name:
+                login: Login page
+            style:
+                column: Column

@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
-use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -18,24 +17,20 @@ class CreateRootNodeSubscriber implements EventSubscriberInterface
     const ROOT_NODE_PATTERN = '/';
 
     protected $nodeManager;
-    protected $repositoryTemplate;
     protected $objectManager;
     protected $translator;
 
     /**
      * @param NodeManager                 $nodeManager
-     * @param TemplateRepositoryInterface $repositoryTemplate
      * @param ObjectManager               $objectManager
      * @param TranslatorInterface         $translator
      */
     public function __construct(
         NodeManager $nodeManager,
-        TemplateRepositoryInterface $repositoryTemplate,
         ObjectManager $objectManager,
         TranslatorInterface $translator
     ){
         $this->nodeManager = $nodeManager;
-        $this->repositoryTemplate = $repositoryTemplate;
         $this->objectManager = $objectManager;
         $this->translator = $translator;
     }
@@ -45,14 +40,12 @@ class CreateRootNodeSubscriber implements EventSubscriberInterface
      */
     public function createRootNode(SiteEvent $siteEvent)
     {
-        $templateId = $siteEvent->getRootNodeTemplateId();
         $site = $siteEvent->getSite();
-        if (null !== $templateId && null !== $site) {
+        if (null !== $site) {
             $language = $site->getDefaultLanguage();
-            $template = $this->repositoryTemplate->findOneByTemplateId($templateId);
             $name = $this->translator->trans('open_orchestra_backoffice.node.root_name');
 
-            $node = $this->nodeManager->createRootNode($site->getSiteId(), $language, $name, self::ROOT_NODE_PATTERN, $template);
+            $node = $this->nodeManager->createRootNode($site->getSiteId(), $language, $name, self::ROOT_NODE_PATTERN, $site->getTemplateNodeRoot());
             $this->objectManager->persist($node);
             $this->objectManager->flush();
         }

@@ -33,7 +33,7 @@ class OpenOrchestra.Page.Block.BlockView extends OrchestraView
     return
 
   ###*
-   * Render area
+   * Render block
   ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/block/blockView', @options)

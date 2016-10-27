@@ -101,7 +101,7 @@ class NodeVersionVoterTest extends AbstractBaseTestCase
             array('OpenOrchestra\ModelInterface\Model\ContentInterface', false, false),
             array('stdClass', false, false),
             array('OpenOrchestra\ModelInterface\Model\NodeInterface', NodeInterface::TYPE_DEFAULT, true),
-            array('OpenOrchestra\ModelInterface\Model\NodeInterface', NodeInterface::TYPE_TRANSVERSE, false),
+//            array('OpenOrchestra\ModelInterface\Model\NodeInterface', NodeInterface::TYPE_TRANSVERSE, false),
             array('OpenOrchestra\ModelInterface\Model\NodeInterface', NodeInterface::TYPE_ERROR, true),
         );
     }

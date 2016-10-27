@@ -63,22 +63,13 @@ class BlockNodePatternValidatorTest extends AbstractBaseTestCase
         $blocks = array($block, $block);
 
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area)->getBlocks()->thenReturn(array(
-            array('nodeId' => 0, 'blockId' => 0),
-            array('nodeId' => 0, 'blockId' => 1),
-        ));
+        Phake::when($area)->getBlocks()->thenReturn($blocks);
         $areas = array($area);
-
-        $rootArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($rootArea)->getAreas()->thenReturn($areas);
-
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn(true);
-
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getStatus()->thenReturn($status);
-        Phake::when($node)->getBlocks()->thenReturn($blocks);
-        Phake::when($node)->getRootArea()->thenReturn($rootArea);
+        Phake::when($node)->getAreas()->thenReturn($areas);
         Phake::when($node)->getRoutePattern()->thenReturn($routePattern);
 
         Phake::when($this->generateFormManager)->getRequiredUriParameter(Phake::anyParameters())->thenReturn($parameters);

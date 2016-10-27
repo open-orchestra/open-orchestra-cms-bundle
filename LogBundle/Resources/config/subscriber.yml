@@ -8,7 +8,6 @@ parameters:
     open_orchestra_log.subscriber.redirection.class: OpenOrchestra\LogBundle\EventSubscriber\LogRedirectionSubscriber
     open_orchestra_log.subscriber.site.class: OpenOrchestra\LogBundle\EventSubscriber\LogSiteSubscriber
     open_orchestra_log.subscriber.status.class: OpenOrchestra\LogBundle\EventSubscriber\LogStatusSubscriber
-    open_orchestra_log.subscriber.template.class: OpenOrchestra\LogBundle\EventSubscriber\LogTemplateSubscriber
     open_orchestra_log.subscriber.theme.class: OpenOrchestra\LogBundle\EventSubscriber\LogThemeSubscriber
     open_orchestra_log.subscriber.user.class: OpenOrchestra\LogBundle\EventSubscriber\LogUserSubscriber
 
@@ -65,12 +64,6 @@ services:
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.status:
         class: '%open_orchestra_log.subscriber.status.class%'
-        arguments: ['@logger']
-        tags:
-            - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: openorchestra }
-    open_orchestra_log.subscriber.template:
-        class: '%open_orchestra_log.subscriber.template.class%'
         arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }

@@ -1,6 +1,7 @@
 module.exports = {
   src: [
     //--[ MAIN ]--//
+    'web/built/openorchestrabackoffice/js/staticConfig.js',
     'web/built/openorchestrabackoffice/js/orchestraLib.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/tinyMceConf.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/plugins/BBCodeOrchestraPlugin.js',
@@ -93,12 +94,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/page/area/AreaView.js',
     'web/built/openorchestrabackoffice/js/page/area/AreaToolbarView.js',
 
-    //----- TEMPLATE  -----//
-    'web/built/openorchestrabackoffice/js/page/template/Template.js',
-    'web/built/openorchestrabackoffice/js/page/template/TemplateFormView.js',
-    'web/built/openorchestrabackoffice/js/page/template/TemplateView.js',
-    'web/built/openorchestrabackoffice/js/page/template/TemplateRouter.js',
-
     //----- NODE -----//
     'web/built/openorchestrabackoffice/js/page/node/Node.js',
     'web/built/openorchestrabackoffice/js/page/node/NodeRouter.js',
@@ -161,6 +156,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/formBehavior/TagCondition.js',
     'web/built/openorchestrabackoffice/js/formBehavior/TagCreator.js',
     'web/built/openorchestrabackoffice/js/formBehavior/ValidateHidden.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/SelectGrouping.js',
 
     //--[ ERROR ]--//
     'web/built/openorchestrabackoffice/js/ErrorView.js',

@@ -2,7 +2,6 @@ parameters:
     open_orchestra_api.transformer.node.class: OpenOrchestra\ApiBundle\Transformer\NodeTransformer
     open_orchestra_api.transformer.node_collection.class: OpenOrchestra\ApiBundle\Transformer\NodeCollectionTransformer
     open_orchestra_api.transformer.node_tree.class: OpenOrchestra\ApiBundle\Transformer\NodeTreeTransformer
-    open_orchestra_api.transformer.template.class: OpenOrchestra\ApiBundle\Transformer\TemplateTransformer
     open_orchestra_api.transformer.area.class: OpenOrchestra\ApiBundle\Transformer\AreaTransformer
     open_orchestra_api.transformer.block.class: OpenOrchestra\ApiBundle\Transformer\BlockTransformer
     open_orchestra_api.transformer.block_collection.class: OpenOrchestra\ApiBundle\Transformer\BlockCollectionTransformer
@@ -54,6 +53,7 @@ services:
             - '@open_orchestra_model.repository.status'
             - '@event_dispatcher'
             - '@security.authorization_checker'
+            - '%open_orchestra_backoffice.template_set%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.node_collection:
@@ -68,21 +68,12 @@ services:
             - '%open_orchestra_api.facade.node_tree.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.template:
-        class: '%open_orchestra_api.transformer.template.class%'
-        arguments:
-            - '%open_orchestra_api.facade.template.class%'
-            - '@security.authorization_checker'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.area:
         class: '%open_orchestra_api.transformer.area.class%'
         arguments:
             - '%open_orchestra_api.facade.area.class%'
             - '@open_orchestra_model.repository.node'
-            - '@open_orchestra_backoffice.manager.area'
             - '@security.authorization_checker'
-            - '@open_orchestra_backoffice.manager.node'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block:
@@ -91,13 +82,8 @@ services:
             - '%open_orchestra_api.facade.block.class%'
             - '@open_orchestra_backoffice.display_block_manager'
             - '@open_orchestra_backoffice.display_icon_manager'
-            - '%open_orchestra_model.document.block.class%'
-            - '@open_orchestra_backoffice.block_parameter_manager'
-            - '@open_orchestra_backoffice.generate_form_manager'
             - '@open_orchestra_model.repository.node'
-            - '@open_orchestra_backoffice.context_manager'
             - '@translator'
-            - '@event_dispatcher'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block_collection:

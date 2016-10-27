@@ -18,6 +18,7 @@ class SiteTypeTest extends AbstractBaseTestCase
 
     protected $siteClass = 'oo_site';
     protected $translator;
+    protected $templateManager;
     protected $languages = array('en', 'fr');
 
     /**
@@ -26,10 +27,10 @@ class SiteTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $repositoryTemplate = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
+        $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
 
-        $this->form = new SiteType($this->siteClass, $this->translator, $repositoryTemplate, $this->languages);
+        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager, $this->languages);
     }
 
     /**

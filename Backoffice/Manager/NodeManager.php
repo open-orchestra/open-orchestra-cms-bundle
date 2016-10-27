@@ -3,10 +3,7 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
-use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
@@ -15,7 +12,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Repository\BlockRepositoryInterface;
 
 /**
  * Class NodeManager
@@ -24,14 +21,12 @@ class NodeManager
 {
     protected $versionableSaver;
     protected $statusRepository;
+    protected $blockRepository;
     protected $eventDispatcher;
     protected $nodeRepository;
     protected $siteRepository;
     protected $contextManager;
-    protected $blockManager;
-    protected $areaManager;
     protected $nodeClass;
-    protected $areaClass;
 
     /**
      * Constructor
@@ -40,11 +35,9 @@ class NodeManager
      * @param NodeRepositoryInterface    $nodeRepository
      * @param SiteRepositoryInterface    $siteRepository
      * @param StatusRepositoryInterface  $statusRepository
-     * @param AreaManager                $areaManager
-     * @param BlockManager               $blockManager
+     * @param BlockRepositoryInterface   $blockRepository
      * @param ContextManager             $contextManager
      * @param string                     $nodeClass
-     * @param string                     $areaClass
      * @param EventDispatcherInterface   $eventDispatcher
      */
     public function __construct(
@@ -52,22 +45,18 @@ class NodeManager
         NodeRepositoryInterface $nodeRepository,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
-        AreaManager $areaManager,
-        BlockManager $blockManager,
+        BlockRepositoryInterface  $blockRepository,
         ContextManager $contextManager,
         $nodeClass,
-        $areaClass,
         $eventDispatcher
     ){
         $this->versionableSaver =  $versionableSaver;
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
         $this->statusRepository = $statusRepository;
-        $this->areaManager = $areaManager;
-        $this->blockManager = $blockManager;
+        $this->blockRepository = $blockRepository;
         $this->contextManager = $contextManager;
         $this->nodeClass = $nodeClass;
-        $this->areaClass = $areaClass;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -87,17 +76,14 @@ class NodeManager
         $node = $this->nodeRepository->findVersion($nodeId, $language, $siteId, $version);
         $lastNode = $this->nodeRepository->findInLastVersion($nodeId, $language, $siteId);
         $lastNodeVersion = $lastNode->getVersion();
-        $status = $this->getEditableStatus($node);
-        if ($status === null) {
-            $status = $this->statusRepository->findOneByInitial();
-        }
+        $status = $this->statusRepository->findOneByInitial();
+
         /** @var NodeInterface $newNode */
         $newNode = clone $node;
         $newNode->setStatus($status);
         $newNode->setCurrentlyPublished($status->isPublished());
         $newNode->setVersion($lastNodeVersion + 1);
         $this->duplicateBlockAndArea($node, $newNode);
-        $this->updateBlockReferences($node, $newNode);
 
         if (true === $save) {
             $this->saveDuplicatedNode($newNode);
@@ -132,13 +118,6 @@ class NodeManager
         $node->setInMenu(false);
         $node->setVersion(1);
 
-        /** @var AreaInterface $area */
-        $area = new $this->areaClass();
-        $area->setAreaId(AreaInterface::ROOT_AREA_ID);
-        $area->setLabel(AreaInterface::ROOT_AREA_LABEL);
-        $area->setAreaType(AreaInterface::TYPE_ROOT);
-        $node->setRootArea($area);
-
         $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
         return $node;
@@ -154,7 +133,9 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion(1);
-        $newNode->setStatus($this->getEditableStatus($node));
+        $status = $this->statusRepository->findOneByInitial();
+
+        $newNode->setStatus($status);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
         $siteId = $this->contextManager->getCurrentSiteId();
@@ -168,20 +149,6 @@ class NodeManager
         $this->eventDispatcher->dispatch(NodeEvents::NODE_ADD_LANGUAGE, new NodeEvent($node));
 
         return $newNode;
-    }
-
-    /**
-     * @param NodeInterface|null $node
-     *
-     * @return StatusInterface
-     */
-    protected function getEditableStatus(NodeInterface $node = null)
-    {
-        if (is_null($node) || $node->getNodeId() == NodeInterface::TRANSVERSE_NODE_ID) {
-            return $this->statusRepository->findOneByEditable();
-        }
-
-        return null;
     }
 
     /**
@@ -220,21 +187,11 @@ class NodeManager
         $oldNode = $this->nodeRepository->findInLastVersion($nodeId, $node->getLanguage(), $siteId);
 
         if ($oldNode) {
+            $node->setTemplate($oldNode->getTemplate());
             $this->duplicateBlockAndArea($oldNode, $node);
         }
 
         return $node;
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @param AreaInterface $sourceRootArea
-     */
-    public function hydrateAreaFromTemplate(NodeInterface $node, $sourceRootArea)
-    {
-        $newRootArea = clone $sourceRootArea;
-        $this->duplicateArea($sourceRootArea, $newRootArea);
-        $node->setRootArea($newRootArea);
     }
 
     /**
@@ -245,74 +202,40 @@ class NodeManager
      */
     protected function duplicateBlockAndArea(NodeInterface $node, NodeInterface $newNode)
     {
-        $newRootArea = clone $node->getRootArea();
-        $this->duplicateArea($node->getRootArea(), $newRootArea);
-        $newNode->setRootArea($newRootArea);
-
-        foreach ($node->getBlocks() as $key => $block) {
-            $newBlock = clone $block;
-            $newNode->setBlock($key, $newBlock);
+        foreach ($node->getAreas() as $areaId => $area) {
+            $newArea = clone $area;
+            $newNode->setArea($areaId, $newArea);
+            foreach ($area->getBlocks() as $block) {
+                if (!$block->isTransverse()) {
+                    $newBlock = clone $block;
+                    $this->blockRepository->getDocumentManager()->persist($newBlock);
+                    $newArea->addBlock($newBlock);
+                }
+            }
         }
 
         return $newNode;
     }
 
     /**
-     * @param AreaInterface $areaContainer
-     * @param AreaInterface $newAreaContainer
-     */
-    protected function duplicateArea(AreaInterface $areaContainer, AreaInterface $newAreaContainer)
-    {
-        foreach ($areaContainer->getAreas() as $area) {
-            $newArea = clone $area;
-            $newAreaContainer->addArea($newArea);
-            $this->duplicateArea($area, $newArea);
-        }
-    }
-
-    /**
-     * @param array $nodes
-     *
-     * @return bool
-     */
-    public function nodeConsistency($nodes)
-    {
-        if (is_array($nodes)) {
-            foreach ($nodes as $node) {
-                if (!$this->areaManager->areaConsistency($node->getRootArea(), $node) || !$this->blockManager->blockConsistency($node)) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string            $siteId
-     * @param string            $language
-     * @param string            $name
-     * @param string            $routePattern
-     * @param TemplateInterface $template
+     * @param string $siteId
+     * @param string $language
+     * @param string $name
+     * @param string $routePattern
+     * @param string $template
      *
      * @return NodeInterface
      */
-    public function createRootNode($siteId, $language, $name, $routePattern, TemplateInterface $template)
+    public function createRootNode($siteId, $language, $name, $routePattern, $template)
     {
-        $node = $this->initializeNode(NodeInterface::ROOT_PARENT_ID, $siteId, $language);
-        $node->setSiteId($siteId);
-        $node->setTemplateId($template->getTemplateId());
+        $node = $this->initializeNode(NodeInterface::ROOT_PARENT_ID, $language, $siteId);
+        $node->setTemplate($template);
         $node->setRoutePattern($routePattern);
         $node->setName($name);
         $node->setBoLabel($name);
         $node->setVersion(1);
         $node->setInMenu(true);
         $node->setInFooter(true);
-        $node->setLanguage($language);
-
-        $this->hydrateAreaFromTemplate($node, $template->getRootArea());
 
         return $node;
     }
@@ -337,7 +260,8 @@ class NodeManager
         $node->setDefaultSiteTheme(true);
 
         $parentNode = $this->nodeRepository->findVersion($parentId, $language, $siteId);
-        $node->setStatus($this->getEditableStatus($parentNode));
+        $status = $this->statusRepository->findOneByInitial();
+        $node->setStatus($status);
         $nodeType = NodeInterface::TYPE_DEFAULT;
         if ($parentNode instanceof NodeInterface) {
             $nodeType = $parentNode->getNodeType();
@@ -357,35 +281,7 @@ class NodeManager
         return $node;
     }
 
-    /**
-     * @param NodeInterface $oldNode
-     * @param NodeInterface $node
-     */
-    public function updateBlockReferences(NodeInterface $oldNode, NodeInterface $node)
-    {
-        $nodeTransverse = $this->nodeRepository
-            ->findInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
-        $areas = $node->getRootArea()->getAreas();
-        foreach($areas as $area) {
-            foreach ($area->getBlocks() as $areaBlock) {
-                if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
-                    $block = $nodeTransverse->getBlock($areaBlock['blockId']);
-                    if ($block instanceof BlockInterface) {
-                        $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
-                    }
-                    continue;
-                }
-                $block = $node->getBlock($areaBlock['blockId']);
-                foreach ($block->getAreas() as $blockArea) {
-                    if ($blockArea['nodeId'] === $oldNode->getId()) {
-                        $blockArea['nodeId'] = $node->getId();
-                    }
-                }
-            }
-        }
-    }
-
-    /**
+   /**
      * @param array         $orderedNode
      * @param NodeInterface $node
      */
@@ -408,34 +304,6 @@ class NodeManager
     }
 
     /**
-     * Create transverse node
-     *
-     * @param string $language
-     * @param string $siteId
-     *
-     * @return NodeInterface
-     */
-    public function createTransverseNode($language, $siteId)
-    {
-        $area = new $this->areaClass();
-        $area->setLabel(AreaInterface::ROOT_AREA_LABEL);
-        $area->setAreaId(AreaInterface::ROOT_AREA_ID);
-        $area->setAreaType(AreaInterface::TYPE_ROOT);
-
-        /** @var NodeInterface $node */
-        $node = new $this->nodeClass();
-        $node->setLanguage($language);
-        $node->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
-        $node->setName(NodeInterface::TRANSVERSE_NODE_ID);
-        $node->setBoLabel(NodeInterface::TRANSVERSE_BO_LABEL);
-        $node->setNodeType(NodeInterface::TYPE_TRANSVERSE);
-        $node->setSiteId($siteId);
-        $node->setRootArea($area);
-
-        return $node;
-    }
-
-    /**
      * @param string $parentId
      * @param string $siteId
      *
@@ -449,21 +317,5 @@ class NodeManager
         }
 
         return $greatestOrderNode->getOrder() + 1;
-    }
-
-    /**
-     * Remove unused blocks present in $node
-     *
-     * @param NodeInterface $node
-     */
-    public function removeUnusedBlocks(NodeInterface $node)
-    {
-        $blocks = $node->getBlocks();
-
-        foreach ($blocks as $index => $block) {
-            if (count($block->getAreas()) == 0) {
-                $node->removeBlockWithKey($index);
-            }
-        }
     }
 }

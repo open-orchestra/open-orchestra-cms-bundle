@@ -16,6 +16,7 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompi
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AuthorizeStatusChangeCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ReferenceCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TemplateCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -45,5 +46,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new RemoveTrashcanEntityCompilerPass());
         $container->addCompilerPass(new RoleCompilerPass());
         $container->addCompilerPass(new FieldToElasticaTypeCompilerPass());
+        $container->addCompilerPass(new TemplateCompilerPass());
     }
 }

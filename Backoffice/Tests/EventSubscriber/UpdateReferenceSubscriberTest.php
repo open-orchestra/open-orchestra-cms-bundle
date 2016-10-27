@@ -9,15 +9,15 @@ use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
-use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Event\BlockEvent;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
+use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface;
 use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Phake;
-use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\BlockEvents;
 
 /**
  * Test UpdateReferenceSubscriberTest
@@ -54,11 +54,9 @@ class UpdateReferenceSubscriberTest extends AbstractBaseTestCase
      */
     public function testEventSubscribed()
     {
-        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_BLOCK, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_DUPLICATE, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_CREATION, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_DELETE_BLOCK, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_BLOCK_POSITION, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(BlockEvents::POST_BLOCK_CREATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(BlockEvents::POST_BLOCK_UPDATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(BlockEvents::POST_BLOCK_DELETE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_UPDATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_CREATION, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_DUPLICATE, $this->subscriber->getSubscribedEvents());
@@ -70,15 +68,15 @@ class UpdateReferenceSubscriberTest extends AbstractBaseTestCase
     /**
      * Test update reference to node
      */
-    public function testUpdateReferencesToNode()
+    public function testUpdateReferencesToBlock()
     {
-        $node = Phake::mock(ReadNodeInterface::class);
-        $nodeEvent = Phake::mock(NodeEvent::class);
-        Phake::when($nodeEvent)->getNode()->thenReturn($node);
+        $block = Phake::mock(ReadBlockInterface::class);
+        $blockEvent = Phake::mock(BlockEvent::class);
+        Phake::when($blockEvent)->getBlock()->thenReturn($block);
 
-        $this->subscriber->updateReferencesToNode($nodeEvent);
+        $this->subscriber->updateReferencesToBlock($blockEvent);
 
-        Phake::verify($this->referenceManager)->updateReferencesToEntity($node);
+        Phake::verify($this->referenceManager)->updateReferencesToEntity($block);
     }
 
     /**
@@ -121,5 +119,19 @@ class UpdateReferenceSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->removeReferencesToEntity($trashcanEvent);
 
         Phake::verify($this->referenceManager)->removeReferencesToEntity($deletedEntity);
+    }
+
+    /**
+     * Test remove reference to entity
+     */
+    public function testRemoveReferencesToBlock()
+    {
+        $block = Phake::mock(ReadBlockInterface::class);
+        $blockEvent = Phake::mock(BlockEvent::class);
+        Phake::when($blockEvent)->getBlock()->thenReturn($block);
+
+        $this->subscriber->removeReferencesToBlock($blockEvent);
+
+        Phake::verify($this->referenceManager)->removeReferencesToEntity($block);
     }
 }

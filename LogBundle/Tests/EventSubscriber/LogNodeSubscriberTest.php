@@ -128,24 +128,6 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     }
 
     /**
-     * Test nodeDeleteArea
-     */
-    public function testNodeDeleteArea()
-    {
-        $this->subscriber->nodeDeleteArea($this->nodeEvent);
-        $this->assertEventLogged('open_orchestra_log.node.area.delete', $this->context);
-    }
-
-    /**
-     * Test nodeUpdateArea
-     */
-    public function testNodeUpdateArea()
-    {
-        $this->subscriber->nodeUpdateArea($this->nodeEvent);
-        $this->assertEventLogged('open_orchestra_log.node.area.update', $this->context);
-    }
-
-    /**
      * Test nodeChangeStatus
      */
     public function testNodeChangeStatus()

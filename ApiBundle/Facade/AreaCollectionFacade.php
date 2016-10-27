@@ -17,16 +17,17 @@ class AreaCollectionFacade extends AbstractFacade
     public $collectionName = 'areas';
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
+     * @Serializer\Type("array<string,OpenOrchestra\ApiBundle\Facade\AreaFacade>")
      */
     protected $areas = array();
 
     /**
      * @param FacadeInterface $facade
+     * @param string          $key
      */
-    public function addArea(FacadeInterface $facade)
+    public function setArea(FacadeInterface $facade, $key)
     {
-        $this->areas[] = $facade;
+        $this->areas[$key] = $facade;
     }
 
     /**
