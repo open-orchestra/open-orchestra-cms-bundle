@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,6 +10,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
 
 /**
  * Class ContentTypeType
