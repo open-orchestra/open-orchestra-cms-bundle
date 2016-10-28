@@ -8,6 +8,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class ContentTypeType
@@ -18,24 +21,31 @@ class ContentTypeType extends AbstractType
     protected $backOfficeLanguages;
     protected $translator;
     protected $contentTypeOrderFieldTransformer;
+    protected $contentRepository;
+    protected $statusRepository;
 
     /**
-     * @param string                   $contentTypeClass
-     * @param TranslatorInterface      $translator
-     * @param array                    $backOfficeLanguages
-     * @param DataTransformerInterface $contentTypeOrderFieldTransformer
+     * @param string                     $contentTypeClass
+     * @param TranslatorInterface        $translator
+     * @param array                      $backOfficeLanguages
+     * @param DataTransformerInterface   $contentTypeOrderFieldTransformer
+     * @param ContentRepositoryInterface $contentRepository
+     * @param StatusRepositoryInterface  $statusRepository
      */
     public function __construct(
         $contentTypeClass,
         TranslatorInterface $translator,
         array $backOfficeLanguages,
-        DataTransformerInterface $contentTypeOrderFieldTransformer
-    )
-    {
+        DataTransformerInterface $contentTypeOrderFieldTransformer,
+        ContentRepositoryInterface $contentRepository,
+        StatusRepositoryInterface $statusRepository
+    ) {
         $this->contentTypeClass = $contentTypeClass;
         $this->translator = $translator;
         $this->backOfficeLanguages = $backOfficeLanguages;
         $this->contentTypeOrderFieldTransformer = $contentTypeOrderFieldTransformer;
+        $this->contentRepository = $contentRepository;
+        $this->statusRepository = $statusRepository;
     }
 
     /**
@@ -93,6 +103,7 @@ class ContentTypeType extends AbstractType
             ));
 
         $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
+        $builder->addEventSubscriber(new ContentTypeStatusableSubscriber($this->contentRepository, $this->statusRepository));
         $builder->get('fields')->addModelTransformer($this->contentTypeOrderFieldTransformer);
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
