@@ -24,8 +24,17 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
         $contentTypeOrderFieldTransformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
+        $contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
+        $statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
 
-        $this->form = new ContentTypeType($this->class, $this->translator, array(), $contentTypeOrderFieldTransformer);
+        $this->form = new ContentTypeType(
+            $this->class,
+            $this->translator,
+            array(),
+            $contentTypeOrderFieldTransformer,
+            $contentRepository,
+            $statusRepository
+        );
     }
 
     /**
@@ -50,7 +59,7 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         $this->form->buildForm($builder, array());
 
         Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
-        Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.add');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.new');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.delete');
