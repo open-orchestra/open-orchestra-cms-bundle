@@ -29,15 +29,20 @@ _.extend(Backbone.history, {
                 return previousKey + parameter[key];
             }
 
-            return '';
+            if (null !== match.match(/\(.*:.*\)/g)) {
+                return ''
+            }
+
+            throw new Error('Missing parameter ' + key + 'for route' + route);
         };
 
         if ('undefined' !== typeof route) {
             route = route.replace(optionalParam, replaceFunction);
             route = route.replace(namedParam, replaceFunction);
+
             return route
         }
 
-        throw new Error('route name is unknown');
+        throw new Error('route' + name + 'is unknown');
     }
 });
