@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Doctrine\Common\Util\Inflector;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\DisplayIcon\DisplayManager;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
@@ -11,6 +12,7 @@ use OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
+use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\BlockNodeEvents;
 use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -30,6 +32,7 @@ class BlockTransformer extends AbstractTransformer
     protected $displayIconManager;
     protected $currentSiteManager;
     protected $eventDispatcher;
+    protected $fixedParameters;
     protected $nodeRepository;
     protected $displayManager;
     protected $blockClass;
@@ -46,6 +49,7 @@ class BlockTransformer extends AbstractTransformer
      * @param CurrentSiteIdInterface   $currentSiteManager
      * @param TranslatorInterface      $translator
      * @param EventDispatcherInterface $eventDispatcher
+     * @param array                    $fixedParameters
      */
     public function __construct(
         $facadeClass,
@@ -57,7 +61,8 @@ class BlockTransformer extends AbstractTransformer
         NodeRepositoryInterface $nodeRepository,
         CurrentSiteIdInterface $currentSiteManager,
         TranslatorInterface $translator,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        array $fixedParameters
     )
     {
         parent::__construct($facadeClass);
@@ -70,6 +75,7 @@ class BlockTransformer extends AbstractTransformer
         $this->currentSiteManager = $currentSiteManager;
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
+        $this->fixedParameters = $fixedParameters;
     }
 
     /**
@@ -177,7 +183,7 @@ class BlockTransformer extends AbstractTransformer
             /** @var BlockInterface $blockElement */
             $blockElement = new $blockClass();
             $blockElement->setComponent($facade->component);
-            $blockElement->setAttributes($this->generateFormManager->getDefaultConfiguration($blockElement));
+            $blockElement = $this->setDefaultConfiguration($blockElement);
             $node->addBlock($blockElement);
             $blockIndex = $node->getBlockIndex($blockElement);
             $block['blockId'] = $blockIndex;
@@ -219,5 +225,27 @@ class BlockTransformer extends AbstractTransformer
         }
 
         return true;
+    }
+
+    /**
+     * @param BlockInterface $block
+     *
+     * @return BlockInterface
+     * @throws \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
+     */
+    protected function setDefaultConfiguration(BlockInterface $block)
+    {
+        $defaultConfiguration = $this->generateFormManager->getDefaultConfiguration($block);
+        foreach ($defaultConfiguration as $key => $value) {
+            if (in_array($key, $this->fixedParameters) &&
+                method_exists($block, $setter = 'set' . Inflector::classify($key))
+            ) {
+                $block->$setter($value);
+                unset($defaultConfiguration[$key]);
+            }
+        }
+        $block->setAttributes($defaultConfiguration);
+
+        return $block;
     }
 }
