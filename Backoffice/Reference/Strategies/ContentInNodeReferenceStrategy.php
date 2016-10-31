@@ -40,7 +40,7 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
             $contentIds = $this->extractContentsFromNode($entity);
 
             foreach ($contentIds as $contentId) {
-                /** @var OpenOrchestra\ModelInterface\Model\ContentInterface $content */
+                /** @var \OpenOrchestra\ModelInterface\Model\ContentInterface $content */
                 $contents = $this->contentRepository->findByContentId($contentId);
 
                 if (is_array($contents)) {
@@ -77,7 +77,7 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
     {
         $references = array();
 
-        /** @var BlockInterface $block */
+        /** @var \OpenOrchestra\ModelInterface\Model\BlockInterface $block */
         foreach ($node->getBlocks() as $block) {
             $references = $this->extractContentsFromElement($block->getAttributes(), $references);
         }
