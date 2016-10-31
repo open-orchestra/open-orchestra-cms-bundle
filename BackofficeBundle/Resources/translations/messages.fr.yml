@@ -603,8 +603,6 @@ open_orchestra_backoffice:
             version: Version
             status_label: Statut
             linked_to_site: Liaison au site
-        keywords:
-            label: Etiquette
         role:
             description: Description
             from_status: Depuis le statut

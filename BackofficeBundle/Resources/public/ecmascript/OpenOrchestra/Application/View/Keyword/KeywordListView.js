@@ -29,15 +29,7 @@ class KeywordListView extends AbstractDataTableView
         return [
             {
                 name: "label",
-                title: "Label",
-                orderable: true,
-                orderDirection: 'desc',
-                activateColvis: true,
-                visibile: true
-            },
-            {
-                name: "id",
-                title: "Id",
+                title: Translator.trans('open_orchestra_backoffice.table.keywords.label'),
                 orderable: true,
                 orderDirection: 'desc',
                 activateColvis: true,
@@ -45,11 +37,23 @@ class KeywordListView extends AbstractDataTableView
             },
             {
                 name: 'links',
-                title: 'Action',
                 orderable: false,
-                activateColvis: false
+                activateColvis: false,
+                createdCell: this._addLinkCell
             }
         ];
+    }
+
+    /**
+     *
+     * @param td
+     * @param cellData
+     *
+     * Example of specif column
+     * @private
+     */
+    _addLinkCell(td, cellData) {
+        $(td).html('<a href="' + cellData._self_form + '">Edit</a>');
     }
 
     /**
