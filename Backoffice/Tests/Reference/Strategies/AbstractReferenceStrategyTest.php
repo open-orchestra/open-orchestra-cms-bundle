@@ -1,4 +1,5 @@
 <?php
+
 namespace OpenOrchestra\Backoffice\Tests\Reference\Strategies;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
@@ -32,14 +33,14 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
 
     /**
      * @param mixed  $entity
-     * @apram string $entityId
+     * @param string $entityId
      * @param array  $usedItems
      */
     abstract function testAddReferencesToEntity($entity, $entityId, array $usedItems);
 
     /**
      * @param mixed  $entity
-     * @apram string $entityId
+     * @param string $entityId
      * @param array  $usedItems
      */
     abstract function testRemoveReferencesToEntity($entity, $entityId, array $usedItems);
@@ -49,6 +50,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      * @param string $entityId
      * @param array  $usedItems
      * @param string $entityType
+     * @param mixed  $itemRepository
      */
     protected function checkAddReferencesToEntity($entity, $entityId, array $usedItems, $entityType, $itemRepository)
     {
@@ -65,7 +67,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
 
     /**
      * @param mixed  $entity
-     * @apram string $entityId
+     * @param string $entityId
      * @param array  $usedItems
      * @param string $entityType
      */
@@ -86,7 +88,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      * @param  string $contentId
      * @param  array  $attributes
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeContent($contentId = 'contentId', array $attributes = array())
     {
@@ -99,8 +101,9 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
 
     /**
      * Create a Phake node
+     * @param string $nodeId
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeNode($nodeId = 'nodeId')
     {
@@ -112,8 +115,9 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
 
     /**
      * Create a Phake Content Type
+     * @param string $contentTypeId
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeContentType($contentTypeId = 'contentTypeId')
     {
@@ -128,7 +132,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      *
      * @param string $keywordId
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeKeyword($keywordId = 'keywordId')
     {
@@ -143,7 +147,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      *
      * @param string $value
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeContentAttribute($value = '')
     {
