@@ -32,14 +32,14 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
 
     /**
      * @param mixed  $entity
-     * @apram string $entityId
+     * @param string $entityId
      * @param array  $usedItems
      */
     abstract function testAddReferencesToEntity($entity, $entityId, array $usedItems);
 
     /**
      * @param mixed  $entity
-     * @apram string $entityId
+     * @param string $entityId
      * @param array  $usedItems
      */
     abstract function testRemoveReferencesToEntity($entity, $entityId, array $usedItems);
@@ -65,7 +65,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
 
     /**
      * @param mixed  $entity
-     * @apram string $entityId
+     * @param string $entityId
      * @param array  $usedItems
      * @param string $entityType
      */
@@ -86,7 +86,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      * @param  string $contentId
      * @param  array  $attributes
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeContent($contentId = 'contentId', array $attributes = array())
     {
@@ -100,7 +100,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
     /**
      * Create a Phake node
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeNode($nodeId = 'nodeId')
     {
@@ -128,7 +128,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      *
      * @param string $keywordId
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeKeyword($keywordId = 'keywordId')
     {
@@ -143,7 +143,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      *
      * @param string $value
      *
-     * @return Phake_IMock
+     * @return \Phake_IMock
      */
     protected function createPhakeContentAttribute($value = '')
     {
