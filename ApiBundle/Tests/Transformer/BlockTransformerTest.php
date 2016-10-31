@@ -16,6 +16,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
     protected $blockParameterManager;
     protected $generateFormManager;
     protected $displayBlockManager;
+    protected $fixedParameters;
     protected $displayIconManager;
     protected $currentSiteManager;
     protected $transformerManager;
@@ -56,6 +57,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $this->fixedParameters = array();
 
         $this->blockTransformer = new BlockTransformer(
             $this->facadeClass,
@@ -67,7 +69,8 @@ class BlockTransformerTest extends AbstractBaseTestCase
             $this->nodeRepository,
             $this->currentSiteManager,
             $this->translator,
-            $this->eventDispatcher
+            $this->eventDispatcher,
+            $this->fixedParameters
         );
         $this->blockTransformer->setContext($this->transformerManager);
     }
