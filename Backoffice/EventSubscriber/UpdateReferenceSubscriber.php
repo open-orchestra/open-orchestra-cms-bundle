@@ -42,7 +42,6 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
      */
     public function updateReferencesToContent(ContentEvent $event)
     {
-        var_dump('duplicate');
         $content = $event->getContent();
         $this->referenceManager->updateReferencesToEntity($content);
     }
