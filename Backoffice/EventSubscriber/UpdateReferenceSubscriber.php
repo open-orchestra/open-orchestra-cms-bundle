@@ -75,6 +75,7 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_CREATION => 'updateReferencesToNode',
             NodeEvents::NODE_DELETE_BLOCK => 'updateReferencesToNode',
             NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'updateReferencesToNode',
+            NodeEvents::NODE_DUPLICATE => 'updateReferencesToNode',
             ContentEvents::CONTENT_UPDATE => 'updateReferencesToContent',
             ContentEvents::CONTENT_CREATION => 'updateReferencesToContent',
             ContentEvents::CONTENT_DUPLICATE => 'updateReferencesToContent',
