@@ -2,12 +2,13 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
 
 /**
  * Class ContentTypeType
@@ -18,24 +19,31 @@ class ContentTypeType extends AbstractType
     protected $backOfficeLanguages;
     protected $translator;
     protected $contentTypeOrderFieldTransformer;
+    protected $contentTypeTypeSubscriber;
+    protected $contentTypeStatusableSubscriber;
 
     /**
-     * @param string                   $contentTypeClass
-     * @param TranslatorInterface      $translator
-     * @param array                    $backOfficeLanguages
-     * @param DataTransformerInterface $contentTypeOrderFieldTransformer
+     * @param string                          $contentTypeClass
+     * @param TranslatorInterface             $translator
+     * @param array                           $backOfficeLanguages
+     * @param DataTransformerInterface        $contentTypeOrderFieldTransformer
+     * @param ContentTypeTypeSubscriber       $contentTypeTypeSubscriber,
+     * @param ContentTypeStatusableSubscriber $contentTypeStatusableSubscriber
      */
     public function __construct(
         $contentTypeClass,
         TranslatorInterface $translator,
         array $backOfficeLanguages,
-        DataTransformerInterface $contentTypeOrderFieldTransformer
-    )
-    {
+        DataTransformerInterface $contentTypeOrderFieldTransformer,
+        ContentTypeTypeSubscriber $contentTypeTypeSubscriber,
+        ContentTypeStatusableSubscriber $contentTypeStatusableSubscriber
+    ) {
         $this->contentTypeClass = $contentTypeClass;
         $this->translator = $translator;
         $this->backOfficeLanguages = $backOfficeLanguages;
         $this->contentTypeOrderFieldTransformer = $contentTypeOrderFieldTransformer;
+        $this->contentTypeTypeSubscriber = $contentTypeTypeSubscriber;
+        $this->contentTypeStatusableSubscriber = $contentTypeStatusableSubscriber;
     }
 
     /**
@@ -92,7 +100,8 @@ class ContentTypeType extends AbstractType
                 'options' => array( 'label' => false ),
             ));
 
-        $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
+        $builder->addEventSubscriber($this->contentTypeTypeSubscriber);
+        $builder->addEventSubscriber($this->contentTypeStatusableSubscriber);
         $builder->get('fields')->addModelTransformer($this->contentTypeOrderFieldTransformer);
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
