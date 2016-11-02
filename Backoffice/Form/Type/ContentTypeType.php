@@ -8,8 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
 
 /**
@@ -21,31 +19,31 @@ class ContentTypeType extends AbstractType
     protected $backOfficeLanguages;
     protected $translator;
     protected $contentTypeOrderFieldTransformer;
-    protected $contentRepository;
-    protected $statusRepository;
+    protected $contentTypeTypeSubscriber;
+    protected $contentTypeStatusableSubscriber;
 
     /**
-     * @param string                     $contentTypeClass
-     * @param TranslatorInterface        $translator
-     * @param array                      $backOfficeLanguages
-     * @param DataTransformerInterface   $contentTypeOrderFieldTransformer
-     * @param ContentRepositoryInterface $contentRepository
-     * @param StatusRepositoryInterface  $statusRepository
+     * @param string                          $contentTypeClass
+     * @param TranslatorInterface             $translator
+     * @param array                           $backOfficeLanguages
+     * @param DataTransformerInterface        $contentTypeOrderFieldTransformer
+     * @param ContentTypeTypeSubscriber       $contentTypeTypeSubscriber,
+     * @param ContentTypeStatusableSubscriber $contentTypeStatusableSubscriber
      */
     public function __construct(
         $contentTypeClass,
         TranslatorInterface $translator,
         array $backOfficeLanguages,
         DataTransformerInterface $contentTypeOrderFieldTransformer,
-        ContentRepositoryInterface $contentRepository,
-        StatusRepositoryInterface $statusRepository
+        ContentTypeTypeSubscriber $contentTypeTypeSubscriber,
+        ContentTypeStatusableSubscriber $contentTypeStatusableSubscriber
     ) {
         $this->contentTypeClass = $contentTypeClass;
         $this->translator = $translator;
         $this->backOfficeLanguages = $backOfficeLanguages;
         $this->contentTypeOrderFieldTransformer = $contentTypeOrderFieldTransformer;
-        $this->contentRepository = $contentRepository;
-        $this->statusRepository = $statusRepository;
+        $this->contentTypeTypeSubscriber = $contentTypeTypeSubscriber;
+        $this->contentTypeStatusableSubscriber = $contentTypeStatusableSubscriber;
     }
 
     /**
@@ -102,8 +100,8 @@ class ContentTypeType extends AbstractType
                 'options' => array( 'label' => false ),
             ));
 
-        $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
-        $builder->addEventSubscriber(new ContentTypeStatusableSubscriber($this->contentRepository, $this->statusRepository));
+        $builder->addEventSubscriber($this->contentTypeTypeSubscriber);
+        $builder->addEventSubscriber($this->contentTypeStatusableSubscriber);
         $builder->get('fields')->addModelTransformer($this->contentTypeOrderFieldTransformer);
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
