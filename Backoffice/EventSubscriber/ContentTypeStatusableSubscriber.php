@@ -37,8 +37,9 @@ class ContentTypeStatusableSubscriber implements EventSubscriberInterface
         $contentType = $event->getForm()->getData();
         $data = $event->getData();
 
+        $data['definingStatusable'] = !array_key_exists('definingStatusable', $data) ? false : $data['definingStatusable'];
+
         if ($contentType instanceof ContentTypeInterface
-            && array_key_exists('definingStatusable', $data)
             && $contentType->isDefiningStatusable() != $data['definingStatusable']
         ) {
             $status = $this->statusRepository->findOneByOutOfWorkflow();
