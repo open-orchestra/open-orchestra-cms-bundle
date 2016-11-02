@@ -100,21 +100,10 @@ class ContentTypeStatusableSubscriberTest extends AbstractBaseTestCase
         Phake::when($event2)->getForm()->thenReturn($form2);
         Phake::when($event2)->getData()->thenReturn(array());
 
-        $event3 = Phake::mock('Symfony\Component\Form\FormEvent');
-        $form3 = Phake::mock('Symfony\Component\Form\FormInterface');
-        $contentType3 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($contentType3)->isDefiningStatusable()->thenReturn(true);
-        Phake::when($contentType3)->getContentTypeId()->thenReturn('fakeContentTypeId');
-        Phake::when($form3)->getData()->thenReturn($contentType3);
-        Phake::when($event3)->getForm()->thenReturn($form3);
-        Phake::when($event3)->getData()->thenReturn(array());
-
-
         return array(
             array($event0, 1, 1, 1),
             array($event1, 0, 1, 1),
             array($event2, 0, 0, 0),
-            array($event3, 0, 0, 0),
         );
     }
 }
