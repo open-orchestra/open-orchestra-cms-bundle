@@ -1,9 +1,9 @@
-import FormView from '../../../Service/Form/View/FormView'
+import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 
 /**
  * @class NodeFormView
  */
-class NodeFormView extends FormView
+class NodeFormView extends AbstractFormView
 {
     /**
      * @return {Object}
