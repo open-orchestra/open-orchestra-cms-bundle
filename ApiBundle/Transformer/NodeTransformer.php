@@ -239,7 +239,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             foreach ($site->getAliases() as $aliasId => $alias) {
                 if ($alias->getLanguage() == $node->getLanguage()) {
                     $facade->addPreviewLink(
-                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $node->getId())
+                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId)
                     );
                 }
             }
@@ -255,11 +255,10 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param SiteAliasInterface $alias
      * @param string             $encryptedId
      * @param int                $aliasId
-     * @param string             $nodeId
      *
      * @return FacadeInterface
      */
-    protected function getPreviewLink($scheme, $alias, $encryptedId, $aliasId, $nodeId)
+    protected function getPreviewLink($scheme, $alias, $encryptedId, $aliasId)
     {
         $previewLink = array(
             'name' => $alias->getDomain(),
@@ -273,8 +272,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $routeName = 'open_orchestra_base_node_preview';
         $parameters = array(
             'token' => $encryptedId,
-            'aliasId' => $aliasId,
-            'nodeId' => $nodeId
+            'aliasId' => $aliasId
         );
 
         $previewLink['link'] = $domain . $this->generateRoute($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
