@@ -98,6 +98,7 @@ class ContentTypeStatusableSubscriberTest extends AbstractBaseTestCase
         $form2 = Phake::mock('Symfony\Component\Form\FormInterface');
         Phake::when($form2)->getData()->thenReturn(new \stdClass());
         Phake::when($event2)->getForm()->thenReturn($form2);
+        Phake::when($event2)->getData()->thenReturn(array());
 
         $event3 = Phake::mock('Symfony\Component\Form\FormEvent');
         $form3 = Phake::mock('Symfony\Component\Form\FormInterface');
