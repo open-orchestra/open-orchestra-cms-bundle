@@ -138,6 +138,12 @@ open_orchestra_backoffice:
                 title: Indicative periodicity of change (for the sitemap)
                 helper: Indicative periodicity of change (for the sitemap)
             template_set: Template set
+            tabulation:
+                information: Informations
+                template_set: Template set
+                seo: Seo
+                content: Content
+                alias: Alias
         theme:
             success: The theme has been modified
             creation: The theme has been created
@@ -351,6 +357,10 @@ open_orchestra_backoffice:
             content: Content
             query: Query string
             filter: Content filter
+        alias:
+            tabulation:
+                information: Informations
+                seo: Seo
     left_menu:
         tree:
             new_page: New page

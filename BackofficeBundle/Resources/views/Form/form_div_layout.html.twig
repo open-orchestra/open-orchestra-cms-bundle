@@ -13,6 +13,48 @@
     {% endspaceless %}
 {% endblock form %}
 
+{% block form_widget %}
+    {% set tabulation_val = {} %}
+    {% set tabulation_err = {} %}
+    {% set tabulation_req = {} %}
+    {% set tabulation_ord = {} %}
+    {% set tabulation_active = '' %}
+    {% set tabulation_in_error = '' %}
+    {% if true == form.vars.tabulation_enabled and compound %}
+        {% for child in form %}
+            {% set key = form.vars.name~'-'~child.vars.tabulation_rank %}
+            {% set active = active|default(key) %}
+            {% set val = tabulation_val[key]|default('') %}
+            {% set err = tabulation_err[key]|default(false) %}
+            {% set req = tabulation_req[key]|default(false) %}
+            {% set error = child.vars.errors is not empty %}
+            {% set tabulation_val = tabulation_val|merge({(key):val~form_row(child)}) %}
+            {% set tabulation_err = tabulation_err|merge({(key):err and error}) %}
+            {% set tabulation_req = tabulation_req|merge({(key):req and child.vars.required}) %}
+            {% set tabulation_ord = tabulation_ord|merge({(key): (child.vars.tabulation_rank)}) %}
+            {% if tabulation_in_error == '' and error%}
+            	{% set tabulation_active = key %}
+            {% endif %}
+        {% endfor %}
+        {% set tabulation_ord = tabulation_ord|sort %}
+        {% set tabulation_active = tabulation_in_error != '' ? tabulation_in_error : tabulation_ord|keys|first%}
+        <ul role="tablist" class="nav nav-tabs">
+        {% for key, entry in tabulation_ord %}
+			<li class="{% if tabulation_active == key%}active{% endif %}"><a data-toggle="tab" role="tab" href="#tab-{{ key }}"><label for="{{ key }}" class="control-label col-lg-3">{{ form.vars.tabulation_label[entry]|default(key)|trans }}</label></a></li>
+        {% endfor %}
+        </ul>
+        <div class="tab-content">
+        {% for key, entry in tabulation_ord %}
+            <div id="tab-{{ key }}" class="tab-pane{% if tabulation_active == key%} active{% endif %}{% if tabulation_err[key]%} error{% endif %}{% if tabulation_req[key]%} required{% endif %}">
+            {{ tabulation_val[key]|raw }}
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block checkbox_widget %}
     {% spaceless %}
         <div class="smart-form">
@@ -31,30 +73,6 @@
                 {{ parent() }}
                 <i data-swchon-text="{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}" data-swchoff-text="{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}"></i>
             </label>
-        </div>
-    {% endspaceless %}
-{% endblock %}
-
-{% block column_layout_row_widget %}
-    {% spaceless %}
-        <div class="col-lg-11 col-lg-offset-1">
-            <div class="form-group">
-                <label class="control-label">{{ 'open_orchestra_backoffice.form.area.layout.select_layout'|trans }}</label>
-                <ul class="list-inline layout-options">
-                    <li class="text-hide" data-layout="1">1</li>
-                    <li class="text-hide" data-layout="1,1">1,1</li>
-                    <li class="text-hide" data-layout="2,1">2,1</li>
-                    <li class="text-hide" data-layout="1,1,1">1,1,1</li>
-                    <li class="text-hide" data-layout="1,3">1,3</li>
-                    <li class="text-hide" data-layout="4,1">4,1</li>
-                    <li class="text-hide" data-layout="1,1,1,1,1,1">1,1,1,1,1,1</li>
-                    <li class="text-hide" data-layout="1,4,1">1,4,1</li>
-                    <li class="text-hide" data-layout="1,1,1,3">1,1,1,3</li>
-                </ul>
-            </div>
-
-            {% set attr = attr|merge({ 'style': 'vertical'}) %}
-            {{ block('form_rows') }}
         </div>
     {% endspaceless %}
 {% endblock %}
@@ -287,6 +305,7 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_date_picker_widget %}
+
 {% block form_legend %}
     <div class="help-block">
         <p>* {{ 'open_orchestra_backoffice.form.orchestra_fields.required_field' | trans }}</p>

@@ -29,30 +29,33 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $data = $event->getData();
-        if (null === $data->getSiteId()) {
-            $form->add('siteTemplateSelection', 'form', array(
-                'virtual' => true,
-                'label' => false,
-                'attr' => array('class' => 'select-grouping'),
-                'mapped' => false,
-                'required' => false,
-            ));
-            $form->get('siteTemplateSelection')->add('templateSet', 'choice', array(
-                'label' => 'open_orchestra_backoffice.form.website.template_set',
-                'choices' => $this->getTemplateSetChoices(),
-                'attr' => array('class' => 'select-grouping-master'),
-                'required' => true,
-            ));
-            $form->get('siteTemplateSelection')->add('templateNodeRoot', 'choice', array(
-                'label' => 'open_orchestra_backoffice.form.website.template_node_root.label',
-                'choices' => $this->getTemplateChoices(),
-                'attr'  => array(
-                    'help_text' => 'open_orchestra_backoffice.form.website.template_node_root.helper',
-                    'class' => 'select-grouping-slave'
-                ),
-                'required' => true,
-            ));
-        }
+        $disabled = null !== $data->getSiteId();
+        $form->add('siteTemplateSelection', 'form', array(
+            'virtual' => true,
+            'label' => false,
+            'attr' => array('class' => 'select-grouping'),
+            'mapped' => false,
+            'required' => false,
+            'disabled' => $disabled,
+            'tabulation_rank' => 1,
+        ));
+        $form->get('siteTemplateSelection')->add('templateSet', 'choice', array(
+            'label' => 'open_orchestra_backoffice.form.website.template_set',
+            'choices' => $this->getTemplateSetChoices(),
+            'attr' => array('class' => 'select-grouping-master'),
+            'required' => true,
+            'disabled' => $disabled,
+        ));
+        $form->get('siteTemplateSelection')->add('templateNodeRoot', 'choice', array(
+            'label' => 'open_orchestra_backoffice.form.website.template_node_root.label',
+            'choices' => $this->getTemplateChoices(),
+            'attr'  => array(
+                'help_text' => 'open_orchestra_backoffice.form.website.template_node_root.helper',
+                'class' => 'select-grouping-slave'
+            ),
+            'required' => true,
+            'disabled' => $disabled,
+        ));
     }
 
     /**

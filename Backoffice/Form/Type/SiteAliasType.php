@@ -36,21 +36,26 @@ class SiteAliasType extends AbstractType
         $builder
             ->add('scheme', 'choice', array(
                 'choices' => $this->schemeChoices,
-                'label' => 'open_orchestra_backoffice.form.website.scheme'
+                'label' => 'open_orchestra_backoffice.form.website.scheme',
+                'tabulation_rank' => 0,
             ))
             ->add('domain', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.website.domain'
+                'label' => 'open_orchestra_backoffice.form.website.domain',
+                'tabulation_rank' => 0,
             ))
             ->add('language', 'orchestra_language', array(
-                'label' => 'open_orchestra_backoffice.form.website.language'
+                'label' => 'open_orchestra_backoffice.form.website.language',
+                'tabulation_rank' => 0,
             ))
             ->add('prefix', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.prefix',
                 'required' => false,
+                'tabulation_rank' => 0,
             ))
             ->add('main', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.main',
-                'required' => false
+                'required' => false,
+                'tabulation_rank' => 0,
             ));
     }
 
@@ -62,6 +67,11 @@ class SiteAliasType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => $this->siteAliasClass,
+                'tabulation_enabled' => true,
+                'tabulation_label' => array(
+                    'open_orchestra_backoffice.form.alias.tabulation.information',
+                    'open_orchestra_backoffice.form.alias.tabulation.seo',
+                )
             )
         );
     }

@@ -138,6 +138,12 @@ open_orchestra_backoffice:
                 title: Fréquence de modification indicative (pour le sitemap)
                 helper: Fréquence de modification indicative (pour le sitemap)
             template_set: ensemble de templates
+            tabulation:
+                information: Informations
+                template_set: Habillage
+                seo: Référencement
+                content: Contenu
+                alias: Alias
         theme:
             success: Le thème a été modifié
             creation: Le thème a été créé
@@ -351,6 +357,10 @@ open_orchestra_backoffice:
             content: Contenu
             query: Chaîne de requête
             filter: Filtrer les contenus
+        alias:
+            tabulation:
+                information: Informations
+                seo: Référencement
     left_menu:
         tree:
             new_page: Nouvelle page

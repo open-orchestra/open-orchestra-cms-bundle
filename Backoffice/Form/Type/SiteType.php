@@ -48,15 +48,16 @@ class SiteType extends AbstractType
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.name',
                 'attr' => array('class' => 'generate-id-source'),
-            ));
-        $builder->add('siteId', 'text', array(
-            'label' => 'open_orchestra_backoffice.form.website.site_id',
-            'attr' => array('class' => 'generate-id-dest'),
-        ));
-        $builder
+                'tabulation_rank' => 0,
+            ))
+            ->add('siteId', 'text', array(
+                'label' => 'open_orchestra_backoffice.form.website.site_id',
+                'attr' => array('class' => 'generate-id-dest'),
+                'tabulation_rank' => 0,
+            ))
             ->add('aliases', 'collection', array(
                 'type' => 'oo_site_alias',
-                'label' => 'open_orchestra_backoffice.form.website.aliases',
+                'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'attr' => array(
@@ -65,46 +66,56 @@ class SiteType extends AbstractType
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
                 ),
                 'options' => array( 'label' => false ),
+                'tabulation_rank' => 4,
             ))
             ->add('blocks', 'oo_block_choice', array(
                 'multiple' => true,
                 'label' => 'open_orchestra_backoffice.form.website.blocks',
-                'required' => false
+                'required' => false,
+                'tabulation_rank' => 3,
             ))
             ->add('theme', 'oo_site_theme_choice', array(
-                'label' => 'open_orchestra_backoffice.form.website.theme'
+                'label' => 'open_orchestra_backoffice.form.website.theme',
+                'tabulation_rank' => 1,
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.changefreq.title',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.website.changefreq.helper'),
+                'tabulation_rank' => 2,
             ))
             ->add('sitemap_priority', 'percent', array(
                 'label' => 'open_orchestra_backoffice.form.node.priority.label',
                 'type' => 'fractional',
                 'precision' => 2,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.priority.helper'),
+                'tabulation_rank' => 2,
             ))
             ->add('metaKeywords', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
-                'languages' => $this->frontLanguages
+                'languages' => $this->frontLanguages,
+                'tabulation_rank' => 2,
             ))
             ->add('metaDescriptions', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
-                'languages' => $this->frontLanguages
+                'languages' => $this->frontLanguages,
+                'tabulation_rank' => 2,
             ))
             ->add('metaIndex', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_index',
                 'required' => false,
+                'tabulation_rank' => 2,
             ))
             ->add('metaFollow', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_follow',
                 'required' => false,
+                'tabulation_rank' => 2,
             ))
             ->add('robotsTxt', 'textarea', array(
                 'label' => 'open_orchestra_backoffice.form.website.robots_txt',
                 'required' => true,
+                'tabulation_rank' => 2,
             ))
             ;
         $builder->addEventSubscriber(new WebSiteSubscriber());
@@ -122,6 +133,14 @@ class SiteType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => $this->siteClass,
+                'tabulation_enabled' => true,
+                'tabulation_label' => array(
+                    'open_orchestra_backoffice.form.website.tabulation.information',
+                    'open_orchestra_backoffice.form.website.tabulation.template_set',
+                    'open_orchestra_backoffice.form.website.tabulation.seo',
+                    'open_orchestra_backoffice.form.website.tabulation.content',
+                    'open_orchestra_backoffice.form.website.tabulation.alias',
+                )
             )
         );
     }
