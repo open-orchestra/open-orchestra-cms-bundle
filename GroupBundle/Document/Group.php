@@ -32,12 +32,21 @@ class Group extends BaseGroup implements GroupInterface
     protected $labels;
 
     /**
+     * @var Collection
+     *
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface", strategy="set")
+     */
+    protected $workflowProfiles;
+
+    /**
      * @var Collection $perimeters
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\PerimeterInterface", strategy="set")
      */
     protected $perimeters;
 
+    
+    
     /**
      * Constructor
      */

@@ -7,4 +7,13 @@ namespace OpenOrchestra\Backoffice\Model;
  */
 interface PerimeterInterface
 {
+    /**
+     * @param string $path
+     */
+    public function addPath($path);
+
+    /**
+     * @param string $path
+     */
+    public function removePath($path);
 }

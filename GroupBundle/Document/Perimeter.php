@@ -3,10 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 
 /**
@@ -15,133 +12,25 @@ use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 class Perimeter implements PerimeterInterface
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface")
-     */
-    protected $site;
-
-    /**
-     * @var Collection $labels
+     * @var Collection $paths
      *
      * @ODM\Field(type="hash")
-     * @ORCHESTRA\Search(key="label", type="multiLanguages")
      */
-    protected $labels;
+    protected $paths;
 
     /**
-     * @var Collection $perimeters
-     *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\PerimeterInterface", strategy="set")
+     * @param string $path
      */
-    protected $perimeters;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function addPath($path)
     {
-        parent::__construct();
-        $this->labels = array();
-        $this->roles = array();
-        $this->perimeters = new ArrayCollection();
+        $this->paths->add($path);
     }
 
     /**
-     * Clone the element
+     * @param string $path
      */
-    public function __clone()
+    public function removePath($path)
     {
-        $this->id = null;
-        $this->perimeters = new ArrayCollection();
-
-        $this->setName($this->cloneLabel($this->name));
-
-        foreach ($this->getLabels() as $language => $label) {
-            $this->addLabel($language, $this->cloneLabel($label));
-        }
-    }
-
-    /**
-     * @param ReadSiteInterface|null $site
-     */
-    public function setSite(ReadSiteInterface $site = null)
-    {
-        $this->site = $site;
-    }
-
-    /**
-     * @return ReadSiteInterface|null
-     */
-    public function getSite()
-    {
-        return $this->site;
-    }
-
-    /**
-     * @param string $language
-     * @param string $label
-     */
-    public function addLabel($language, $label)
-    {
-        if (is_string($language) && is_string($label)) {
-            $this->labels[$language] = $label;
-        }
-    }
-
-    /**
-     * @param string $language
-     */
-    public function removeLabel($language)
-    {
-        if (is_string($language) && isset($this->labels[$language])) {
-            unset($this->labels[$language]);
-        }
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return string
-     */
-    public function getLabel($language)
-    {
-        if (isset($this->labels[$language])) {
-            return $this->labels[$language];
-        }
-
-        return '';
-    }
-
-    /**
-     * @return array
-     */
-    public function getLabels()
-    {
-        return $this->labels;
-    }
-
-    /**
-     * @param array $labels
-     */
-    public function setLabels(array $labels)
-    {
-        foreach ($labels as $language => $label) {
-            $this->addLabel($language, $label);
-        }
-    }
-
-    /**
-     * @param string $label
-     *
-     * @return string
-     */
-    protected function cloneLabel($label)
-    {
-        $patternNameVersion = '/.*_([0-9]+$)/';
-        if (0 !== preg_match_all($patternNameVersion, $label, $matches)) {
-            $version = (int) $matches[1][0] + 1;
-            return preg_replace('/[0-9]+$/', $version, $label);
-        }
-
-        return $label . '_2';
+        $this->paths->removeElement($path);
     }
 }
