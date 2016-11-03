@@ -3,20 +3,16 @@
 namespace OpenOrchestra\GroupBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
-use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 
 /**
- * @ODM\Document(
- *  collection="users_group",
- *  repositoryClass="OpenOrchestra\GroupBundle\Repository\GroupRepository"
- * )
+ * @ODM\EmbeddedDocument
  */
-class Group extends BaseGroup implements GroupInterface
+class Perimeter implements PerimeterInterface
 {
     /**
      * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface")

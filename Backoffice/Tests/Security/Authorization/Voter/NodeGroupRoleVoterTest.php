@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
-use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeGroupRoleVoter;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -100,12 +99,11 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
      * @param string $nodeId
      * @param string $ngrNodeId
      * @param string $ngrRole
-     * @param bool   $isGranted
      * @param string $groupSiteId
      *
      * @dataProvider provideResponseAndNodeData
      */
-    public function testVote($expectedVoterResponse, $nodeId, $ngrNodeId, $ngrRole, $isGranted, $groupSiteId = 'siteId')
+    public function testVote($expectedVoterResponse, $nodeId, $ngrNodeId, $ngrRole, $groupSiteId = 'siteId')
     {
         $siteId = 'siteId';
         $role = TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
@@ -113,11 +111,7 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
         Phake::when($node)->getNodeId()->thenReturn($nodeId);
         Phake::when($node)->getSiteId()->thenReturn($siteId);
 
-        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
-        Phake::when($nodeGroupRole)->isGranted()->thenReturn($isGranted);
-
         $group = $this->generateGroup($groupSiteId);
-        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $ngrNodeId, $ngrRole)->thenReturn($nodeGroupRole);
         $otherGroup = $this->generateGroup('otherSiteId');
         $noSiteGroup = $this->generateGroup();
 
@@ -135,19 +129,19 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
     public function provideResponseAndNodeData()
     {
         return array(
-            array(VoterInterface::ACCESS_GRANTED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, false),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, false),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,  true, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', '5640af7a02b0cf39178b4598', false, 'fakeSiteId'),
+            array(VoterInterface::ACCESS_GRANTED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', '5640af7a02b0cf39178b4598', 'fakeSiteId'),
         );
     }
 

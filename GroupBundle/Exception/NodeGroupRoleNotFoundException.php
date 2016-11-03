@@ -3,7 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Exception;
 
 /**
- * Class NodeGroupRoleNotFoundException
+ * TO REMOVE
  */
 class NodeGroupRoleNotFoundException extends \Exception
 {

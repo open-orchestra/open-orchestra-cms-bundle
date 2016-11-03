@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Model;
 
-use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 
@@ -11,6 +10,7 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
  */
 interface GroupInterface extends BaseGroupInterface
 {
+    // TO REMOVE
     const SEPARATOR_KEY_MODEL_ROLES = '##';
 
     /**
@@ -50,38 +50,4 @@ interface GroupInterface extends BaseGroupInterface
      * @param array $labels
      */
     public function setLabels(array $labels);
-
-    /**
-     * @return array
-     */
-    public function getModelGroupRoles();
-
-    /**
-     * @param ModelGroupRoleInterface $modelGroupRole
-     */
-    public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole);
-
-    /**
-     * @param ArrayCollection <ModelGroupRoleInterface> $modelGroupRole
-     */
-    public function setModelGroupRoles(Collection $modelGroupRoles);
-
-    /**
-     * @param string $type
-     * @param string $id
-     * @param string $role
-     *
-     * @return ModelGroupRoleInterface|null
-     */
-    public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
-
-    /**
-     * @param string $type
-     * @param string $id
-     * @param string $role
-     *
-     * @return boolean
-     */
-    public function hasModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
-
 }

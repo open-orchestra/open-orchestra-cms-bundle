@@ -6,9 +6,7 @@ use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * Class ModelGroupRole
- *
- * @ODM\EmbeddedDocument
+ * TO REMOVE
  */
 class ModelGroupRole implements ModelGroupRoleInterface
 {
