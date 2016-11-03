@@ -1,3 +1,2 @@
 resolve_target_documents:
-    OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface: OpenOrchestra\GroupBundle\Document\ModelGroupRole
     OpenOrchestra\Backoffice\Model\PerimeterInterface: OpenOrchestra\GroupBundle\Document\Perimeter

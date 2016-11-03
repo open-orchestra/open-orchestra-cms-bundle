@@ -66,7 +66,6 @@ class OpenOrchestraApiExtensionTest extends AbstractBaseTestCase
             array('keyword', 'KeywordFacade'),
             array('keyword_collection', 'KeywordCollectionFacade'),
             array('link', 'LinkFacade'),
-            array('model_group_role', 'ModelGroupRoleFacade'),
             array('node', 'NodeFacade'),
             array('node_collection', 'NodeCollectionFacade'),
             array('node_tree', 'NodeTreeFacade'),

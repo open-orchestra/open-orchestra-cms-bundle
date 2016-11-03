@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Class GroupFacade
@@ -32,9 +31,9 @@ class GroupFacade extends AbstractFacade
     public $site;
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\PerimeterFacade>")
      */
-    protected $modelRoles;
+    protected $perimeters;
 
     /**
      * @param string $role
@@ -42,21 +41,5 @@ class GroupFacade extends AbstractFacade
     public function addRole($role)
     {
         $this->roles[] = $role;
-    }
-
-    /**
-     * @param FacadeInterface $facade
-     */
-    public function addModelRoles(FacadeInterface $facade)
-    {
-        $this->modelRoles[] = $facade;
-    }
-
-    /**
-     * @return array
-     */
-    public function getModelRoles()
-    {
-        return $this->modelRoles;
     }
 }
