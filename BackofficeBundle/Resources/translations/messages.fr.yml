@@ -131,6 +131,12 @@ open_orchestra_backoffice:
             meta_index: Meta index
             meta_follow: Meta follow
             robots_txt: Informations contenues dans le fichier robots.txt
+            metaAuthor: Auteur
+            google_marker: Marqueur
+            cnil_compliance: Conformité CNIL
+            xtsd: xtsd
+            xtside: xtside
+            xtn2: xtn2
             template_node_root:
                 label: Gabarit de la page d'accueil
                 helper: Gabarit utilisé pour la génération de la page d'accueil de votre site.
@@ -138,12 +144,18 @@ open_orchestra_backoffice:
                 title: Fréquence de modification indicative (pour le sitemap)
                 helper: Fréquence de modification indicative (pour le sitemap)
             template_set: ensemble de templates
-            tabulation:
+            group:
                 information: Informations
                 template_set: Habillage
                 seo: Référencement
                 content: Contenu
                 alias: Alias
+            sub_group:
+                property: Propriété
+                meta: Meta
+                sitemap: Sitemap
+                robot: Robots.txt
+                block: Blocs
         theme:
             success: Le thème a été modifié
             creation: Le thème a été créé
@@ -358,9 +370,14 @@ open_orchestra_backoffice:
             query: Chaîne de requête
             filter: Filtrer les contenus
         alias:
-            tabulation:
+            group:
                 information: Informations
                 seo: Référencement
+            sub_group:
+                property: Property
+                meta: Meta
+                google_marker: Marqueur Google Analytics / GTM
+                xiti: Marqueur ATinternet (Xiti)
     left_menu:
         tree:
             new_page: Nouvelle page
@@ -407,7 +424,7 @@ open_orchestra_backoffice:
                 list: Corbeille
     block:
         configurable_content:
-            title: Bloc contenu paramétrable
+            title: Contenu paramétrable
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
             description: Affiche un contenu sélectionné.
@@ -416,54 +433,54 @@ open_orchestra_backoffice:
                 title: Usage du gabarit
                 helper: Usage du gabarit
         contact:
-            title: Bloc contact
+            title: Contact
             description: Affiche un formulaire de contact.
             recipient: Email du destinataire
             signature: Signature de l'email de notitication
         footer:
-            title: Bloc pied de page
+            title: Pied de page
             description: Affiche une liste de nom de noeud qui ont l'attribut footer.
         menu:
-            title: Bloc menu
+            title: Menu
             description: Affiche une liste de nom de noeud qui ont l'attribut menu.
         search:
-            title: Bloc recherche
+            title: Recherche
             description: Affiche un champ de recherche.
         search_result:
             title: Bloc résultat de recherche
             description: Affiche les résultats de la recherche.
         tiny_mce_wysiwyg:
-            title: Bloc texte riche
+            title: Texte riche
             description: Affiche un bloc de text riche.
             searchable: Indexable
         sub_menu:
-            title: Bloc sous-menu
+            title: Sous-menu
             description: Affiche un menu à partir d'un noeud racine.
         content_list:
-            title: Bloc liste de contenus
+            title: Liste de contenus
             description: Affiche une liste de contenu.
         content_list_by_keyword:
-            title: Bloc liste de contenu par mot-clé
+            title: Liste de contenu par mot-clé
             description: Affiche une liste de contenu par mot clé.
         content:
-            title: Bloc contenu
+            title: Contenu
             description: Affiche un contenu.
             content_template: Erreur de syntax twig.
         language_list:
-            title: Bloc séléction de langue
+            title: Séléction de langue
             description: Affiche la liste déroulante avec toutes les langues du site.
         login:
-            title: Bloc connexion
+            title: Connexion
             description: Affiche un formulaire pour ce logger.
         delete_question: Voulez vous supprimer ce bloc ?
         delete_explanation: La suppression sera définitive.
         video:
-            title: Bloc vidéo
+            title: Vidéo
             description: Insère une vidéo Youtube, Dailymotion ou Vimeo
             type: Type de vidéo
             youtube:
                 name: Youtube
-                title: Bloc youtube
+                title: Youtube
                 description: Affiche une vidéo de Youtube
                 video_id: Id ou url de la vidéo
                 autoplay: Lance automatiquement la vidéo
@@ -482,7 +499,7 @@ open_orchestra_backoffice:
                 color: Affiche la barre de progression en blanc
             dailymotion:
                 name: Dailymotion
-                title: Bloc dailymotion
+                title: Dailymotion
                 description: Affiche une vidéo de Dailymotion
                 video_id: Id ou url de la vidéo
                 autoplay: Lance automatiquement la vidéo
@@ -498,7 +515,7 @@ open_orchestra_backoffice:
                 logo: Affiche le logo Dailymotion
             vimeo:
                 name: Vimeo
-                title: Bloc Vimeo
+                title: Vimeo
                 description: Affiche une vidéo de Vimeo
                 video_id: Id ou url de la vidéo
                 autoplay: Lance automatiquement la vidéo
@@ -512,13 +529,13 @@ open_orchestra_backoffice:
                 height: Hauteur du lecteur
                 badge: Désactive le badge sur la vidéo
         gmap:
-            title: Bloc Gmap
+            title: Gmap
             description: Affiche une carte
         add_this:
-            title: Bloc Add this
+            title: Add this
             description: Affiche des boutons pour partager des contenus
         audience_analysis:
-            title: Bloc d'analyse d'audience
+            title: Analyse d'audience
             description: Intègre un tag Google Analytics ou Xiti
             tag_type: Type de tag
             google_analytics: Google Analytics

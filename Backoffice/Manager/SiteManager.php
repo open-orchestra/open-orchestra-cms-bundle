@@ -34,8 +34,6 @@ class SiteManager
         $site = new $this->siteClass();
         $site->setSitemapPriority(SiteInterface::PRIORITY_DEFAULT);
         $site->setSitemapChangefreq(SiteInterface::CHANGE_FREQ_DEFAULT);
-        $site->setMetaIndex(true);
-        $site->setMetaFollow(true);
         $site->addAlias($siteAlias);
 
         return $site;

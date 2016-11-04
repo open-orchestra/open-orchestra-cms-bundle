@@ -20,7 +20,9 @@ class WebSiteSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $options = array(
             'label' => 'open_orchestra_backoffice.form.website.site_id',
-            'attr' => array('class' => 'generate-id-dest')
+            'attr' => array('class' => 'generate-id-dest'),
+            'group_rank' => 0,
+            'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.property',
         );
         if (null !== $data->getSiteId()) {
             $options['disabled'] = true;

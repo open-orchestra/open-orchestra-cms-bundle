@@ -66,11 +66,15 @@ class WebSiteSubscriberTest extends AbstractBaseTestCase
         return array(
             array(null, array(
                 'label' => 'open_orchestra_backoffice.form.website.site_id',
-                'attr' => array('class' => 'generate-id-dest')
+                'attr' => array('class' => 'generate-id-dest'),
+                'group_rank' => 0,
+                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.property',
             )),
             array('siteId', array(
                 'label' => 'open_orchestra_backoffice.form.website.site_id',
                 'attr' => array('class' => 'generate-id-dest'),
+                'group_rank' => 0,
+                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.property',
                 'disabled' => true
             ))
         );

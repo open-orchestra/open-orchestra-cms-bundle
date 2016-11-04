@@ -42,8 +42,6 @@ class NodeManagerTest extends AbstractBaseTestCase
     protected $statusRepository;
     protected $blockRepository;
     protected $documentManager;
-    protected $metaKeywords = 'fake keyword';
-    protected $metaDescription = 'fake description';
 
     /**
      * Set up the test
@@ -54,10 +52,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($theme)->getName()->thenReturn('fakeNameTheme');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site)->getTheme()->thenReturn($theme);
-        Phake::when($site)->getMetaKeywordsInLanguage(Phake::anyParameters())->thenReturn($this->metaKeywords);
-        Phake::when($site)->getMetaDescriptionInLanguage(Phake::anyParameters())->thenReturn($this->metaDescription);
-        Phake::when($site)->getMetaIndex()->thenReturn(true);
-        Phake::when($site)->getMetaFollow()->thenReturn(true);
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $this->area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
@@ -177,8 +171,6 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         Phake::verify($alteredNode)->setVersion(1);
         Phake::verify($alteredNode)->setLanguage($language);
-        Phake::verify($alteredNode)->setMetaKeywords($this->metaKeywords);
-        Phake::verify($alteredNode)->setMetaDescription($this->metaDescription);
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
@@ -257,11 +249,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals($language, $node->getLanguage());
         $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
         $this->assertTrue($node->hasDefaultSiteTheme());
-        $this->assertEquals($this->metaKeywords, $node->getMetaKeywords());
-        $this->assertEquals($this->metaDescription, $node->getMetaDescription());
         $this->assertEquals(0, $node->getOrder());
-        $this->assertEquals(true, $node->getMetaIndex());
-        $this->assertEquals(true, $node->getMetaFollow());
         if (is_null($parentNode)) {
             $this->assertSame(NodeInterface::ROOT_NODE_ID, $node->getNodeId());
             $this->assertSame(NodeInterface::TYPE_DEFAULT, $node->getNodeType());
@@ -287,11 +275,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals($language, $node->getLanguage());
         $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
         $this->assertTrue($node->hasDefaultSiteTheme());
-        $this->assertEquals($this->metaKeywords, $node->getMetaKeywords());
-        $this->assertEquals($this->metaDescription, $node->getMetaDescription());
         $this->assertEquals(0, $node->getOrder());
-        $this->assertEquals(true, $node->getMetaIndex());
-        $this->assertEquals(true, $node->getMetaFollow());
         if (is_null($parentNode)) {
             $this->assertSame(NodeInterface::ROOT_NODE_ID, $node->getNodeId());
             $this->assertSame(NodeInterface::TYPE_DEFAULT, $node->getNodeType());

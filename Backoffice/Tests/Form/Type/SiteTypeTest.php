@@ -30,7 +30,7 @@ class SiteTypeTest extends AbstractBaseTestCase
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
 
-        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager, $this->languages);
+        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager);
     }
 
     /**
@@ -60,7 +60,7 @@ class SiteTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(12))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
         Phake::verify($this->translator, Phake::times(3))->trans(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
@@ -74,8 +74,18 @@ class SiteTypeTest extends AbstractBaseTestCase
 
         $this->form->configureOptions($resolver);
 
-        Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteClass
-        ));
+        Phake::verify($resolver)->setDefaults(
+            array(
+                'data_class' => $this->siteClass,
+                'group_enabled' => true,
+                'group_label' => array(
+                    'open_orchestra_backoffice.form.website.group.information',
+                    'open_orchestra_backoffice.form.website.group.template_set',
+                    'open_orchestra_backoffice.form.website.group.seo',
+                    'open_orchestra_backoffice.form.website.group.content',
+                    'open_orchestra_backoffice.form.website.group.alias',
+                )
+            )
+        );
     }
 }

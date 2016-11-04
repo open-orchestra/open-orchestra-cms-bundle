@@ -52,7 +52,7 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
     }
 
     /**
@@ -64,8 +64,15 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
 
         $this->form->configureOptions($resolver);
 
-        Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteAliasClass
-        ));
+        Phake::verify($resolver)->setDefaults(
+            array(
+                'data_class' => $this->siteAliasClass,
+                'group_enabled' => true,
+                'group_label' => array(
+                    'open_orchestra_backoffice.form.alias.group.information',
+                    'open_orchestra_backoffice.form.alias.group.seo',
+                )
+            )
+        );
     }
 }

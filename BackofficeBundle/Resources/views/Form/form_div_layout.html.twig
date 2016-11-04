@@ -14,46 +14,70 @@
 {% endblock form %}
 
 {% block form_widget %}
-    {% set tabulation_val = {} %}
-    {% set tabulation_err = {} %}
-    {% set tabulation_req = {} %}
-    {% set tabulation_ord = {} %}
-    {% set tabulation_active = '' %}
-    {% set tabulation_in_error = '' %}
-    {% if true == form.vars.tabulation_enabled and compound %}
-        {% for child in form %}
-            {% set key = form.vars.name~'-'~child.vars.tabulation_rank %}
-            {% set active = active|default(key) %}
-            {% set val = tabulation_val[key]|default('') %}
-            {% set err = tabulation_err[key]|default(false) %}
-            {% set req = tabulation_req[key]|default(false) %}
-            {% set error = child.vars.errors is not empty %}
-            {% set tabulation_val = tabulation_val|merge({(key):val~form_row(child)}) %}
-            {% set tabulation_err = tabulation_err|merge({(key):err and error}) %}
-            {% set tabulation_req = tabulation_req|merge({(key):req and child.vars.required}) %}
-            {% set tabulation_ord = tabulation_ord|merge({(key): (child.vars.tabulation_rank)}) %}
-            {% if tabulation_in_error == '' and error%}
-            	{% set tabulation_active = key %}
-            {% endif %}
+	{% set nav_html  = '' %}
+	{% set group_html  = '' %}
+    {% if form.vars.group_enabled is defined and true == form.vars.group_enabled %}
+        {% for group, all in form.vars.group %}
+        	{%  set current_group_html %}
+            	{%  set err = false %}
+            	{%  set req = false %}
+            	{%  set active = -1 %}
+                {% for subgroup, children in all %}
+                	{% set subgroup_html %}
+                        {% for rank, child in children %}
+                    		{{ form_row(form[child]) }}
+                    		{% set err = err or form[child].vars.errors is not empty %}
+                    		{% set req = req or form[child].vars.required %}
+                    		{% set active = (active == -1 and err) ? loop.index0 : active %}
+                    	{% endfor %}
+       	            {% endset %}
+       	            {% if subgroup != constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_SUB_GROUP') %}
+           	        	<fieldset>
+           	        		<legend>{{ subgroup|trans }}</legend>
+           	        		{{ subgroup_html }}
+           	            </fieldset>
+       	            {% else %}
+       	                {{ subgroup_html }}
+       	            {% endif %}
+    	        {% endfor %}
+           		{% set active = (active == -1) ? 0 : active %}
+	        {% endset %}
+	        {% set current_group_html %}
+               	<div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if err %} error{% endif %}{% if req %} required{% endif %}">
+               		{{ current_group_html }}
+    	        </div>
+	        {% endset %}
+	        {% set current_nav_html %}
+	        	<li class="{% if active == loop.index0 %}active{% endif %}"><a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}"><label for="{{ loop.index0 }}" class="control-label col-lg-3">{{ group|default(loop.index0)|trans }}</label></a></li>
+	        {% endset %}
+	        {% set nav_html = nav_html ~ current_nav_html %}
+	        {% set group_html = group_html ~ current_group_html %}
         {% endfor %}
-        {% set tabulation_ord = tabulation_ord|sort %}
-        {% set tabulation_active = tabulation_in_error != '' ? tabulation_in_error : tabulation_ord|keys|first%}
         <ul role="tablist" class="nav nav-tabs">
-        {% for key, entry in tabulation_ord %}
-			<li class="{% if tabulation_active == key%}active{% endif %}"><a data-toggle="tab" role="tab" href="#tab-{{ key }}"><label for="{{ key }}" class="control-label col-lg-3">{{ form.vars.tabulation_label[entry]|default(key)|trans }}</label></a></li>
-        {% endfor %}
+            {{ nav_html|raw }}
         </ul>
-        <div class="tab-content">
-        {% for key, entry in tabulation_ord %}
-            <div id="tab-{{ key }}" class="tab-pane{% if tabulation_active == key%} active{% endif %}{% if tabulation_err[key]%} error{% endif %}{% if tabulation_req[key]%} required{% endif %}">
-            {{ tabulation_val[key]|raw }}
-            </div>
-        {% endfor %}
-        </div>
+    	<div class="tab-content">
+    	    {{ group_html|raw }}
+		</div>
     {% else %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
+
+
+{% block choice_widget %}
+    {% spaceless %}
+        {% if expanded and multiple %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                {{ checkbox_row(child, { 'no_form_group': true, 'inline' : (attr.inline is defined and attr.inline), 'label_attr': label_attr, 'form_group_col': 6 }) }}
+            {% endfor %}
+        </div>
+        {% else %}
+        	{{ parent() }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock choice_widget %}
 
 {% block checkbox_widget %}
     {% spaceless %}
@@ -119,6 +143,7 @@
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
         {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
         {% set label_col = label_col|default(bootstrap_get_label_col()) %}
+        {% set form_group_col = form_group_col|default('') %}
         {% set refreshIcon = '' %}
 
         {% if attr.label_col is defined and attr.label_col is not empty %}
@@ -130,6 +155,11 @@
         {% if attr.col_size is defined and attr.col_size is not empty %}
             {% set col_size = attr.col_size %}
         {% endif %}
+		{% set form_group_class = '' %}
+        {% if form_group_col is defined and form_group_col is not empty %}
+            {% set form_group_class = 'col-'~col_size~'-'~form_group_col %}
+        {% endif %}
+
         {% if attr.style is defined and attr.style is not empty %}
             {% set style = attr.style %}
         {% endif %}
@@ -158,7 +188,7 @@
             {% endif %}
         {% endfor %}
 
-        <div class="form-group{% if errors %} has-error{% endif %}">
+        <div class="form-group{% if errors %} has-error{% endif %} {{ form_group_class }}">
             {% if style == 'horizontal' %}
                 {{ form_label(form) }}
                 {{ refreshIcon }}
