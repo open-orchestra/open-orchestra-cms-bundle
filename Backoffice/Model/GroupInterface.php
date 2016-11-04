@@ -11,9 +11,6 @@ use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface;
  */
 interface GroupInterface extends BaseGroupInterface
 {
-    // TO REMOVE
-    const SEPARATOR_KEY_MODEL_ROLES = '##';
-
     /**
      * @param ReadSiteInterface|null $site
      */
