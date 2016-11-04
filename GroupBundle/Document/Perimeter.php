@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\GroupBundle\Document;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 
@@ -12,25 +11,25 @@ use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 class Perimeter implements PerimeterInterface
 {
     /**
-     * @var Collection $paths
+     * @var array $paths
      *
      * @ODM\Field(type="hash")
      */
     protected $paths;
 
     /**
-     * @param string $path
+     * Constructor
      */
-    public function addPath($path)
+    public function __construct()
     {
-        $this->paths->add($path);
+        $this->paths = array();
     }
 
     /**
      * @param string $path
      */
-    public function removePath($path)
+    public function addPath($path)
     {
-        $this->paths->removeElement($path);
+        $this->paths[] = $path;
     }
 }

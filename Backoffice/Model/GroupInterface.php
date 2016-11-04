@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Model;
 
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface;
 
 /**
  * Interface GroupInterface
@@ -50,4 +51,16 @@ interface GroupInterface extends BaseGroupInterface
      * @param array $labels
      */
     public function setLabels(array $labels);
+
+    /**
+     * @param string                             $entityType
+     * @param WorkflowProfileCollectionInterface $profileCollection
+     */
+    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $profileCollection);
+
+    /**
+     * @param string             $perimeterType
+     * @param PerimeterInterface $perimeter
+     */
+    public function addPerimeter($perimeterType, PerimeterInterface $perimeter);
 }

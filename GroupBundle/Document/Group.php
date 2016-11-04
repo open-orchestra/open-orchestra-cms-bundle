@@ -9,6 +9,8 @@ use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\Backoffice\Model\PerimeterInterface;
+use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface;
 
 /**
  * @ODM\Document(
@@ -24,7 +26,7 @@ class Group extends BaseGroup implements GroupInterface
     protected $site;
 
     /**
-     * @var Collection $labels
+     * @var array $labels
      *
      * @ODM\Field(type="hash")
      * @ORCHESTRA\Search(key="label", type="multiLanguages")
@@ -36,7 +38,7 @@ class Group extends BaseGroup implements GroupInterface
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface", strategy="set")
      */
-    protected $workflowProfiles;
+    protected $workflowProfileCollections;
 
     /**
      * @var Collection $perimeters
@@ -45,16 +47,15 @@ class Group extends BaseGroup implements GroupInterface
      */
     protected $perimeters;
 
-    
-    
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($name = '', $roles = array())
     {
-        parent::__construct();
+        parent::__construct($name, $roles);
+
         $this->labels = array();
-        $this->roles = array();
+        $this->workflowProfileCollections = new ArrayCollection();
         $this->perimeters = new ArrayCollection();
     }
 
@@ -64,13 +65,14 @@ class Group extends BaseGroup implements GroupInterface
     public function __clone()
     {
         $this->id = null;
-        $this->perimeters = new ArrayCollection();
-
         $this->setName($this->cloneLabel($this->name));
 
         foreach ($this->getLabels() as $language => $label) {
             $this->addLabel($language, $this->cloneLabel($label));
         }
+
+        $this->workflowProfileCollections = new ArrayCollection();
+        $this->perimeters = new ArrayCollection();
     }
 
     /**
@@ -140,6 +142,24 @@ class Group extends BaseGroup implements GroupInterface
         foreach ($labels as $language => $label) {
             $this->addLabel($language, $label);
         }
+    }
+
+    /**
+     * @param string                             $entityType
+     * @param WorkflowProfileCollectionInterface $profileCollection
+     */
+    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $profileCollection)
+    {
+        $this->workflowProfileCollections->set($entityType, $profileCollection);
+    }
+
+    /**
+     * @param string             $entityType
+     * @param PerimeterInterface $perimeter
+     */
+    public function addPerimeter($entityType, PerimeterInterface $perimeter)
+    {
+        $this->perimeters->set($entityType, $perimeter);
     }
 
     /**
