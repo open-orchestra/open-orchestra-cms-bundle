@@ -11,10 +11,10 @@ class AbstractDataTableView extends OrchestraView
      * @param {Object} options
      */
     constructor(options) {
-        if (new.target === DataTableView) {
+        super(options);
+        if (this.constructor === AbstractDataTableView) {
             throw TypeError("Can not construct abstract class");
         }
-        super(options);
     }
 
     /**
