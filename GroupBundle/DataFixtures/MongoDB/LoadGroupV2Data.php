@@ -5,15 +5,12 @@ namespace OpenOrchestra\GroupBundle\DataFixtures\MongoDB;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\GroupBundle\Document\Group;
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use OpenOrchestra\GroupBundle\Document\Perimeter;
-use OpenOrchestra\WorkflowFunctionModelBundle\Document\WorkflowProfileCollection;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class LoadGroupV2Data
  */
-class LoadGroupV2Data extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
+class LoadGroupV2Data extends AbstractLoadGroupV2Data implements OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager
@@ -26,52 +23,17 @@ class LoadGroupV2Data extends AbstractFixture implements OrderedFixtureInterface
         ));
         $nodeProfileCollection = $this->createProfileCollection(array('profile-Contributor'));
 
-        $mediaPerimeter = $this->createPerimeter(array('first_images_folder'));
-        $mediaProfileCollection = $this->createProfileCollection(array('profile-Contributor', 'profile-Validator'));
-
         $group = new Group('Group v2');
         $group->addLabel('en', 'Group v2');
         $group->addLabel('fr', 'Groupe v2');
         $group->setSite($this->getReference('site2'));
-        $group->addWorkflowProfileCollection('Node', $nodeProfileCollection);
-        $group->addWorkflowProfileCollection('Media', $mediaProfileCollection);
-        $group->addPerimeter('Node', $nodePerimeter);
-        $group->addPerimeter('Media', $mediaPerimeter);
+        $group->addWorkflowProfileCollection(NodeInterface::ENTITY_TYPE, $nodeProfileCollection);
+        $group->addPerimeter(NodeInterface::ENTITY_TYPE, $nodePerimeter);
+
+        $this->addReference('group-v2', $group);
 
         $manager->persist($group);
         $manager->flush();
-    }
-
-    /**
-     * @param array<string> $paths
-     *
-     * @return Perimeter
-     */
-    protected function createPerimeter(array $paths)
-    {
-        $perimeter = new Perimeter();
-
-        foreach ($paths as $path) {
-            $perimeter->addPath($path);
-        }
-
-        return $perimeter;
-    }
-
-    /**
-     * @param array<string> $profileReferences
-     *
-     * @return WorkflowProfileCollection
-     */
-    protected function createProfileCollection(array $profileReferences)
-    {
-        $profileCollection = new WorkflowProfileCollection();
-
-        foreach ($profileReferences as $reference) {
-            $profileCollection->addProfile($this->getReference($reference));
-        }
-
-        return $profileCollection;
     }
 
     /**

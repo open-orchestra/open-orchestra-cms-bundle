@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\GroupBundle\Document;
 
-use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
@@ -21,29 +20,43 @@ use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface;
 class Group extends BaseGroup implements GroupInterface
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface")
+     * @ODM\ReferenceOne(
+     *  targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface"
+     * )
      */
     protected $site;
 
     /**
      * @var array $labels
      *
-     * @ODM\Field(type="hash")
-     * @ORCHESTRA\Search(key="label", type="multiLanguages")
+     * @ODM\Field(
+     *  type="hash"
+     * )
+     *
+     * @ORCHESTRA\Search(
+     *  key="label",
+     *  type="multiLanguages"
+     * )
      */
     protected $labels;
 
     /**
-     * @var Collection
+     * @var Collection $workflowProfileCollections
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface", strategy="set")
+     * @ODM\EmbedMany(
+     *  targetDocument="OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface",
+     *  strategy="set"
+     * )
      */
     protected $workflowProfileCollections;
 
     /**
      * @var Collection $perimeters
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\PerimeterInterface", strategy="set")
+     * @ODM\EmbedMany(
+     *  targetDocument="OpenOrchestra\Backoffice\Model\PerimeterInterface",
+     *  strategy="set"
+     * )
      */
     protected $perimeters;
 
@@ -54,9 +67,8 @@ class Group extends BaseGroup implements GroupInterface
     {
         parent::__construct($name, $roles);
 
+        $this->initCollections();
         $this->labels = array();
-        $this->workflowProfileCollections = new ArrayCollection();
-        $this->perimeters = new ArrayCollection();
     }
 
     /**
@@ -65,14 +77,12 @@ class Group extends BaseGroup implements GroupInterface
     public function __clone()
     {
         $this->id = null;
+        $this->initCollections();
         $this->setName($this->cloneLabel($this->name));
 
         foreach ($this->getLabels() as $language => $label) {
             $this->addLabel($language, $this->cloneLabel($label));
         }
-
-        $this->workflowProfileCollections = new ArrayCollection();
-        $this->perimeters = new ArrayCollection();
     }
 
     /**
@@ -160,6 +170,15 @@ class Group extends BaseGroup implements GroupInterface
     public function addPerimeter($entityType, PerimeterInterface $perimeter)
     {
         $this->perimeters->set($entityType, $perimeter);
+    }
+
+    /**
+     * Initialize collections
+     */
+    protected function initCollections()
+    {
+        $this->workflowProfileCollections = new ArrayCollection();
+        $this->perimeters = new ArrayCollection();
     }
 
     /**

@@ -13,7 +13,9 @@ class Perimeter implements PerimeterInterface
     /**
      * @var array $paths
      *
-     * @ODM\Field(type="hash")
+     * @ODM\Field(
+     *  type="hash"
+     * )
      */
     protected $paths;
 
