@@ -17,7 +17,6 @@ class SiteAliasType extends AbstractType
 
     /**
      * @param string $siteAliasClass
-     * @param array  $frontLanguages
      */
     public function __construct(
         $siteAliasClass

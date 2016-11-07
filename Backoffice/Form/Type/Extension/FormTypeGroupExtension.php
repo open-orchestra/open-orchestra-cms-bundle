@@ -16,6 +16,10 @@ class FormTypeGroupExtension extends AbstractTypeExtension
 {
     CONST DEFAULT_SUB_GROUP = '_default';
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->setAttribute('group_enabled', $options['group_enabled']);
@@ -24,6 +28,11 @@ class FormTypeGroupExtension extends AbstractTypeExtension
         $builder->setAttribute('sub_group', $options['sub_group']);
     }
 
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if($form->getConfig()->getAttribute('group_enabled')) {
@@ -46,6 +55,9 @@ class FormTypeGroupExtension extends AbstractTypeExtension
         }
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -56,6 +68,11 @@ class FormTypeGroupExtension extends AbstractTypeExtension
         ));
     }
 
+    /**
+     * Returns the name of extended type.
+     *
+     * @return string The name of extended type
+     */
     public function getExtendedType()
     {
         return 'form';
