@@ -1,13 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading"><%= Translator.trans(title) %></div>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th><%= Translator.trans('open_orchestra_backoffice.dashboard.widget.list.name') %></th>
-            <th><%= Translator.trans('open_orchestra_backoffice.dashboard.widget.list.language') %></th>
-            <th><%= Translator.trans('open_orchestra_backoffice.dashboard.widget.list.date') %></th>
-        </tr>
-        </thead>
+    <table class="table">
         <tbody>
        <% if (_.isEmpty(entities)) { %>
             <tr>

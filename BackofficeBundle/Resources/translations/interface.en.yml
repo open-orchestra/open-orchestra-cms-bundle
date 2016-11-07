@@ -10,6 +10,3 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: No records found
-              name: Name
-              language: Language
-              date: Date
