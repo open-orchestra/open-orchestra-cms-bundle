@@ -642,7 +642,7 @@ open_orchestra_backoffice:
         api_client:
             name: Nom
             trusted: Confiance
-        websites:
+        sites:
             site_id: Id
             name: Nom
         trashcan:
