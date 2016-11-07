@@ -64,14 +64,6 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
 
-        $defaultDashBoardWidget = array(
-            "last_nodes",
-            "draft_nodes",
-            "last_contents",
-            "draft_contents"
-        );
-        $this->assertEquals($defaultDashBoardWidget, $container->getParameter('open_orchestra_backoffice.dashboard_widgets'));
-
         $defaultColor =  array(
             'red' => 'open_orchestra_backoffice.form.status.color.red',
             'green' => 'open_orchestra_backoffice.form.status.color.green',
@@ -125,9 +117,6 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
             'maxAge',
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
-
-        $defaultDashBoardWidget = array("fake_widget");
-        $this->assertEquals($defaultDashBoardWidget, $container->getParameter('open_orchestra_backoffice.dashboard_widgets'));
 
         $defaultColor =  array("fake_color" => "fake_translation_color");
         $this->assertEquals($defaultColor, $container->getParameter('open_orchestra_backoffice.choice.available_color'));
