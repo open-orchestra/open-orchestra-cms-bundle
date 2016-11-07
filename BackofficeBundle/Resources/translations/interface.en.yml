@@ -2,3 +2,14 @@ open_orchestra_backoffice:
     table:
         keywords:
             label: Label
+    dashboard:
+        last_node_title: My latest pages
+        last_content_title: My latest contents
+        node_draft_title: My pages not published
+        content_draft_title: My contents not published
+        widget:
+            list:
+              no_entities: No records found
+              name: Name
+              language: Language
+              date: Date

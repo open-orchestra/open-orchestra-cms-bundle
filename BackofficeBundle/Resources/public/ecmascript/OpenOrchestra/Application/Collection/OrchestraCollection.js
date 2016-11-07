@@ -23,10 +23,12 @@ class OrchestraCollection extends Backbone.Collection
      * 'update': '/user/update',
      * 'delete': '/user/remove'
      * }
+     * @param {object} options - sync options
+     *
      * @returns {Object}
      * @private
      */
-    _getSyncUrl() {
+    _getSyncUrl(options) {
         return {}
     }
 
@@ -35,7 +37,7 @@ class OrchestraCollection extends Backbone.Collection
      */
     sync(method, model, options) {
         options = options || {};
-        let url = this._getSyncUrl()[method.toLowerCase()];
+        let url = this._getSyncUrl(options)[method.toLowerCase()];
         if (typeof url != 'undefined') {
             options.url = url;
         }

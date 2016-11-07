@@ -1,5 +1,6 @@
 import NodeRouter       from './Router/Node/NodeRouter'
 import KeywordRouter    from './Router/Keyword/KeywordRouter'
+import DashboardRouter  from './Router/Dashboard/DashboardRouter'
 import ErrorView        from './View/Error/ErrorView'
 import TemplateManager  from '../Service/TemplateManager'
 import ApplicationError from '../Service/Error/ApplicationError'
@@ -102,6 +103,7 @@ class Application
      * @private
      */
     _initRouter() {
+        new DashboardRouter();
         new NodeRouter();
         new KeywordRouter();
     }
@@ -138,6 +140,7 @@ class Application
      */
     _initTranslator() {
         Translator.locale = this._configuration.getParameter('language');
+        Translator.defaultDomain = 'interface';
     }
 }
 

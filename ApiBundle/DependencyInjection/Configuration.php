@@ -63,8 +63,6 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('trash_item')->defaultValue('OpenOrchestra\ApiBundle\Facade\TrashItemFacade')->end()
                     ->scalarNode('trash_item_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\TrashItemCollectionFacade')->end()
                     ->scalarNode('translation')->defaultValue('OpenOrchestra\ApiBundle\Facade\TranslationFacade')->end()
-                    ->scalarNode('widget_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\WidgetCollectionFacade')->end()
-                    ->scalarNode('widget')->defaultValue('OpenOrchestra\ApiBundle\Facade\WidgetFacade')->end()
                 ->end()
             ->end()
         ->end();

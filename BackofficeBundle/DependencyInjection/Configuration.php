@@ -75,16 +75,6 @@ class Configuration implements ConfigurationInterface
                 ))
                 ->prototype('scalar')->end()
             ->end()
-            ->arrayNode('dashboard_widgets')
-                ->info('List of widgets presented on the dashboard')
-                ->prototype('scalar')->end()
-                ->defaultValue( array(
-                    "last_nodes",
-                    "draft_nodes",
-                    "last_contents",
-                    "draft_contents"
-                ))
-            ->end()
             ->arrayNode('collector')
                 ->useAttributeAsKey('key')
                 ->defaultValue( array(
