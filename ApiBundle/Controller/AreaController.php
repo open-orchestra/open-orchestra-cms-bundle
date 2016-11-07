@@ -5,16 +5,12 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
-use OpenOrchestra\ModelInterface\TemplateEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
 /**

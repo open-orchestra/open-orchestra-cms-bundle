@@ -94,12 +94,12 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
                             if ($accessParent !== $nodeGroupRole->isGranted()) {
                                 $nodeGroupRole->setGranted($accessParent);
                                 $this->objectManager->persist($group);
-                                $this->objectManager->flush();
                             }
                         }
                     }
                 }
             }
+            $this->objectManager->flush();
 
             $children = $this->nodeRepository->findByParent($node->getNodeId(), $node->getSiteId());
             foreach ($children as $child) {

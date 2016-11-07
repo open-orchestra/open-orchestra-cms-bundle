@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**

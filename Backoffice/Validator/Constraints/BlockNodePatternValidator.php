@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Validator\Constraints;
 
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;

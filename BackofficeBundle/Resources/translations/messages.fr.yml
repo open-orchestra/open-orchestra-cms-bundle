@@ -642,9 +642,6 @@ open_orchestra_backoffice:
         api_client:
             name: Nom
             trusted: Confiance
-        sites:
-            site_id: Id
-            name: Nom
         trashcan:
           name: Nom
           deleted_at: Supprimé le
