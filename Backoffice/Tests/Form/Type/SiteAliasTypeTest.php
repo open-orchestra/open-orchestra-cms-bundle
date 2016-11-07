@@ -52,7 +52,7 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(13))->add(Phake::anyParameters());
     }
 
     /**
