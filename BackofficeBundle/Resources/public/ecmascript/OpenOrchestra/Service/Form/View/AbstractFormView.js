@@ -9,10 +9,10 @@ class AbstractFormView extends OrchestraView
      * Constructor
      */
     constructor (options) {
-        if (new.target === AbstractFormView) {
+        super(options);
+        if (this.constructor === AbstractFormView) {
             throw TypeError("Can not construct abstract class");
         }
-        super(options);
     }
 
     /**
