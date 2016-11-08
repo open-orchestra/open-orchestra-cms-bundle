@@ -63,8 +63,7 @@ class BlockTransformer extends AbstractTransformer
         TranslatorInterface $translator,
         EventDispatcherInterface $eventDispatcher,
         array $fixedParameters
-    )
-    {
+    ){
         parent::__construct($facadeClass);
         $this->blockParameterManager = $blockParameterManager;
         $this->generateFormManager = $generateFormManager;
