@@ -68,10 +68,34 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
             array(
                 'data_class' => $this->siteAliasClass,
                 'group_enabled' => true,
-                'group_label' => array(
-                    'open_orchestra_backoffice.form.alias.group.information',
-                    'open_orchestra_backoffice.form.alias.group.seo',
-                )
+                'group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.alias.group.information',
+                    ),
+                    'seo' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.alias.group.seo',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                    ),
+                    'meta' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.meta',
+                    ),
+                    'google_marker' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.google_marker',
+                    ),
+                    'xiti' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.xiti',
+                    ),
+                ),
             )
         );
     }

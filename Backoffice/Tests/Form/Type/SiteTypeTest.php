@@ -78,13 +78,50 @@ class SiteTypeTest extends AbstractBaseTestCase
             array(
                 'data_class' => $this->siteClass,
                 'group_enabled' => true,
-                'group_label' => array(
-                    'open_orchestra_backoffice.form.website.group.information',
-                    'open_orchestra_backoffice.form.website.group.template_set',
-                    'open_orchestra_backoffice.form.website.group.seo',
-                    'open_orchestra_backoffice.form.website.group.content',
-                    'open_orchestra_backoffice.form.website.group.alias',
-                )
+                'group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.group.information',
+                    ),
+                    'template_set' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.group.template_set',
+                    ),
+                    'seo' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.website.group.seo',
+                    ),
+                    'content' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_backoffice.form.website.group.content',
+                    ),
+                    'alias' => array(
+                        'rank' => 4,
+                        'label' => 'open_orchestra_backoffice.form.website.group.alias',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.property',
+                    ),
+                    'block' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.block',
+                    ),
+                    'meta' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.meta',
+                    ),
+                    'sitemap' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.sitemap',
+                    ),
+                    'alias' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.robot',
+                    ),
+                ),
             )
         );
     }
