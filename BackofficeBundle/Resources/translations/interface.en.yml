@@ -9,4 +9,4 @@ open_orchestra_backoffice:
         content_draft_title: My contents not published
         widget:
             list:
-              no_entities: No records found
+              no_entities: No element to display
