@@ -6,7 +6,9 @@ let configuration = new Configuration(config);
 app.setConfiguration(configuration);
 $(() => {
     app.setRegions({
-        'content': $('#content')
+        'header': $('.header'),
+        'left_column': $('#left_column'),
+        'content': $('#central-column')
     });
     app.run();
 });

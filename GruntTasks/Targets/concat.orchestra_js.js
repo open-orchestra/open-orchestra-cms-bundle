@@ -27,9 +27,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/generateId.js',
     'web/built/openorchestrabackoffice/js/forbiddenAccessRedirection.js',
 
-    //--[ AJAX LOADER ]--//
-    'web/built/openorchestrabackoffice/js/ajaxLoader/AjaxLoaderView.js',
-
     //--[ BUTTON RIBBON ]--//
     'web/built/openorchestrabackoffice/js/ribbonButton/RibbonFormButtonView.js',
 

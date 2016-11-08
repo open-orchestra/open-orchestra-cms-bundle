@@ -18,7 +18,10 @@ module.exports = function(grunt) {
 
     var lessConfig = {
       compile: {
-        files: filesLess
+          options: {
+              paths: ['vendor/bower_components/']
+          },
+          files: filesLess
       }
     };
 
