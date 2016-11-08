@@ -38,78 +38,78 @@ class SiteAliasType extends AbstractType
             ->add('scheme', 'choice', array(
                 'choices' => $this->schemeChoices,
                 'label' => 'open_orchestra_backoffice.form.website.scheme',
-                'group_rank' => 0,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('domain', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.domain',
-                'group_rank' => 0,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('language', 'orchestra_language', array(
                 'label' => 'open_orchestra_backoffice.form.website.language',
-                'group_rank' => 0,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('prefix', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.prefix',
                 'required' => false,
-                'group_rank' => 0,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('main', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.main',
                 'required' => false,
-                'group_rank' => 0,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('metaDescription', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.meta',
+                'group_id' => 'seo',
+                'sub_group_id' => 'meta',
             ))
             ->add('metaIndex', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_index',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.meta',
+                'group_id' => 'seo',
+                'sub_group_id' => 'meta',
             ))
             ->add('metaFollow', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_follow',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.meta',
+                'group_id' => 'seo',
+                'sub_group_id' => 'meta',
             ))
             ->add('googleMarker', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.google_marker',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.google_marker',
+                'group_id' => 'seo',
+                'sub_group_id' => 'google_marker',
             ))
             ->add('cnilCompliance', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.cnil_compliance',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.google_marker',
+                'group_id' => 'seo',
+                'sub_group_id' => 'google_marker',
             ))
             ->add('xtsd', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.xtsd',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.xiti',
+                'group_id' => 'seo',
+                'sub_group_id' => 'xiti',
             ))
             ->add('xtside', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.xtside',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.xiti',
+                'group_id' => 'seo',
+                'sub_group_id' => 'xiti',
             ))
             ->add('xtn2', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.xtn2',
                 'required' => false,
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.alias.sub_group.xiti',
+                'group_id' => 'seo',
+                'sub_group_id' => 'xiti',
             ));
     }
 
@@ -122,10 +122,34 @@ class SiteAliasType extends AbstractType
             array(
                 'data_class' => $this->siteAliasClass,
                 'group_enabled' => true,
-                'group_label' => array(
-                    'open_orchestra_backoffice.form.alias.group.information',
-                    'open_orchestra_backoffice.form.alias.group.seo',
-                )
+                'group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.alias.group.information',
+                    ),
+                    'seo' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.alias.group.seo',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                    ),
+                    'meta' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.meta',
+                    ),
+                    'google_marker' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.google_marker',
+                    ),
+                    'xiti' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.xiti',
+                    ),
+                ),
             )
         );
     }

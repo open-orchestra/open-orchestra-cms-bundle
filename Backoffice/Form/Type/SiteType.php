@@ -44,8 +44,8 @@ class SiteType extends AbstractType
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.name',
                 'attr' => array('class' => 'generate-id-source'),
-                'group_rank' => 0,
-                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.property',
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('aliases', 'collection', array(
                 'type' => 'oo_site_alias',
@@ -58,45 +58,45 @@ class SiteType extends AbstractType
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
                 ),
                 'options' => array( 'label' => false ),
-                'group_rank' => 4,
+                'group_id' => 'alias',
             ))
             ->add('blocks', 'oo_block_choice', array(
                 'multiple' => true,
                 'expanded' => true,
                 'label' => false,
                 'required' => false,
-                'group_rank' => 3,
-                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.block',
+                'group_id' => 'content',
+                'sub_group_id' => 'block',
             ))
             ->add('theme', 'oo_site_theme_choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.theme',
-                'group_rank' => 1,
-                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.property',
+                'group_id' => 'template_set',
+                'sub_group_id' => 'property',
             ))
             ->add('metaAuthor', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.metaAuthor',
-                'group_rank' => 2,
-                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.meta',
+                'group_id' => 'seo',
+                'sub_group_id' => 'meta',
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.changefreq.title',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.website.changefreq.helper'),
-                'group_rank' => 2,
-                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.sitemap',
+                'group_id' => 'seo',
+                'sub_group_id' => 'sitemap',
             ))
             ->add('sitemap_priority', 'percent', array(
                 'label' => 'open_orchestra_backoffice.form.node.priority.label',
                 'type' => 'fractional',
                 'precision' => 2,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.priority.helper'),
-                'group_rank' => 2,
-                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.sitemap',
+                'group_id' => 'seo',
+                'sub_group_id' => 'sitemap',
             ))
             ->add('robotsTxt', 'textarea', array(
                 'label' => 'open_orchestra_backoffice.form.website.robots_txt',
                 'required' => true,
-                'group_rank' => 2,
-                'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.robot',
+                'group_id' => 'seo',
+                'sub_group_id' => 'robot',
             ))
             ;
         $builder->addEventSubscriber(new WebSiteSubscriber());
@@ -115,13 +115,50 @@ class SiteType extends AbstractType
             array(
                 'data_class' => $this->siteClass,
                 'group_enabled' => true,
-                'group_label' => array(
-                    'open_orchestra_backoffice.form.website.group.information',
-                    'open_orchestra_backoffice.form.website.group.template_set',
-                    'open_orchestra_backoffice.form.website.group.seo',
-                    'open_orchestra_backoffice.form.website.group.content',
-                    'open_orchestra_backoffice.form.website.group.alias',
-                )
+                'group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.group.information',
+                    ),
+                    'template_set' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.group.template_set',
+                    ),
+                    'seo' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.website.group.seo',
+                    ),
+                    'content' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_backoffice.form.website.group.content',
+                    ),
+                    'alias' => array(
+                        'rank' => 4,
+                        'label' => 'open_orchestra_backoffice.form.website.group.alias',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.property',
+                    ),
+                    'block' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.block',
+                    ),
+                    'meta' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.meta',
+                    ),
+                    'sitemap' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.sitemap',
+                    ),
+                    'alias' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.robot',
+                    ),
+                ),
             )
         );
     }

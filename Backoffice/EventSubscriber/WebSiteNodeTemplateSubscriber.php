@@ -37,8 +37,8 @@ class WebSiteNodeTemplateSubscriber implements EventSubscriberInterface
             'mapped' => false,
             'required' => false,
             'disabled' => $disabled,
-            'group_rank' => 1,
-            'sub_group' => 'open_orchestra_backoffice.form.website.sub_group.property',
+            'group_id' => 'template_set',
+            'sub_group_id' => 'property',
         ));
         $form->get('siteTemplateSelection')->add('templateSet', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.website.template_set',

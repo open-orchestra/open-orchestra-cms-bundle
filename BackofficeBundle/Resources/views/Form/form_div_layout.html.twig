@@ -16,24 +16,26 @@
 {% block form_widget %}
 	{% set nav_html  = '' %}
 	{% set group_html  = '' %}
+	{% set group_label  = '' %}
     {% if form.vars.group_enabled is defined and true == form.vars.group_enabled %}
-        {% for group, all in form.vars.group %}
+        {% for group in form.vars.group %}
         	{%  set current_group_html %}
             	{%  set err = false %}
             	{%  set req = false %}
             	{%  set active = -1 %}
-                {% for subgroup, children in all %}
+                {% for subgroup in group %}
                 	{% set subgroup_html %}
-                        {% for rank, child in children %}
+                	    {% set group_label = subgroup.group_label %}
+                        {% for child in subgroup.children %}
                     		{{ form_row(form[child]) }}
                     		{% set err = err or form[child].vars.errors is not empty %}
                     		{% set req = req or form[child].vars.required %}
                     		{% set active = (active == -1 and err) ? loop.index0 : active %}
                     	{% endfor %}
        	            {% endset %}
-       	            {% if subgroup != constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_SUB_GROUP') %}
+       	            {% if subgroup.sub_group_label != constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_SUB_GROUP') %}
            	        	<fieldset>
-           	        		<legend>{{ subgroup|trans }}</legend>
+           	        		<legend>{{ subgroup.sub_group_label|trans }}</legend>
            	        		{{ subgroup_html }}
            	            </fieldset>
        	            {% else %}
@@ -48,7 +50,7 @@
     	        </div>
 	        {% endset %}
 	        {% set current_nav_html %}
-	        	<li class="{% if active == loop.index0 %}active{% endif %}"><a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}"><label for="{{ loop.index0 }}" class="control-label col-lg-3">{{ group|default(loop.index0)|trans }}</label></a></li>
+	        	<li class="{% if active == loop.index0 %}active{% endif %}"><a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}"><label for="{{ loop.index0 }}" class="control-label col-lg-3">{{ group_label|default(loop.index0)|trans }}</label></a></li>
 	        {% endset %}
 	        {% set nav_html = nav_html ~ current_nav_html %}
 	        {% set group_html = group_html ~ current_group_html %}
