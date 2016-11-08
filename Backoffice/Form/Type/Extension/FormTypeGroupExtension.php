@@ -37,7 +37,7 @@ class FormTypeGroupExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if($form->getConfig()->getAttribute('group_enabled')) {
+        if ($form->getConfig()->getAttribute('group_enabled')) {
             $view->vars['group'] = array();
             $groupRender = $form->getConfig()->getAttribute('group_render');
             $subGroupRender = $form->getConfig()->getAttribute('sub_group_render');
