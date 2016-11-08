@@ -1,8 +1,7 @@
 module.exports = {
   expand: true,
   src: [
-    'web/css/presmartadmin.css',
-    'web/css/postsmartadmin.css'
+    'web/css/all.css'
   ],
   ext: '.min.css'
 };

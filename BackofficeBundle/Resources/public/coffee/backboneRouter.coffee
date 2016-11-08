@@ -29,7 +29,7 @@ OrchestraBORouter = Backbone.Router.extend(
     return
 
   initDisplayRouteChanges: (selector) ->
-    window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', null, $('form').not('#OrchestraBOModal form')
+    ###window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', null, $('form').not('#OrchestraBOModal form')
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
     $('#left-panel .active').removeClass 'active'
     link = $('#left-panel a' + selector)
@@ -39,7 +39,7 @@ OrchestraBORouter = Backbone.Router.extend(
     OpenOrchestra.RibbonButton.ribbonFormButtonView.resetAll('.ribbon-form-button')
     @afterRouteChanges(selector)
     displayLoader()
-    return true
+    return true###
 
   afterRouteChanges: (selector) ->
     navElementSelector = '#left-panel nav li:has(a' + selector + ')';

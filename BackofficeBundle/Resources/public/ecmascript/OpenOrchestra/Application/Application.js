@@ -30,11 +30,9 @@ class Application
         this._initTemplateManager();
         this._initRouter();
 
-        if (Routing.generate('fos_user_security_login', true) != document.location.pathname) {
-            Backbone.Events.trigger('application:before:start');
-            Backbone.history.start();
-            Backbone.Events.trigger('application:after:start');
-        }
+        Backbone.Events.trigger('application:before:start');
+        Backbone.history.start();
+        Backbone.Events.trigger('application:after:start');
     }
 
     /**

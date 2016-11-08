@@ -1,153 +1,229 @@
 module.exports = {
-  //--[ BOWER COMPONENTS ]--//
-  open_sans_fonts_bold: {
-    src: 'vendor/bower_components/open-sans/fonts/bold',
-    dest: 'web/fonts/bold'
-  },
-  open_sans_fonts_bold_italic: {
-    src: 'vendor/bower_components/open-sans/fonts/bold-italic',
-    dest: 'web/fonts/bold-italic'
-  },
-  open_sans_fonts_extrabold: {
-    src: 'vendor/bower_components/open-sans/fonts/extrabold',
-    dest: 'web/fonts/extrabold'
-  },
-  open_sans_fonts_extrabold_italic: {
-    src: 'vendor/bower_components/open-sans/fonts/extrabold-italic',
-    dest: 'web/fonts/extrabold-italic'
-  },
-  open_sans_fonts_italic: {
-    src: 'vendor/bower_components/open-sans/fonts/italic',
-    dest: 'web/fonts/italic'
-  },
-  open_sans_fonts_light: {
-    src: 'vendor/bower_components/open-sans/fonts/light',
-    dest: 'web/fonts/light'
-  },
-  open_sans_fonts_light_italic: {
-    src: 'vendor/bower_components/open-sans/fonts/light-italic',
-    dest: 'web/fonts/light-italic'
-  },
-  open_sans_fonts_regular: {
-    src: 'vendor/bower_components/open-sans/fonts/regular',
-    dest: 'web/fonts/regular'
-  },
-  open_sans_fonts_semibold: {
-    src: 'vendor/bower_components/open-sans/fonts/semibold',
-    dest: 'web/fonts/semibold'
-  },
-  open_sans_fonts_semibold_italic: {
-    src: 'vendor/bower_components/open-sans/fonts/semibold-italic',
-    dest: 'web/fonts/semibold-italic'
-  },
-  fontawesome_font_otf: {
-    src: 'vendor/bower_components/font-awesome/fonts/FontAwesome.otf',
-    dest: 'web/fonts/FontAwesome.otf'
-  },
-  fontawesome_font_eot: {
-    src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.eot',
-    dest: 'web/fonts/fontawesome-webfont.eot'
-  },
-  fontawesome_font_svg: {
-    src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.svg',
-    dest: 'web/fonts/fontawesome-webfont.svg'
-  },
-  fontawesome_font_ttf: {
-    src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
-    dest: 'web/fonts/fontawesome-webfont.ttf'
-  },
-  fontawesome_font_woff: {
-    src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.woff',
-    dest: 'web/fonts/fontawesome-webfont.woff'
-  },
-  fontawesome_font_woff2: {
-    src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.woff2',
-    dest: 'web/fonts/fontawesome-webfont.woff2'
-  },
-  bootstrap_font_eot: {
-    src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot',
-    dest: 'web/fonts/glyphicons-halflings-regular.eot'
-  },
-  bootstrap_font_svg: {
-    src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg',
-    dest: 'web/fonts/glyphicons-halflings-regular.svg'
-  },
-  bootstrap_font_ttf: {
-    src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
-    dest: 'web/fonts/glyphicons-halflings-regular.ttf'
-  },
-  bootstrap_font_woff: {
-    src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff',
-    dest: 'web/fonts/glyphicons-halflings-regular.woff'
-  },
-  bootstrap_font_woff2: {
-    src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
-    dest: 'web/fonts/glyphicons-halflings-regular.woff2'
-  },
-  jcrop_gif: {
-    src: 'vendor/bower_components/Jcrop/css/Jcrop.gif',
-    dest: 'web/css/Jcrop.gif'
-  },
-
-  //--[ SMARTADMIN ASSETS ]--//
-  smartadmin_bg: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/img/mybg.png',
-    dest: 'web/img/mybg.png'
-  },
-  smartadmin_overlay_pattern: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/img/pattern/overlay-pattern.png',
-    dest: 'web/img/pattern/overlay-pattern.png'
-  },
-  smartadmin_messagebox_sounds_mp3: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/messagebox.mp3',
-    dest: 'web/sound/messagebox.mp3'
-  },
-  smartadmin_messagebox_sounds_ogg: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/messagebox.ogg',
-    dest: 'web/sound/messagebox.ogg'
-  },
-  smartadmin_smallbox_sounds_mp3: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/smallbox.mp3',
-    dest: 'web/sound/smallbox.mp3'
-  },
-  smartadmin_smallbox_sounds_ogg: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/smallbox.ogg',
-    dest: 'web/sound/smallbox.ogg'
-  },
-  smartadmin_flags: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/img/flags/flags.png',
-    dest: 'web/img/flags/flags.png'
-  },
-  jquery_minicolors: {
-    src: 'vendor/bower_components/jquery-minicolors/jquery.minicolors.png',
-    dest: 'web/css/images/jquery.minicolors.png'
-  },
-  select2_gif: {
-    src: 'web/bundles/openorchestrabackoffice/smartadmin/img/select2-spinner.gif',
-    dest: 'web/img/select2-spinner.gif'
-  },
-  jquery_ui: {
-    src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
-    dest: 'web/css/images/ui-icons_222222_256x240.png'
-  },
-  jquery_ui_bg_flat: {
-    src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png',
-    dest: 'web/css/images/ui-bg_flat_75_ffffff_40x100.png'
-  },
-  jquery_ui_bg_highlight: {
-    src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png',
-    dest: 'web/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png'
-  },
-  jquery_ui_bg_glass: {
-    src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_glass_75_dadada_1x400.png',
-    dest: 'web/css/images/ui-bg_glass_75_dadada_1x400.png'
-  },
-  column_icons: {
-    src: 'web/bundles/openorchestrabackoffice/images/column-icons.svg',
-    dest: 'web/images/column-icons.svg'
-  },
-  padlock_icon: {
+    //--[ FONT MONTSERRAT ]--//
+    font_montserrat_700_eot: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-700/Montserrat-700.eot',
+        dest: 'web/fonts/Montserrat-700/Montserrat-700.eot'
+    },
+    font_montserrat_700_svg: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-700/Montserrat-700.svg',
+        dest: 'web/fonts/Montserrat-700/Montserrat-700.svg'
+    },
+    font_montserrat_700_ttf: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-700/Montserrat-700.ttf',
+        dest: 'web/fonts/Montserrat-700/Montserrat-700.ttf'
+    },
+    font_montserrat_700_woff: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-700/Montserrat-700.woff',
+        dest: 'web/fonts/Montserrat-700/Montserrat-700.woff'
+    },
+    font_montserrat_700_woff2: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-700/Montserrat-700.woff2',
+        dest: 'web/fonts/Montserrat-700/Montserrat-700.woff2'
+    },
+    font_montserrat_regular_eot: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-regular/Montserrat-regular.eot',
+        dest: 'web/fonts/Montserrat-regular/Montserrat-regular.eot'
+    },
+    font_montserrat_regular_svg: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-regular/Montserrat-regular.svg',
+        dest: 'web/fonts/Montserrat-regular/Montserrat-regular.svg'
+    },
+    font_montserrat_regular_ttf: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-regular/Montserrat-regular.ttf',
+        dest: 'web/fonts/Montserrat-regular/Montserrat-regular.ttf'
+    },
+    font_montserrat_regular_woff: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-regular/Montserrat-regular.woff',
+        dest: 'web/fonts/Montserrat-regular/Montserrat-regular.woff'
+    },
+    font_montserrat_regular_woff2: {
+        src: 'web/bundles/openorchestrabackoffice/font/Montserrat/fonts/Montserrat-regular/Montserrat-regular.woff2',
+        dest: 'web/fonts/Montserrat-regular/Montserrat-regular.woff2'
+    },
+    //--[ FONT ROBOTO ]--//
+    font_roboto_500_eot: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-500/Roboto-500.eot',
+        dest: 'web/fonts/Roboto-500/Roboto-500.eot'
+    },
+    font_roboto_500_svg: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-500/Roboto-500.svg',
+        dest: 'web/fonts/Roboto-500/Roboto-500.svg'
+    },
+    font_roboto_500_ttf: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-500/Roboto-500.ttf',
+        dest: 'web/fonts/Roboto-500/Roboto-500.ttf'
+    },
+    font_roboto_500_woff: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-500/Roboto-500.woff',
+        dest: 'web/fonts/Roboto-500/Roboto-500.woff'
+    },
+    font_roboto_500_woff2: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-500/Roboto-500.woff2',
+        dest: 'web/fonts/Roboto-500/Roboto-500.woff2'
+    },
+    font_roboto_700_eot: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700/Roboto-700.eot',
+        dest: 'web/fonts/Roboto-700/Roboto-700.eot'
+    },
+    font_roboto_700_svg: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700/Roboto-700.svg',
+        dest: 'web/fonts/Roboto-700/Roboto-700.svg'
+    },
+    font_roboto_700_ttf: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700/Roboto-700.ttf',
+        dest: 'web/fonts/Roboto-700/Roboto-700.ttf'
+    },
+    font_roboto_700_woff: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700/Roboto-700.woff',
+        dest: 'web/fonts/Roboto-700/Roboto-700.woff'
+    },
+    font_roboto_700_woff2: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700/Roboto-700.woff2',
+        dest: 'web/fonts/Roboto-700/Roboto-700.woff2'
+    },
+    font_roboto_700italic_eot: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700italic/Roboto-700italic.eot',
+        dest: 'web/fonts/Roboto-700italic/Roboto-700italic.eot'
+    },
+    font_roboto_700italic_svg: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700italic/Roboto-700italic.svg',
+        dest: 'web/fonts/Roboto-700italic/Roboto-700italic.svg'
+    },
+    font_roboto_700italic_ttf: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700italic/Roboto-700italic.ttf',
+        dest: 'web/fonts/Roboto-700italic/Roboto-700italic.ttf'
+    },
+    font_roboto_700italic_woff: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700italic/Roboto-700italic.woff',
+        dest: 'web/fonts/Roboto-700italic/Roboto-700italic.woff'
+    },
+    font_roboto_700italic_woff2: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-700italic/Roboto-700italic.woff2',
+        dest: 'web/fonts/Roboto-700italic/Roboto-700italic.woff2'
+    },
+    font_roboto_regular_eot: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-regular/Roboto-regular.eot',
+        dest: 'web/fonts/Roboto-regular/Roboto-regular.eot'
+    },
+    font_roboto_regular_svg: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-regular/Roboto-regular.svg',
+        dest: 'web/fonts/Roboto-regular/Roboto-regular.svg'
+    },
+    font_roboto_regular_ttf: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-regular/Roboto-regular.ttf',
+        dest: 'web/fonts/Roboto-regular/Roboto-regular.ttf'
+    },
+    font_roboto_regular_woff: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-regular/Roboto-regular.woff',
+        dest: 'web/fonts/Roboto-regular/Roboto-regular.woff'
+    },
+    font_roboto_regular_woff2: {
+        src: 'web/bundles/openorchestrabackoffice/font/Roboto/fonts/Roboto-regular/Roboto-regular.woff2',
+        dest: 'web/fonts/Roboto-regular/Roboto-regular.woff2'
+    },
+    //--[ FONT AWESOME ]--//
+    fontawesome_font_otf: {
+        src: 'vendor/bower_components/font-awesome/fonts/FontAwesome.otf',
+        dest: 'web/fonts/FontAwesome.otf'
+    },
+    fontawesome_font_eot: {
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.eot',
+        dest: 'web/fonts/fontawesome-webfont.eot'
+    },
+    fontawesome_font_svg: {
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.svg',
+        dest: 'web/fonts/fontawesome-webfont.svg'
+    },
+    fontawesome_font_ttf: {
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
+        dest: 'web/fonts/fontawesome-webfont.ttf'
+    },
+    fontawesome_font_woff: {
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.woff',
+        dest: 'web/fonts/fontawesome-webfont.woff'
+    },
+    fontawesome_font_woff2: {
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.woff2',
+        dest: 'web/fonts/fontawesome-webfont.woff2'
+    },
+    //--[ FONT BOOTSTRAP ]--//
+    bootstrap_font_eot: {
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot',
+        dest: 'web/fonts/glyphicons-halflings-regular.eot'
+    },
+    bootstrap_font_svg: {
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg',
+        dest: 'web/fonts/glyphicons-halflings-regular.svg'
+    },
+    bootstrap_font_ttf: {
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
+        dest: 'web/fonts/glyphicons-halflings-regular.ttf'
+    },
+    bootstrap_font_woff: {
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff',
+        dest: 'web/fonts/glyphicons-halflings-regular.woff'
+    },
+    bootstrap_font_woff2: {
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
+        dest: 'web/fonts/glyphicons-halflings-regular.woff2'
+    },
+    //--[ JCROP ]--//
+    jcrop_gif: {
+        src: 'vendor/bower_components/Jcrop/css/Jcrop.gif',
+        dest: 'web/css/Jcrop.gif'
+    },
+    //--[ JQUERY UI ]--//
+    jquery_minicolors: {
+        src: 'vendor/bower_components/jquery-minicolors/jquery.minicolors.png',
+        dest: 'web/css/images/jquery.minicolors.png'
+    },
+    jquery_ui: {
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
+        dest: 'web/css/images/ui-icons_222222_256x240.png'
+    },
+    jquery_ui_bg_flat: {
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png',
+        dest: 'web/css/images/ui-bg_flat_75_ffffff_40x100.png'
+    },
+    jquery_ui_bg_highlight: {
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png',
+        dest: 'web/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png'
+    },
+    jquery_ui_bg_glass: {
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_glass_75_dadada_1x400.png',
+        dest: 'web/css/images/ui-bg_glass_75_dadada_1x400.png'
+    },
+    //--[ IMAGES ]--//
+    padlock_icon: {
       src: 'web/bundles/openorchestrabackoffice/images/padlock.png',
       dest: 'web/images/padlock.png'
+    },
+    logo: {
+      src: 'web/bundles/openorchestrabackoffice/images/logo.png',
+      dest: 'web/images/logo.png'
+    },
+    menu_item1: {
+      src: 'web/bundles/openorchestrabackoffice/images/menu-item1.png',
+      dest: 'web/images/menu-item1.png'
+    },
+    menu_item2: {
+      src: 'web/bundles/openorchestrabackoffice/images/menu-item2.png',
+      dest: 'web/images/menu-item2.png'
+    },
+    menu_item3: {
+      src: 'web/bundles/openorchestrabackoffice/images/menu-item3.png',
+      dest: 'web/images/menu-item3.png'
+    },
+    menu_item4: {
+      src: 'web/bundles/openorchestrabackoffice/images/menu-item4.png',
+      dest: 'web/images/menu-item4.png'
+    },
+    menu_item5: {
+      src: 'web/bundles/openorchestrabackoffice/images/menu-item5.png',
+      dest: 'web/images/menu-item5.png'
+    },
+    menu_item6: {
+      src: 'web/bundles/openorchestrabackoffice/images/menu-item6.png',
+      dest: 'web/images/menu-item6.png'
     }
 };
