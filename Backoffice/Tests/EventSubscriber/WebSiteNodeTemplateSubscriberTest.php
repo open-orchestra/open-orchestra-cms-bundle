@@ -46,7 +46,7 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $siteId
-     * @param int    $countAddForm
+     * @param bool   $disabled
      *
      * @dataProvider provideSiteIdAndCountAddForm
      */
