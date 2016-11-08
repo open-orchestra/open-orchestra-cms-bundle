@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder;
 
 /**
  * Class StatusTransformer
@@ -24,6 +25,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $roleRepository;
     protected $multiLanguagesChoiceManager;
     protected $translator;
+    protected $usageFinder;
 
     /**
      * @param string                               $facadeClass
@@ -32,6 +34,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param TranslatorInterface                  $translator
      * @param AuthorizationCheckerInterface        $authorizationChecker
+     * @param StatusUsageFinder                    $usageFinder
      */
     public function __construct(
         $facadeClass,
@@ -39,13 +42,15 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         RoleRepositoryInterface $roleRepository,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         TranslatorInterface $translator,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        StatusUsageFinder $usageFinder
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
         $this->roleRepository = $roleRepository;
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->translator = $translator;
+        $this->usageFinder = $usageFinder;
     }
 
     /**
@@ -90,7 +95,9 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
             }
             $facade->fromRole = implode(',', $fromRoles);
 
-            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)) {
+            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)
+                && !$this->usageFinder->hasUsage($status)
+            ) {
                 $facade->addLink('_self_delete', $this->generateRoute(
                     'open_orchestra_api_status_delete',
                     array('statusId' => $status->getId())

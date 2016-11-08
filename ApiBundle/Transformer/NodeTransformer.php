@@ -39,7 +39,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param array                   $templateSetparameters
+     * @param array                         $templateSetparameters
      */
     public function __construct(
         $facadeClass,
@@ -192,9 +192,11 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         $facade = $this->addPreviewLinks($facade, $node);
 
-        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
-            'id' => $node->getId(),
-        )));
+        if (!$node->getStatus()->isBlockedEdition()) {
+            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
+                'id' => $node->getId(),
+            )));
+        }
 
         $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_node_list_status', array(
             'nodeMongoId' => $node->getId()
@@ -217,8 +219,9 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             'language' => $node->getLanguage(),
         )));
 
-        if (NodeInterface::TYPE_ERROR !== $node->getNodeType() &&
-            $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node)
+        if (NodeInterface::TYPE_ERROR !== $node->getNodeType()
+            && $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node)
+            && !NodeInterface::ROOT_NODE_ID === $node->getNodeId()
         ) {
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
                 'nodeId' => $node->getNodeId()

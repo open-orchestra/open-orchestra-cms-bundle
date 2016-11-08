@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\BlockTransformer;
 
