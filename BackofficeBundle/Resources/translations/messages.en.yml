@@ -15,17 +15,6 @@ open_orchestra_backoffice:
         tooltip: '*Warning! This will reset all your widget settings.*'
         title: Clear Local Storage
         text: Would you like to RESET all your saved widgets and clear LocalStorage?
-    dashboard:
-        last_node_title: My latest pages
-        last_content_title: My latest contents
-        node_draft_title: My pages not published
-        content_draft_title: My contents not published
-        widget:
-            list:
-              no_entities: No records found
-              name: Name
-              language: Language
-              date: Date
     internal_link:
         title: Internal link
     form:

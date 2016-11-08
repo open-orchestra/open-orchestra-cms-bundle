@@ -15,17 +15,6 @@ open_orchestra_backoffice:
         tooltip: '*Attention ! Ceci réinitialisera tous les settings de widgets.*'
         title: Purger le Local Storage
         text: Voulez-vous REINITIALISER toutes vos configurations de widgets sauvegardées et purger votre Local Storage ?
-    dashboard:
-        last_node_title: Mes dernières pages
-        last_content_title: Mes derniers contenus
-        node_draft_title: Mes pages non publiées
-        content_draft_title: Mes contenus non publiés
-        widget:
-            list:
-              no_entities: Aucun élément à afficher
-              name: Nom
-              language: Langue
-              date: Date
     internal_link:
         title: Lien interne
     form:

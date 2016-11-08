@@ -2,3 +2,11 @@ open_orchestra_backoffice:
     table:
         keywords:
             label: Etiquette
+    dashboard:
+        last_node_title: Mes dernières pages
+        last_content_title: Mes derniers contenus
+        node_draft_title: Mes pages non publiées
+        content_draft_title: Mes contenus non publiés
+        widget:
+            list:
+              no_entities: Aucun élément à afficher

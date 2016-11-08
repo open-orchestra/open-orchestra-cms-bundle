@@ -11,7 +11,7 @@ class KeywordRouter extends OrchestraRouter
     /**
      * @inheritdoc
      */
-    preinitialize(options) {
+    preinitialize() {
         this.routes = {
             'keyword/list(/:page)': 'listKeyword',
             'keyword/test/:test(/:page)': 'test'

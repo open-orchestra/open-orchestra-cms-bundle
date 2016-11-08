@@ -2,7 +2,7 @@ OrchestraBORouter = Backbone.Router.extend(
   routePatterns: {}
 
   routes: {
-    '*path': 'showHome'
+    #'*path': 'showHome'
   }
 
   initialize: ->
