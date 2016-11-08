@@ -122,7 +122,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertSame($deleted, $facade->deleted);
         $this->assertSame($linkedToSite, $facade->linkedToSite);
         $this->assertSame($facade->status->label, $facade->statusLabel);
-        Phake::verify($content, Phake::times(1))->getStatus();
+        Phake::verify($content, Phake::times(2))->getStatus();
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
