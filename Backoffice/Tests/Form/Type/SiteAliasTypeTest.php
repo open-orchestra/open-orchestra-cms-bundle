@@ -52,7 +52,7 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(13))->add(Phake::anyParameters());
     }
 
     /**
@@ -64,8 +64,39 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
 
         $this->form->configureOptions($resolver);
 
-        Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteAliasClass
-        ));
+        Phake::verify($resolver)->setDefaults(
+            array(
+                'data_class' => $this->siteAliasClass,
+                'group_enabled' => true,
+                'group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.alias.group.information',
+                    ),
+                    'seo' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.alias.group.seo',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.property',
+                    ),
+                    'meta' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.meta',
+                    ),
+                    'google_marker' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.google_marker',
+                    ),
+                    'xiti' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_backoffice.form.alias.sub_group.xiti',
+                    ),
+                ),
+            )
+        );
     }
 }

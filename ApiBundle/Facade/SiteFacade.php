@@ -23,26 +23,6 @@ class SiteFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<string>")
      */
-    public $metaKeywords;
-
-    /**
-     * @Serializer\Type("array<string>")
-     */
-    public $metaDescriptions;
-
-    /**
-     * @Serializer\Type("boolean")
-     */
-    public $metaIndex = false;
-
-    /**
-     * @Serializer\Type("boolean")
-     */
-    public $metaFollow = false;
-
-    /**
-     * @Serializer\Type("array<string>")
-     */
     protected $languages = array();
 
     /**

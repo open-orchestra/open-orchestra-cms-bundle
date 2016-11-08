@@ -1,6 +1,7 @@
 import NodeRouter       from './Router/Node/NodeRouter'
 import KeywordRouter    from './Router/Keyword/KeywordRouter'
 import DashboardRouter  from './Router/Dashboard/DashboardRouter'
+import SiteRouter       from './Router/Site/SiteRouter'
 import ErrorView        from './View/Error/ErrorView'
 import TemplateManager  from '../Service/TemplateManager'
 import ApplicationError from '../Service/Error/ApplicationError'
@@ -106,6 +107,7 @@ class Application
         new DashboardRouter();
         new NodeRouter();
         new KeywordRouter();
+        new SiteRouter();
     }
 
     /**

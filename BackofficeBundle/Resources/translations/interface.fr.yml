@@ -10,3 +10,6 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: Aucun élément à afficher
+        sites:
+            site_id: Id
+            name: Nom

@@ -13,6 +13,74 @@
     {% endspaceless %}
 {% endblock form %}
 
+{% block form_widget %}
+	{% set nav_html  = '' %}
+	{% set group_html  = '' %}
+	{% set group_label  = '' %}
+    {% if form.vars.group_enabled is defined and true == form.vars.group_enabled %}
+        {% for group in form.vars.group %}
+        	{%  set current_group_html %}
+            	{%  set err = false %}
+            	{%  set req = false %}
+            	{%  set active = -1 %}
+                {% for subgroup in group %}
+                	{% set subgroup_html %}
+                	    {% set group_label = subgroup.group_label %}
+                        {% for child in subgroup.children %}
+                    		{{ form_row(form[child]) }}
+                    		{% set err = err or form[child].vars.errors is not empty %}
+                    		{% set req = req or form[child].vars.required %}
+                    		{% set active = (active == -1 and err) ? loop.index0 : active %}
+                    	{% endfor %}
+       	            {% endset %}
+       	            {% if subgroup.sub_group_label != constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_SUB_GROUP') %}
+           	        	<fieldset>
+           	        		<legend>{{ subgroup.sub_group_label|trans }}</legend>
+           	        		{{ subgroup_html }}
+           	            </fieldset>
+       	            {% else %}
+       	                {{ subgroup_html }}
+       	            {% endif %}
+    	        {% endfor %}
+           		{% set active = (active == -1) ? 0 : active %}
+	        {% endset %}
+	        {% set current_group_html %}
+               	<div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if err %} error{% endif %}{% if req %} required{% endif %}">
+               		{{ current_group_html }}
+    	        </div>
+	        {% endset %}
+	        {% set current_nav_html %}
+	        	<li class="{% if active == loop.index0 %}active{% endif %}"><a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}"><label for="{{ loop.index0 }}" class="control-label col-lg-3">{{ group_label|default(loop.index0)|trans }}</label></a></li>
+	        {% endset %}
+	        {% set nav_html = nav_html ~ current_nav_html %}
+	        {% set group_html = group_html ~ current_group_html %}
+        {% endfor %}
+        <ul role="tablist" class="nav nav-tabs">
+            {{ nav_html|raw }}
+        </ul>
+    	<div class="tab-content">
+    	    {{ group_html|raw }}
+		</div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+
+{% block choice_widget %}
+    {% spaceless %}
+        {% if expanded and multiple %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                {{ checkbox_row(child, { 'no_form_group': true, 'inline' : (attr.inline is defined and attr.inline), 'label_attr': label_attr, 'form_group_col': 6 }) }}
+            {% endfor %}
+        </div>
+        {% else %}
+        	{{ parent() }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock choice_widget %}
+
 {% block checkbox_widget %}
     {% spaceless %}
         <div class="smart-form">
@@ -31,30 +99,6 @@
                 {{ parent() }}
                 <i data-swchon-text="{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}" data-swchoff-text="{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}"></i>
             </label>
-        </div>
-    {% endspaceless %}
-{% endblock %}
-
-{% block column_layout_row_widget %}
-    {% spaceless %}
-        <div class="col-lg-11 col-lg-offset-1">
-            <div class="form-group">
-                <label class="control-label">{{ 'open_orchestra_backoffice.form.area.layout.select_layout'|trans }}</label>
-                <ul class="list-inline layout-options">
-                    <li class="text-hide" data-layout="1">1</li>
-                    <li class="text-hide" data-layout="1,1">1,1</li>
-                    <li class="text-hide" data-layout="2,1">2,1</li>
-                    <li class="text-hide" data-layout="1,1,1">1,1,1</li>
-                    <li class="text-hide" data-layout="1,3">1,3</li>
-                    <li class="text-hide" data-layout="4,1">4,1</li>
-                    <li class="text-hide" data-layout="1,1,1,1,1,1">1,1,1,1,1,1</li>
-                    <li class="text-hide" data-layout="1,4,1">1,4,1</li>
-                    <li class="text-hide" data-layout="1,1,1,3">1,1,1,3</li>
-                </ul>
-            </div>
-
-            {% set attr = attr|merge({ 'style': 'vertical'}) %}
-            {{ block('form_rows') }}
         </div>
     {% endspaceless %}
 {% endblock %}
@@ -101,6 +145,7 @@
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
         {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
         {% set label_col = label_col|default(bootstrap_get_label_col()) %}
+        {% set form_group_col = form_group_col|default('') %}
         {% set refreshIcon = '' %}
 
         {% if attr.label_col is defined and attr.label_col is not empty %}
@@ -112,6 +157,11 @@
         {% if attr.col_size is defined and attr.col_size is not empty %}
             {% set col_size = attr.col_size %}
         {% endif %}
+		{% set form_group_class = '' %}
+        {% if form_group_col is defined and form_group_col is not empty %}
+            {% set form_group_class = 'col-'~col_size~'-'~form_group_col %}
+        {% endif %}
+
         {% if attr.style is defined and attr.style is not empty %}
             {% set style = attr.style %}
         {% endif %}
@@ -140,7 +190,7 @@
             {% endif %}
         {% endfor %}
 
-        <div class="form-group{% if errors %} has-error{% endif %}">
+        <div class="form-group{% if errors %} has-error{% endif %} {{ form_group_class }}">
             {% if style == 'horizontal' %}
                 {{ form_label(form) }}
                 {{ refreshIcon }}
@@ -287,6 +337,7 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_date_picker_widget %}
+
 {% block form_legend %}
     <div class="help-block">
         <p>* {{ 'open_orchestra_backoffice.form.orchestra_fields.required_field' | trans }}</p>

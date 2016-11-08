@@ -38,8 +38,6 @@ class SiteManagerTest extends AbstractBaseTestCase
         $this->assertInstanceOf($this->siteClass, $site);
         $this->assertEquals(SiteInterface::PRIORITY_DEFAULT, $site->getSitemapPriority());
         $this->assertEquals(SiteInterface::CHANGE_FREQ_DEFAULT, $site->getSitemapChangefreq());
-        $this->assertTrue($site->getMetaIndex());
-        $this->assertTrue($site->getMetaFollow());
         $this->assertEquals(1, $site->getAliases()->count());
     }
 }

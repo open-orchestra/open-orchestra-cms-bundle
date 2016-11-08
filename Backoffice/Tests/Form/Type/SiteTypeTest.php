@@ -30,7 +30,7 @@ class SiteTypeTest extends AbstractBaseTestCase
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
 
-        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager, $this->languages);
+        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager);
     }
 
     /**
@@ -60,7 +60,7 @@ class SiteTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(12))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
         Phake::verify($this->translator, Phake::times(3))->trans(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
@@ -74,8 +74,55 @@ class SiteTypeTest extends AbstractBaseTestCase
 
         $this->form->configureOptions($resolver);
 
-        Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteClass
-        ));
+        Phake::verify($resolver)->setDefaults(
+            array(
+                'data_class' => $this->siteClass,
+                'group_enabled' => true,
+                'group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.group.information',
+                    ),
+                    'template_set' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.group.template_set',
+                    ),
+                    'seo' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.website.group.seo',
+                    ),
+                    'content' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_backoffice.form.website.group.content',
+                    ),
+                    'alias' => array(
+                        'rank' => 4,
+                        'label' => 'open_orchestra_backoffice.form.website.group.alias',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.property',
+                    ),
+                    'block' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.block',
+                    ),
+                    'meta' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.meta',
+                    ),
+                    'sitemap' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.sitemap',
+                    ),
+                    'alias' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.robot',
+                    ),
+                ),
+            )
+        );
     }
 }

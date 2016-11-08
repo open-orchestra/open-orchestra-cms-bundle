@@ -46,11 +46,11 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $siteId
-     * @param int    $countAddForm
+     * @param bool   $disabled
      *
      * @dataProvider provideSiteIdAndCountAddForm
      */
-    public function testPreSetData($siteId, $countAddForm)
+    public function testPreSetData($siteId, $disabled)
     {
         $templateSetChoices = array(
             'fakeTemplateSet' => 'fakeTemplateSet'
@@ -65,13 +65,14 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->data)->getSiteId()->thenReturn($siteId);
 
         $this->subscriber->onPreSetData($this->event);
-        Phake::verify($this->form, Phake::times($countAddForm))->add('templateSet', 'choice', array(
+        Phake::verify($this->form)->add('templateSet', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.website.template_set',
             'choices' => $templateSetChoices,
             'attr' => array('class' => 'select-grouping-master'),
             'required' => true,
+            'disabled' => $disabled,
         ));
-        Phake::verify($this->form, Phake::times($countAddForm))->add('templateNodeRoot', 'choice', array(
+        Phake::verify($this->form)->add('templateNodeRoot', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.website.template_node_root.label',
             'choices' => $templateChoices,
             'attr'  => array(
@@ -79,6 +80,7 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
                 'class' => 'select-grouping-slave'
             ),
             'required' => true,
+            'disabled' => $disabled,
         ));
     }
 
@@ -88,8 +90,8 @@ class WebSiteNodeTemplateSubscriberTest extends \PHPUnit_Framework_TestCase
     public function provideSiteIdAndCountAddForm()
     {
         return array(
-            "with site id in data" => array('fakeSiteId', 0),
-            "no site id in data" => array(null, 1)
+            "with site id in data" => array('fakeSiteId', true),
+            "no site id in data" => array(null, false)
         );
     }
 

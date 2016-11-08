@@ -131,6 +131,12 @@ open_orchestra_backoffice:
             meta_index: Meta index
             meta_follow: Meta follow
             robots_txt: Informations contained in the robots.txt file
+            metaAuthor: Author
+            google_marker: Marker
+            cnil_compliance: CNIL compliance
+            xtsd: xtsd
+            xtside: xtside
+            xtn2: xtn2
             template_node_root:
                 label: Homepage template
                 helper: Template used to create the homepage of your site.
@@ -138,6 +144,18 @@ open_orchestra_backoffice:
                 title: Indicative periodicity of change (for the sitemap)
                 helper: Indicative periodicity of change (for the sitemap)
             template_set: Template set
+            group:
+                information: Informations
+                template_set: Template set
+                seo: Seo
+                content: Content
+                alias: Alias
+            sub_group:
+                property: Property
+                meta: Meta
+                sitemap: Sitemap
+                robot: Robots.txt
+                block: Blocks
         theme:
             success: The theme has been modified
             creation: The theme has been created
@@ -351,6 +369,15 @@ open_orchestra_backoffice:
             content: Content
             query: Query string
             filter: Content filter
+        alias:
+            group:
+                information: Informations
+                seo: Seo
+            sub_group:
+                property: Property
+                meta: Meta
+                google_marker: Google Analytics marker / GTM
+                xiti: AT Internet tag (Xiti)
     left_menu:
         tree:
             new_page: New page
@@ -397,7 +424,7 @@ open_orchestra_backoffice:
                 list: Trashcan
     block:
         configurable_content:
-            title: Configurable content block
+            title: Configurable content
             contentTypeId: Choose a content type
             contentId: Choose a content
             description: Display selected content.
@@ -406,54 +433,54 @@ open_orchestra_backoffice:
                 title: Template usage
                 helper: Template usage
         contact:
-            title: Contact block
+            title: Contact
             description: Display a contact form.
             recipient: Recipient's email
             signature: Signature of the email notification
         footer:
-            title: Footer block
+            title: Footer
             description: Display a page name list that have a footer attribute.
         menu:
-            title: Menu block
+            title: Menu
             description: Display a page name list that have the attribute menu.
         search:
-            title: Search block
+            title: Search
             description: Display a search field.
         search_result:
-            title: Search result block
+            title: Search result
             description: Display result of the research.
         tiny_mce_wysiwyg:
-            title: Rich text block
+            title: Rich text
             description: Display a rich text area.
             searchable: Indexable
         sub_menu:
-            title: SubMenu Block
+            title: SubMenu
             description: Display a menu.
         content_list:
-            title: Content List Block
+            title: Content List
             description: Display a list of contents.
         content_list_by_keyword:
             title: Content list by keyword block
             description: Display a list of contents by key word.
         content:
-            title: Content Block
+            title: Content
             description: Display a content.
             content_template: Twig syntax error.
         language_list:
-            title: Language choice Block
+            title: Language choice
             description: Display dropdown list with all the languages of the site.
         login:
-            title: Login Block
+            title: Login
             description: Display a log form.
         delete_question: Delete this block?
         delete_explanation: The removal will be final.
         video:
-            title: Video Block
+            title: Video
             description: Insert a Youtube, Dailymotion or Vimeo video
             type: Video type
             youtube:
                 name: Youtube
-                title: Youtube block
+                title: Youtube
                 description: Display a Youtube video
                 video_id: Video id or url of the video
                 autoplay: Play the video automatically on load
@@ -472,7 +499,7 @@ open_orchestra_backoffice:
                 color: Display progress bar in white
             dailymotion:
                 name: Dailymotion
-                title: Dailymotion block
+                title: Dailymotion
                 description: Display a Dailymotion video
                 video_id: Video id or url of the video
                 autoplay: Play the video automatically on load
@@ -488,7 +515,7 @@ open_orchestra_backoffice:
                 logo: Allows to show the Dailymotion logo
             vimeo:
                 name: Vimeo
-                title: Vimeo block
+                title: Vimeo
                 description: Display a Vimeo video
                 video_id: Video id or url of the video
                 autoplay: Play the video automatically on load
@@ -502,13 +529,13 @@ open_orchestra_backoffice:
                 height: Height of the player
                 badge: Disables the badge on the video
         gmap:
-            title: Gmap Block
+            title: Gmap
             description: Display a map
         add_this:
-            title: Add this block
+            title: Add this
             description: Display button to share content
         audience_analysis:
-            title: Audience analysis block
+            title: Audience analysis
             description: Integrate a Google Analytics or Xiti tag
             tag_type: Tag type
             google_analytics: Google Analytics
@@ -615,9 +642,6 @@ open_orchestra_backoffice:
         api_client:
             name: Name
             trusted: Trusted
-        websites:
-            site_id: Site id
-            name: Name
         trashcan:
           name: Name
           deleted_at: Deleted at

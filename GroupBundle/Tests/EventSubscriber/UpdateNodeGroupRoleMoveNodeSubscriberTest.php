@@ -92,7 +92,6 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
 
         Phake::verify($nodeGroupRole, Phake::times($countUpdate))->setGranted($accessParent);
         Phake::verify($this->objectManager, Phake::times($countUpdate))->persist($this->group);
-        Phake::verify($this->objectManager, Phake::times($countUpdate))->flush();
     }
 
     /**
@@ -185,7 +184,6 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         Phake::verify($nodeGroupRole, Phake::times($countUpdateNode))->setGranted(Phake::anyParameters());
         Phake::verify($nodeGroupChild, Phake::times($countUpdateChild))->setGranted(Phake::anyParameters());
         Phake::verify($this->objectManager, Phake::times($countTotal))->persist(Phake::anyParameters());
-        Phake::verify($this->objectManager, Phake::times($countTotal))->flush();
     }
 
     /**
