@@ -79,8 +79,19 @@ class ContentTransformerTest extends AbstractBaseTestCase
      *
      * @dataProvider provideContentData
      */
-    public function testTransform($contentId, $contentType, $name, $version, $contentTypeVersion, $language, $creationDate, $updateDate, $deleted, $linkedToSite, $getVersion)
-    {
+    public function testTransform(
+        $contentId,
+        $contentType,
+        $name,
+        $version,
+        $contentTypeVersion,
+        $language,
+        $creationDate,
+        $updateDate,
+        $deleted,
+        $linkedToSite,
+        $getVersion
+    ) {
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
@@ -94,6 +105,9 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::when($content)->getUpdatedAt()->thenReturn($updateDate);
         Phake::when($content)->isDeleted()->thenReturn($deleted);
         Phake::when($content)->isLinkedToSite()->thenReturn($linkedToSite);
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->isBlocked()->thenReturn(false);
+        Phake::when($content)->getStatus()->thenReturn($status);
 
         $facade = $this->contentTransformer->transform($content);
 
