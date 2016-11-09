@@ -57,8 +57,8 @@ class FormTypeGroupExtension extends AbstractTypeExtension
                 array_push($view->vars['group'][$groupKey][$subGroupKey]['children'], $child->getName());
             }
             $view->vars['group'] = $this->ksort_recursive($view->vars['group']);
-            $view->vars['group_enabled'] = $form->getConfig()->getAttribute('group_enabled');
         }
+        $view->vars['group_enabled'] = $form->getConfig()->getAttribute('group_enabled');
     }
 
     /**
@@ -97,12 +97,10 @@ class FormTypeGroupExtension extends AbstractTypeExtension
     {
         $key = $default;
         $label = $default;
-        if ($form->getConfig()->hasAttribute($id)) {
-            $id = $form->getConfig()->getAttribute($id);
-            if (array_key_exists($id, $reference)) {
-                $key = array_key_exists('rank', $reference[$id]) ? $reference[$id]['rank'] : $id;
-                $label = array_key_exists('label', $reference[$id]) ? $reference[$id]['label'] : $id;
-            }
+        $id = $form->getConfig()->getAttribute($id);
+        if (array_key_exists($id, $reference)) {
+            $key = array_key_exists('rank', $reference[$id]) ? $reference[$id]['rank'] : $id;
+            $label = array_key_exists('label', $reference[$id]) ? $reference[$id]['label'] : $id;
         }
 
         return array($key, $label);
