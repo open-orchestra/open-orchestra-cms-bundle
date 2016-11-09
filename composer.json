@@ -25,7 +25,8 @@
     "open-orchestra/open-orchestra-user-bundle": "self.version",
     "friendsofsymfony/user-bundle": "@alpha",
     "friendsofsymfony/jsrouting-bundle": "~1.6.0",
-    "willdurand/js-translation-bundle": "~2.6.1"
+    "willdurand/js-translation-bundle": "~2.6.1",
+    "open-orchestra/open-orchestra-workflow-function-bundle": "self.version"
   },
 
   "require-dev": {

@@ -83,7 +83,6 @@ class GroupTransformerTest extends AbstractBaseTestCase
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group)->getRoles()->thenReturn(array());
         Phake::when($group)->getLabels()->thenReturn(array());
-        Phake::when($group)->getModelGroupRoles()->thenReturn(array());
 
         $facade = $this->transformer->transform($group);
 

@@ -2,17 +2,15 @@
 
 namespace OpenOrchestra\Backoffice\Model;
 
-use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface;
 
 /**
  * Interface GroupInterface
  */
 interface GroupInterface extends BaseGroupInterface
 {
-    const SEPARATOR_KEY_MODEL_ROLES = '##';
-
     /**
      * @param ReadSiteInterface|null $site
      */
@@ -52,36 +50,14 @@ interface GroupInterface extends BaseGroupInterface
     public function setLabels(array $labels);
 
     /**
-     * @return array
+     * @param string                             $entityType
+     * @param WorkflowProfileCollectionInterface $profileCollection
      */
-    public function getModelGroupRoles();
+    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $profileCollection);
 
     /**
-     * @param ModelGroupRoleInterface $modelGroupRole
+     * @param string             $perimeterType
+     * @param PerimeterInterface $perimeter
      */
-    public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole);
-
-    /**
-     * @param ArrayCollection <ModelGroupRoleInterface> $modelGroupRole
-     */
-    public function setModelGroupRoles(Collection $modelGroupRoles);
-
-    /**
-     * @param string $type
-     * @param string $id
-     * @param string $role
-     *
-     * @return ModelGroupRoleInterface|null
-     */
-    public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
-
-    /**
-     * @param string $type
-     * @param string $id
-     * @param string $role
-     *
-     * @return boolean
-     */
-    public function hasModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
-
+    public function addPerimeter($perimeterType, PerimeterInterface $perimeter);
 }

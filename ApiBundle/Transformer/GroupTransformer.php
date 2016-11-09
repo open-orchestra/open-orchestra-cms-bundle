@@ -77,10 +77,6 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             foreach ($group->getRoles() as $role) {
                 $facade->addRole($role);
             }
-
-            foreach ($group->getModelGroupRoles() as $modelRoles) {
-                $facade->addModelRoles($this->getTransformer('model_group_role')->transform($modelRoles));
-            }
         }
 
         return $facade;

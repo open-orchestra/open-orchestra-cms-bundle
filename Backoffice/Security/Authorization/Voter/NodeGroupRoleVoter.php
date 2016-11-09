@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use FOS\UserBundle\Model\UserInterface;
-use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
@@ -114,10 +113,6 @@ class NodeGroupRoleVoter implements VoterInterface
     {
         if ($node->getNodeType() === NodeInterface::TYPE_ERROR) {
             return true;
-        }
-        $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $attribute);
-        if ($nodeGroupRole instanceof ModelGroupRoleInterface) {
-            return $nodeGroupRole->isGranted();
         }
 
         return false;

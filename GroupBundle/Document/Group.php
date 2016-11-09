@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\GroupBundle\Document;
 
-use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\Backoffice\Model\PerimeterInterface;
+use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface;
 
 /**
  * @ODM\Document(
@@ -20,35 +20,55 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Group extends BaseGroup implements GroupInterface
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface")
+     * @ODM\ReferenceOne(
+     *  targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface"
+     * )
      */
     protected $site;
 
     /**
-     * @var Collection $labels
+     * @var array $labels
      *
-     * @ODM\Field(type="hash")
-     * @ORCHESTRA\Search(key="label", type="multiLanguages")
+     * @ODM\Field(
+     *  type="hash"
+     * )
+     *
+     * @ORCHESTRA\Search(
+     *  key="label",
+     *  type="multiLanguages"
+     * )
      */
     protected $labels;
 
     /**
-     * @var Collection $modelRoles
+     * @var Collection $workflowProfileCollections
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface", strategy="set")
+     * @ODM\EmbedMany(
+     *  targetDocument="OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface",
+     *  strategy="set"
+     * )
      */
-    protected $modelRoles;
+    protected $workflowProfileCollections;
 
+    /**
+     * @var Collection $perimeters
+     *
+     * @ODM\EmbedMany(
+     *  targetDocument="OpenOrchestra\Backoffice\Model\PerimeterInterface",
+     *  strategy="set"
+     * )
+     */
+    protected $perimeters;
 
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($name = '', $roles = array())
     {
-        parent::__construct();
+        parent::__construct($name, $roles);
+
+        $this->initCollections();
         $this->labels = array();
-        $this->roles = array();
-        $this->modelRoles = new ArrayCollection();
     }
 
     /**
@@ -57,13 +77,7 @@ class Group extends BaseGroup implements GroupInterface
     public function __clone()
     {
         $this->id = null;
-        $modelGroupRoles = $this->modelRoles;
-        $this->modelRoles = new ArrayCollection();
-        foreach ($modelGroupRoles as $groupRole) {
-            $newGroupRole = clone $groupRole;
-            $this->addModelGroupRole($newGroupRole);
-        }
-
+        $this->initCollections();
         $this->setName($this->cloneLabel($this->name));
 
         foreach ($this->getLabels() as $language => $label) {
@@ -141,82 +155,30 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @return array
+     * @param string                             $entityType
+     * @param WorkflowProfileCollectionInterface $profileCollection
      */
-    public function getModelGroupRoles()
+    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $profileCollection)
     {
-        return $this->modelRoles;
+        $this->workflowProfileCollections->set($entityType, $profileCollection);
     }
 
     /**
-     * @param string $type
-     * @param string $id
-     * @param string $role
-     *
-     * @return ModelGroupRoleInterface|null
+     * @param string             $entityType
+     * @param PerimeterInterface $perimeter
      */
-    public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
+    public function addPerimeter($entityType, PerimeterInterface $perimeter)
     {
-        $key = $this->getKeyModelRoles($id, $type, $role);
-        if (true === $this->modelRoles->containsKey($key)) {
-            return $this->modelRoles->get($key);
-        }
-
-        return null;
+        $this->perimeters->set($entityType, $perimeter);
     }
 
     /**
-     * @param ModelGroupRoleInterface $modelGroupRole
+     * Initialize collections
      */
-    public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole)
+    protected function initCollections()
     {
-        $key = $this->getKeyModelRoles($modelGroupRole->getId(), $modelGroupRole->getType(), $modelGroupRole->getRole());
-        $this->modelRoles->set($key, $modelGroupRole);
-    }
-
-    /**
-     * @param ArrayCollection<ModelGroupRoleInterface> $modelGroupRole
-     */
-    public function setModelGroupRoles(Collection $modelGroupRoles)
-    {
-        $correctCollection = true;
-
-        foreach ($modelGroupRoles as $modelGroupRole) {
-            if (!($modelGroupRole instanceof ModelGroupRoleInterface)) {
-                $correctCollection = false;
-                break;
-            }
-        }
-
-        if ($correctCollection) {
-            $this->modelRoles = $modelGroupRoles;
-        }
-    }
-
-    /**
-     * @param string $type
-     * @param string $id
-     * @param string $role
-     *
-     * @return boolean
-     */
-    public function hasModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
-    {
-        return null !== $this->getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
-    }
-
-    /**
-     * @param string $id
-     * @param string $type
-     * @param string $role
-     *
-     * @return string
-     */
-    protected function getKeyModelRoles($id, $type, $role)
-    {
-        $key = implode(self::SEPARATOR_KEY_MODEL_ROLES, array($id, $type, $role));
-
-        return md5($key);
+        $this->workflowProfileCollections = new ArrayCollection();
+        $this->perimeters = new ArrayCollection();
     }
 
     /**
