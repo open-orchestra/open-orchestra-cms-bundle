@@ -202,28 +202,28 @@ module.exports = {
       src: 'web/bundles/openorchestrabackoffice/images/logo.png',
       dest: 'web/images/logo.png'
     },
-    menu_item1: {
-      src: 'web/bundles/openorchestrabackoffice/images/menu-item1.png',
-      dest: 'web/images/menu-item1.png'
+    menu_dashboard: {
+      src: 'web/bundles/openorchestrabackoffice/images/navigation/dashboard.png',
+      dest: 'web/images/navigation/dashboard.png'
     },
-    menu_item2: {
-      src: 'web/bundles/openorchestrabackoffice/images/menu-item2.png',
-      dest: 'web/images/menu-item2.png'
+    menu_configuration: {
+      src: 'web/bundles/openorchestrabackoffice/images/navigation/configuration.png',
+      dest: 'web/images/navigation/configuration.png'
     },
-    menu_item3: {
-      src: 'web/bundles/openorchestrabackoffice/images/menu-item3.png',
-      dest: 'web/images/menu-item3.png'
+    menu_contribution: {
+      src: 'web/bundles/openorchestrabackoffice/images/navigation/contribution.png',
+      dest: 'web/images/navigation/contribution.png'
     },
-    menu_item4: {
-      src: 'web/bundles/openorchestrabackoffice/images/menu-item4.png',
-      dest: 'web/images/menu-item4.png'
+    menu_developer: {
+      src: 'web/bundles/openorchestrabackoffice/images/navigation/developer.png',
+      dest: 'web/images/navigation/developer.png'
     },
-    menu_item5: {
-      src: 'web/bundles/openorchestrabackoffice/images/menu-item5.png',
-      dest: 'web/images/menu-item5.png'
+    menu_platform: {
+      src: 'web/bundles/openorchestrabackoffice/images/navigation/platform.png',
+      dest: 'web/images/navigation/platform.png'
     },
-    menu_item6: {
-      src: 'web/bundles/openorchestrabackoffice/images/menu-item6.png',
-      dest: 'web/images/menu-item6.png'
+    menu_user: {
+      src: 'web/bundles/openorchestrabackoffice/images/navigation/user.png',
+      dest: 'web/images/navigation/user.png'
     }
 };

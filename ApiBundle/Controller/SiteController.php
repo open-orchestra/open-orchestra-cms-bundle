@@ -79,6 +79,22 @@ class SiteController extends BaseController
     }
 
     /**
+     * @Config\Route("/list/available", name="open_orchestra_api_available_site_list")
+     * @Config\Method({"GET"})
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE_MAIN_ALIAS
+     * })
+     *
+     * @return FacadeInterface
+     */
+    public function listAvailableSite()
+    {
+        $availableSite = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($availableSite);
+    }
+
+    /**
      * @param string $siteId
      *
      * @Config\Route("/{siteId}/delete", name="open_orchestra_api_site_delete")

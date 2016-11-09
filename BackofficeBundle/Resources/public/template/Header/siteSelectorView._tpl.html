@@ -1,0 +1,28 @@
+<div class="website dropdown">
+    <% if (null !== currentSite) { %>
+    <button class="btn dropdown-toggle" type="button" id="select-website" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <strong><%= Translator.trans('open_orchestra_backoffice.header.site') %></strong>
+        <%= currentSite.get('name') %>
+        <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="select-website">
+        <% _.each(sites, function(site, key) { %>
+            <% if (site !== currentSite) { %>
+            <li>
+                <a href="<%= Routing.generate(
+                                'homepage_with_site_id_and_language',
+                                {'siteId': site.get('site_id'), '_locale': currentLocale}
+                          )%>"
+                >
+                    <%= site.get('name') %>
+                </a>
+            </li>
+            <% }; %>
+        <% }); %>
+    </ul>
+    <% }; %>
+</div>
+
+<div class="home">
+    <a href="<%= linkMainAlias %>" target="_blank"><i class="fa fa-home" aria-hidden="true"></i></a>
+</div>

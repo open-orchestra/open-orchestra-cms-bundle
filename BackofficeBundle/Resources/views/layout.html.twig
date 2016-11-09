@@ -23,22 +23,20 @@
 </head>
     <body>
     {% block body %}
-        <header class="header">
+        <header class="header-region">
         </header>
         <div class="inner">
             <div id="left-column">
-             </div>
+            </div>
             <div id="central-column">
             </div>
         </div>
-
+        <div class="modal-region"></div>
 
         <script>
             var config = {
                 debug: '{{ app.debug }}',
                 environment: '{{ app.environment }}',
-                siteId: '{{ context.currentSiteId }}',
-                language: '{{ context.currentLocale }}',
                 template: {
                     baseUrlTemplate: '/bundles/',
                     templateVersion: '{{ asset_version('/') }}'
@@ -48,7 +46,16 @@
                     scheme: '{{ app.request.scheme }}',
                     host: '{{ app.request.host }}'
                 }
-            }
+            };
+            var context = {
+                siteId: '{{ context.currentSiteId }}',
+                language: '{{ context.currentLocale }}',
+                user: {
+                    username : '{{ app.user.username }}',
+                    firstName : '{{ app.user.firstName }}',
+                    lastName : '{{ app.user.lastName }}'
+                }
+            };
         </script>
 
         {{ tinymce_init() }}
@@ -63,6 +70,5 @@
             {% endjavascripts %}
         {% endif %}
     {% endblock %}
-
     </body>
 </html>

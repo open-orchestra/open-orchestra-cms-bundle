@@ -13,8 +13,7 @@ class KeywordRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'keyword/list(/:page)': 'listKeyword',
-            'keyword/test/:test(/:page)': 'test'
+            'keyword/list(/:page)': 'listKeyword'
         };
     }
 

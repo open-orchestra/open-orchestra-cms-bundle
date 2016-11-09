@@ -37,6 +37,10 @@ class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->theme = $this->getTransformer('theme')->transform($site->getTheme());
         }
 
+        if ($this->hasGroup(CMSGroupContext::SITE_MAIN_ALIAS)) {
+            $facade->mainAlias = $this->getTransformer('site_alias')->transform($site->getMainAlias());
+        }
+
         foreach ($site->getLanguages() as $language) {
             $facade->addLanguage($language);
         }

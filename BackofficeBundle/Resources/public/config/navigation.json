@@ -1,0 +1,22 @@
+{
+  "contribution": {
+    "page": {
+      "template": "Navigation/Contribution/page",
+      "rank": 0
+    },
+    "content": {
+      "template": "Navigation/Contribution/content",
+      "rank": 10
+    },
+    "trashcan": {
+      "template": "Navigation/Contribution/trashcan",
+      "rank": 20
+    }
+  },
+  "platform": {
+    "tag": {
+      "template": "Navigation/Platform/tag",
+      "rank": 0
+    }
+  }
+}

@@ -1,17 +1,17 @@
 module.exports = function(grunt) {
 
     grunt.registerTask('babel:config', 'Open Orchestra task to find and compile es6 scripts', function () {
-        var config = grunt.config('babel.config');
+        var config = grunt.config('application.config');
 
         // Babel
         var patternsEs6 = [];
-        grunt.util._.each(config.babel.bundles, function (value) {
+        grunt.util._.each(config.application.bundles, function (value) {
             patternsEs6.push(value + '/ecmascript/**/*.js')
         });
 
         var mappingFileEs6 = grunt.file.expandMapping(
             patternsEs6,
-            config.babel.dest,
+            config.application.dest.javascript,
             {
                 cwd: 'web/bundles/',
                 rename: function (dest, matchedSrcPath) {

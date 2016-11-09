@@ -12,8 +12,8 @@ class DashboardRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            // '*path': 'showDashboard', -- Remove comment when refacto es6 is done
-            'dashboard': 'showDashboard'
+            'dashboard': 'showDashboard',
+            '*path': 'showDashboard'
         };
     }
 
@@ -22,7 +22,6 @@ class DashboardRouter extends OrchestraRouter
      */
     showDashboard() {
         let dashboardView = new DashboardView();
-        console.log('dashboard');
         app.getRegion('content').html(dashboardView.render().$el);
     }
 }

@@ -1,14 +1,17 @@
-import app from './OpenOrchestra/Application/Application'
+import app           from './OpenOrchestra/Application/Application'
 import Configuration from './OpenOrchestra/Service/Configuration'
+import Context       from './OpenOrchestra/Service/Context'
 
-// variable config is define in layout.html.twig
-let configuration = new Configuration(config);
-app.setConfiguration(configuration);
+// variable config and context is defined in layout.html.twig
+app.setConfiguration(new Configuration(config));
+app.setContext(new Context(context));
+
 $(() => {
     app.setRegions({
-        'header': $('.header'),
-        'left_column': $('#left_column'),
-        'content': $('#central-column')
+        'header': $('.header-region'),
+        'left_column': $('#left-column'),
+        'content': $('#central-column'),
+        'modal': $('.modal-region')
     });
     app.run();
 });

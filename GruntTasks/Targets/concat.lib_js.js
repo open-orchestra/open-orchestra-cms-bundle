@@ -18,7 +18,8 @@ module.exports = {
     'vendor/bower_components/lodash/lodash.js',
     'vendor/bower_components/jquery-tokeninput/build/jquery.tokeninput.min.js',
     'web/bundles/fosjsrouting/js/router.js',
-    'web/bundles/bazingajstranslation/js/translator.min.js'
+    'web/bundles/bazingajstranslation/js/translator.min.js',
+    'node_modules/twig/twig.min.js'
   ],
   dest: 'web/built/lib.js'
 };

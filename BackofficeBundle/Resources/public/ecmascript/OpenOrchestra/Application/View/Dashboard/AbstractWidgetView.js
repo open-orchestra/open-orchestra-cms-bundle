@@ -54,16 +54,15 @@ class AbstractWidgetView extends OrchestraView
      * Render
      */
     render() {
-        this._renderTemplate('openorchestrabackoffice/underscore/Dashboard/listWidgetView',
+        let template = this._renderTemplate(
+            'Dashboard/listWidgetView',
             {
                 title: this.getTitleKey(),
                 editLink: this.getEditLink(),
                 entities: this.collection.models
-            },
-            (template) => {
-                this.$el.html(template);
             }
         );
+        this.$el.html(template);
 
         return this;
     }

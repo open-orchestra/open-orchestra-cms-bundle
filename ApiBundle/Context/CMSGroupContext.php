@@ -19,4 +19,5 @@ class CMSGroupContext
     const STATUS_LINKS = 'status_links';
     const THEME = 'theme';
     const THEME_LINKS = 'theme_links';
+    const SITE_MAIN_ALIAS = 'site_main_alias';
 }

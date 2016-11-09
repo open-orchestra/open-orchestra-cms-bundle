@@ -1,4 +1,31 @@
 open_orchestra_backoffice:
+    header:
+        site: Site
+        sign_out: Sign out
+        preference: Preferences
+    log_out_modal:
+        yes: Yes
+        no: No
+        security_message: You can improve your security after disconnect by closing your browser
+    navigation:
+        hide_menu: Hide menu
+        dashboard:
+          title: Dashboard
+        contribution:
+          title: Contribution
+          nodes: Pages
+          contents: Contents
+          trashcan: Trashcan
+          media: Media
+        user:
+          title: User
+        platform:
+          title: Platform
+          tag: Tag
+        developer:
+          title:  Developer
+        configuration:
+          title:  Configuration
     table:
         keywords:
             label: Label
