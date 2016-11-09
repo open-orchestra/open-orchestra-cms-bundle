@@ -62,7 +62,7 @@ abstract class AbstractAdminController extends Controller
         $template = self::TEMPLATE
     ){
         if (is_null($response)) {
-            $code = Response::HTTP_OK;
+            $code = Response::HTTP_UNPROCESSABLE_ENTITY;
             if ($form->isSubmitted() && !$form->isValid()) {
                 $code = Response::HTTP_BAD_REQUEST;
             }
