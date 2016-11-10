@@ -87,7 +87,7 @@ class SiteController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAvailableSite()
+    public function listAvailableSiteAction()
     {
         $availableSite = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
 
