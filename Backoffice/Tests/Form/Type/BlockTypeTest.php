@@ -15,22 +15,42 @@ class BlockTypeTest extends AbstractBaseTestCase
      * @var BlockType
      */
     protected $blockType;
-
-    protected $templateName = 'template';
+    protected $blockClass = 'fakeBlockClass';
+    protected $templateManager;
+    protected $contextManager;
     protected $generateFormManager;
+    protected $blockToArrayTransformer;
+    protected $blockFormTypeSubscriber;
+    protected $templateName = 'template';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
+        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
-        $blockToArrayTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer');
-        $blockFormTypeSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber');
+        $this->blockToArrayTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer');
+        $this->blockFormTypeSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber');
 
+        Phake::when($this->templateManager)->getTemplateSetParameters()->thenReturn(array('fakeTemplateSet' => array('styles' => array())));
+        Phake::when($site)->getTemplateSet()->thenReturn('fakeTemplateSet');
+        Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
+        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
         Phake::when($this->generateFormManager)->getTemplate(Phake::anyParameters())->thenReturn($this->templateName);
 
-        $this->blockType = new BlockType($this->generateFormManager, $blockToArrayTransformer, $blockFormTypeSubscriber);
+        $this->blockType = new BlockType(
+            $this->blockClass,
+            $this->templateManager,
+            $this->contextManager,
+            $this->siteRepository,
+            $this->generateFormManager,
+            $this->blockToArrayTransformer,
+            $this->blockFormTypeSubscriber
+        );
     }
 
     /**
@@ -60,7 +80,44 @@ class BlockTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolver)->setDefaults(array(
             'blockPosition' => 0,
-            'data_class' => null
+            'data_class' => null,
+            'group_enabled' => true,
+            'group_render' => array(
+                'property' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.block.group.property',
+                ),
+                'data' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.block.group.data',
+                ),
+                'technical' => array(
+                    'rank' => 2,
+                    'label' => 'open_orchestra_backoffice.form.block.group.technical',
+                ),
+            ),
+            'sub_group_render' => array(
+                'property' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.block.sub_group.property',
+                ),
+                'style' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.block.sub_group.style',
+                ),
+                'content' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.block.sub_group.content',
+                ),
+                'cache' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.block.sub_group.cache',
+                ),
+                'html' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.block.sub_group.html',
+                ),
+            ),
         ));
     }
 

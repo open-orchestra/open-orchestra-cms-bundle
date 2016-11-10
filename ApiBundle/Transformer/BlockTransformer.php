@@ -66,7 +66,7 @@ class BlockTransformer extends AbstractTransformer
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
         $facade->component = $block->getComponent();
         $facade->label = $block->getLabel();
-        $facade->class = $block->getClass();
+        $facade->style = $block->getStyle();
         $facade->id = $block->getId();
 
         foreach ($block->getAttributes() as $key => $attribute) {

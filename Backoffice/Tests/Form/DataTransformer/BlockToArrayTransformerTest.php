@@ -65,14 +65,14 @@ class BlockToArrayTransformerTest extends AbstractBaseTestCase
 
         $data = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($data)->getLabel()->thenReturn($element);
-        Phake::when($data)->getClass()->thenReturn($element);
+        Phake::when($data)->getStyle()->thenReturn($element);
         Phake::when($data)->getId()->thenReturn($element);
         Phake::when($data)->getMaxAge()->thenReturn($element);
         Phake::when($data)->getAttributes()->thenReturn(array('foo' => $element));
 
         $this->assertSame(array(
             'label' => $element,
-            'class' => $element,
+            'style' => $element,
             'id' => $element,
             'maxAge' => $element,
             'foo' => $element
