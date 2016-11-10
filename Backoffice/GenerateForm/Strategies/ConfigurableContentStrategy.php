@@ -63,17 +63,23 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
             'refresh' => true,
             'required' => true,
             'authorize_new' => false,
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
 
         $builder->add('contentTemplateEnabled', 'checkbox', array(
             'label' => 'open_orchestra_backoffice.block.configurable_content.content_template_enabled.title',
             'attr' => array('help_text' => 'open_orchestra_backoffice.block.configurable_content.content_template_enabled.helper'),
             'required' => false,
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('contentTemplate', 'oo_tinymce', array(
             'required' => false,
             'label' => 'open_orchestra_backoffice.block.configurable_content.content_template',
             'constraints' => new ContentTemplate(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
     }
 

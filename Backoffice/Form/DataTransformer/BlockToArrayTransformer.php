@@ -20,7 +20,7 @@ class BlockToArrayTransformer implements DataTransformerInterface
         if ($data instanceof BlockInterface) {
             return array_merge(array(
                 'label' => $data->getLabel(),
-                'class' => $data->getClass(),
+                'style' => $data->getStyle(),
                 'id' => $data->getId(),
                 'maxAge' => $data->getMaxAge(),
             ), $data->getAttributes());
@@ -36,5 +36,6 @@ class BlockToArrayTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        return new BlockInterface();
     }
 }

@@ -26,9 +26,18 @@ class SearchStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('value');
-        $builder->add('nodeId', 'oo_node_choice');
-        $builder->add('limit', 'integer');
+        $builder->add('value', 'text', array(
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
+        ));
+        $builder->add('nodeId', 'oo_node_choice', array(
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
+        ));
+        $builder->add('limit', 'integer', array(
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
+        ));
     }
 
     /**

@@ -30,9 +30,13 @@ class AddThisStrategy extends AbstractBlockStrategy
     {
         $builder->add('pubid', 'text', array(
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('addThisClass', 'textarea', array(
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
     }
 

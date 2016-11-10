@@ -31,12 +31,18 @@ class ContactStrategy extends AbstractBlockStrategy
         $builder->add('recipient', 'email', array(
             'label' => 'open_orchestra_backoffice.block.contact.recipient',
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('signature', 'text', array(
             'label' => 'open_orchestra_backoffice.block.contact.signature',
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
-        $builder->add('maxAge', 'hidden');
+        $builder->add('maxAge', 'hidden', array(
+            'group_id' => 'data',
+        ));
     }
 
     /**

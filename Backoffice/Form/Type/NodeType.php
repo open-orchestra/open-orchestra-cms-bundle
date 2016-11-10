@@ -54,7 +54,7 @@ class NodeType extends AbstractType
             SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
         );
         $this->specialPageList = $specialPageList;
-    }
+   }
 
     /**
      * @param FormBuilderInterface $builder
@@ -71,7 +71,7 @@ class NodeType extends AbstractType
             ))
             ->add('specialPageName', 'choice', array(
                     'label' => 'open_orchestra_backoffice.form.node.specialPageName',
-                    'choices' => $this->getChoices()
+                    'choices' => $this->specialPageList
             ));
         if (true === $options['activateBoLabel']) {
             $builder->add('boLabel', 'text', array(

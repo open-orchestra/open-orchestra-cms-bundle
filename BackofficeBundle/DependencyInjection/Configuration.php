@@ -213,10 +213,11 @@ class Configuration implements ConfigurationInterface
         $specialPageNames = $builder->root('special_page_name');
         $specialPageNames
             ->info('Array of available special page names')
+            ->useAttributeAsKey('name')
             ->prototype('array')
             ->end();
         $specialPageNames->defaultValue(array(
-            'DEFAULT'
+            'DEFAULT' => 'open_orchestra_backoffice.node.special_page.default'
         ));
 
         return $specialPageNames;

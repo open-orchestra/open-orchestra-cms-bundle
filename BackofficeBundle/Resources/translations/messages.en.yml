@@ -238,6 +238,7 @@ open_orchestra_backoffice:
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
             template: Template
+            specialPageName: Special page name
         changefreq:
             always: Always
             hourly: Hourly
@@ -267,7 +268,17 @@ open_orchestra_backoffice:
             label: Block label
             max_age: Max age of the response for this block
             id: Html id for the block
-            class: Html class for the block
+            style: Block style
+            group:
+                property: Property
+                data: Data
+                technical: Technical
+            sub_group:
+                property: Property
+                style: Style
+                content: Content
+                cache: Cache
+                html: Html
         sub_menu:
             node: Menu root
             level: Menu depth
@@ -565,6 +576,8 @@ open_orchestra_backoffice:
             text: This operation is not reversible.
             title: Would you like delete this page?
         blocks: Blocks
+        special_page:
+            default: Defaut
     status:
         none_available: No status available
     top_menu:
@@ -655,14 +668,6 @@ open_orchestra_backoffice:
         default:
             label: Default set
             template_name:
-                default: Default (left column)
-                full_page: Without column
+                default: Default
             style:
-                highlight: Highlight
-                paragraph: Editorial section
-        custom:
-            label: Custom set
-            template_name:
-                login: Login page
-            style:
-                column: Column
+                default: Default
