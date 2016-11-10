@@ -51,6 +51,8 @@ class HeaderView extends OrchestraView
         let logOutModalView = new LogOutModalView();
         Application.getRegion('modal').html(logOutModalView.render().$el);
         logOutModalView.show();
+
+        return false;
     }
 
     /**
