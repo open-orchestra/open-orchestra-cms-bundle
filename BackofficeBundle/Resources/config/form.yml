@@ -72,8 +72,9 @@ services:
             - '@open_orchestra_backoffice.manager.node'
             - '@open_orchestra_backoffice.context_manager'
             - '@open_orchestra_model.repository.site'
-            - '%open_orchestra_backoffice.template_set%'
+            - '@open_orchestra_backoffice.manager.template'
             - '%open_orchestra_model.document.node.class%'
+            - '%open_orchestra_backoffice.special_page_name%'
         tags:
             - { name: form.type, alias: oo_node }
     # Block form type
@@ -350,7 +351,7 @@ services:
     open_orchestra_backoffice.type.template_set:
         class: '%open_orchestra_backoffice.type.template_set.class%'
         arguments:
-            - '%open_orchestra_backoffice.template_set%'
+            - '@open_orchestra_backoffice.manager.template'
         tags:
             - { name: form.type, alias: oo_template_set }
     open_orchestra_backoffice.type_extension.form_group:

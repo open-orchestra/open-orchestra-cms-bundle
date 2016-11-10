@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use OpenOrchestra\Backoffice\Manager\TemplateManager;
 
 /**
  * Class TemplateSetType
@@ -13,12 +14,12 @@ class TemplateSetType extends AbstractType
     protected $choices;
 
     /**
-     * @param array $parameters
+     * @param TemplateManager $templateManager
      */
-    public function __construct(array $parameters)
+    public function __construct(TemplateManager $templateManager)
     {
         $this->choices = array();
-        foreach ($parameters as $key => $parameter) {
+        foreach ($this->templateManager->getTemplateSetParameters() as $key => $parameter) {
             $this->choices[$key] = $parameter['label'];
         }
     }

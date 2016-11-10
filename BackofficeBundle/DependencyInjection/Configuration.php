@@ -83,6 +83,7 @@ class Configuration implements ConfigurationInterface
                 ->prototype('scalar')->end()
             ->end()
             ->append($this->addTemplateSetConfiguration())
+            ->append($this->addSpecialPageConfiguration())
         ->end();
 
         return $treeBuilder;
@@ -201,5 +202,23 @@ class Configuration implements ConfigurationInterface
         ));
 
         return $templateSet;
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public function addSpecialPageConfiguration()
+    {
+        $builder = new TreeBuilder();
+        $specialPageNames = $builder->root('special_page_name');
+        $specialPageNames
+            ->info('Array of available special page names')
+            ->prototype('array')
+            ->end();
+        $specialPageNames->defaultValue(array(
+            'DEFAULT'
+        ));
+
+        return $specialPageNames;
     }
 }

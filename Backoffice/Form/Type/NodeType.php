@@ -23,6 +23,7 @@ class NodeType extends AbstractType
     protected $siteRepository;
     protected $templateManager;
     protected $nodeClass;
+    protected $specialPageList;
 
     /**
      * @param NodeManager             $nodeManager
@@ -30,13 +31,15 @@ class NodeType extends AbstractType
      * @param SiteRepositoryInterface $siteRepository
      * @param TemplateManager         $templateManager
      * @param string                  $nodeClass
+     * @param array $specialPageList
      */
     public function __construct(
         NodeManager $nodeManager,
         CurrentSiteIdInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
         TemplateManager $templateManager,
-        $nodeClass
+        $nodeClass,
+        array $specialPageList
     ) {
         $this->nodeManager = $nodeManager;
         $this->contextManager = $contextManager;
@@ -50,6 +53,7 @@ class NodeType extends AbstractType
             SchemeableInterface::SCHEME_FILE => SchemeableInterface::SCHEME_FILE,
             SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
         );
+        $this->specialPageList = $specialPageList;
     }
 
     /**
@@ -64,8 +68,11 @@ class NodeType extends AbstractType
                 'attr' => array(
                     'class' => 'generate-id-source',
                 )
+            ))
+            ->add('specialPageName', 'choice', array(
+                    'label' => 'open_orchestra_backoffice.form.node.specialPageName',
+                    'choices' => $this->getChoices()
             ));
-
         if (true === $options['activateBoLabel']) {
             $builder->add('boLabel', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.node.boLabel.name',

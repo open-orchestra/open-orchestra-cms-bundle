@@ -41,54 +41,6 @@ class TemplateManager
     }
 
     /**
-     * @return array
-     */
-    public function createTemplateSetChoices()
-    {
-        $choices = array();
-        foreach ($this->templateSet as $key => $parameter) {
-            $choices[$key] = $parameter['label'];
-        }
-
-        return $choices;
-    }
-
-    /**
-     * @return array
-     */
-    public function createTemplateChoices()
-    {
-        $choices = array();
-        foreach ($this->templateSet as $keyTemplateSet => $templateSetParameters) {
-            foreach ($templateSetParameters['templates'] as $key => $template) {
-                $choices[$keyTemplateSet][$key] = $template['label'];
-            }
-        }
-
-        return $choices;
-    }
-
-    /**
-     * @param string $templateId
-     *
-     * @return array
-     * @throws NonExistingTemplateSetException
-     */
-    public function createTemplateChoicesWithTemplateSet($templateSetId)
-    {
-        if (!isset($this->templateSet[$templateSetId])) {
-            throw new NonExistingTemplateException();
-        }
-
-        $choices = array();
-        foreach ($this->templateSetparameters[$templateSetId]['templates'] as $key => $template) {
-            $choices[$key] = $template['label'];
-        }
-
-        return $choices;
-    }
-
-    /**
      * @param string $name
      * @param string $templateSetName
      *

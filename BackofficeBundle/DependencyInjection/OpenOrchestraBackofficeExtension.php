@@ -46,6 +46,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
         $container->setParameter('open_orchestra_backoffice.block_default_configuration', $config['block_default_configuration']);
         $container->setParameter('open_orchestra_backoffice.template_set', $config['template_set']);
+        $container->setParameter('open_orchestra_backoffice.special_page_name', $config['special_page_name']);
 
         $loader->load('services.yml');
         $loader->load('form.yml');
