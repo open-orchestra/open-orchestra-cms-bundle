@@ -29,10 +29,8 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('transformer.yml');
         $loader->load('form.yml');
-        $loader->load('navigation_panel.yml');
         $loader->load('oauth2.yml');
         $loader->load('subscriber.yml');
-        $loader->load('datatable_parameter.yml');
         $loader->load('role_parameter.yml');
     }
 }
