@@ -3,15 +3,31 @@ module.exports = function(grunt) {
     grunt.registerTask('navigation:compile', 'Open Orchestra task to find template underscore and compile it', function () {
         var config = grunt.config('application.config');
 
-        var navigationConfigs = [];
+        var navigationConfigsFile = [];
         grunt.util._.each(config.application.bundles, function (value) {
-            navigationConfigs.push('web/bundles/' + value + '/config/navigation.json')
+            navigationConfigsFile.push('web/bundles/' + value + '/config/navigation.json')
         });
-        navigationConfigs = grunt.file.expand(navigationConfigs);
+        navigationConfigsFile = grunt.file.expand(navigationConfigsFile);
 
+        var navigationConfigs = mergeNavigationConfiguration(navigationConfigsFile);
+        navigationConfigs = sortNavigation(navigationConfigs);
+
+        var navigationConfigsJavascript = convertConfigToJavascript(navigationConfigs);
+
+        var destFile = config.application.dest.navigation + 'navigation/navigation.js';
+        grunt.file.write(destFile, navigationConfigsJavascript);
+        grunt.log.write('File "' + destFile + '" created.');
+
+    });
+
+    /**
+     * @param {Array} navigationConfigsFile
+     *
+     * @returns {Object}
+     */
+    var mergeNavigationConfiguration = function(navigationConfigsFile) {
         var json = {};
-        // merge config
-        navigationConfigs.forEach(function (navigationFile) {
+        navigationConfigsFile.forEach(function (navigationFile) {
             if (!grunt.file.exists(navigationFile))
                 throw "JSON source file \"" + navigationFile + "\" not found.";
             else {
@@ -21,24 +37,38 @@ module.exports = function(grunt) {
             }
         });
 
-        // sort navigation
-        grunt.util._.forEach(json, function(value, key) {
+        return json;
+    };
+
+    /**
+     * @param {Object} navigationConfigs
+     *
+     * @returns {Object}
+     */
+    var sortNavigation = function(navigationConfigs) {
+        grunt.util._.forEach(navigationConfigs, function(value, key) {
             value = grunt.util._.sortBy(value, function(o) { return o.rank; });
             value = grunt.util._.filter(value, function(o) {return true !== o.disabled});
-            json[key] = value;
+            navigationConfigs[key] = value;
         });
 
+        return navigationConfigs;
+    };
 
-        // json to javascript
+    /**
+     * @param {Object} navigationConfigs
+     *
+     * @returns {String}
+     */
+    var convertConfigToJavascript = function(navigationConfigs) {
         var contentJavascript = '';
             contentJavascript += 'this["Orchestra"] = this["Orchestra"] || {};\n';
             contentJavascript += 'this["Orchestra"]["Config"] = this["Orchestra"]["Config"] || {};\n';
             contentJavascript += 'this["Orchestra"]["Config"]["Navigation"] = this["Orchestra"]["Config"]["Navigation"] || {};\n';
-            contentJavascript += 'this["Orchestra"]["Config"]["Navigation"] =' + JSON.stringify(json) + ';';
+            contentJavascript += 'this["Orchestra"]["Config"]["Navigation"] =' + JSON.stringify(navigationConfigs) + ';';
 
-        var destFile = config.application.dest.navigation + 'navigation/navigation.js';
-        grunt.file.write(destFile, contentJavascript);
-        grunt.log.write('File "' + destFile + '" created.');
-
-    });
+        return contentJavascript;
+    }
 };
+
+
