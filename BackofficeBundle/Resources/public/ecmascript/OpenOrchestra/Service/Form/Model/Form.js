@@ -65,7 +65,7 @@ class Form
      * @private
      */
     _formError(response) {
-       if (400 === response.status) {
+       if (422 === response.status) {
            this._parseHtml(response.responseText);
        } else {
            let error = new ServerError(response.status, response.responseText, response.statusText);
