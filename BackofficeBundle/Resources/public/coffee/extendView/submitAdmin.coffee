@@ -61,7 +61,7 @@ extendView['submitAdmin'] = {
             @httpCreated(arguments)
           200: ->
             @httpOk(arguments, form);
-          400: ->
+          422: ->
             @httpBadRequest(arguments, form);
           403: ->
             @httpForbidden(arguments, form);
