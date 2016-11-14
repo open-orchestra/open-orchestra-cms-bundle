@@ -1,2 +1,9 @@
 parameters:
     security.access.role_hierarchy_voter.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\RoleHierarchyVoter
+    open_orchestra_backoffice.voter.node.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter
+
+services:
+    open_orchestra_backoffice.voter.node:
+       class: '%open_orchestra_backoffice.voter.node.class%'
+       tags:
+            - { name: security.voter }

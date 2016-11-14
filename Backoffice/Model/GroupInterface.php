@@ -60,4 +60,11 @@ interface GroupInterface extends BaseGroupInterface
      * @param PerimeterInterface $perimeter
      */
     public function addPerimeter($perimeterType, PerimeterInterface $perimeter);
+
+    /**
+     * @param string $perimeterType
+     *
+     * @return array
+     */
+    public function getPerimeter($perimeterType);
 }

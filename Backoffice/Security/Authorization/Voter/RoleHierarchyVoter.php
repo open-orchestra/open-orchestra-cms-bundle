@@ -13,7 +13,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 class RoleHierarchyVoter extends BaseRoleHierarchyVoter
 {
     /**
-     * {@inheritdoc}
+     * @param TokenInterface $token
+     * @param object|null    $object
+     * @param array          $attributes
+     *
+     * @return int
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {

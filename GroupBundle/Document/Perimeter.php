@@ -34,4 +34,20 @@ class Perimeter implements PerimeterInterface
     {
         $this->paths[] = $path;
     }
+
+    /**
+     * Check if a path is contained in the perimeter
+     *
+     * @param string $path
+     *
+     * @return boolean
+     */
+    public function contains($path)
+    {
+        if (is_string($path)) {
+            return array_search($path, $this->paths) ? true : false;
+        }
+
+        return false;
+    }
 }

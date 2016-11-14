@@ -173,6 +173,16 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
+     * @param string $perimeterType
+     *
+     * @return array
+     */
+    public function getPerimeter($perimeterType)
+    {
+        return $this->perimeters->get($perimeterType);
+    }
+
+    /**
      * Initialize collections
      */
     protected function initCollections()
