@@ -25,6 +25,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
     protected $routeDocumentClass;
     protected $siteRepository;
     protected $nodeRepository;
+    protected $redirectionRepository;
     protected $siteAliasEn;
     protected $siteAliasFr;
     protected $site;
@@ -38,6 +39,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         $this->routeDocumentClass = 'OpenOrchestra\ModelBundle\Document\RouteDocument';
 
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->redirectionRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RedirectionRepositoryInterface');
         $this->routeDocumentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RouteDocumentRepositoryInterface');
 
         $this->siteAliasFr = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
@@ -65,6 +67,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
             $this->routeDocumentClass,
             $this->siteRepository,
             $this->nodeRepository,
+            $this->redirectionRepository,
             $this->routeDocumentRepository
         );
     }
@@ -108,6 +111,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         $nodeId = 'nodeId';
         $node = $this->generateNode($language, $id, $pattern, $parentId, $nodeId);
         Phake::when($this->nodeRepository)->findLastVersionByTypeCurrentlyPublished(Phake::anyParameters())->thenReturn(array($node));
+        Phake::when($this->redirectionRepository)->findBySiteId(Phake::anyParameters())->thenReturn(array());
 
         $routeDocuments = $this->manager->createForSite($this->site);
 
@@ -138,6 +142,44 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
             array('en', 'nodeId', array(0, 2), 'foo', '/bar/foo', 'parent'),
         );
     }
+
+    /**
+     * @param string $locale
+     * @param string $id
+     * @param array  $aliasIds
+     * @param bool   $permanent
+     * @param string $pattern
+     *
+     * @dataProvider provideNodeRedirectionData
+     */
+    public function testCreateForSiteWithRedirection($locale, $id, $aliasIds, $permanent, $pattern)
+    {
+        $mongoNodeId = 'mongoNodeId';
+        $nodeId = 'nodeId';
+        $siteId = $this->siteId;
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getId()->thenReturn($mongoNodeId);
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($node)->getSiteId()->thenReturn($siteId);
+
+        $redirection = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
+        Phake::when($redirection)->getId()->thenReturn($id);
+        Phake::when($redirection)->getNodeId()->thenReturn($nodeId);
+        Phake::when($redirection)->isPermanent()->thenReturn($permanent);
+        Phake::when($redirection)->getSiteId()->thenReturn($siteId);
+        Phake::when($redirection)->getRoutePattern()->thenReturn($pattern);
+        Phake::when($redirection)->getLocale()->thenReturn($locale);
+
+        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn($node);
+        Phake::when($this->nodeRepository)->findLastVersionByTypeCurrentlyPublished(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->redirectionRepository)->findBySiteId(Phake::anyParameters())->thenReturn(array($redirection));
+
+        $routeDocuments = $this->manager->createForSite($this->site);
+
+        $this->verifyRedirectionRoutes($routeDocuments, $locale, $id, $aliasIds, $mongoNodeId, $permanent);
+        Phake::verify($this->nodeRepository)->findOneCurrentlyPublished($nodeId, $locale, $siteId);
+    }
+
 
     /**
      * Test if no node is published
@@ -212,16 +254,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
 
         $routeDocuments = $this->manager->createOrUpdateForRedirection($redirection);
 
-        $this->assertCount(2, $routeDocuments);
-        foreach ($routeDocuments as $key => $route) {
-            $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
-            $this->assertSame($this->{'domain'. ucfirst($locale)}, $route->getHost());
-            $this->assertSame(array(
-                '_controller' => 'FrameworkBundle:Redirect:redirect',
-                'route' => $aliasIds[$key] . '_' . $mongoNodeId,
-                'permanent' => $permanent,
-            ), $route->getDefaults());
-        }
+        $this->verifyRedirectionRoutes($routeDocuments, $locale, $id, $aliasIds, $mongoNodeId, $permanent);
         Phake::verify($this->siteRepository)->findOneBySiteId($siteId);
         Phake::verify($this->nodeRepository)->findOneCurrentlyPublished($nodeId, $locale, $siteId);
     }
@@ -369,6 +402,28 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
             $this->assertSame($this->siteId, $route->getSiteId());
             $this->assertSame($language, $route->getLanguage());
             $this->assertSame($exceptedPattern, $route->getPattern());
+        }
+    }
+
+    /**
+     * @param array  $routeDocuments
+     * @param string $locale
+     * @param string $id
+     * @param array  $aliasIds
+     * @param string $mongoNodeId
+     * @param string $permanent
+     */
+    protected function verifyRedirectionRoutes(array $routeDocuments, $locale, $id, array $aliasIds, $mongoNodeId, $permanent)
+    {
+        $this->assertCount(2, $routeDocuments);
+        foreach ($routeDocuments as $key => $route) {
+            $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
+            $this->assertSame($this->{'domain'. ucfirst($locale)}, $route->getHost());
+            $this->assertSame(array(
+                '_controller' => 'FrameworkBundle:Redirect:redirect',
+                'route' => $aliasIds[$key] . '_' . $mongoNodeId,
+                'permanent' => $permanent,
+            ), $route->getDefaults());
         }
     }
 }
