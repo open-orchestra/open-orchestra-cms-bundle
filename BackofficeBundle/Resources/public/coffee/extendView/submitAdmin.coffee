@@ -48,7 +48,7 @@ extendView['submitAdmin'] = {
     form = if (clone = $(event.target).data('clone')) then $('#' + clone).closest('form') else $(event.target).closest('form')
     if $("textarea.tinymce", form).length > 0
       tinymce.triggerSave()
-    if !form.hasClass('HTML5Validation') && form[0].checkValidity()
+    if form[0].checkValidity()
       event.preventDefault()
       $.ajax
         type: 'POST'
