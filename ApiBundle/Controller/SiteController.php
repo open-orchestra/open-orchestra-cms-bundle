@@ -85,6 +85,8 @@ class SiteController extends BaseController
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE_MAIN_ALIAS
      * })
      *
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
      * @return FacadeInterface
      */
     public function listAvailableSiteAction()
