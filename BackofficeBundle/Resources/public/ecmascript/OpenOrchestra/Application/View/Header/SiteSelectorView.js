@@ -42,7 +42,6 @@ class SiteSelectorView extends OrchestraView
     }
 
     /**
-     *
      * @param {SiteAlias} siteAlias
      *
      * @return {String}
