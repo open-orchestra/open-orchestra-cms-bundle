@@ -43,9 +43,8 @@ extendView['submitAdmin'] = {
       Backbone.history.loadUrl(displayRoute)
     else
       Backbone.history.navigate(displayRoute, {trigger: true})
-  
+
   addEventOnSave: (event) ->
-    viewContext = @
     form = if (clone = $(event.target).data('clone')) then $('#' + clone).closest('form') else $(event.target).closest('form')
     if $("textarea.tinymce", form).length > 0
       tinymce.triggerSave()
@@ -65,9 +64,4 @@ extendView['submitAdmin'] = {
             @httpBadRequest(arguments, form);
           403: ->
             @httpForbidden(arguments, form);
-    else if !form.hasClass('HTML5Validation')
-      form.addClass('HTML5Validation')
-      form.find(':submit').click()
-    else
-      form.removeClass('HTML5Validation')
 }
