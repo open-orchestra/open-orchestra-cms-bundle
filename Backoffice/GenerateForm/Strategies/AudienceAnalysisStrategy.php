@@ -33,10 +33,14 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
                 'choices' => $this->getChoices(),
                 'label' => 'open_orchestra_backoffice.block.audience_analysis.tag_type',
                 'constraints' => new NotBlank(),
+                'group_id' => 'data',
+                'sub_group_id' => 'content',
             ))
             ->add('site_id', 'text', array(
                 'label' => 'open_orchestra_backoffice.block.audience_analysis.site_id',
                 'constraints' => new NotBlank(),
+                'group_id' => 'data',
+                'sub_group_id' => 'content',
             ))
         ;
     }

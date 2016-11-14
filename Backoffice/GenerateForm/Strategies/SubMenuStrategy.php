@@ -31,10 +31,14 @@ class SubMenuStrategy extends AbstractBlockStrategy
         $builder->add('nbLevel', 'text', array(
             'label' => 'open_orchestra_backoffice.form.sub_menu.level',
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('nodeName', 'oo_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.sub_menu.node',
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
     }
 

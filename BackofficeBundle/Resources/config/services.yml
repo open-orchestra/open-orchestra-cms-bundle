@@ -30,6 +30,7 @@ services:
             - '@open_orchestra_model.repository.node'
             - '@open_orchestra_model.repository.site'
             - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_model.repository.block'
             - '@open_orchestra_backoffice.context_manager'
             - '%open_orchestra_model.document.node.class%'
             - '@event_dispatcher'

@@ -34,23 +34,34 @@ class ContentListStrategy extends AbstractBlockStrategy
         $builder->add('contentNodeId', 'oo_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_list.node',
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('characterNumber', 'integer', array(
             'empty_data' => 50,
             'constraints' => new Type('integer'),
             'label' => 'open_orchestra_backoffice.form.content_list.nb_characters',
             'required' => false,
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
-        $builder->add('contentSearch', 'oo_content_search');
+        $builder->add('contentSearch', 'oo_content_search', array(
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
+        ));
         $builder->add('contentTemplateEnabled', 'checkbox', array(
             'label' => 'open_orchestra_backoffice.form.content_list.content_template_enabled.title',
             'required' => false,
             'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_list.content_template_enabled.helper'),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('contentTemplate', 'oo_tinymce', array(
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.content_list.content_template',
             'constraints' => new ContentTemplate(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
     }
 

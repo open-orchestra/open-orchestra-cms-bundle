@@ -27,7 +27,9 @@ class LoginStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('maxAge', 'hidden');
+        $builder->add('maxAge', 'hidden', array(
+            'group_id' => 'data',
+        ));
     }
 
     /**

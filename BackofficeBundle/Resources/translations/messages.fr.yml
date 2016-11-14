@@ -238,6 +238,7 @@ open_orchestra_backoffice:
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
             template: Template
+            specialPageName: Nom de page spéciale
         changefreq:
             always: Toujours
             hourly: Toutes les heures
@@ -267,7 +268,17 @@ open_orchestra_backoffice:
             label: Nom du bloc
             max_age: Max age pour le cache de la réponse
             id: Id html du bloc
-            class: Classe html du bloc
+            style: Style du bloc
+            group:
+                property: Propriétés
+                data: Données
+                technical: Technique
+            sub_group:
+                property: Propriétés
+                style: Style
+                content: Contenu
+                cache: Cache
+                html: Html
         sub_menu:
             node: Racine du menu
             level: Profondeur du menu
@@ -565,6 +576,8 @@ open_orchestra_backoffice:
             text: Cette opération est définitive.
             title: Souhaitez-vous supprimer ce noeud ?
         blocks: Blocs
+        special_page:
+            default: Defaut
     status:
         none_available: Pas de statut disponible
     top_menu:
@@ -655,14 +668,6 @@ open_orchestra_backoffice:
         default:
             label: Ensemble par défaut
             template_name:
-                default: Défaut (colonne gauche)
-                full_page: Sans colonne
+                default: Défaut
             style:
-                highlight: Mise en avant
-                paragraph: Paragraphe rédactionnel
-        custom:
-            label: Ensemble personnalisé
-            template_name:
-                login: Page de connexion
-            style:
-                column: Colonnage
+                default: Default

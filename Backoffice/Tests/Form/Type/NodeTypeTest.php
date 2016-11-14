@@ -33,7 +33,8 @@ class NodeTypeTest extends AbstractBaseTestCase
             $this->contextManager,
             $this->siteRepository,
             $this->templateManager,
-            $this->nodeClass
+            $this->nodeClass,
+            array()
         );
     }
 
@@ -47,7 +48,7 @@ class NodeTypeTest extends AbstractBaseTestCase
 
         $this->nodeType->buildForm($formBuilderMock, array('activateBoLabel' => true));
 
-        Phake::verify($formBuilderMock, Phake::times(18))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(19))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
@@ -63,7 +64,7 @@ class NodeTypeTest extends AbstractBaseTestCase
 
         $this->nodeType->buildForm($formBuilderMock, array('activateBoLabel' => false));
 
-        Phake::verify($formBuilderMock, Phake::times(17))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(18))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->add('boLabel', 'text', array(
             'label' => 'open_orchestra_backoffice.form.node.boLabel.name',

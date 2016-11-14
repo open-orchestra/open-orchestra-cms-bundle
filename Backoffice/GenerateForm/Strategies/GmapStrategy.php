@@ -30,12 +30,18 @@ class GmapStrategy extends AbstractBlockStrategy
     {
         $builder->add('latitude', 'text', array(
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('longitude', 'text', array(
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
         $builder->add('zoom', 'text', array(
             'constraints' => new NotBlank(),
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
         ));
     }
 
