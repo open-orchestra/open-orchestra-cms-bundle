@@ -36,6 +36,5 @@ class BlockToArrayTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        return new BlockInterface();
     }
 }

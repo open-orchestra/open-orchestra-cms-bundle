@@ -70,8 +70,9 @@ class NodeType extends AbstractType
                 )
             ))
             ->add('specialPageName', 'choice', array(
-                    'label' => 'open_orchestra_backoffice.form.node.specialPageName',
-                    'choices' => $this->specialPageList
+                'label' => 'open_orchestra_backoffice.form.node.specialPageName',
+                'choices' => $this->specialPageList,
+                'required' => false
             ));
         if (true === $options['activateBoLabel']) {
             $builder->add('boLabel', 'text', array(

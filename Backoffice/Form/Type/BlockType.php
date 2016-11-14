@@ -155,7 +155,6 @@ class BlockType extends AbstractType
     }
 
     /**
-     *
      * @return array
      */
     protected function getStyleChoices()
