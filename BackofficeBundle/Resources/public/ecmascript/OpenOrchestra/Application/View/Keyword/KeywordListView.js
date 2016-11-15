@@ -46,8 +46,8 @@ class KeywordListView extends AbstractDataTableView
 
     /**
      *
-     * @param td
-     * @param cellData
+     * @param {Object} td
+     * @param {Object} cellData
      *
      * Example of specif column
      * @private

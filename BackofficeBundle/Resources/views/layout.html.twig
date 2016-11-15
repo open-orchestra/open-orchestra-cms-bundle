@@ -1,81 +1,65 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-
         <title>{% block title %}OpenOrchestra{% endblock %}</title>
-        <meta name="description" content="">
-        <meta name="author" content="">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block stylesheets %}
-            {% include 'OpenOrchestraBackofficeBundle:BackOffice:stylesheets.html.twig' %}
+
+            {% if app.debug %}
+                {% stylesheets 'css/all.css' filter='cssrewrite' %}
+                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+                {% endstylesheets %}
+            {% else %}
+                {% stylesheets 'css/all.min.css' filter='cssrewrite' %}
+                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+                {% endstylesheets %}
+            {% endif %}
+
         {% endblock %}
-
-        <!-- Specifying a Webpage Icon for Web Clip
-             Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
-        <link rel="apple-touch-icon" href="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/splash/sptouch-icon-iphone.png') }}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/splash/touch-icon-ipad.png') }}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/splash/touch-icon-iphone-retina.png') }}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/splash/touch-icon-ipad-retina.png') }}">
-
-        <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-        <!-- Startup image for web apps -->
-        <link rel="apple-touch-startup-image" href="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/splash/ipad-landscape.png') }}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
-        <link rel="apple-touch-startup-image" href="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/splash/ipad-portrait.png') }}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
-        <link rel="apple-touch-startup-image" href="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/splash/iphone.png') }}" media="screen and (max-device-width: 320px)">
-
 </head>
-{% block body_opener %}
-    <!-- #BODY -->
-    <!-- Possible Classes
+    <body>
+    {% block body %}
+        <header class="header-region">
+        </header>
+        <div class="inner">
+            <div id="left-column">
+            </div>
+            <div id="central-column">
+            </div>
+        </div>
+        <div class="modal-region"></div>
 
-        * 'smart-style-{SKIN#}'
-        * 'smart-rtl'         - Switch theme mode to RTL
-        * 'menu-on-top'       - Switch to top navigation (no DOM change required)
-        * 'no-menu'           - Hides the menu completely
-        * 'hidden-menu'       - Hides the main menu but still accessable by hovering over left edge
-        * 'fixed-header'      - Fixes the header
-        * 'fixed-navigation'  - Fixes the main menu
-        * 'fixed-ribbon'      - Fixes breadcrumb
-        * 'fixed-page-footer' - Fixes footer
-        * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
-    -->
-    <body class="desktop-detected fixed-header fixed-navigation pace-done fixed-ribbon">
-{% endblock %}
-    <div id="assets-version" class="hidden-info">{{ asset_version('/') }}</div>
-    <div id="oo-environment" class="hidden-info">{{ app.environment }}</div>
+        <script>
+            var config = {
+                debug: '{{ app.debug }}',
+                environment: '{{ app.environment }}',
+                template: {
+                    baseUrlTemplate: '/bundles/',
+                    templateVersion: '{{ asset_version('/') }}'
+                },
+                routing: {
+                    baseUrl: '{{ app.request.baseUrl }}',
+                    scheme: '{{ app.request.scheme }}',
+                    host: '{{ app.request.host }}'
+                }
+            };
+            var context = {
+                siteId: '{{ context.currentSiteId }}',
+                language: '{{ context.currentLocale }}',
+                user: {
+                    username : '{{ app.user.username }}',
+                    firstName : '{{ app.user.firstName }}',
+                    lastName : '{{ app.user.lastName }}'
+                }
+            };
+        </script>
 
-    {% block content %}
-    {% endblock %}
+        {{ tinymce_init() }}
 
-<!--================================================== -->
-
-    {{ tinymce_init() }}
-
-    <script>
-        var config = {
-            debug: '{{ app.debug }}',
-            environment: '{{ app.environment }}',
-            siteId: '{{ context.currentSiteId }}',
-            language: '{{ context.currentLocale }}',
-            template: {
-                baseUrlTemplate: '/bundles/',
-                templateVersion: '{{ asset_version('/') }}'
-            },
-            routing: {
-                baseUrl: '{{ app.request.baseUrl }}',
-                scheme: '{{ app.request.scheme }}',
-                host: '{{ app.request.host }}'
-            }
-        }
-    </script>
-
-    {% block javascripts %}
         {% if app.debug %}
             {% javascripts 'js/all.js' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -86,12 +70,5 @@
             {% endjavascripts %}
         {% endif %}
     {% endblock %}
-
-    <script>
-        $(document).ready(function() {
-            // DO NOT REMOVE : GLOBAL FUNCTIONS!
-            pageSetUp();
-        });
-    </script>
     </body>
 </html>

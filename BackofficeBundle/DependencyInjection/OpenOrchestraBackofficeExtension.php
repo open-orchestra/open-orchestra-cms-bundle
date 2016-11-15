@@ -56,8 +56,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('field_type.yml');
         $loader->load('transformer.yml');
         $loader->load('icon.yml');
-        $loader->load('navigation_panel.yml');
-        $loader->load('datatable_parameter.yml');
         $loader->load('value_transformer.yml');
         $loader->load('subscriber.yml');
         $loader->load('listener.yml');

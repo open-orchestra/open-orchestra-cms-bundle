@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.registerTask('less:discovering', 'Open Orchestra task to find and compile less files', function() {
     var mappingFileLess = grunt.file.expandMapping(
-      ['*/less/*.less', '*/less/*/*.less'],
+      ['*/less/**/*.less'],
       'web/built/',
       {
         cwd: 'web/bundles/',
@@ -18,7 +18,10 @@ module.exports = function(grunt) {
 
     var lessConfig = {
       compile: {
-        files: filesLess
+          options: {
+              paths: ['vendor/bower_components/']
+          },
+          files: filesLess
       }
     };
 

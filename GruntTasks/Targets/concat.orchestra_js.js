@@ -27,9 +27,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/generateId.js',
     'web/built/openorchestrabackoffice/js/forbiddenAccessRedirection.js',
 
-    //--[ AJAX LOADER ]--//
-    'web/built/openorchestrabackoffice/js/ajaxLoader/AjaxLoaderView.js',
-
     //--[ BUTTON RIBBON ]--//
     'web/built/openorchestrabackoffice/js/ribbonButton/RibbonFormButtonView.js',
 
@@ -164,6 +161,7 @@ module.exports = {
     //--[ VIEWS CONFIGURATION ]--//
     'web/built/openorchestrabackoffice/js/viewConfigurator.js',
 
+
     //--[ ROUTING ]--//
     'web/js/fos_js_routes.js',
 
@@ -172,6 +170,12 @@ module.exports = {
 
     //--[ LIB ORCHESTRA ]--//
     'web/built/**/Lib/*.js',
+
+    //--[ TEMPLATE UNDERSCORE ]--//
+    'web/built/template/templates.js',
+
+    //--[ NAVIGATION CONFIG ]--//
+    'web/built/navigation/navigation.js',
 
     //--[ APPLICATION ]--//
     'web/built/oo_application.js'

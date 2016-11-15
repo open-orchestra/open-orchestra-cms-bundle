@@ -581,11 +581,9 @@ open_orchestra_backoffice:
     status:
         none_available: Pas de statut disponible
     top_menu:
-        site: "Site :"
         collapse_menu: Replier le menu
-        sign_out: Se déconnecter
+
         improve_security: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
-        fullscreen: Plein écran
     areas:
         delete_question: Souhaitez-vous supprimer cette zone ?
         delete_explanation: Cette opération est non réversible.

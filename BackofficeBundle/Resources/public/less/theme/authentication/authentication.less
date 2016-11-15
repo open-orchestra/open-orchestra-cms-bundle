@@ -1,0 +1,43 @@
+@import "../variables.less";
+
+/* ===================================================================
+ * Authentication
+ * =================================================================*/
+#authentication {
+  background-color: @darkBlue;
+  position: relative;
+  height: 100%;
+  .form-login {
+    background-color: #fff;
+    border-radius: 3px;
+    width: 640px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .header {
+    border-radius: 3px 3px 0 0;
+    padding: 5px;
+    background-color: #e6e6e6;
+    text-align: center;
+    color: #737687;
+    img { margin-right: 10px;}
+  }
+  .body-login {
+    padding: 100px 30px 30px;
+    border-radius:  0 0 3px 3px;
+  }
+  .form-group {
+    margin-bottom: 30px;
+    &.action-buttons,
+    .btn { margin-bottom: 0; }
+    .fa {
+      .fontSize(16);
+      color: #9fa1aa;
+      position: absolute;
+      right: 30px;
+      top: 10px;
+    }
+  }
+}

@@ -13,6 +13,7 @@ parameters:
     open_orchestra_api.transformer.content_collection.class: OpenOrchestra\ApiBundle\Transformer\ContentCollectionTransformer
     open_orchestra_api.transformer.status_collection.class: OpenOrchestra\ApiBundle\Transformer\StatusCollectionTransformer
     open_orchestra_api.transformer.site.class: OpenOrchestra\ApiBundle\Transformer\SiteTransformer
+    open_orchestra_api.transformer.site_alias.class: OpenOrchestra\ApiBundle\Transformer\SiteAliasTransformer
     open_orchestra_api.transformer.site_collection.class: OpenOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
     open_orchestra_api.transformer.theme.class: OpenOrchestra\ApiBundle\Transformer\ThemeTransformer
     open_orchestra_api.transformer.theme_collection.class: OpenOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
@@ -138,6 +139,12 @@ services:
         arguments:
             - '%open_orchestra_api.facade.site.class%'
             - '@security.authorization_checker'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.site_alias:
+        class: '%open_orchestra_api.transformer.site_alias.class%'
+        arguments:
+            - '%open_orchestra_api.facade.site_alias.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.site_collection:

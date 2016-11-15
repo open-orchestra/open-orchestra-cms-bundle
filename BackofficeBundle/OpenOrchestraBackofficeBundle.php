@@ -8,7 +8,6 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockComp
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\FieldToElasticaTypeCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\NavigationPanelCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RestoreEntityCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RoleCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
@@ -37,7 +36,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new TwigGlobalsCompilerPass());
         $container->addCompilerPass(new TinymceCompilerPass());
         $container->addCompilerPass(new DisplayIconCompilerPass());
-        $container->addCompilerPass(new NavigationPanelCompilerPass());
         $container->addCompilerPass(new BlockParameterCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());

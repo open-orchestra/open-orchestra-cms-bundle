@@ -1,0 +1,23 @@
+<div class="logo">
+    <img src="/images/logo.png" alt="logo" />
+</div>
+<div class="site-selector">
+</div>
+<div class="pull-right">
+    <div class="account">
+        <button class="btn dropdown-toggle" type="button" id="select-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <%= user.firstName %> <span><%= user.lastName %></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="select-action">
+            <li><a href="#"><%= Translator.trans('open_orchestra_backoffice.header.preference') %></a></li>
+            <li>
+                <a href="#" class="logout">
+                    <%= Translator.trans('open_orchestra_backoffice.header.sign_out') %>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="expand">
+        <a href="#"><i class="fa fa-expand" aria-hidden="true"></i></a>
+    </div>
+</div>

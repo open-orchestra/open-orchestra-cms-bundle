@@ -3,9 +3,11 @@ import KeywordRouter    from './Router/Keyword/KeywordRouter'
 import DashboardRouter  from './Router/Dashboard/DashboardRouter'
 import SiteRouter       from './Router/Site/SiteRouter'
 import ErrorView        from './View/Error/ErrorView'
-import TemplateManager  from '../Service/TemplateManager'
 import ApplicationError from '../Service/Error/ApplicationError'
 import AjaxError        from '../Service/Error/AjaxError'
+import HeaderView       from './View/Header/HeaderView'
+import SitesAvailable   from './Collection/Site/SitesAvailable'
+import NavigationView   from './View/Navigation/NavigationView'
 
 /**
  * @class Application
@@ -27,14 +29,12 @@ class Application
     run() {
         this._initRouting();
         this._initTranslator();
-        this._initTemplateManager();
         this._initRouter();
+        this._initLayoutView();
 
-        if (Routing.generate('fos_user_security_login', true) != document.location.pathname) {
-            Backbone.Events.trigger('application:before:start');
-            Backbone.history.start();
-            Backbone.Events.trigger('application:after:start');
-        }
+        Backbone.Events.trigger('application:before:start');
+        Backbone.history.start();
+        Backbone.Events.trigger('application:after:start');
     }
 
     /**
@@ -77,6 +77,20 @@ class Application
     }
 
     /**
+     * @param {Context} context - Context object
+     */
+    setContext(context) {
+        this._context = context;
+    }
+
+    /**
+     * @returns {Context}
+     */
+    getContext() {
+        return this._context;
+    }
+
+    /**
      * @param {Object} err - ErrorEvent
      * @private
      */
@@ -111,14 +125,18 @@ class Application
     }
 
     /**
-     * Initialize template manager
+     * Initialize layout view (header, nav, ...)
      * @private
      */
-    _initTemplateManager() {
-        TemplateManager.initialize(
-            this._configuration.getParameter('template'),
-            this._configuration.getParameter('environment')
-        );
+    _initLayoutView() {
+        new SitesAvailable().fetch({
+            success: (sites) => {
+                let headerView = new HeaderView({sites : sites});
+                this.getRegion('header').html(headerView.render().$el);
+            }
+        });
+        let navigationView = new NavigationView();
+        this.getRegion('left_column').html(navigationView.render().$el);
     }
 
     /**
@@ -141,7 +159,7 @@ class Application
      * @private
      */
     _initTranslator() {
-        Translator.locale = this._configuration.getParameter('language');
+        Translator.locale = this.getContext().language;
         Translator.defaultDomain = 'interface';
     }
 }

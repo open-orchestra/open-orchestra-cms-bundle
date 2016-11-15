@@ -24,13 +24,13 @@ class NodeTreeView extends OrchestraView
      * Render node tree
      */
     render() {
-        let view = this;
-        this._renderTemplate('openorchestrabackoffice/underscore/Node/nodeTreeView',
-            {'nodeTree' : this._nodeTree},
-            (template) => {
-                view.$el.append(template);
+        let template = this._renderTemplate(
+            'Node/nodeTreeView',
+            {
+                'nodeTree' : this._nodeTree
             }
         );
+        this.$el.html(template);
 
         return this;
     }

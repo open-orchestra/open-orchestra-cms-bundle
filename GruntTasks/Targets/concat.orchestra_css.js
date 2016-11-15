@@ -1,20 +1,13 @@
 module.exports = {
   src: [
-    'web/built/openorchestrabackoffice/css/openorchestra.css',
-    'web/built/openorchestrabackoffice/css/contentTypeForm.css',
-    'web/built/openorchestrabackoffice/css/datatable/datatable.css',
-    'web/built/openorchestrabackoffice/css/datatable/pagination.css',
-    'web/built/openorchestrabackoffice/css/loginPage.css',
-    'web/built/openorchestrabackoffice/css/editTable.css',
-    'web/built/openorchestrabackoffice/css/ribbonButtons.css',
-    'web/built/openorchestrabackoffice/css/tab.css',
-    'web/built/openorchestrabackoffice/css/groupTreePanel.css',
-    'web/built/openorchestrabackoffice/css/ajaxLoader/ajaxLoader.css',
-    'web/built/openorchestrabackoffice/css/page/node.css',
-    'web/built/openorchestrabackoffice/css/page/template.css',
-    'web/built/openorchestrabackoffice/css/page/area.css',
-    'web/built/openorchestrabackoffice/css/page/block.css',
-    'web/built/openorchestrabackoffice/css/role.css'
+    'web/bundles/openorchestrabackoffice/font/Montserrat/css/fonts.css',
+    'web/bundles/openorchestrabackoffice/font/Roboto/css/fonts.css',
+    'web/built/openorchestrabackoffice/css/theme/open-orchestra-v2.css',
+    'web/built/openorchestrabackoffice/css/theme/header/header.css',
+    'web/built/openorchestrabackoffice/css/theme/modal/modal.css',
+    'web/built/openorchestrabackoffice/css/theme/authentication/authentication.css',
+    'web/built/openorchestrabackoffice/css/theme/navigation/navigation.css',
+    'web/built/openorchestrabackoffice/css/theme/ajaxLoader/ajaxLoader.css'
   ],
   dest: 'web/built/orchestra.css'
 };
