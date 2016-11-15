@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AccessLanguageForNodeNotGrantedHttpException;
-use OpenOrchestra\Backoffice\Security\NodeRole;
 
 /**
  * Class NodeController
@@ -53,7 +52,7 @@ class NodeController extends BaseController
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
-        $this->denyAccessUnlessGranted(NodeRole::READER, $node);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
@@ -94,7 +93,7 @@ class NodeController extends BaseController
 
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
         if ($node) {
-            $this->denyAccessUnlessGranted(NodeRole::READER);
+            $this->denyAccessUnlessGranted($this->getAccessRole($node));
         }
         if (!$node) {
             $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
@@ -156,7 +155,7 @@ class NodeController extends BaseController
         $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
         $newNode = $nodeManager->duplicateNode($nodeId, $siteId, $language, $version, false);
         try{
-            $this->denyAccessUnlessGranted(NodeRole::EDITOR, $newNode);
+            $this->denyAccessUnlessGranted($this->getEditionRole($newNode), $newNode);
         } catch(AccessDeniedException $exception) {
             throw new NewVersionNodeNotGrantedHttpException();
         }
@@ -231,7 +230,7 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
         $node = !empty($nodes) ? $nodes[0] : null;
-        $this->denyAccessUnlessGranted(NodeRole::READER, $node);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($nodes);
     }
@@ -249,7 +248,7 @@ class NodeController extends BaseController
     {
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
-        $this->denyAccessUnlessGranted(NodeRole::EDITOR);
+        $this->denyAccessUnlessGranted($this->getEditionRole($node));
 
         return $this->reverseTransform(
             $request, $nodeMongoId,
@@ -271,7 +270,7 @@ class NodeController extends BaseController
     {
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
-        $this->denyAccessUnlessGranted(NodeRole::READER, $node);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
         return $this->listStatuses($node);
     }
@@ -354,5 +353,33 @@ class NodeController extends BaseController
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
 
         return $node;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getAccessRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getEditionRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 }

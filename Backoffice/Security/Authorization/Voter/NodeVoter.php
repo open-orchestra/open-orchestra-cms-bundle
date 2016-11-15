@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\Backoffice\Security\NodeRole;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\Backoffice\Security\ContributionAction;
 
 /**
  * Class NodeVoter
@@ -18,7 +18,7 @@ class NodeVoter extends AbstractVoter
      */
     protected function getSupportedClasses()
     {
-        return array('NodeInterface');
+        return array('OpenOrchestra\ModelInterface\Model\NodeInterface');
     }
 
     /**
@@ -27,25 +27,22 @@ class NodeVoter extends AbstractVoter
     protected function getSupportedAttributes()
     {
         return array(
-            NodeRole::READER,
-            NodeRole::CREATOR,
-            NodeRole::EDITOR,
-            NodeRole::SUPPRESSOR
+            ContributionAction::ADD,
+            ContributionAction::EDIT,
+            ContributionAction::DELETE
         );
     }
 
     /**
-     * @param string               $attribute
-     * @param object               $object
-     * @param UserInterface|string $user
+     * @param string         $attribute
+     * @param mixed          $subject
+     * @param TokenInterface $token
      *
      * @return bool
      */
-    protected function isGranted($attribute, $object, $user = null)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        if (is_null($user)) {
-            return VoterInterface::ACCESS_DENIED;
-        }
+        $user = $token->getUser();
 
         if ($this->isSuperAdmin($user)) {
             return VoterInterface::ACCESS_GRANTED;
@@ -54,7 +51,7 @@ class NodeVoter extends AbstractVoter
         foreach ($user->getGroups() as $group) {
 
             if ($group->hasRole($attribute)) {
-                $nodePerimeter = $group->getPerimeters(NodeInterface::ENTITY_TYPE);
+                $nodePerimeter = $group->getPerimeter(NodeInterface::ENTITY_TYPE);
 
                 if ($nodePerimeter instanceof PerimeterInterface && $nodePerimeter->contains($object->getPath())) {
 

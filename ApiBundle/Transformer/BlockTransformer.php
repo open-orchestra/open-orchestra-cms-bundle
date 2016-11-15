@@ -92,13 +92,13 @@ class BlockTransformer extends AbstractTransformer
                 'component' => $block->getComponent(),
             )
         ));
-        if($block->getId()) {
-            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_block_form',
-                array(
-                    'blockId' => $block->getId()
-                )
-            ));
-        }
+//         if($block->getId()) {
+//             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_block_form',
+//                 array(
+//                     'blockId' => $block->getId()
+//                 )
+//             ));
+//         }
 
         $facade->isDeletable = true;
         if ($this->nodeRepository->isBlockUsed($block->getId())) {

@@ -105,13 +105,13 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'siteId' => $node->getSiteId(),
         )));
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
-            'areaId' => $areaId,
-            'nodeId' => $node->getNodeId(),
-            'language' => $node->getLanguage(),
-            'version' => $node->getVersion(),
-            'siteId' => $node->getSiteId()
-        )));
+//         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
+//             'areaId' => $areaId,
+//             'nodeId' => $node->getNodeId(),
+//             'language' => $node->getLanguage(),
+//             'version' => $node->getVersion(),
+//             'siteId' => $node->getSiteId()
+//         )));
     }
 
     /**
