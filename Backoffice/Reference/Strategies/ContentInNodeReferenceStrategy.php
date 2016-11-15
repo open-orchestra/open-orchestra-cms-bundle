@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\Reference\Strategies;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
 
 /**
  * Class ContentInNodeReferenceStrategy
@@ -32,12 +33,13 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
     }
 
     /**
-     * @param mixed $entity
+     * @param mixed $event
      */
-    public function addReferencesToEntity($entity)
+    public function addReferencesToEntity($event)
     {
-        if ($this->support($entity)) {
-            $contentIds = $this->extractContentsFromNode($entity);
+        $node = $event->getNode();
+        if ($this->support($node)) {
+            $contentIds = $this->extractContentsFromNode($event);
 
             foreach ($contentIds as $contentId) {
                 /** @var \OpenOrchestra\ModelInterface\Model\ContentInterface $content */
@@ -45,7 +47,7 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
 
                 if (is_array($contents)) {
                     foreach ($contents as $content) {
-                        $content->addUseInEntity($entity->getId(), NodeInterface::ENTITY_TYPE);
+                        $content->addUseInEntity($node->getId(), NodeInterface::ENTITY_TYPE);
                     }
                 }
             }
@@ -69,16 +71,18 @@ class ContentInNodeReferenceStrategy implements ReferenceStrategyInterface
     }
 
     /**
-     * @param ReadNodeInterface $node
+     * @param NodeEvent $event
      *
      * @return array
      */
-    protected function extractContentsFromNode(ReadNodeInterface $node)
+    protected function extractContentsFromNode(NodeEvent $event)
     {
         $references = array();
 
+        $blocks = ($event->getBlock() != null) ? array($event->getBlock()) : $event->getNode()->getBlocks();
+
         /** @var \OpenOrchestra\ModelInterface\Model\BlockInterface $block */
-        foreach ($node->getBlocks() as $block) {
+        foreach ($blocks as $block) {
             $references = $this->extractContentsFromElement($block->getAttributes(), $references);
         }
 
