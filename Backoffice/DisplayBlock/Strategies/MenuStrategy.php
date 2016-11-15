@@ -37,7 +37,7 @@ class MenuStrategy extends AbstractStrategy
             'OpenOrchestraBackofficeBundle:Block/Menu:show.html.twig',
             array(
                 'id' => $block->getId(),
-                'class' => $block->getClass()
+                'class' => $block->getStyle()
             )
         );
     }

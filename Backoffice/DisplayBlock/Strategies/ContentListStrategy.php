@@ -24,7 +24,7 @@ class ContentListStrategy extends AbstractStrategy
         $contentSearch = $block->getAttribute('contentSearch');
         $attributes = array(
             'id' => $block->getId(),
-            'class' => $block->getClass(),
+            'class' => $block->getStyle(),
             'contentNodeId' => $block->getAttribute('contentNodeId'),
             'characterNumber' => $block->getAttribute('characterNumber'),
             'keywords' => (!is_null($contentSearch) && array_key_exists('keywords', $contentSearch)) ? $contentSearch['keywords'] : '',

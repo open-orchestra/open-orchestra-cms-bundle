@@ -37,7 +37,7 @@ class SubMenuStrategy extends AbstractStrategy
             'OpenOrchestraBackofficeBundle:Block/SubMenu:show.html.twig',
             array(
                 'id' => $block->getId(),
-                'class' => $block->getClass(),
+                'class' => $block->getStyle(),
                 'nbLevel' => $block->getAttribute('nbLevel'),
                 'node' => $block->getAttribute('nodeName')
             )

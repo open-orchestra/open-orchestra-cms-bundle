@@ -37,7 +37,7 @@ class FooterStrategy extends AbstractStrategy
             'OpenOrchestraBackofficeBundle:Block/Footer:show.html.twig',
             array(
                 'id' => $block->getId(),
-                'class' => $block->getClass()
+                'class' => $block->getStyle()
             )
         );
     }
