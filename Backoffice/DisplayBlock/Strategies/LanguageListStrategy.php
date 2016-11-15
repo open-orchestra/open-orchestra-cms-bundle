@@ -36,7 +36,7 @@ class LanguageListStrategy extends AbstractStrategy
         return $this->render(
             'OpenOrchestraBackofficeBundle:Block/LanguageList:show.html.twig',
             array(
-                'class' => $block->getClass(),
+                'class' => $block->getStyle(),
                 'id' => $block->getId()
             )
         );

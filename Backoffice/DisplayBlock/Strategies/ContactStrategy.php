@@ -37,7 +37,7 @@ class ContactStrategy extends AbstractStrategy
             'OpenOrchestraBackofficeBundle:Block/Contact:show.html.twig',
             array(
                 'id' => $block->getId(),
-                'class' => $block->getClass(),
+                'class' => $block->getStyle(),
             )
         );
     }
