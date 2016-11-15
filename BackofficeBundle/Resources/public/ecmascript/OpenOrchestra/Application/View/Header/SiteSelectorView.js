@@ -31,7 +31,7 @@ class SiteSelectorView extends OrchestraView
             'Header/siteSelectorView',
             {
                 currentSite: currentSite,
-                sites: this.sites.models,
+                sites: _.without(this.sites.models, currentSite),
                 currentLocale: Application.getContext().language,
                 linkMainAlias: linkMainAlias
             }
