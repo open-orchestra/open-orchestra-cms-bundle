@@ -73,7 +73,6 @@ class BlockToArrayTransformerTest extends AbstractBaseTestCase
         $this->assertSame(array(
             'label' => $element,
             'style' => $element,
-            'id' => $element,
             'maxAge' => $element,
             'foo' => $element
         ), $this->transformer->transform($data));
