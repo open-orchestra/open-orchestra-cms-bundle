@@ -1,8 +1,13 @@
 parameters:
     open_orchestra_backoffice.voter.node.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter
+    open_orchestra_backoffice.voter.content.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVoter
 
 services:
     open_orchestra_backoffice.voter.node:
        class: '%open_orchestra_backoffice.voter.node.class%'
+       tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.content:
+       class: '%open_orchestra_backoffice.voter.content.class%'
        tags:
             - { name: security.voter }

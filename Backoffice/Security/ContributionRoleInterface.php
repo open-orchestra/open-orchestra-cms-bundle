@@ -4,13 +4,20 @@ namespace OpenOrchestra\Backoffice\Security;
 
 /**
  * Interface ContributionRoleInterface
+ *
+ * This interface is never implemented
+ * It defines roles available on the platform
  */
 interface ContributionRoleInterface
 {
-    const DEVELOPER      = 'ROLE_DEVELOPER';
-    const PLATFORM_ADMIN = 'ROLE_PLATFORM_ADMIN';
+    const DEVELOPER               = 'ROLE_DEVELOPER';                    // Can manage the entire platform
+    const PLATFORM_ADMIN          = 'ROLE_PLATFORM_ADMIN';               // Can manage the entire platform, dev parts excluded
 
-    const NODE_SELF      = 'EDITORIAL_NODE_SELF';
-    const NODE_EDIT      = 'EDITORIAL_NODE_EDIT';
-    const NODE_DELETE    = 'EDITORIAL_NODE_DELETE';
+    const NODE_CONTRIBUTOR        = 'EDITORIAL_NODE_CONTRIBUTOR';        // Can create nodes, edit & delete own nodes
+    const NODE_SUPER_EDITOR       = 'EDITORIAL_NODE_SUPER_EDITOR';       // Can edit someone else's node
+    const NODE_SUPER_SUPRESSOR    = 'EDITORIAL_NODE_SUPER_SUPRESSOR';    // Can remove someone else's node
+
+    const CONTENT_CONTRIBUTOR     = 'EDITORIAL_CONTENT_CONTRIBUTOR';     // Can create contents, edit & delete own contents
+    const CONTENT_SUPER_EDITOR    = 'EDITORIAL_CONTENT_SUPER_EDITOR';    // Can edit someone else's content
+    const CONTENT_SUPER_SUPRESSOR = 'EDITORIAL_CONTENT_SUPER_SUPRESSOR'; // Can remove someone else's content
 }

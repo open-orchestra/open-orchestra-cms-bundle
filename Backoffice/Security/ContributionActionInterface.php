@@ -4,6 +4,9 @@ namespace OpenOrchestra\Backoffice\Security;
 
 /**
  * Interface ContributionAction
+ *
+ * This interface is never implemented
+ * It defines actions available on the platform
  */
 interface ContributionActionInterface
 {

@@ -3,24 +3,24 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
- * Class NodeVoter
+ * Class ContentVoter
  *
- * Voter checking rights on node management
+ * Voter checking rights on content management
  */
-class NodeVoter extends AbstractPerimeterVoter
+class ContentVoter extends AbstractPerimeterVoter
 {
     /**
      * @return array
      */
     protected function getSupportedClasses()
     {
-        return array('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        return array('OpenOrchestra\ModelInterface\Model\ContentInterface');
     }
 
     /**
@@ -52,54 +52,54 @@ class NodeVoter extends AbstractPerimeterVoter
         }
 
         if (ContributionActionInterface::READ == $attribute) {
-            return true;
+            return $this->isSubjectInAllowedPerimeter($subject, $user, ContentInterface::ENTITY_TYPE);
         }
 
         if ($subject->getCreatedBy() == $user->getUsername()) {
-            return $this->voteForOwnedNode($attribute, $subject, $user);
+            return $this->voteForOwnedContent($attribute, $subject, $user);
         }
 
-        return $this->voteForSomeoneElseNode($attribute, $subject, $user);
+        return $this->voteForSomeoneElseContent($attribute, $subject, $user);
     }
 
     /**
-     * Vote for $action on $node owned by $user
+     * Vote for $action on $content owned by $user
      *
-     * @param string        $action
-     * @param NodeInterface $node
-     * @param UserInterface $user
+     * @param string           $action
+     * @param ContentInterface $node
+     * @param UserInterface    $user
      *
      * @return bool
      */
-    protected function voteForOwnedNode($action, NodeInterface $node, UserInterface $user)
+    protected function voteForOwnedContent($action, ContentInterface $content, UserInterface $user)
     {
-        return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
-            && $this->isSubjectInAllowedPerimeter($node, $user, NodeInterface::ENTITY_TYPE);
+        return $user->hasRole(ContributionRoleInterface::CONTENT_CONTRIBUTOR)
+            && $this->isSubjectInAllowedPerimeter($content, $user, ContentInterface::ENTITY_TYPE);
     }
 
     /**
-     * Vote for $action on $node not owned by $user
+     * Vote for $action on $content not owned by $user
      *
-     * @param string        $action
-     * @param NodeInterface $node
-     * @param UserInterface $user
+     * @param string           $action
+     * @param ContentInterface $node
+     * @param UserInterface    $user
      *
      * @return bool
      */
-    protected function voteForSomeoneElseNode($action, NodeInterface $node, UserInterface $user)
+    protected function voteForSomeoneElseNode($action, ContentInterface $content, UserInterface $user)
     {
-        $requiredRole = ContributionRoleInterface::NODE_CONTRIBUTOR;
+        $requiredRole = ContributionRoleInterface::CONTENT_CONTRIBUTOR;
 
         switch ($action) {
             case ContributionActionInterface::EDIT:
-                $requiredRole = ContributionRoleInterface::NODE_SUPER_EDITOR;
+                $requiredRole = ContributionRoleInterface::CONTENT_SUPER_EDITOR;
             break;
             case ContributionActionInterface::DELETE:
-                $requiredRole = ContributionRoleInterface::NODE_SUPER_SUPRESSOR;
+                $requiredRole = ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR;
             break;
         }
 
         return $user->hasRole($requiredRole)
-            && $this->isSubjectInAllowedPerimeter($node, $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInAllowedPerimeter($content, $user, ContentInterface::ENTITY_TYPE);
     }
 }

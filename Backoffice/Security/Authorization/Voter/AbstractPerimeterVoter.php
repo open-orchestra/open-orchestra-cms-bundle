@@ -2,14 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use Symfony\Component\Security\Core\Authorization\Voter\Voter as BaseAbstractVoter;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 
 /**
  * Class AbstractVoter
+ *
+ * Abstract class for voters associated with a perimeter
  */
-abstract class AbstractVoter extends BaseAbstractVoter
+abstract class AbstractPerimeterVoter extends Voter
 {
     /**
      * If you have a simple voter triggering on certain classes and certain attributes,
@@ -70,5 +73,28 @@ abstract class AbstractVoter extends BaseAbstractVoter
         return ($user instanceof UserInterface
             && ($user->hasRole(ContributionRoleInterface::DEVELOPER) || $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN))
         );
+    }
+
+    /**
+     * Check if $subject is in an allowed perimeter to $user
+     * The perimeter to check is of $entityType
+     *
+     * @param mixed         $subject // TO REPLACE WITH A PATHABLE INTERFACE
+     * @param UserInterface $user
+     * @param string        $entityType
+     *
+     * @return bool
+     */
+    protected function isSubjectInAllowedPerimeter($subject, UserInterface $user, $entityType)
+    {
+        foreach ($user->getGroups() as $group) {
+            $perimeter = $group->getPerimeter($entityType);
+
+            if ($perimeter instanceof PerimeterInterface && $perimeter->contains($subject->getPath())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
