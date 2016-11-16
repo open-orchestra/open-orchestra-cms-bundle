@@ -74,7 +74,7 @@ class NodeVoter extends AbstractPerimeterVoter
     protected function voteForOwnedNode($action, NodeInterface $node, UserInterface $user)
     {
         return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
-            && $this->isSubjectInAllowedPerimeter($node, $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInAllowedPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
     }
 
     /**
@@ -100,6 +100,6 @@ class NodeVoter extends AbstractPerimeterVoter
         }
 
         return $user->hasRole($requiredRole)
-            && $this->isSubjectInAllowedPerimeter($node, $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInAllowedPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
     }
 }

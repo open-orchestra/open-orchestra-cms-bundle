@@ -52,7 +52,7 @@ class ContentVoter extends AbstractPerimeterVoter
         }
 
         if (ContributionActionInterface::READ == $attribute) {
-            return $this->isSubjectInAllowedPerimeter($subject, $user, ContentInterface::ENTITY_TYPE);
+            return $this->isSubjectInAllowedPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE);
         }
 
         if ($subject->getCreatedBy() == $user->getUsername()) {
@@ -74,7 +74,7 @@ class ContentVoter extends AbstractPerimeterVoter
     protected function voteForOwnedContent($action, ContentInterface $content, UserInterface $user)
     {
         return $user->hasRole(ContributionRoleInterface::CONTENT_CONTRIBUTOR)
-            && $this->isSubjectInAllowedPerimeter($content, $user, ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInAllowedPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 
     /**
@@ -100,6 +100,6 @@ class ContentVoter extends AbstractPerimeterVoter
         }
 
         return $user->hasRole($requiredRole)
-            && $this->isSubjectInAllowedPerimeter($content, $user, ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInAllowedPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 }

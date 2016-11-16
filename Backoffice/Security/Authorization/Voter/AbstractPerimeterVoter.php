@@ -76,21 +76,21 @@ abstract class AbstractPerimeterVoter extends Voter
     }
 
     /**
-     * Check if $subject is in an allowed perimeter to $user
+     * Check if $subjectKey is in an allowed perimeter to $user
      * The perimeter to check is of $entityType
      *
-     * @param mixed         $subject // TO REPLACE WITH A PATHABLE INTERFACE
+     * @param string        $subject
      * @param UserInterface $user
      * @param string        $entityType
      *
      * @return bool
      */
-    protected function isSubjectInAllowedPerimeter($subject, UserInterface $user, $entityType)
+    protected function isSubjectInAllowedPerimeter($subjectKey, UserInterface $user, $entityType)
     {
         foreach ($user->getGroups() as $group) {
             $perimeter = $group->getPerimeter($entityType);
 
-            if ($perimeter instanceof PerimeterInterface && $perimeter->contains($subject->getPath())) {
+            if ($perimeter instanceof PerimeterInterface && $perimeter->contains($subjectKey)) {
                 return true;
             }
         }
