@@ -24,8 +24,8 @@ class NodeTreeView extends OrchestraView
      * Render node tree
      */
     render() {
-        let template = this._renderTemplate(
-            'Node/nodeTreeView',
+        console.log(this.nodeTree);
+        let template = this._renderTemplate('Node/nodeTreeView',
             {
                 'nodeTree' : this._nodeTree
             }

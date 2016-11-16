@@ -32,7 +32,7 @@ class NodeTree extends OrchestraModel
      * @inheritdoc
      */
     _getSyncUrl() {
-        let siteId = App.getConfiguration().getParameter('siteId');
+        let siteId = App.getContext().siteId;
 
         return {
             'read': Routing.generate('open_orchestra_api_node_list_tree', {siteId : siteId})
