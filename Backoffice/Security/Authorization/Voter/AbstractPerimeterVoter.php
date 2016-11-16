@@ -6,6 +6,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class AbstractVoter
@@ -14,13 +16,60 @@ use OpenOrchestra\Backoffice\Model\PerimeterInterface;
  */
 abstract class AbstractPerimeterVoter extends Voter
 {
+
     /**
-     * If you have a simple voter triggering on certain classes and certain attributes,
-     * only override the getSupportedClasses and getSupportedAttributes methods.
+     * Return the list of supported classes
      *
-     * If you have a more complex supports mixing both attribute and subject,
-     * then overide this method
+     * @return array
+     */
+    abstract protected function getSupportedClasses();
+
+    /**
+     * @return array
+     */
+    protected function getSupportedAttributes()
+    {
+        return array(
+            ContributionActionInterface::READ,
+            ContributionActionInterface::ADD,
+            ContributionActionInterface::EDIT,
+            ContributionActionInterface::DELETE
+        );
+    }
+
+    /**
+     * Vote for Read action
      *
+     * @param mixed         $subject
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
+    abstract protected function voteForReadAction($subject, $user);
+
+    /**
+     * Vote for $action on $subject owned by $user
+     *
+     * @param string        $action
+     * @param mixed         $subject
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
+    abstract protected function voteForOwnedSubject($action, $subject, UserInterface $user);
+
+    /**
+     * Vote for $action on $subject not owned by $user
+     *
+     * @param string        $action
+     * @param mixed         $subject
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
+    abstract protected function voteForSomeoneElseSubject($action, $subject, UserInterface $user);
+
+    /**
      * @param string $attribute
      * @param mixed  $subject
      *
@@ -42,25 +91,29 @@ abstract class AbstractPerimeterVoter extends Voter
     }
 
     /**
-     * If you have a simple voter triggering on certain classes and certain attributes,
-     * you can override this method to return the list of supported classes
+     * @param string         $attribute
+     * @param mixed          $subject
+     * @param TokenInterface $token
      *
-     * @return array
+     * @return bool
      */
-    protected function getSupportedClasses()
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        return array();
-    }
+        $user = $token->getUser();
 
-    /**
-     * If you have a simple voter triggering on certain classes and certain attributes,
-     * you can ovveride this method to return the list of supported attributes
-     *
-     * @return array
-     */
-    protected function getSupportedAttributes()
-    {
-        return array();
+        if ($this->isSuperAdmin($user)) {
+            return true;
+        }
+
+        if (ContributionActionInterface::READ == $attribute) {
+            return $this->voteForReadAction($subject, $user);
+        }
+
+        if ($subject->getCreatedBy() == $user->getUsername()) {
+            return $this->voteForOwnedSubject($attribute, $subject, $user);
+        }
+
+        return $this->voteForSomeoneElseSubject($attribute, $subject, $user);
     }
 
     /**

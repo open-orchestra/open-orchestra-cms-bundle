@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
@@ -24,54 +23,28 @@ class ContentVoter extends AbstractPerimeterVoter
     }
 
     /**
-     * @return array
-     */
-    protected function getSupportedAttributes()
-    {
-        return array(
-            ContributionActionInterface::READ,
-            ContributionActionInterface::ADD,
-            ContributionActionInterface::EDIT,
-            ContributionActionInterface::DELETE
-        );
-    }
-
-    /**
-     * @param string         $attribute
-     * @param mixed          $subject
-     * @param TokenInterface $token
+     * Vote for Read action
+     *
+     * @param ContentInterface $content
+     * @param UserInterface    $user
      *
      * @return bool
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteForReadAction($content, $user)
     {
-        $user = $token->getUser();
-
-        if ($this->isSuperAdmin($user)) {
-            return true;
-        }
-
-        if (ContributionActionInterface::READ == $attribute) {
-            return $this->isSubjectInAllowedPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE);
-        }
-
-        if ($subject->getCreatedBy() == $user->getUsername()) {
-            return $this->voteForOwnedContent($attribute, $subject, $user);
-        }
-
-        return $this->voteForSomeoneElseContent($attribute, $subject, $user);
+        return $this->isSubjectInAllowedPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 
     /**
      * Vote for $action on $content owned by $user
      *
      * @param string           $action
-     * @param ContentInterface $node
+     * @param ContentInterface $content
      * @param UserInterface    $user
      *
      * @return bool
      */
-    protected function voteForOwnedContent($action, ContentInterface $content, UserInterface $user)
+    protected function voteForOwnedSubject($action, $content, UserInterface $user)
     {
         return $user->hasRole(ContributionRoleInterface::CONTENT_CONTRIBUTOR)
             && $this->isSubjectInAllowedPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
@@ -81,12 +54,12 @@ class ContentVoter extends AbstractPerimeterVoter
      * Vote for $action on $content not owned by $user
      *
      * @param string           $action
-     * @param ContentInterface $node
+     * @param ContentInterface $content
      * @param UserInterface    $user
      *
      * @return bool
      */
-    protected function voteForSomeoneElseNode($action, ContentInterface $content, UserInterface $user)
+    protected function voteForSomeoneElseSubject($action, $content, UserInterface $user)
     {
         $requiredRole = ContributionRoleInterface::CONTENT_CONTRIBUTOR;
 
