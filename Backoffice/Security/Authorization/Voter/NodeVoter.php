@@ -24,6 +24,7 @@ class NodeVoter extends AbstractPerimeterVoter
 
     /**
      * Vote for Read action
+     * Everyone can read every node
      *
      * @param NodeInterface $node
      * @param UserInterface $user
@@ -37,6 +38,7 @@ class NodeVoter extends AbstractPerimeterVoter
 
     /**
      * Vote for $action on $node owned by $user
+     * A user can act on his own nodes if he has the NODE_CONTRIBUTOR role and the node is in his perimeter 
      *
      * @param string        $action
      * @param NodeInterface $node
@@ -52,6 +54,7 @@ class NodeVoter extends AbstractPerimeterVoter
 
     /**
      * Vote for $action on $node not owned by $user
+     * A user can act on someone else's node if he has the matching super role and the node is in his perimeter
      *
      * @param string        $action
      * @param NodeInterface $node

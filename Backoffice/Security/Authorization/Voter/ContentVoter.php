@@ -24,6 +24,7 @@ class ContentVoter extends AbstractPerimeterVoter
 
     /**
      * Vote for Read action
+     * A user can read a content if it is in his perimeter
      *
      * @param ContentInterface $content
      * @param UserInterface    $user
@@ -37,6 +38,7 @@ class ContentVoter extends AbstractPerimeterVoter
 
     /**
      * Vote for $action on $content owned by $user
+     * A user can act on his own contents if he has the CONTENT_CONTRIBUTOR role and the content is in his perimeter 
      *
      * @param string           $action
      * @param ContentInterface $content
@@ -52,6 +54,7 @@ class ContentVoter extends AbstractPerimeterVoter
 
     /**
      * Vote for $action on $content not owned by $user
+     * A user can act on someone else's content if he has the matching super role and the content is in his perimeter
      *
      * @param string           $action
      * @param ContentInterface $content
