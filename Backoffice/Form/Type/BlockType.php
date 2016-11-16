@@ -71,12 +71,6 @@ class BlockType extends AbstractType
             'group_id' => 'property',
             'sub_group_id' => 'style',
         ));
-        $builder->add('id', 'text', array(
-            'label' => 'open_orchestra_backoffice.form.block.id',
-            'required' => false,
-            'group_id' => 'technical',
-            'sub_group_id' => 'html',
-        ));
         $builder->add('maxAge', 'integer', array(
             'label' => 'open_orchestra_backoffice.form.block.max_age',
             'required' => false,

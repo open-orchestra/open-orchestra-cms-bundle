@@ -39,8 +39,7 @@ class AreaController extends BaseController
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
-        $rootArea = $node->getRootArea();
-        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($rootArea, $areaId);
+        $area = $this->get('open_orchestra_model.repository.node')->findAreaInNodeByAreaId($node, $areaId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($areaId, $area, $node);
     }

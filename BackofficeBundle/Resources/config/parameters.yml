@@ -3,8 +3,7 @@ parameters:
         - component
         - submit
         - label
-        - class
-        - id
+        - style
         - maxAge
 
     open_orchestra_backoffice.orchestra_choice.direction:

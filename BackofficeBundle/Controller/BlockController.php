@@ -59,9 +59,10 @@ class BlockController extends AbstractEditionRoleController
 
     /**
      * @param Request $request
-     * @param string  $redirectionId
+     * @param string  $blockId
+     * @param string  $nodeId
      *
-     * @Config\Route("/form/{redirectionId}/{nodeId}", name="open_orchestra_backoffice_block_form", defaults={"nodeId" = null})
+     * @Config\Route("/form/{blockId}/{nodeId}", name="open_orchestra_backoffice_block_form", defaults={"nodeId" = null})
      * @Config\Method({"GET", "POST"})
      *
      * Config\Security("is_granted('')")
