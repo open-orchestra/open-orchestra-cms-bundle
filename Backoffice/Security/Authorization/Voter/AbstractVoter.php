@@ -2,8 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter as BaseAbstractVoter;
+use OpenOrchestra\UserBundle\Model\UserInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class AbstractVoter
@@ -16,25 +17,30 @@ abstract class AbstractVoter extends BaseAbstractVoter
      *
      * If you have a more complex supports mixing both attribute and subject,
      * then overide this method
+     *
+     * @param string $attribute
+     * @param mixed  $subject
+     *
+     * return bool
      */
     protected function supports($attribute, $subject)
     {
-        $attributeSupported = in_array($attribute, $this->getSupportedAttributes());
+        if (!in_array($attribute, $this->getSupportedAttributes())) {
+            return false;
+        }
 
-        $classSupported = false;
         foreach ($this->getSupportedClasses() as $supportedClass) {
             if ($subject instanceof $supportedClass) {
-                $classSupported = true;
-                break;
+                return true;
             }
-      }
+        }
 
-        return $attribute && $classSupported;
+        return false;
     }
 
     /**
      * If you have a simple voter triggering on certain classes and certain attributes,
-     * you can simply override this method to return the list of supported classes
+     * you can override this method to return the list of supported classes
      *
      * @return array
      */
@@ -45,7 +51,7 @@ abstract class AbstractVoter extends BaseAbstractVoter
 
     /**
      * If you have a simple voter triggering on certain classes and certain attributes,
-     * you can simply ovveride this method to return the list of supported attributes
+     * you can ovveride this method to return the list of supported attributes
      *
      * @return array
      */
@@ -62,7 +68,7 @@ abstract class AbstractVoter extends BaseAbstractVoter
     protected function isSuperAdmin($user = null)
     {
         return ($user instanceof UserInterface
-            && ($user->hasRole('ROLE_DEVELOPPER') || $user->hasRole('ROLE_PLATFORM_ADMIN'))
+            && ($user->hasRole(ContributionRoleInterface::DEVELOPER) || $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN))
         );
     }
 }
