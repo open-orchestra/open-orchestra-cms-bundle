@@ -41,9 +41,38 @@ class NavigationView extends OrchestraView
             }
         );
 
+        this._resizeColumns();
+        this._enabledScroll();
+
         this.$el.html(template);
 
         return this;
+    }
+
+    /**
+     * Enabled niceScroll on menu
+     * @private
+     */
+    _enabledScroll() {
+        $('#left-column').niceScroll({
+            horizrailenabled: false,
+            cursorcolor: "#e6eef1",
+            railpadding: { top: 0, right: 1, left: 0, bottom: 0 },
+            cursorborder: 0
+        }).resize();
+    }
+
+    /**
+     * Toggle menu according window width
+     * @private
+     */
+    _resizeColumns() {
+        this.$el.removeClass('sublevel-open');
+        let $selectorColumns = $('#left-column, #central-column');
+        $selectorColumns.removeClass('toggle-left');
+        if (this._isTablet()) {
+            $selectorColumns.addClass('toggle-left');
+        }
     }
 
     /**
@@ -51,9 +80,13 @@ class NavigationView extends OrchestraView
      * @private
      */
     _toggleMenu() {
+        $('.tab-pane', this.$el).removeClass('active');
         this.$el.addClass('sublevel-closed').removeClass('sublevel-open');
-        this.$el.toggleClass('toggle-left');
-        $('#central-column').toggleClass('toggle-left');
+        $('#central-column, #left-column').toggleClass('toggle-left');
+
+        if (this._isTablet()) {
+            $('#central-column').toggleClass('wide');
+        }
     }
 
     /**
@@ -63,14 +96,20 @@ class NavigationView extends OrchestraView
      * @private
      */
     _toggleSubLevel(event) {
-        let idSubMenu = $(event.currentTarget).attr('href');
+        let target = $(event.currentTarget);
+        let idSubMenu = target.attr('href');
+        target.addClass('active');
         let subMenu = $('.sublevels '+idSubMenu, this.$el);
         if (0 !== subMenu.length) {
             this.$el.addClass('sublevel-open').removeClass('sublevel-closed');
-            this.$el.removeClass('toggle-left');
-            $('#central-column').removeClass('toggle-left');
+            $('#central-column, #left-column').removeClass('toggle-left');
+            if (this._isTablet()) {
+                $('#central-column').addClass('wide');
+            }
         } else {
             this.$el.addClass('sublevel-closed').removeClass('sublevel-open');
+            $('.tab-pane', this.$el).removeClass('active');
+            $('.nav li', this.$el).removeClass('active');
             event.stopPropagation();
         }
     }
@@ -78,14 +117,24 @@ class NavigationView extends OrchestraView
     /**
      * Button return menu level1
      *
-     * @param {Object} event
      * @private
      */
-    _returnLevel1Menu(event) {
-        event.stopPropagation();
+    _returnLevel1Menu() {
         this.$el.removeClass('sublevel-open').addClass('sublevel-closed');
+        $('.tab-pane', this.$el).removeClass('active');
+        $('.nav li', this.$el).removeClass('active');
 
         return false
+    }
+
+    /**
+     * @returns {boolean}
+     * @private
+     */
+    _isTablet() {
+        let tabletWidth = 1024;
+
+        return $(window).width() <= tabletWidth;
     }
 }
 
