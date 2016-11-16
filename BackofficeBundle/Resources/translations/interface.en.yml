@@ -7,6 +7,10 @@ open_orchestra_backoffice:
         yes: Yes
         no: No
         security_message: You can improve your security after disconnect by closing your browser
+    search_engine:
+        yes: Yes
+        no: No
+        filter: Filter results
     navigation:
         hide_menu: Hide menu
         dashboard:
@@ -29,6 +33,11 @@ open_orchestra_backoffice:
     table:
         keywords:
             label: Label
+        node:
+            title: Title
+            author: Author
+            updated_at: Updated date
+            current_status: Current status
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -48,3 +57,8 @@ open_orchestra_backoffice:
             statuses_legend:
                 title: Legend
                 out_of_bounds: Out of bounds
+        search_engine:
+            status: Status
+            displayed_menu: Displayed in the menu
+            na: N/A
+            reset: Reset

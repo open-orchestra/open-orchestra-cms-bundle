@@ -16,10 +16,11 @@ class NodesTree extends OrchestraCollection
     /**
      * @inheritdoc
      */
-    _getSyncUrl(options) {
+    _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
-        return {
-            'read': Routing.generate('open_orchestra_api_node_list_tree', urlParameter)
+        switch (method) {
+            case "read":
+                return Routing.generate('open_orchestra_api_node_list_tree', urlParameter);
         }
     }
 }

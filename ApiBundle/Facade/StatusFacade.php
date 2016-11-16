@@ -33,6 +33,11 @@ class StatusFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
+    public $name;
+
+    /**
+     * @Serializer\Type("string")
+     */
     public $label;
 
     /**

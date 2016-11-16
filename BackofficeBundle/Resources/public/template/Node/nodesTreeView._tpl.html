@@ -1,21 +1,3 @@
-<div class="pull-right languages">
-    <ul>
-        <% _.each(siteLanguages, function(siteLanguage, key) { %>
-            <% if (siteLanguage === language) { %>
-                <li class="active">
-                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
-                </li>
-            <% } else { %>
-                <li>
-                    <a href="#<%= Backbone.history.generateUrl('showNodeTree', {language: siteLanguage}) %>">
-                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
-                    </a>
-                </li>
-            <% }; %>
-        <% }); %>
-    </ul>
-</div>
-<h1> <%= Translator.trans('open_orchestra_backoffice.node.title') %></h1>
 <div class="tree">
     <div class="actions">
         <a href="#" class="btn btn-border btn-close">
@@ -29,6 +11,12 @@
     <div class="legend-panel panel">
         <div class="panel-heading"><%= Translator.trans('open_orchestra_backoffice.node.tree.statuses_legend.title') %></div>
         <div class="panel-body">
+            <ul class="state">
+                <% _.each(statuses, function(status, key) { %>
+                    <li class="state-<%= status.get('code_color') %>"><%= status.get('label') %></li>
+                <% }); %>
+                <li class="out-of-bounds"><%= Translator.trans('open_orchestra_backoffice.node.tree.statuses_legend.out_of_bounds') %></li>
+            </ul>
         </div>
     </div>
 

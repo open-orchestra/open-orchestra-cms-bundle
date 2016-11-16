@@ -24,10 +24,12 @@ class NodesTreeView extends OrchestraView
 
     /**
      * Initialize
+     * @param {Statuses} statuses
      * @param {NodeTree} nodesTree
-     * @param {string} language
+     * @param {string}   language
      */
-    initialize({nodesTree, language}) {
+    initialize({statuses, nodesTree, language}) {
+        this._statuses = statuses;
         this._nodesTree = nodesTree;
         this._language = language
     }
@@ -39,6 +41,7 @@ class NodesTreeView extends OrchestraView
         let template = this._renderTemplate('Node/nodesTreeView',
             {
                 nodesTree : this._nodesTree.models,
+                statuses: this._statuses.models,
                 language: this._language,
                 siteLanguages: Application.getContext().siteLanguages
             }
@@ -46,26 +49,10 @@ class NodesTreeView extends OrchestraView
 
         this.$el.html(template);
         this._enableTreeSortable($('.tree .children', this.$el));
-        this._renderLegend($('.legend-panel .panel-body', this.$el));
 
         return this;
     }
 
-    /**
-     * Render statuses legend panel
-     *
-     * @param {Object} $region - Jquery selector
-     * @private
-     */
-    _renderLegend($region) {
-        this._diplayLoader($region);
-        new Statuses().fetch({
-            success: (statuses) => {
-                let template = this._renderTemplate('Node/statusesLegend',{ statuses: statuses.models });
-                $region.html(template);
-            }
-        });
-    }
 
     /**
      * @param {Object} $tree - Jquery selector

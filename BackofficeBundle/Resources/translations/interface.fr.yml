@@ -7,6 +7,10 @@ open_orchestra_backoffice:
         yes: Oui
         no: Non
         security_message: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
+    search_engine:
+        yes: Oui
+        no: Non
+        filter: Filtrer les résultats
     navigation:
         hide_menu: Réduire le menu
         dashboard:
@@ -29,6 +33,11 @@ open_orchestra_backoffice:
     table:
         keywords:
             label: Etiquette
+        node:
+            title: Titre
+            author: Auteur
+            updated_at: Date de modification
+            current_status: Etat courant
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -48,3 +57,8 @@ open_orchestra_backoffice:
         statuses_legend:
             title: Légende
             out_of_bounds: Hors périmètre
+        search_engine:
+            status: Etat
+            displayed_menu: S'affiche dans le menu
+            na: N/A
+            reset: Reinitialiser

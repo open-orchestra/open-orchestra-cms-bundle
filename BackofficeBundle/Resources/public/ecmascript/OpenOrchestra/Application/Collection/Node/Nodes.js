@@ -1,10 +1,11 @@
 import OrchestraCollection from '../OrchestraCollection'
 import Node                from '../../Model/Node/Node'
+import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
 
 /**
  * @class Nodes
  */
-class Nodes extends OrchestraCollection
+class Nodes extends DataTableCollection
 {
     /**
      * Pre initialize
@@ -25,10 +26,13 @@ class Nodes extends OrchestraCollection
     /**
      * @inheritdoc
      */
-    _getSyncUrl(options) {
+    _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
-        return {
-            'update': Routing.generate('open_orchestra_api_node_update_children_order', urlParameter)
+        switch (method) {
+            case "read":
+                return Routing.generate('open_orchestra_api_node_list', urlParameter);
+            case "update":
+                return Routing.generate('open_orchestra_api_node_update_children_order', urlParameter);
         }
     }
 }

@@ -25,9 +25,10 @@ class SitesAvailable extends OrchestraCollection
     /**
      * @inheritdoc
      */
-    _getSyncUrl() {
-        return {
-            'read': Routing.generate('open_orchestra_api_available_site_list')
+    _getSyncUrl(method) {
+        switch (method) {
+            case "read":
+                return Routing.generate('open_orchestra_api_available_site_list');
         }
     }
 }
