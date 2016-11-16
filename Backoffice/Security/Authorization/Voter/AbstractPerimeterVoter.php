@@ -2,21 +2,18 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use OpenOrchestra\UserBundle\Model\UserInterface;
-use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
- * Class AbstractVoter
+ * Class AbstractPerimeterVoter
  *
  * Abstract class for voters associated with a perimeter
  */
-abstract class AbstractPerimeterVoter extends Voter
+abstract class AbstractPerimeterVoter extends AbstractVoter
 {
-
     /**
      * Return the list of supported classes
      *
@@ -114,18 +111,6 @@ abstract class AbstractPerimeterVoter extends Voter
         }
 
         return $this->voteForSomeoneElseSubject($attribute, $subject, $user);
-    }
-
-    /**
-     * @param UserInterface|string $user
-     *
-     * @return bool
-     */
-    protected function isSuperAdmin($user = null)
-    {
-        return ($user instanceof UserInterface
-            && ($user->hasRole(ContributionRoleInterface::DEVELOPER) || $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN))
-        );
     }
 
     /**

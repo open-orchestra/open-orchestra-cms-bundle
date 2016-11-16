@@ -1,6 +1,7 @@
 parameters:
-    open_orchestra_backoffice.voter.node.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter
-    open_orchestra_backoffice.voter.content.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVoter
+    open_orchestra_backoffice.voter.node.class:       OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter
+    open_orchestra_backoffice.voter.content.class:    OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVoter
+    open_orchestra_backoffice.voter.trash_item.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\TrashItemVoter
 
 services:
     open_orchestra_backoffice.voter.node:
@@ -9,5 +10,9 @@ services:
             - { name: security.voter }
     open_orchestra_backoffice.voter.content:
        class: '%open_orchestra_backoffice.voter.content.class%'
+       tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.trash_item:
+       class: '%open_orchestra_backoffice.voter.trash_item.class%'
        tags:
             - { name: security.voter }

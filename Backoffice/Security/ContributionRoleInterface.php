@@ -20,4 +20,7 @@ interface ContributionRoleInterface
     const CONTENT_CONTRIBUTOR     = 'EDITORIAL_CONTENT_CONTRIBUTOR';     // Can create contents, edit & delete own contents
     const CONTENT_SUPER_EDITOR    = 'EDITORIAL_CONTENT_SUPER_EDITOR';    // Can edit someone else's content
     const CONTENT_SUPER_SUPRESSOR = 'EDITORIAL_CONTENT_SUPER_SUPRESSOR'; // Can remove someone else's content
+
+    const TRASH_RESTORER          = 'EDITORIAL_TRASH_RESTORER';          // Can restore trash items
+    const TRASH_SUPRESSOR         = 'EDITORIAL_TRASH_SUPRESSOR';         // Can purge trash items
 }
