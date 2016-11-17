@@ -12,7 +12,7 @@ use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
  *
  * Voter checking rights on content management
  */
-class ContentVoter extends AbstractPerimeterVoter
+class ContentVoter extends AbstractEditorialVoter
 {
     /**
      * @return array

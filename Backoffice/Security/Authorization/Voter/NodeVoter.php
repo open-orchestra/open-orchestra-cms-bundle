@@ -12,7 +12,7 @@ use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
  *
  * Voter checking rights on node management
  */
-class NodeVoter extends AbstractPerimeterVoter
+class NodeVoter extends AbstractEditorialVoter
 {
     /**
      * @return array

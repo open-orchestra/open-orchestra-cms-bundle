@@ -32,7 +32,7 @@ class TrashItemVoter extends AbstractVoter
     }
 
     /**
-     * Evryone can read the trash item
+     * Everyone can read the trash item
      * but you can only purge or restore items with the matching role
      *
      * @param string         $attribute

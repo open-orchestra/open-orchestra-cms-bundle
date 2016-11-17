@@ -12,6 +12,7 @@ interface ContributionRoleInterface
 {
     const DEVELOPER               = 'ROLE_DEVELOPER';                    // Can manage the entire platform
     const PLATFORM_ADMIN          = 'ROLE_PLATFORM_ADMIN';               // Can manage the entire platform, dev parts excluded
+    const SITE_ADMIN              = 'ROLE_SITE_ADMIN';                   // Can manage users, groups and site on a specific site
 
     const NODE_CONTRIBUTOR        = 'EDITORIAL_NODE_CONTRIBUTOR';        // Can create nodes, edit & delete own nodes
     const NODE_SUPER_EDITOR       = 'EDITORIAL_NODE_SUPER_EDITOR';       // Can edit someone else's node
