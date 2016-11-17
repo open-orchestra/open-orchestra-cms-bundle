@@ -45,3 +45,6 @@ open_orchestra_backoffice:
         tree:
             open: Déployer l'arborescence
             close: Fermer l'arborescence
+        statuses_legend:
+            title: Légende
+            out_of_bounds: Hors périmètre

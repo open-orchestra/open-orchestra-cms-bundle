@@ -2,6 +2,7 @@ import OrchestraView    from '../OrchestraView'
 import Nodes            from '../../Collection/Node/Nodes'
 import ApplicationError from '../../../Service/Error/ApplicationError'
 import Application      from '../../Application'
+import Statuses         from '../../Collection/Statuses/Statuses'
 
 /**
  * @class NodesTreeView
@@ -45,8 +46,25 @@ class NodesTreeView extends OrchestraView
 
         this.$el.html(template);
         this._enableTreeSortable($('.tree .children', this.$el));
+        this._renderLegend($('.legend-panel .panel-body', this.$el));
 
         return this;
+    }
+
+    /**
+     * Render statuses legend panel
+     *
+     * @param {Object} $region - Jquery selector
+     * @private
+     */
+    _renderLegend($region) {
+        this._diplayLoader($region);
+        new Statuses().fetch({
+            success: (statuses) => {
+                let template = this._renderTemplate('Node/statusesLegend',{ statuses: statuses.models });
+                $region.html(template);
+            }
+        });
     }
 
     /**

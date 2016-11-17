@@ -45,3 +45,6 @@ open_orchestra_backoffice:
         tree:
             open: Open the tree
             close: Close the tree
+            statuses_legend:
+                title: Legend
+                out_of_bounds: Out of bounds
