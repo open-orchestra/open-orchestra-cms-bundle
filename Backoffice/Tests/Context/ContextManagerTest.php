@@ -209,12 +209,13 @@ class ContextManagerTest extends AbstractBaseTestCase
      */
     public function testSetCurrentSite($site)
     {
-        $this->contextManager->setCurrentSite($site['siteId'], $site['name'], $site['defaultLanguage']);
+        $this->contextManager->setCurrentSite($site['siteId'], $site['name'], $site['defaultLanguage'], $site['languages']);
 
         Phake::verify($this->session)->set(ContextManager::KEY_SITE, array(
             'siteId' => $site['siteId'],
             'name' => $site['name'],
             'defaultLanguage' => $site['defaultLanguage'],
+            'languages' => $site['languages'],
         ));
     }
 
@@ -226,8 +227,8 @@ class ContextManagerTest extends AbstractBaseTestCase
     public function getSite()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en')),
-            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'en')),
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en', 'languages' => array('fr', 'en', 'de'))),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'en', 'languages' => array('fr', 'en', 'de'))),
         );
     }
 
@@ -312,6 +313,35 @@ class ContextManagerTest extends AbstractBaseTestCase
         return array(
             array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en'), 'en'),
             array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'fr'), 'fr'),
+        );
+    }
+
+    /**
+     * @param $site  $site
+     * @param array  $languages
+     *
+     * @dataProvider siteLanguagesProvider
+     */
+    public function testGetCurrentSiteLanguages(array $site, array $languages)
+    {
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
+
+        $this->assertEquals($languages, $this->contextManager->getCurrentSiteLanguages());
+
+        Phake::verify($this->session, Phake::times(1))->get(ContextManager::KEY_SITE);
+    }
+
+
+    /**
+     * SiteId provider languages
+     *
+     * @return array
+     */
+    public function siteLanguagesProvider()
+    {
+        return array(
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en', 'languages' => array('en')), array('en')),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'fr', 'languages' => array('en', 'de')), array('en', 'de')),
         );
     }
 

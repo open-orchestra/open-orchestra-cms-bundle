@@ -3,16 +3,16 @@
  * =================================================================*/
 /* Fonts */
 .Roboto {
-    font-family: 'Roboto', sans-serif;
-    font-weight: normal;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
 }
 .Montserrat {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: normal;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
 }
 .FontAwesome {
-    font-family: 'FontAwesome', sans-serif;
-    font-weight: normal;
+  font-family: 'FontAwesome', sans-serif;
+  font-weight: normal;
 }
 
 /* Taille de la font initiale */
@@ -21,6 +21,7 @@
 /* Couleurs */
 @baseColor: #393d4e;
 @green: #24bc7a;
+@paleBlue: #e6eef1;
 @lightBlue: #38b5e9;
 @darkBlue: #252837;
 @red: #ff3f3a;
@@ -36,7 +37,7 @@
  * CLASSES LESS
  * =================================================================*/
 .fontSize(@a) {
-    font-size: 1em * (@a / @initialFontSize);
+  font-size: 1em * (@a / @initialFontSize);
 }
 
 /*
@@ -48,75 +49,76 @@
  *   => @color: couleur de la coche;
  */
 .checkBox(@coche: '\f14a', @fontsize: 16px, @left: 2px, @top: 0, @color: @darkBlue) {
-    /* Cachons la case à cocher */
-    [type="checkbox"]:not(:checked),
-    [type="checkbox"]:checked {
-        position: absolute;
-        left: -9999px;
-    }
-    /* on prépare le label */
-    [type="checkbox"]:not(:checked) + label,
-    [type="checkbox"]:checked + label {
-        position: relative; /* permet de positionner les pseudo-éléments */
-        padding: 0 22px 0 25px; /* fait un peu d'espace pour notre case à venir */
-        cursor: pointer;    /* affiche un curseur adapté */
-        font-weight: normal;
-        margin: 0 20px 0 0;
-        vertical-align: top;
-    }
-    /* Aspect des checkboxes */
-    /* :before sert à créer la case à cocher */
-    [type="checkbox"]:not(:checked) + label:before,
-    [type="checkbox"]:checked + label:before{
-        content: '\f096';
-        font-family: 'FontAwesome';
-        position: absolute;
-        top: @top;
-        left: @left;
-        font-size: @fontsize+2;
-        color: @color;
-        transition: all .2s; /* on prévoit une animation */
-    }
-    [type="checkbox"]:checked + label:before { opacity: 0;}
+  /* Cachons la case à cocher */
+  [type="checkbox"]:not(:checked),
+  [type="checkbox"]:checked {
+    position: absolute;
+    left: -9999px;
+  }
+  /* on prépare le label */
+  [type="checkbox"]:not(:checked) + label,
+  [type="checkbox"]:checked + label {
+    position: relative; /* permet de positionner les pseudo-éléments */
+    padding: 0 22px 0 25px; /* fait un peu d'espace pour notre case à venir */
+    cursor: pointer;    /* affiche un curseur adapté */
+    font-weight: normal;
+    margin: 0 20px 0 0;
+    vertical-align: top;
+  }
+  /* Aspect des checkboxes */
+  /* :before sert à créer la case à cocher */
+  [type="checkbox"]:not(:checked) + label:before,
+  [type="checkbox"]:checked + label:before{
+    content: '\f096';
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: @top;
+    left: @left;
+    font-size: @fontsize+2;
+    color: @color;
+    transition: all .2s; /* on prévoit une animation */
+  }
+  [type="checkbox"]:checked + label:before { opacity: 0;}
 
-    /* Aspect général de la coche */
-    [type="checkbox"]:not(:checked) + label:after,
-    [type="checkbox"]:checked + label:after {
-        content: @coche;
-        font-family: 'FontAwesome';
-        position: absolute;
-        top: @top;
-        left: @left;
-        font-size: @fontsize;
-        color: @color;
-        transition: all .2s; /* on prévoit une animation */
-    }
-    /* Aspect si "pas cochée" */
-    [type="checkbox"]:not(:checked) + label:after {
-        opacity: 0; /* coche invisible */
-        transform: scale(0); /* mise à l'échelle à 0 */
-    }
-    /* Aspect si "cochée" */
-    [type="checkbox"]:checked + label:after {
-        opacity: 1; /* coche opaque */
-        transform: scale(1); /* mise à l'échelle 1:1 */
-    }
+  /* Aspect général de la coche */
+  [type="checkbox"]:not(:checked) + label:after,
+  [type="checkbox"]:checked + label:after {
+    content: @coche;
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: @top;
+    left: @left;
+    font-size: @fontsize;
+    color: @color;
+    transition: all .2s; /* on prévoit une animation */
+  }
+  /* Aspect si "pas cochée" */
+  [type="checkbox"]:not(:checked) + label:after {
+    opacity: 0; /* coche invisible */
+    transform: scale(0); /* mise à l'échelle à 0 */
+  }
+  /* Aspect si "cochée" */
+  [type="checkbox"]:checked + label:after {
+    opacity: 1; /* coche opaque */
+    transform: scale(1); /* mise à l'échelle 1:1 */
+  }
 
-    /* aspect désactivée */
-    [type="checkbox"]:disabled:not(:checked) + label:before,
-    [type="checkbox"]:disabled:checked + label:before {
-        box-shadow: none;
-        border-color: #bbb;
-        background-color: #ddd;
-    }
-    /* styles de la coche (si cochée/désactivée) */
-    [type="checkbox"]:disabled:checked + label:after {
-        color: #999;
-    }
-    /* on style aussi le label quand désactivé */
-    [type="checkbox"]:disabled + label {
-        color: #aaa;
-    }
+  /* aspect désactivée */
+  [type="checkbox"]:disabled:not(:checked) + label:before,
+  [type="checkbox"]:disabled:checked + label:before {
+    box-shadow: none;
+    border-color: #bbb;
+    color: #999;
+  }
+  /* styles de la coche (si cochée/désactivée) */
+  [type="checkbox"]:disabled:not(:checked) + label:after,
+  [type="checkbox"]:disabled:checked + label:after {
+    color: #999;
+  }
+  /* on style aussi le label quand désactivé */
+  [type="checkbox"]:disabled + label {
+    color: #aaa;
+  }
 }
 
 /*
@@ -125,100 +127,131 @@
  *   => @color: couleur du bouton;
  */
 .radioBouton(@coche: '\f05d', @size: 16px, @left: 0, @top: -0.5px, @color: @baseColor){
-    /* Cachons le bouton radio */
-    [type="radio"]:not(:checked),
-    [type="radio"]:checked {
-        position: absolute;
-        left: -9999px;
-    }
-    /* on prépare le label */
-    [type="radio"]:not(:checked) + label,
-    [type="radio"]:checked + label {
-        position: relative; /* permet de positionner les pseudo-éléments */
-        padding: 0 22px; /* fait un peu d'espace pour notre bouton à venir */
-        cursor: pointer;    /* affiche un curseur adapté */
-        font-weight: normal;
-        margin-bottom: 0;
-        vertical-align: top;
-    }
-    /* Aspect des boutons radios */
-    /* :before sert à créer le bouton radio */
-    [type="radio"]:not(:checked) + label:before,
-    [type="radio"]:checked + label:before{
-        content: '\f10c';
-        font-family: 'FontAwesome';
-        position: absolute;
-        top: @top;
-        left: @left;
-        font-size: @size;
-        color: @color;
-        transition: all .2s; /* on prévoit une animation */
-    }
-    /* Aspect général de la coche */
-    [type="radio"]:not(:checked) + label:after,
-    [type="radio"]:checked + label:after {
-        content: @coche;
-        font-family: 'FontAwesome';
-        position: absolute;
-        top: @top;
-        left: @left;
-        font-size: @size;
-        color: @color;
-        transition: all .2s; /* on prévoit une animation */
-        z-index: 2;
-    }
-    /* Aspect si "pas cochée" */
-    [type="radio"]:not(:checked) + label:after{
-        opacity: 0; /* coche invisible */
-        transform: scale(0); /* mise à l'échelle à 0 */
-    }
-    /* Aspect si "cochée" */
-    [type="radio"]:checked + label:after {
-        opacity: 1; /* coche opaque */
-        transform: scale(1); /* mise à l'échelle 1:1 */
-    }
+  /* Cachons le bouton radio */
+  [type="radio"]:not(:checked),
+  [type="radio"]:checked {
+    position: absolute;
+    left: -9999px;
+  }
+  /* on prépare le label */
+  [type="radio"]:not(:checked) + label,
+  [type="radio"]:checked + label {
+    position: relative; /* permet de positionner les pseudo-éléments */
+    padding: 0 22px; /* fait un peu d'espace pour notre bouton à venir */
+    cursor: pointer;    /* affiche un curseur adapté */
+    font-weight: normal;
+    margin-bottom: 0;
+    vertical-align: top;
+  }
+  /* Aspect des boutons radios */
+  /* :before sert à créer le bouton radio */
+  [type="radio"]:not(:checked) + label:before,
+  [type="radio"]:checked + label:before{
+    content: '\f10c';
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: @top;
+    left: @left;
+    font-size: @size;
+    color: @color;
+    transition: all .2s; /* on prévoit une animation */
+  }
+  /* Aspect général de la coche */
+  [type="radio"]:not(:checked) + label:after,
+  [type="radio"]:checked + label:after {
+    content: @coche;
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: @top;
+    left: @left;
+    font-size: @size;
+    color: @color;
+    transition: all .2s; /* on prévoit une animation */
+    z-index: 2;
+  }
+  /* Aspect si "pas cochée" */
+  [type="radio"]:not(:checked) + label:after{
+    opacity: 0; /* coche invisible */
+    transform: scale(0); /* mise à l'échelle à 0 */
+  }
+  /* Aspect si "cochée" */
+  [type="radio"]:checked + label:after {
+    opacity: 1; /* coche opaque */
+    transform: scale(1); /* mise à l'échelle 1:1 */
+  }
 
-    /* aspect désactivée */
-    [type="radio"]:disabled:not(:checked) + label:before,
-    [type="radio"]:disabled:checked + label:before {
-        box-shadow: none;
-        border-color: #bbb;
-        color: #999;
-    }
-    /* styles de la coche (si cochée/désactivée) */
-    [type="radio"]:disabled:checked + label:after {
-        color: #999;
-    }
-    /* on style aussi le label quand désactivé */
-    [type="radio"]:disabled + label {
-        color: #aaa;
-    }
+  /* aspect désactivée */
+  [type="radio"]:disabled:not(:checked) + label:before,
+  [type="radio"]:disabled:checked + label:before {
+    box-shadow: none;
+    border-color: #bbb;
+    color: #999;
+  }
+  /* styles de la coche (si cochée/désactivée) */
+  [type="radio"]:disabled:checked + label:after {
+    color: #999;
+  }
+  /* on style aussi le label quand désactivé */
+  [type="radio"]:disabled + label {
+    color: #aaa;
+  }
 }
 
 /*
  *   Dropdown stylé
  */
 .styledSelect() {
-    .styled-select{
-        position: relative;
-        &:after {
-            content: "\f13a";
-            font-family: 'FontAwesome';
-            color: @baseColor;
-            position: absolute;
-            right: 10px;
-            top: 6px;
-            pointer-events: none;
-        }
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            -ms-appearance: none;
-            -o-appearance: none;
-            appearance: none;
-            &[multiple]{
-                height: 175px;
-            }
-        }
+  .styled-select{
+    position: relative;
+    &:not(.multiple):after {
+      content: "\f13a";
+      font-family: 'FontAwesome';
+      color: @baseColor;
+      position: absolute;
+      right: 10px;
+      top: 6px;
+      pointer-events: none;
     }
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -o-appearance: none;
+      appearance: none;
+      &[multiple]{ height: 175px; }
+    }
+    .top_bottom_mask{
+      border: 10px solid #fff;
+      height: 98.5%;
+      position: absolute;
+      right: 1px;
+      top: 2px;
+      width: 17px;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      .top, .bottom{
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        right: -2px;
+        top: -2px;
+      }
+      .top:before,.bottom:before{
+        content: "\f077";
+        font-family: 'FontAwesome';
+        color: @baseColor;
+        position: absolute;
+        right: 0;
+        top: -4px;
+        pointer-events: none;
+        .fontSize(14);
+      }
+      .bottom {
+        top: 93%;
+        &:before {
+          content: "\f078";
+        }
+      }
+    }
+  }
 }

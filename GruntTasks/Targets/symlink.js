@@ -225,5 +225,21 @@ module.exports = {
     menu_user: {
       src: 'web/bundles/openorchestrabackoffice/images/navigation/user.png',
       dest: 'web/images/navigation/user.png'
+    },
+    language_fr: {
+      src: 'web/bundles/openorchestrabackoffice/images/languages/fr.png',
+      dest: 'web/images/languages/fr.png'
+    },
+    language_en: {
+      src: 'web/bundles/openorchestrabackoffice/images/languages/en.png',
+      dest: 'web/images/languages/en.png'
+    },
+    language_de: {
+      src: 'web/bundles/openorchestrabackoffice/images/languages/de.png',
+      dest: 'web/images/languages/de.png'
+    },
+    state: {
+      src: 'web/bundles/openorchestrabackoffice/images/state.png',
+      dest: 'web/images/state.png'
     }
 };

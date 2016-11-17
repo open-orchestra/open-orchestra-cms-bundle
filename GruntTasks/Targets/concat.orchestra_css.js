@@ -7,7 +7,9 @@ module.exports = {
     'web/built/openorchestrabackoffice/css/theme/modal/modal.css',
     'web/built/openorchestrabackoffice/css/theme/authentication/authentication.css',
     'web/built/openorchestrabackoffice/css/theme/navigation/navigation.css',
-    'web/built/openorchestrabackoffice/css/theme/ajaxLoader/ajaxLoader.css'
+    'web/built/openorchestrabackoffice/css/theme/loader/ajaxLoader.css',
+    'web/built/openorchestrabackoffice/css/theme/languages/languages.css',
+    'web/built/openorchestrabackoffice/css/node/tree.css'
   ],
   dest: 'web/built/orchestra.css'
 };

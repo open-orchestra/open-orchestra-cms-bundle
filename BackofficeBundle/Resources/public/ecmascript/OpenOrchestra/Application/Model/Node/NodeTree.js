@@ -1,6 +1,5 @@
 import OrchestraModel from '../OrchestraModel'
 import Node           from './Node'
-import App            from '../../Application'
 
 /**
  * @class NodeTree
@@ -15,7 +14,7 @@ class NodeTree extends OrchestraModel
      */
     parse(response) {
         if (response.hasOwnProperty('node')) {
-            response.node = new Node(response.node);
+            response.node = new Node(response.node, {parse: true});
         }
         if (response.hasOwnProperty('children')) {
             let children = [];
@@ -26,17 +25,6 @@ class NodeTree extends OrchestraModel
         }
 
         return response;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    _getSyncUrl() {
-        let siteId = App.getContext().siteId;
-
-        return {
-            'read': Routing.generate('open_orchestra_api_node_list_tree', {siteId : siteId})
-        }
     }
 }
 

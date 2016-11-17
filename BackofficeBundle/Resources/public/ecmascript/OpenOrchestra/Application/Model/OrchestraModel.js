@@ -42,7 +42,7 @@ class OrchestraModel extends Backbone.Model
             options.url = url;
         }
 
-        return Backbone.sync.apply(this, arguments);
+        return Backbone.sync.apply(this, [method, model, options]);
     }
 
     /**

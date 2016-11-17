@@ -12,6 +12,7 @@ class OrchestraView extends Backbone.View
      * @param {object}   parameters
      */
     _renderTemplate(templateName, parameters = {}) {
+        parameters = _.extend({renderTemplate: this._renderTemplate}, parameters);
         return TemplateManager.get(templateName)(parameters);
     }
 }

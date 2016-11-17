@@ -10,7 +10,7 @@ class LoaderView extends OrchestraView
      */
     preinitialize() {
         this.tagName = 'div';
-        this.className = 'oo-application-loader'
+        this.className = 'spinner'
     }
 }
 

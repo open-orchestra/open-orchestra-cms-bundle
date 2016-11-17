@@ -37,9 +37,9 @@ class NavigationView extends OrchestraView
 
         let template = this._renderTemplate('Navigation/navigationView',
             {
-                includeTemplate: this._renderTemplate,
                 navConfig: Orchestra.Config.Navigation
-            });
+            }
+        );
 
         this.$el.html(template);
 

@@ -35,14 +35,13 @@ class OrchestraCollection extends Backbone.Collection
     /**
      * @inheritdoc
      */
-    sync(method, model, options) {
-        options = options || {};
+    sync(method, model, options = {}) {
         let url = this._getSyncUrl(options)[method.toLowerCase()];
         if (typeof url != 'undefined') {
             options.url = url;
         }
 
-        return Backbone.sync.apply(this, arguments);
+        return Backbone.sync.apply(this, [method, model, options]);
     }
 
     /**
@@ -59,6 +58,10 @@ class OrchestraCollection extends Backbone.Collection
         }
 
         Backbone.Events.trigger('application:error', error);
+    }
+
+    save(options) {
+        this.sync('update', this, options);
     }
 }
 

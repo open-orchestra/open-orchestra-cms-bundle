@@ -22,6 +22,7 @@ class ContextManager implements CurrentSiteIdInterface
     protected $session;
     protected $tokenStorage;
     protected $currentLanguage;
+    protected $currentSiteLanguages = array();
     protected $defaultLocale;
     protected $siteRepository;
 
@@ -128,8 +129,9 @@ class ContextManager implements CurrentSiteIdInterface
      * @param string $siteId
      * @param string $siteName
      * @param string $siteDefaultLanguage
+     * @param array $languages
      */
-    public function setCurrentSite($siteId, $siteName, $siteDefaultLanguage)
+    public function setCurrentSite($siteId, $siteName, $siteDefaultLanguage, $languages)
     {
         $this->siteId = $siteId;
         $this->session->set(
@@ -138,6 +140,7 @@ class ContextManager implements CurrentSiteIdInterface
                 'siteId' => $siteId,
                 'name' => $siteName,
                 'defaultLanguage' => $siteDefaultLanguage,
+                'languages' => $languages,
             )
         );
     }
@@ -183,6 +186,20 @@ class ContextManager implements CurrentSiteIdInterface
     }
 
     /**
+     * Get languages of the current site
+     *
+     * @return array
+     */
+    public function getCurrentSiteLanguages()
+    {
+        if (empty($this->currentSiteLanguages)) {
+            $this->currentSiteLanguages = $this->getCurrentSite()['languages'];
+        }
+
+        return $this->currentSiteLanguages;
+    }
+
+    /**
      * Get current selected site (BO Context)
      *
      * @return array
@@ -197,12 +214,14 @@ class ContextManager implements CurrentSiteIdInterface
             $siteId = 0;
             $siteName = 'No site available';
             $locale = $this->getCurrentLocale();
+            $languages = array();
             if (isset($sites[0])) {
                 $siteId = $sites[0]->getSiteId();
                 $siteName = $sites[0]->getName();
                 $locale = $sites[0]->getDefaultLanguage();
+                $languages = $sites[0]->getLanguages();
             }
-            $this->setCurrentSite($siteId, $siteName, $locale);
+            $this->setCurrentSite($siteId, $siteName, $locale, $languages);
             $currentSite = $this->session->get(self::KEY_SITE);
         }
 

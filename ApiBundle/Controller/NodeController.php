@@ -194,23 +194,24 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param string $siteId
+     * @param String  $siteId
+     * @param String  $language
      *
-     * @Config\Route("/list/tree/{siteId}", name="open_orchestra_api_node_list_tree")
+     * @Config\Route("/list/tree/{siteId}/{language}", name="open_orchestra_api_node_list_tree")
      * @Config\Method({"GET"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
-    public function listTreeNodeAction($siteId)
+    public function listTreeNodeAction($siteId, $language)
     {
-        $nodes = $this->get('open_orchestra_model.repository.node')->findTreeNode($siteId, 'en');
+        $nodes = $this->get('open_orchestra_model.repository.node')->findTreeNode($siteId, $language);
         if(empty($nodes)) {
             return array();
         }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_tree')->transform($nodes);
+        return $this->get('open_orchestra_api.transformer_manager')->get('nodes_tree')->transform($nodes);
     }
 
     /**
@@ -278,7 +279,7 @@ class NodeController extends BaseController
      * @param string  $nodeId
      *
      * @Config\Route("/{nodeId}/children/update/order", name="open_orchestra_api_node_update_children_order")
-     * @Config\Method({"POST"})
+     * @Config\Method({"PUT"})
      * @Api\Serialize()
      *
      * @return Response
@@ -294,7 +295,7 @@ class NodeController extends BaseController
         );
 
         $orderedNode = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->reverseTransformOrder($facade);
-
+        dump($orderedNode);
         $this->get('open_orchestra_backoffice.manager.node')->orderNodeChildren($orderedNode, $node);
 
         $this->get('object_manager')->flush();
