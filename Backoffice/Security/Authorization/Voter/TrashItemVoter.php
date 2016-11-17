@@ -14,21 +14,24 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class TrashItemVoter extends AbstractVoter
 {
-    protected $actionMapping = array(
-        ContributionActionInterface::READ          => null,
-        ContributionActionInterface::TRASH_RESTORE => ContributionRoleInterface::TRASH_RESTORER,
-        ContributionActionInterface::TRASH_PURGE   => ContributionRoleInterface::TRASH_SUPRESSOR
-    );
+    /**
+     * @return array
+     */
+    protected function getSupportedClasses()
+    {
+        array('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+    }
 
     /**
-     * @param string $attribute
-     * @param mixed  $subject
-     *
-     * @return bool
+     * @return array
      */
-    protected function supports($attribute, $subject)
+    protected function getSupportedAttributes()
     {
-        return $subject instanceof TrashItemInterface && array_key_exists($attribute, $this->actionMapping);
+        return array(
+            ContributionActionInterface::READ,
+            ContributionActionInterface::TRASH_RESTORE,
+            ContributionActionInterface::TRASH_PURGE
+        );
     }
 
     /**
@@ -51,6 +54,11 @@ class TrashItemVoter extends AbstractVoter
             return true;
         }
 
-        return $token->getUser->hasRole($this->actionMapping[$attribute]);
+        $actionMapping = array(
+            ContributionActionInterface::TRASH_RESTORE => ContributionRoleInterface::TRASH_RESTORER,
+            ContributionActionInterface::TRASH_PURGE   => ContributionRoleInterface::TRASH_SUPRESSOR
+        );
+
+        return $token->getUser->hasRole($actionMapping[$attribute]);
     }
 }
