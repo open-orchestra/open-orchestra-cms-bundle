@@ -21,7 +21,6 @@ class BlockToArrayTransformer implements DataTransformerInterface
             return array_merge(array(
                 'label' => $data->getLabel(),
                 'style' => $data->getStyle(),
-                'id' => $data->getId(),
                 'maxAge' => $data->getMaxAge(),
             ), $data->getAttributes());
         }
@@ -36,5 +35,6 @@ class BlockToArrayTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        return $value;
     }
 }

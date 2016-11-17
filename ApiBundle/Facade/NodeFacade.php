@@ -109,7 +109,7 @@ class NodeFacade extends DeletedFacade
     public $editable;
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
+     * @Serializer\Type("array<string,OpenOrchestra\ApiBundle\Facade\AreaFacade>")
      */
     protected $areas = array();
 

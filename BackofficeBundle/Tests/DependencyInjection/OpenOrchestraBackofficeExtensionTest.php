@@ -58,8 +58,7 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
             'component',
             'submit',
             'label',
-            'class',
-            'id',
+            'style',
             'maxAge',
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
@@ -112,8 +111,7 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
             'component',
             'submit',
             'label',
-            'class',
-            'id',
+            'style',
             'maxAge',
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));

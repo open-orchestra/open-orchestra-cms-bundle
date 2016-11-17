@@ -58,7 +58,6 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
             $blockAttributes = array();
             foreach ($event->getForm()->all() as $key => $children) {
                 $value = $children->getData();
-
                 if (in_array($key, $this->fixedParameters)) {
                     $setter = 'set' . Inflector::classify($key);
                     $block->$setter($value);

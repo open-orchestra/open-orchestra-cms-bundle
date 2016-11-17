@@ -135,7 +135,7 @@ class BlockTypeTest extends AbstractBaseTestCase
 
         $this->blockType->buildForm($builder, $options);
 
-        Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
         Phake::verify($builder)->setAttribute('template', $this->templateName);
         Phake::verify($builder)->addViewTransformer(Phake::anyParameters());
         Phake::verify($builder, Phake::times($subscriberCount))->addEventSubscriber(Phake::anyParameters());
