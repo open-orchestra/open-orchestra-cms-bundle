@@ -84,7 +84,6 @@ class NodesTreeView extends OrchestraView
                 }
                 let nodes = [];
                 $.each($nodes, function(index, node) {
-                    console.log($(node));
                     nodes.push({'node_id': $(node).data('node-id')})
 
                 });
