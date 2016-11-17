@@ -43,8 +43,9 @@ class TestContextManager extends ContextManager
      * @param string $siteId
      * @param string $siteDomain
      * @param string $defaultLanguage
+     * @param array  $languages
      */
-    public function setCurrentSite($siteId, $siteDomain, $defaultLanguage)
+    public function setCurrentSite($siteId, $siteDomain, $defaultLanguage, array $languages)
     {
         $this->siteId = $siteId;
         $this->siteDomain = $siteDomain;

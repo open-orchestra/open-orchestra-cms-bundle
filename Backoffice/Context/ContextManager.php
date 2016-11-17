@@ -131,7 +131,7 @@ class ContextManager implements CurrentSiteIdInterface
      * @param string $siteDefaultLanguage
      * @param array $languages
      */
-    public function setCurrentSite($siteId, $siteName, $siteDefaultLanguage, $languages)
+    public function setCurrentSite($siteId, $siteName, $siteDefaultLanguage, array $languages)
     {
         $this->siteId = $siteId;
         $this->session->set(
