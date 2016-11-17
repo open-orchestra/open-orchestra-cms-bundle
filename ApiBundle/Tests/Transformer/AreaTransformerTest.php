@@ -84,8 +84,8 @@ class AreaTransformerTest extends AbstractBaseTestCase
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
         $this->assertArrayHasKey('_block_list', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self_update_block_position', $areaFacade->getLinks());
-        $this->assertArrayHasKey('_self', $areaFacade->getLinks());
-        Phake::verify($this->router, Phake::times(3))->generate(Phake::anyParameters());
+//        $this->assertArrayHasKey('_self', $areaFacade->getLinks());
+        Phake::verify($this->router, Phake::times(2))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform(
             $this->block,
             0

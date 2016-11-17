@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use OpenOrchestra\BaseApi\Model\ApiClientInterface;

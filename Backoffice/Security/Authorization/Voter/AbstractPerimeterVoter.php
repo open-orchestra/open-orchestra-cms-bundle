@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class AbstractPerimeterVoter
