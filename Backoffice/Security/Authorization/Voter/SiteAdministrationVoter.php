@@ -2,26 +2,32 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
+use OpenOrchestra\LogBundle\Model\LogInterface;
 
 /**
- * Class ConfigurationVoter
+ * Class SiteAdministrationVoter
  *
- * Voter checking rights on configuration management
+ * Voter checking rights on site management
  */
-class ConfigurationVoter extends AbstractPerimeterVoter
+class SiteAdministrationVoter extends AbstractPerimeterVoter
 {
+    /**
+     * @return array
+     */
     protected function getSupportedClasses()
     {
         return array(
+            'OpenOrchestra\ModelInterface\Model\SiteInterface',
+            'OpenOrchestra\ModelInterface\Model\RedirectionInterface',
+            'OpenOrchestra\LogBundle\Model\LogInterface',
             'OpenOrchestra\UserBundle\Model\UserInterface',
-            'OpenOrchestra\Backoffice\Model\GroupInterface',
-            'OpenOrchestra\ModelInterface\Model\SiteInterface'
+            'OpenOrchestra\Backoffice\Model\GroupInterface'
         );
     }
 
@@ -47,8 +53,12 @@ class ConfigurationVoter extends AbstractPerimeterVoter
             return false;
         }
 
-        if (ContributionActionInterface::READ == $attribute) {
+        if ($subject instanceof LogInterface) {
             return true;
+        }
+
+        if ($subject instanceof RedirectionInterface) {
+            return $this->canActOnSite($subject->getSiteId(), $user);
         }
 
         if ($subject instanceof UserInterface) {
@@ -56,7 +66,7 @@ class ConfigurationVoter extends AbstractPerimeterVoter
         }
 
         if ($subject instanceof GroupInterface || $subject instanceof SiteInterface) {
-            return $this->isSubjectInAllowedPerimeter($subject->getSite()->getSiteId(), $user, SiteInterface::ENTITY_TYPE);
+            return $this->canActOnSite($subject->getSite()->getSiteId(), $user);
         }
 
         return false;
@@ -74,11 +84,24 @@ class ConfigurationVoter extends AbstractPerimeterVoter
     protected function voteForUser(UserInterface $subject, UserInterface $user)
     {
         foreach ($subject->getGroups() as $group) {
-            if ($this->isSubjectInAllowedPerimeter($group->getSite()->getSiteId(), $user, SiteInterface::ENTITY_TYPE)) {
+            if ($this->canActOnSite($group->getSite()->getSiteId(), $user)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Check if the $user has $siteId in his Sites Perimeter
+     *
+     * @param string        $siteId
+     * @param UserInterface $user
+     *
+     * @return boolean
+     */
+    protected function canActOnSite($siteId, UserInterface $user)
+    {
+        return $this->isSubjectInAllowedPerimeter($siteId, $user, SiteInterface::ENTITY_TYPE);
     }
 }
