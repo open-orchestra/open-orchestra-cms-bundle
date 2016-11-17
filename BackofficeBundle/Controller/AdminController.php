@@ -27,7 +27,7 @@ class AdminController extends Controller
 
         if ($siteId) {
             $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-            $contextManager->setCurrentsite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage());
+            $contextManager->setCurrentsite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage(), $site->getLanguages());
         }
 
         return $this->render('OpenOrchestraBackofficeBundle::layout.html.twig');
