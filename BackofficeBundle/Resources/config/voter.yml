@@ -1,9 +1,10 @@
 parameters:
-    open_orchestra_backoffice.voter.node.class:                OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter
-    open_orchestra_backoffice.voter.content.class:             OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVoter
-    open_orchestra_backoffice.voter.trash_item.class:          OpenOrchestra\Backoffice\Security\Authorization\Voter\TrashItemVoter
-    open_orchestra_backoffice.voter.site_administration.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\SiteAdministrationVoter
-    open_orchestra_backoffice.voter.developer_tool.class:      OpenOrchestra\Backoffice\Security\Authorization\Voter\DeveloperToolVoter
+    open_orchestra_backoffice.voter.node.class:                    OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter
+    open_orchestra_backoffice.voter.content.class:                 OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVoter
+    open_orchestra_backoffice.voter.trash_item.class:              OpenOrchestra\Backoffice\Security\Authorization\Voter\TrashItemVoter
+    open_orchestra_backoffice.voter.site_administration.class:     OpenOrchestra\Backoffice\Security\Authorization\Voter\SiteAdministrationVoter
+    open_orchestra_backoffice.voter.platform_administration.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\PlatformAdministrationVoter
+    open_orchestra_backoffice.voter.developer_tool.class:          OpenOrchestra\Backoffice\Security\Authorization\Voter\DeveloperToolVoter
 
 services:
     open_orchestra_backoffice.voter.node:
@@ -20,6 +21,10 @@ services:
             - { name: security.voter }
     open_orchestra_backoffice.voter.site_administration:
        class: '%open_orchestra_backoffice.voter.site_administration.class%'
+       tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.platform_administration:
+       class: '%open_orchestra_backoffice.voter.platform_administration.class%'
        tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.developer_tool:
