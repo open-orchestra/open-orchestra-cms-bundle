@@ -295,7 +295,6 @@ class NodeController extends BaseController
         );
 
         $orderedNode = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->reverseTransformOrder($facade);
-        dump($orderedNode);
         $this->get('open_orchestra_backoffice.manager.node')->orderNodeChildren($orderedNode, $node);
 
         $this->get('object_manager')->flush();

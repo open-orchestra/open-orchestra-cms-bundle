@@ -12,6 +12,7 @@ class TestContextManager extends ContextManager
     protected $siteId = '2';
     protected $defaultLanguage = 'fr';
     protected $siteName = 'Demo site';
+    protected $languages = array('fr', 'en', 'de');
 
     /**
      * @param SiteRepositoryInterface $siteRepository
@@ -50,6 +51,7 @@ class TestContextManager extends ContextManager
         $this->siteId = $siteId;
         $this->siteDomain = $siteDomain;
         $this->defaultLanguage = $defaultLanguage;
+        $this->languages = $languages;
     }
 
     /**
@@ -82,5 +84,13 @@ class TestContextManager extends ContextManager
     public function getAvailableSites()
     {
         return $this->siteRepository->findByDeleted(false);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCurrentSiteLanguages()
+    {
+        return $this->languages;
     }
 }
