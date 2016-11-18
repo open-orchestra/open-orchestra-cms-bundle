@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
-use Phake;
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Tests\Manager\AbstractVoterTest;
@@ -29,8 +28,8 @@ class NodeVoterTest extends AbstractVoterTest
      */
     protected function getNotSupportedSubjects()
     {
-        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        $trashItem = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        $content = $this->createPhakeContent();
+        $trashItem = $this->createPhakeTrashItem();
 
         return array(
             'Bad subject : Content'    => array($content,   ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
@@ -43,7 +42,7 @@ class NodeVoterTest extends AbstractVoterTest
      */
     protected function getNotSupportedAttributes()
     {
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node = $this->createPhakeNode();
 
         return array(
             'Bad action : Trash Purge'   => array($node, ContributionActionInterface::TRASH_PURGE,   array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
@@ -56,10 +55,8 @@ class NodeVoterTest extends AbstractVoterTest
      */
     protected function getNotInPerimeter()
     {
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-
-        $nodeSelf = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($nodeSelf)->getCreatedBy()->thenReturn($this->username);
+        $node = $this->createPhakeNode();
+        $nodeSelf = $this->createPhakeNode(true);
 
         return array(
             'Not in perimeter : Edit self'    => array($nodeSelf, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     false, VoterInterface::ACCESS_DENIED),
@@ -74,7 +71,7 @@ class NodeVoterTest extends AbstractVoterTest
      */
     protected function getBadRoles()
     {
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node = $this->createPhakeNode();
 
         return array(
             'Bad role (Edit) : None'                      => array($node, ContributionActionInterface::EDIT,   array(),                                                   true, VoterInterface::ACCESS_DENIED),
@@ -100,10 +97,8 @@ class NodeVoterTest extends AbstractVoterTest
      */
     protected function getOkVotes()
     {
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-
-        $nodeSelf = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($nodeSelf)->getCreatedBy()->thenReturn($this->username);
+        $node = $this->createPhakeNode();
+        $nodeSelf = $this->createPhakeNode(true);
 
         return array(
             'Ok : Read'         => array($node,     ContributionActionInterface::READ,   array(),                                                false, VoterInterface::ACCESS_GRANTED),
