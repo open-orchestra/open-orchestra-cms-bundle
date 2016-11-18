@@ -135,10 +135,16 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
      *
      * @return Phake_IMock
      */
-    protected function createPhakeContent()
+    protected function createPhakeContent($owner = false)
     {
-        return Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-    }
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+
+        if ($owner) {
+            Phake::when($content)->getCreatedBy()->thenReturn($this->username);
+        }
+
+        return $content;
+}
 
     /**
      * Create a Phake trash item

@@ -3,8 +3,6 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use OpenOrchestra\ModelInterface\Model\KeywordInterface;
-use OpenOrchestra\BaseApi\Model\ApiClientInterface;
 
 /**
  * Class PlatformAdministrationVoter

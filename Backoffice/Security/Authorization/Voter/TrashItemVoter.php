@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
-use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

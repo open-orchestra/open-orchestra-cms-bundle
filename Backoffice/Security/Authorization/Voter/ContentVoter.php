@@ -33,7 +33,7 @@ class ContentVoter extends AbstractEditorialVoter
      */
     protected function voteForReadAction($content, $user)
     {
-        return $this->isSubjectInAllowedPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+        return $this->isSubjectInAllowedPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 
     /**

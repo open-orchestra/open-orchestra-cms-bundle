@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class AbstractVoter
