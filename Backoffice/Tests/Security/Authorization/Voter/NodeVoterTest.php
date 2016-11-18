@@ -30,10 +30,20 @@ class NodeVoterTest extends AbstractVoterTest
     {
         $content = $this->createPhakeContent();
         $trashItem = $this->createPhakeTrashItem();
+        $site = $this->createPhakeSite();
+        $redirection = $this->createPhakeRedirection();
+        $log = $this->createPhakeLog();
+        $user = $this->createPhakeUser();
+        $group = $this->createPhakeGroup();
 
         return array(
-            'Bad subject : Content'    => array($content,   ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Trash Item' => array($trashItem, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Content'     => array($content,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Trash Item'  => array($trashItem,   ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Site'        => array($site,        ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Redirection' => array($redirection, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Log'         => array($log,         ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : User'        => array($user,        ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Group'       => array($group,       ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
         );
     }
 

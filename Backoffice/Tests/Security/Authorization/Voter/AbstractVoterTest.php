@@ -144,17 +144,75 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
         }
 
         return $content;
-}
+    }
 
     /**
      * Create a Phake trash item
-     *
-     * @param bool $owner
      *
      * @return Phake_IMock
      */
     protected function createPhakeTrashItem()
     {
         return Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+    }
+
+    /**
+     * Create a Phake site
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeSite()
+    {
+        return Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+    }
+
+    /**
+     * Create a Phake redirection
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeRedirection()
+    {
+        return Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
+    }
+
+    /**
+     * Create a Phake log
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeLog()
+    {
+        return Phake::mock('OpenOrchestra\LogBundle\Model\LogInterface');
+    }
+
+    /**
+     * Create a Phake user
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeUser()
+    {
+        $group = $this->createPhakeGroup();
+
+        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
+        Phake::when($user)->getGroups()->thenReturn(array($group));
+
+        return $user;
+    }
+
+    /**
+     * Create a Phake group
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeGroup()
+    {
+        $site = $this->createPhakeSite();
+
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        Phake::when($group)->getSite()->thenReturn($site);
+
+        return $group;
     }
 }

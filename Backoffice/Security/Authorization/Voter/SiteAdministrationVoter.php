@@ -57,7 +57,7 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
             return true;
         }
 
-        if ($subject instanceof RedirectionInterface) {
+        if ($subject instanceof RedirectionInterface || $subject instanceof SiteInterface) {
             return $this->canActOnSite($subject->getSiteId(), $user);
         }
 
@@ -65,7 +65,7 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
             return $this->voteForUser($subject, $user);
         }
 
-        if ($subject instanceof GroupInterface || $subject instanceof SiteInterface) {
+        if ($subject instanceof GroupInterface) {
             return $this->canActOnSite($subject->getSite()->getSiteId(), $user);
         }
 
