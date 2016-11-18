@@ -82,7 +82,6 @@ class NodeVoterTest extends AbstractVoterTest
             'Bad role (Edit) : Trash Restorer'            => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_RESTORER),          true, VoterInterface::ACCESS_DENIED),
             'Bad role (Edit) : Trash Supressor'           => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_SUPRESSOR),         true, VoterInterface::ACCESS_DENIED),
             'Bad role (Delete) : None'                    => array($node, ContributionActionInterface::DELETE, array(),                                                   true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : None'                    => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
             'Bad role (Delete) : Content contributor'     => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_DENIED),
             'Bad role (Delete) : Content super editor'    => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
             'Bad role (Delete) : Content super supressor' => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_DENIED),

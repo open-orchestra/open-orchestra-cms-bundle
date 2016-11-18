@@ -74,21 +74,20 @@ class ContentVoterTest extends AbstractVoterTest
         $content = $this->createPhakeContent();
 
         return array(
-            'Bad role (Edit) : None'                      => array($content, ContributionActionInterface::EDIT,   array(),                                                true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Content contributor'       => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Content super editor'      => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Content super supressor'   => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Site Admin'                => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::SITE_ADMIN),           true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Trash Restorer'            => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_RESTORER),       true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Trash Supressor'           => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_SUPRESSOR),      true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : None'                    => array($content, ContributionActionInterface::DELETE, array(),                                                true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : None'                    => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Content contributor'     => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Content super editor'    => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Content super supressor' => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Site Admin'              => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::SITE_ADMIN),           true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Trash Restorer'          => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::TRASH_RESTORER),       true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Trash Supressor'         => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::TRASH_SUPRESSOR),      true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) : None'                   => array($content, ContributionActionInterface::EDIT,   array(),                                                true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) : Node contributor'       => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) : Node super editor'      => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) : Node super supressor'   => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) : Site Admin'             => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::SITE_ADMIN),           true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) : Trash Restorer'         => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_RESTORER),       true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) : Trash Supressor'        => array($content, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_SUPRESSOR),      true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Delete) : None'                 => array($content, ContributionActionInterface::DELETE, array(),                                                true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Delete) : Node contributor'     => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Delete) : Node super editor'    => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Delete) : Node super supressor' => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Delete) : Site Admin'           => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::SITE_ADMIN),           true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Delete) : Trash Restorer'       => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::TRASH_RESTORER),       true, VoterInterface::ACCESS_DENIED),
+            'Bad role (Delete) : Trash Supressor'      => array($content, ContributionActionInterface::DELETE, array(ContributionRoleInterface::TRASH_SUPRESSOR),      true, VoterInterface::ACCESS_DENIED),
         );
     }
 
