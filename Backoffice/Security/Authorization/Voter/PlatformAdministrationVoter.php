@@ -16,7 +16,7 @@ class PlatformAdministrationVoter extends AbstractVoter
      */
     protected function getSupportedClasses()
     {
-        array(
+        return array(
             'OpenOrchestra\ModelInterface\Model\KeywordInterface',
             'OpenOrchestra\BaseApi\Model\ApiClientInterface'
         );
@@ -33,7 +33,7 @@ class PlatformAdministrationVoter extends AbstractVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        if ($this->isSuperAdmin($user)) {
+        if ($this->isSuperAdmin($token->getUser())) {
             return true;
         }
     }

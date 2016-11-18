@@ -215,4 +215,24 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
 
         return $group;
     }
+
+    /**
+     * Create a Phake keyword
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeKeyword()
+    {
+        return Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
+    }
+
+    /**
+     * Create a Phake api client
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeApiClient()
+    {
+        return Phake::mock('OpenOrchestra\BaseApi\Model\ApiClientInterface');
+    }
 }

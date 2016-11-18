@@ -31,11 +31,15 @@ class SiteAdministrationVoterTest extends AbstractVoterTest
         $node = $this->createPhakeNode();
         $content = $this->createPhakeContent();
         $trashItem = $this->createPhakeTrashItem();
+        $keyword = $this->createPhakeKeyword();
+        $client = $this->createPhakeApiClient();
 
         return array(
             'Bad subject : Node'       => array($node,      ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Content'    => array($content,   ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Trash Item' => array($trashItem, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Keyword'    => array($keyword,   ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Api client' => array($client,    ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
         );
     }
 

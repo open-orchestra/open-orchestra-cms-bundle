@@ -35,6 +35,8 @@ class NodeVoterTest extends AbstractVoterTest
         $log = $this->createPhakeLog();
         $user = $this->createPhakeUser();
         $group = $this->createPhakeGroup();
+        $keyword = $this->createPhakeKeyword();
+        $client = $this->createPhakeApiClient();
 
         return array(
             'Bad subject : Content'     => array($content,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
@@ -44,6 +46,8 @@ class NodeVoterTest extends AbstractVoterTest
             'Bad subject : Log'         => array($log,         ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : User'        => array($user,        ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Group'       => array($group,       ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Keyword'     => array($keyword,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Api client'  => array($client,      ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
         );
     }
 
