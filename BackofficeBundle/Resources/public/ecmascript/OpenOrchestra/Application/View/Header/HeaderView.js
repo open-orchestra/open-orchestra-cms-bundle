@@ -1,7 +1,10 @@
 import OrchestraView    from '../OrchestraView'
-import Application      from '../../Application'
+import app              from '../../Application'
 import SiteSelectorView from './SiteSelectorView'
 import LogOutModalView  from './LogOutModalView'
+import FormBuilder      from '../../../Service/Form/Model/FormBuilder'
+import UserFormView     from '../../View/User/UserFormView'
+
 
 /**
  * @class HeaderView
@@ -16,7 +19,8 @@ class HeaderView extends OrchestraView
         this.className = 'header';
         this.events = {
             'click .expand': '_toggleFullscreen',
-            'click .logout': '_showLogOutModal'
+            'click .logout': '_showLogOutModal',
+            'click .preference': '_showPreference',
         }
     }
 
@@ -35,7 +39,7 @@ class HeaderView extends OrchestraView
         let template = this._renderTemplate(
             'Header/headerView',
             {
-                user: Application.getContext().user
+                user: app.getContext().user
             }
         );
         this.$el.html(template);
@@ -49,8 +53,21 @@ class HeaderView extends OrchestraView
      */
     _showLogOutModal() {
         let logOutModalView = new LogOutModalView();
-        Application.getRegion('modal').html(logOutModalView.render().$el);
+        app.getRegion('modal').html(logOutModalView.render().$el);
         logOutModalView.show();
+
+        return false;
+    }
+
+    /**
+     * Show Preference
+     */
+    _showPreference() {
+        let url = Routing.generate('open_orchestra_user_admin_user_form', {userId : app.getContext().user.id});
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let userFormView = new UserFormView({form : form});
+            app.getRegion('content').html(userFormView.render().$el);
+        });
 
         return false;
     }

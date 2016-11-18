@@ -52,6 +52,7 @@
                 siteLanguages: {{ context.currentSiteLanguages|json_encode()|raw }},
                 language: '{{ context.currentLocale }}',
                 user: {
+                    id : '{{ app.user.id }}',
                     username : '{{ app.user.username }}',
                     firstName : '{{ app.user.firstName }}',
                     lastName : '{{ app.user.lastName }}',
