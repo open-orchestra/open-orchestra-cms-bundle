@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;

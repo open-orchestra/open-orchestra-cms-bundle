@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\Backoffice\Tests\Manager\AbstractVoterTest;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
