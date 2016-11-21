@@ -4,6 +4,7 @@ namespace OpenOrchestra\UserAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class LoadUserV2Data
@@ -15,9 +16,18 @@ class LoadUserV2Data extends AbstractLoadUserData implements OrchestraFunctional
      */
     public function load(ObjectManager $manager)
     {
-        $userV2 = $this->generate('userV2', 'group-v2');
-        $this->addReference('user-v2', $userV2);
-        $manager->persist($userV2);
+        $developer = $this->generate('developer');
+        $developer->addRole(ContributionRoleInterface::DEVELOPER);
+        $manager->persist($developer);
+
+        $padmin = $this->generate('p-admin');
+        $padmin->addRole(ContributionRoleInterface::PLATFORM_ADMIN);
+        $this->addReference('p-admin', $padmin);
+        $manager->persist($padmin);
+
+        $sadmin = $this->generate('s-admin', 's-admin-demo');
+        $sadmin->addRole(ContributionRoleInterface::SITE_ADMIN);
+        $manager->persist($sadmin);
 
         $manager->flush();
     }

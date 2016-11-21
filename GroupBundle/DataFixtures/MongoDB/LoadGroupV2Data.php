@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\GroupBundle\Document\Group;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class LoadGroupV2Data
@@ -17,6 +18,17 @@ class LoadGroupV2Data extends AbstractLoadGroupV2Data implements OrchestraFuncti
      */
     public function load(ObjectManager $manager)
     {
+        $sitePerimeter = $this->createPerimeter(array(
+            $this->getReference('site2')->getSiteId()
+        ));
+        $sadmin2 = new Group('Site Admin demo');
+        $sadmin2->addLabel('en', 'Site admin demo');
+        $sadmin2->addLabel('fr', 'Admin site demo');
+        $sadmin2->setSite($this->getReference('site2'));
+        $sadmin2->addPerimeter(SiteInterface::ENTITY_TYPE, $sitePerimeter);
+        $this->addReference('s-admin-demo', $sadmin2);
+        $manager->persist($sadmin2);
+
         $nodePerimeter = $this->createPerimeter(array(
             'root/fixture_page_legal_mentions',
             'root/fixture_page_contact'
