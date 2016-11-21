@@ -23,8 +23,6 @@ class UserController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_user_admin_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_USER')")
-     *
      * @return Response
      */
     public function newAction(Request $request)
@@ -56,8 +54,6 @@ class UserController extends AbstractAdminController
      *
      * @Config\Route("/form/{userId}", name="open_orchestra_user_admin_user_form")
      * @Config\Method({"GET", "POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_USER')")
      *
      * @return Response
      */
@@ -129,6 +125,45 @@ class UserController extends AbstractAdminController
     }
 
     /**
+     * @param Request $request
+     * @param string  $userId
+     *
+     * @Config\Route("/password/change/{userId}", name="open_orchestra_user_admin_user_change_password")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function changePasswordAction(Request $request, $userId)
+    {
+        /* @var UserInterface $user */
+        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $url = 'open_orchestra_user_admin_user_change_password';
+
+        return $this->renderChangePassword($request, $user, $url);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/password/change", name="open_orchestra_user_admin_user_self_change_password")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function selfChangePasswordAction(Request $request)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $url = "open_orchestra_user_admin_user_self_change_password";
+
+        return $this->renderChangePassword($request, $user, $url);
+    }
+
+    /**
+     * @param Request       $request
      * @param UserInterface $user
      *
      * @return UserInterface

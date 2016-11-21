@@ -30,7 +30,6 @@ class ThemeController extends BaseController
      *
      * @Config\Route("/{themeId}", name="open_orchestra_api_theme_show")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ROLE_ACCESS_THEME')")
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::THEME_LINKS
@@ -50,7 +49,6 @@ class ThemeController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_theme_list")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ROLE_ACCESS_THEME')")
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::THEME_LINKS
@@ -72,8 +70,6 @@ class ThemeController extends BaseController
      *
      * @Config\Route("/{themeId}/delete", name="open_orchestra_api_theme_delete")
      * @Config\Method({"DELETE"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_THEME')")
      *
      * @return Response
      */

@@ -22,8 +22,6 @@ class RoleController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_backoffice_role_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_ROLE')")
-     *
      * @return Response
      */
     public function newAction(Request $request)
@@ -55,8 +53,6 @@ class RoleController extends AbstractAdminController
      *
      * @Config\Route("/form/{roleId}", name="open_orchestra_backoffice_role_form")
      * @Config\Method({"GET", "POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_ROLE')")
      *
      * @return Response
      */

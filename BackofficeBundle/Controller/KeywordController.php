@@ -21,8 +21,6 @@ class KeywordController extends AbstractAdminController
      * @Config\Route("/keyword/form/{keywordId}", name="open_orchestra_backoffice_keyword_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_KEYWORD')")
-     *
      * @return Response
      */
     public function formAction(Request $request, $keywordId)
@@ -48,8 +46,6 @@ class KeywordController extends AbstractAdminController
      *
      * @Config\Route("/keyword/new", name="open_orchestra_backoffice_keyword_new")
      * @Config\Method({"GET", "POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_KEYWORD')")
      *
      * @return Response
      */

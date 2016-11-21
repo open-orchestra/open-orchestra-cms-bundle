@@ -22,8 +22,6 @@ class GroupController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_backoffice_group_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_GROUP')")
-     *
      * @return Response
      */
     public function newAction(Request $request)
@@ -56,8 +54,6 @@ class GroupController extends AbstractAdminController
      *
      * @Config\Route("/form/{groupId}", name="open_orchestra_backoffice_group_form")
      * @Config\Method({"GET", "POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_GROUP')")
      *
      * @return Response
      */

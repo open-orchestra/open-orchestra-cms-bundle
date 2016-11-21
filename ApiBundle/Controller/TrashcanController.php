@@ -7,6 +7,7 @@ use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 
 /**
  * Class TrashcanController
@@ -24,8 +25,6 @@ class TrashcanController extends BaseController
      *
      * @Config\Route("/list", name="open_orchestra_api_trashcan_list")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETED')")
      *
      * @return FacadeInterface
      */
@@ -46,8 +45,6 @@ class TrashcanController extends BaseController
      *
      * @Config\Route("/{trashItemId}/restore", name="open_orchestra_api_trashcan_restore")
      * @Config\Method({"PUT"})
-
-     * @Config\Security("is_granted('ROLE_ACCESS_RESTORE')")
      *
      * @return array|mixed
      */
@@ -55,19 +52,24 @@ class TrashcanController extends BaseController
     {
         /* @var TrashItemInterface $trashItem */
         $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
-        /* @var $entity SoftDeleteableInterface */
-        $entity = $trashItem->getEntity();
-        $om = $this->get('object_manager');
 
-        if ($this->isValid($entity, 'restore')) {
-            $this->get('open_orchestra_backoffice.restore_entity.manager')->restore($entity);
-            $om->remove($trashItem);
-            $om->flush();
+        if ($trashItem instanceof TrashItemInterface) {
+            /* @var $entity SoftDeleteableInterface */
+            $entity = $trashItem->getEntity();
+            $om = $this->get('object_manager');
 
-            return array();
+            if ($this->isValid($entity, 'restore')) {
+                $this->get('open_orchestra_backoffice.restore_entity.manager')->restore($entity);
+                $om->remove($trashItem);
+                $om->flush();
+
+                return array();
+            }
+
+            return $this->getViolations();
         }
 
-        return $this->getViolations();
+        return array();
     }
 
 
@@ -76,8 +78,6 @@ class TrashcanController extends BaseController
      *
      * @Config\Route("/{trashItemId}/remove", name="open_orchestra_api_trashcan_remove")
      * @Config\Method({"DELETE"})
-
-     * @Config\Security("is_granted('ROLE_ACCESS_REMOVED_TRASHCAN')")
      *
      * @return array|mixed
      */

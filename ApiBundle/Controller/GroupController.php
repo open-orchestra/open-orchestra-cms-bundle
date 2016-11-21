@@ -30,7 +30,6 @@ class GroupController extends BaseController
      *
      * @Config\Route("/{groupId}", name="open_orchestra_api_group_show")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ROLE_ACCESS_GROUP')")
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::GROUP_ROLES,
@@ -50,8 +49,6 @@ class GroupController extends BaseController
      *
      * @Config\Route("/{groupId}", name="open_orchestra_api_group_edit")
      * @Config\Method({"POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_GROUP')")
      *
      * @return array
      */
@@ -73,8 +70,6 @@ class GroupController extends BaseController
      * @Config\Route("", name="open_orchestra_api_group_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_GROUP')")
-     *
      * @return FacadeInterface
      */
     public function listAction(Request $request)
@@ -94,8 +89,6 @@ class GroupController extends BaseController
      * @Config\Route("/{groupId}/delete", name="open_orchestra_api_group_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_GROUP')")
-     *
      * @return Response
      */
     public function deleteAction($groupId)
@@ -114,8 +107,6 @@ class GroupController extends BaseController
      *
      * @Config\Route("/{groupId}/duplicate", name="open_orchestra_api_group_duplicate")
      * @Config\Method({"POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_GROUP')")
      *
      * @return Response
      */

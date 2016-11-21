@@ -33,7 +33,6 @@ class StatusController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_status_list_table")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ROLE_ACCESS_STATUS')")
      *
      * @Api\Groups({CMSGroupContext::STATUS_LINKS})
      */

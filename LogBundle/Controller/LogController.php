@@ -26,8 +26,6 @@ class LogController extends Controller
      * @Config\Route("", name="open_orchestra_api_log_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_LOG')")
-     *
      * @return FacadeInterface
      */
     public function listAction(Request $request)

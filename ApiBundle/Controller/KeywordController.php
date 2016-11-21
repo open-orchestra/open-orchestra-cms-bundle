@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class KeywordController
@@ -29,8 +30,6 @@ class KeywordController extends BaseController
      *
      * @Config\Route("/check", name="open_orchestra_api_check_keyword")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_KEYWORD')")
      *
      * @return Response
      */
@@ -51,8 +50,6 @@ class KeywordController extends BaseController
      * @Config\Route("/{keywordId}", name="open_orchestra_api_keyword_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_KEYWORD')")
-     *
      * @return FacadeInterface
      */
     public function showAction($keywordId)
@@ -67,8 +64,6 @@ class KeywordController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_keyword_list")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_KEYWORD')")
      *
      * @return FacadeInterface
      */
@@ -89,21 +84,22 @@ class KeywordController extends BaseController
      * @Config\Route("/{keywordId}/delete", name="open_orchestra_api_keyword_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_KEYWORD')")
-     *
      * @return Response
      * @throws KeywordNotDeletableException
      */
     public function deleteAction($keywordId)
     {
         $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
-        if ($keyword->isUsed()) {
-            throw new KeywordNotDeletableException();
+
+        if ($keyword instanceof KeywordInterface) {
+            if ($keyword->isUsed()) {
+                throw new KeywordNotDeletableException();
+            }
+            $dm = $this->get('object_manager');
+            $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
+            $dm->remove($keyword);
+            $dm->flush();
         }
-        $dm = $this->get('object_manager');
-        $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
-        $dm->remove($keyword);
-        $dm->flush();
 
         return array();
     }

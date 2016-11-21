@@ -17,8 +17,6 @@ class ApiClientController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_backoffice_api_client_new")
      * @Config\Method({"GET","POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_API_CLIENT')")
-     *
      * @return Response
      */
     public function newAction(Request $request)
@@ -49,8 +47,6 @@ class ApiClientController extends AbstractAdminController
      *
      * @Config\Route("/form/{apiClientId}", name="open_orchestra_backoffice_api_client_form")
      * @Config\Method({"GET","POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_API_CLIENT')")
      *
      * @return Response
      */

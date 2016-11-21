@@ -6,6 +6,7 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentManager
@@ -51,7 +52,10 @@ class ContentManager
         $content->setContentType($contentType);
 
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($contentType);
-        $content->setLinkedToSite($contentType->isLinkedToSite());
+
+        if ($contentType instanceof ContentTypeInterface) {
+            $content->setLinkedToSite($contentType->isLinkedToSite());
+        }
 
         return $content;
     }

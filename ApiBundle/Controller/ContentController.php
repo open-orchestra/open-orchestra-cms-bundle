@@ -38,8 +38,6 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}", name="open_orchestra_api_content_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
      * @return FacadeInterface
      * @throws ContentNotFoundHttpException
      */
@@ -60,8 +58,6 @@ class ContentController extends BaseController
      *
      * @Config\Route("/{contentId}/show-or-create", name="open_orchestra_api_content_show_or_create")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return FacadeInterface
      * @throws SourceLanguageNotFoundHttpException
@@ -105,8 +101,6 @@ class ContentController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_content_list")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @Api\Groups({GroupContext::G_HIDE_ROLES})
      *
@@ -152,21 +146,22 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT')")
-     *
      * @return Response
      * @throws ContentNotDeletableException
      */
     public function deleteAction($contentId)
     {
         $content = $this->get('open_orchestra_model.repository.content')->find($contentId);
-        if ($content->isUsed()) {
-            throw new ContentNotDeletableException();
-        }
 
-        $content->setDeleted(true);
-        $this->get('object_manager')->flush();
-        $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
+        if ($content instanceof ContentInterface) {
+            if ($content->isUsed()) {
+                throw new ContentNotDeletableException();
+            }
+
+            $content->setDeleted(true);
+            $this->get('object_manager')->flush();
+            $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
+        }
 
         return array();
     }
@@ -177,8 +172,6 @@ class ContentController extends BaseController
      *
      * @Config\Route("/{contentId}/new-version", name="open_orchestra_api_content_new_version")
      * @Config\Method({"POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -199,8 +192,6 @@ class ContentController extends BaseController
      *
      * @Config\Route("/{contentId}/duplicate", name="open_orchestra_api_content_duplicate")
      * @Config\Method({"POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -227,8 +218,6 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}/list-version", name="open_orchestra_api_content_list_version")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
      * @return Response
      */
     public function listVersionAction(Request $request, $contentId)
@@ -244,8 +233,6 @@ class ContentController extends BaseController
      *
      * @Config\Route("/{contentMongoId}/update", name="open_orchestra_api_content_update")
      * @Config\Method({"POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -265,8 +252,6 @@ class ContentController extends BaseController
      *
      * @Config\Route("/{contentMongoId}/list-statuses", name="open_orchestra_api_content_list_status")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
