@@ -24,7 +24,7 @@ class NodeVoter extends AbstractEditorialVoter
 
     /**
      * Vote for Read action
-     * Everyone can read every node
+     * A user can read a node if it is in his perimeter
      *
      * @param NodeInterface $node
      * @param UserInterface $user
@@ -33,7 +33,8 @@ class NodeVoter extends AbstractEditorialVoter
      */
     protected function voteForReadAction($node, $user)
     {
-        return true;
+        return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
+            && $this->isSubjectInAllowedPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
     }
 
     /**
