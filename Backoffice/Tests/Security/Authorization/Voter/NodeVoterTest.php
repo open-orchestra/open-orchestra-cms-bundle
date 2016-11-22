@@ -120,7 +120,7 @@ class NodeVoterTest extends AbstractVoterTest
 
         return array(
             'Ok : Read'         => array($node,     ContributionActionInterface::READ,   array(),                                                false, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add self'     => array($nodeSelf, ContributionActionInterface::ADD,    array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true,  VoterInterface::ACCESS_GRANTED),
+            'Ok : Add self'     => array($nodeSelf, ContributionActionInterface::CREATE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true,  VoterInterface::ACCESS_GRANTED),
             'Ok : Edit self'    => array($nodeSelf, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true,  VoterInterface::ACCESS_GRANTED),
             'Ok : Delete self'  => array($nodeSelf, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true,  VoterInterface::ACCESS_GRANTED),
             'Ok : Edit other'   => array($node,     ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_EDITOR),    true,  VoterInterface::ACCESS_GRANTED),

@@ -22,6 +22,7 @@ class DeveloperToolVoter extends AbstractVoter
         return array(
             'OpenOrchestra\ModelInterface\Model\ContentTypeInterface',
             'OpenOrchestra\WorkflowFunction\Model\WorkflowProfileInterface',
+            'OpenOrchestra\ModelInterface\Model\RoleInterface',
             'OpenOrchestra\ModelInterface\Model\StatusInterface'
         );
     }

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class SiteController
@@ -26,6 +27,7 @@ class SiteController extends AbstractAdminController
     public function formAction(Request $request, $siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $site);
 
         if ($site instanceof SiteInterface) {
             $oldAliases = $site->getAliases();
@@ -47,6 +49,8 @@ class SiteController extends AbstractAdminController
 
             return $this->renderAdminForm($form);
         }
+
+        return new Response();
     }
 
     /**
@@ -60,6 +64,8 @@ class SiteController extends AbstractAdminController
     public function newAction(Request $request)
     {
         $site = $this->get('open_orchestra_backoffice.manager.site')->initializeNewSite();
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $site);
+
         $form = $this->createForm('oo_site', $site, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
             'method' => 'POST',

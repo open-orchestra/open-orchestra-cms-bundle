@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ContentController
@@ -34,8 +35,9 @@ class ContentController extends AbstractAdminController
         $version = $request->get('version');
 
         $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
-        if (content instanceof ContentInterface) {
+        if ($content instanceof ContentInterface) {
             $form = $this->createForm('oo_content', $content, array(
                 'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
                     'contentId' => $content->getContentId(),
@@ -96,6 +98,7 @@ class ContentController extends AbstractAdminController
     public function newAction(Request $request, $contentType)
     {
         $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentType);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
 
         $form = $this->createForm('oo_content', $content, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(

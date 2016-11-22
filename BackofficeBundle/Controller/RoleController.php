@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\RoleEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class RoleController
@@ -29,6 +30,7 @@ class RoleController extends AbstractAdminController
         $roleClass = $this->container->getParameter('open_orchestra_model.document.role.class');
         /** @var RoleInterface $role */
         $role = new $roleClass();
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $role);
 
         $form = $this->createForm('oo_role', $role, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_role_new'),
@@ -59,6 +61,7 @@ class RoleController extends AbstractAdminController
     public function formAction(Request $request, $roleId)
     {
         $role = $this->get('open_orchestra_model.repository.role')->find($roleId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $role);
 
         $form = $this->createForm('oo_role', $role, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_role_form', array(

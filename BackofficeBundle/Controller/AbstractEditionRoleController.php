@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class AbstractEditionRoleController
@@ -17,11 +17,7 @@ abstract class AbstractEditionRoleController extends AbstractAdminController
      */
     protected function getAccessRole(NodeInterface $node)
     {
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+        return ContributionActionInterface::READ;
     }
 
     /**
@@ -31,10 +27,6 @@ abstract class AbstractEditionRoleController extends AbstractAdminController
      */
     protected function getEditionRole(NodeInterface $node)
     {
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+        return ContributionActionInterface::EDIT;
     }
 }

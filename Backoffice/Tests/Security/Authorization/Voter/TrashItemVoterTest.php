@@ -64,7 +64,7 @@ class TrashItemVoterTest extends AbstractVoterTest
         $trashItem = $this->createPhakeTrashItem();
 
         return array(
-            'Bad action : Add'    => array($trashItem, ContributionActionInterface::ADD,    array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad action : Add'    => array($trashItem, ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
             'Bad action : Edit'   => array($trashItem, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
             'Bad action : Delete' => array($trashItem, ContributionActionInterface::DELETE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
         );

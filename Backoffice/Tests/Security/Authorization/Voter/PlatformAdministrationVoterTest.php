@@ -83,16 +83,16 @@ class PlatformAdministrationVoterTest extends AbstractVoterTest
         $keyword = $this->createPhakeKeyword();
 
         return array(
-            'Bad role (Add) : None'                       => array($keyword, ContributionActionInterface::ADD,    array(),                                                   null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Node contributor'           => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::NODE_CONTRIBUTOR),        null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Node super editor'          => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::NODE_SUPER_EDITOR),       null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Node super supressor'       => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR),    null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Content contributor'        => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Content super editor'       => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Content super supressor'    => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR), null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Site Admin'                 => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::SITE_ADMIN),              null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Trash Restorer'             => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::TRASH_RESTORER),          null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Add) : Trash Supressor'            => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::TRASH_SUPRESSOR),         null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : None'                       => array($keyword, ContributionActionInterface::CREATE, array(),                                                   null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Node contributor'           => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),        null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Node super editor'          => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::NODE_SUPER_EDITOR),       null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Node super supressor'       => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR),    null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Content contributor'        => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Content super editor'       => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Content super supressor'    => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR), null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Site Admin'                 => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::SITE_ADMIN),              null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Trash Restorer'             => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::TRASH_RESTORER),          null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Add) : Trash Supressor'            => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::TRASH_SUPRESSOR),         null, VoterInterface::ACCESS_DENIED),
             'Bad role (Edit) : None'                      => array($keyword, ContributionActionInterface::EDIT,   array(),                                                   null, VoterInterface::ACCESS_DENIED),
             'Bad role (Edit) : Node contributor'          => array($keyword, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),        null, VoterInterface::ACCESS_DENIED),
             'Bad role (Edit) : Node super editor'         => array($keyword, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_EDITOR),       null, VoterInterface::ACCESS_DENIED),
@@ -126,11 +126,11 @@ class PlatformAdministrationVoterTest extends AbstractVoterTest
 
         return array(
             'Ok : Read keyword'      => array($keyword, ContributionActionInterface::READ,   array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add keyword'       => array($keyword, ContributionActionInterface::ADD,    array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
+            'Ok : Add keyword'       => array($keyword, ContributionActionInterface::CREATE, array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Edit keyword'      => array($keyword, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete keyword'    => array($keyword, ContributionActionInterface::DELETE, array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Read api client'   => array($client,  ContributionActionInterface::READ,   array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add api client'    => array($client,  ContributionActionInterface::ADD,    array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
+            'Ok : Add api client'    => array($client,  ContributionActionInterface::CREATE, array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Edit api client'   => array($client,  ContributionActionInterface::EDIT,   array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete api client' => array($client,  ContributionActionInterface::DELETE, array(ContributionRoleInterface::PLATFORM_ADMIN), null, VoterInterface::ACCESS_GRANTED),
         );

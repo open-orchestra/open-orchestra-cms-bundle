@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ApiClientController
@@ -23,6 +24,8 @@ class ApiClientController extends AbstractAdminController
     {
         $apiClientClass = $this->container->getParameter('open_orchestra_api.document.api_client.class');
         $apiClient = new $apiClientClass();
+
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $apiClient);
 
         $form = $this->createForm('oo_api_client', $apiClient, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_api_client_new'),
@@ -53,6 +56,8 @@ class ApiClientController extends AbstractAdminController
     public function formAction(Request $request, $apiClientId)
     {
         $apiClient = $this->get('open_orchestra_api.repository.api_client')->find($apiClientId);
+
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $apiClient);
 
         $form = $this->createForm('oo_api_client', $apiClient, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_api_client_form', array(

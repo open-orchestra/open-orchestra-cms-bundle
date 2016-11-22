@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class KeywordController
@@ -26,6 +27,7 @@ class KeywordController extends AbstractAdminController
     public function formAction(Request $request, $keywordId)
     {
         $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $keyword);
 
         $form = $this->createForm(
             'oo_keyword',
@@ -54,6 +56,7 @@ class KeywordController extends AbstractAdminController
         $keywordClass = $this->container->getParameter('open_orchestra_model.document.keyword.class');
         /** @var KeywordInterface $keyword */
         $keyword = new $keywordClass();
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $keyword);
 
         $form = $this->createForm('oo_keyword', $keyword, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),

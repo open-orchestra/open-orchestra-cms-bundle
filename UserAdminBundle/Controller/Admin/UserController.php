@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class UserController
@@ -31,6 +32,7 @@ class UserController extends AbstractAdminController
         /** @var UserInterface $user */
         $user = new $userClass();
         $user = $this->refreshLanguagesByAliases($user);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $user);
 
         $form = $this->createForm('oo_registration_user', $user, array(
             'action' => $this->generateUrl('open_orchestra_user_admin_new'),
@@ -61,6 +63,7 @@ class UserController extends AbstractAdminController
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
         $user = $this->refreshLanguagesByAliases($user);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
 
         return $this->renderForm($request, $user, false);
     }
@@ -137,6 +140,8 @@ class UserController extends AbstractAdminController
     {
         /* @var UserInterface $user */
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
+
         $url = 'open_orchestra_user_admin_user_change_password';
 
         return $this->renderChangePassword($request, $user, $url);

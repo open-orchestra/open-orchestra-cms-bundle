@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\RedirectionEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class RedirectionController
@@ -29,6 +30,7 @@ class RedirectionController extends AbstractAdminController
         $redirectionClass = $this->container->getParameter('open_orchestra_model.document.redirection.class');
         /** @var RedirectionInterface $redirection */
         $redirection = new $redirectionClass();
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $redirection);
 
         $form = $this->createForm('oo_redirection', $redirection, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
@@ -60,6 +62,7 @@ class RedirectionController extends AbstractAdminController
     public function formAction(Request $request, $redirectionId)
     {
         $redirection = $this->get('open_orchestra_model.repository.redirection')->find($redirectionId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $redirection);
 
         $form = $this->createForm('oo_redirection', $redirection, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_redirection_form', array(

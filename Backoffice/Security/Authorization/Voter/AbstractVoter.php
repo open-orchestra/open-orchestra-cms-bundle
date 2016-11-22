@@ -26,7 +26,7 @@ abstract class AbstractVoter extends Voter
     {
         return array(
             ContributionActionInterface::READ,
-            ContributionActionInterface::ADD,
+            ContributionActionInterface::CREATE,
             ContributionActionInterface::EDIT,
             ContributionActionInterface::DELETE
         );

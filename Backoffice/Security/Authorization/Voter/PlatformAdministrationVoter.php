@@ -36,5 +36,7 @@ class PlatformAdministrationVoter extends AbstractVoter
         if ($this->isSuperAdmin($token->getUser())) {
             return true;
         }
+
+        return false;
     }
 }

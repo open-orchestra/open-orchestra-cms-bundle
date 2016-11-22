@@ -114,7 +114,7 @@ class ContentVoterTest extends AbstractVoterTest
 
         return array(
             'Ok : Read'         => array($content,     ContributionActionInterface::READ,   array(),                                                   true, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add self'     => array($contentSelf, ContributionActionInterface::ADD,    array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
+            'Ok : Add self'     => array($contentSelf, ContributionActionInterface::CREATE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
             'Ok : Edit self'    => array($contentSelf, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete self'  => array($contentSelf, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
             'Ok : Edit other'   => array($content,     ContributionActionInterface::EDIT,   array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    true, VoterInterface::ACCESS_GRANTED),

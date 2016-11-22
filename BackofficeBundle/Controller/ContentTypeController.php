@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ContentTypeController
@@ -26,6 +27,8 @@ class ContentTypeController extends AbstractAdminController
     public function formAction(Request $request, $contentTypeId)
     {
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $contentType);
+
         $newContentType = $this->get('open_orchestra_backoffice.manager.content_type')->duplicate($contentType);
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_form', array('contentTypeId' => $contentTypeId));
         $form = $this->createContentTypeForm($request, array('action' => $action), $newContentType);

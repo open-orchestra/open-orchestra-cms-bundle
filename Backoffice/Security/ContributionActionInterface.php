@@ -11,7 +11,7 @@ namespace OpenOrchestra\Backoffice\Security;
 interface ContributionActionInterface
 {
     const READ          = 'ACTION_READ';
-    const ADD           = 'ACTION_ADD';
+    const CREATE        = 'ACTION_CREATE';
     const EDIT          = 'ACTION_EDIT';
     const DELETE        = 'ACTION_DELETE';
 

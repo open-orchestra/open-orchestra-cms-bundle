@@ -132,15 +132,15 @@ class DeveloperToolVoterTest extends AbstractVoterTest
 
         return array(
             'Ok : Read content type'   => array($contentType, ContributionActionInterface::READ,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add content type'    => array($contentType, ContributionActionInterface::ADD,    array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
+            'Ok : Add content type'    => array($contentType, ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Edit content type'   => array($contentType, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete content type' => array($contentType, ContributionActionInterface::DELETE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Read profile'        => array($profile,     ContributionActionInterface::READ,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add profile'         => array($profile,     ContributionActionInterface::ADD,    array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
+            'Ok : Add profile'         => array($profile,     ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Edit profile'        => array($profile,     ContributionActionInterface::EDIT,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete profile'      => array($profile,     ContributionActionInterface::DELETE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Read status'         => array($status,      ContributionActionInterface::READ,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add status'          => array($status,      ContributionActionInterface::ADD,    array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
+            'Ok : Add status'          => array($status,      ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Edit status'         => array($status,      ContributionActionInterface::EDIT,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete status'       => array($status,      ContributionActionInterface::DELETE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
         );
