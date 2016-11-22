@@ -78,15 +78,9 @@ class Form
      * @private
      */
     _parseHtml(html) {
-        let $html = $(html);
-        this.$messages = [];
-        $html.each((index, tag) => {
-            if ("FORM" === $(tag).prop("tagName")) {
-                this.$form = $(tag);
-            } else if ($(tag).hasClass('alert')) {
-                this.$messages.push($(tag));
-            }
-        });
+        let $form = $('<div>').html(html);
+        this.$form = $('form', $form);
+        this.$messages = $('.alert', $form).toArray();
         this.method = this.$form.attr('method');
         this.action = this.$form.attr('data-action');
     }

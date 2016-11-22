@@ -2,6 +2,7 @@ import NodeRouter       from './Router/Node/NodeRouter'
 import KeywordRouter    from './Router/Keyword/KeywordRouter'
 import DashboardRouter  from './Router/Dashboard/DashboardRouter'
 import SiteRouter       from './Router/Site/SiteRouter'
+import UserRouter       from './Router/User/UserRouter'
 import ErrorView        from './View/Error/ErrorView'
 import ApplicationError from '../Service/Error/ApplicationError'
 import AjaxError        from '../Service/Error/AjaxError'
@@ -122,6 +123,7 @@ class Application
         new NodeRouter();
         new KeywordRouter();
         new SiteRouter();
+        new UserRouter();
     }
 
     /**

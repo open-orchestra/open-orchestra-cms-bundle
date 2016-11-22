@@ -36,6 +36,7 @@ parameters:
     open_orchestra_backoffice.type.site_site_alias.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteSiteAliasType
     open_orchestra_backoffice.type.default_listable_checkbox.class: OpenOrchestra\Backoffice\Form\Type\Component\DefaultListableCheckboxType
     open_orchestra_backoffice.type.multi_languages.class: OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType
+    open_orchestra_backoffice.type.language_by_sites.class: OpenOrchestra\Backoffice\Form\Type\Component\LanguageBySitesType
     open_orchestra_backoffice.type.template_set.class: OpenOrchestra\Backoffice\Form\Type\Component\TemplateSetType
     open_orchestra_backoffice.type_extension.form_group.class: OpenOrchestra\Backoffice\Form\Type\Extension\FormTypeGroupExtension
 
@@ -358,6 +359,13 @@ services:
             - '@open_orchestra_backoffice.manager.template'
         tags:
             - { name: form.type, alias: oo_template_set }
+    open_orchestra_backoffice.type.language_by_sites:
+        class: '%open_orchestra_backoffice.type.language_by_sites.class%'
+        arguments:
+            - '@open_orchestra_model.repository.site'
+            - '%open_orchestra_backoffice.orchestra_choice.front_language%'
+        tags:
+            - { name: form.type, alias: oo_language_by_sites }
     open_orchestra_backoffice.type_extension.form_group:
         class: '%open_orchestra_backoffice.type_extension.form_group.class%'
         tags:
