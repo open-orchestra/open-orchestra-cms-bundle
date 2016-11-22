@@ -13,7 +13,7 @@ use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 /**
  * Class BlockController
  */
-class BlockController extends AbstractEditionRoleController
+class BlockController extends AbstractAdminController
 {
     /**
      * @param Request $request

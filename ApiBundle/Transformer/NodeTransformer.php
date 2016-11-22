@@ -20,6 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class NodeTransformer
@@ -116,7 +117,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-        $facade->editable = $this->authorizationChecker->isGranted($this->getEditionRole($node), $node);
+        $facade->editable = $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node);
 
         return $facade;
     }
@@ -206,7 +207,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             'nodeMongoId' => $node->getId()
         )));
 
-        if ($this->authorizationChecker->isGranted($this->getEditionRole($node))) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node)) {
             $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_node_new_version', array(
                 'nodeId' => $node->getNodeId(),
                 'language' => $node->getLanguage(),
@@ -339,20 +340,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         return $source;
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return string
-     */
-    protected function getEditionRole(NodeInterface $node)
-    {
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 
     /**

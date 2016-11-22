@@ -53,7 +53,7 @@ class NodeController extends BaseController
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
@@ -94,7 +94,7 @@ class NodeController extends BaseController
 
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
         if ($node) {
-            $this->denyAccessUnlessGranted($this->getAccessRole($node));
+            $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
         }
         if (!$node) {
             $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
@@ -229,7 +229,7 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
         $node = !empty($nodes) ? $nodes[0] : null;
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($nodes);
     }
@@ -269,7 +269,7 @@ class NodeController extends BaseController
     {
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         return $this->listStatuses($node);
     }
@@ -352,19 +352,5 @@ class NodeController extends BaseController
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
 
         return $node;
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return string
-     */
-    protected function getAccessRole(NodeInterface $node)
-    {
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
     }
 }
