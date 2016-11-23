@@ -1,5 +1,5 @@
 import OrchestraView    from '../OrchestraView'
-import app              from '../../Application'
+import Application      from '../../Application'
 import SiteSelectorView from './SiteSelectorView'
 import LogOutModalView  from './LogOutModalView'
 
@@ -36,7 +36,7 @@ class HeaderView extends OrchestraView
         let template = this._renderTemplate(
             'Header/headerView',
             {
-                user: app.getContext().user
+                user: Application.getContext().user
             }
         );
         this.$el.html(template);
@@ -50,7 +50,7 @@ class HeaderView extends OrchestraView
      */
     _showLogOutModal() {
         let logOutModalView = new LogOutModalView();
-        app.getRegion('modal').html(logOutModalView.render().$el);
+        Application.getRegion('modal').html(logOutModalView.render().$el);
         logOutModalView.show();
 
         return false;

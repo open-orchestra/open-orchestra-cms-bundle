@@ -39,10 +39,7 @@ class LanguageBySitesType extends AbstractType
     {
         foreach ($options['sites_id'] as $siteId) {
             $site = $this->siteRepository->find($siteId);
-            $aliasLanguages = array();
-            foreach ($site->getAliases() as $alias) {
-                $aliasLanguages[] = $alias->getLanguage();
-            }
+            $aliasLanguages = $site->getLanguages();
             $builder
                 ->add($siteId, 'choice', array(
                     'choices' => $this->frontLanguages,

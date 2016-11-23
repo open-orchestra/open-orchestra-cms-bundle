@@ -1,7 +1,7 @@
 import OrchestraRouter from '../OrchestraRouter'
-import app             from '../../Application'
-import UserFormView     from '../../View/User/UserFormView'
-import FormBuilder      from '../../../Service/Form/Model/FormBuilder'
+import Application     from '../../Application'
+import UserFormView    from '../../View/User/UserFormView'
+import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 
 /**
  * @class UserRouter
@@ -13,18 +13,19 @@ class UserRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'preference': '_showPreference'
+            'user/preference': 'showUserPreference'
         };
     }
 
     /**
-     * Show Preference
+     * Show User Preference
      */
-    _showPreference() {
-        let url = Routing.generate('open_orchestra_user_admin_user_self_form', {userId : app.getContext().user.id});
+    showUserPreference() {
+        this._diplayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_user_admin_user_self_form', {userId : Application.getContext().user.id});
         FormBuilder.createFormFromUrl(url, (form) => {
             let userFormView = new UserFormView({form : form});
-            app.getRegion('content').html(userFormView.render().$el);
+            Application.getRegion('content').html(userFormView.render().$el);
         });
 
         return false;

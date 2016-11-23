@@ -82,10 +82,7 @@ class UserController extends AbstractAdminController
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $user = $this->refreshLanguagesByAliases($user);
+        $user = $this->refreshLanguagesByAliases($this->getUser());
 
         return $this->renderForm($request, $user, true);
     }
