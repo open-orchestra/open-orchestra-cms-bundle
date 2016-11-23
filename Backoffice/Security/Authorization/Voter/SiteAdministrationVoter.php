@@ -102,6 +102,6 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
      */
     protected function canActOnSite($siteId, UserInterface $user)
     {
-        return $this->isSubjectInAllowedPerimeter($siteId, $user, SiteInterface::ENTITY_TYPE);
+        return $this->isSubjectInPerimeter($siteId, $user, SiteInterface::ENTITY_TYPE);
     }
 }

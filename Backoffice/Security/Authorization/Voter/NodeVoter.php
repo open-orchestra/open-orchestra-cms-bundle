@@ -34,7 +34,7 @@ class NodeVoter extends AbstractEditorialVoter
     protected function voteForReadAction($node, $user)
     {
         return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
-            && $this->isSubjectInAllowedPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
     }
 
     /**
@@ -50,7 +50,7 @@ class NodeVoter extends AbstractEditorialVoter
     protected function voteForOwnedSubject($action, $node, UserInterface $user)
     {
         return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
-            && $this->isSubjectInAllowedPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
     }
 
     /**
@@ -77,6 +77,6 @@ class NodeVoter extends AbstractEditorialVoter
         }
 
         return $user->hasRole($requiredRole)
-            && $this->isSubjectInAllowedPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);
     }
 }

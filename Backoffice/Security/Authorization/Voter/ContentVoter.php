@@ -33,7 +33,7 @@ class ContentVoter extends AbstractEditorialVoter
      */
     protected function voteForReadAction($content, $user)
     {
-        return $this->isSubjectInAllowedPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+        return $this->isSubjectInPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 
     /**
@@ -49,7 +49,7 @@ class ContentVoter extends AbstractEditorialVoter
     protected function voteForOwnedSubject($action, $content, UserInterface $user)
     {
         return $user->hasRole(ContributionRoleInterface::CONTENT_CONTRIBUTOR)
-            && $this->isSubjectInAllowedPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 
     /**
@@ -76,6 +76,6 @@ class ContentVoter extends AbstractEditorialVoter
         }
 
         return $user->hasRole($requiredRole)
-            && $this->isSubjectInAllowedPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 }

@@ -8,26 +8,32 @@ parameters:
 
 services:
     open_orchestra_backoffice.voter.node:
-       class: '%open_orchestra_backoffice.voter.node.class%'
-       tags:
+        class: '%open_orchestra_backoffice.voter.node.class%'
+        arguments:
+            - '@open_orchestra_group.perimeter_manager'
+        tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.content:
-       class: '%open_orchestra_backoffice.voter.content.class%'
-       tags:
+        class: '%open_orchestra_backoffice.voter.content.class%'
+        arguments:
+            - '@open_orchestra_group.perimeter_manager'
+        tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.trash_item:
-       class: '%open_orchestra_backoffice.voter.trash_item.class%'
-       tags:
+        class: '%open_orchestra_backoffice.voter.trash_item.class%'
+        tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.site_administration:
-       class: '%open_orchestra_backoffice.voter.site_administration.class%'
-       tags:
+        class: '%open_orchestra_backoffice.voter.site_administration.class%'
+        arguments:
+            - '@open_orchestra_group.perimeter_manager'
+        tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.platform_administration:
-       class: '%open_orchestra_backoffice.voter.platform_administration.class%'
-       tags:
+        class: '%open_orchestra_backoffice.voter.platform_administration.class%'
+        tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.developer_tool:
-       class: '%open_orchestra_backoffice.voter.developer_tool.class%'
-       tags:
+        class: '%open_orchestra_backoffice.voter.developer_tool.class%'
+        tags:
             - { name: security.voter }

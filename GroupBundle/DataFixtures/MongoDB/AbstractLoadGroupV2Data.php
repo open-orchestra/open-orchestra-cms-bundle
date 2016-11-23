@@ -13,16 +13,17 @@ use OpenOrchestra\WorkflowFunctionModelBundle\Document\WorkflowProfileCollection
 abstract class AbstractLoadGroupV2Data extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * @param array<string> $paths
+     * @param string        $type
+     * @param array<string> $items
      *
      * @return Perimeter
      */
-    protected function createPerimeter(array $paths)
+    protected function createPerimeter($type, array $items)
     {
-        $perimeter = new Perimeter();
+        $perimeter = new Perimeter($type);
 
-        foreach ($paths as $path) {
-            $perimeter->addPath($path);
+        foreach ($items as $item) {
+            $perimeter->addItem($item);
         }
 
         return $perimeter;

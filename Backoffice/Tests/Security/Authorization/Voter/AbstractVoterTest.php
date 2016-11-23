@@ -12,6 +12,7 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
 {
     protected $voter;
 
+    protected $perimeterManager;
     protected $token;
     protected $user;
     protected $perimeter;
@@ -23,6 +24,8 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->perimeter = Phake::mock('OpenOrchestra\Backoffice\Model\PerimeterInterface');
+
+        $this->perimeterManager = Phake::mock('OpenOrchestra\Backoffice\Perimeter\PerimeterManager');
 
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group)->getPerimeter(Phake::anyParameters())->thenReturn($this->perimeter);
@@ -50,7 +53,7 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
             Phake::when($this->user)->hasRole($role)->thenReturn(true);
         }
 
-        Phake::when($this->perimeter)->contains(Phake::anyParameters())->thenReturn($inPerimeter);
+        Phake::when($this->perimeterManager)->isInPerimeter(Phake::anyParameters())->thenReturn($inPerimeter);
 
         $vote = $this->voter->vote($this->token, $object, array($attribute));
 

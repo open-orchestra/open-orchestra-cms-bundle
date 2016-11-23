@@ -1,0 +1,21 @@
+parameters:
+    open_orchestra_group.perimeter_manager.class:      OpenOrchestra\Backoffice\Perimeter\PerimeterManager
+    open_orchestra_group.perimeter.node.class:         OpenOrchestra\Backoffice\Perimeter\Strategy\NodePerimeterStrategy
+    open_orchestra_group.perimeter.content_type.class: OpenOrchestra\Backoffice\Perimeter\Strategy\ContentTypePerimeterStrategy
+    open_orchestra_group.perimeter.site.class:         OpenOrchestra\Backoffice\Perimeter\Strategy\SitePerimeterStrategy
+
+services:
+    open_orchestra_group.perimeter_manager:
+        class: '%open_orchestra_group.perimeter_manager.class%'
+    open_orchestra_group.perimeter.node:
+        class: '%open_orchestra_group.perimeter.node.class%'
+        tags:
+            - { name: open_orchestra_group.perimeter.strategy }
+    open_orchestra_group.perimeter.content_type:
+        class: '%open_orchestra_group.perimeter.content_type.class%'
+        tags:
+            - { name: open_orchestra_group.perimeter.strategy }
+    open_orchestra_group.perimeter.site:
+        class: '%open_orchestra_group.perimeter.site.class%'
+        tags:
+            - { name: open_orchestra_group.perimeter.strategy }

@@ -19,7 +19,7 @@ class SiteAdministrationVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new SiteAdministrationVoter();
+        $this->voter = new SiteAdministrationVoter($this->perimeterManager);
     }
 
     /**

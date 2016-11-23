@@ -8,16 +8,22 @@ namespace OpenOrchestra\Backoffice\Model;
 interface PerimeterInterface
 {
     /**
-     * @param string $path
+     * @param string $type
      */
-    public function addPath($path);
+    public function setType($type);
 
     /**
-     * Check if a path is contained in the perimeter
-     *
-     * @param string $path
-     *
-     * @return boolean
+     * @return string
      */
-    public function contains($path);
+    public function getType();
+
+    /**
+     * @param string $item
+     */
+    public function addItem($item);
+
+    /**
+     * @return array
+     */
+    public function getItems();
 }
