@@ -1,12 +1,17 @@
 <div class="pull-right languages">
     <ul>
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
-            <li <% if (siteLanguage === language) { %> class="active" <% }; %> >
-                <a href="#<%= Backbone.history.generateUrl('showNodeTree', {language: siteLanguage}) %>">
-                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" />
-                    <%= siteLanguage.toUpperCase() %>
-                </a>
-            </li>
+            <% if (siteLanguage === language) { %>
+                <li class="active">
+                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                </li>
+            <% } else { %>
+                <li>
+                    <a href="#<%= Backbone.history.generateUrl('showNodeTree', {language: siteLanguage}) %>">
+                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    </a>
+                </li>
+            <% }; %>
         <% }); %>
     </ul>
 </div>

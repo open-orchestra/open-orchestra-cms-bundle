@@ -2,7 +2,7 @@ import OrchestraCollection from '../OrchestraCollection'
 import Node                from '../../Model/Node/Node'
 
 /**
- * @class Keywords
+ * @class NodesWidgets
  */
 class NodesWidget extends OrchestraCollection
 {

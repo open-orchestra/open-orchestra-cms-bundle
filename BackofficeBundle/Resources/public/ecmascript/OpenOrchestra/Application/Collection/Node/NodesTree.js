@@ -2,9 +2,9 @@ import OrchestraCollection from '../OrchestraCollection'
 import NodeTree            from '../../Model/Node/NodeTree'
 
 /**
- * @class Keywords
+ * @class NodesTree
  */
-class NodesWidget extends OrchestraCollection
+class NodesTree extends OrchestraCollection
 {
     /**
      * Pre initialize
@@ -24,4 +24,4 @@ class NodesWidget extends OrchestraCollection
     }
 }
 
-export default NodesWidget
+export default NodesTree
