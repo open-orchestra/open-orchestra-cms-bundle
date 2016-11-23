@@ -20,22 +20,6 @@ class LoadUserData extends AbstractLoadUserData implements OrchestraFunctionalFi
         $demoUser->addGroup($this->getReference('group3'));
         $manager->persist($demoUser);
 
-        $user1 = $this->generate('user1', 'group2');
-        $this->addReference('user-user1', $user1);
-        $manager->persist($user1);
-
-        $userContentType = $this->generate('userContentType', 'groupContentType');
-        $this->addReference('user-userContentType', $userContentType);
-        $manager->persist($userContentType);
-
-        $userLog = $this->generate('userLog', 'groupLog');
-        $this->addReference('user-userLog', $userLog);
-        $manager->persist($userLog);
-
-        $userFolderCreate = $this->generate('userFolderCreate', 'group-folders-create');
-        $this->addReference('user-folder-create', $userFolderCreate);
-        $manager->persist($userFolderCreate);
-
         $userNoAccess = $this->generate('userNoAccess');
         $manager->persist($userNoAccess);
 
