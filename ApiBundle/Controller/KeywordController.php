@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class KeywordController
@@ -55,8 +56,13 @@ class KeywordController extends BaseController
     public function showAction($keywordId)
     {
         $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
+        if ($keyword instanceof KeywordInterface) {
+            $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $keyword);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('keyword')->transform($keyword);
+            return $this->get('open_orchestra_api.transformer_manager')->get('keyword')->transform($keyword);
+        }
+
+        return array();
     }
 
     /**
@@ -64,6 +70,7 @@ class KeywordController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_keyword_list")
      * @Config\Method({"GET"})
+-    * @Config\Security("is_granted('ACCESS_KEYWORD')")
      *
      * @return FacadeInterface
      */
@@ -71,7 +78,8 @@ class KeywordController extends BaseController
     {
         $mapping = $this
             ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_model.document.keyword.class'));
+            ->extractMapping($this->getParameter('open_orchestra_model.document.keyword.class'));
+
         $repository = $this->get('open_orchestra_model.repository.keyword');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection');
 
@@ -92,6 +100,7 @@ class KeywordController extends BaseController
         $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
 
         if ($keyword instanceof KeywordInterface) {
+            $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $keyword);
             if ($keyword->isUsed()) {
                 throw new KeywordNotDeletableException();
             }
