@@ -31,13 +31,13 @@ class StatusController extends BaseController
      *
      * @return FacadeInterface
      *
-     * @Config\Route("", name="open_orchestra_api_status_list")
+     * @Config\Route("", name="open_orchestra_api_status_list_table")
      * @Config\Method({"GET"})
      * @Config\Security("is_granted('ROLE_ACCESS_STATUS')")
      *
      * @Api\Groups({CMSGroupContext::STATUS_LINKS})
      */
-    public function listAction(Request $request)
+    public function listTableAction(Request $request)
     {
         $mapping = $this
             ->get('open_orchestra.annotation_search_reader')
@@ -46,6 +46,21 @@ class StatusController extends BaseController
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
 
         return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+    }
+
+    /**
+     * @return FacadeInterface
+     *
+     * @Config\Route("/list", name="open_orchestra_api_status_list")
+     * @Config\Method({"GET"})
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     */
+    public function listAction()
+    {
+        $status = $this->get('open_orchestra_model.repository.status')->findNotOutOfWorkflow();
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($status);
     }
 
     /**

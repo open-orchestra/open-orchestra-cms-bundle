@@ -3,9 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use Phake;
-use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
 use OpenOrchestra\ApiBundle\Transformer\AreaTransformer;
 

@@ -45,7 +45,7 @@
             <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.navigation.contribution.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(navConfig.contribution, function(entity, key) { %>
-                    <%= includeTemplate(entity.template) %>
+                    <%= renderTemplate(entity.template) %>
                 <% }); %>
             </ul>
         </div>
@@ -57,7 +57,7 @@
             <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.navigation.user.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(navConfig.user, function(entity, key) { %>
-                    <%= includeTemplate(entity.template) %>
+                    <%= renderTemplate(entity.template) %>
                 <% }); %>
             </ul>
         </div>
@@ -69,7 +69,7 @@
         <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.navigation.configuration.title') %></a></div>
         <ul class="nav level2">
             <% _.each(navConfig.configuration, function(entity, key) { %>
-                <%= includeTemplate(entity.template) %>
+                <%= renderTemplate(entity.template) %>
             <% }); %>
         </ul>
     </div>
@@ -81,7 +81,7 @@
         <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.navigation.platform.title') %></a></div>
         <ul class="nav level2">
             <% _.each(navConfig.platform, function(entity, key) { %>
-                <%= includeTemplate(entity.template) %>
+                <%= renderTemplate(entity.template) %>
             <% }); %>
         </ul>
     </div>
@@ -93,7 +93,7 @@
         <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.navigation.developer.title') %></a></div>
         <ul class="nav level2">
             <% _.each(navConfig.developer, function(entity, key) { %>
-                <%= includeTemplate(entity.template) %>
+                <%= renderTemplate(entity.template) %>
             <% }); %>
         </ul>
     </div>

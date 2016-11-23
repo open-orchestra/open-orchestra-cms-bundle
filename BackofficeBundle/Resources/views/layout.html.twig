@@ -49,11 +49,15 @@
             };
             var context = {
                 siteId: '{{ context.currentSiteId }}',
+                siteLanguages: {{ context.currentSiteLanguages|json_encode()|raw }},
                 language: '{{ context.currentLocale }}',
                 user: {
                     username : '{{ app.user.username }}',
                     firstName : '{{ app.user.firstName }}',
-                    lastName : '{{ app.user.lastName }}'
+                    lastName : '{{ app.user.lastName }}',
+                    language: {
+                        contribution: 'en'
+                    }
                 }
             };
         </script>

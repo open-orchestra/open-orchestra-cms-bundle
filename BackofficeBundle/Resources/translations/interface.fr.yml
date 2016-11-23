@@ -40,3 +40,11 @@ open_orchestra_backoffice:
         sites:
             site_id: Id
             name: Nom
+    node:
+        title: Pages
+        tree:
+            open: Déployer l'arborescence
+            close: Fermer l'arborescence
+        statuses_legend:
+            title: Légende
+            out_of_bounds: Hors périmètre

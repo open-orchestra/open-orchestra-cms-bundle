@@ -40,3 +40,11 @@ open_orchestra_backoffice:
         sites:
             site_id: Site id
             name: Name
+    node:
+        title: Pages
+        tree:
+            open: Open the tree
+            close: Close the tree
+            statuses_legend:
+                title: Legend
+                out_of_bounds: Out of bounds
