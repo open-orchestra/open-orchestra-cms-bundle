@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserType
@@ -31,6 +32,11 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $languages = array();
+        if (array_key_exists('data', $options) && ($site = $options['data']) instanceof UserInterface) {
+            $languages = array_keys($site->getLanguageBySites());
+        }
+
         $builder
             ->add('firstName', 'text', array(
                 'label' => 'open_orchestra_user_admin.form.user.firstName',
@@ -90,7 +96,7 @@ class UserType extends AbstractType
             ))
             ->add('languageBySites', 'oo_language_by_sites', array(
                 'label' => false,
-                'sites_id' => array_keys($options['data']->getLanguageBySites()),
+                'sites_id' => $languages,
                 'group_id' => 'preference',
                 'sub_group_id' => 'language',
             ));
