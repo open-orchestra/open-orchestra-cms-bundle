@@ -11,16 +11,11 @@ class ScrollTable
     activate($elements) {
         $elements.each(function() {
             let $table = $(this);
-            let $fixedColumn = $table.clone().insertBefore($table).css({
-                position: 'absolute',
-                display: 'inline-block',
-                width: 'auto',
-                borderRight: '1px dotted #000000',
-                backgroudColor: '#000000',
-                zIndex: 2,
-            });
-            $table.css({zIndex: 1}).wrap($('<div>').css({overflow: 'auto'}));
+            let $fixedColumn = $table.clone().addClass('clone');
             $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
+            $fixedColumn.insertBefore($table)
+            $table.wrap($('<div>').addClass('wraper'));
+            $fixedColumn;
             $fixedColumn.find('tr').each(function (i, elem) {
                 $(this).height($table.find('tr:eq(' + i + ')').height());
             });

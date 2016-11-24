@@ -85,36 +85,36 @@
 
 {% block oo_language_by_sites_widget %}
     {% spaceless %}
-        <table class="table table-striped scrollable">
-        {% set child = form|first %}
-		<thead>
-            <tr>
-                <th>&nbsp;</th>
-	        {% for choice in child %}
-                <th>
-                    {{ choice.vars.label|trans }}
-                </th>
-		    {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-        {% for child in form %}
-            <tr>
-            	<td>
-            		{{ child.vars.label|trans }}
-            	</td>
-	        {% for choice in child %}
-                <td>
-					<div class="radio radio-inline">
-                        <input type="radio" id="{{ choice.vars.full_name }}_{{ choice.vars.value }}" name="{{ choice.vars.full_name }}" value="{{ choice.vars.value }}"{% if choice.vars.checked %} checked="checked"{% endif %}{% if choice.vars.attr.disabled is defined and choice.vars.attr.disabled == 'disabled' %} disabled="disabled"{% endif %} />
+        <div class="contribution">
+            <table class="table table-striped table-language scrollable">
+            {% set child = form|first %}
+    		<thead>
+                <tr>
+                    <th>&nbsp;</th>
+    	        {% for choice in child %}
+                    <th>
+                        {{ choice.vars.label|trans }}
+                    </th>
+    		    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for child in form %}
+                <tr>
+                	<td>
+                		{{ child.vars.label|trans }}
+                	</td>
+    	        {% for choice in child %}
+                    <td>
+                        <input type="radio" id="{{ choice.vars.full_name }}_{{ choice.vars.value }}" name="{{ choice.vars.full_name }}" value="{{ choice.vars.value }}"{% if choice.vars.checked %} checked=""{% endif %}{% if choice.vars.attr.disabled is defined and choice.vars.attr.disabled == 'disabled' %} disabled="disabled"{% endif %} />
                         <label for="{{ choice.vars.full_name }}_{{ choice.vars.value }}"></label>
-					</div
-                </td>
-		    {% endfor %}
-            </tr>
-	    {% endfor %}
-	    </tbody>
-        </table>
+                    </td>
+    		    {% endfor %}
+                </tr>
+    	    {% endfor %}
+    	    </tbody>
+            </table>
+        </div>
     {% endspaceless %}
 {% endblock oo_language_by_sites_widget %}
 
