@@ -9,7 +9,7 @@ import AjaxError          from '../Service/Error/AjaxError'
 import HeaderView         from './View/Header/HeaderView'
 import SitesAvailable     from './Collection/Site/SitesAvailable'
 import NavigationView     from './View/Navigation/NavigationView'
-import FormBehaviorLoader from '../Service/Form/Behavior/Loader'
+import FormBehaviorManager from '../Service/Form/Behavior/Manager'
 import ScrollTable        from '../Service/Form/Behavior/ScrollTable'
 
 /**
@@ -34,7 +34,7 @@ class Application
         this._initTranslator();
         this._initRouter();
         this._initLayoutView();
-        this._initFormBehaviorLoader();
+        this._initFormBehaviorManager();
 
         Backbone.Events.trigger('application:before:start');
         Backbone.history.start();
@@ -172,8 +172,8 @@ class Application
      * Initialize form behavior library
      * @private
      */
-    _initFormBehaviorLoader() {
-        FormBehaviorLoader.add(ScrollTable);
+    _initFormBehaviorManager() {
+        FormBehaviorManager.add(ScrollTable);
     }
 
 }

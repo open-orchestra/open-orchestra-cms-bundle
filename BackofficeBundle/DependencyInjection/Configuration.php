@@ -28,18 +28,6 @@ class Configuration implements ConfigurationInterface
                     'en'=>'open_orchestra_backoffice.language.en',
                     'fr'=>'open_orchestra_backoffice.language.fr',
                     'de' => 'open_orchestra_backoffice.language.de',
-                    'de1' => 'open_orchestra_backoffice.language.de',
-                    'de2' => 'open_orchestra_backoffice.language.de',
-                    'de3' => 'open_orchestra_backoffice.language.de',
-                    'de4' => 'open_orchestra_backoffice.language.de',
-                    'de5' => 'open_orchestra_backoffice.language.de',
-                    'de6' => 'open_orchestra_backoffice.language.de',
-                    'de7' => 'open_orchestra_backoffice.language.de',
-                    'de8' => 'open_orchestra_backoffice.language.de',
-                    'de9' => 'open_orchestra_backoffice.language.de',
-                    'de10' => 'open_orchestra_backoffice.language.de',
-                    'de11' => 'open_orchestra_backoffice.language.de',
-                    'de12' => 'open_orchestra_backoffice.language.de',
                 ))
                 ->prototype('scalar')->end()
             ->end()

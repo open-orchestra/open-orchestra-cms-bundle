@@ -33,8 +33,10 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $languages = array();
-        if (array_key_exists('data', $options) && ($site = $options['data']) instanceof UserInterface) {
-            $languages = array_keys($site->getLanguageBySites());
+        $disabled = false;
+        if (array_key_exists('data', $options) && ($user = $options['data']) instanceof UserInterface) {
+            $languages = array_keys($user->getLanguageBySites());
+            $disabled = !$user->isEditAllowed();
         }
 
         $builder
@@ -42,18 +44,19 @@ class UserType extends AbstractType
                 'label' => 'open_orchestra_user_admin.form.user.firstName',
                 'group_id' => 'information',
                 'sub_group_id' => 'contact_information',
-                'disabled' => $options['self_editing'],
+                'disabled' => $disabled,
             ))
             ->add('lastName', 'text', array(
                 'label' => 'open_orchestra_user_admin.form.user.lastName',
                 'group_id' => 'information',
                 'sub_group_id' => 'contact_information',
-                'disabled' => $options['self_editing'],
+                'disabled' => $disabled,
             ))
             ->add('email', 'email', array(
                 'label' => 'open_orchestra_user_admin.form.user.email',
                 'group_id' => 'information',
                 'sub_group_id' => 'contact_information',
+                'disabled' => $disabled,
             ));
         if ($options['self_editing']) {
             $builder

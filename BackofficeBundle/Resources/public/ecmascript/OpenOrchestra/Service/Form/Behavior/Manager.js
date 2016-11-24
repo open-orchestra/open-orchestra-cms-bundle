@@ -1,7 +1,7 @@
 /**
- * @class Loader
+ * @class Manager
  */
-class Loader
+class Manager
 {
     /**
      * Constructor
@@ -42,5 +42,5 @@ class Loader
     }
 }
 
-// unique instance of Loader
-export default (new Loader);
+// unique instance of Manager
+export default (new Manager);
