@@ -1,0 +1,4 @@
+parameters:
+    open_orchestra_user_admin.role_hierarchy:
+        ROLE_PLATFORM_ADMIN: [ROLE_USER, ROLE_KEYWORD]
+        ROLE_DEVELOPER:      [ROLE_PLATFORM_ADMIN, ROLE_ALLOWED_TO_SWITCH]

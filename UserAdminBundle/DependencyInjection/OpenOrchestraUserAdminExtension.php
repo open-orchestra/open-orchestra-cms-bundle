@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -32,5 +33,22 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader->load('oauth2.yml');
         $loader->load('subscriber.yml');
         $loader->load('role_parameter.yml');
+
+        $this->addOrchestraHierarchy($container, $loader);
+    }
+
+    /**
+     * Add Open Orchestra role hierarchy
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function addOrchestraHierarchy(ContainerBuilder $container, LoaderInterface $loader)
+    {
+        $loader->load('security.yml');
+
+        $orchestraHierarchy = $container->getParameter('open_orchestra_user_admin.role_hierarchy');
+        $roleHierarchy = $container->getParameter('security.role_hierarchy.roles');
+
+        $container->setParameter('security.role_hierarchy.roles', array_merge($orchestraHierarchy, $roleHierarchy));
     }
 }
