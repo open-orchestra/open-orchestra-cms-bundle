@@ -10,6 +10,7 @@ use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -300,6 +301,43 @@ class NodeController extends BaseController
         $this->get('object_manager')->flush();
 
         return array();
+    }
+
+    /**
+     * @param Request $request
+     * @param String  $siteId
+     * @param String  $language
+     *
+     * @Config\Route("/list/{siteId}/{language}", name="open_orchestra_api_node_list")
+     * @Config\Method({"GET"})
+     *
+     *  @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
+     * })
+     *
+     * @return FacadeInterface
+     */
+    public function listAction(Request $request, $siteId, $language)
+    {
+        $mapping = array(
+            'updated_at' => 'updatedAt',
+            'name'      => 'name',
+            'created_by'=> 'createdBy',
+            'status.label' => 'status.labels',
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+
+        $repository = $this->get('open_orchestra_model.repository.node');
+        $collection = $repository->findForPaginate($configuration, $siteId, $language);
+        $recordsTotal = $repository->count($siteId, $language);
+        $recordsFiltered = $repository->countWithFilter($configuration, $siteId, $language);
+
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('node_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
     }
 
     /**

@@ -28,18 +28,18 @@ class ContentsWidget extends OrchestraCollection
     /**
      * @inheritdoc
      */
-    _getSyncUrl(options) {
-        let readUrl = Routing.generate('open_orchestra_api_content_list_author_and_site');
-        if (
-            options.hasOwnProperty('parameter') &&
-            options.parameter.hasOwnProperty('published') &&
-            false === options.parameter.published
-        ) {
-            readUrl = Routing.generate('open_orchestra_api_content_list_author_and_site_not_published');
-        }
+    _getSyncUrl(method, options) {
+        switch (method) {
+            case "read":
+                if (
+                    options.hasOwnProperty('parameter') &&
+                    options.parameter.hasOwnProperty('published') &&
+                    false === options.parameter.published
+                ) {
+                    return Routing.generate('open_orchestra_api_content_list_author_and_site_not_published');
+                }
 
-        return {
-            'read': readUrl
+                return Routing.generate('open_orchestra_api_content_list_author_and_site');
         }
     }
 }

@@ -90,11 +90,12 @@ class AbstractDataTableView extends OrchestraView
             stateSave: false,
             pagingType: 'numbers',
             globalSearch: false,
-            tableClassName: 'table table-striped table-bordered table-hover smart-form'
+            tableClassName: 'table table-striped',
+            infoCallback: this._infoCallback
         }
     }
 
-    /**
+    /*
      * Add filter to the datatable and reload data
      * Work only with server side, use the default method search for other case
      * {
@@ -148,7 +149,7 @@ class AbstractDataTableView extends OrchestraView
         let columnDefs = [];
         let columnsParameters = this.getColumnsDefinition();
         for (let element of columnsParameters) {
-            columns.push({'data' : 'attributes.' + element.name, 'defaultContent': ''});
+            columns.push({'data' : 'attributes.' + element.name.replace('\.', '.attributes.'), 'defaultContent': ''});
             columnDefs.push(_.extend(element, {targets: columnDefs.length}));
         }
 
@@ -161,10 +162,14 @@ class AbstractDataTableView extends OrchestraView
      * @private
      */
     _getDomSettings() {
-        let dom = "<'row dt-toolbar'";
-        dom += "<'col-sm-11 col-xs-6 hidden-xs'B><'col-xs-12 col-sm-1 hidden-xs'l>>";
-        dom += "tr";
-        dom += "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>";
+        $.fn.dataTableExt.classes.sPaging = 'content-pager ';
+        $.fn.dataTableExt.classes.sLength = 'styled-select pull-right list-length';
+        $.fn.dataTableExt.classes.sLengthSelect = 'form-control';
+        $.fn.dataTable.Buttons.defaults.dom.container.className = 'pull-right';
+
+        let dom = "<'header-results clearfix' <'nb-results pull-left' i> l B p>";
+        dom += "<'table-responsive'tr>";
+        dom += "p";
 
         return dom;
     }
@@ -200,7 +205,11 @@ class AbstractDataTableView extends OrchestraView
             }
         }
 
-        return [{ extend: 'colvis', columns: columns}];
+        if (columns.length > 0) {
+            return [{ extend: 'colvis', columns: columns}];
+        }
+
+        return [];
     }
 
     /**
@@ -219,7 +228,6 @@ class AbstractDataTableView extends OrchestraView
             serverSideSettings.serverParams = $.proxy((data) => {
                 let dataFilter = this.$table.data('filter');
                 if ('undefined' !== typeof dataFilter) {
-                    this.$table.removeData('filter');
                     data.search = this._transformerDataFilter(dataFilter);
                 }
                 data.order = this._transformDataOrder(data);
@@ -239,11 +247,9 @@ class AbstractDataTableView extends OrchestraView
      * @private
      */
     _transformerDataFilter(data) {
-        let filter = {
-            columns : {}
-        };
+        let filter = {};
         for (let name of Object.keys(data)) {
-            filter.columns[name] = data[name];
+            filter[name] = data[name];
         }
 
         return filter;
@@ -266,17 +272,30 @@ class AbstractDataTableView extends OrchestraView
     }
 
     /**
+     * Table summary information display callback
+     *
+     * @param {Object}  settings
+     * @param {Integer} start
+     * @param {Integer} end
+     * @param {Integer} max
+     * @param {Integer} total
+     * @param {String}  pre
+     * @private
+     */
+    _infoCallback(settings, start, end, max, total, pre) {
+        let totalHtml = '<span>'+total+'</span>';
+
+        return Translator.trans('open_orchestra_datatable.info', {total: totalHtml});
+    }
+
+    /**
      * @returns {Object}
      * @private
      */
     _getLanguage() {
         return {
             "emptyTable":     Translator.trans('open_orchestra_datatable.empty_table'),
-            "info":           Translator.trans('open_orchestra_datatable.info'),
-            "infoEmpty":      Translator.trans('open_orchestra_datatable.info_empty'),
-            "infoFiltered":   Translator.trans('open_orchestra_datatable.info_filtered'),
             "lengthMenu":     Translator.trans('open_orchestra_datatable.length_menu'),
-            "infoThousands":  Translator.trans('open_orchestra_datatable.info_thousands'),
             "loadingRecords": Translator.trans('open_orchestra_datatable.loading_records'),
             "processing":     Translator.trans('open_orchestra_datatable.processing'),
             "search":         Translator.trans('open_orchestra_datatable.search'),

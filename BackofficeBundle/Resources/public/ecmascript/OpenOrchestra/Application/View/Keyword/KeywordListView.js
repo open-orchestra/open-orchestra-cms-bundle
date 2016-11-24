@@ -32,13 +32,11 @@ class KeywordListView extends AbstractDataTableView
                 title: Translator.trans('open_orchestra_backoffice.table.keywords.label'),
                 orderable: true,
                 orderDirection: 'desc',
-                activateColvis: true,
                 visibile: true
             },
             {
                 name: 'links',
                 orderable: false,
-                activateColvis: false,
                 createdCell: this._addLinkCell
             }
         ];
