@@ -101,9 +101,9 @@
             <tbody>
             {% for child in form %}
                 <tr>
-                	<td>
+                	<th>
                 		{{ child.vars.label|trans }}
-                	</td>
+                	</th>
     	        {% for choice in child %}
                     <td>
                         <input type="radio" id="{{ choice.vars.full_name }}_{{ choice.vars.value }}" name="{{ choice.vars.full_name }}" value="{{ choice.vars.value }}"{% if choice.vars.checked %} checked=""{% endif %}{% if choice.vars.attr.disabled is defined and choice.vars.attr.disabled == 'disabled' %} disabled="disabled"{% endif %} />
