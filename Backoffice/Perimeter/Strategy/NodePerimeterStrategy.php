@@ -27,9 +27,9 @@ class NodePerimeterStrategy implements PerimeterStrategyInterface
      */
     public function isInPerimeter($item, PerimeterInterface $perimeter)
     {
-        if (is_string($item)) {
+        if ($perimeter->getType() == $this->getType() && is_string($item)) {
             foreach ($perimeter->getItems() as $path) {
-                if (0 === strpos($path, $item)) {
+                if (0 === strpos($item, $path)) {
                     return true;
                 }
             }
