@@ -3,10 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class KeywordTransformer
@@ -31,26 +31,10 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->id = $keyword->getId();
         $facade->label = $keyword->getLabel();
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_keyword_show',
-            array('keywordId' => $keyword->getId())
-        ));
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_KEYWORD)
-            && !$keyword->isUsed()
-        ) {
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_keyword_delete',
-                array('keywordId' => $keyword->getId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_KEYWORD)) {
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_backoffice_keyword_form',
-                array('keywordId' => $keyword->getId())
-            ));
-        }
+        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $keyword));
+        $can_delete =
+            $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $keyword) && !$keyword->isUsed();
+        $facade->addRight('can_delete', $can_delete);
 
         return $facade;
     }
