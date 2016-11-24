@@ -10,7 +10,7 @@ use OpenOrchestra\WorkflowFunctionModelBundle\Document\WorkflowProfileCollection
 /**
  * Class AbstractLoadGroupV2Data
  */
-abstract class AbstractLoadGroupV2Data extends AbstractFixture implements OrderedFixtureInterface
+abstract class AbstractLoadGroupData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * @param string        $type

@@ -21,7 +21,7 @@ abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
      *
      * @return bool
      */
-    abstract protected function voteForReadAction($subject, $user);
+    abstract protected function voteForReadAction($subject, UserInterface $user);
 
     /**
      * Vote for $action on $subject owned by $user

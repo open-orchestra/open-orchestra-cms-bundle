@@ -31,7 +31,7 @@ class NodeVoter extends AbstractEditorialVoter
      *
      * @return bool
      */
-    protected function voteForReadAction($node, $user)
+    protected function voteForReadAction($node, UserInterface $user)
     {
         return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
             && $this->isSubjectInPerimeter($node->getPath(), $user, NodeInterface::ENTITY_TYPE);

@@ -9,9 +9,9 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
- * Class LoadGroupV2Data
+ * Class LoadGroupData
  */
-class LoadGroupV2Data extends AbstractLoadGroupV2Data implements OrchestraFunctionalFixturesInterface
+class LoadGroupData extends AbstractLoadGroupData implements OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager

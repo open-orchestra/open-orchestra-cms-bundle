@@ -70,7 +70,7 @@ class KeywordController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_keyword_list")
      * @Config\Method({"GET"})
--    * @Config\Security("is_granted('ACCESS_KEYWORD')")
+     * @Config\Security("is_granted('ACCESS_KEYWORD')")
      *
      * @return FacadeInterface
      */
