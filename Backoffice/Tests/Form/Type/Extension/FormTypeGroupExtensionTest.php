@@ -139,6 +139,7 @@ class FormTypeGroupExtensionTest extends AbstractBaseTestCase
                                         1,
                                     ),
                                 'group_label' => 'Tabulation0',
+                                'group_name' => 'tabulation0',
                                 'sub_group_label' => 'Fieldset0',
                             ),
                             array (
@@ -147,6 +148,7 @@ class FormTypeGroupExtensionTest extends AbstractBaseTestCase
                                         2,
                                     ),
                                  'group_label' => 'Tabulation0',
+                                 'group_name' => 'tabulation0',
                                  'sub_group_label' => 'Fieldset1',
                             ),
                         ),
@@ -158,6 +160,7 @@ class FormTypeGroupExtensionTest extends AbstractBaseTestCase
                                       4,
                                   ),
                                   'group_label' => 'Tabulation1',
+                                  'group_name' => 'tabulation1',
                                   'sub_group_label' => 'Fieldset0',
                             ),
                             array (
@@ -166,6 +169,7 @@ class FormTypeGroupExtensionTest extends AbstractBaseTestCase
                                     3,
                                 ),
                                 'group_label' => 'Tabulation1',
+                                'group_name' => 'tabulation1',
                                 'sub_group_label' => 'Fieldset1',
                             ),
                         ),
@@ -178,6 +182,7 @@ class FormTypeGroupExtensionTest extends AbstractBaseTestCase
                                             5,
                                         ),
                                     'group_label' => '_default_group',
+                                    'group_name' => 'noTabulationDefinition',
                                     'sub_group_label' => 'Fieldset0',
                                 ),
                             '_default_sub_group' =>
@@ -187,6 +192,7 @@ class FormTypeGroupExtensionTest extends AbstractBaseTestCase
                                             6,
                                         ),
                                     'group_label' => '_default_group',
+                                    'group_name' => 'noTabulationDefinition',
                                     'sub_group_label' => '_default_sub_group',
                                 ),
                         ),
@@ -206,10 +212,10 @@ class FormTypeGroupExtensionTest extends AbstractBaseTestCase
     /**
      * Test setDefaultOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
-        $this->formExtension->setDefaultOptions($resolver);
+        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
+        $this->formExtension->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
             'group_enabled' => false,

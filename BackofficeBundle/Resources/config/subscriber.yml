@@ -18,6 +18,7 @@ parameters:
     open_orchestra_backoffice.subscriber.update_history_list.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateHistoryListSubscriber
     open_orchestra_backoffice.subscriber.content_type_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber
     open_orchestra_backoffice.subscriber.content_type_statusable.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber
+    open_orchestra_backoffice.subscriber.node_choice_status.class: OpenOrchestra\Backoffice\EventSubscriber\NodeChoiceStatusSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -152,3 +153,7 @@ services:
             - '@open_orchestra_model.repository.status'
         tags:
             - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.node_choice_status:
+        class: '%open_orchestra_backoffice.subscriber.node_choice_status.class%'
+        arguments:
+            - '@open_orchestra_backoffice.authorize_status_change_manager'

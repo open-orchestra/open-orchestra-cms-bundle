@@ -109,7 +109,7 @@ class UpdateRedirectionNodeSubscriberTest extends AbstractBaseTestCase
     public function testUpdateRedirectionRoutes()
     {
         $this->subscriber->updateRedirectionRoutes($this->nodeEvent);
-        Phake::verify($this->redirectionManager)->updateRedirection($this->nodeId, $this->language);
+        Phake::verify($this->redirectionManager)->updateRedirection($this->nodeId, $this->language, $this->siteId);
     }
 
     /**

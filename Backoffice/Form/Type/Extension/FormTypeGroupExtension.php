@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
@@ -42,7 +43,7 @@ class FormTypeGroupExtension extends AbstractTypeExtension
             $groupRender = $form->getConfig()->getAttribute('group_render');
             $subGroupRender = $form->getConfig()->getAttribute('sub_group_render');
             foreach ($form->all() as $child) {
-                list($groupKey, $groupLabel) = $this->generateKeyLabel($child, 'group_id', self::DEFAULT_GROUP, $groupRender);
+                list($groupKey, $groupLabel, $group_name) = $this->generateKeyLabel($child, 'group_id', self::DEFAULT_GROUP, $groupRender);
                 list($subGroupKey, $subGroupLabel) = $this->generateKeyLabel($child, 'sub_group_id', self::DEFAULT_SUB_GROUP, $subGroupRender);
                 if (!array_key_exists($groupKey, $view->vars['group'])) {
                     $view->vars['group'][$groupKey] = array();
@@ -52,11 +53,12 @@ class FormTypeGroupExtension extends AbstractTypeExtension
                         'children' => array(),
                         'group_label' => $groupLabel,
                         'sub_group_label' => $subGroupLabel,
+                        'group_name' => $group_name
                     );
                 }
                 array_push($view->vars['group'][$groupKey][$subGroupKey]['children'], $child->getName());
             }
-            $view->vars['group'] = $this->ksort_recursive($view->vars['group']);
+            $view->vars['group'] = $this->ksortRecursive($view->vars['group']);
         }
         $view->vars['group_enabled'] = $form->getConfig()->getAttribute('group_enabled');
     }
@@ -64,7 +66,7 @@ class FormTypeGroupExtension extends AbstractTypeExtension
     /**
      * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'group_enabled' => false,
@@ -103,7 +105,7 @@ class FormTypeGroupExtension extends AbstractTypeExtension
             $label = array_key_exists('label', $reference[$id]) ? $reference[$id]['label'] : $id;
         }
 
-        return array($key, $label);
+        return array($key, $label, $id);
     }
 
     /**
@@ -111,11 +113,11 @@ class FormTypeGroupExtension extends AbstractTypeExtension
      *
      * @return array
      */
-    protected function ksort_recursive(&$array)
+    protected function ksortRecursive(&$array)
     {
        foreach ($array as &$value) {
            if (is_array($value)) {
-               $this->ksort_recursive($value);
+               $this->ksortRecursive($value);
            }
        }
        ksort($array, SORT_NATURAL);

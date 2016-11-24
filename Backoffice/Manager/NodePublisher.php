@@ -58,7 +58,7 @@ class NodePublisher implements NodePublisherInterface
             $node->setStatus($publishedStatus);
             $this->objectManager->persist($node);
             $publishedNodes[] = array(
-                'BOLabel' => $node->getBoLabel(),
+                'name' => $node->getName(),
                 'version' => $node->getVersion(),
                 'language' => $node->getLanguage()
             );
@@ -94,7 +94,7 @@ class NodePublisher implements NodePublisherInterface
             $node->setStatus($unpublishedStatus);
             $this->objectManager->persist($node);
             $unpublishedNodes[] = array(
-                'BOLabel' => $node->getBoLabel(),
+                'name' => $node->getName(),
                 'version' => $node->getVersion(),
                 'language' => $node->getLanguage()
             );

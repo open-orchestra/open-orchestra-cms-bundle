@@ -27,6 +27,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
+        $nodeChoiceStatusSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
 
         $this->nodeType = new NodeType(
             $this->nodeManager,
@@ -34,7 +35,8 @@ class NodeTypeTest extends AbstractBaseTestCase
             $this->siteRepository,
             $this->templateManager,
             $this->nodeClass,
-            array()
+            array(),
+            $nodeChoiceStatusSubscriber
         );
     }
 
@@ -46,37 +48,12 @@ class NodeTypeTest extends AbstractBaseTestCase
         $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
-        $this->nodeType->buildForm($formBuilderMock, array('activateBoLabel' => true));
-
-        Phake::verify($formBuilderMock, Phake::times(19))->add(Phake::anyParameters());
+        $this->nodeType->buildForm($formBuilderMock, array());
+        Phake::verify($formBuilderMock, Phake::times(20))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
     }
-
-    /**
-     * test build without bo label form
-     */
-    public function testBuildFormWithoutBoLabel()
-    {
-        $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
-        Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
-
-        $this->nodeType->buildForm($formBuilderMock, array('activateBoLabel' => false));
-
-        Phake::verify($formBuilderMock, Phake::times(18))->add(Phake::anyParameters());
-
-        Phake::verify($formBuilderMock, Phake::never())->add('boLabel', 'text', array(
-            'label' => 'open_orchestra_backoffice.form.node.boLabel.name',
-            'attr' => array(
-                'class' => 'generate-id-dest',
-                'help_text' => 'open_orchestra_backoffice.form.node.boLabel.helper',
-            )
-        ));
-        Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
-    }
-
 
     /**
      * Test configureOptions
@@ -89,7 +66,59 @@ class NodeTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->nodeClass,
-            'activateBoLabel' => true,
+            'group_enabled' => true,
+            'group_render' => array(
+                'properties' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.node.group.properties',
+                ),
+                'seo' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.node.group.seo',
+                ),
+                'keywords' => array(
+                    'rank' => 2,
+                    'label' => 'open_orchestra_backoffice.form.node.group.keywords',
+                ),
+                'cache' => array(
+                    'rank' => 3,
+                    'label' => 'open_orchestra_backoffice.form.node.group.cache',
+                ),
+            ),
+            'sub_group_render' => array(
+                'properties' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.properties',
+                ),
+                'style' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.style',
+                ),
+                'publication' => array(
+                    'rank' => 2,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.publication',
+                ),
+                'seo' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.seo',
+                ),
+                'canonical' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.canonical',
+                ),
+                'keywords' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.keywords',
+                ),
+                'cache' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
+                ),
+                'roles' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.roles',
+                ),
+            ),
         ));
     }
 

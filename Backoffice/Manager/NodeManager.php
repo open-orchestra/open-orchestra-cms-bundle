@@ -226,7 +226,6 @@ class NodeManager
         $node->setTemplate($template);
         $node->setRoutePattern($routePattern);
         $node->setName($name);
-        $node->setBoLabel($name);
         $node->setVersion(1);
         $node->setInMenu(true);
         $node->setInFooter(true);

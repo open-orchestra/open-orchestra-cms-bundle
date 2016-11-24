@@ -6,7 +6,6 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 use Symfony\Component\OptionsResolver\Options;
 
 /**
@@ -15,18 +14,15 @@ use Symfony\Component\OptionsResolver\Options;
 class NodeChoiceType extends AbstractType
 {
     protected $nodeRepository;
-    protected $treeManager;
     protected $currentSiteManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
-     * @param TreeManager $treeManager
      * @param CurrentSiteIdInterface $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, TreeManager $treeManager, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
-        $this->treeManager = $treeManager;
         $this->currentSiteManager = $currentSiteManager;
     }
 
@@ -38,9 +34,10 @@ class NodeChoiceType extends AbstractType
         $resolver->setDefaults(
             array(
                 'choices' => function(Options $options) {
-                    return $this->getChoices($options['siteId']);
+                    return $this->getChoices($options['siteId'], $options['language']);
                 },
                 'siteId' => $this->currentSiteManager->getCurrentSiteId(),
+                'language' => $this->currentSiteManager->getCurrentSiteDefaultLanguage(),
                 'attr' => array(
                     'class' => 'orchestra-node-choice'
                 )
@@ -50,13 +47,13 @@ class NodeChoiceType extends AbstractType
 
     /**
      * @param string $siteId
+     * @param string $language
      *
      * @return array
      */
-    protected function getChoices($siteId)
+    protected function getChoices($siteId, $language)
     {
-        $nodes = $this->nodeRepository->findLastVersionByType($siteId);
-        $orderedNodes = $this->treeManager->generateTree($nodes);
+        $orderedNodes = $this->nodeRepository->findTreeNode($siteId, $language);
 
         return $this->getHierarchicalChoices($orderedNodes);
     }
@@ -75,7 +72,7 @@ class NodeChoiceType extends AbstractType
             if ($depth > 0) {
                 $pre = str_repeat('&#x2502;', $depth - 1).'&#x251C;';
             }
-            $choices[$node['node']->getNodeId()] = $pre.$node['node']->getName();
+            $choices[$node['node']['nodeId']] = $pre.$node['node']['name'];
 
             if (array_key_exists('child', $node)) {
                 $choices = array_merge($choices, $this->getHierarchicalChoices($node['child'], $depth + 1));
@@ -86,7 +83,7 @@ class NodeChoiceType extends AbstractType
             if ($depth > 0) {
                 $pre = str_repeat('&#x2502;', $depth - 1).'&#x2514;';
             }
-            $choices[$node['node']->getNodeId()] = $pre.$node['node']->getName();
+            $choices[$node['node']['nodeId']] = $pre.$node['node']['name'];
         }
 
         return $choices;

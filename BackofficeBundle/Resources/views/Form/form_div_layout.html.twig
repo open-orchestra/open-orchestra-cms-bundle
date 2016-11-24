@@ -14,56 +14,58 @@
 {% endblock form %}
 
 {% block form_widget %}
-	{% set groups  = [] %}
+    {% set groups  = [] %}
     {% if form.vars.group_enabled is defined and true == form.vars.group_enabled %}
-      	{%  set active = -1 %}
+        {%  set active = -1 %}
         {% for group in form.vars.group %}
-        	{% set err = false %}
-        	{% set req = false %}
-        	{% set rank = loop.index0 %}
-			{% set group_label  = '' %}
-        	{%  set current_group %}
+            {% set err = false %}
+            {% set req = false %}
+            {% set group_name = '' %}
+            {% set rank = loop.index0 %}
+            {% set group_label  = '' %}
+            {%  set current_group %}
                 {% for subgroup in group %}
-                	{% set subgroup_html %}
-                	    {% set group_label = subgroup.group_label %}
+                    {% set subgroup_html %}
+                        {% set group_label = subgroup.group_label %}
+                        {% set group_name = subgroup.group_name %}
                         {% for child in subgroup.children %}
-                    		{{ form_row(form[child]) }}
-                    		{% set err = err or not form[child].vars.valid %}
-                    		{% set req = req or (form[child].vars.required is defined and form[child].vars.required) %}
-                    		{% set active = (active == -1 and err) ? rank : active %}
-	                   	{% endfor %}
-       	            {% endset %}
-       	            {% if subgroup.sub_group_label != constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_SUB_GROUP') %}
-           	        	<fieldset>
-           	        		<legend>{{ subgroup.sub_group_label|trans }}</legend>
-           	        		{{ subgroup_html }}
-           	            </fieldset>
-       	            {% else %}
-       	                {{ subgroup_html }}
-       	            {% endif %}
-    	        {% endfor %}
-	        {% endset %}
-	        {% set groups = groups|merge([{'label': group_label, 'html': current_group, 'err': err, 'req': req}]) %}
-	    {% endfor %}
-   		{% set active = (active == -1) ? 0 : active %}
-        <ul role="tablist" class="nav nav-tabs">
-        {% for group in groups %}
-	    	<li class="{% if active == loop.index0 %}active{% endif %}">
-	    		<a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
-	    		    {{ group.label|default(loop.index0)|trans }}
-	    	    </a>
-	    	</li>
+                            {{ form_row(form[child]) }}
+                            {% set err = err or not form[child].vars.valid %}
+                            {% set req = req or (form[child].vars.required is defined and form[child].vars.required) %}
+                            {% set active = (active == -1 and err) ? rank : active %}
+                        {% endfor %}
+                    {% endset %}
+                    {% if subgroup.sub_group_label != constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_SUB_GROUP') %}
+                    <fieldset>
+                        <legend class="underline-label">{{ subgroup.sub_group_label|trans }}</legend>
+                        {{ subgroup_html }}
+                    </fieldset>
+                    {% else %}
+                        {{ subgroup_html }}
+                    {% endif %}
+                {% endfor %}
+            {% endset %}
+            {% set groups = groups|merge([{'group_name': group_name,'label': group_label, 'html': current_group, 'err': err, 'req': req}]) %}
         {% endfor %}
-        </ul>
-    	<div class="tab-content">
+        {% set active = (active == -1) ? 0 : active %}
+    <ul role="tablist" class="nav nav-tabs">
         {% for group in groups %}
-           	<div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}">
-           		{{ group.html }}
-	        </div>
+            <li class="{% if active == loop.index0 %}active{% endif %}">
+                <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
+                    {{ group.label|default(loop.index0)|trans }}
+                </a>
+            </li>
         {% endfor %}
-		</div>
-    {% else %}
-        {{ parent() }}
+    </ul>
+    <div class="tab-content">
+        {% for group in groups %}
+            <div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if group.group_name != '' %} tab-{{ group.group_name }} {% endif %}">
+                {{ group.html }}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    {{ parent() }}
     {% endif %}
 {% endblock %}
 
@@ -71,13 +73,15 @@
 {% block choice_widget %}
     {% spaceless %}
         {% if expanded and multiple %}
-        <div {{ block('widget_container_attributes') }}>
-            {% for child in form %}
-                {{ checkbox_row(child, { 'no_form_group': true, 'inline' : (attr.inline is defined and attr.inline), 'label_attr': label_attr, 'form_group_col': 6 }) }}
-            {% endfor %}
-        </div>
+            <div {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    {{ checkbox_row(child, { 'no_form_group': true, 'inline' : (attr.inline is defined and attr.inline), 'label_attr': label_attr, 'form_group_col': 6 }) }}
+                {% endfor %}
+            </div>
         {% else %}
-        	{{ parent() }}
+            <div class="styled-select">
+            {{ parent() }}
+          </div>
         {% endif %}
     {% endspaceless %}
 {% endblock choice_widget %}
@@ -87,32 +91,32 @@
     {% spaceless %}
         <div class="contribution">
             <table class="table table-striped table-language scrollable">
-            {% set child = form|first %}
-    		<thead>
+                {% set child = form|first %}
+                <thead>
                 <tr>
                     <th>&nbsp;</th>
-    	        {% for choice in child %}
-                    <th>
-                        {{ choice.vars.label|trans }}
-                    </th>
-    		    {% endfor %}
+                    {% for choice in child %}
+                        <th>
+                            {{ choice.vars.label|trans }}
+                        </th>
+                    {% endfor %}
                 </tr>
-            </thead>
-            <tbody>
-            {% for child in form %}
-                <tr>
-                	<th>
-                		{{ child.vars.label|trans }}
-                	</th>
-    	        {% for choice in child %}
-                    <td>
-                        <input type="radio" id="{{ choice.vars.full_name }}_{{ choice.vars.value }}" name="{{ choice.vars.full_name }}" value="{{ choice.vars.value }}"{% if choice.vars.checked %} checked=""{% endif %}{% if choice.vars.attr.disabled is defined and choice.vars.attr.disabled == 'disabled' %} disabled="disabled"{% endif %} />
-                        <label for="{{ choice.vars.full_name }}_{{ choice.vars.value }}"></label>
-                    </td>
-    		    {% endfor %}
-                </tr>
-    	    {% endfor %}
-    	    </tbody>
+                </thead>
+                <tbody>
+                {% for child in form %}
+                    <tr>
+                        <th>
+                            {{ child.vars.label|trans }}
+                        </th>
+                        {% for choice in child %}
+                            <td>
+                                <input type="radio" id="{{ choice.vars.full_name }}_{{ choice.vars.value }}" name="{{ choice.vars.full_name }}" value="{{ choice.vars.value }}"{% if choice.vars.checked %} checked=""{% endif %}{% if choice.vars.attr.disabled is defined and choice.vars.attr.disabled == 'disabled' %} disabled="disabled"{% endif %} />
+                                <label for="{{ choice.vars.full_name }}_{{ choice.vars.value }}"></label>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
         </div>
     {% endspaceless %}
@@ -120,13 +124,16 @@
 
 {% block checkbox_widget %}
     {% spaceless %}
-        <div class="smart-form">
-            <label class="toggle display-normal">
+        <div class="col-md-10 switch-button">
+            <span>{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}</span>
+            <label class="switch">
                 {{ parent() }}
-                <i data-swchon-text="{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}" data-swchoff-text="{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}"></i>
+                <div class="slider"></div>
             </label>
+            <span>{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}</span>
         </div>
     {% endspaceless %}
+
 {% endblock %}
 
 {% block radio_widget %}
@@ -145,36 +152,81 @@
         <div {{ block('widget_container_attributes') }}>
             <ul class="nav nav-tabs" role="tablist" id="myTab">
                 {% for key, field in form %}
-                   {% if attribute(field.children, 'value') is defined %}
-                   <li {% if app.request.locale == key %}class="active" {% endif %}>
-                        <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
-                            <img
-                                src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
-                                class="flag flag-{{ field.vars.value.language }}"
-                                alt="{{ ('open_orchestra_backoffice.language.' ~ field.vars.value.language)|trans }}"
-                            >
-                            {{ form_label(field.value) }}
-                        </a>
-                    </li>
+                    {% if attribute(field.children, 'value') is defined %}
+                        <li {% if app.request.locale == key %}class="active" {% endif %}>
+                            <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
+                                <img
+                                        src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
+                                        class="flag flag-{{ field.vars.value.language }}"
+                                        alt="{{ ('open_orchestra_backoffice.language.' ~ field.vars.value.language)|trans }}"
+                                >
+                                {{ form_label(field.value) }}
+                            </a>
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <div class="tab-content">
                 {% for key, field in form %}
-                   {% if attribute(field.children, 'value') is defined %}
-                    <div class="tab-pane {% if app.request.locale == key %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
-                        <div class="form-group{% if field.value.vars.errors|length > 0 %} has-error{% endif %}">
-                            {{ form_widget(field.value) }}
-                            {{ form_rest(field) }}
-                            {{ form_errors(field.value) }}
+                    {% if attribute(field.children, 'value') is defined %}
+                        <div class="tab-pane {% if app.request.locale == key %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
+                            <div class="form-group{% if field.value.vars.errors|length > 0 %} has-error{% endif %}">
+                                {{ form_widget(field.value) }}
+                                {{ form_rest(field) }}
+                                {{ form_errors(field.value) }}
+                            </div>
                         </div>
-                    </div>
                     {% endif %}
                 {% endfor %}
             </div>
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block form_label %}
+    {% spaceless %}
+        {% set col_size = col_size|default(bootstrap_get_col_size()) %}
+
+        {% if attr.label_col is defined and attr.label_col is not empty %}
+            {% set label_col = attr.label_col %}
+        {% endif %}
+        {% if attr.widget_col is defined and attr.widget_col is not empty %}
+            {% set widget_col = attr.widget_col %}
+        {% endif %}
+        {% if attr.col_size is defined and attr.col_size is not empty %}
+            {% set col_size = attr.col_size %}
+        {% endif %}
+
+        {% if label is not same as (false) %}
+            {% set style = style|default(bootstrap_get_style()) %}
+            {% set label_col = label_col|default(bootstrap_get_label_col()) %}
+
+            {% if attr.style is defined and attr.style is not empty %}
+                {% set style = attr.style %}
+            {% endif %}
+
+            {% set label_attr = label_attr|merge({ 'class': (label_attr.class|default('') ~ ' control-label')|trim }) %}
+            {% if style == 'horizontal' %}
+                {% set label_attr = label_attr|merge({ 'class': (label_attr.class|default('') ~ ' col-' ~ col_size ~ '-' ~ label_col)|trim }) %}
+            {% elseif style == 'inline' %}
+                {% set label_attr = label_attr|merge({ 'class': (label_attr.class|default('') ~ ' sr-only')|trim }) %}
+            {% endif %}
+
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ label|trans({}, translation_domain)|raw }} {{ block('form_help') }}
+            </label>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_label %}
 
 {% block form_row %}
     {% spaceless %}
@@ -194,7 +246,7 @@
         {% if attr.col_size is defined and attr.col_size is not empty %}
             {% set col_size = attr.col_size %}
         {% endif %}
-		{% set form_group_class = '' %}
+        {% set form_group_class = '' %}
         {% if form_group_col is defined and form_group_col is not empty %}
             {% set form_group_class = 'col-'~col_size~'-'~form_group_col %}
         {% endif %}
@@ -232,13 +284,11 @@
                 {{ form_label(form) }}
                 {{ refreshIcon }}
                 <div class="col-{{ col_size }}-{{ widget_col }}">
-                    {{ block('form_help') }}
                     {{ block('form_input_group') }}
                     {{ form_errors(form) }}
                 </div>
             {% else %}
                 {{ form_label(form) }}
-                {{ block('form_help') }}
                 {{ block('form_input_group') }}
                 {{ form_errors(form) }}
             {% endif %}
@@ -275,17 +325,19 @@
     {% endif %}
 {% endblock choice_widget_options %}
 
+
 {% block form_help %}
     {% spaceless %}
         {% if attr.help_text is defined and attr.help_text is not empty %}
             {% set help_text = attr.help_text|trans({}, translation_domain)|raw %}
-            <i class='icon-prepend fa fa-question-circle helper-block' rel="tooltip" data-placement="top" data-original-title="{{ help_text }}"></i>
+            <i class='form-help-tooltip icon-prepend fa fa-question-circle-o' data-toggle="tooltip" data-placement="bottom" data-original-title="{{ help_text }}"></i>
         {% endif %}
     {% endspaceless %}
 {% endblock form_help %}
 
+
 {% block widget_attributes %}
-{% spaceless %}
+    {% spaceless %}
         id="{{ id }}" name="{{ full_name }}"{% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %}
         {% for attrname, attrvalue in attr %}{% if attrname in ['placeholder', 'title'] %}{{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}" {% elseif attrname in ['input_group'] %}{% else %}{{ attrname }}="{{ attrvalue }}" {% endif %}{% endfor %}
         {% for attrname, attrvalue in label_attr %}{{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}"{% endfor %}
@@ -369,7 +421,6 @@
         {% endif %}
         {{ block('date_widget') }}
         {% if form.vars.widget == 'single_text' %}
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
             </div>
         {% endif %}
     {% endspaceless %}
@@ -385,37 +436,37 @@
 {% endblock form_legend %}
 
 {% block oo_tinymce_widget %}
-      {{ block('textarea_widget') }}
-      <div
-          id="modal_internal_link_{{ id }}"
-          data-url="{{ path('open_orchestra_backoffice_internal_link_form') }}"
-      ></div>
+    {{ block('textarea_widget') }}
+    <div
+            id="modal_internal_link_{{ id }}"
+            data-url="{{ path('open_orchestra_backoffice_internal_link_form') }}"
+    ></div>
 {% endblock %}
 
 {% block oo_role_choice_widget %}
     <div class="container-fluid">
-    {% for category, parameters in form.vars.rolesOrdered %}
-        <h4>{{ category|trans }}</h4>
-        <div class="role-table">
-        {% for label, ranks in parameters %}
-            <div class="role-row">
-                <div class="role-cell">
-                    <div class="role-title">
-                        {{ label|trans({}, 'role') }}
-                    </div>
-                </div>
-                <div class="btn-group" data-toggle="buttons">
-                {% for rank in ranks %}
-                    <div class="role-cell btn btn-default{% if form[rank].vars.checked %} active{% endif %}">
-                        <input type="checkbox" name="{{ form[rank].vars.full_name }}" value="{{ form[rank].vars.value }}" {% if form[rank].vars.checked %} checked="checked"{% endif %} />
-                        {{ form[rank].vars.label }}
+        {% for category, parameters in form.vars.rolesOrdered %}
+            <h4>{{ category|trans }}</h4>
+            <div class="role-table">
+                {% for label, ranks in parameters %}
+                    <div class="role-row">
+                        <div class="role-cell">
+                            <div class="role-title">
+                                {{ label|trans({}, 'role') }}
+                            </div>
+                        </div>
+                        <div class="btn-group" data-toggle="buttons">
+                            {% for rank in ranks %}
+                                <div class="role-cell btn btn-default{% if form[rank].vars.checked %} active{% endif %}">
+                                    <input type="checkbox" name="{{ form[rank].vars.full_name }}" value="{{ form[rank].vars.value }}" {% if form[rank].vars.checked %} checked="checked"{% endif %} />
+                                    {{ form[rank].vars.label }}
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 {% endfor %}
-                </div>
             </div>
         {% endfor %}
-        </div>
-    {% endfor %}
     </div>
 {% endblock %}
 
@@ -444,12 +495,12 @@
         <div {{ block('widget_container_attributes') }}>
             <ul class="nav nav-tabs" role="tablist" id="myTab">
                 {% for key, field in form %}
-                   <li {% if loop.first %}class="active" {% endif %}>
+                    <li {% if loop.first %}class="active" {% endif %}>
                         <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
                             <img
-                                src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
-                                class="flag flag-{{ key }}"
-                                alt="{{ ('open_orchestra_backoffice.language.' ~ key)|trans }}"
+                                    src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
+                                    class="flag flag-{{ key }}"
+                                    alt="{{ ('open_orchestra_backoffice.language.' ~ key)|trans }}"
                             >
                             {{ form_label(field) }}
                         </a>

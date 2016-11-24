@@ -17,28 +17,39 @@ class NodeController extends AbstractAdminController
 {
     /**
      * @param Request $request
-     * @param string  $id
+     * @param string  $siteId
+     * @param string  $nodeId
+     * @param string  $version
+     * @param string  $language
      *
-     * @Config\Route("/node/form/{id}", name="open_orchestra_backoffice_node_form")
+     * @Config\Route(
+     *     "/node/form/{siteId}/{nodeId}/{language}/{version}",
+     *     name="open_orchestra_backoffice_node_form",
+     *     defaults={"version": null},
+     * )
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function formAction(Request $request, $id)
+    public function formAction(Request $request, $siteId, $nodeId, $language, $version)
     {
         $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->findVersionByDocumentId($id);
+        $node = $nodeRepository->findVersion($nodeId, $language, $siteId, $version);
+        $oldStatus = $node->getStatus();
+        if (!$node instanceof NodeInterface) {
+            throw new \UnexpectedValueException();
+        }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
-        $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
+        $url = $this->generateUrl('open_orchestra_backoffice_node_form', array(
+            'siteId' => $siteId,
+            'nodeId' => $nodeId,
+            'version' => $version,
+            'language' => $language
+        ));
+
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
-        $options = array(
-            'action' => $url,
-            'validation_groups' => array($node->getNodeType()),
-        );
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            $options['activateBoLabel'] = false;
-        }
+        $options = array('action' => $url);
 
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT);
 
@@ -46,6 +57,10 @@ class NodeController extends AbstractAdminController
 
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
+            if ($oldStatus !== $node->getStatus()) {
+                $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, new NodeEvent($node, $oldStatus));
+                $form = $this->createForm('oo_node', $node, $options, $this->getEditionRole($node));
+            }
         }
 
         return $this->renderAdminForm($form);
@@ -81,7 +96,10 @@ class NodeController extends AbstractAdminController
             $this->dispatchEvent(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
             return $this->redirect($this->generateUrl('open_orchestra_backoffice_node_form', array(
-                'id' => $node->getId()
+                'siteId' => $node->getSiteId(),
+                'nodeId' => $node->getNodeId(),
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
             )));
         }
 

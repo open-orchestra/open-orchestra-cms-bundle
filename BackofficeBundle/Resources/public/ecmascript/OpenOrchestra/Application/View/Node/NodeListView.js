@@ -31,7 +31,8 @@ class NodeListView extends AbstractDataTableView
                 name: 'name',
                 title: Translator.trans('open_orchestra_backoffice.table.node.title'),
                 orderable: true,
-                visibile: true
+                visibile: true,
+                createdCell: this._createEditLink
             },
             {
                 name: 'created_by',
@@ -55,28 +56,36 @@ class NodeListView extends AbstractDataTableView
         ];
     }
 
-
     /**
-     * @return {Function}
+     *
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
+     *
+     * Example of specif column
      * @private
      */
-    _dataTableAjaxCollection() {
-        let collection = this._collection;
-        return (request, drawCallback, settings) => {
-            settings.jqXHR = collection.fetch({
-                urlParameter: {
-                    'language': this._language,
-                    'siteId': this._siteId
-                },
-                data: request,
-                processData: true,
-                success: (collection) => {
-                    settings.sAjaxDataProp = "models";
+    _createEditLink(td, cellData, rowData) {
+        let link = Backbone.history.generateUrl('editNode', {
+            language: rowData.get('language'),
+            nodeId: rowData.get('node_id'),
+            version: rowData.get('version')
+        });
+        let $link = $('<a>',{
+            text: cellData,
+            href: '#'+link
+        });
+        $(td).html($link);
+    }
 
-                    return drawCallback(collection);
-                }
-            });
-        }
+    /**
+     * @inheritDoc
+     */
+    _getSyncUrlParameter() {
+        return {
+            'language': this._language,
+            'siteId': this._siteId
+        };
     }
 
 }

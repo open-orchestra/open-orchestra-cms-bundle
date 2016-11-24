@@ -35,6 +35,7 @@ class RedirectionController extends AbstractAdminController
         $form = $this->createForm('oo_redirection', $redirection, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
             'method' => 'POST',
+            'csrf_protection'   => false,
         ));
 
         $form->handleRequest($request);

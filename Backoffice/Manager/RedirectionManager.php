@@ -83,10 +83,11 @@ class RedirectionManager
     /**
      * @param string $nodeId
      * @param string $language
+     * @param string $siteId
      */
-    public function deleteRedirection($nodeId, $language)
+    public function deleteRedirection($nodeId, $language, $siteId)
     {
-        $redirections = $this->redirectionRepository->findByNode($nodeId, $language);
+        $redirections = $this->redirectionRepository->findByNode($nodeId, $language, $siteId);
         foreach ($redirections as $redirection) {
             $this->documentManager->remove($redirection);
             $this->documentManager->flush($redirection);
@@ -97,10 +98,11 @@ class RedirectionManager
     /**
      * @param string $nodeId
      * @param string $language
+     * @param string $siteId
      */
-    public function updateRedirection($nodeId, $language)
+    public function updateRedirection($nodeId, $language, $siteId)
     {
-        $redirections = $this->redirectionRepository->findByNode($nodeId, $language);
+        $redirections = $this->redirectionRepository->findByNode($nodeId, $language, $siteId);
         foreach ($redirections as $redirection) {
             $this->eventDispatcher->dispatch(RedirectionEvents::REDIRECTION_UPDATE, new RedirectionEvent($redirection));
         }
@@ -132,11 +134,13 @@ class RedirectionManager
      */
     public function generateRedirectionForNode(NodeInterface $node)
     {
+        $siteId = $node->getSiteId();
+
         $this->deleteRedirection(
             $node->getNodeId(),
-            $node->getLanguage()
+            $node->getLanguage(),
+            $siteId
             );
-        $siteId = $node->getSiteId();
         $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
         if (count($nodes) > 0) {
             $lastNode = array_shift($nodes);

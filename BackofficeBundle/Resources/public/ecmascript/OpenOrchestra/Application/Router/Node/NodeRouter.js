@@ -20,7 +20,7 @@ class NodeRouter extends OrchestraRouter
     preinitialize() {
         this.routes = {
             'nodes(/:language)': 'showNodes',
-            'node/new': 'newNode'
+            'node/edit/:nodeId/:language(/:version)': 'editNode'
         };
     }
 
@@ -49,13 +49,28 @@ class NodeRouter extends OrchestraRouter
     }
 
     /**
-     * Create new node
+     * Edit node
+     *
+     * @param {string} nodeId
+     * @param {string|null} version
+     * @param {string} language
      */
-    newNode() {
+    editNode(nodeId, language, version = null) {
         this._diplayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_backoffice_node_new', {parentId : 'root'});
+        let url = Routing.generate('open_orchestra_backoffice_node_form', {
+            siteId : Application.getContext().siteId,
+            nodeId : nodeId,
+            language: language,
+            version: version
+        });
         FormBuilder.createFormFromUrl(url, (form) => {
-            let nodeFormView = new NodeFormView({form : form});
+            let nodeFormView = new NodeFormView({
+                form : form,
+                siteLanguages: Application.getContext().siteLanguages,
+                siteId : Application.getContext().siteId,
+                nodeId : nodeId,
+                language: language
+            });
             Application.getRegion('content').html(nodeFormView.render().$el);
         });
     }

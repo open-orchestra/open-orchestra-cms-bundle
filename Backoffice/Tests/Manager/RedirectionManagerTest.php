@@ -124,7 +124,7 @@ class RedirectionManagerTest extends AbstractBaseTestCase
      */
     public function testDeleteRedirection()
     {
-        $this->manager->deleteRedirection('fakeNodeId', 'fakeLanguage');
+        $this->manager->deleteRedirection('fakeNodeId', 'fakeLanguage', 'fakeSiteId');
 
         Phake::verify($this->documentManager, Phake::times(3))->remove(Phake::anyParameters());
         Phake::verify($this->documentManager, Phake::times(3))->flush(Phake::anyParameters());
@@ -136,7 +136,7 @@ class RedirectionManagerTest extends AbstractBaseTestCase
      */
     public function testUpdateRedirection()
     {
-        $this->manager->updateRedirection('fakeNodeId', 'fakeLanguage');
+        $this->manager->updateRedirection('fakeNodeId', 'fakeLanguage', 'fakeSiteId');
 
         Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
     }

@@ -57,6 +57,26 @@ class RedirectionController extends BaseController
         return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
     }
 
+   /**
+     * @param string $siteId
+     * @param string $nodeId
+     * @param string $locale
+     *
+     * @Config\Route("/node/{siteId}/{nodeId}/{locale}", name="open_orchestra_api_redirection_node_list")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_REDIRECTION')")
+     *
+     * @return FacadeInterface
+     */
+    public function listRedirectionNodeAction($siteId, $nodeId, $locale)
+    {
+        $repository = $this->get('open_orchestra_model.repository.redirection');
+        $redirectionList = $repository->findByNode($nodeId, $locale, $siteId);
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection')->transform($redirectionList);
+    }
+
     /**
      * @param int $redirectionId
      *
