@@ -61,7 +61,6 @@ class NodeFormView extends AbstractFormView
             },
             success: (redirections) => {
                 if (redirections.length > 0) {
-                    console.log(redirections);
                     let template = this._renderTemplate('Node/redirectionListView', { redirections: redirections.models });
                     $('.tab-seo', this.$el).append(template);
                 }
