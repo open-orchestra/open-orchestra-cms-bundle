@@ -11,9 +11,6 @@
   table-layout: fixed;
   padding-top: 40px;
 }
-fieldset {
-	display: table-column
-}
 #left-column {
   width: 235px;
   height: 100%;
@@ -1523,7 +1520,14 @@ table.dataTable thead .sorting_desc:after {
     &.disabled { cursor: not-allowed; }
   }
 }
-
+fieldset {
+	display: table-column
+}
+.required {
+    &:after {
+	    content: "*";
+    }
+}
 /* ===================================================================
  * SEARCH ENGINE
  * =================================================================*/
