@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="modal-region"></div>
-
+        {% set siteIdKey = constant('OpenOrchestra\\UserBundle\\Document\\User::SITE_ID_PREFIX') ~ context.currentSiteId %}
         <script>
             var config = {
                 debug: '{{ app.debug }}',
@@ -57,7 +57,7 @@
                     firstName : '{{ app.user.firstName }}',
                     lastName : '{{ app.user.lastName }}',
                     language: {
-                        contribution: 'en'
+                        contribution: {% if app.user.languageBySites[siteIdKey] is defined %} '{{ app.user.languageBySites[siteIdKey] }}' {% else %} '{{context.currentSiteDefaultLanguage}}' {% endif %}
                     }
                 }
             };

@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\UserBundle\Document\User;
 
 /**
  * Class LanguageBySitesType
@@ -38,17 +39,19 @@ class LanguageBySitesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['sites_id'] as $siteId) {
-            $site = $this->siteRepository->find($siteId);
-            $aliasLanguages = $site->getLanguages();
-            $builder
-                ->add($siteId, 'choice', array(
-                    'choices' => $this->frontLanguages,
-                    'choice_attr' => function ($key, $val, $index) use ($aliasLanguages) {
-                        return in_array($key, $aliasLanguages) ? array() : array('disabled' => 'disabled');
-                    },
-                    'label' => $site->getSiteId(),
-                    'expanded' => true,
-            ));
+            $site = $this->siteRepository->findOneBySiteId(preg_replace('/^('.preg_quote(User::SITE_ID_PREFIX).')(.*)$/', '$2', $siteId));
+            if (null !== $site) {
+                $aliasLanguages = $site->getLanguages();
+                $builder
+                    ->add($siteId, 'choice', array(
+                        'choices' => $this->frontLanguages,
+                        'choice_attr' => function ($key, $val, $index) use ($aliasLanguages) {
+                            return in_array($key, $aliasLanguages) ? array() : array('disabled' => 'disabled');
+                        },
+                        'label' => $site->getSiteId(),
+                        'expanded' => true,
+                ));
+            }
         }
     }
 

@@ -32,10 +32,10 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $languages = array();
+        $sitesId = array();
         $disabled = false;
         if (array_key_exists('data', $options) && ($user = $options['data']) instanceof UserInterface) {
-            $languages = array_keys($user->getLanguageBySites());
+            $sitesId = array_keys($user->getLanguageBySites());
             $disabled = !$user->isEditAllowed();
         }
 
@@ -99,7 +99,7 @@ class UserType extends AbstractType
             ))
             ->add('languageBySites', 'oo_language_by_sites', array(
                 'label' => false,
-                'sites_id' => $languages,
+                'sites_id' => $sitesId,
                 'group_id' => 'preference',
                 'sub_group_id' => 'language',
             ));

@@ -3,7 +3,6 @@ import Application      from '../../Application'
 import SiteSelectorView from './SiteSelectorView'
 import LogOutModalView  from './LogOutModalView'
 
-
 /**
  * @class HeaderView
  */

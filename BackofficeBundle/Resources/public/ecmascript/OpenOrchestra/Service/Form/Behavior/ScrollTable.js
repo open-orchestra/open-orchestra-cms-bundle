@@ -43,7 +43,6 @@ class ScrollTable
     getSelector() {
         return 'table.scrollable';
     }
-
 }
 
 // unique instance of ScrollTable

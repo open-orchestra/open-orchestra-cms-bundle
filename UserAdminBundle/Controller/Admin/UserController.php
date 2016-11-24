@@ -137,23 +137,22 @@ class UserController extends AbstractAdminController
     {
         $sites = array();
         $siteIds = array();
-
         if ($user->isSuperAdmin()) {
             $sites = $this->container->get('open_orchestra_model.repository.site')->findByDeleted(false);
         } else {
             foreach ($user->getGroups() as $group) {
                 /** @var SiteInterface $site */
                 $site = $group->getSite();
-                if (!$site->isDeleted() && !in_array($site->getId(), $siteIds)) {
-                    $siteIds[] = $site->getId();
+                if (!$site->isDeleted() && !in_array($site->getSiteId(), $siteIds)) {
+                    $siteIds[] = $site->getSiteId();
                     $sites[] = $site;
                 }
             }
         }
 
         foreach ($sites as $site) {
-            if(!$user->hasLanguageBySite($site->getId())) {
-                $user->setLanguageBySite($site->getId(), $site->getDefaultLanguage());
+            if(!$user->hasLanguageBySite($site->getSiteId())) {
+                $user->setLanguageBySite($site->getSiteId(), $site->getDefaultLanguage());
             }
         }
 
