@@ -20,7 +20,6 @@ class NodeRouter extends OrchestraRouter
     preinitialize() {
         this.routes = {
             'nodes(/:language)': 'showNodes',
-            'node/list': 'listNode',
             'node/new': 'newNode'
         };
     }
@@ -47,34 +46,6 @@ class NodeRouter extends OrchestraRouter
                 Application.getRegion('content').html(nodesView.render().$el);
             }
         });
-
-
-        //this._diplayLoader(Application.getRegion('content'));
-        /*new NodesTree().fetch({
-            urlParameter: {
-                'language': language,
-                'siteId': Application.getContext().siteId
-            },
-            success: (nodesTree) => {
-                let treeView = new NodesTreeView({nodesTree : nodesTree, language: language});
-                Application.getRegion('content').html(treeView.render().$el);
-            }
-        });*/
-    }
-
-    /**
-     * List temp node
-     */
-    listNode() {
-        this._diplayLoader(Application.getRegion('content'));
-        let collection = new Nodes();
-        let nodeListView = new NodeListView({
-            collection: collection,
-            language: Application.getContext().user.language.contribution,
-            siteId: Application.getContext().siteId
-        });
-        let el = nodeListView.render().$el;
-        Application.getRegion('content').html(el);
     }
 
     /**
