@@ -18,10 +18,10 @@ class RegistrationUserType extends RegistrationFormType
     {
         $builder
             ->add('firstName', 'text', array(
-                'label' => 'open_orchestra_user.form.registration_user.first_name'
+                'label' => 'open_orchestra_user_admin.form.registration_user.first_name'
             ))
             ->add('lastName', 'text', array(
-                'label' => 'open_orchestra_user.form.registration_user.last_name'
+                'label' => 'open_orchestra_user_admin.form.registration_user.last_name'
             ));
 
         parent::buildForm($builder, $options);

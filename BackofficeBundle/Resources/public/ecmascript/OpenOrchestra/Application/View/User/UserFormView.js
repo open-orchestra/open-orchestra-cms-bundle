@@ -1,9 +1,9 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 
 /**
- * @class NodeFormView
+ * @class UserFormView
  */
-class NodeFormView extends AbstractFormView
+class UserFormView extends AbstractFormView
 {
     /**
      * @return {Object}
@@ -17,4 +17,4 @@ class NodeFormView extends AbstractFormView
     }
 }
 
-export default NodeFormView;
+export default UserFormView;

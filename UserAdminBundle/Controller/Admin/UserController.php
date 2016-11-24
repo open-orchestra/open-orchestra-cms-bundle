@@ -32,12 +32,14 @@ class UserController extends AbstractAdminController
         $userClass = $this->container->getParameter('open_orchestra_user.document.user.class');
         /** @var UserInterface $user */
         $user = new $userClass();
+        $user = $this->refreshLanguagesByAliases($user);
+
         $form = $this->createForm('oo_registration_user', $user, array(
             'action' => $this->generateUrl('open_orchestra_user_admin_new'),
             'validation_groups' => array('Registration')
         ));
         $form->handleRequest($request);
-        if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.new.success'), $user)) {
+        if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_user_admin.new.success'), $user)) {
             $url = $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $user->getId()));
 
             $this->dispatchEvent(UserEvents::USER_CREATE, new UserEvent($user));
@@ -62,6 +64,7 @@ class UserController extends AbstractAdminController
     public function formAction(Request $request, $userId)
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $user = $this->refreshLanguagesByAliases($user);
 
         return $this->renderForm($request, $user, false);
     }
@@ -79,8 +82,7 @@ class UserController extends AbstractAdminController
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->refreshLanguagesByAliases($this->getUser());
 
         return $this->renderForm($request, $user, true);
     }
@@ -104,12 +106,21 @@ class UserController extends AbstractAdminController
 
         $form = $this->createForm('oo_user', $user, array(
             'action' => $action,
-            'validation_groups' => array('Profile'),
-            'edit_groups' => $editGroups
+            'edit_groups' => $editGroups,
+            'self_editing' => $selfEdit,
+            'validation_groups' => array('Profile', 'UpdatePassword', 'Default'),
         ));
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
-        $this->dispatchEvent(UserEvents::USER_UPDATE, new UserEvent($user));
+
+        if ($form->isValid()) {
+            if ('' != $user->getPlainPassword()) {
+                $userManager = $this->get('fos_user.user_manager');
+                $userManager->updatePassword($user);
+                $this->dispatchEvent(UserEvents::USER_CHANGE_PASSWORD, new UserEvent($user));
+            }
+            $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user_admin.update.success'));
+            $this->dispatchEvent(UserEvents::USER_UPDATE, new UserEvent($user));
+        }
 
         $title = 'open_orchestra_user_admin.form.title';
         $title = $this->get('translator')->trans($title);
@@ -118,70 +129,34 @@ class UserController extends AbstractAdminController
     }
 
     /**
-     * @param Request $request
-     * @param string  $userId
-     *
-     * @Config\Route("/password/change/{userId}", name="open_orchestra_user_admin_user_change_password")
-     * @Config\Method({"GET", "POST"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_USER')")
-     *
-     * @return Response
-     */
-    public function changePasswordAction(Request $request, $userId)
-    {
-        /* @var UserInterface $user */
-        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $url = 'open_orchestra_user_admin_user_change_password';
-
-        return $this->renderChangePassword($request, $user, $url);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @Config\Route("/password/change", name="open_orchestra_user_admin_user_self_change_password")
-     * @Config\Method({"GET", "POST"})
-     *
-     * @return Response
-     */
-    public function selfChangePasswordAction(Request $request)
-    {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $url = "open_orchestra_user_admin_user_self_change_password";
-
-        return $this->renderChangePassword($request, $user, $url);
-    }
-
-    /**
-     * @param Request       $request
      * @param UserInterface $user
-     * @param string        $url
      *
-     * @return Response
+     * @return UserInterface
      */
-    protected function renderChangePassword(Request $request, UserInterface $user, $url)
+    protected function refreshLanguagesByAliases(UserInterface $user)
     {
-        $form = $this->createForm('oo_user_change_password', $user, array(
-            'action' => $this->generateUrl($url, array('userId' => $user->getId())),
-            'validation_groups' => array('UpdatePassword', 'Default'),
-        ));
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $userManager = $this->get('fos_user.user_manager');
-            $userManager->updatePassword($user);
-            $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
-            $this->dispatchEvent(UserEvents::USER_CHANGE_PASSWORD, new UserEvent($user));
+        $sites = array();
+        $siteIds = array();
+        if ($user->isSuperAdmin()) {
+            $sites = $this->container->get('open_orchestra_model.repository.site')->findByDeleted(false);
+        } else {
+            foreach ($user->getGroups() as $group) {
+                /** @var SiteInterface $site */
+                $site = $group->getSite();
+                if (!$site->isDeleted() && !in_array($site->getSiteId(), $siteIds)) {
+                    $siteIds[] = $site->getSiteId();
+                    $sites[] = $site;
+                }
+            }
         }
 
-        $title = 'open_orchestra_user_admin.password.title';
-        $title = $this->get('translator')->trans($title);
+        foreach ($sites as $site) {
+            if(!$user->hasLanguageBySite($site->getSiteId())) {
+                $user->setLanguageBySite($site->getSiteId(), $site->getDefaultLanguage());
+            }
+        }
 
-        return $this->renderAdminForm($form, array('title' => $title));
+        return $user;
     }
+
 }

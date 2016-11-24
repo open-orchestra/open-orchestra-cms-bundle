@@ -46,11 +46,11 @@ class UserTypeTest extends AbstractUserTypeTest
      *
      * @dataProvider provideOptions
      */
-    public function testBuilder(array $options, $expectSubscriber)
+    public function testBuilder(array $options, $expectSubscriber, $nbrAdd)
     {
         $this->form->buildForm($this->builder, $options);
 
-        Phake::verify($this->builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times($nbrAdd))->add(Phake::anyParameters());
 
         if ($expectSubscriber) {
             Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
@@ -64,9 +64,12 @@ class UserTypeTest extends AbstractUserTypeTest
      */
     public function provideOptions()
     {
+        $site = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
+        Phake::when($site)->getLanguageBySites()->thenReturn(array('en' => 'fakeLanguage', 'fr' => 'fakeLanguage'));
+
         return array(
-            'without_groups_edition' => array(array(), false),
-            'with_groups_edition' => array(array('edit_groups' => 'true'), true)
+            'without_groups_edition' => array(array('edit_groups' => 'false', 'self_editing' => false, 'data' => $site), false, 6),
+            'with_groups_edition' => array(array('edit_groups' => 'true', 'self_editing' => true, 'data' => $site), true, 7)
         );
     }
 
@@ -78,7 +81,41 @@ class UserTypeTest extends AbstractUserTypeTest
         $this->form->configureOptions($this->resolver);
         Phake::verify($this->resolver)->setDefaults(array(
             'data_class' => $this->class,
-            'edit_groups' => true
+            'edit_groups' => true,
+            'self_editing' => false,
+            'group_enabled' => true,
+            'group_render' => array(
+                'information' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.group.information',
+                ),
+                'authentication' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_user_admin.form.user.group.authentication',
+                ),
+                'preference' => array(
+                    'rank' => 2,
+                    'label' => 'open_orchestra_user_admin.form.user.group.preference',
+                ),
+            ),
+            'sub_group_render' => array(
+                'contact_information' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.contact_information',
+                ),
+                'identifier' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.identifier',
+                ),
+                'backoffice' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.backoffice',
+                ),
+                'language' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.language',
+                ),
+            ),
         ));
         Phake::verify($this->resolver)->setDefaults(Phake::anyParameters());
     }

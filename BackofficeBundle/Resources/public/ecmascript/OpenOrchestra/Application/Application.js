@@ -1,13 +1,16 @@
-import NodeRouter       from './Router/Node/NodeRouter'
-import KeywordRouter    from './Router/Keyword/KeywordRouter'
-import DashboardRouter  from './Router/Dashboard/DashboardRouter'
-import SiteRouter       from './Router/Site/SiteRouter'
-import ErrorView        from './View/Error/ErrorView'
-import ApplicationError from '../Service/Error/ApplicationError'
-import AjaxError        from '../Service/Error/AjaxError'
-import HeaderView       from './View/Header/HeaderView'
-import SitesAvailable   from './Collection/Site/SitesAvailable'
-import NavigationView   from './View/Navigation/NavigationView'
+import NodeRouter         from './Router/Node/NodeRouter'
+import KeywordRouter      from './Router/Keyword/KeywordRouter'
+import DashboardRouter    from './Router/Dashboard/DashboardRouter'
+import SiteRouter         from './Router/Site/SiteRouter'
+import UserRouter         from './Router/User/UserRouter'
+import ErrorView          from './View/Error/ErrorView'
+import ApplicationError   from '../Service/Error/ApplicationError'
+import AjaxError          from '../Service/Error/AjaxError'
+import HeaderView         from './View/Header/HeaderView'
+import SitesAvailable     from './Collection/Site/SitesAvailable'
+import NavigationView     from './View/Navigation/NavigationView'
+import FormBehaviorManager from '../Service/Form/Behavior/Manager'
+import ScrollTable        from '../Service/Form/Behavior/ScrollTable'
 
 /**
  * @class Application
@@ -31,6 +34,7 @@ class Application
         this._initTranslator();
         this._initRouter();
         this._initLayoutView();
+        this._initFormBehaviorManager();
 
         Backbone.Events.trigger('application:before:start');
         Backbone.history.start();
@@ -122,6 +126,7 @@ class Application
         new NodeRouter();
         new KeywordRouter();
         new SiteRouter();
+        new UserRouter();
     }
 
     /**
@@ -162,6 +167,15 @@ class Application
         Translator.locale = this.getContext().language;
         Translator.defaultDomain = 'interface';
     }
+
+    /**
+     * Initialize form behavior library
+     * @private
+     */
+    _initFormBehaviorManager() {
+        FormBehaviorManager.add(ScrollTable);
+    }
+
 }
 
 // unique instance of Application

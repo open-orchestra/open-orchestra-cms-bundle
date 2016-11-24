@@ -2,10 +2,11 @@
 
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
-use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserType
@@ -31,24 +32,79 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName', 'text', array(
-            'label' => 'open_orchestra_user.form.user.firstName'
-        ));
-        $builder->add('lastName', 'text', array(
-            'label' => 'open_orchestra_user.form.user.lastName'
-        ));
-        $builder->add('email', 'email', array(
-            'label' => 'open_orchestra_user.form.user.email'
-        ));
-        $builder->add('language', 'choice', array(
-            'choices' => $this->getLanguages(),
-            'label' => 'open_orchestra_user.form.user.language'
-        ));
-        $builder->add('id', 'hidden', array(
-            'disabled' => true
-        ));
+        $sitesId = array();
+        $disabled = false;
+        if (array_key_exists('data', $options) && ($user = $options['data']) instanceof UserInterface) {
+            $sitesId = array_keys($user->getLanguageBySites());
+            $disabled = !$user->isEditAllowed();
+        }
 
-        if (isset($options['edit_groups']) && $options['edit_groups']) {
+        $builder
+            ->add('firstName', 'text', array(
+                'label' => 'open_orchestra_user_admin.form.user.firstName',
+                'group_id' => 'information',
+                'sub_group_id' => 'contact_information',
+                'disabled' => $disabled,
+            ))
+            ->add('lastName', 'text', array(
+                'label' => 'open_orchestra_user_admin.form.user.lastName',
+                'group_id' => 'information',
+                'sub_group_id' => 'contact_information',
+                'disabled' => $disabled,
+            ))
+            ->add('email', 'email', array(
+                'label' => 'open_orchestra_user_admin.form.user.email',
+                'group_id' => 'information',
+                'sub_group_id' => 'contact_information',
+                'disabled' => $disabled,
+            ));
+        if ($options['self_editing']) {
+            $builder
+                ->add('current_password', 'password', array(
+                    'label' => 'form.current_password',
+                    'translation_domain' => 'FOSUserBundle',
+                    'mapped' => false,
+                    'group_id' => 'authentication',
+                    'sub_group_id' => 'identifier',
+                    'required' => false,
+                ))
+                ->add('plainPassword', 'repeated', array(
+                    'type' => 'password',
+                    'options' => array('translation_domain' => 'FOSUserBundle'),
+                    'first_options' => array('label' => 'form.new_password'),
+                    'second_options' => array('label' => 'form.new_password_confirmation'),
+                    'invalid_message' => 'fos_user.password.mismatch',
+                    'group_id' => 'authentication',
+                    'sub_group_id' => 'identifier',
+                    'required' => false,
+                ));
+        } else {
+            $builder
+                ->add('plainPassword', 'repeated', array(
+                    'type' => 'password',
+                    'options' => array('translation_domain' => 'FOSUserBundle'),
+                    'first_options' => array('label' => 'form.password'),
+                    'second_options' => array('label' => 'form.password_confirmation'),
+                    'invalid_message' => 'fos_user.password.mismatch',
+                    'group_id' => 'authentication',
+                    'sub_group_id' => 'identifier',
+                ));
+        }
+        $builder
+            ->add('language', 'choice', array(
+                'choices' => $this->getLanguages(),
+                'label' => 'open_orchestra_user_admin.form.user.language',
+                'group_id' => 'preference',
+                'sub_group_id' => 'backoffice',
+            ))
+            ->add('languageBySites', 'oo_language_by_sites', array(
+                'label' => false,
+                'sites_id' => $sitesId,
+                'group_id' => 'preference',
+                'sub_group_id' => 'language',
+            ));
+
+        if ($options['edit_groups']) {
             $builder->addEventSubscriber(new UserGroupsSubscriber());
         }
 
@@ -64,7 +120,41 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->class,
-            'edit_groups' => true
+            'edit_groups' => true,
+            'self_editing' => false,
+            'group_enabled' => true,
+            'group_render' => array(
+                'information' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.group.information',
+                ),
+                'authentication' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_user_admin.form.user.group.authentication',
+                ),
+                'preference' => array(
+                    'rank' => 2,
+                    'label' => 'open_orchestra_user_admin.form.user.group.preference',
+                ),
+            ),
+            'sub_group_render' => array(
+                'contact_information' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.contact_information',
+                ),
+                'identifier' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.identifier',
+                ),
+                'backoffice' => array(
+                    'rank' => 0,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.backoffice',
+                ),
+                'language' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.language',
+                ),
+            ),
         ));
     }
 

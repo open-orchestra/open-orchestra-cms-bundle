@@ -21,7 +21,7 @@ class AbstractFormView extends OrchestraView
      */
     preinitialize(options) {
         this.events = {
-            'click button[type="submit"]': '_submit'
+            'click button[type="submit"]': '_submit',
         };
     }
 
@@ -45,6 +45,7 @@ class AbstractFormView extends OrchestraView
 
         //@todo refacto this line when form behavior is convert in ES6
         OpenOrchestra.FormBehavior.channel.trigger('activate', this, this.$el);
+        Backbone.Events.trigger('form:activate', this.$el);
 
         return this;
     }
@@ -55,6 +56,7 @@ class AbstractFormView extends OrchestraView
     refreshRender() {
         //@todo refacto this line when form behavior is convert in ES6
         OpenOrchestra.FormBehavior.channel.trigger('deactivate', this, this.$el);
+        Backbone.Events.trigger('form:deactivate', this.$el);
         this.render();
     }
 

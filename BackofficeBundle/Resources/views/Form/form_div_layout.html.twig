@@ -14,24 +14,24 @@
 {% endblock form %}
 
 {% block form_widget %}
-	{% set nav_html  = '' %}
-	{% set group_html  = '' %}
-	{% set group_label  = '' %}
+	{% set groups  = [] %}
     {% if form.vars.group_enabled is defined and true == form.vars.group_enabled %}
+      	{%  set active = -1 %}
         {% for group in form.vars.group %}
-        	{%  set current_group_html %}
-            	{%  set err = false %}
-            	{%  set req = false %}
-            	{%  set active = -1 %}
+        	{% set err = false %}
+        	{% set req = false %}
+        	{% set rank = loop.index0 %}
+			{% set group_label  = '' %}
+        	{%  set current_group %}
                 {% for subgroup in group %}
                 	{% set subgroup_html %}
                 	    {% set group_label = subgroup.group_label %}
                         {% for child in subgroup.children %}
                     		{{ form_row(form[child]) }}
-                    		{% set err = err or form[child].vars.errors is not empty %}
-                    		{% set req = req or form[child].vars.required %}
-                    		{% set active = (active == -1 and err) ? loop.index0 : active %}
-                    	{% endfor %}
+                    		{% set err = err or not form[child].vars.valid %}
+                    		{% set req = req or (form[child].vars.required is defined and form[child].vars.required) %}
+                    		{% set active = (active == -1 and err) ? rank : active %}
+	                   	{% endfor %}
        	            {% endset %}
        	            {% if subgroup.sub_group_label != constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_SUB_GROUP') %}
            	        	<fieldset>
@@ -42,24 +42,25 @@
        	                {{ subgroup_html }}
        	            {% endif %}
     	        {% endfor %}
-           		{% set active = (active == -1) ? 0 : active %}
 	        {% endset %}
-	        {% set current_group_html %}
-               	<div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if err %} error{% endif %}{% if req %} required{% endif %}">
-               		{{ current_group_html }}
-    	        </div>
-	        {% endset %}
-	        {% set current_nav_html %}
-	        	<li class="{% if active == loop.index0 %}active{% endif %}"><a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}"><label for="{{ loop.index0 }}" class="control-label col-lg-3">{{ group_label|default(loop.index0)|trans }}</label></a></li>
-	        {% endset %}
-	        {% set nav_html = nav_html ~ current_nav_html %}
-	        {% set group_html = group_html ~ current_group_html %}
-        {% endfor %}
+	        {% set groups = groups|merge([{'label': group_label, 'html': current_group, 'err': err, 'req': req}]) %}
+	    {% endfor %}
+   		{% set active = (active == -1) ? 0 : active %}
         <ul role="tablist" class="nav nav-tabs">
-            {{ nav_html|raw }}
+        {% for group in groups %}
+	    	<li class="{% if active == loop.index0 %}active{% endif %}">
+	    		<a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
+	    		    {{ group.label|default(loop.index0)|trans }}
+	    	    </a>
+	    	</li>
+        {% endfor %}
         </ul>
     	<div class="tab-content">
-    	    {{ group_html|raw }}
+        {% for group in groups %}
+           	<div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}">
+           		{{ group.html }}
+	        </div>
+        {% endfor %}
 		</div>
     {% else %}
         {{ parent() }}
@@ -80,6 +81,42 @@
         {% endif %}
     {% endspaceless %}
 {% endblock choice_widget %}
+
+
+{% block oo_language_by_sites_widget %}
+    {% spaceless %}
+        <div class="contribution">
+            <table class="table table-striped table-language scrollable">
+            {% set child = form|first %}
+    		<thead>
+                <tr>
+                    <th>&nbsp;</th>
+    	        {% for choice in child %}
+                    <th>
+                        {{ choice.vars.label|trans }}
+                    </th>
+    		    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for child in form %}
+                <tr>
+                	<th>
+                		{{ child.vars.label|trans }}
+                	</th>
+    	        {% for choice in child %}
+                    <td>
+                        <input type="radio" id="{{ choice.vars.full_name }}_{{ choice.vars.value }}" name="{{ choice.vars.full_name }}" value="{{ choice.vars.value }}"{% if choice.vars.checked %} checked=""{% endif %}{% if choice.vars.attr.disabled is defined and choice.vars.attr.disabled == 'disabled' %} disabled="disabled"{% endif %} />
+                        <label for="{{ choice.vars.full_name }}_{{ choice.vars.value }}"></label>
+                    </td>
+    		    {% endfor %}
+                </tr>
+    	    {% endfor %}
+    	    </tbody>
+            </table>
+        </div>
+    {% endspaceless %}
+{% endblock oo_language_by_sites_widget %}
 
 {% block checkbox_widget %}
     {% spaceless %}

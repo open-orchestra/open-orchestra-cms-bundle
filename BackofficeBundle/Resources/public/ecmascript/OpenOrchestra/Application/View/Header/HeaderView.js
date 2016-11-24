@@ -16,7 +16,7 @@ class HeaderView extends OrchestraView
         this.className = 'header';
         this.events = {
             'click .expand': '_toggleFullscreen',
-            'click .logout': '_showLogOutModal'
+            'click .logout': '_showLogOutModal',
         }
     }
 

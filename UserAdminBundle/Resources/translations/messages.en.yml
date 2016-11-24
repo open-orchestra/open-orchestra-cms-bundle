@@ -14,8 +14,35 @@ open_orchestra_user_admin:
         last_name: Last name
         delete_confirm:
             title: Remove this user of group?
+    password:
+        title: Password
     form:
         title: General
         super_admin_help_text: This user is super admin, so it is impossible to select rights because he already has all the access.
-    password:
-        title: Password
+        registration_user:
+            first_name: First name
+            last_name: Last name
+            roles: Roles
+        user:
+            firstName: First name
+            lastName: Last name
+            email: Email
+            password: Password
+            password_confirmation: Password confirmation
+            password_mismatch: Password mismatch
+            groups: Groups
+            language: Default language
+            success: The user has been updated
+            group:
+                information: Informations
+                authentication: Authentication
+                preference: Preferences
+            sub_group:
+                contact_information: Contact informations
+                identifier: Identifier
+                backoffice: Back-office
+                language: Language of contribution
+    new:
+        success: The user has been created
+    update:
+        success: The user has been updated

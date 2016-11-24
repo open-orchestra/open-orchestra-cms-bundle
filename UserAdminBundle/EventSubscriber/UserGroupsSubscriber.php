@@ -36,7 +36,7 @@ class UserGroupsSubscriber implements EventSubscriberInterface
                     'multiple' => true,
                     'expanded' => true,
                     'required' => false,
-                    'label' => 'open_orchestra_user.form.user.groups'
+                    'label' => 'open_orchestra_user_admin.form.user.groups'
                 ));
             } else {
                 $form->add('help_text', 'button', array(
