@@ -8,6 +8,7 @@ use OpenOrchestra\DisplayBundle\BBcode\InternalLinkDefinition;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
 
 /**
  * Class NodeInNodeReferenceStrategy
@@ -44,17 +45,18 @@ class NodeInNodeReferenceStrategy implements ReferenceStrategyInterface
     }
 
     /**
-     * @param mixed $entity
+     * @param mixed $event
      */
-    public function addReferencesToEntity($entity)
+    public function addReferencesToEntity($event)
     {
-        if ($this->support($entity)) {
-            $listNodes = $this->extractNodesFromNode($entity);
+        $node = $event->getNode();
+        if ($this->support($node)) {
+            $listNodes = $this->extractNodesFromNode($event);
 
             foreach ($listNodes as $nodeReference) {
                 $nodeId = $nodeReference['nodeId'];
                 $siteId = $nodeReference['siteId'];
-                $this->nodeRepository->updateUseReference($entity->getId(), $nodeId, $siteId, NodeInterface::ENTITY_TYPE);
+                $this->nodeRepository->updateUseReference($node->getId(), $nodeId, $siteId, NodeInterface::ENTITY_TYPE);
             }
         }
     }
@@ -77,16 +79,18 @@ class NodeInNodeReferenceStrategy implements ReferenceStrategyInterface
     }
 
     /**
-     * @param ReadNodeInterface $node
+     * @param NodeEvent $event
      *
      * @return array
      */
-    protected function extractNodesFromNode(ReadNodeInterface $node)
+    protected function extractNodesFromNode(NodeEvent $event)
     {
         $references = array();
 
+        $blocks = ($event->getBlock() != null) ? array($event->getBlock()) : $event->getNode()->getBlocks();
+
         /** @var \OpenOrchestra\ModelInterface\Model\BlockInterface $block */
-        foreach ($node->getBlocks() as $block) {
+        foreach ($blocks as $block) {
             $references = array_merge($references, $this->extractNodesFromElement($block->getAttributes()));
         }
 

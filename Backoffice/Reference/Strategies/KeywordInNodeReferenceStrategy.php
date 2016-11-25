@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Reference\Strategies;
 
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
 
 /**
  * Class KeywordInNodeReferenceStrategy
@@ -21,18 +22,19 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
     }
 
     /**
-     * @param mixed $entity
+     * @param mixed $event
      */
-    public function addreferencesToEntity($entity)
+    public function addreferencesToEntity($event)
     {
-        if ($this->support($entity)) {
-            $keywordIds = $this->extractKeywordsFromNode($entity);
+        $node = $event->getNode();
+        if ($this->support($node)) {
+            $keywordIds = $this->extractKeywordsFromNode($event);
 
             foreach ($keywordIds as $keywordId) {
                 /** @var \OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
                 $keyword = $this->keywordRepository->find($keywordId);
                 if ($keyword) {
-                    $keyword->addUseInEntity($entity->getId(), NodeInterface::ENTITY_TYPE);
+                    $keyword->addUseInEntity($node->getId(), NodeInterface::ENTITY_TYPE);
                 }
             }
         }
@@ -55,16 +57,18 @@ class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy im
     }
 
     /**
-     * @param ReadNodeInterface $node
+     * @param NodeEvent $event
      *
      * @return array
      */
-    protected function extractKeywordsFromNode(ReadNodeInterface $node)
+    protected function extractKeywordsFromNode(NodeEvent $event)
     {
         $references = array();
 
+        $blocks = ($event->getBlock() != null) ? array($event->getBlock()) : $event->getNode()->getBlocks();
+
         /** @var \OpenOrchestra\ModelInterface\Model\BlockInterface $block */
-        foreach ($node->getBlocks() as $block) {
+        foreach ($blocks as $block) {
             $references = $this->extractKeywordsFromElement($block->getAttributes(), $references);
         }
 

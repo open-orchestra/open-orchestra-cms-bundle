@@ -53,7 +53,7 @@ class BlockController extends AbstractEditionRoleController
         if ('PATCH' !== $request->getMethod()) {
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');
             if ($this->handleForm($form, $message)) {
-                $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
+                $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node), null, $block);
             }
         }
 
