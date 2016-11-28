@@ -59,7 +59,7 @@ class NodeController extends AbstractAdminController
             $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
             if ($oldStatus !== $node->getStatus()) {
                 $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, new NodeEvent($node, $oldStatus));
-                $form = $this->createForm('oo_node', $node, $options, $this->getEditionRole($node));
+                $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT);
             }
         }
 

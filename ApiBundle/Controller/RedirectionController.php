@@ -3,8 +3,11 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\DisplayBundle\Exception\NodeNotFoundException;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -65,12 +68,16 @@ class RedirectionController extends BaseController
      * @Config\Route("/node/{siteId}/{nodeId}/{locale}", name="open_orchestra_api_redirection_node_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_REDIRECTION')")
-     *
      * @return FacadeInterface
      */
     public function listRedirectionNodeAction($siteId, $nodeId, $locale)
     {
+        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeAndSite($nodeId, $siteId);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
+
         $repository = $this->get('open_orchestra_model.repository.redirection');
         $redirectionList = $repository->findByNode($nodeId, $locale, $siteId);
 
