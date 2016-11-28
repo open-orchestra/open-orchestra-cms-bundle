@@ -47,7 +47,10 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader->load('security.yml');
 
         $orchestraHierarchy = $container->getParameter('open_orchestra_user_admin.role_hierarchy');
-        $roleHierarchy = $container->getParameter('security.role_hierarchy.roles');
+        $roleHierarchy = array();
+        if ($container->hasParameter('security.role_hierarchy.roles')) {
+            $roleHierarchy = $container->getParameter('security.role_hierarchy.roles');
+        }
 
         $container->setParameter('security.role_hierarchy.roles', array_merge($orchestraHierarchy, $roleHierarchy));
     }
