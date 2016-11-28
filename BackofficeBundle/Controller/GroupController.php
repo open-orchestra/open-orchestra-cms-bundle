@@ -8,6 +8,7 @@ use OpenOrchestra\UserBundle\GroupEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class GroupController
@@ -22,8 +23,6 @@ class GroupController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_backoffice_group_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_GROUP')")
-     *
      * @return Response
      */
     public function newAction(Request $request)
@@ -31,6 +30,7 @@ class GroupController extends AbstractAdminController
         $groupClass = $this->container->getParameter('open_orchestra_user.document.group.class');
         /** @var GroupInterface $group */
         $group = new $groupClass();
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $group);
 
         $form = $this->createForm('oo_group', $group, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_group_new'),
@@ -57,13 +57,12 @@ class GroupController extends AbstractAdminController
      * @Config\Route("/form/{groupId}", name="open_orchestra_backoffice_group_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_GROUP')")
-     *
      * @return Response
      */
     public function formAction(Request $request, $groupId)
     {
         $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $group);
 
         $form = $this->createForm('oo_group', $group, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_group_form', array(

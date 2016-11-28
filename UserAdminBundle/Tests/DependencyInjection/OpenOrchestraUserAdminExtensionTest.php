@@ -39,8 +39,15 @@ class OpenOrchestraUserAdminExtensionTest extends AbstractBaseTestCase
      */
     public function testFacadesConfig($parameter, $facadeClass)
     {
-        $this->assertEquals('OpenOrchestra\UserAdminBundle\Facade\\'.$facadeClass, $this->emptyContainer->getParameter('open_orchestra_user_admin.facade.'.$parameter.'.class'));
-        $this->assertEquals('FacadeClass', $this->valueContainer->getParameter('open_orchestra_user_admin.facade.'.$parameter.'.class'));
+        $this->assertEquals(
+            'OpenOrchestra\UserAdminBundle\Facade\\' . $facadeClass,
+            $this->emptyContainer->getParameter('open_orchestra_user_admin.facade.' . $parameter . '.class')
+        );
+
+        $this->assertEquals(
+            'FacadeClass',
+            $this->valueContainer->getParameter('open_orchestra_user_admin.facade.' . $parameter . '.class')
+        );
     }
 
     /**
@@ -59,7 +66,7 @@ class OpenOrchestraUserAdminExtensionTest extends AbstractBaseTestCase
      *
      * @return ContainerBuilder
      */
-    private function loadContainerFromFile($file)
+    protected function loadContainerFromFile($file)
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', false);

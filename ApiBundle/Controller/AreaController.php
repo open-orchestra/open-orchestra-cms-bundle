@@ -2,16 +2,15 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class AreaController
@@ -37,7 +36,7 @@ class AreaController extends BaseController
     public function showAreaNodeAction($areaId, $nodeId, $language, $version, $siteId)
     {
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         $area = $this->get('open_orchestra_model.repository.node')->findAreaInNodeByAreaId($node, $areaId);
 
@@ -63,7 +62,7 @@ class AreaController extends BaseController
             $request->get('_format', 'json')
         );
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
-        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
         $areaClass = $this->container->getParameter('open_orchestra_model.document.area.class');
 
@@ -115,7 +114,7 @@ class AreaController extends BaseController
             $request->get('_format', 'json')
         );
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
-        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
         foreach ($facade->getAreas() as $key => $facadeArea) {
             $blocks = array();
@@ -130,34 +129,5 @@ class AreaController extends BaseController
         $this->get('object_manager')->flush();
 
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return string
-     */
-    protected function getEditionRole(NodeInterface $node)
-    {
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return string
-     *
-     */
-    protected function getAccessRole(NodeInterface $node)
-    {
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
     }
 }

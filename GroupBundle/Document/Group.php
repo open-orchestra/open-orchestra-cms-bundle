@@ -164,12 +164,21 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @param string             $entityType
      * @param PerimeterInterface $perimeter
      */
-    public function addPerimeter($entityType, PerimeterInterface $perimeter)
+    public function addPerimeter(PerimeterInterface $perimeter)
     {
-        $this->perimeters->set($entityType, $perimeter);
+        $this->perimeters->set($perimeter->getType(), $perimeter);
+    }
+
+    /**
+     * @param string $perimeterType
+     *
+     * @return array
+     */
+    public function getPerimeter($perimeterType)
+    {
+        return $this->perimeters->get($perimeterType);
     }
 
     /**

@@ -8,6 +8,9 @@ use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ContentController
@@ -21,8 +24,6 @@ class ContentController extends AbstractAdminController
      * @Config\Route("/content/form/{contentId}", name="open_orchestra_backoffice_content_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT')")
-     *
      * @return Response
      */
     public function formAction(Request $request, $contentId)
@@ -34,28 +35,31 @@ class ContentController extends AbstractAdminController
         $version = $request->get('version');
 
         $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
-        $form = $this->createForm('oo_content', $content, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
-                'contentId' => $content->getContentId(),
-                'language' => $content->getLanguage(),
-                'version' => $content->getVersion(),
-            ))
-        ), ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT);
+        if ($content instanceof ContentInterface) {
+            $form = $this->createForm('oo_content', $content, array(
+                'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
+                    'contentId' => $content->getContentId(),
+                    'language' => $content->getLanguage(),
+                    'version' => $content->getVersion(),
+                ))
+            ), ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT);
 
-        $form->handleRequest($request);
-        $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
+            $form->handleRequest($request);
+            $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
 
-        if ($this->handleForm($form, $message)) {
-            $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+            if ($this->handleForm($form, $message)) {
+                $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+            }
+
+            return $this->renderAdminForm(
+                $form,
+                array(),
+                null,
+                $this->getFormTemplate($content->getContentType()
+            ));
         }
-
-        return $this->renderAdminForm(
-            $form,
-            array(),
-            null,
-            $this->getFormTemplate($content->getContentType()
-        ));
     }
 
     /**
@@ -71,10 +75,12 @@ class ContentController extends AbstractAdminController
 
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
 
-        $customTemplate = $contentType->getTemplate();
+        if ($contentType instanceof ContentTypeInterface) {
+            $customTemplate = $contentType->getTemplate();
 
-        if ($customTemplate != '' && $this->get('templating')->exists($customTemplate)) {
-            $template = $customTemplate;
+            if ($customTemplate != '' && $this->get('templating')->exists($customTemplate)) {
+                $template = $customTemplate;
+            }
         }
 
         return $template;
@@ -87,13 +93,12 @@ class ContentController extends AbstractAdminController
      * @Config\Route("/content/new/{contentType}", name="open_orchestra_backoffice_content_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT')")
-     *
      * @return Response
      */
     public function newAction(Request $request, $contentType)
     {
         $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentType);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
 
         $form = $this->createForm('oo_content', $content, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(

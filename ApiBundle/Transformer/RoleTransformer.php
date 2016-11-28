@@ -9,6 +9,7 @@ use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\Backoffice\UsageFinder\RoleUsageFinder;
 
 /**
  * Class RoleTransformer
@@ -16,19 +17,23 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $multiLanguagesChoiceManager;
+    protected $usageFinder;
 
     /**
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param AuthorizationCheckerInterface        $authorizationChecker
+     * @param RoleUsageFinder                      $usageFinder
      */
     public function __construct(
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        RoleUsageFinder $usageFinder
     ){
         parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
+        $this->usageFinder = $usageFinder;
     }
 
     /**
@@ -56,7 +61,9 @@ class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
             'open_orchestra_api_role_show',
             array('roleId' => $role->getId())
         ));
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE, $role)) {
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE, $role)
+            && !$this->usageFinder->hasUsage($role)
+        ) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_role_delete',
                 array('roleId' => $role->getId())

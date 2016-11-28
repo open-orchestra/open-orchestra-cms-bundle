@@ -11,27 +11,63 @@ use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 class Perimeter implements PerimeterInterface
 {
     /**
-     * @var array $paths
+     * @var string $type
+     *
+     * @ODM\Field(
+     *  type="string"
+     * )
+     */
+    protected $type;
+
+    /**
+     * @var array $items
      *
      * @ODM\Field(
      *  type="hash"
      * )
      */
-    protected $paths;
+    protected $items;
 
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($type = '')
     {
-        $this->paths = array();
+        $this->setType($type);
+        $this->items = array();
     }
 
     /**
-     * @param string $path
+     * @param string $type
      */
-    public function addPath($path)
+    public function setType($type)
     {
-        $this->paths[] = $path;
+        if (is_string($type)) {
+            $this->type = $type;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $item
+     */
+    public function addItem($item)
+    {
+        $this->items[] = $item;
+    }
+
+    /**
+     * @return array
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }

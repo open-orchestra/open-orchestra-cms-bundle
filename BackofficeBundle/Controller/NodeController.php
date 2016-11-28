@@ -2,18 +2,18 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class NodeController
  */
-class NodeController extends AbstractEditionRoleController
+class NodeController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -28,7 +28,7 @@ class NodeController extends AbstractEditionRoleController
     {
         $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->findVersionByDocumentId($id);
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
@@ -40,7 +40,7 @@ class NodeController extends AbstractEditionRoleController
             $options['activateBoLabel'] = false;
         }
 
-        $form = $this->createForm('oo_node', $node, $options, $this->getEditionRole($node));
+        $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT);
 
         $form->handleRequest($request);
 
@@ -63,13 +63,12 @@ class NodeController extends AbstractEditionRoleController
     public function newAction(Request $request, $parentId)
     {
         $parentNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($parentId);
-
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $parentNode);
-
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
         $language = $contextManager->getCurrentSiteDefaultLanguage();
         $siteId = $contextManager->getCurrentSiteId();
         $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNode($parentId, $language, $siteId);
+
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $node);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');

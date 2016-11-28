@@ -31,7 +31,6 @@ class ContentTypeController extends BaseController
      *
      * @Config\Route("/{contentTypeId}", name="open_orchestra_api_content_type_show")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE')")
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::FIELD_TYPES
@@ -49,8 +48,6 @@ class ContentTypeController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_content_type_list")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE')")
      *
      * @return FacadeInterface
      */
@@ -81,8 +78,6 @@ class ContentTypeController extends BaseController
      *
      * @Config\Route("/{contentTypeId}/delete", name="open_orchestra_api_content_type_delete")
      * @Config\Method({"DELETE"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_CONTENT_TYPE')")
      *
      * @return Response
      */

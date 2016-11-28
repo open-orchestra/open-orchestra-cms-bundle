@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteController
@@ -31,7 +32,6 @@ class SiteController extends BaseController
      *
      * @Config\Route("/{siteId}", name="open_orchestra_api_site_show")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ROLE_ACCESS_SITE')")
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::THEME,
@@ -50,8 +50,6 @@ class SiteController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_site_list")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_SITE')")
      *
      * @return FacadeInterface
      */
@@ -85,8 +83,6 @@ class SiteController extends BaseController
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE_MAIN_ALIAS
      * })
      *
-     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     *
      * @return FacadeInterface
      */
     public function listAvailableSiteAction()
@@ -102,16 +98,17 @@ class SiteController extends BaseController
      * @Config\Route("/{siteId}/delete", name="open_orchestra_api_site_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_SITE')")
-     *
      * @return Response
      */
     public function deleteAction($siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $site->setDeleted(true);
-        $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
-        $this->get('object_manager')->flush();
+
+        if ($site instanceof SiteInterface) {
+            $site->setDeleted(true);
+            $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
+            $this->get('object_manager')->flush();
+        }
 
         return array();
     }

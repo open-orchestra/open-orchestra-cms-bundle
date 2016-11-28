@@ -33,7 +33,6 @@ class StatusController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_status_list_table")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ROLE_ACCESS_STATUS')")
      *
      * @Api\Groups({CMSGroupContext::STATUS_LINKS})
      */
@@ -75,7 +74,9 @@ class StatusController extends BaseController
     public function deleteAction($statusId)
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
-        if (!$this->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)) {
+        if (!$this->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)
+            || $this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
+        ) {
             throw new DeleteStatusNotGrantedHttpException();
         }
         $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));

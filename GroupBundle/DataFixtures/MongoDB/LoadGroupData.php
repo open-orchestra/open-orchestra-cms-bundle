@@ -3,8 +3,10 @@
 namespace OpenOrchestra\GroupBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\GroupBundle\Document\Group;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class LoadGroupData
@@ -16,19 +18,72 @@ class LoadGroupData extends AbstractLoadGroupData implements OrchestraFunctional
      */
     public function load(ObjectManager $manager)
     {
+        $sadmin2 = $this->createSiteAdminGroup();
+        $this->addReference('s-admin-demo', $sadmin2);
+        $manager->persist($sadmin2);
 
-        $group3 = $this->generateGroup('Empty group', 'Empty group', 'Groupe vide', 'site3', 'group3');
-        $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
-        $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_THEME);
-        $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_THEME);
-        $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_THEME);
+        $group = $this->createEmptyGroup();
+        $this->addReference('group3', $group);
+        $manager->persist($group);
 
-        $manager->persist($group3);
-
-        $groupContentType = $this->generateGroup('Content type group', 'Content type group', 'Groupe pour les types de contenu', 'site2', 'groupContentType', AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
-        $manager->persist($groupContentType);
+        $groupDemo = $this->createDemoGroup();
+        $this->addReference('group2', $groupDemo);
+        $manager->persist($groupDemo);
 
         $manager->flush();
+    }
+
+    /**
+     * Create Site 2 Admin group
+     *
+     * @return \OpenOrchestra\GroupBundle\Document\Group
+     */
+    protected function createSiteAdminGroup()
+    {
+        $sitePerimeter = $this->createPerimeter(SiteInterface::ENTITY_TYPE, array(
+            $this->getReference('site2')->getSiteId()
+        ));
+
+        $sadmin2 = new Group('Site Admin demo');
+        $sadmin2->addLabel('en', 'Site admin demo');
+        $sadmin2->addLabel('fr', 'Admin site demo');
+        $sadmin2->setSite($this->getReference('site2'));
+        $sadmin2->addPerimeter($sitePerimeter);
+
+        return $sadmin2;
+    }
+
+    /**
+     * Create group V2
+     *
+     * @return \OpenOrchestra\GroupBundle\Document\Group
+     */
+    protected function createDemoGroup()
+    {
+        $nodePerimeter = $this->createPerimeter(NodeInterface::ENTITY_TYPE, array(
+            'root/fixture_page_legal_mentions',
+            'root/fixture_page_contact'
+        ));
+        $nodeProfileCollection = $this->createProfileCollection(array('profile-Contributor'));
+
+        $group = new Group('Demo group');
+        $group->addLabel('en', 'Demo group');
+        $group->addLabel('fr', 'Groupe de démo');
+        $group->setSite($this->getReference('site2'));
+        $group->addWorkflowProfileCollection(NodeInterface::ENTITY_TYPE, $nodeProfileCollection);
+        $group->addPerimeter($nodePerimeter);
+
+        return $group;
+    }
+
+    protected function createEmptyGroup()
+    {
+        $group = new Group('Empty group');
+        $group->addLabel('en', 'Empty group');
+        $group->addLabel('fr', 'Groupe vide');
+        $group->setSite($this->getReference('site3'));
+
+        return $group;
     }
 
     /**
@@ -38,6 +93,6 @@ class LoadGroupData extends AbstractLoadGroupData implements OrchestraFunctional
      */
     public function getOrder()
     {
-        return 600;
+        return 612;
     }
 }

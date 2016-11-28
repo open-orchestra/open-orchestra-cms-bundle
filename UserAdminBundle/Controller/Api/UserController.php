@@ -29,8 +29,6 @@ class UserController extends BaseController
      * @Config\Route("/{userId}", name="open_orchestra_api_user_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_USER')")
-     *
      * @return FacadeInterface
      */
     public function showAction($userId)
@@ -45,8 +43,6 @@ class UserController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_user_list")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_USER')")
      *
      * @return FacadeInterface
      */
@@ -68,8 +64,6 @@ class UserController extends BaseController
      * @Config\Route("/list-by-group/{groupId}", name="open_orchestra_api_user_list_by_group")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_USER')")
-     *
      * @return FacadeInterface
      */
     public function listByGroupAction($groupId)
@@ -90,8 +84,6 @@ class UserController extends BaseController
      *
      * @Config\Route("/list-by-username-without-group/{groupId}", name="open_orchestra_api_user_list_by_username_without_group")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_USER')")
      *
      * @return FacadeInterface
      */
@@ -115,8 +107,6 @@ class UserController extends BaseController
      * @Config\Route("/remove-group/{userId}/{groupId}", name="open_orchestra_api_user_remove_group")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_USER')")
-     *
      * @return FacadeInterface
      */
     public function removeGroupAction($groupId, $userId)
@@ -137,8 +127,6 @@ class UserController extends BaseController
      * @Config\Route("/add-group/{userId}/{groupId}", name="open_orchestra_api_user_add_group")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_USER')")
-     *
      * @return FacadeInterface
      */
     public function addGroupAction($groupId, $userId)
@@ -157,8 +145,6 @@ class UserController extends BaseController
      *
      * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")
      * @Config\Method({"DELETE"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_USER')")
      *
      * @return Response
      */

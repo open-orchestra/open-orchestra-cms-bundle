@@ -84,7 +84,9 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT)) {
-            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)) {
+            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)
+                && !$content->getStatus()->isBlockedEdition()
+            ) {
                 $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
                     'contentId' => $content->getContentId(),
                     'language' => $content->getLanguage(),

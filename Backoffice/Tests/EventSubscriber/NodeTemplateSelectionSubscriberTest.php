@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
-use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use Symfony\Component\Form\FormEvents;
 
 /**

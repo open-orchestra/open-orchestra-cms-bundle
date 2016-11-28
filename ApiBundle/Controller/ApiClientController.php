@@ -27,8 +27,6 @@ class ApiClientController extends BaseController
      * @Config\Route("", name="open_orchestra_api_api_client_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_API_CLIENT')")
-     *
      * @return FacadeInterface
      */
     public function listAction(Request $request)
@@ -45,8 +43,6 @@ class ApiClientController extends BaseController
      *
      * @Config\Route("/{apiClientId}/delete", name="open_orchestra_api_api_client_delete")
      * @Config\Method({"DELETE"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_API_CLIENT')")
      *
      * @return Response
      */

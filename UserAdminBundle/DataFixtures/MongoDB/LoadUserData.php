@@ -15,26 +15,23 @@ class LoadUserData extends AbstractLoadUserData implements OrchestraFunctionalFi
      */
     public function load(ObjectManager $manager)
     {
+        $developer = $this->generate('developer');
+        $developer->addRole(ContributionRoleInterface::DEVELOPER);
+        $manager->persist($developer);
+
+        $padmin = $this->generate('p-admin');
+        $padmin->addRole(ContributionRoleInterface::PLATFORM_ADMIN);
+        $this->addReference('p-admin', $padmin);
+        $manager->persist($padmin);
+
+        $sadmin = $this->generate('s-admin', 's-admin-demo');
+        $sadmin->addRole(ContributionRoleInterface::SITE_ADMIN);
+        $manager->persist($sadmin);
+
         $demoUser = $this->generate('demo', 'group2');
         $this->addReference('user-demo', $demoUser);
         $demoUser->addGroup($this->getReference('group3'));
         $manager->persist($demoUser);
-
-        $user1 = $this->generate('user1', 'group2');
-        $this->addReference('user-user1', $user1);
-        $manager->persist($user1);
-
-        $userContentType = $this->generate('userContentType', 'groupContentType');
-        $this->addReference('user-userContentType', $userContentType);
-        $manager->persist($userContentType);
-
-        $userLog = $this->generate('userLog', 'groupLog');
-        $this->addReference('user-userLog', $userLog);
-        $manager->persist($userLog);
-
-        $userFolderCreate = $this->generate('userFolderCreate', 'group-folders-create');
-        $this->addReference('user-folder-create', $userFolderCreate);
-        $manager->persist($userFolderCreate);
 
         $userNoAccess = $this->generate('userNoAccess');
         $manager->persist($userNoAccess);

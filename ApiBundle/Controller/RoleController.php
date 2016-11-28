@@ -29,8 +29,6 @@ class RoleController extends BaseController
      * @Config\Route("/show/{roleId}", name="open_orchestra_api_role_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_ROLE')")
-     *
      * @return FacadeInterface
      */
     public function showAction($roleId)
@@ -46,8 +44,6 @@ class RoleController extends BaseController
      * @Config\Route("/type/{type}", name="open_orchestra_api_role_list_by_type")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_ROLE')")
-     *
      * @return FacadeInterface
      */
     public function listByTypeAction($type)
@@ -58,8 +54,6 @@ class RoleController extends BaseController
     /**
      * @Config\Route("/type-node", name="open_orchestra_api_role_list_by_node_type")
      * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_ROLE')")
      *
      * @return FacadeInterface
      */
@@ -86,8 +80,6 @@ class RoleController extends BaseController
      * @Config\Route("", name="open_orchestra_api_role_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_ROLE')")
-     *
      * @return FacadeInterface
      */
     public function listAction(Request $request)
@@ -106,8 +98,6 @@ class RoleController extends BaseController
      *
      * @Config\Route("/{roleId}/delete", name="open_orchestra_api_role_delete")
      * @Config\Method({"DELETE"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_ROLE')")
      *
      * @return Response
      */

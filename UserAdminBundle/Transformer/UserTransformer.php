@@ -46,43 +46,45 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         $facade = $this->newFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->username = $mixed->getUsername();
-        $facade->roles = implode(',', $mixed->getRoles());
+        if (!is_null($mixed)) {
+            $facade->id = $mixed->getId();
+            $facade->username = $mixed->getUsername();
+            $facade->roles = implode(',', $mixed->getRoles());
 
-        $groups = $mixed->getGroups();
-        $labels = array();
-        foreach($groups as $group){
-            $labels[] = $this->multiLanguagesChoiceManager->choose($group->getLabels());
-        }
+            $groups = $mixed->getGroups();
+            $labels = array();
+            foreach($groups as $group){
+                $labels[] = $this->multiLanguagesChoiceManager->choose($group->getLabels());
+            }
 
-        $facade->groups = implode(',', $labels);
+            $facade->groups = implode(',', $labels);
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_user_show',
-            array('userId' => $mixed->getId())
-        ));
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_USER)) {
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_user_delete',
+            $facade->addLink('_self', $this->generateRoute(
+                'open_orchestra_api_user_show',
                 array('userId' => $mixed->getId())
             ));
+            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_USER)) {
+                $facade->addLink('_self_delete', $this->generateRoute(
+                    'open_orchestra_api_user_delete',
+                    array('userId' => $mixed->getId())
+                ));
+            }
+            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
+                $facade->addLink('_self_form', $this->generateRoute(
+                    'open_orchestra_user_admin_user_form',
+                    array('userId' => $mixed->getId())
+                ));
+            }
+            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
+                $facade->addLink('_self_panel_password_change', $this->generateRoute(
+                    'open_orchestra_user_admin_user_change_password',
+                    array('userId' => $mixed->getId())));
+            }
+            $this->eventDispatcher->dispatch(
+                UserFacadeEvents::POST_USER_TRANSFORMATION,
+                new UserFacadeEvent($facade, $mixed)
+            );
         }
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_user_admin_user_form',
-                array('userId' => $mixed->getId())
-            ));
-        }
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
-            $facade->addLink('_self_panel_password_change', $this->generateRoute(
-                'open_orchestra_user_admin_user_change_password',
-                array('userId' => $mixed->getId())));
-        }
-        $this->eventDispatcher->dispatch(
-            UserFacadeEvents::POST_USER_TRANSFORMATION,
-            new UserFacadeEvent($facade, $mixed)
-        );
 
         return $facade;
     }

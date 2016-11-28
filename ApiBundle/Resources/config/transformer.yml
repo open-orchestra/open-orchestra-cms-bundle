@@ -193,6 +193,7 @@ services:
             - '%open_orchestra_api.facade.role.class%'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@security.authorization_checker'
+            - '@open_orchestra_backoffice.usage_finder.role'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.role_collection:
@@ -268,6 +269,7 @@ services:
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@translator'
             - '@security.authorization_checker'
+            - '@open_orchestra_backoffice.usage_finder.status'
         tags:
             - { name: open_orchestra_api.transformer.strategy }
     open_orchestra_api.transformer.keyword:
