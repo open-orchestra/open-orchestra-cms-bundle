@@ -4,6 +4,7 @@ namespace OpenOrchestra\UserAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class LoadUserData
