@@ -8,9 +8,8 @@ use OpenOrchestra\UserBundle\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\UserBundle\Model\UserInterface as OO_User;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserController
@@ -64,7 +63,7 @@ class UserController extends AbstractAdminController
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
 
-        if ($user instanceof OO_User) {
+        if ($user instanceof UserInterface) {
             $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
             $user = $this->refreshLanguagesByAliases($user);
 
