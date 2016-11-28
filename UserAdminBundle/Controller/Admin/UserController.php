@@ -8,8 +8,8 @@ use OpenOrchestra\UserBundle\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserController
@@ -62,10 +62,15 @@ class UserController extends AbstractAdminController
     public function formAction(Request $request, $userId)
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $user = $this->refreshLanguagesByAliases($user);
-        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
 
-        return $this->renderForm($request, $user, false);
+        if ($user instanceof UserInterface) {
+            $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
+            $user = $this->refreshLanguagesByAliases($user);
+
+            return $this->renderForm($request, $user, false);
+        }
+
+        return new Response();
     }
 
     /**
