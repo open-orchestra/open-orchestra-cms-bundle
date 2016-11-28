@@ -30,7 +30,7 @@ open_orchestra_user_admin:
             password: Mot de passe
             password_confirmation: Confirmation du mot de passe
             password_mismatch: Mots de passe et confirmation différents
-            groups: Groupes
+            groups: Groupe(s) d'appartenance
             language: Langage par défaut
             success: L'utilisateur a été mis à jour
             group:
@@ -42,6 +42,11 @@ open_orchestra_user_admin:
                 identifier: Identifiant
                 backoffice: Back-office
                 language: Langue de contribution
+                profil: Profils
+                group: Groupes
+            platform_admin: Administrateur plateforme
+            developer: Développeur
+            edit_allowed: Peut éditer ses données personnelles
     new:
         success: L'utilisateur a bien été créé.
     update:

@@ -6,6 +6,7 @@ services:
     open_orchestra_user_admin.type.user:
         class: '%open_orchestra_user_admin.type.user.class%'
         arguments:
+            - '@object_manager'
             - '%open_orchestra_user.document.user.class%'
             - '%open_orchestra_base.administration_languages%'
         tags:

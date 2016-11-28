@@ -13,16 +13,31 @@ class UserRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'user/preference': 'showUserPreference'
+            'user/selfedit': 'editSelfUser',
+            'user/edit/:userId': 'editUser',
         };
     }
 
     /**
-     * Show User Preference
+     * Edit user preference
      */
-    showUserPreference() {
+    editSelfUser() {
         this._diplayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_user_admin_user_self_form', {userId : Application.getContext().user.id});
+        let url = Routing.generate('open_orchestra_user_admin_user_self_form');
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let userFormView = new UserFormView({form : form});
+            Application.getRegion('content').html(userFormView.render().$el);
+        });
+
+        return false;
+    }
+
+    /**
+     * Edit User
+     */
+    editUser(userId) {
+        this._diplayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_user_admin_user_form', {userId : userId});
         FormBuilder.createFormFromUrl(url, (form) => {
             let userFormView = new UserFormView({form : form});
             Application.getRegion('content').html(userFormView.render().$el);

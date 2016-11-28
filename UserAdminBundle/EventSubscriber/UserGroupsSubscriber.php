@@ -31,19 +31,13 @@ class UserGroupsSubscriber implements EventSubscriberInterface
         $user = $event->getData();
 
         if ($user instanceof UserInterface) {
-            if (false === $user->isSuperAdmin()) {
-                $form->add('groups', 'oo_group_choice', array(
-                    'multiple' => true,
-                    'expanded' => true,
-                    'required' => false,
-                    'label' => 'open_orchestra_user_admin.form.user.groups'
-                ));
-            } else {
-                $form->add('help_text', 'button', array(
-                    'disabled' => true,
-                    'label' => 'open_orchestra_user_admin.form.super_admin_help_text'
-                ));
-            }
+            $form->add('groups', 'oo_group_list', array(
+                'groups' => $user->getGroups(),
+                'label' => 'open_orchestra_user_admin.form.user.groups',
+                'group_id' => 'information',
+                'sub_group_id' => 'group',
+                'required' => false,
+            ));
         }
     }
 }

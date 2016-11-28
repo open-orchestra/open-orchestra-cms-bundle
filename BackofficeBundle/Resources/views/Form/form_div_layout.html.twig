@@ -138,11 +138,13 @@
 
 {% block radio_widget %}
     {% spaceless %}
-        <div class="smart-form">
-            <label class="toggle display-normal">
-                {{ parent() }}
-                <i data-swchon-text="{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}" data-swchoff-text="{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}"></i>
+        <div class="col-md-10 switch-button">
+            <span>{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}</span>
+            <label for="{{ form.vars.id }}" class="switch">
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+                <div class="slider"></div>
             </label>
+            <span>{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}</span>
         </div>
     {% endspaceless %}
 {% endblock %}

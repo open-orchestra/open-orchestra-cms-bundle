@@ -1,0 +1,8 @@
+parameters:
+    open_orchestra_group.transformer.group_list_to_array.class: OpenOrchestra\GroupBundle\Form\DataTransformer\GroupListToArrayTransformer
+
+services:
+    open_orchestra_group.transformer.group_list_to_array:
+        class: '%open_orchestra_group.transformer.group_list_to_array.class%'
+        arguments:
+            - '@open_orchestra_user.repository.group'
