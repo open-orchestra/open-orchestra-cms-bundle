@@ -53,6 +53,7 @@
       "OpenOrchestra\\GroupBundle\\": "GroupBundle/",
       "OpenOrchestra\\ApiBundle\\": "ApiBundle/",
       "OpenOrchestra\\UserAdminBundle\\": "UserAdminBundle/"
+      "OpenOrchestra\\Workflow\\": "Workflow/"
     }
   },
 
