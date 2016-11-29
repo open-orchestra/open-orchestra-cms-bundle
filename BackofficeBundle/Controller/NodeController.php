@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -33,9 +34,7 @@ class NodeController extends AbstractAdminController
      */
     public function formAction(Request $request, $siteId, $nodeId, $language, $version)
     {
-        $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->findVersion($nodeId, $language, $siteId, $version);
-        $oldStatus = $node->getStatus();
+        $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         if (!$node instanceof NodeInterface) {
             throw new \UnexpectedValueException();
         }
@@ -48,18 +47,18 @@ class NodeController extends AbstractAdminController
             'language' => $language
         ));
 
+        $status = $node->getStatus();
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
         $options = array('action' => $url);
-
-        $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT);
+        $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
 
         $form->handleRequest($request);
 
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
-            if ($oldStatus !== $node->getStatus()) {
-                $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, new NodeEvent($node, $oldStatus));
-                $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT);
+            if ($status->getId() !== $node->getStatus()->getId()) {
+                $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, new NodeEvent($node, $status));
+                $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
             }
         }
 
@@ -77,7 +76,6 @@ class NodeController extends AbstractAdminController
      */
     public function newAction(Request $request, $parentId)
     {
-        $parentNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($parentId);
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
         $language = $contextManager->getCurrentSiteDefaultLanguage();
         $siteId = $contextManager->getCurrentSiteId();
@@ -104,5 +102,23 @@ class NodeController extends AbstractAdminController
         }
 
         return $this->renderAdminForm($form);
+    }
+
+    /**
+     * @param string|\Symfony\Component\Form\FormTypeInterface $type
+     * @param null                                             $data
+     * @param array                                            $options
+     * @param string|null                                      $editionRole
+     * @param StatusInterface|null                             $status
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    public function createForm($type, $data = null, array $options = array(), $editionRole = null, StatusInterface $status = null)
+    {
+        if (null !== $status && $status->isBlockedEdition()) {
+            $options['disabled'] = true;
+        }
+
+        return parent::createForm($type, $data, $options, $editionRole);
     }
 }

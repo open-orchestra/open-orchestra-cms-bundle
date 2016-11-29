@@ -27,7 +27,7 @@ abstract class AbstractPerimeterVoter extends AbstractVoter
      * Check if $subjectKey is in an allowed perimeter to $user
      * The perimeter to check is of $entityType
      *
-     * @param string        $subject
+     * @param string        $subjectKey
      * @param UserInterface $user
      * @param string        $entityType
      *

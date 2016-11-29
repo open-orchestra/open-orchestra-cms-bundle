@@ -60,11 +60,14 @@ class NodeChoiceStatusSubscriber implements EventSubscriberInterface
     protected function getStatusChoices(NodeInterface $node)
     {
         $choices = array();
-        $choices[] = $node->getStatus();
         $transitions = $node->getStatus()->getFromRoles();
 
         foreach ($transitions as $transition) {
             $status = $transition->getToStatus();
+            // Adding original status
+            if (empty($choices)) {
+                $choices[] = $transition->getFromStatus();
+            }
             if ($this->authorizeStatusChangeManager->isGranted($node, $status)) {
                 $choices[] = $status;
             }
