@@ -66,7 +66,7 @@ class AuthorizationTypeTest extends AbstractBaseTestCase
     {
         $formView = Phake::mock('Symfony\Component\Form\FormView');
         $form = Phake::mock('Symfony\Component\Form\FormInterface');
-        $authorization = Phake::mock('OpenOrchestra\Workflow\Model\AuthorizationInterface');
+        $authorization = Phake::mock('OpenOrchestra\ModelInterface\Model\AuthorizationInterface');
         $formView->vars['value'] = $authorization;
 
         Phake::when($this->contentTypeRepository)->find(Phake::anyParameters())->thenReturn($contentType);

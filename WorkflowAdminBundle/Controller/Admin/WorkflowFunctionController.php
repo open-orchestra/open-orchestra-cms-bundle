@@ -5,7 +5,7 @@ namespace OpenOrchestra\WorkflowAdminBundle\Controller\Admin;
 use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
 use OpenOrchestra\Workflow\Event\WorkflowFunctionEvent;
 use OpenOrchestra\Workflow\WorkflowFunctionEvents;
-use OpenOrchestra\Workflow\Model\WorkflowFunctionInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowFunctionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;

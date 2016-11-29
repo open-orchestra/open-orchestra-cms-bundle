@@ -37,7 +37,7 @@ class AuthorizationWorkflowRightManagerTest extends AbstractBaseTestCase
      */
     public function testCleanAuthorization($inReference, $inAuthorization, $nbrRemove, $nbrAdd)
     {
-        $workflowRight = Phake::mock('OpenOrchestra\Workflow\Model\WorkflowRightInterface');
+        $workflowRight = Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowRightInterface');
 
         $authorizations = $this->generateArray($inAuthorization, 'AuthorizationInterface', 'getReferenceId');
         Phake::when($workflowRight)->getAuthorizations()->thenReturn($authorizations);
@@ -60,7 +60,7 @@ class AuthorizationWorkflowRightManagerTest extends AbstractBaseTestCase
     {
         $arrays = new ArrayCollection();
         foreach ($inArray as $classId) {
-            $array[] = Phake::mock('OpenOrchestra\Workflow\Model\\' . $classInterface);
+            $array[] = Phake::mock('OpenOrchestra\ModelInterface\Model\\' . $classInterface);
             $index = count($array) - 1;
             Phake::when($array[$index])->$getter()->thenReturn($classId);
             $arrays->add($array[$index]);

@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Workflow\Manager;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowRightInterface;
 
 
 /**

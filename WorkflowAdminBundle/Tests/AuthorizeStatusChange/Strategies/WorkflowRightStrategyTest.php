@@ -28,7 +28,7 @@ class WorkflowRightStrategyTest extends AbstractBaseTestCase
         $roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         Phake::when($roleRepository)->findOneByFromStatusAndToStatus(Phake::anyParameters())->thenReturn($role);
 
-        $workflowFunctionRepository = Phake::mock('OpenOrchestra\Workflow\Repository\WorkflowFunctionRepositoryInterface');
+        $workflowFunctionRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\WorkflowFunctionRepositoryInterface');
         Phake::when($workflowFunctionRepository)->findByRole(Phake::anyParameters())->thenReturn(array());
 
         $this->workflowRightStrategy = new WorkflowRightStrategy($this->authorizationChecker, $roleRepository, $workflowFunctionRepository);

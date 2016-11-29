@@ -256,7 +256,7 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
      */
     protected function createPhakeWorkflowProfile()
     {
-        return Phake::mock('OpenOrchestra\Workflow\Model\WorkflowProfileInterface');
+        return Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface');
     }
 
     /**

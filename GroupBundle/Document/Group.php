@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
-use OpenOrchestra\Workflow\Model\WorkflowProfileCollectionInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
 
 /**
  * @ODM\Document(
@@ -44,7 +44,7 @@ class Group extends BaseGroup implements GroupInterface
      * @var Collection $workflowProfileCollections
      *
      * @ODM\EmbedMany(
-     *  targetDocument="OpenOrchestra\Workflow\Model\WorkflowProfileCollectionInterface",
+     *  targetDocument="OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface",
      *  strategy="set"
      * )
      */

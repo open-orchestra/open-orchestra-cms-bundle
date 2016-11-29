@@ -37,9 +37,9 @@ class AddWorkFlowFunctionSubscriberTest extends AbstractBaseTestCase
         $this->user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
         $this->userRepository = Phake::mock('OpenOrchestra\UserBundle\Repository\UserRepository');
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $this->workflowFunction = Phake::mock('OpenOrchestra\Workflow\Model\WorkflowFunctionInterface');
-        $this->authorization = Phake::mock('OpenOrchestra\Workflow\Model\AuthorizationInterface');
-        $this->workflowRight = Phake::mock('OpenOrchestra\Workflow\Model\WorkflowRightInterface');
+        $this->workflowFunction = Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowFunctionInterface');
+        $this->authorization = Phake::mock('OpenOrchestra\ModelInterface\Model\AuthorizationInterface');
+        $this->workflowRight = Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowRightInterface');
         $this->workflowRightEvent = Phake::mock('OpenOrchestra\Workflow\Event\WorkflowRightEvent');
 
         $this->authorizations = new ArrayCollection();

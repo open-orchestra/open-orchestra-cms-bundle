@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Workflow\Event;
 
-use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowRightInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

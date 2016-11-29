@@ -4,7 +4,7 @@ namespace OpenOrchestra\WorkflowAdminBundle\Form\Type\Component;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\Workflow\Model\WorkflowFunctionInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowFunctionInterface;
 
 /**
  * Class WorkflowFunctionChoiceType

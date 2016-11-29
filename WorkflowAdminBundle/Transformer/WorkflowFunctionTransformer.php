@@ -5,7 +5,7 @@ namespace OpenOrchestra\WorkflowAdminBundle\Transformer;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\Workflow\Model\WorkflowFunctionInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowFunctionInterface;
 use OpenOrchestra\WorkflowAdminBundle\NavigationPanel\Strategies\WorkflowFunctionPanelStrategy;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 

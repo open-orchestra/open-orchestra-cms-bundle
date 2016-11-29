@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Manager;
 
-use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowRightInterface;
 use OpenOrchestra\Workflow\Manager\AuthorizationWorkflowRightManager;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\Workflow\Repository\WorkflowRightRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\WorkflowRightRepositoryInterface;
 
 /**
  * Class WorkflowRightManager

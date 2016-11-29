@@ -31,7 +31,7 @@ class WorkflowRightManagerTest extends AbstractBaseTestCase
     {
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($this->contentTypeRepository)->findAllNotDeletedInLastVersion()->thenReturn(array());
-        $this->workflowRightRepository = Phake::mock('OpenOrchestra\Workflow\Repository\WorkflowRightRepositoryInterface');
+        $this->workflowRightRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\WorkflowRightRepositoryInterface');
         $this->authorizationWorkflowRightManager = Phake::mock('OpenOrchestra\Workflow\Manager\AuthorizationWorkflowRightManager');
 
         $this->workflowRightManager = new WorkflowRightManager($this->contentTypeRepository, $this->workflowRightRepository, $this->authorizationWorkflowRightManager, $this->workflowRightClass, $this->referenceClass);

@@ -8,7 +8,7 @@ use OpenOrchestra\Workflow\WorkflowRightEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
-use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowRightInterface;
 
 /**
  * Class WorkflowRightController
