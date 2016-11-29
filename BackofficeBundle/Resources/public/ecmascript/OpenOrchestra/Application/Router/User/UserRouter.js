@@ -1,7 +1,7 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import UserFormView    from '../../View/User/UserFormView'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
+import OrchestraRouter    from '../OrchestraRouter'
+import Application        from '../../Application'
+import UserFormView       from '../../View/User/UserFormView'
+import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
 
 /**
  * @class UserRouter
@@ -22,8 +22,8 @@ class UserRouter extends OrchestraRouter
      * Edit user preference
      */
     editSelfUser() {
-        this._diplayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_user_admin_user_self_form');
+        this._diplayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let userFormView = new UserFormView({form : form});
             Application.getRegion('content').html(userFormView.render().$el);
@@ -36,10 +36,10 @@ class UserRouter extends OrchestraRouter
      * Edit User
      */
     editUser(userId) {
-        this._diplayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_user_admin_user_form', {userId : userId});
+        this._diplayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let userFormView = new UserFormView({form : form});
+            let userFormView = new UserFormView({form : form, userId: userId});
             Application.getRegion('content').html(userFormView.render().$el);
         });
 

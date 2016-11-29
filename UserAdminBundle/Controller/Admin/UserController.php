@@ -87,7 +87,7 @@ class UserController extends AbstractAdminController
             throw $this->createAccessDeniedException();
         }
         $user = $this->refreshLanguagesByAliases($this->getUser());
-
+var_dump($user->getId());
         return $this->renderForm($request, $user, true);
     }
 

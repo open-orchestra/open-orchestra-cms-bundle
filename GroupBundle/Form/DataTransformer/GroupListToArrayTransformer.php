@@ -49,7 +49,9 @@ class GroupListToArrayTransformer implements DataTransformerInterface
         $value = new ArrayCollection();
 
         foreach($groups as $id => $selected) {
-            $value->add($this->groupRepository->find($id));
+            if ($selected) {
+                $value->add($this->groupRepository->find($id));
+            }
         }
 
         return $value;

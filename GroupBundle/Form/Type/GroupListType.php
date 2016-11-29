@@ -7,8 +7,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\GroupBundle\Form\DataTransformer\GroupListToArrayTransformer;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * Class GroupListType
@@ -41,21 +39,10 @@ class GroupListType extends AbstractType
         foreach ($options['groups'] as $group) {
             $builder->add($group->getId(), 'radio', array(
                 'label' => $this->multiLanguagesChoiceManager->choose($group->getLabels()),
+                'attr' => array('data-site' => $group->getSite()->getSiteId()),
             ));
         }
     }
-    /**
-     * @param FormView      $view
-     * @param FormInterface $form
-     * @param array         $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        //var_dump($options['groups']);
-        var_dump(($view->vars['form']));
-//        $view->vars['refresh'] = $options['refresh'];
-    }
-
 
     /**
      * @param OptionsResolver $resolver
