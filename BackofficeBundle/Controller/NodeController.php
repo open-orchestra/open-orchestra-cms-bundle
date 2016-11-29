@@ -38,7 +38,7 @@ class NodeController extends AbstractAdminController
         if (!$node instanceof NodeInterface) {
             throw new \UnexpectedValueException();
         }
-        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array(
             'siteId' => $siteId,

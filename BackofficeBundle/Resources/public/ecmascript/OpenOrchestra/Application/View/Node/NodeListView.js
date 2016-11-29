@@ -5,7 +5,6 @@ import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataT
  */
 class NodeListView extends AbstractDataTableView
 {
-
     /**
      * @inheritdoc
      */
@@ -66,16 +65,19 @@ class NodeListView extends AbstractDataTableView
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = Backbone.history.generateUrl('editNode', {
-            language: rowData.get('language'),
-            nodeId: rowData.get('node_id'),
-            version: rowData.get('version')
-        });
-        let $link = $('<a>',{
-            text: cellData,
-            href: '#'+link
-        });
-        $(td).html($link);
+        if (true === rowData.get('rights').can_read) {
+            let link = Backbone.history.generateUrl('editNode', {
+                language: rowData.get('language'),
+                nodeId: rowData.get('node_id'),
+                version: rowData.get('version')
+            });
+            cellData = $('<a>',{
+                text: cellData,
+                href: '#'+link
+            });
+        }
+
+        $(td).html(cellData)
     }
 
     /**

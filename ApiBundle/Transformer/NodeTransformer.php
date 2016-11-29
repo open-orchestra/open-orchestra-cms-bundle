@@ -114,7 +114,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-        $facade->editable = $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node);
+
+        $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
 
         return $facade;
     }

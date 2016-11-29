@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
@@ -37,25 +37,7 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->redirection = $redirection->getNodeId();
         }
         $facade->permanent = $redirection->isPermanent();
-
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_redirection_show',
-            array('redirectionId' => $redirection->getId())
-        ));
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_REDIRECTION)) {
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_redirection_delete',
-                array('redirectionId' => $redirection->getId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_REDIRECTION)) {
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_backoffice_redirection_form',
-                array('redirectionId' => $redirection->getId())
-            ));
-        }
+        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $redirection));
 
         return $facade;
     }
