@@ -1,0 +1,19 @@
+open_orchestra_backoffice:
+    table:
+        workflow_functions:
+            name: Name
+
+open_orchestra_workflow_admin:
+    left_menu:
+        administration:
+            workflow_function: Workflow profiles
+    form:
+        workflow_function:
+            success: The workflow function has been saved
+            name: Name
+            role: Transition
+        workflow_right:
+            success: The rights have been succefully updated
+    right:
+        title: Rights
+        owner: Only when user is owner

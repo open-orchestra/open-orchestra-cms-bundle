@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
  */
 interface WorkflowRightInterface
 {
-    const NODE = 'open_orchestra_workflow_function.node';
+    const NODE = 'open_orchestra_workflow.node';
 
     /**
      * @return string

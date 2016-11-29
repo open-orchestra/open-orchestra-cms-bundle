@@ -1,0 +1,4 @@
+open_orchestra_workflow_admin:
+    facades:
+        workflow_function:            FacadeClass
+        workflow_function_collection: FacadeClass
