@@ -127,7 +127,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         Phake::when($this->node)->getAreas()->thenReturn(array($area));
         $facade = $this->nodeTransformer->transform($this->node);
 
-        $this->assertSame($facade->editable, false);
+        $this->assertSame($facade->getRights()['can_read'], false);
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         Phake::verify($this->router, Phake::times(1))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node, 0);

@@ -97,6 +97,7 @@ class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
         $fromRoles = array($role);
         Phake::when($status)->getFromRoles()->thenReturn($fromRoles);
         Phake::when($role)->getToStatus()->thenReturn($status2);
+        Phake::when($role)->getFromStatus()->thenReturn($status);
 
         return array(
             array($status, true, array($status, $status2)),
