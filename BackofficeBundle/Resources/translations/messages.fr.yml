@@ -58,9 +58,11 @@ open_orchestra_backoffice:
                 orange: Orange
                 green: Vert
                 grayDark: Gris
+                blue: Bleu
             display_color: Couleur du statut
             creation: Le nouveau statut a été créé
             success: Le statut a été modifié
+            translation_state: Status de traduction
             blocked_edition:
                 label: édition bloquée
                 helper: Si réglé à "Oui", les contenus ayant ce statut ne peuvent être modifiés.

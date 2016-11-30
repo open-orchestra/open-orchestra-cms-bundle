@@ -22,7 +22,7 @@ class NodeRouter extends OrchestraRouter
             'nodes(/:language)': 'showNodes',
             'node/edit/:nodeId/:language(/:version)': 'editNode',
             'node/new/tree/:language/:parentId': 'newTreeNode',
-            'node/new/:language/:parentId': 'newNode'
+            'node/new/:language/:parentId/:order': 'newNode'
         };
     }
 
@@ -97,7 +97,6 @@ class NodeRouter extends OrchestraRouter
                     parentId: parentId
                 });
                 Application.getRegion('content').html(nodeNewTreeView.render().$el);
-                console.log(nodesTree);
             }
         });
     }
@@ -107,20 +106,23 @@ class NodeRouter extends OrchestraRouter
      *
      * @param {string} language
      * @param {string} parentId
+     * @param {int}    order
      */
-    newNode(language, parentId) {
+    newNode(language, parentId, order) {
         this._diplayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_node_new', {
             siteId : Application.getContext().siteId,
             language: language,
-            parentId: parentId
+            parentId: parentId,
+            order: order
         });
         FormBuilder.createFormFromUrl(url, (form) => {
             let nodeFormView = new NodeNewFormView({
                 form : form,
                 siteLanguages: Application.getContext().siteLanguages,
                 parentId : parentId,
-                language: language
+                language: language,
+                order: order
             });
             Application.getRegion('content').html(nodeFormView.render().$el);
         });

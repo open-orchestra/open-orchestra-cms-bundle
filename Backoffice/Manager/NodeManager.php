@@ -133,7 +133,7 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion(1);
-        $status = $this->statusRepository->findOneByInitial();
+        $status = $this->statusRepository->findOneByTranslationState();
 
         $newNode->setStatus($status);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
@@ -237,10 +237,11 @@ class NodeManager
      * @param string $parentId
      * @param string $language
      * @param string $siteId
+     * @param int    $order
      *
      * @return NodeInterface
      */
-    public function initializeNode($parentId, $language, $siteId)
+    public function initializeNode($parentId, $language, $siteId, $order = 0)
     {
         /** @var NodeInterface $node */
         $node = new $this->nodeClass();
@@ -248,7 +249,7 @@ class NodeManager
         $node->setLanguage($language);
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
-        $node->setOrder($this->getNewNodeOrder($parentId, $siteId));
+        $node->setOrder($order);
         $node->setTheme(NodeInterface::THEME_DEFAULT);
         $node->setDefaultSiteTheme(true);
 
@@ -286,21 +287,5 @@ class NodeManager
             $event = new NodeEvent($child);
             $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
         }
-    }
-
-    /**
-     * @param string $parentId
-     * @param string $siteId
-     *
-     * @return int
-     */
-    protected function getNewNodeOrder($parentId, $siteId)
-    {
-        $greatestOrderNode = $this->nodeRepository->findOneByParentWithGreatestOrder($parentId, $siteId);
-        if (null === $greatestOrderNode) {
-            return 0;
-        }
-
-        return $greatestOrderNode->getOrder() + 1;
     }
 }

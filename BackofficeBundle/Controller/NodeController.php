@@ -70,22 +70,44 @@ class NodeController extends AbstractAdminController
      * @param string  $siteId
      * @param string  $language
      * @param string  $parentId
+     * @param int     $order
      *
-     * @Config\Route("/node/new/{siteId}/{language}/{parentId}", name="open_orchestra_backoffice_node_new")
+     * @Config\Route(
+     *     "/node/new/{siteId}/{language}/{parentId}/{order}",
+     *     requirements={"order": "\d+"},
+     *     name="open_orchestra_backoffice_node_new"
+     * )
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function newAction(Request $request, $siteId, $language, $parentId)
+    public function newAction(Request $request, $siteId, $language, $parentId, $order)
     {
+        $order = (int) $order;
         $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
-        $node = $nodeManager->initializeNode($parentId, $language, $siteId);
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+
+        $node = $nodeManager->initializeNode($parentId, $language, $siteId, $order);
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $node);
 
-        $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('siteId' => $siteId, 'language' => $language, 'parentId' => $parentId));
+        $url = $this->generateUrl('open_orchestra_backoffice_node_new', array(
+            'siteId'   => $siteId,
+            'language' => $language,
+            'parentId' => $parentId,
+            'order'    => $order
+        ));
         $form = $this->createForm('oo_node', $node, array('action' => $url));
 
         $form->handleRequest($request);
+
+        if ($nodeRepository->hasNodeWithSameParentAndOrder($parentId, $order, $siteId)) {
+            $nodeRepository->updateOrderBrotherNode(
+                $siteId,
+                $node->getNodeId(),
+                $node->getOrder(),
+                $node->getParentId()
+            );
+        }
 
         if ($form->isValid()) {
             $nodesEvent = array();
@@ -97,11 +119,13 @@ class NodeController extends AbstractAdminController
             $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
             foreach ($languages as $siteLanguage) {
                 if ($language !== $siteLanguage) {
-                    $node = $nodeManager->createNewLanguageNode($node, $siteLanguage);
-                    $documentManager->persist($node);
-                    $nodesEvent[] = new NodeEvent($node);
+                    $translatedNode = $nodeManager->createNewLanguageNode($node, $siteLanguage);
+                    $documentManager->persist($translatedNode);
+                    $nodesEvent[] = new NodeEvent($translatedNode);
                 }
             }
+
+            $documentManager->flush();
 
             foreach ($nodesEvent as $nodeEvent) {
                 $this->dispatchEvent(NodeEvents::NODE_CREATION, $nodeEvent);

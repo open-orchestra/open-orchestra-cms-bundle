@@ -68,6 +68,7 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
             'green' => 'open_orchestra_backoffice.form.status.color.green',
             'orange' => 'open_orchestra_backoffice.form.status.color.orange',
             'grayDark' => 'open_orchestra_backoffice.form.status.color.grayDark',
+            'blue' => 'open_orchestra_backoffice.form.status.color.blue',
         );
         $this->assertEquals($defaultColor, $container->getParameter('open_orchestra_backoffice.choice.available_color'));
 

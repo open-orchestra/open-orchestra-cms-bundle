@@ -58,9 +58,11 @@ open_orchestra_backoffice:
                 orange: Orange
                 green: Green
                 grayDark: Grey
+                blue: Blue
             display_color: Diplay color
             creation: The new status has been created
             success: The status has been modified
+            translation_state: Translation state
             blocked_edition:
                 label: Blocked edition
                 helper: If set to "Yes", the contents with this status can not be changed.

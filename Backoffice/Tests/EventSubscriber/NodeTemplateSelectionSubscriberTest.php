@@ -23,6 +23,7 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
     protected $nodeManager;
     protected $contextManager;
     protected $siteRepository;
+    protected $templateManager;
 
     protected $siteId = 'fakeSiteId';
     protected $templateSet = 'fakeTemplateSet';
@@ -114,6 +115,8 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
             'mapped' => false,
             'label_attr' => array('class' => 'one-needed'),
             'required' => false,
+            'group_id' => 'properties',
+            'sub_group_id' => 'style',
             'attr' => array(
                 'help_text' => 'open_orchestra_backoffice.form.node.template_selection.helper',
             )

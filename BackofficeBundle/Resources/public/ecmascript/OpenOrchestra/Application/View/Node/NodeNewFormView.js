@@ -11,12 +11,14 @@ class NodeNewFormView extends AbstractFormView
      * @param {Array}  siteLanguages
      * @param {string} parentId
      * @param {string} language
+     * @param {int}    order
      */
-    initialize({form, siteLanguages, parentId, language}) {
+    initialize({form, siteLanguages, parentId, language, order}) {
         super.initialize({form : form});
         this._siteLanguages = siteLanguages;
         this._parentId = parentId;
         this._language = language;
+        this._order = order;
     }
 
     /**
@@ -27,6 +29,7 @@ class NodeNewFormView extends AbstractFormView
             {
                 language: this._language,
                 parentId: this._parentId,
+                order: this._order,
                 siteLanguages: this._siteLanguages
             }
         );

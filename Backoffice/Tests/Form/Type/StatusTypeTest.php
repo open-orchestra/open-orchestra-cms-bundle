@@ -53,7 +53,7 @@ class StatusTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(9))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(10))->add(Phake::anyParameters());
     }
 
     /**
