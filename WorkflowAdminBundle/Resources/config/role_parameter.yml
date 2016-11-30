@@ -1,0 +1,18 @@
+parameters:
+    open_orchestra_workflow.role:
+        role_access_workflowfunction :
+            category: open_orchestra_backoffice.left_menu.administration.title
+            label: open_orchestra_role.label_access_workflowfunction
+            order: 5800
+        role_access_create_workflowfunction :
+            category: open_orchestra_backoffice.left_menu.administration.title
+            label: open_orchestra_role.label_access_workflowfunction
+            order: 5900
+        role_access_update_workflowfunction :
+            category: open_orchestra_backoffice.left_menu.administration.title
+            label: open_orchestra_role.label_access_workflowfunction
+            order: 6000
+        role_access_delete_workflowfunction :
+            category: open_orchestra_backoffice.left_menu.administration.title
+            label: open_orchestra_role.label_access_workflowfunction
+            order: 6100

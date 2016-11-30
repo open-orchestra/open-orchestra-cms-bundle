@@ -4,7 +4,7 @@ namespace OpenOrchestra\Backoffice\Model;
 
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileCollectionInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
 
 /**
  * Interface GroupInterface

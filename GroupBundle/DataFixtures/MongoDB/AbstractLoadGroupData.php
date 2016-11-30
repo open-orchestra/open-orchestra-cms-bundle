@@ -5,7 +5,7 @@ namespace OpenOrchestra\GroupBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use OpenOrchestra\GroupBundle\Document\Perimeter;
-use OpenOrchestra\WorkflowFunctionModelBundle\Document\WorkflowProfileCollection;
+use OpenOrchestra\ModelBundle\Document\WorkflowProfileCollection;
 
 /**
  * Class AbstractLoadGroupV2Data
