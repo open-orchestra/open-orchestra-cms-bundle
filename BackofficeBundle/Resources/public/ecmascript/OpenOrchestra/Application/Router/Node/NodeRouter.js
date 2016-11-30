@@ -4,9 +4,9 @@ import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import NodesTree       from '../../Collection/Node/NodesTree'
 import Statuses        from '../../Collection/Statuses/Statuses'
 import Nodes           from '../../Collection/Node/Nodes'
-import NodesTreeView   from '../../View/Node/NodesTreeView'
+import NodeNewTreeView from '../../View/Node/NodeNewTreeView'
 import NodeFormView    from '../../View/Node/NodeFormView'
-import NodeListView    from '../../View/Node/NodeListView'
+import NodeNewFormView from '../../View/Node/NodeNewFormView'
 import NodesView       from '../../View/Node/NodesView'
 
 /**
@@ -20,7 +20,9 @@ class NodeRouter extends OrchestraRouter
     preinitialize() {
         this.routes = {
             'nodes(/:language)': 'showNodes',
-            'node/edit/:nodeId/:language(/:version)': 'editNode'
+            'node/edit/:nodeId/:language(/:version)': 'editNode',
+            'node/new/tree/:language/:parentId': 'newTreeNode',
+            'node/new/:language/:parentId': 'newNode'
         };
     }
 
@@ -69,6 +71,55 @@ class NodeRouter extends OrchestraRouter
                 siteLanguages: Application.getContext().siteLanguages,
                 siteId : Application.getContext().siteId,
                 nodeId : nodeId,
+                language: language
+            });
+            Application.getRegion('content').html(nodeFormView.render().$el);
+        });
+    }
+    /**
+     *  New tree node
+     *
+     * @param {string} language
+     * @param {string} parentId
+     */
+    newTreeNode(language, parentId) {
+        this._diplayLoader(Application.getRegion('content'));
+        new NodesTree().fetch({
+            urlParameter: {
+                'language': language,
+                'siteId': Application.getContext().siteId,
+                'parentId': parentId
+            },
+            success: (nodesTree) => {
+                let nodeNewTreeView = new NodeNewTreeView({
+                    language: language,
+                    nodesTree: nodesTree,
+                    parentId: parentId
+                });
+                Application.getRegion('content').html(nodeNewTreeView.render().$el);
+                console.log(nodesTree);
+            }
+        });
+    }
+
+    /**
+     *  New Node
+     *
+     * @param {string} language
+     * @param {string} parentId
+     */
+    newNode(language, parentId) {
+        this._diplayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_backoffice_node_new', {
+            siteId : Application.getContext().siteId,
+            language: language,
+            parentId: parentId
+        });
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let nodeFormView = new NodeNewFormView({
+                form : form,
+                siteLanguages: Application.getContext().siteLanguages,
+                parentId : parentId,
                 language: language
             });
             Application.getRegion('content').html(nodeFormView.render().$el);

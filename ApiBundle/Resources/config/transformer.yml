@@ -65,7 +65,7 @@ services:
     open_orchestra_api.transformer.node_tree_leaf:
         class: '%open_orchestra_api.transformer.node_tree_leaf.class%'
         arguments:
-            - '%open_orchestra_api.facade.node_tree.class%'
+            - '%open_orchestra_api.facade.node.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.status_node_tree:

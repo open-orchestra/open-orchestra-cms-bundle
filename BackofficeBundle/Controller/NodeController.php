@@ -67,38 +67,50 @@ class NodeController extends AbstractAdminController
 
     /**
      * @param Request $request
+     * @param string  $siteId
+     * @param string  $language
      * @param string  $parentId
      *
-     * @Config\Route("/node/new/{parentId}", name="open_orchestra_backoffice_node_new")
+     * @Config\Route("/node/new/{siteId}/{language}/{parentId}", name="open_orchestra_backoffice_node_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function newAction(Request $request, $parentId)
+    public function newAction(Request $request, $siteId, $language, $parentId)
     {
-        $contextManager = $this->get('open_orchestra_backoffice.context_manager');
-        $language = $contextManager->getCurrentSiteDefaultLanguage();
-        $siteId = $contextManager->getCurrentSiteId();
-        $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNode($parentId, $language, $siteId);
-
+        $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
+        $node = $nodeManager->initializeNode($parentId, $language, $siteId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $node);
 
-        $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
-
+        $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('siteId' => $siteId, 'language' => $language, 'parentId' => $parentId));
         $form = $this->createForm('oo_node', $node, array('action' => $url));
 
         $form->handleRequest($request);
 
-        if ($this->handleForm($form, $message, $node)) {
-            $this->dispatchEvent(NodeEvents::NODE_CREATION, new NodeEvent($node));
+        if ($form->isValid()) {
+            $nodesEvent = array();
+            $documentManager = $this->get('object_manager');
 
-            return $this->redirect($this->generateUrl('open_orchestra_backoffice_node_form', array(
-                'siteId' => $node->getSiteId(),
-                'nodeId' => $node->getNodeId(),
-                'language' => $node->getLanguage(),
-                'version' => $node->getVersion(),
-            )));
+            $documentManager->persist($node);
+            $nodesEvent[] = new NodeEvent($node);
+
+            $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
+            foreach ($languages as $siteLanguage) {
+                if ($language !== $siteLanguage) {
+                    $node = $nodeManager->createNewLanguageNode($node, $siteLanguage);
+                    $documentManager->persist($node);
+                    $nodesEvent[] = new NodeEvent($node);
+                }
+            }
+
+            foreach ($nodesEvent as $nodeEvent) {
+                $this->dispatchEvent(NodeEvents::NODE_CREATION, $nodeEvent);
+            }
+
+            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
+            $this->get('session')->getFlashBag()->add('success', $message);
+
+            return new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
         }
 
         return $this->renderAdminForm($form);

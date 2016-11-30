@@ -52,6 +52,8 @@ open_orchestra_backoffice:
     node:
         title: Pages
         parameterize: Parameterize
+        add: Add a page
+        new: New page
         back_to_list: Back to list
         edit: Edit
         redirections: Redirections
@@ -61,6 +63,8 @@ open_orchestra_backoffice:
             statuses_legend:
                 title: Legend
                 out_of_bounds: Out of bounds
+            new_select_page: Select the location of the page
+            add_here: Here
         search_engine:
             status: Status
             displayed_menu: Displayed in the menu

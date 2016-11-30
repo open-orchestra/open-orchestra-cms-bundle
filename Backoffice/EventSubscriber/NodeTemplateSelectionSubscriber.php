@@ -72,6 +72,8 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
                 'mapped' => false,
                 'label_attr' => array('class' => 'one-needed'),
                 'required' => false,
+                'group_id' => 'properties',
+                'sub_group_id' => 'style',
                 'attr' => array(
                     'help_text' => 'open_orchestra_backoffice.form.node.template_selection.helper',
                 )

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -53,7 +54,7 @@ class NodeChoiceType extends AbstractType
      */
     protected function getChoices($siteId, $language)
     {
-        $orderedNodes = $this->nodeRepository->findTreeNode($siteId, $language);
+        $orderedNodes = $this->nodeRepository->findTreeNode($siteId, $language, NodeInterface::ROOT_NODE_ID);
 
         return $this->getHierarchicalChoices($orderedNodes);
     }

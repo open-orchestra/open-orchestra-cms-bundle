@@ -198,15 +198,20 @@ class NodeController extends BaseController
     /**
      * @param String  $siteId
      * @param String  $language
+     * @param String  $parentId
      *
-     * @Config\Route("/list/tree/{siteId}/{language}", name="open_orchestra_api_node_list_tree")
+     * @Config\Route(
+     *     "/list/tree/{siteId}/{language}/{parentId}",
+     *     defaults={"parentId": NodeInterface::ROOT_PARENT_ID},
+     *     name="open_orchestra_api_node_list_tree"
+     * )
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
      */
-    public function listTreeNodeAction($siteId, $language)
+    public function listTreeNodeAction($siteId, $language, $parentId = NodeInterface::ROOT_PARENT_ID)
     {
-        $nodes = $this->get('open_orchestra_model.repository.node')->findTreeNode($siteId, $language);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findTreeNode($siteId, $language, $parentId);
         if(empty($nodes)) {
             return array();
         }
@@ -287,7 +292,7 @@ class NodeController extends BaseController
     public function updateChildrenOrderAction(Request $request, $nodeId)
     {
         $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_MOVE_TREE);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade',

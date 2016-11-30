@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class NodeTreeLeafTransformer
@@ -25,6 +26,8 @@ class NodeTreeLeafTransformer extends AbstractTransformer
         $facade->version = $node['version'];
         $facade->siteId = $node['siteId'];
         $facade->status = $this->getTransformer('status_node_tree')->transform($node['status']);
+
+        $facade->addRight('can_create', (NodeInterface::TYPE_DEFAULT === $node['nodeType']));
 
         return $facade;
     }

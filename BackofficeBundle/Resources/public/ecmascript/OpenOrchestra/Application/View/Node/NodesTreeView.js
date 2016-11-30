@@ -53,7 +53,6 @@ class NodesTreeView extends OrchestraView
         return this;
     }
 
-
     /**
      * @param {Object} $tree - Jquery selector
      * @private
