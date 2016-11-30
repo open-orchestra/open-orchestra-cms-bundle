@@ -1,0 +1,16 @@
+<fieldset>
+    <legend class="underline-label">
+        <%= Translator.trans('open_orchestra_backoffice.node.redirections') %>
+    </legend>
+    <ul class="list-group">
+        <% _.each(redirections, function(redirection, key) { %>
+        <li class="list-group-item">
+            <% if (true === redirection.get('rights').can_edit) { %>
+                <a><%= redirection.get('route_pattern') %></a>
+            <% } else { %>
+                <%= redirection.get('route_pattern') %>
+            <% }; %>
+        </li>
+        <% }); %>
+    </ul>
+</fieldset>

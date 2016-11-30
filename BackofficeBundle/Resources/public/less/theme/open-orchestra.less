@@ -745,7 +745,7 @@ a.btn.disabled {
   }
 }
 /* tooltips */
-.tooltip-wrapper + .tooltip > .tooltip-inner {
+.form-help-tooltip + .tooltip > .tooltip-inner {
   background-color: #e6e6e6;
   color: @baseColor;
   border-top-left-radius: 0;
@@ -754,7 +754,7 @@ a.btn.disabled {
   width: 235px;
   left: 0
 }
-.tooltip-wrapper + .tooltip.bottom > .tooltip-arrow{
+.form-help-tooltip + .tooltip.bottom > .tooltip-arrow{
   top: 0;
   left: 50%;
   margin-left: 25%;
@@ -762,17 +762,12 @@ a.btn.disabled {
   border-right: 5px solid transparent;
   border-bottom: 5px solid #e6e6e6;
 }
-.tooltip-wrapper {
-  color: @baseColor;
+.form-help-tooltip {
+  color: @lightBlue;
   text-decoration: none;
+  margin: 0 0 0 7px;
+  vertical-align: text-top;
   &:focus { text-decoration: none;}
-  &::after {
-    content: "\f29c";
-    font-family: 'FontAwesome';
-    color: @lightBlue;
-    margin: 0 0 0 7px;
-    vertical-align: text-top;
-  }
 }
 
 /* date picker */
@@ -784,8 +779,11 @@ a.btn.disabled {
     color: @baseColor;
     position: absolute;
     right: 10px;
-    top: 7px;
   }
+}
+/** remove datepicker navigator **/
+input[type=date].datepicker::-webkit-inner-spin-button, input[type=date].datepicker::-webkit-calendar-picker-indicator {
+  display: none;
 }
 
 /* Workflow */
@@ -978,7 +976,6 @@ table.dataTable thead .sorting_desc:after {
     }
   }
 
-
   li {
     list-style: none;
     position: relative;
@@ -990,6 +987,7 @@ table.dataTable thead .sorting_desc:after {
       overflow: hidden;
       & > span { float: left; }
       &:hover { background: @paleBlue; }
+      &:hover .links { display: block; }
     }
   }
   & > ul {
@@ -1004,6 +1002,7 @@ table.dataTable thead .sorting_desc:after {
   .links {
     margin-left: 30px;
     float: left;
+    display: none;
     a {
       color: @lightBlue;
       font-weight: 700;
@@ -1422,10 +1421,6 @@ table.dataTable thead .sorting_desc:after {
   /* colonnage 30% */
   .col-30 { float: left; width: 30%;}
 
-  .datepicker {
-    width: 30%;
-    float: left;
-  }
   .switch-button { margin-top: 7px; }
   .switch {
     width: 40px;
@@ -1505,7 +1500,7 @@ table.dataTable thead .sorting_desc:after {
   /*tags */
   .tags {
     height: 38px;
-    span {
+    .tag {
       background-color: @lightGrey;
       padding: 3px 10px;
       border-radius: 5px;
@@ -1519,13 +1514,66 @@ table.dataTable thead .sorting_desc:after {
     }
     &.disabled { cursor: not-allowed; }
   }
+
+  /** Select 2 **/
+  .select2-container {
+    .select2-arrow { display: none; }
+    .select2-choice{
+      background-image: none;
+      height: 34px;
+      padding: 6px 12px;
+      line-height: 1.42857143;
+      color: #555;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .select2-choices .select2-search-choice {
+      .tags .tag;
+      border: none;
+      box-shadow: none;
+      background-image: none;
+      line-height: inherit;
+      &.bg-color-red {
+        background-color: @red;
+        color: #fff;
+        &:before{
+          color: white;
+        }
+      }
+      div {
+        display: inline-block;
+      }
+
+      a {
+        display: inline-block;
+        position: relative;
+        right: auto;
+        left: auto;
+        top: auto;
+        padding-left: 20px;
+        vertical-align: middle;
+      }
+    }
+  }
 }
+
+li.orchestra-node-choice div.select2-result-label{
+  line-height:17px;
+}
+
+li.orchestra-node-choice .hierarchical{
+  font-family: "Courier New";
+  font-size:22px;
+  line-height:0;
+}
+
 fieldset {
 	display: table-column
 }
 .required {
     &:after {
 	    content: "*";
+        padding-left: 5px;
     }
 }
 /* ===================================================================

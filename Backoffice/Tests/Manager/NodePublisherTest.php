@@ -20,13 +20,13 @@ class NodePublisherTest extends AbstractBaseTestCase
 
     protected $node1;
     protected $node1Attributes = array(
-        'BOLabel' => 'BOLabel-1',
+        'name' => 'name-1',
         'version' => 'version-1',
         'language' => 'language-1'
     );
     protected $node2;
     protected $node2Attributes = array(
-        'BOLabel' => 'BOLabel-2',
+        'name' => 'name-2',
         'version' => 'version-2',
         'language' => 'language-2'
     );
@@ -56,12 +56,12 @@ class NodePublisherTest extends AbstractBaseTestCase
         Phake::when($this->site)->getSiteId()->thenReturn($this->siteId);
 
         $this->node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($this->node1)->getBoLabel()->thenReturn($this->node1Attributes['BOLabel']);
+        Phake::when($this->node1)->getName()->thenReturn($this->node1Attributes['name']);
         Phake::when($this->node1)->getVersion()->thenReturn($this->node1Attributes['version']);
         Phake::when($this->node1)->getLanguage()->thenReturn($this->node1Attributes['language']);
 
         $this->node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($this->node2)->getBoLabel()->thenReturn($this->node2Attributes['BOLabel']);
+        Phake::when($this->node2)->getName()->thenReturn($this->node2Attributes['name']);
         Phake::when($this->node2)->getVersion()->thenReturn($this->node2Attributes['version']);
         Phake::when($this->node2)->getLanguage()->thenReturn($this->node2Attributes['language']);
 

@@ -51,6 +51,10 @@ open_orchestra_backoffice:
             name: Name
     node:
         title: Pages
+        parameterize: Parameterize
+        back_to_list: Back to list
+        edit: Edit
+        redirections: Redirections
         tree:
             open: Open the tree
             close: Close the tree
@@ -62,3 +66,6 @@ open_orchestra_backoffice:
             displayed_menu: Displayed in the menu
             na: N/A
             reset: Reset
+    form:
+        keyword:
+            new: new

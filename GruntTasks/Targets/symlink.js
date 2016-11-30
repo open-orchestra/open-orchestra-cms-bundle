@@ -178,8 +178,8 @@ module.exports = {
         dest: 'web/css/images/jquery.minicolors.png'
     },
     jquery_ui: {
-        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
-        dest: 'web/css/images/ui-icons_222222_256x240.png'
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-icons_444444_256x240.png',
+        dest: 'web/css/images/ui-icons_444444_256x240.png'
     },
     jquery_ui_bg_flat: {
         src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png',
@@ -241,5 +241,14 @@ module.exports = {
     state: {
       src: 'web/bundles/openorchestrabackoffice/images/state.png',
       dest: 'web/images/state.png'
+    },
+    //--[ SELECT2 ]--//
+    select2: {
+        src: 'vendor/bower_components/select2/select2.png',
+        dest: 'web/css/select2.png'
+    },
+    select2_spinner: {
+        src: 'vendor/bower_components/select2/select2-spinner.gif',
+        dest: 'web/css/select2-spinner.gif'
     }
 };

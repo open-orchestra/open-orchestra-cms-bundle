@@ -30,8 +30,8 @@ open_orchestra_backoffice:
         add: Ajouter
         select: Sélectionner
         swchoff:
-            on: OUI
-            off: NON
+            on: Oui
+            off: Non
         javascript:
           error: Une erreur est survenue dans votre navigateur lors de la soumission du formulaire!
         allowed_characters:
@@ -207,30 +207,34 @@ open_orchestra_backoffice:
             name: Nom
         node:
             success: La page a été sauvegardée
-            name: Page
+            title: Titre
             scheme: Protocol
             default_scheme: Par défaut (Configuration de l'alias)
             publish_date: Date de publication automatique
             unpublish_date: Date de dépublication automatique
+            status: Status
             node_type: Type de page
             priority:
                 label: Importance relative par rapport aux autres pages du site (pour le sitemap)
                 helper: Importance relative par rapport aux autres pages du site (pour le sitemap)
+            canonical: Page canonique
             theme: Le thème
             alias: Alias
-            boLabel:
-                name: Label dans le Back Office
-                helper: Ce label est commun à toutes les versions et les langues de la page
             route_pattern:
-                name : Pattern de l'url
+                name : URL principale
                 helper: |
                     Types de pattern : simple (pattern), absolu (/pattern), avec variable (/{contentId})
             language: Langue
             status: Statut
             in_menu: Affiché dans les menus
             in_footer: Affiché dans le pied de page
+            keywords: Mot clés
+            meta_description: Meta description
+            meta_index: Meta index
+            meta_follow: Meta follow
+            seo_title: Titre
             role: Rôle nécessaire pour afficher la page
-            max_age: Max age pour le cache de la réponse de la page
+            max_age: Durée de mise en cache
             node_source: La page source (en cas de copie)
             template_selection:
                 name : Sélection du gabarit
@@ -239,6 +243,20 @@ open_orchestra_backoffice:
                 title: Fréquence de modification indicative (pour le sitemap)
             template: Template
             specialPageName: Nom de page spéciale
+            group:
+                properties: Propriétés
+                seo: Référencement
+                keywords: Mot-clés
+                cache: Gestion du cache et des accès
+            sub_group:
+                properties: Propriétés
+                style: Style et mise en page
+                publication: Publications
+                seo: Référencement
+                canonical: Canonique
+                keywords: Mot-clés / moteur de recherche
+                cache: Cache
+                roles: Rôles
         changefreq:
             always: Toujours
             hourly: Toutes les heures

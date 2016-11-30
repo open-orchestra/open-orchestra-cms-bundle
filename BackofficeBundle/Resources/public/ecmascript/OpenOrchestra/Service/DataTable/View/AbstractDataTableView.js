@@ -313,6 +313,16 @@ class AbstractDataTableView extends OrchestraView
     }
 
     /**
+     * Return url parameter used ton fetch collection
+     *
+     * @returns {{}}
+     * @private
+     */
+    _getSyncUrlParameter() {
+        return {};
+    }
+
+    /**
      * @return {Function}
      * @private
      */
@@ -320,6 +330,7 @@ class AbstractDataTableView extends OrchestraView
         let collection = this._collection;
         return (request, drawCallback, settings) => {
            settings.jqXHR = collection.fetch({
+                urlParameter: this._getSyncUrlParameter(),
                 data: request,
                 processData: true,
                 success: (collection) => {

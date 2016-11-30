@@ -51,6 +51,10 @@ open_orchestra_backoffice:
             name: Nom
     node:
         title: Pages
+        parameterize: Paramètrer
+        back_to_list: Retour à la liste
+        edit: Modifier
+        redirections: Redirections
         tree:
             open: Déployer l'arborescence
             close: Fermer l'arborescence
@@ -62,3 +66,6 @@ open_orchestra_backoffice:
             displayed_menu: S'affiche dans le menu
             na: N/A
             reset: Reinitialiser
+    form:
+        keyword:
+            new: nouveau

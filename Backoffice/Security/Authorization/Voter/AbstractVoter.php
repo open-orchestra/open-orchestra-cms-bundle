@@ -36,7 +36,7 @@ abstract class AbstractVoter extends Voter
      * @param string $attribute
      * @param mixed  $subject
      *
-     * return bool
+     * @return bool
      */
     protected function supports($attribute, $subject)
     {

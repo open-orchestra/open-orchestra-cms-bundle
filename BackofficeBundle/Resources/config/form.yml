@@ -76,6 +76,7 @@ services:
             - '@open_orchestra_backoffice.manager.template'
             - '%open_orchestra_model.document.node.class%'
             - '%open_orchestra_backoffice.special_page_name%'
+            - '@open_orchestra_backoffice.subscriber.node_choice_status'
         tags:
             - { name: form.type, alias: oo_node }
     # Block form type
@@ -203,7 +204,6 @@ services:
         class: '%open_orchestra_backoffice.type.node_choice.class%'
         arguments:
             - '@open_orchestra_model.repository.node'
-            - '@open_orchestra_display.manager.tree'
             - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: form.type, alias: oo_node_choice}

@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
@@ -77,8 +76,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade = $this->addMainAttributes($facade, $node);
         $facade = $this->addAreas($facade, $node);
         $facade = $this->addStatus($facade, $node);
-        $facade = $this->addLinks($facade, $node);
-        $facade = $this->addGeneralNodeLinks($facade, $node);
+        $facade = $this->addPreviewLinks($facade, $node);
 
         return $facade;
     }
@@ -106,7 +104,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->path = $node->getPath();
         $facade->routePattern = $node->getRoutePattern();
         $facade->language = $node->getLanguage();
-        $facade->metaKeywords = $node->getMetaKeywords();
         $facade->metaDescription = $node->getMetaDescription();
         $facade->metaIndex = $node->getMetaIndex();
         $facade->metaFollow = $node->getMetaFollow();
@@ -117,7 +114,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-        $facade->editable = $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node);
+
+        $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
 
         return $facade;
     }
@@ -149,84 +147,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         if ($this->hasGroup(CMSGroupContext::STATUS)) {
             $facade->status = $this->getTransformer('status')->transform($node->getStatus());
-        }
-
-        return $facade;
-    }
-
-    /**
-     * @param FacadeInterface $facade
-     * @param NodeInterface   $node
-     *
-     * @return FacadeInterface
-     */
-    protected function addLinks(FacadeInterface $facade, NodeInterface $node)
-    {
-        if ($this->hasGroup(CMSGroupContext::NODE_LINKS)) {
-            $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-                'nodeId' => $node->getNodeId()
-            )));
-
-            $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-                'nodeId' => $node->getNodeId(),
-                'version' => $node->getVersion(),
-                'language' => $node->getLanguage(),
-            )));
-
-            $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_languages_show', array(
-                'siteId' => $node->getSiteId()
-            )));
-
-            $facade->addLink('_block_list', $this->generateRoute('open_orchestra_api_block_list_with_transverse', array('language' => $node->getLanguage())));
-        }
-
-        return $facade;
-    }
-
-    /**
-     * @param FacadeInterface $facade
-     * @param NodeInterface   $node
-     *
-     * @return FacadeInterface
-     */
-    protected function addGeneralNodeLinks(FacadeInterface $facade, NodeInterface $node)
-    {
-        $facade = $this->addPreviewLinks($facade, $node);
-
-        if (!$node->getStatus()->isBlockedEdition()) {
-            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
-                'id' => $node->getId(),
-            )));
-        }
-
-        $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_node_list_status', array(
-            'nodeMongoId' => $node->getId()
-        )));
-
-        $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
-            'nodeMongoId' => $node->getId()
-        )));
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node)) {
-            $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_node_new_version', array(
-                'nodeId' => $node->getNodeId(),
-                'language' => $node->getLanguage(),
-                'version' => $node->getVersion(),
-            )));
-        }
-
-        $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
-            'nodeId' => $node->getNodeId(),
-            'language' => $node->getLanguage(),
-        )));
-
-        if (NodeInterface::TYPE_ERROR !== $node->getNodeType()
-            && $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node)
-            && !NodeInterface::ROOT_NODE_ID === $node->getNodeId()
-        ) {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
-                'nodeId' => $node->getNodeId()
-            )));
         }
 
         return $facade;
@@ -306,12 +226,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
         $facade->status = $this->getTransformer('status')->transform($node->getStatus());
-
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $node->getNodeId(),
-            'version' => $node->getVersion(),
-            'language' => $node->getLanguage(),
-        )));
 
         return $facade;
     }

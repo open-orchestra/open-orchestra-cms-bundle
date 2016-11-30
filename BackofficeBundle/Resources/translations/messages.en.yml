@@ -30,8 +30,8 @@ open_orchestra_backoffice:
         add: Add
         select: Select
         swchoff:
-            on: YES
-            off: NO
+            on: Yes
+            off: No
         javascript:
           error: An error occurs on your browser during form submission!
         allowed_characters:
@@ -207,22 +207,21 @@ open_orchestra_backoffice:
             name: Name
         node:
             success: The page has been saved
-            name: Page
+            title: Title
             scheme: Scheme
             default_scheme: Default (Alias configuration)
             publish_date: Automatic publish date
             unpublish_date: Automatic unpublish date
+            status: Status
             node_type: Type of Node
             priority:
                 label: Relative importance compared to the other pages of the site (for the sitemap)
                 helper: Relative importance compared to the other pages of the site (for the sitemap)
+            canonical: Canonical page
             theme: The theme
             alias: Alias
-            boLabel:
-                name: Back Office label
-                helper: This label is common to all versions and languages of the page
             route_pattern:
-                name : Url Pattern
+                name : Main URL
                 helper: |
                     Pattern types: simple (pattern), absolute (/pattern), with variable (/{contentId})
             language: Language
@@ -230,7 +229,12 @@ open_orchestra_backoffice:
             in_menu: Shown in menus
             in_footer: Shown in footer
             role: Role needed to display the page
-            max_age: Max age of the response for the page
+            keywords: Keywords
+            meta_description: Meta description
+            meta_index: Meta index
+            meta_follow: Meta follow
+            seo_title: Title
+            max_age: Cache time
             node_source: The source page (in case of copy)
             template_selection:
                 name : Template selection
@@ -239,6 +243,20 @@ open_orchestra_backoffice:
                 title: Indicative periodicity of change (for the sitemap)
             template: Template
             specialPageName: Special page name
+            group:
+                properties: Propriétés
+                seo: Référencement
+                keywords: Mot-clés
+                cache: Gestion du cache et des accès
+            sub_group:
+                properties: Propriétés
+                style: Style et mise en page
+                publication: Publications
+                seo: Référencement
+                canonical: Canonique
+                keywords: Mot-clés / moteur de recherche
+                cache: Cache
+                roles: Rôles
         changefreq:
             always: Always
             hourly: Hourly

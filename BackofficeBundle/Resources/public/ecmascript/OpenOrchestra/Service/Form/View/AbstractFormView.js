@@ -21,7 +21,7 @@ class AbstractFormView extends OrchestraView
      */
     preinitialize(options) {
         this.events = {
-            'click button[type="submit"]': '_submit',
+            'click button[type="submit"]': '_submit'
         };
     }
 
@@ -31,21 +31,14 @@ class AbstractFormView extends OrchestraView
      */
     initialize({form}) {
         this._form = form;
+        this._$formRegion = this.$el;
     }
 
     /**
-     * Render a form
+     * Render
      */
     render() {
-        this.$el.html('');
-        for (let message of this._form.$messages) {
-            this.$el.append(message);
-        }
-        this.$el.append(this._form.$form);
-
-        //@todo refacto this line when form behavior is convert in ES6
-        OpenOrchestra.FormBehavior.channel.trigger('activate', this, this.$el);
-        Backbone.Events.trigger('form:activate', this.$el);
+        this._renderForm();
 
         return this;
     }
@@ -54,10 +47,25 @@ class AbstractFormView extends OrchestraView
      * Refresh render
      */
     refreshRender() {
-        //@todo refacto this line when form behavior is convert in ES6
-        OpenOrchestra.FormBehavior.channel.trigger('deactivate', this, this.$el);
         Backbone.Events.trigger('form:deactivate', this.$el);
-        this.render();
+        this._renderForm();
+    }
+
+    /**
+     * Render a form
+     *
+     * @private
+     */
+    _renderForm() {
+        this._$formRegion.html('');
+        for (let message of this._form.$messages) {
+            this._$formRegion.append(message);
+        }
+        this._$formRegion.append(this._form.$form);
+
+        Backbone.Events.trigger('form:activate', this._$formRegion);
+
+        return this;
     }
 
     /**

@@ -67,7 +67,8 @@ class UpdateSiteAliasRedirectionSiteSubscriber implements EventSubscriberInterfa
         foreach ($nodes as $node) {
             $this->redirectionManager->deleteRedirection(
                 $node->getNodeId(),
-                $node->getLanguage()
+                $node->getLanguage(),
+                $node->getSiteId()
             );
         }
     }

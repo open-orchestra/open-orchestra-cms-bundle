@@ -108,13 +108,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $facade = $this->nodeTransformer->transform($this->node);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
-        $this->assertArrayHasKey('_self_form', $facade->getLinks());
-        $this->assertArrayHasKey('_self_new_version', $facade->getLinks());
-        $this->assertArrayHasKey('_self_version', $facade->getLinks());
-        $this->assertArrayHasKey('_language_list', $facade->getLinks());
-        $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
-        $this->assertArrayHasKey('_block_list', $facade->getLinks());
-        Phake::verify($this->router, Phake::times(10))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(1))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node, 0);
         Phake::verify($this->siteRepository, Phake::times(2))->findOneBySiteId(Phake::anyParameters());
     }
@@ -133,30 +127,11 @@ class NodeTransformerTest extends AbstractBaseTestCase
         Phake::when($this->node)->getAreas()->thenReturn(array($area));
         $facade = $this->nodeTransformer->transform($this->node);
 
-        $this->assertSame($facade->editable, false);
+        $this->assertSame($facade->getRights()['can_read'], false);
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
-        $this->assertArrayHasKey('_self_form', $facade->getLinks());
-        $this->assertArrayHasKey('_self_version', $facade->getLinks());
-        $this->assertArrayHasKey('_language_list', $facade->getLinks());
-        $this->assertArrayNotHasKey('_self_new_version', $facade->getLinks());
-        $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
-        $this->assertArrayNotHasKey('_self_delete', $facade->getLinks());
-        $this->assertArrayHasKey('_block_list', $facade->getLinks());
-        Phake::verify($this->router, Phake::times(9))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(1))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node, 0);
         Phake::verify($this->siteRepository, Phake::times(2))->findOneBySiteId(Phake::anyParameters());
-    }
-
-    /**
-     * Test transformVersion
-     */
-    public function testTransformVersion()
-    {
-        $facade = $this->nodeTransformer->transformVersion($this->node);
-
-        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
-        $this->assertArrayHasKey('_self', $facade->getLinks());
-        Phake::verify($this->router)->generate(Phake::anyParameters());
     }
 
     /**

@@ -13,9 +13,8 @@ class ScrollTable
             let $table = $(this);
             let $fixedColumn = $table.clone().addClass('clone');
             $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
-            $fixedColumn.insertBefore($table)
+            $fixedColumn.insertBefore($table);
             $table.wrap($('<div>').addClass('wraper'));
-            $fixedColumn;
             $fixedColumn.find('tr').each(function (i, elem) {
                 $(this).height($table.find('tr:eq(' + i + ')').height());
             });

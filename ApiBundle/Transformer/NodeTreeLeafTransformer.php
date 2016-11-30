@@ -21,6 +21,8 @@ class NodeTreeLeafTransformer extends AbstractTransformer
 
         $facade->nodeId = $node['nodeId'];
         $facade->name = $node['name'];
+        $facade->language = $node['language'];
+        $facade->version = $node['version'];
         $facade->siteId = $node['siteId'];
         $facade->status = $this->getTransformer('status_node_tree')->transform($node['status']);
 

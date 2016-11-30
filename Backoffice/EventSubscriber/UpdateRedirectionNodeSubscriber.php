@@ -47,7 +47,8 @@ class UpdateRedirectionNodeSubscriber implements EventSubscriberInterface
         $node = $event->getNode();
         $this->redirectionManager->updateRedirection(
             $node->getNodeId(),
-            $node->getLanguage()
+            $node->getLanguage(),
+            $node->getSiteId()
         );
     }
 
@@ -79,7 +80,8 @@ class UpdateRedirectionNodeSubscriber implements EventSubscriberInterface
     {
         $this->redirectionManager->deleteRedirection(
             $node->getNodeId(),
-            $node->getLanguage()
+            $node->getLanguage(),
+            $node->getSiteId()
         );
 
         $nodes = $this->nodeRepository->findByParent($node->getNodeId(), $node->getSiteId());

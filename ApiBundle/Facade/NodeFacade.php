@@ -61,11 +61,6 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("string")
      */
-    public $metaKeywords;
-
-    /**
-     * @Serializer\Type("string")
-     */
     public $metaDescription;
 
     /**

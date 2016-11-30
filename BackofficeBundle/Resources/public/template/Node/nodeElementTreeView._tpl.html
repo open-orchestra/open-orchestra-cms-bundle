@@ -6,6 +6,15 @@
         <% }; %>
         <span><%= nodeTree.get('node').get('name') %></span>
         <i class="state state-<%= nodeTree.get('node').get('status').get('code_color') %>" aria-hidden="true"></i>
+        <div class="links">
+            <a href="#<%= Backbone.history.generateUrl('editNode', {
+                language: nodeTree.get('node').get('language'),
+                nodeId: nodeTree.get('node').get('node_id'),
+                version: nodeTree.get('node').get('version')
+            }) %>">
+                <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
+            </a>
+        </div>
     </div>
     <% if ( 0 !== nodeTree.get('children').length) { %>
         <ul class="children">

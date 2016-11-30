@@ -14,7 +14,6 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $orchestraNodeChoiceType;
     protected $nodeRepository;
-    protected $treeManager;
     protected $node1;
     protected $node2;
     protected $nodeName1 = 'nodeName1';
@@ -34,10 +33,9 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
         Phake::when($this->node2)->getName()->thenReturn($this->nodeName2);
         Phake::when($this->node2)->getNodeId()->thenReturn($this->nodeNodeId2);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->treeManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TreeManager');
         $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
 
-        $this->orchestraNodeChoiceType = new NodeChoiceType($this->nodeRepository, $this->treeManager, $currentSiteManager);
+        $this->orchestraNodeChoiceType = new NodeChoiceType($this->nodeRepository, $currentSiteManager);
     }
 
     /**
@@ -71,14 +69,7 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
     {
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        Phake::when($this->nodeRepository)->findLastVersionByType(Phake::anyParameters())->thenReturn(
-            array(
-                $this->node1,
-                $this->node2
-            )
-        );
-
-        Phake::when($this->treeManager)->generateTree(Phake::anyParameters())->thenReturn(
+        Phake::when($this->nodeRepository)->findTreeNode(Phake::anyParameters())->thenReturn(
             array(
                 array('node' => $this->node1, 'child' => array(array('node' => $this->node2))),
             )
@@ -90,6 +81,7 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
                     return $this->getChoices($options['siteId']);
                 },
                 'siteId' => null,
+                'language' => null,
                 'attr' => array(
                     'class' => 'orchestra-node-choice'
                 )

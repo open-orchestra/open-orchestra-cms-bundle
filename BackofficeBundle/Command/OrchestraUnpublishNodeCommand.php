@@ -80,7 +80,7 @@ class OrchestraUnpublishNodeCommand extends ContainerAwareCommand
 
         } elseif (is_array($unpublishResult)) {
             foreach ($unpublishResult as $node) {
-                $output->writeln("<comment>-> " . $node['BOLabel'] . " (v" . $node['version'] . " " . $node['language'] . ") unpublished</comment>");
+                $output->writeln("<comment>-> " . $node['name'] . " (v" . $node['version'] . " " . $node['language'] . ") unpublished</comment>");
             }
         }
     }
