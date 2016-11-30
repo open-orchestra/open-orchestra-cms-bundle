@@ -96,6 +96,7 @@ class NodeController extends AbstractAdminController
             'parentId' => $parentId,
             'order'    => $order
         ));
+
         $form = $this->createForm('oo_node', $node, array('action' => $url));
 
         $form->handleRequest($request);
