@@ -12,7 +12,7 @@
                 </li>
             <% } else { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('newNode', {language: siteLanguage, parentId: parentId}) %>">
+                    <a href="#<%= Backbone.history.generateUrl('newNode', {language: siteLanguage, parentId: parentId, order: order}) %>">
                         <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
                     </a>
                 </li>

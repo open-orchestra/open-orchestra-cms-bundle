@@ -33,7 +33,7 @@
                 <ul class="children">
                     <li>
                         <div>
-                            <a class='new-node-link' href="#<%= Backbone.history.generateUrl('newNode', {language: language, parentId: nodeTree.get('node').get('node_id')}) %>">
+                            <a class='new-node-link' href="#<%= Backbone.history.generateUrl('newNode', {language: language, parentId: nodeTree.get('node').get('node_id'), order: '0'}) %>">
                                 <%= Translator.trans('open_orchestra_backoffice.node.tree.add_here') %>
                             </a>
                         </div>
@@ -42,7 +42,7 @@
                         <li>
                             <div>
                                 <p><span><%= childrenTree.get('node').get('name') %></span></p>
-                                <a class='new-node-link' href="#<%= Backbone.history.generateUrl('newNode', {language: language, parentId: nodeTree.get('node').get('node_id')}) %>">
+                                <a class='new-node-link' href="#<%= Backbone.history.generateUrl('newNode', {language: language, parentId: nodeTree.get('node').get('node_id'), order: (childrenTree.get('node').get('order') + 1).toString()}) %>">
                                     <%= Translator.trans('open_orchestra_backoffice.node.tree.add_here') %>
                                 </a>
                             </div>
