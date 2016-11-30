@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\UserBundle\Document\User;
 
 /**

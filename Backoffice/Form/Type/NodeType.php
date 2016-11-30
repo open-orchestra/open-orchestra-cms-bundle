@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventSubscriber\NodeChoiceStatusSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
