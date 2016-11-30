@@ -1,0 +1,2 @@
+parameters:
+    open_orchestra_user.document.group.class: OpenOrchestra\GroupBundle\Document\Group

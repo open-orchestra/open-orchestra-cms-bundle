@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class UserController
@@ -87,7 +88,7 @@ class UserController extends AbstractAdminController
             throw $this->createAccessDeniedException();
         }
         $user = $this->refreshLanguagesByAliases($this->getUser());
-var_dump($user->getId());
+
         return $this->renderForm($request, $user, true);
     }
 
@@ -183,7 +184,9 @@ var_dump($user->getId());
     {
         $sites = array();
         $siteIds = array();
-        if ($user->isSuperAdmin()) {
+        $allSite = $this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) || $this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER);
+
+        if ($allSite) {
             $sites = $this->container->get('open_orchestra_model.repository.site')->findByDeleted(false);
         } else {
             foreach ($user->getGroups() as $group) {

@@ -10,9 +10,6 @@ class GroupListForUserView extends AbstractDataTableView
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events = {
-            'draw.dt table': '_updatePage'
-        };
     }
 
     /**
@@ -48,18 +45,20 @@ class GroupListForUserView extends AbstractDataTableView
      *
      * @private
      */
-    _addCheckbox(td) {
-        $(td).html('<input type="checkbox">');
-    }
-
-    /**
-     * @param {Object} event
-     *
-     * @private
-     */
-    _updatePage(event) {
-        let api = $(event.target).DataTable();
-        let page = api.page.info().page + 1;
+    _addCheckbox(td, cellData) {
+        console.log(cellData);
+        let cell = '' +
+            '<div class="form-group ">' +
+            '    <div class="col-md-10 switch-button">' +
+            '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.off') + '</span>' +
+            '        <label class="switch" for="oo_user[editAllowed]">' +
+            '            <input type="checkbox" value="1" name="oo_user[editAllowed]" id="oo_user[editAllowed]">' +
+            '            <div class="slider"></div>' +
+            '        </label>' +
+            '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.on') + '</span>' +
+            '    </div>' +
+            '</div>';
+        $(td).html(cell);
     }
 }
 

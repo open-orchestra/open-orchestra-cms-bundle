@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class GroupController
@@ -81,6 +82,32 @@ class GroupController extends BaseController
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
 
         return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/user/group", name="open_orchestra_api_group_user_list")
+     * @Config\Method({"GET"})
+     *
+     * @return FacadeInterface
+     */
+    public function listUserAction(Request $request)
+    {
+        $siteIds = null;
+        if (!$this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) &&
+            $this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER)
+        ) {
+            foreach ($this->getUser()->getGroups() as $group) {
+                $site = $group->getSite();
+                if (!$site->isDeleted() && !in_array($site->getSiteId(), $siteIds)) {
+                    $siteIds[] = $site->getSiteId();
+                }
+            }
+        }
+        $groups = $this->get('open_orchestra_user.repository.group')->findBySiteId($siteIds);
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->transform($groups);
     }
 
     /**

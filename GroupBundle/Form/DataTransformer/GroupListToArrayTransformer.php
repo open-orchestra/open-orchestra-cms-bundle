@@ -4,7 +4,7 @@ namespace OpenOrchestra\GroupBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\UserBundle\Repository\GroupRepository;
+use OpenOrchestra\GroupBundle\Repository\GroupRepository;
 
 /**
  * Class GroupListToArrayTransformer

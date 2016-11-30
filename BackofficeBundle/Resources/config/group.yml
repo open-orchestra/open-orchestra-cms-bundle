@@ -1,5 +1,5 @@
 parameters:
-    open_orchestra_user.repository.group.class: OpenOrchestra\UserBundle\Repository\GroupRepository
+    open_orchestra_user.repository.group.class: OpenOrchestra\GroupBundle\Repository\GroupRepository
 
 services:
     open_orchestra_user.repository.group:

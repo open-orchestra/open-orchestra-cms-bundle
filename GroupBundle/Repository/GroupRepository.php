@@ -31,7 +31,7 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
 
     /**
      * Find all groups linked to site with $id
-     * 
+     *
      * @param string $id   The site id
      * @return array
      */
@@ -44,5 +44,20 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
         $qa->match($filter);
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param array $siteIds
+     *
+     * @return array
+     */
+    public function findBySiteId(array $siteIds = null)
+    {
+        $qb = $this->createQueryBuilder();
+        if (!is_null($siteIds)) {
+            $qb->field('site.$id')->in($siteIds);
+        }
+
+        return $qb->getQuery()->execute();
     }
 }
