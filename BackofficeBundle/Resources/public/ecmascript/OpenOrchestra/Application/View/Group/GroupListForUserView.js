@@ -25,6 +25,11 @@ class GroupListForUserView extends AbstractDataTableView
     getColumnsDefinition() {
         return [
             {
+                name: 'checkbox',
+                orderable: false,
+                createdCell: this._addCheckbox
+            },
+            {
                 name: "label",
                 title: Translator.trans('open_orchestra_backoffice.table.group.label'),
                 orderable: true,
@@ -32,9 +37,11 @@ class GroupListForUserView extends AbstractDataTableView
                 visibile: true
             },
             {
-                name: 'checkbox',
-                orderable: false,
-                createdCell: this._addCheckbox
+                name: "site.name",
+                title: Translator.trans('open_orchestra_backoffice.table.group.site_name'),
+                orderable: true,
+                orderDirection: 'desc',
+                visibile: true
             }
         ];
     }
@@ -45,14 +52,14 @@ class GroupListForUserView extends AbstractDataTableView
      *
      * @private
      */
-    _addCheckbox(td, cellData) {
-        console.log(cellData);
+    _addCheckbox(td, cellData, rowData) {
+        let id = rowData.get('id')
         let cell = '' +
             '<div class="form-group ">' +
-            '    <div class="col-md-10 switch-button">' +
+            '    <div class="switch-button">' +
             '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.off') + '</span>' +
-            '        <label class="switch" for="oo_user[editAllowed]">' +
-            '            <input type="checkbox" value="1" name="oo_user[editAllowed]" id="oo_user[editAllowed]">' +
+            '        <label class="switch" for="group[' + id + ']">' +
+            '            <input type="checkbox" value="' + id + '" name="group" id="group[' + id + ']">' +
             '            <div class="slider"></div>' +
             '        </label>' +
             '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.on') + '</span>' +

@@ -50,7 +50,7 @@ class UserProfilSubscriber implements EventSubscriberInterface
 
         if ($user instanceof UserInterface) {
             if ($this->allowedToSetPlatformAdmin) {
-                $form->add('platform_admin', 'radio', array(
+                $form->add('platform_admin', 'checkbox', array(
                     'data' => $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN),
                     'value' => true,
                     'label' => 'open_orchestra_user_admin.form.user.platform_admin',
@@ -61,7 +61,7 @@ class UserProfilSubscriber implements EventSubscriberInterface
                 ));
             }
             if ($this->allowedToSetDeveloper) {
-                $form->add('developer', 'radio', array(
+                $form->add('developer', 'checkbox', array(
                     'data' => $user->hasRole(ContributionRoleInterface::DEVELOPER),
                     'value' => true,
                     'label' => 'open_orchestra_user_admin.form.user.developer',

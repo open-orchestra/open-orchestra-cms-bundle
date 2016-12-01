@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 
 /**
  * Class GroupController
@@ -90,6 +91,9 @@ class GroupController extends BaseController
      * @Config\Route("/user/group", name="open_orchestra_api_group_user_list")
      * @Config\Method({"GET"})
      *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
+     * })
      * @return FacadeInterface
      */
     public function listUserAction(Request $request)
@@ -105,9 +109,24 @@ class GroupController extends BaseController
                 }
             }
         }
-        $groups = $this->get('open_orchestra_user.repository.group')->findBySiteId($siteIds);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->transform($groups);
+        $mapping = array(
+            'label' => 'labels',
+            'site.name' => 'site.name',
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+
+        $repository = $this->get('open_orchestra_user.repository.group');
+        $collection = $repository->findForPaginate($configuration, $siteIds);
+        $recordsTotal = $repository->count($siteIds);
+        $recordsFiltered = $repository->countWithFilter($configuration, $siteIds);
+
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
     }
 
     /**

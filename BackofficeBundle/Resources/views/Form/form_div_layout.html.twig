@@ -98,6 +98,13 @@
                 	    <td><i class="fa fa-close" aria-hidden="true"></i></td>
                 	</tr>
                 {% endif %}
+            	{% if child.vars.attr['type'] is defined and child.vars.attr['type'] == "prototype" %}
+                	<tr class="prototype hide">
+                	    <td><div class="hide">{{ form_widget(child) }}</div>{{ child.vars.label }}</td>
+                	    <td>{{ child.vars.attr['data-site'] }}</td>
+                	    <td><i class="fa fa-close" aria-hidden="true"></i></td>
+                	</tr>
+                {% endif %}
             {% endfor %}
             </table>
             <div>

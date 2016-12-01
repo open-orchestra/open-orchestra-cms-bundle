@@ -38,6 +38,9 @@ open_orchestra_backoffice:
             author: Auteur
             updated_at: Date de modification
             current_status: Etat courant
+        group:
+            label: Label
+            site_name: Nom du site
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -70,9 +73,15 @@ open_orchestra_backoffice:
             displayed_menu: S'affiche dans le menu
             na: N/A
             reset: Reinitialiser
+    user:
+        add_group: Ajouter un group à l'utilisateur
+        select: Sélectionner
     form:
         keyword:
             new: nouveau
         behavior:
             copy_page: Copier une page
             use_template: Utiliser un template prédéfini
+        swchoff:
+            on: Oui
+            off: Non

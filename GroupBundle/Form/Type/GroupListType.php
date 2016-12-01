@@ -39,9 +39,16 @@ class GroupListType extends AbstractType
         foreach ($options['groups'] as $group) {
             $builder->add($group->getId(), 'radio', array(
                 'label' => $this->multiLanguagesChoiceManager->choose($group->getLabels()),
-                'attr' => array('data-site' => $group->getSite()->getSiteId()),
+                'attr' => array('data-site' => $group->getSite()->getName()),
             ));
         }
+        $builder->add('__prototype-id__', 'radio', array(
+            'label' => '__prototype-label__',
+            'attr' => array(
+                'data-site' => '__prototype-site.name__',
+                'type' => 'prototype'),
+            'mapped' => false,
+        ));
     }
 
     /**
