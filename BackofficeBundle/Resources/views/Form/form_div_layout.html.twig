@@ -99,7 +99,7 @@
                 	</tr>
                 {% endif %}
             	{% if child.vars.attr['type'] is defined and child.vars.attr['type'] == "prototype" %}
-                	<tr class="prototype hide">
+                	<tr class="prototype">
                 	    <td><div class="hide">{{ form_widget(child) }}</div>{{ child.vars.label }}</td>
                 	    <td>{{ child.vars.attr['data-site'] }}</td>
                 	    <td><i class="fa fa-close" aria-hidden="true"></i></td>
