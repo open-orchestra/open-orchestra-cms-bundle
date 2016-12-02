@@ -48,9 +48,12 @@ class GroupTable extends AbstractBehavior
     /**
      * Open group list in modal
      */
-    _openGroupList() {
+    _openGroupList(event) {
         this._diplayLoader(Application.getRegion('modal'));
-        let groupListModalView = new GroupListModalView();
+        let checkboxes = $(event.target).closest('.group-list').find('[type="checkbox"]');
+        let blockedGroups = _.pluck(checkboxes.serializeArray(), 'value');
+        let selectedGroups = blockedGroups;
+        let groupListModalView = new GroupListModalView({blockedGroups: blockedGroups, selectedGroups: selectedGroups});
         Application.getRegion('modal').html(groupListModalView.render().$el);
         groupListModalView.show();
     }
@@ -62,9 +65,11 @@ class GroupTable extends AbstractBehavior
         let prototype = $('.prototype', this.$el).data('prototype');
         let container = $('.group-list table tbody', this.$el);
         for (let group of selectedGroups) {
-            container.append(prototype.replace(/__([^_]*?)__/g, function(str, property) {
-                return eval('group.get("' + property.split('.').join('").get("') + '")');
-            }));
+            if($('[type="checkbox"][value="' + group.get('id') + '"]', this.$el).length == 0) {
+                container.append(prototype.replace(/__([^_]*?)__/g, function(str, property) {
+                    return eval('group.get("' + property.split('.').join('").get("') + '")');
+                }));
+            }
         }
     }
 }

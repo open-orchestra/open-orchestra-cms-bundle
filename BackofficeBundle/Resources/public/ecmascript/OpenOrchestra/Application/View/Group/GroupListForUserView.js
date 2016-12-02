@@ -8,8 +8,10 @@ class GroupListForUserView extends AbstractDataTableView
     /**
      * @inheritDoc
      */
-    preinitialize(options) {
-        super.preinitialize(options);
+    preinitialize({collection, blockedGroups, selectedGroups}) {
+        super.preinitialize({collection: collection});
+        this._blockedGroups = blockedGroups;
+        this._selectedGroups = selectedGroups;
     }
 
     /**
@@ -27,7 +29,7 @@ class GroupListForUserView extends AbstractDataTableView
             {
                 name: 'checkbox',
                 orderable: false,
-                createdCell: this._addCheckbox
+                createdCell: this._addCheckbox.bind(this)
             },
             {
                 name: "label",
@@ -59,7 +61,7 @@ class GroupListForUserView extends AbstractDataTableView
             '    <div class="switch-button">' +
             '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.off') + '</span>' +
             '        <label class="switch" for="group[' + id + ']">' +
-            '            <input type="checkbox" value="' + id + '" name="group" id="group[' + id + ']">' +
+            '            <input type="checkbox" value="' + id + '" name="group" id="group[' + id + ']"' + ((this._blockedGroups.indexOf(id) > -1) ? ' disabled="disabled"' : '') + '' + ((this._selectedGroups.indexOf(id) > -1) ? ' checked="checked"' : '') + '>' +
             '            <div class="slider"></div>' +
             '        </label>' +
             '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.on') + '</span>' +
