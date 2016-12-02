@@ -20,7 +20,7 @@ class Manager
     }
 
     /**
-     * deactivate behavior
+     * activate behavior
      * 
      * @param {Object} view - instance of AbstractFormView
      */
@@ -31,11 +31,11 @@ class Manager
     }
 
     /**
-     * activate behavior
+     * deactivate behavior
      * 
-     * @param {Object} $form - jQuery element containing form
+     * @param {Object} view - jQuery element containing form
      */
-    _deactivate($form) {
+    _deactivate(view) {
         for (let behavior of this._behaviors) {
             behavior.deactivateBehavior(view);
         }

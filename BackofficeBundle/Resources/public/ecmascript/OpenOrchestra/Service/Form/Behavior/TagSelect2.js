@@ -16,7 +16,6 @@ class TagSelect2 extends AbstractBehavior
             tags: tags,
             containerCssClass: 'tags',
             createSearchChoice: (term, data) => {
-                console.log($element);
                 if (!$element.data('authorize-new')) {
                     return false;
                 }
@@ -46,7 +45,7 @@ class TagSelect2 extends AbstractBehavior
      * @param {Object} $element - jQuery object
      */
     deactivate($element) {
-        $(element).select2("destroy");
+        $element.select2("destroy");
     }
 
     /**
