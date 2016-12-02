@@ -160,7 +160,6 @@ class NodeManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param NodeInterface   $node
      * @param string          $language
      *
      * @dataProvider provideNodeAndLanguage
@@ -339,41 +338,6 @@ class NodeManagerTest extends AbstractBaseTestCase
             array(0, 'root', ''),
             array(3, 'test', '/test'),
             array(4, 'fixture', '/test/fixture'),
-        );
-    }
-
-    /**
-     * Test getNewNodeOrder
-     *
-     * @param NodeInterface|null $node
-     * @param int                $expectedOrder
-     *
-     * @dataProvider provideGreatestOrderedNode
-     */
-    public function testGetNewNodeOrder($node, $expectedOrder)
-    {
-        Phake::when($this->nodeRepository)->findOneByParentWithGreatestOrder(Phake::anyParameters())->thenReturn($node);
-
-        $node = $this->manager->initializeNode('fakeParentId', 'fakeLanguage', 'fakeId');
-
-        $this->assertEquals($expectedOrder, $node->getOrder());
-    }
-
-    /**
-     * @return array
-     */
-    public function provideGreatestOrderedNode()
-    {
-        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node1)->getOrder()->thenReturn(1);
-
-        $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node2)->getOrder()->thenReturn(4);
-
-        return array(
-            array($node1, 2),
-            array($node2, 5),
-            array(null, 0),
         );
     }
 }

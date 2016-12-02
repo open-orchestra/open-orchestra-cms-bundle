@@ -1,0 +1,24 @@
+<div class="top-action-buttons">
+    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: language}) %>" role="button">
+        <%= Translator.trans('open_orchestra_backoffice.node.back_to_list') %>
+    </a>
+</div>
+<div class="pull-right languages">
+    <ul>
+        <% _.each(siteLanguages, function(siteLanguage, key) { %>
+            <% if (siteLanguage === language) { %>
+                <li class="active">
+                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                </li>
+            <% } else { %>
+                <li>
+                    <a href="#<%= Backbone.history.generateUrl('newNode', {language: siteLanguage, parentId: parentId, order: order}) %>">
+                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    </a>
+                </li>
+            <% }; %>
+        <% }); %>
+    </ul>
+</div>
+<h1> <%= Translator.trans('open_orchestra_backoffice.node.new') %></h1>
+<div class='form-new'></div>

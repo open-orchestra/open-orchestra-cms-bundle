@@ -67,7 +67,9 @@ class KeywordsChoiceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $isGranted = $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD);
+        // @todo Update when voter for create and access is created
+        //$isGranted = $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD);
+        $isGranted = true;
 
         $resolver->setDefaults(array(
             'attr' => function(Options $options) use ($isGranted) {

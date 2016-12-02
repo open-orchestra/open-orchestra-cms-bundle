@@ -54,9 +54,7 @@ class NodeType extends AbstractType
         $this->schemeChoices = array(
             SchemeableInterface::SCHEME_DEFAULT => 'open_orchestra_backoffice.form.node.default_scheme',
             SchemeableInterface::SCHEME_HTTP => SchemeableInterface::SCHEME_HTTP,
-            SchemeableInterface::SCHEME_HTTPS => SchemeableInterface::SCHEME_HTTPS,
-            SchemeableInterface::SCHEME_FILE => SchemeableInterface::SCHEME_FILE,
-            SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
+            SchemeableInterface::SCHEME_HTTPS => SchemeableInterface::SCHEME_HTTPS
         );
         $this->specialPageList = $specialPageList;
         $this->nodeChoiceStatusSubscriber = $nodeChoiceStatusSubscriber;
@@ -193,12 +191,6 @@ class NodeType extends AbstractType
                 'group_id' => 'cache',
                 'sub_group_id' => 'cache',
                 'required' => false,
-            ))
-            ->add('role', 'oo_front_role_choice', array(
-                'label' => 'open_orchestra_backoffice.form.node.role',
-                'group_id' => 'cache',
-                'sub_group_id' => 'roles',
-                'required' => false,
             ));
 
         $builder->addEventSubscriber($this->nodeChoiceStatusSubscriber);
@@ -270,11 +262,7 @@ class NodeType extends AbstractType
                 'cache' => array(
                     'rank' => 0,
                     'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
-                ),
-                'roles' => array(
-                    'rank' => 1,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.roles',
-                ),
+                )
             ),
         ));
     }

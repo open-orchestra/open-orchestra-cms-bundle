@@ -65,6 +65,9 @@ class NodeListView extends AbstractDataTableView
      * @private
      */
     _createEditLink(td, cellData, rowData) {
+        if (true === rowData.get('status').get('translation_state')) {
+            cellData = '[ ' + cellData + ' ]';
+        }
         if (true === rowData.get('rights').can_read) {
             let link = Backbone.history.generateUrl('editNode', {
                 language: rowData.get('language'),

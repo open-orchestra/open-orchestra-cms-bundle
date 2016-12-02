@@ -31,6 +31,11 @@ class StatusFacade extends AbstractFacade
     public $autoUnpublishTo;
 
     /**
+     * @Serializer\Type("boolean")
+     */
+    public $translationState;
+
+    /**
      * @Serializer\Type("string")
      */
     public $name;

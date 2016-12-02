@@ -1,32 +1,23 @@
+import AbstractBehavior from './AbstractBehavior'
+
 /**
  * @class ScrollTable
  */
-class ScrollTable
+class ScrollTable extends AbstractBehavior
 {
     /**
      * activate behavior
      * 
-     * @param {Object} $elements - jQuery elements matching selector
+     * @param {Object} $element - jQuery object
      */
-    activate($elements) {
-        $elements.each(function() {
-            let $table = $(this);
-            let $fixedColumn = $table.clone().addClass('clone');
-            $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
-            $fixedColumn.insertBefore($table);
-            $table.wrap($('<div>').addClass('wraper'));
-            $fixedColumn.find('tr').each(function (i, elem) {
-                $(this).height($table.find('tr:eq(' + i + ')').height());
-            });
+    activate($element) {
+        let $fixedColumn = $element.clone().addClass('clone');
+        $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
+        $fixedColumn.insertBefore($element);
+        $element.wrap($('<div>').addClass('wraper'));
+        $fixedColumn.find('tr').each(function (i, elem) {
+            $(this).height($element.find('tr:eq(' + i + ')').height());
         });
-    }
-
-    /**
-     * deactivate behavior
-     * 
-     * @param {Object} $elements - jQuery elements matching selector
-     */
-    deactivate($elements) {
     }
 
     /**

@@ -23,6 +23,7 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
     protected $nodeManager;
     protected $contextManager;
     protected $siteRepository;
+    protected $templateManager;
 
     protected $siteId = 'fakeSiteId';
     protected $templateSet = 'fakeTemplateSet';
@@ -110,13 +111,11 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
 
         Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('nodeTemplateSelection', 'form', array(
             'virtual' => true,
-            'label' => 'open_orchestra_backoffice.form.node.template_selection.name',
+            'label' => false,
             'mapped' => false,
-            'label_attr' => array('class' => 'one-needed'),
             'required' => false,
-            'attr' => array(
-                'help_text' => 'open_orchestra_backoffice.form.node.template_selection.helper',
-            )
+            'group_id' => 'properties',
+            'sub_group_id' => 'style'
         ));
 
         Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('nodeSource', 'oo_node_choice', array(

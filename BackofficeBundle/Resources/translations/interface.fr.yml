@@ -52,6 +52,8 @@ open_orchestra_backoffice:
     node:
         title: Pages
         parameterize: Paramètrer
+        add: Ajouter une page
+        new: Nouvelle page
         back_to_list: Retour à la liste
         edit: Modifier
         redirections: Redirections
@@ -61,6 +63,8 @@ open_orchestra_backoffice:
         statuses_legend:
             title: Légende
             out_of_bounds: Hors périmètre
+            new_select_page: Sélectionner l'emplacement de la page
+            add_here: Ici
         search_engine:
             status: Etat
             displayed_menu: S'affiche dans le menu
@@ -69,3 +73,6 @@ open_orchestra_backoffice:
     form:
         keyword:
             new: nouveau
+        behavior:
+            copy_page: Copier une page
+            use_template: Utiliser un template prédéfini

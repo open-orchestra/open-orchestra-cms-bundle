@@ -49,7 +49,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
         $this->nodeType->buildForm($formBuilderMock, array());
-        Phake::verify($formBuilderMock, Phake::times(20))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(19))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
@@ -113,11 +113,7 @@ class NodeTypeTest extends AbstractBaseTestCase
                 'cache' => array(
                     'rank' => 0,
                     'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
-                ),
-                'roles' => array(
-                    'rank' => 1,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.roles',
-                ),
+                )
             ),
         ));
     }

@@ -1,20 +1,22 @@
-import NodeRouter          from './Router/Node/NodeRouter'
-import KeywordRouter       from './Router/Keyword/KeywordRouter'
-import DashboardRouter     from './Router/Dashboard/DashboardRouter'
-import SiteRouter          from './Router/Site/SiteRouter'
-import UserRouter          from './Router/User/UserRouter'
-import ErrorView           from './View/Error/ErrorView'
-import ApplicationError    from '../Service/Error/ApplicationError'
-import AjaxError           from '../Service/Error/AjaxError'
-import HeaderView          from './View/Header/HeaderView'
-import SitesAvailable      from './Collection/Site/SitesAvailable'
-import NavigationView      from './View/Navigation/NavigationView'
-import FormBehaviorManager from '../Service/Form/Behavior/Manager'
-import ScrollTable         from '../Service/Form/Behavior/ScrollTable'
-import Tooltip             from '../Service/Form/Behavior/Tooltip'
-import TagSelect2          from '../Service/Form/Behavior/TagSelect2'
-import DatePicker          from '../Service/Form/Behavior/DatePicker'
-import NodeChoice          from '../Service/Form/Behavior/NodeChoice'
+import NodeRouter            from './Router/Node/NodeRouter'
+import KeywordRouter         from './Router/Keyword/KeywordRouter'
+import DashboardRouter       from './Router/Dashboard/DashboardRouter'
+import SiteRouter            from './Router/Site/SiteRouter'
+import UserRouter            from './Router/User/UserRouter'
+import ErrorView             from './View/Error/ErrorView'
+import ApplicationError      from '../Service/Error/ApplicationError'
+import AjaxError             from '../Service/Error/AjaxError'
+import HeaderView            from './View/Header/HeaderView'
+import SitesAvailable        from './Collection/Site/SitesAvailable'
+import NavigationView        from './View/Navigation/NavigationView'
+import FormBehaviorManager   from '../Service/Form/Behavior/Manager'
+import ScrollTable           from '../Service/Form/Behavior/ScrollTable'
+import Tooltip               from '../Service/Form/Behavior/Tooltip'
+import TagSelect2            from '../Service/Form/Behavior/TagSelect2'
+import DatePicker            from '../Service/Form/Behavior/DatePicker'
+import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
+import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
+import GenerateId            from '../Service/Form/Behavior/GenerateId'
 
 /**
  * @class Application
@@ -180,11 +182,13 @@ class Application
      * @private
      */
     _initFormBehaviorManager() {
+        FormBehaviorManager.add(NodeTemplateSelection);
         FormBehaviorManager.add(ScrollTable);
         FormBehaviorManager.add(Tooltip);
         FormBehaviorManager.add(TagSelect2);
         FormBehaviorManager.add(NodeChoice);
         FormBehaviorManager.add(DatePicker);
+        FormBehaviorManager.add(GenerateId);
     }
 
 }

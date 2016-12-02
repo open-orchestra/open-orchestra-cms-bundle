@@ -58,9 +58,11 @@ open_orchestra_backoffice:
                 orange: Orange
                 green: Green
                 grayDark: Grey
+                blue: Blue
             display_color: Diplay color
             creation: The new status has been created
             success: The status has been modified
+            translation_state: Translation state
             blocked_edition:
                 label: Blocked edition
                 helper: If set to "Yes", the contents with this status can not be changed.
@@ -208,7 +210,7 @@ open_orchestra_backoffice:
         node:
             success: The page has been saved
             title: Title
-            scheme: Scheme
+            scheme: Protocol
             default_scheme: Default (Alias configuration)
             publish_date: Automatic publish date
             unpublish_date: Automatic unpublish date
@@ -228,17 +230,13 @@ open_orchestra_backoffice:
             status: Status
             in_menu: Shown in menus
             in_footer: Shown in footer
-            role: Role needed to display the page
             keywords: Keywords
             meta_description: Meta description
             meta_index: Meta index
             meta_follow: Meta follow
             seo_title: Title
             max_age: Cache time
-            node_source: The source page (in case of copy)
-            template_selection:
-                name : Template selection
-                helper : One field required
+            node_source: The source page
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
             template: Template

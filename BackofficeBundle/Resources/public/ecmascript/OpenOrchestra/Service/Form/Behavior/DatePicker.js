@@ -1,12 +1,15 @@
+import AbstractBehavior from './AbstractBehavior'
+
 /**
  * @class DatePicker
  */
-class DatePicker
+class DatePicker extends AbstractBehavior
 {
     /**
      * Constructor
      */
     constructor() {
+        super();
         this._convertFormatDay = {
             'EEEE': 'DD',
             'EE': 'D',
@@ -27,31 +30,21 @@ class DatePicker
     /**
      * activate behavior
      *
-     * @param {Object} $elements - jQuery elements matching selector
+     * @param {Object} $element - jQuery object
      */
-    activate($elements) {
+    activate($element) {
         if (typeof $.fn.datepicker !== 'undefined') {
-            $elements.each((index, element) => {
-                let $element = $(element);
-                let dataDateFormat = $element.data('dateformat') || 'yyyy-mm-dd';
-                dataDateFormat = this._convertFormat(this._convertFormatYear, dataDateFormat);
-                dataDateFormat = this._convertFormat(this._convertFormatMonth, dataDateFormat);
-                dataDateFormat = this._convertFormat(this._convertFormatDay, dataDateFormat);
-                $element.datepicker({
-                    dateFormat: dataDateFormat,
-                    prevText: '<i class="fa fa-chevron-left"></i>',
-                    nextText: '<i class="fa fa-chevron-right"></i>'
-                });
+            let dataDateFormat = $element.data('dateformat') || 'yyyy-mm-dd';
+            dataDateFormat = this._convertFormat(this._convertFormatYear, dataDateFormat);
+            dataDateFormat = this._convertFormat(this._convertFormatMonth, dataDateFormat);
+            dataDateFormat = this._convertFormat(this._convertFormatDay, dataDateFormat);
+            $element.datepicker({
+                dateFormat: dataDateFormat,
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>'
             });
         }
     }
-
-    /**
-     * deactivate behavior
-     *
-     * @param {Object} $elements - jQuery elements matching selector
-     */
-    deactivate($elements) {}
 
     /**
      *

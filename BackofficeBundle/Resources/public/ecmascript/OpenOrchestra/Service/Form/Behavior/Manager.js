@@ -22,11 +22,11 @@ class Manager
     /**
      * deactivate behavior
      * 
-     * @param {Object} $form - jQuery element containing form
+     * @param {Object} view - instance of AbstractFormView
      */
-    _activate($form) {
+    _activate(view) {
         for (let behavior of this._behaviors) {
-            behavior.activate($(behavior.getSelector(), $form));
+            behavior.activateBehavior(view);
         }
     }
 
@@ -37,7 +37,7 @@ class Manager
      */
     _deactivate($form) {
         for (let behavior of this._behaviors) {
-            behavior.deactivate($(behavior.getSelector(), $form));
+            behavior.deactivateBehavior(view);
         }
     }
 }

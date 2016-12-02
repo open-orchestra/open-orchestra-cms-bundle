@@ -986,7 +986,6 @@ table.dataTable thead .sorting_desc:after {
       min-height: 50px;
       overflow: hidden;
       & > span { float: left; }
-      &:hover { background: @paleBlue; }
       &:hover .links { display: block; }
     }
   }
@@ -998,7 +997,6 @@ table.dataTable thead .sorting_desc:after {
     padding: 0;
     & > li { border: none; }
   }
-  a { color: @baseColor; }
   .links {
     margin-left: 30px;
     float: left;
@@ -1072,6 +1070,16 @@ table.dataTable thead .sorting_desc:after {
   .state-green::before { background-position: 0 -90px; }
   .state-grey::before { background-position: 0 -120px; }
   .out-of-bounds::before { background-position: 0 -150px; }
+}
+
+.tree.tree-new-node {
+  .new-node-link {
+    padding-left: 30px;
+  }
+}
+
+.tree:not(.tree-new-node) li div:hover {
+  background: @paleBlue;
 }
 
 /* ===================================================================
