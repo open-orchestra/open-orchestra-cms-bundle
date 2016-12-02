@@ -40,9 +40,9 @@ class NodeTemplateSelection extends AbstractBehavior
      * @private
      */
     _toggleChoice(event) {
-        $('.input-node-template-selection .form-group', $element).hide();
+        $('.input-node-template-selection .form-group', this.$el).hide();
         let inputId = $(event.currentTarget).val();
-        $('#' + inputId, $element).closest('.form-group').show();
+        $('#' + inputId, this.$el).closest('.form-group').show();
     }
 
     /**
