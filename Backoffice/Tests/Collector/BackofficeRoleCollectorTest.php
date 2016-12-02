@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\Tests\Collector;
 
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -117,36 +116,6 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
     public function provideRoleAndTypeAndExpected()
     {
         return array(
-            array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'node', array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans)),
-            array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'template', array()),
-            array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'content', array()),
-            array(array(
-                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
-            ), 'node', array(
-                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans,
-                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE => $this->fakeTrans,
-                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE => $this->fakeTrans,
-                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE => $this->fakeTrans,
-            )),
-            array(array(
-                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
-            ), 'general_node', array(
-            )),
-            array(array(
-                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
-                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
-                AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
-                AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE,
-            ), 'content_type_for_content', array(
-            )),
             array(array(
                 AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
                 AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE,

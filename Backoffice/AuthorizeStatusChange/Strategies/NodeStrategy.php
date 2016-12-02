@@ -3,11 +3,11 @@
 namespace OpenOrchestra\Backoffice\AuthorizeStatusChange\Strategies;
 
 use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class NodeStrategy
@@ -36,7 +36,7 @@ class NodeStrategy implements AuthorizeStatusChangeInterface
     public function isGranted(StatusableInterface $document, StatusInterface $toStatus)
     {
         if ($document instanceof NodeInterface) {
-            if (!$this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
+            if (!$this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $document)) {
                 return false;
             }
         }

@@ -3,7 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -57,14 +56,6 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_ROLE,
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_ROLE,
             AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_MOVE_TREE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_ERROR_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_SITE,
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_SITE,
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_SITE,

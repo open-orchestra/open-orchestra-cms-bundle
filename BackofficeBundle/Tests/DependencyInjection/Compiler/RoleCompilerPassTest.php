@@ -3,7 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\DependencyInjection\Compiler;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RoleCompilerPass;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
@@ -76,10 +75,6 @@ class RoleCompilerPassTest extends AbstractBaseTestCase
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_GROUP,
             AdministrationPanelStrategy::ROLE_ACCESS_DELETE_GROUP,
             AdministrationPanelStrategy::ROLE_ACCESS_ROLE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
-            TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_SITE,
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_SITE,
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_SITE,
