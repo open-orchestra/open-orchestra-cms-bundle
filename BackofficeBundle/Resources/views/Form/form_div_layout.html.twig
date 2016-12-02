@@ -383,7 +383,6 @@
             <div class="form-group">
                 <div class="col-lg-12">
                     {% set label = 'open_orchestra_backoffice.form.submit' %}
-                    {% set attr = {'class': 'submit_form btn-in-ribbon'} %}
                     {% set id = 'submit_' ~ form.vars.name %}
                     {{ block('submit_widget') }}
                 </div>
@@ -392,6 +391,14 @@
         {% endspaceless %}
     {% endif %}
 {% endblock form_end %}
+
+{% block submit_widget %}
+    {% spaceless %}
+        {% set attr = {'class': 'submit-form'} %}
+        {% set button_class= 'primary' %}
+        {{ block('button_widget') }}
+    {% endspaceless %}
+{% endblock submit_widget %}
 
 {% block form_start %}
     {% spaceless %}
@@ -432,7 +439,7 @@
             {% set attr = attr|merge({ 'role': 'form' }) %}
         {% endif %}
 
-        <form  name="{{ form.vars.name }}" method="{{ form_method|lower }}" data-action="{{ action }}" action="{{ path('homepage') }}#error"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+        <form  name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
         {% if form_method != method %}
             <input type="hidden" name="_method" value="{{ method }}" />
         {% endif %}
