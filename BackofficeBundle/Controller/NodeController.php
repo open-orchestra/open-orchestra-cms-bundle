@@ -101,7 +101,7 @@ class NodeController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($nodeRepository->hasNodeWithSameParentAndOrder($parentId, $order, $siteId)) {
-            $nodeRepository->updateOrderBrotherNode(
+            $nodeRepository->updateOrderOfBrothers(
                 $siteId,
                 $node->getNodeId(),
                 $node->getOrder(),
