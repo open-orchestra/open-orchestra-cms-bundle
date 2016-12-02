@@ -5,9 +5,9 @@ import Application      from '../../Application'
 import Statuses         from '../../Collection/Statuses/Statuses'
 
 /**
- * @class NodeNewTreeView
+ * @class NewNodeTreeView
  */
-class NodeNewTreeView extends OrchestraView
+class NewNodeTreeView extends OrchestraView
 {
     /**
      * @inheritdoc
@@ -32,7 +32,7 @@ class NodeNewTreeView extends OrchestraView
      * Render node tree
      */
     render() {
-        let template = this._renderTemplate('Node/nodeNewTreeView',
+        let template = this._renderTemplate('Node/newNodeTreeView',
             {
                 nodesTree : this._nodesTree.models,
                 language: this._language,
@@ -47,4 +47,4 @@ class NodeNewTreeView extends OrchestraView
     }
 }
 
-export default NodeNewTreeView;
+export default NewNodeTreeView;

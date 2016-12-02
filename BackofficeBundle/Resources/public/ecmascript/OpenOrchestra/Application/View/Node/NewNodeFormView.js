@@ -1,9 +1,9 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 
 /**
- * @class NodeNewFormView
+ * @class NewNodeFormView
  */
-class NodeNewFormView extends AbstractFormView
+class NewNodeFormView extends AbstractFormView
 {
     /**
      * Initialize
@@ -25,7 +25,7 @@ class NodeNewFormView extends AbstractFormView
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Node/nodeNewView',
+        let template = this._renderTemplate('Node/newNodeView',
             {
                 language: this._language,
                 parentId: this._parentId,
@@ -62,4 +62,4 @@ class NodeNewFormView extends AbstractFormView
     }
 }
 
-export default NodeNewFormView;
+export default NewNodeFormView;

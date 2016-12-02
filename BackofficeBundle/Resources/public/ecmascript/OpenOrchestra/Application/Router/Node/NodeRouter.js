@@ -4,9 +4,9 @@ import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import NodesTree       from '../../Collection/Node/NodesTree'
 import Statuses        from '../../Collection/Statuses/Statuses'
 import Nodes           from '../../Collection/Node/Nodes'
-import NodeNewTreeView from '../../View/Node/NodeNewTreeView'
+import NewNodeTreeView from '../../View/Node/NewNodeTreeView'
 import NodeFormView    from '../../View/Node/NodeFormView'
-import NodeNewFormView from '../../View/Node/NodeNewFormView'
+import NewNodeFormView from '../../View/Node/NewNodeFormView'
 import NodesView       from '../../View/Node/NodesView'
 
 /**
@@ -91,12 +91,12 @@ class NodeRouter extends OrchestraRouter
                 'parentId': parentId
             },
             success: (nodesTree) => {
-                let nodeNewTreeView = new NodeNewTreeView({
+                let newNodeTreeView = new NewNodeTreeView({
                     language: language,
                     nodesTree: nodesTree,
                     parentId: parentId
                 });
-                Application.getRegion('content').html(nodeNewTreeView.render().$el);
+                Application.getRegion('content').html(newNodeTreeView.render().$el);
             }
         });
     }
@@ -117,7 +117,7 @@ class NodeRouter extends OrchestraRouter
             order: order
         });
         FormBuilder.createFormFromUrl(url, (form) => {
-            let nodeFormView = new NodeNewFormView({
+            let nodeFormView = new NewNodeFormView({
                 form : form,
                 siteLanguages: Application.getContext().siteLanguages,
                 parentId : parentId,
