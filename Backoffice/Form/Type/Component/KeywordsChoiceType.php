@@ -8,12 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\OptionsResolver\Options;
 use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer;
 use OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class KeywordsChoiceType
