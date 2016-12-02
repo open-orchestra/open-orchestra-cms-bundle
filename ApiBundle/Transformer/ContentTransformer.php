@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
@@ -15,6 +14,7 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ContentTransformer
@@ -83,8 +83,8 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
 
-        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT)) {
-            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::READ, $content->getId())) {
+            if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $content->getId())
                 && !$content->getStatus()->isBlockedEdition()
             ) {
                 $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
@@ -94,7 +94,9 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 )));
             }
 
-            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT) && $contentType->isDefiningVersionable()) {
+            if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, $content->getId())
+                && $contentType->isDefiningVersionable()
+            ) {
                 $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_content_new_version', array(
                     'contentId' => $content->getContentId(),
                     'language' => $content->getLanguage(),
@@ -106,7 +108,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             }
 
             if (
-                $this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT) &&
+                $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content->getId()) &&
                 !$content->isUsed()
             ) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(

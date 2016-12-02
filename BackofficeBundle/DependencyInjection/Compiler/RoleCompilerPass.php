@@ -3,7 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -22,10 +21,6 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
     public function process(ContainerBuilder $container)
     {
         $roles = array(
-            ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
-            ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT,
-            ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT,
-            ContentTypeForContentPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT,
             AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE,
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE,

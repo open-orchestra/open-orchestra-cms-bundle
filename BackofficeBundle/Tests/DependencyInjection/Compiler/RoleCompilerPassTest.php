@@ -3,7 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\DependencyInjection\Compiler;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RoleCompilerPass;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
@@ -59,7 +58,6 @@ class RoleCompilerPassTest extends AbstractBaseTestCase
     public function testWithServices()
     {
         $roles = array(
-            ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
             AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
             AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION,
             AdministrationPanelStrategy::ROLE_ACCESS_API_CLIENT,
