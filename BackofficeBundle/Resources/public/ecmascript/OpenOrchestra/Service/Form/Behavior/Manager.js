@@ -33,7 +33,7 @@ class Manager
     /**
      * deactivate behavior
      * 
-     * @param {Object} view - jQuery element containing form
+     * @param {Object} view - instance of AbstractFormView
      */
     _deactivate(view) {
         for (let behavior of this._behaviors) {

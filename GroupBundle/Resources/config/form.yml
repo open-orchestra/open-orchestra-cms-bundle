@@ -1,11 +1,18 @@
 parameters:
     open_orchestra_group.type.group_list.class: OpenOrchestra\GroupBundle\Form\Type\GroupListType
+    open_orchestra_group.type.group.class: OpenOrchestra\GroupBundle\Form\Type\GroupType
 
 services:
     open_orchestra_group.type.group_list:
         class: '%open_orchestra_group.type.group_list.class%'
         arguments:
-            - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@open_orchestra_group.transformer.group_list_to_array'
         tags:
             - { name: form.type, alias: oo_group_list }
+    open_orchestra_group.type.group:
+        class: '%open_orchestra_group.type.group.class%'
+        arguments:
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
+            - '@open_orchestra_user.repository.group'
+        tags:
+            - { name: form.type, alias: oo_group }

@@ -46,7 +46,7 @@ class GroupListModalView extends ModalView
             }
         }
         Backbone.Events.trigger('group:select', selectedGroups);
-        this.hide();
+        this.$el.modal('hide');
     }
 }
 

@@ -5,7 +5,6 @@ namespace OpenOrchestra\GroupBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\GroupBundle\Form\DataTransformer\GroupListToArrayTransformer;
 
 /**
@@ -13,18 +12,14 @@ use OpenOrchestra\GroupBundle\Form\DataTransformer\GroupListToArrayTransformer;
  */
 class GroupListType extends AbstractType
 {
-    protected $multiLanguagesChoiceManager;
     protected $groupListToArrayTransformer;
 
     /**
-     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param GroupListToArrayTransformer          $groupListToArrayTransformer
      */
     public function __construct(
-        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         GroupListToArrayTransformer $groupListToArrayTransformer
     ) {
-        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->groupListToArrayTransformer = $groupListToArrayTransformer;
     }
 
@@ -36,7 +31,14 @@ class GroupListType extends AbstractType
     {
         $builder->addModelTransformer($this->groupListToArrayTransformer);
 
-        foreach ($options['groups'] as $group) {
+        $builder->add('groups_collection', 'collection', array(
+                'type' => 'oo_group',
+                'label' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype_name' => '__id__'
+        ));
+/*        foreach ($options['groups'] as $group) {
             $builder->add($group->getId(), 'radio', array(
                 'label' => $this->multiLanguagesChoiceManager->choose($group->getLabels()),
                 'attr' => array('data-site' => $group->getSite()->getName()),
@@ -47,20 +49,8 @@ class GroupListType extends AbstractType
             'attr' => array(
                 'data-site' => '__prototype-site.name__',
                 'type' => 'prototype'),
-            'mapped' => false,
-        ));
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'groups' => array(),
-            )
-        );
+            'data' => true,
+        ));*/
     }
 
     /**

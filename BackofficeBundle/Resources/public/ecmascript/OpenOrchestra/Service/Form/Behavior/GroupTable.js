@@ -59,14 +59,11 @@ class GroupTable extends AbstractBehavior
      * add groups selected in modal
      */
     _addGroups(selectedGroups) {
-        let prototype = $('.prototype', this.$el);
-        let prototypeContainer = prototype.parent();
-        let prototypeHtml = $('<div>').append(prototype.clone().removeClass("prototype")).html();
+        let prototype = $('.prototype', this.$el).data('prototype');
+        let container = $('.group-list table tbody', this.$el);
         for (let group of selectedGroups) {
-            prototypeContainer.append(
-                    prototypeHtml.replace(/__prototype-(.*?)__/g, function(str, property) {
-                    property = 'group.get("' + property.split('.').join('").get("') + '")';
-                    return eval(property);
+            container.append(prototype.replace(/__([^_]*?)__/g, function(str, property) {
+                return eval('group.get("' + property.split('.').join('").get("') + '")');
             }));
         }
     }

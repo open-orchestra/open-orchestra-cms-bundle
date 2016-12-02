@@ -31,10 +31,9 @@ class GroupListToArrayTransformer implements DataTransformerInterface
         $value = array();
 
         foreach($groups as $group) {
-            $value[$group->getId()] = true;
+            $value[$group->getId()] = array('group' => true);
         }
-
-        return $value;
+        return array('groups_collection' => $value);
     }
 
     /**
@@ -48,9 +47,15 @@ class GroupListToArrayTransformer implements DataTransformerInterface
     {
         $value = new ArrayCollection();
 
-        foreach($groups as $id => $selected) {
-            if ($selected) {
-                $value->add($this->groupRepository->find($id));
+        if (array_key_exists('groups_collection', $groups)) {
+            $groups = $groups['groups_collection'];
+            foreach ($groups as $groupId => $group) {
+                if (array_key_exists('group', $group) && $group['group']) {
+                    $group = $this->groupRepository->find($groupId);
+                    if (null !== $group) {
+                        $value->add($group);
+                    }
+                }
             }
         }
 

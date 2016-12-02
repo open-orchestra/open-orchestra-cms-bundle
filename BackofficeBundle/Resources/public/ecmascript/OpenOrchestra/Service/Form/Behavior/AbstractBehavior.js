@@ -65,9 +65,10 @@ class AbstractBehavior
      * @param {Object} view - instance of AbstractFormView
      */
     deactivateBehavior(view) {
+        let behavior = this;
         view.undelegateEvents();
         $(this.getSelector(), view.$el).each(function(){
-            this.deactivate($(this));
+            behavior.deactivate($(this));
         });
     }
 

@@ -32,7 +32,6 @@ class UserGroupsSubscriber implements EventSubscriberInterface
 
         if ($user instanceof UserInterface) {
             $form->add('groups', 'oo_group_list', array(
-                'groups' => $user->getGroups(),
                 'label' => 'open_orchestra_user_admin.form.user.groups',
                 'group_id' => 'information',
                 'sub_group_id' => 'group',

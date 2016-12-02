@@ -90,23 +90,11 @@
     {% spaceless %}
         <div class="group-list">
         	<table class="table table-striped">
-            {% for child in form %}
-            	{% if child.vars.checked %}
-                	<tr>
-                	    <td><div class="hide">{{ form_widget(child) }}</div>{{ child.vars.label }}</td>
-                	    <td>{{ child.vars.attr['data-site'] }}</td>
-                	    <td><i class="fa fa-close" aria-hidden="true"></i></td>
-                	</tr>
-                {% endif %}
-            	{% if child.vars.attr['type'] is defined and child.vars.attr['type'] == "prototype" %}
-                	<tr class="prototype">
-                	    <td><div class="hide">{{ form_widget(child) }}</div>{{ child.vars.label }}</td>
-                	    <td>{{ child.vars.attr['data-site'] }}</td>
-                	    <td><i class="fa fa-close" aria-hidden="true"></i></td>
-                	</tr>
-                {% endif %}
+            {% for child in form['groups_collection'] %}
+            	{{ form_widget(child) }}
             {% endfor %}
             </table>
+            <div class="prototype" data-prototype="{{ form_widget(form['groups_collection'].vars.prototype)|e('html') }}"></div>
             <div>
             	<button class="open-group-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
             </div>
@@ -114,6 +102,13 @@
     {% endspaceless %}
 {% endblock oo_group_list_widget %}
 
+{% block oo_group_widget %}
+	<tr>
+	    <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.labels['groupName'] }}</td>
+	    <td>{{ form.vars.labels['siteName'] }}</td>
+	    <td><i class="fa fa-close" aria-hidden="true"></i></td>
+	</tr>
+{% endblock oo_group_widget %}
 
 {% block oo_language_by_sites_widget %}
     {% spaceless %}
