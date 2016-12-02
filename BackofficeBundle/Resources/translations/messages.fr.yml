@@ -210,7 +210,7 @@ open_orchestra_backoffice:
         node:
             success: La page a été sauvegardée
             title: Titre
-            scheme: Protocol
+            scheme: Protocole
             default_scheme: Par défaut (Configuration de l'alias)
             publish_date: Date de publication automatique
             unpublish_date: Date de dépublication automatique
@@ -235,12 +235,8 @@ open_orchestra_backoffice:
             meta_index: Meta index
             meta_follow: Meta follow
             seo_title: Titre
-            role: Rôle nécessaire pour afficher la page
             max_age: Durée de mise en cache
-            node_source: La page source (en cas de copie)
-            template_selection:
-                name : Sélection du gabarit
-                helper : Au moins un champ obligatoire
+            node_source: La page source
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
             template: Template

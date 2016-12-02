@@ -73,3 +73,6 @@ open_orchestra_backoffice:
     form:
         keyword:
             new: new
+        behavior:
+            copy_page: Copy a page
+            use_template: Use a predefined template

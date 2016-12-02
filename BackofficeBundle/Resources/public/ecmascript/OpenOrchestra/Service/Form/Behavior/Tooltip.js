@@ -1,24 +1,26 @@
+import AbstractBehavior from './AbstractBehavior'
+
 /**
  * @class Tooltip
  */
-class Tooltip
+class Tooltip extends AbstractBehavior
 {
     /**
      * activate behavior
      * 
-     * @param {Object} $elements - jQuery elements matching selector
+     * @param {Object} $element - jQuery object
      */
-    activate($elements) {
-        $elements.tooltip();
+    activate($element) {
+        $element.tooltip();
     }
 
     /**
      * deactivate behavior
      * 
-     * @param {Object} $elements - jQuery elements matching selector
+     * @param {Object} $element - jQuery object
      */
-    deactivate($elements) {
-        $elements.tooltip('destroy');
+    deactivate($element) {
+        $element.tooltip('destroy');
     }
 
     /**

@@ -1,54 +1,52 @@
+import AbstractBehavior from './AbstractBehavior'
+
 /**
  * @class TagSelect2
  */
-class TagSelect2
+class TagSelect2 extends AbstractBehavior
 {
     /**
      * activate behavior
      * 
-     * @param {Object} $elements - jQuery elements matching selector
+     * @param {Object} $element - jQuery object
      */
-    activate($elements) {
-        $elements.each((index, element) => {
-            let $element = $(element);
-            let tags = $element.data('tags');
-            $element.select2({
-                tags: tags,
-                containerCssClass: 'tags',
-                createSearchChoice: (term, data) => {
-                    if (!$element.data('authorize-new')) {
-                        return false;
-                    }
-
-                    return { id: term, text: term, isNew: true };
-                },
-                formatResult: (term) => {
-                    if (term.isNew) {
-                        return "<span class='label label-danger'>" + Translator.trans('open_orchestra_backoffice.form.keyword.new') + "</span> " + term.text;
-                    } else {
-                        return term.text
-                    }
-                },
-                formatSelection: (term, container) => {
-                    if (term.isNew) {
-                       container.parent().addClass('bg-color-red')
-                    }
-
-                    return term.text;
+    activate($element) {
+        let tags = $element.data('tags');
+        $element.select2({
+            tags: tags,
+            containerCssClass: 'tags',
+            createSearchChoice: (term, data) => {
+                console.log($element);
+                if (!$element.data('authorize-new')) {
+                    return false;
                 }
-            });
+
+                return { id: term, text: term, isNew: true };
+            },
+            formatResult: (term) => {
+                if (term.isNew) {
+                    return "<span class='label label-danger'>" + Translator.trans('open_orchestra_backoffice.form.keyword.new') + "</span> " + term.text;
+                } else {
+                    return term.text
+                }
+            },
+            formatSelection: (term, container) => {
+                if (term.isNew) {
+                   container.parent().addClass('bg-color-red')
+                }
+
+                return term.text;
+            }
         });
     }
 
     /**
      * deactivate behavior
      * 
-     * @param {Object} $elements - jQuery elements matching selector
+     * @param {Object} $element - jQuery object
      */
-    deactivate($elements) {
-        $elements.each((index, element) => {
-            $(element).select2("destroy");
-        });
+    deactivate($element) {
+        $(element).select2("destroy");
     }
 
     /**

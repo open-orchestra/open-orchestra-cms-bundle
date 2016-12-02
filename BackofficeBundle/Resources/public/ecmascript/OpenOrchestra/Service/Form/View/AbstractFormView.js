@@ -47,7 +47,7 @@ class AbstractFormView extends OrchestraView
      * Refresh render
      */
     refreshRender() {
-        Backbone.Events.trigger('form:deactivate', this.$el);
+        Backbone.Events.trigger('form:deactivate', this);
         this._renderForm();
     }
 
@@ -63,7 +63,7 @@ class AbstractFormView extends OrchestraView
         }
         this._$formRegion.append(this._form.$form);
 
-        Backbone.Events.trigger('form:activate', this._$formRegion);
+        Backbone.Events.trigger('form:activate', this);
 
         return this;
     }
