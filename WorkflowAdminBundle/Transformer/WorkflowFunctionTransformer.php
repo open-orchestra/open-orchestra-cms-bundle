@@ -43,11 +43,6 @@ class WorkflowFunctionTransformer extends AbstractSecurityCheckerAwareTransforme
             $facade->id = $mixed->getId();
             $facade->name = $this->multiLanguagesChoiceManager->choose($mixed->getNames());
 
-            $facade->addLink('_self', $this->generateRoute(
-                'open_orchestra_api_workflow_function_show',
-                array('workflowFunctionId' => $mixed->getId())
-            ));
-
             if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $mixed)) {
                 $facade->addLink('_self_delete', $this->generateRoute(
                     'open_orchestra_api_workflow_function_delete',

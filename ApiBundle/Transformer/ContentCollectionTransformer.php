@@ -25,11 +25,6 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
             $facade->addContent($this->getTransformer('content')->transform($content));
         }
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_content_list',
-            array()
-        ));
-
         return $facade;
     }
 

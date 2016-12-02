@@ -2,10 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
  * Class GroupCollectionTransformer
@@ -25,14 +26,7 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addGroup($this->getTransformer('group')->transform($group));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {
-            $facade->addLink('_self', $this->generateRoute(
-                'open_orchestra_api_group_list',
-                array()
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_GROUP)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE)) {
             $facade->addLink('_self_add', $this->generateRoute(
                 'open_orchestra_backoffice_group_new',
                 array()

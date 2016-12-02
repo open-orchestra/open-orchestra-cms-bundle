@@ -3,10 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Model\ApiClientInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ApiClientTransformer
@@ -34,7 +34,7 @@ class ApiClientTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->secret = $apiClient->getSecret();
         $facade->roles = implode(',', $apiClient->getRoles());
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_API_CLIENT)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $apiClient)) {
             $facade->addLink(
                 '_self_delete',
                 $this->generateRoute(
@@ -44,7 +44,7 @@ class ApiClientTransformer extends AbstractSecurityCheckerAwareTransformer
             );
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_API_CLIENT)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $apiClient)) {
             $facade->addLink(
                 '_self_form',
                 $this->generateRoute(

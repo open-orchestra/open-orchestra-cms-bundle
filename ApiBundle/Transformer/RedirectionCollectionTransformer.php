@@ -3,9 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 
 /**
  * Class RedirectionCollectionTransformer
@@ -25,12 +26,7 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
             $facade->addRedirection($this->getTransformer('redirection')->transform($redirection));
         }
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_redirection_list',
-            array()
-        ));
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_REDIRECTION)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, RedirectionInterface::ENTITY_TYPE)) {
             $facade->addLink('_self_add', $this->generateRoute(
                 'open_orchestra_backoffice_redirection_new',
                 array()

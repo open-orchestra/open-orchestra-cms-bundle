@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\DeleteStatusNotGrantedHttpException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
@@ -14,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class StatusController
@@ -74,7 +74,7 @@ class StatusController extends BaseController
     public function deleteAction($statusId)
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
-        if (!$this->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)
+        if (!$this->isGranted(ContributionActionInterface::DELETE, $status)
             || $this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
         ) {
             throw new DeleteStatusNotGrantedHttpException();

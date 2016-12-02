@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,6 +12,8 @@ use Symfony\Component\OptionsResolver\Options;
 use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer;
 use OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class KeywordsChoiceType
@@ -67,9 +68,7 @@ class KeywordsChoiceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        // @todo Update when voter for create and access is created
-        //$isGranted = $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD);
-        $isGranted = true;
+        $isGranted = $this->authorizationChecker->isGranted(ContributionActionInterface::READ, KeywordInterface::ENTITY_TYPE);
 
         $resolver->setDefaults(array(
             'attr' => function(Options $options) use ($isGranted) {

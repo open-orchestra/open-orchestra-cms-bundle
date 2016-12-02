@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
@@ -15,6 +14,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class StatusTransformer
@@ -96,7 +96,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
             }
             $facade->fromRole = implode(',', $fromRoles);
 
-            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)
+            if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
                 && !$this->usageFinder->hasUsage($status)
             ) {
                 $facade->addLink('_self_delete', $this->generateRoute(
@@ -105,7 +105,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
                 ));
             }
 
-            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_STATUS)) {
+            if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $status)) {
                 $facade->addLink('_self_form', $this->generateRoute(
                     'open_orchestra_backoffice_status_form',
                     array('statusId' => $status->getId())

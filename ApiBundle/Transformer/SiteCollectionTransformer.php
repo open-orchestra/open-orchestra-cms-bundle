@@ -3,9 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteCollectionTransformer
@@ -25,12 +26,7 @@ class SiteCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addSite($this->getTransformer('site')->transform($site));
         }
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_site_list',
-            array()
-        ));
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_SITE)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, SiteInterface::ENTITY_TYPE)) {
             $facade->addLink('_self_add', $this->generateRoute(
                 'open_orchestra_backoffice_site_new',
                 array()

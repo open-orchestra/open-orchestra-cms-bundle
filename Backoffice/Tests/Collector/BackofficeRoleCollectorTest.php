@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Tests\Collector;
 
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -90,39 +89,6 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
             array(array('foo'), array('foo' => $this->fakeTrans)),
             array(array('foo', 'foo'), array('foo' => $this->fakeTrans)),
             array(array('foo', 'bar'), array('foo' => $this->fakeTrans, 'bar' => $this->fakeTrans)),
-        );
-    }
-
-    /**
-     * @param array  $newRoles
-     * @param string $type
-     * @param array  $expectedRoles
-     *
-     * @dataProvider provideRoleAndTypeAndExpected
-     */
-    public function testGetRolesByType(array $newRoles, $type, array $expectedRoles)
-    {
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false);
-        foreach ($newRoles as $newRole) {
-            $collector->addRole($newRole);
-        }
-
-        $this->assertSame($expectedRoles, $collector->getRolesByType($type));
-    }
-
-    /**
-     * @return array
-     */
-    public function provideRoleAndTypeAndExpected()
-    {
-        return array(
-            array(array(
-                AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
-                AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE,
-            ), 'content_type', array(
-                AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE  => $this->fakeTrans,
-                AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE  => $this->fakeTrans,
-            )),
         );
     }
 

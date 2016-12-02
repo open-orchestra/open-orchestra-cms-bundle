@@ -3,13 +3,13 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\Backoffice\UsageFinder\RoleUsageFinder;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class RoleTransformer
@@ -57,11 +57,7 @@ class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->fromStatus = $role->getFromStatus();
         $facade->toStatus = $role->getToStatus();
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_role_show',
-            array('roleId' => $role->getId())
-        ));
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE, $role)
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $role)
             && !$this->usageFinder->hasUsage($role)
         ) {
             $facade->addLink('_self_delete', $this->generateRoute(
@@ -69,7 +65,7 @@ class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
                 array('roleId' => $role->getId())
             ));
         }
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_ROLE)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $role)) {
             $facade->addLink('_self_form', $this->generateRoute(
                 'open_orchestra_backoffice_role_form',
                 array('roleId' => $role->getId())

@@ -123,12 +123,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             )));
         }
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
-            'contentId' => $content->getContentId(),
-            'version' => $content->getVersion(),
-            'language' => $content->getLanguage(),
-        )));
-
         $facade->addLink('_self_without_parameters', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
             'contentId' => $content->getContentId(),
         )));
