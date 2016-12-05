@@ -88,7 +88,7 @@
 
 {% block oo_group_list_widget %}
     {% spaceless %}
-        <div class="group-list">
+        <div class="user-groups-list">
         	<table class="table table-striped">
             {% for child in form['groups_collection'] %}
             	{{ form_widget(child) }}
@@ -96,7 +96,7 @@
             </table>
             <div class="prototype" data-prototype="{{ form_widget(form['groups_collection'].vars.prototype)|e('html') }}"></div>
             <div>
-            	<button class="open-group-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
+            	<button class="open-groups-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
             </div>
         </div>
     {% endspaceless %}
@@ -104,9 +104,9 @@
 
 {% block oo_group_widget %}
 	<tr>
-	    <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.labels['groupName'] }}</td>
-	    <td>{{ form.vars.labels['siteName'] }}</td>
-	    <td><i class="fa fa-close" aria-hidden="true"></i></td>
+	    <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.parameters['groupName'] }}</td>
+	    <td>{{ form.vars.parameters['siteName'] }}</td>
+	    <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-close" aria-hidden="true"></i>{% endif %}</td>
 	</tr>
 {% endblock oo_group_widget %}
 

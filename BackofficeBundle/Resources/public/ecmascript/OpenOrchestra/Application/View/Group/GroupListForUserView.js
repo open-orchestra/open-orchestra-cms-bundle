@@ -8,8 +8,8 @@ class GroupListForUserView extends AbstractDataTableView
     /**
      * @inheritDoc
      */
-    preinitialize({collection, blockedGroups, selectedGroups}) {
-        super.preinitialize({collection: collection});
+    preinitialize({collection, blockedGroups, selectedGroups, settings}) {
+        super.initialize({collection, settings});
         this._blockedGroups = blockedGroups;
         this._selectedGroups = selectedGroups;
     }
@@ -41,8 +41,7 @@ class GroupListForUserView extends AbstractDataTableView
             {
                 name: "site.name",
                 title: Translator.trans('open_orchestra_backoffice.table.group.site_name'),
-                orderable: true,
-                orderDirection: 'desc',
+                orderable: false,
                 visibile: true
             }
         ];

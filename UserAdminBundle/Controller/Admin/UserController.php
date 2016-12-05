@@ -96,6 +96,7 @@ class UserController extends AbstractAdminController
      * @param Request       $request
      * @param UserInterface $user
      * @param boolean       $selfEdit
+     * @param array         $allowedSites
      *
      * @return Response
      */

@@ -119,9 +119,18 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
      */
     protected function createAggregationQueryBuilderWithSiteIds($siteIds = null)
     {
+        $qb = $this->getDocumentManager()->createQueryBuilder('OpenOrchestra\ModelBundle\Document\Site');
+        $qb->field('deleted')->equals(false);
+        $sites = $qb->getQuery()->toArray();
+
+        $siteIds = (is_array($siteIds)) ? array_intersect(array_keys($sites), $siteIds) : array_keys($sites);
+
         $qa = $this->createAggregationQuery();
         if (!is_null($siteIds)) {
-            $qa->match(array('site.$id' => $siteIds));
+            foreach ($siteIds as $key => $siteId) {
+                $siteIds[$key] = new \MongoId($siteId);
+            }
+            $qa->match(array('site.$id' => array('$in' => $siteIds)));
         }
 
         return $qa;
@@ -135,13 +144,13 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
     protected function getFilterSearch(PaginateFinderConfiguration $configuration) {
         $filter = array();
         $label = $configuration->getSearchIndex('label');
-        if (null !== $label && $label !== '') {
-            $filter['label'] = new MongoRegex('/.*'.$label.'.*/i');
+        $language = $configuration->getSearchIndex('language');
+        if (null !== $label && $label !== '' && null !== $language && $language !== '' ) {
+            $filter['labels.' . $language] = new \MongoRegex('/.*'.$label.'.*/i');
         }
-
-        $siteId = $configuration->getSearchIndex('siteId');
+        $siteId = $configuration->getSearchIndex('site');
         if (null !== $siteId && $siteId !== '') {
-            $filter['site.$i'] = new MongoRegex('/.*'.$siteId.'.*/i');
+            $filter['site.$id'] = new \MongoId($siteId);
         }
 
         return $filter;

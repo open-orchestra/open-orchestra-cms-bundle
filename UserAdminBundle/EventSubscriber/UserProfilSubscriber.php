@@ -19,13 +19,13 @@ class UserProfilSubscriber implements EventSubscriberInterface
     protected $objectManager;
 
     /**
-     * @param UserInterface $currentUser
+     * @param UserInterface $user
      * @param ObjectManager $objectManager
      */
-    public function __construct(UserInterface $currentUser, ObjectManager $objectManager)
+    public function __construct(UserInterface $user, ObjectManager $objectManager)
     {
-        $this->allowedToSetPlatformAdmin = $currentUser->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) || $currentUser->hasRole(ContributionRoleInterface::DEVELOPER);
-        $this->allowedToSetDeveloper = $currentUser->hasRole(ContributionRoleInterface::DEVELOPER);
+        $this->allowedToSetPlatformAdmin = $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) || $user->hasRole(ContributionRoleInterface::DEVELOPER);
+        $this->allowedToSetDeveloper = $user->hasRole(ContributionRoleInterface::DEVELOPER);
         $this->objectManager = $objectManager;
     }
 

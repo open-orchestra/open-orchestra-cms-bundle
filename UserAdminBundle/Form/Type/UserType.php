@@ -117,7 +117,7 @@ class UserType extends AbstractType
                     'sub_group_id' => 'profil',
                 ));
             $builder->addEventSubscriber(new UserProfilSubscriber($options['current_user'], $this->objectManager));
-            $builder->addEventSubscriber(new UserGroupsSubscriber());
+            $builder->addEventSubscriber(new UserGroupsSubscriber($options['current_user']));
         }
 
         if (array_key_exists('disabled', $options)) {
@@ -135,6 +135,7 @@ class UserType extends AbstractType
             'edit_groups' => true,
             'self_editing' => false,
             'current_user' => null,
+            'allowed_sites' => array(),
             'group_enabled' => true,
             'group_render' => array(
                 'information' => array(

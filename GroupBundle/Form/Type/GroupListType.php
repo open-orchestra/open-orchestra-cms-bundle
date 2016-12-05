@@ -36,21 +36,22 @@ class GroupListType extends AbstractType
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'prototype_name' => '__id__'
+                'prototype_name' => '__id__',
+                'options'  => array(
+                    'allowed_sites' => $options['allowed_sites'],
+                ),
+
         ));
-/*        foreach ($options['groups'] as $group) {
-            $builder->add($group->getId(), 'radio', array(
-                'label' => $this->multiLanguagesChoiceManager->choose($group->getLabels()),
-                'attr' => array('data-site' => $group->getSite()->getName()),
-            ));
-        }
-        $builder->add('__prototype-id__', 'radio', array(
-            'label' => '__prototype-label__',
-            'attr' => array(
-                'data-site' => '__prototype-site.name__',
-                'type' => 'prototype'),
-            'data' => true,
-        ));*/
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'allowed_sites' => null,
+        ));
     }
 
     /**

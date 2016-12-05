@@ -1,5 +1,6 @@
 import AbstractBehavior   from './AbstractBehavior'
 import Application        from '../../../Application/Application'
+import SitesAvailable     from '../../../Application/Collection/Site/SitesAvailable'
 import GroupListModalView from '../../../Application/View/Group/GroupListModalView'
 
 /**
@@ -15,7 +16,7 @@ class GroupTable extends AbstractBehavior
     getExtraEvents() {
         return {
             'click .fa-close': '_deleteGroup',
-            'click .open-group-list': '_openGroupList'
+            'click .open-groups-list': '_openGroupList'
         }
     }
     
@@ -35,7 +36,7 @@ class GroupTable extends AbstractBehavior
      * @return {String}
      */
     getSelector() {
-        return '.group-list';
+        return '.user-groups-list';
     }
 
     /**
@@ -50,12 +51,22 @@ class GroupTable extends AbstractBehavior
      */
     _openGroupList(event) {
         this._diplayLoader(Application.getRegion('modal'));
-        let checkboxes = $(event.target).closest('.group-list').find('[type="checkbox"]');
+        let checkboxes = $(event.target).closest('.user-groups-list').find('[type="checkbox"]');
         let blockedGroups = _.pluck(checkboxes.serializeArray(), 'value');
         let selectedGroups = blockedGroups;
-        let groupListModalView = new GroupListModalView({blockedGroups: blockedGroups, selectedGroups: selectedGroups});
-        Application.getRegion('modal').html(groupListModalView.render().$el);
-        groupListModalView.show();
+        new SitesAvailable().fetch({
+            success: (sites) => {
+                let groupListModalView = new GroupListModalView(
+                        {
+                            sites: sites,
+                            blockedGroups: blockedGroups,
+                            selectedGroups: selectedGroups
+                        }
+                    );
+                    Application.getRegion('modal').html(groupListModalView.render().$el);
+                    groupListModalView.show();
+            }
+        });
     }
 
     /**
@@ -63,7 +74,7 @@ class GroupTable extends AbstractBehavior
      */
     _addGroups(selectedGroups) {
         let prototype = $('.prototype', this.$el).data('prototype');
-        let container = $('.group-list table tbody', this.$el);
+        let container = $('.user-groups-list table tbody', this.$el);
         for (let group of selectedGroups) {
             if($('[type="checkbox"][value="' + group.get('id') + '"]', this.$el).length == 0) {
                 container.append(prototype.replace(/__([^_]*?)__/g, function(str, property) {

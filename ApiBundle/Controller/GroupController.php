@@ -105,17 +105,14 @@ class GroupController extends BaseController
             foreach ($this->getUser()->getGroups() as $group) {
                 $site = $group->getSite();
                 if (!$site->isDeleted() && !in_array($site->getSiteId(), $siteIds)) {
-                    $siteIds[] = $site->getSiteId();
+                    $siteIds[] = $site->getId();
                 }
             }
         }
-
         $mapping = array(
             'label' => 'labels',
-            'site.name' => 'site.name',
         );
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
-
         $repository = $this->get('open_orchestra_user.repository.group');
         $collection = $repository->findForPaginate($configuration, $siteIds);
         $recordsTotal = $repository->count($siteIds);

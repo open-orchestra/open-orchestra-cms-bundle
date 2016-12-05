@@ -41,6 +41,7 @@ open_orchestra_backoffice:
         group:
             label: Label
             site_name: Site name
+            site: Site
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
