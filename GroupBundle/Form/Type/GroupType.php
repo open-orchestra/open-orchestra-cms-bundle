@@ -79,7 +79,7 @@ class GroupType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'allowed_sites' => array(),
+            'allowed_sites' => null,
         ));
     }
 

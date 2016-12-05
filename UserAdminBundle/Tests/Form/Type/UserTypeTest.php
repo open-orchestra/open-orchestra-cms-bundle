@@ -24,10 +24,11 @@ class UserTypeTest extends AbstractUserTypeTest
     public function setUp()
     {
         parent::setUp();
+        $objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->twig = Phake::mock('Twig_Environment');
         $parameters = array(0 => 'en', 1 => 'fr');
 
-        $this->form = new UserType($this->class, $parameters);
+        $this->form = new UserType($objectManager, $this->class, $parameters);
     }
 
     /**
@@ -53,7 +54,7 @@ class UserTypeTest extends AbstractUserTypeTest
         Phake::verify($this->builder, Phake::times($nbrAdd))->add(Phake::anyParameters());
 
         if ($expectSubscriber) {
-            Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
+            Phake::verify($this->builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
         }
     }
 
@@ -67,9 +68,12 @@ class UserTypeTest extends AbstractUserTypeTest
         $site = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
         Phake::when($site)->getLanguageBySites()->thenReturn(array('en' => 'fakeLanguage', 'fr' => 'fakeLanguage'));
 
+        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
+        Phake::when($user)->getGroups()->thenReturn(array());
+
         return array(
-            'without_groups_edition' => array(array('edit_groups' => 'false', 'self_editing' => false, 'data' => $site), false, 6),
-            'with_groups_edition' => array(array('edit_groups' => 'true', 'self_editing' => true, 'data' => $site), true, 7)
+            'without_groups_edition' => array(array('edit_groups' => 'false', 'self_editing' => false, 'data' => $site, 'current_user' => $user), true, 5),
+            'with_groups_edition' => array(array('edit_groups' => 'true', 'self_editing' => true, 'data' => $site), false, 7)
         );
     }
 
@@ -83,6 +87,8 @@ class UserTypeTest extends AbstractUserTypeTest
             'data_class' => $this->class,
             'edit_groups' => true,
             'self_editing' => false,
+            'current_user' => null,
+            'allowed_sites' => array(),
             'group_enabled' => true,
             'group_render' => array(
                 'information' => array(
@@ -102,6 +108,14 @@ class UserTypeTest extends AbstractUserTypeTest
                 'contact_information' => array(
                     'rank' => 0,
                     'label' => 'open_orchestra_user_admin.form.user.sub_group.contact_information',
+                ),
+                'group' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.group',
+                ),
+                'profil' => array(
+                    'rank' => 2,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.profil',
                 ),
                 'identifier' => array(
                     'rank' => 0,

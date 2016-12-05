@@ -29,9 +29,10 @@ class GroupListToArrayTransformer implements DataTransformerInterface
     public function transform($groups)
     {
         $value = array();
-
-        foreach($groups as $group) {
-            $value[$group->getId()] = array('group' => true);
+        if (is_array($groups)) {
+            foreach($groups as $group) {
+                $value[$group->getId()] = array('group' => true);
+            }
         }
         return array('groups_collection' => $value);
     }
@@ -47,7 +48,7 @@ class GroupListToArrayTransformer implements DataTransformerInterface
     {
         $value = new ArrayCollection();
 
-        if (array_key_exists('groups_collection', $groups)) {
+        if (is_array($groups) && array_key_exists('groups_collection', $groups)) {
             $groups = $groups['groups_collection'];
             foreach ($groups as $groupId => $group) {
                 if (array_key_exists('group', $group) && $group['group']) {
