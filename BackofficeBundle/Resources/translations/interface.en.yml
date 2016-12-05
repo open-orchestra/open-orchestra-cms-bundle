@@ -23,6 +23,7 @@ open_orchestra_backoffice:
           media: Media
         user:
           title: User
+          users: All users
         platform:
           title: Platform
           tag: Tag
@@ -31,6 +32,7 @@ open_orchestra_backoffice:
         configuration:
           title:  Configuration
     table:
+        delete_button: Remove selected items
         keywords:
             label: Label
         node:
@@ -42,6 +44,9 @@ open_orchestra_backoffice:
             label: Label
             site_name: Site name
             site: Site
+        users:
+            username: Username
+            groups: Groups
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -75,8 +80,14 @@ open_orchestra_backoffice:
             na: N/A
             reset: Reset
     user:
+<<<<<<< 5e08498a119c6d6f9f41aec1eaeec0cef442b609
         add_group: Add a group to user
         select: Select
+=======
+        title_list: Users list
+        search_engine:
+          search: Search
+>>>>>>> user list
     form:
         keyword:
             new: new

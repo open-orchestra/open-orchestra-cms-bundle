@@ -61,7 +61,6 @@ class NodeListView extends AbstractDataTableView
      * @param {Object} cellData
      * @param {Object} rowData
      *
-     * Example of specif column
      * @private
      */
     _createEditLink(td, cellData, rowData) {

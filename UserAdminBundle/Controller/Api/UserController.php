@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\UserAdminBundle\Controller\Api;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -21,8 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UserController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param string $userId
      *
@@ -48,14 +46,23 @@ class UserController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_user.document.user.class'));
+        $mapping = array(
+            'username' => 'username',
+            'groups' => 'groups.label'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
 
-        $repository =  $this->get('open_orchestra_user.repository.user');
+        $repository = $this->get('open_orchestra_user.repository.user');
+        $collection = $repository->findForPaginate($configuration);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countWithFilter($configuration);
+
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
-        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+        return $facade;
     }
 
     /**
@@ -141,20 +148,31 @@ class UserController extends BaseController
     }
 
     /**
-     * @param int $userId
+     * @param Request $request
      *
-     * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")
+     * @Config\Route("/delete/users", name="open_orchestra_api_user_delete_multiple")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
-    public function deleteAction($userId)
+    public function deleteUsersAction(Request $request)
     {
-        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        dump($request);
+        $format = $request->get('_format', 'json');
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_user_admin.facade.user_collection.class'),
+            $format
+        );
+        $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
+        dump($facade);
+
+        /*$user = $this->get('open_orchestra_user.repository.user')->find($userId);
         $dm = $this->get('object_manager');
         $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
         $dm->remove($user);
-        $dm->flush();
+        $dm->flush();*/
 
         return array();
     }

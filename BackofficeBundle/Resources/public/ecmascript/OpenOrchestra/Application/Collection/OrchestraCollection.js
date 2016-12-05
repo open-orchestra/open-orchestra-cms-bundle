@@ -14,6 +14,19 @@ class OrchestraCollection extends mix(Backbone.Collection).with(OrchestraApiSync
     }
 
     /**
+     * Remove multiple model in the collections
+     * And on the server
+     *
+     * @param {array}  models
+     * @param {Object} options
+     */
+    destroyModels(models, options = {}) {
+        this.remove(models);
+        options.data = JSON.stringify(this.toJSON());
+        this.sync('delete', this, options);
+    }
+
+    /**
      * @param {Object} options
      */
     save(options) {

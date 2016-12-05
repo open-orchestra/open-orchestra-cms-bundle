@@ -13,6 +13,12 @@
       "rank": 20
     }
   },
+  "user": {
+    "users": {
+      "template": "Navigation/User/users",
+      "rank": 0
+    }
+  },
   "platform": {
     "tag": {
       "template": "Navigation/Platform/tag",
