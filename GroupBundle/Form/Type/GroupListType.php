@@ -37,20 +37,7 @@ class GroupListType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype_name' => '__id__',
-                'options'  => array(
-                    'allowed_sites' => $options['allowed_sites'],
-                ),
 
-        ));
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'allowed_sites' => null,
         ));
     }
 

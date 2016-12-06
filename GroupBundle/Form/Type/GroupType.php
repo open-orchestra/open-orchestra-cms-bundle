@@ -4,11 +4,12 @@ namespace OpenOrchestra\GroupBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\GroupBundle\Repository\GroupRepository;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
+use OpenOrchestra\GroupBundle\Repository\GroupRepository;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class GroupType
@@ -17,18 +18,21 @@ class GroupType extends AbstractType
 {
     protected $multiLanguagesChoiceManager;
     protected $groupRepository;
+    protected $authorizationChecker;
 
     /**
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param GroupRepository                      $groupRepository
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      */
     public function __construct(
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        GroupRepository $groupRepository
-
+        GroupRepository $groupRepository,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->groupRepository = $groupRepository;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -68,19 +72,9 @@ class GroupType extends AbstractType
             $view->vars['parameters'] = array(
                 'groupName' => $this->multiLanguagesChoiceManager->choose($group->getLabels()),
                 'siteName' => $group->getSite()->getName(),
-                'disabled' => is_array($options['allowed_sites']) && !in_array($group->getSite()->getId(), $options['allowed_sites']),
+                'disabled' => !$this->authorizationChecker->isGranted(ContributionActionInterface::READ, $group),
             );
         }
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'allowed_sites' => null,
-        ));
     }
 
     /**

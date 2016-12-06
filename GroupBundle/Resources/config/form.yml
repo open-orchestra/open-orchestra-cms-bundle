@@ -14,5 +14,6 @@ services:
         arguments:
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@open_orchestra_user.repository.group'
+            - '@security.authorization_checker'
         tags:
             - { name: form.type, alias: oo_group }

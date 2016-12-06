@@ -1,10 +1,4 @@
 <div class="form-group ">
-	<div class="switch-button">
-		<span><%= Translator.trans('open_orchestra_backoffice.form.swchoff.off') %></span>
-			<label class="switch" for="group[<%= id %>]">
-				<input type="checkbox" value="<%= id %>" name="group" id="group[<%= id %>]"<% if (is_blocked) { %> disabled="disabled"<% } %><% if (is_selected) { %> checked="checked"<% } %>>
-				<div class="slider"></div>
-			</label>
-		<span><%= Translator.trans('open_orchestra_backoffice.form.swchoff.on') %></span>
-	</div>
+	<input type="checkbox" class="form-control" value="<%= id %>" name="group" id="group[<%= id %>]"<% if (is_blocked) { %> disabled="disabled"<% } %><% if (is_selected) { %> checked="checked"<% } %>>
+	<label for="group[<%= id %>]"></label>
 </div>

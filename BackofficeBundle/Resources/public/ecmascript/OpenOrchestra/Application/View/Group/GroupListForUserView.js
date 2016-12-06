@@ -29,7 +29,8 @@ class GroupListForUserView extends AbstractDataTableView
             {
                 name: 'checkbox',
                 orderable: false,
-                createdCell: this._addCheckbox.bind(this)
+                createdCell: this._addCheckbox.bind(this),
+                width: '20px'
             },
             {
                 name: "label",

@@ -23,16 +23,15 @@ class UserGroupsSubscriberTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($this->user)->getGroups()->thenReturn(array());
+        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
 
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
 
-        Phake::when($this->event)->getData()->thenReturn($this->user);
+        Phake::when($this->event)->getData()->thenReturn($user);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new UserGroupsSubscriber($this->user);
+        $this->subscriber = new UserGroupsSubscriber();
     }
 
     /**
@@ -60,7 +59,6 @@ class UserGroupsSubscriberTest extends AbstractBaseTestCase
 
         Phake::verify($this->form)->add('groups', 'oo_group_list', array(
             'label' => 'open_orchestra_user_admin.form.user.groups',
-            'allowed_sites' => array(),
             'group_id' => 'information',
             'sub_group_id' => 'group',
             'required' => false,
