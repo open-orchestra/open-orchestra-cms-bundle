@@ -17,7 +17,7 @@ import DatePicker            from '../Service/Form/Behavior/DatePicker'
 import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
 import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
-import GroupTable          from '../Service/Form/Behavior/GroupTable'
+import GroupTable            from '../Service/Form/Behavior/GroupTable'
 
 /**
  * @class Application

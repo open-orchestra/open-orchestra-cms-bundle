@@ -50,7 +50,6 @@ class GroupTable extends AbstractBehavior
      * Open group list in modal
      */
     _openGroupList(event) {
-        this._diplayLoader(Application.getRegion('modal'));
         let checkboxes = $(event.target).closest('.user-groups-list').find('[type="checkbox"]');
         let blockedGroups = _.pluck(checkboxes.serializeArray(), 'value');
         let selectedGroups = blockedGroups;

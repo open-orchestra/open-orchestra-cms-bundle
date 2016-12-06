@@ -13,21 +13,19 @@ class GroupListModalView extends ModalView
      * @inheritdoc
      */
     preinitialize() {
-        this.tagName = 'div';
-        this.className = 'modal fade';
-        this.events = {
-            'hidden.bs.modal': 'hide',
+        super.preinitialize();
+        $.extend(this.events, {
             'click .select-group': '_selectGroup',
             'click .search-engine button.submit': '_search',
             'click .search-engine button.reset': '_search'
-        }
+        });
     }
 
     /**
      * Initialize
-     * @param {Sites}    sites
-     * @param {array}    blockedGroups
-     * @param {array}    selectedGroups
+     * @param {Sites} sites
+     * @param {array} blockedGroups
+     * @param {array} selectedGroups
      */
     initialize({sites, blockedGroups, selectedGroups}) {
         this._sites = sites;
@@ -86,9 +84,11 @@ class GroupListModalView extends ModalView
         return false;
     }
 
+    /**
+     * Select groups
+     */
     _selectGroup() {
         let formGroups = _.pluck($('[name="group"]', this.$el).removeAttr('disabled').serializeArray(), 'value');
-        let selectedGroups = [];
         for (let group of this._collection.models) {
             if (formGroups.indexOf(group.get('id')) > -1) {
                 selectedGroups.push(group);
