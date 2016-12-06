@@ -2,7 +2,6 @@ import NodeRouter            from './Router/Node/NodeRouter'
 import KeywordRouter         from './Router/Keyword/KeywordRouter'
 import DashboardRouter       from './Router/Dashboard/DashboardRouter'
 import SiteRouter            from './Router/Site/SiteRouter'
-import UserRouter            from './Router/User/UserRouter'
 import ErrorView             from './View/Error/ErrorView'
 import ApplicationError      from '../Service/Error/ApplicationError'
 import AjaxError             from '../Service/Error/AjaxError'
@@ -40,11 +39,13 @@ class Application
         this._initRouting();
         this._initTranslator();
         this._initRouter();
-        this._initLayoutView();
         this._initFormBehaviorManager();
 
         Backbone.Events.trigger('application:before:start');
+
+        this._initLayoutView();
         Backbone.history.start();
+
         Backbone.Events.trigger('application:after:start');
     }
 
@@ -133,7 +134,6 @@ class Application
         new NodeRouter();
         new KeywordRouter();
         new SiteRouter();
-        new UserRouter();
     }
 
     /**
