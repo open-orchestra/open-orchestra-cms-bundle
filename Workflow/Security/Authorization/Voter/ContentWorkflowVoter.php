@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
@@ -31,10 +31,18 @@ class ContentWorkflowVoter extends AbstractWorkflowVoter
     {
         $user = $token->getUser();
 
-        if ($this->userHasTransitionOnEntity($user, $attribute, $subject->getContentType())) {
-            return VoterInterface::ACCESS_GRANTED;
+        if ($this->isSuperAdmin($user)) {
+            return $this->voteForSuperAdmin($attribute);
         }
 
-        return VoterInterface::ACCESS_DENIED;
+        if (!$this->isSubjectInPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE)) {
+            return false;
+        }
+
+        if ($this->userHasTransitionOnEntity($user, $attribute, ContentInterface::ENTITY_TYPE)) {
+            return true;
+        }
+
+        return false;
     }
 }
