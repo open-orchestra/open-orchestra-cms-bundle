@@ -87,7 +87,7 @@ class ContentTypeType extends AbstractType
                 'type' => 'oo_default_listable_checkbox',
                 'label' => 'open_orchestra_backoffice.form.content_type.default_display',
             ))
-            ->add('fields', 'collection', array(
+            ->add('fields', 'bootstrap_collection', array(
                 'type' => 'oo_field_type',
                 'allow_add' => true,
                 'allow_delete' => true,
