@@ -15,7 +15,7 @@ class GroupListType extends AbstractType
     protected $groupListToArrayTransformer;
 
     /**
-     * @param GroupListToArrayTransformer          $groupListToArrayTransformer
+     * @param GroupListToArrayTransformer $groupListToArrayTransformer
      */
     public function __construct(
         GroupListToArrayTransformer $groupListToArrayTransformer
