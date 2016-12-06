@@ -16,8 +16,7 @@ class GroupListModalView extends ModalView
         super.preinitialize();
         $.extend(this.events, {
             'click .select-group': '_selectGroup',
-            'click .search-engine button.submit': '_search',
-            'click .search-engine button.reset': '_search'
+            'click .search-engine button.submit, .search-engine button.reset': '_search',
         });
     }
 
