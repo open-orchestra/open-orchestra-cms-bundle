@@ -30,7 +30,7 @@ open_orchestra_user_admin:
             password: Password
             password_confirmation: Password confirmation
             password_mismatch: Password mismatch
-            groups: Groups
+            groups: Group(s) of membership
             language: Default language
             success: The user has been updated
             group:
@@ -42,6 +42,11 @@ open_orchestra_user_admin:
                 identifier: Identifier
                 backoffice: Back-office
                 language: Language of contribution
+                profil: Profils
+                group: Groups
+            platform_admin: Platform administrator
+            developer: Developer
+            edit_allowed: Can edit his personnal data
     new:
         success: The user has been created
     update:

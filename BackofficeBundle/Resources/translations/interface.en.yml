@@ -38,6 +38,10 @@ open_orchestra_backoffice:
             author: Author
             updated_at: Updated date
             current_status: Current status
+        group:
+            label: Label
+            site_name: Site name
+            site: Site
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -70,9 +74,15 @@ open_orchestra_backoffice:
             displayed_menu: Displayed in the menu
             na: N/A
             reset: Reset
+    user:
+        add_group: Add a group to user
+        select: Select
     form:
         keyword:
             new: new
         behavior:
             copy_page: Copy a page
             use_template: Use a predefined template
+        swchoff:
+            on: Yes
+            off: No

@@ -1,7 +1,7 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import UserFormView    from '../../View/User/UserFormView'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
+import OrchestraRouter    from '../OrchestraRouter'
+import Application        from '../../Application'
+import UserFormView       from '../../View/User/UserFormView'
+import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
 
 /**
  * @class UserRouter
@@ -13,18 +13,33 @@ class UserRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'user/preference': 'showUserPreference'
+            'user/selfedit': 'editSelfUser',
+            'user/edit/:userId': 'editUser',
         };
     }
 
     /**
-     * Show User Preference
+     * Edit user preference
      */
-    showUserPreference() {
+    editSelfUser() {
+        let url = Routing.generate('open_orchestra_user_admin_user_self_form');
         this._diplayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_user_admin_user_self_form', {userId : Application.getContext().user.id});
         FormBuilder.createFormFromUrl(url, (form) => {
             let userFormView = new UserFormView({form : form});
+            Application.getRegion('content').html(userFormView.render().$el);
+        });
+
+        return false;
+    }
+
+    /**
+     * Edit User
+     */
+    editUser(userId) {
+        let url = Routing.generate('open_orchestra_user_admin_user_form', {userId : userId});
+        this._diplayLoader(Application.getRegion('content'));
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let userFormView = new UserFormView({form : form, userId: userId});
             Application.getRegion('content').html(userFormView.render().$el);
         });
 

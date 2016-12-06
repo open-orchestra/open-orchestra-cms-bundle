@@ -2,7 +2,7 @@ import OrchestraCollection from '../OrchestraCollection'
 import Content             from '../../Model/Content/Content'
 
 /**
- * @class Keywords
+ * @class ContentsWidget
  */
 class ContentsWidget extends OrchestraCollection
 {

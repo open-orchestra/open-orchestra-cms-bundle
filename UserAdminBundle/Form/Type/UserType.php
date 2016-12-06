@@ -5,25 +5,39 @@ namespace OpenOrchestra\UserAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\UserBundle\Model\UserInterface;
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
 
 /**
  * Class UserType
  */
 class UserType extends AbstractType
 {
+    protected $objectManager;
+    protected $tokenStorage;
     protected $class;
     protected $availableLanguages;
+    protected $user;
 
     /**
-     * @param string $class
-     * @param array  $availableLanguages
+     * @param ObjectManager         $objectManager
+     * @param TokenStorageInterface $tokenStorage
+     * @param string                $class
+     * @param array                 $availableLanguages
      */
-    public function __construct($class, array $availableLanguages)
-    {
+    public function __construct(
+        ObjectManager $objectManager,
+        TokenStorageInterface $tokenStorage,
+        $class,
+        array $availableLanguages
+    ) {
+        $this->objectManager = $objectManager;
         $this->class = $class;
         $this->availableLanguages = $availableLanguages;
+        $this->user = $tokenStorage->getToken()->getUser();
     }
 
     /**
@@ -77,6 +91,18 @@ class UserType extends AbstractType
                     'group_id' => 'authentication',
                     'sub_group_id' => 'identifier',
                     'required' => false,
+                ))
+                ->add('language', 'choice', array(
+                    'choices' => $this->getLanguages(),
+                    'label' => 'open_orchestra_user_admin.form.user.language',
+                    'group_id' => 'preference',
+                    'sub_group_id' => 'backoffice',
+                ))
+                ->add('languageBySites', 'oo_language_by_sites', array(
+                    'label' => false,
+                    'sites_id' => $sitesId,
+                    'group_id' => 'preference',
+                    'sub_group_id' => 'language',
                 ));
         } else {
             $builder
@@ -88,23 +114,15 @@ class UserType extends AbstractType
                     'invalid_message' => 'fos_user.password.mismatch',
                     'group_id' => 'authentication',
                     'sub_group_id' => 'identifier',
+                    'required' => false,
+                ))
+                ->add('editAllowed', 'radio', array(
+                    'label' => 'open_orchestra_user_admin.form.user.edit_allowed',
+                    'required' => false,
+                    'group_id' => 'information',
+                    'sub_group_id' => 'profil',
                 ));
-        }
-        $builder
-            ->add('language', 'choice', array(
-                'choices' => $this->getLanguages(),
-                'label' => 'open_orchestra_user_admin.form.user.language',
-                'group_id' => 'preference',
-                'sub_group_id' => 'backoffice',
-            ))
-            ->add('languageBySites', 'oo_language_by_sites', array(
-                'label' => false,
-                'sites_id' => $sitesId,
-                'group_id' => 'preference',
-                'sub_group_id' => 'language',
-            ));
-
-        if ($options['edit_groups']) {
+            $builder->addEventSubscriber(new UserProfilSubscriber($this->user, $this->objectManager));
             $builder->addEventSubscriber(new UserGroupsSubscriber());
         }
 
@@ -141,6 +159,14 @@ class UserType extends AbstractType
                 'contact_information' => array(
                     'rank' => 0,
                     'label' => 'open_orchestra_user_admin.form.user.sub_group.contact_information',
+                ),
+                'group' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.group',
+                ),
+                'profil' => array(
+                    'rank' => 2,
+                    'label' => 'open_orchestra_user_admin.form.user.sub_group.profil',
                 ),
                 'identifier' => array(
                     'rank' => 0,

@@ -6,12 +6,14 @@ use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class UserGroupsSubscriber
  */
 class UserGroupsSubscriber implements EventSubscriberInterface
 {
+
     /**
      * @return array The event names to listen to
      */
@@ -31,19 +33,12 @@ class UserGroupsSubscriber implements EventSubscriberInterface
         $user = $event->getData();
 
         if ($user instanceof UserInterface) {
-            if (false === $user->isSuperAdmin()) {
-                $form->add('groups', 'oo_group_choice', array(
-                    'multiple' => true,
-                    'expanded' => true,
-                    'required' => false,
-                    'label' => 'open_orchestra_user_admin.form.user.groups'
-                ));
-            } else {
-                $form->add('help_text', 'button', array(
-                    'disabled' => true,
-                    'label' => 'open_orchestra_user_admin.form.super_admin_help_text'
-                ));
-            }
+            $form->add('groups', 'oo_group_list', array(
+                'label' => 'open_orchestra_user_admin.form.user.groups',
+                'group_id' => 'information',
+                'sub_group_id' => 'group',
+                'required' => false,
+            ));
         }
     }
 }

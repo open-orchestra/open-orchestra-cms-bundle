@@ -86,6 +86,31 @@
     {% endspaceless %}
 {% endblock choice_widget %}
 
+{% block oo_group_list_widget %}
+    {% spaceless %}
+        <div class="user-groups-list">
+        	<table class="table table-striped">
+        		<tbody>
+            {% for child in form['groups_collection'] %}
+            	{{ form_widget(child) }}
+            {% endfor %}
+				</tbody>
+            </table>
+            <div class="prototype hidden" data-prototype="{{ form_widget(form['groups_collection'].vars.prototype)|e('html') }}"></div>
+            <div>
+            	<button class="open-groups-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock oo_group_list_widget %}
+
+{% block oo_group_widget %}
+	<tr>
+	    <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.parameters['groupName'] }}</td>
+	    <td>{{ form.vars.parameters['siteName'] }}</td>
+	    <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-close" aria-hidden="true"></i>{% endif %}</td>
+	</tr>
+{% endblock oo_group_widget %}
 
 {% block oo_language_by_sites_widget %}
     {% spaceless %}
@@ -138,11 +163,13 @@
 
 {% block radio_widget %}
     {% spaceless %}
-        <div class="smart-form">
-            <label class="toggle display-normal">
-                {{ parent() }}
-                <i data-swchon-text="{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}" data-swchoff-text="{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}"></i>
+        <div class="col-md-10 switch-button">
+            <span>{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}</span>
+            <label for="{{ full_name }}" class="switch">
+            	<input id="{{ full_name }}" type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+                <div class="slider"></div>
             </label>
+            <span>{{ 'open_orchestra_backoffice.form.swchoff.on'|trans }}</span>
         </div>
     {% endspaceless %}
 {% endblock %}

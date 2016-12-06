@@ -11,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 
 /**
  * Class GroupController
@@ -81,6 +83,41 @@ class GroupController extends BaseController
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
 
         return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/user/list", name="open_orchestra_api_group_user_list")
+     * @Config\Method({"GET"})
+     *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
+     * })
+     * @return FacadeInterface
+     */
+    public function listUserAction(Request $request)
+    {
+        $siteIds = array();
+        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        foreach ($availableSites as $site) {
+            $siteIds[] = $site->getId();
+        }
+        $mapping = array(
+            'label' => 'labels',
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+        $repository = $this->get('open_orchestra_user.repository.group');
+        $collection = $repository->findForPaginate($configuration, $siteIds);
+        $recordsTotal = $repository->count($siteIds);
+        $recordsFiltered = $repository->countWithFilter($configuration, $siteIds);
+
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
     }
 
     /**
