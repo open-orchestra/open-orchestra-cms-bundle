@@ -5,6 +5,7 @@ namespace OpenOrchestra\GroupBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\GroupBundle\Repository\GroupRepository;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Class GroupListToArrayTransformer
@@ -29,11 +30,13 @@ class GroupListToArrayTransformer implements DataTransformerInterface
     public function transform($groups)
     {
         $value = array();
-        if (is_array($groups)) {
+
+        if ($groups instanceof Collection) {
             foreach($groups as $group) {
                 $value[$group->getId()] = array('group' => true);
             }
         }
+
         return array('groups_collection' => $value);
     }
 

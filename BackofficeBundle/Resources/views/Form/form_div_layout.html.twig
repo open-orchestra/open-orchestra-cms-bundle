@@ -90,9 +90,11 @@
     {% spaceless %}
         <div class="user-groups-list">
         	<table class="table table-striped">
+        		<tbody>
             {% for child in form['groups_collection'] %}
             	{{ form_widget(child) }}
             {% endfor %}
+				</tbody>
             </table>
             <div class="prototype" data-prototype="{{ form_widget(form['groups_collection'].vars.prototype)|e('html') }}"></div>
             <div>

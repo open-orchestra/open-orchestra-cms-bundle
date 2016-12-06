@@ -62,9 +62,9 @@ class GroupListToArrayTransformerTest extends AbstractBaseTestCase
         Phake::when($group)->getId()->thenReturn($fakeId);
 
         return array(
-            array(array(), array('groups_collection' => array())),
-            array(array($group), array('groups_collection' => array($fakeId=> array('group' => true)))),
-            array(array($group, $group), array('groups_collection' => array($fakeId => array('group' => true)))),
+            array(new ArrayCollection(), array('groups_collection' => array())),
+            array(new ArrayCollection(array($group)), array('groups_collection' => array($fakeId=> array('group' => true)))),
+            array(new ArrayCollection(array($group, $group)), array('groups_collection' => array($fakeId => array('group' => true)))),
         );
     }
 

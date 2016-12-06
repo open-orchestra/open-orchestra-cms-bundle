@@ -54,19 +54,14 @@ class GroupListForUserView extends AbstractDataTableView
      * @private
      */
     _addCheckbox(td, cellData, rowData) {
-        let id = rowData.get('id')
-        let cell = '' +
-            '<div class="form-group ">' +
-            '    <div class="switch-button">' +
-            '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.off') + '</span>' +
-            '        <label class="switch" for="group[' + id + ']">' +
-            '            <input type="checkbox" value="' + id + '" name="group" id="group[' + id + ']"' + ((this._blockedGroups.indexOf(id) > -1) ? ' disabled="disabled"' : '') + '' + ((this._selectedGroups.indexOf(id) > -1) ? ' checked="checked"' : '') + '>' +
-            '            <div class="slider"></div>' +
-            '        </label>' +
-            '        <span>' + Translator.trans('open_orchestra_backoffice.form.swchoff.on') + '</span>' +
-            '    </div>' +
-            '</div>';
-        $(td).html(cell);
+        let template = this._renderTemplate('Group/modalCellView',
+            {
+                id: rowData.get('id'),
+                is_blocked: (this._blockedGroups.indexOf(rowData.get('id')) > -1),
+                is_selected: (this._selectedGroups.indexOf(rowData.get('id')) > -1)
+            }
+        );
+        $(td).html(template);
     }
 }
 
