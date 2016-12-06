@@ -24,8 +24,7 @@ open_orchestra_backoffice:
           trashcan: Corbeille
           media: Médiathèque
         user:
-          title: Utilisateur
-          users: Tous les utilisateurs
+          title: User
         platform:
           title: Plateforme
           tag: Tag
@@ -42,12 +41,6 @@ open_orchestra_backoffice:
             author: Auteur
             updated_at: Date de modification
             current_status: Etat courant
-        group:
-            label: Label
-            site_name: Nom du site
-        users:
-            username: Nom d'utilisateur
-            groups: Groupes
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -80,15 +73,6 @@ open_orchestra_backoffice:
             displayed_menu: S'affiche dans le menu
             na: N/A
             reset: Reinitialiser
-    user:
-<<<<<<< 5e08498a119c6d6f9f41aec1eaeec0cef442b609
-        add_group: Ajouter un group à l'utilisateur
-        select: Sélectionner
-=======
-        title_list: Liste des utilisateurs
-        search_engine:
-          search: Rechercher
->>>>>>> user list
     form:
         keyword:
             new: nouveau

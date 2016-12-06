@@ -1,7 +1,7 @@
-import UserRouter from './Application/Router/User/UserRouter'
+import UserSubApplication from './Application/UserSubApplication'
 
 $(() => {
     Backbone.Events.on('application:before:start', () => {
-        new UserRouter();
+        UserSubApplication.run();
     });
 });

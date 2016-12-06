@@ -26,7 +26,7 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
             },
             {
                 name: "username",
-                title: Translator.trans('open_orchestra_backoffice.table.users.username'),
+                title: Translator.trans('open_orchestra_user_admin.table.users.username'),
                 orderable: true,
                 orderDirection: 'desc',
                 visibile: true,
@@ -34,7 +34,7 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
             },
             {
                 name: "groups",
-                title: Translator.trans('open_orchestra_backoffice.table.users.groups'),
+                title: Translator.trans('open_orchestra_user_admin.table.users.groups'),
                 orderable: true,
                 orderDirection: 'desc',
                 visibile: true
@@ -57,9 +57,12 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
      * @private
      */
     _createEditLink(td, cellData, rowData) {
+        let link = Backbone.history.generateUrl('editUser', {
+            userId: rowData.get('id')
+        });
         cellData = $('<a>',{
             text: cellData,
-            href: '#'
+            href: '#'+link
         });
 
         $(td).html(cellData)

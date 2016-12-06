@@ -25,7 +25,6 @@ open_orchestra_backoffice:
           media: Media
         user:
           title: User
-          users: All users
         platform:
           title: Platform
           tag: Tag
@@ -42,13 +41,6 @@ open_orchestra_backoffice:
             author: Author
             updated_at: Updated date
             current_status: Current status
-        group:
-            label: Label
-            site_name: Site name
-            site: Site
-        users:
-            username: Username
-            groups: Groups
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -81,15 +73,6 @@ open_orchestra_backoffice:
             displayed_menu: Displayed in the menu
             na: N/A
             reset: Reset
-    user:
-<<<<<<< 5e08498a119c6d6f9f41aec1eaeec0cef442b609
-        add_group: Add a group to user
-        select: Select
-=======
-        title_list: Users list
-        search_engine:
-          search: Search
->>>>>>> user list
     form:
         keyword:
             new: new
