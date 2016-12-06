@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
 use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class UserType
@@ -16,22 +17,27 @@ use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
 class UserType extends AbstractType
 {
     protected $objectManager;
+    protected $tokenStorage;
     protected $class;
     protected $availableLanguages;
+    protected $user;
 
     /**
-     * @param ObjectManager $objectManager
-     * @param string        $class
-     * @param array         $availableLanguages
+     * @param ObjectManager         $objectManager
+     * @param TokenStorageInterface $tokenStorage
+     * @param string                $class
+     * @param array                 $availableLanguages
      */
     public function __construct(
         ObjectManager $objectManager,
+        TokenStorageInterface $tokenStorage,
         $class,
         array $availableLanguages
     ) {
         $this->objectManager = $objectManager;
         $this->class = $class;
         $this->availableLanguages = $availableLanguages;
+        $this->user = $tokenStorage->getToken()->getUser();
     }
 
     /**
@@ -116,8 +122,8 @@ class UserType extends AbstractType
                     'group_id' => 'information',
                     'sub_group_id' => 'profil',
                 ));
-            $builder->addEventSubscriber(new UserProfilSubscriber($options['current_user'], $this->objectManager));
-            $builder->addEventSubscriber(new UserGroupsSubscriber($options['current_user']));
+            $builder->addEventSubscriber(new UserProfilSubscriber($this->user, $this->objectManager));
+            $builder->addEventSubscriber(new UserGroupsSubscriber($this->user));
         }
 
         if (array_key_exists('disabled', $options)) {

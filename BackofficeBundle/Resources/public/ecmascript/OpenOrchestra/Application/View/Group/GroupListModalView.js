@@ -89,6 +89,7 @@ class GroupListModalView extends ModalView
      */
     _selectGroup() {
         let formGroups = _.pluck($('[name="group"]', this.$el).removeAttr('disabled').serializeArray(), 'value');
+        let selectedGroups = [];
         for (let group of this._collection.models) {
             if (formGroups.indexOf(group.get('id')) > -1) {
                 selectedGroups.push(group);

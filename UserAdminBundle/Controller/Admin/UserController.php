@@ -115,7 +115,6 @@ class UserController extends AbstractAdminController
             'edit_groups' => $editGroups,
             'self_editing' => $selfEdit,
             'validation_groups' => array('Profile', 'UpdatePassword', 'Default'),
-            'current_user' => $this->getUser(),
         ));
         $form->handleRequest($request);
 
