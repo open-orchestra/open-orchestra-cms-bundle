@@ -65,7 +65,7 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
         foreach ($user->getGroups() as $group) {
             if ($group->getWorkflowProfileCollection($entityType)) {
                 foreach ($group->getWorkflowProfileCollection($entityType) as $profile) {
-                    if ($profile->hasTranstion($transition)) {
+                    if ($profile->hasTransition($transition)) {
 
                         return true;
                     }
