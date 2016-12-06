@@ -164,6 +164,16 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
+     * @param string $entityType
+     *
+     * @return WorkflowProfileCollectionInterface|null
+     */
+    public function getWorkflowProfileCollection($entityType)
+    {
+        return $this->workflowProfileCollections->get($entityType);
+    }
+
+    /**
      * @param PerimeterInterface $perimeter
      */
     public function addPerimeter(PerimeterInterface $perimeter)

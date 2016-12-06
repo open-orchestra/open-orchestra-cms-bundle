@@ -58,6 +58,13 @@ interface GroupInterface extends BaseGroupInterface
     public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $profileCollection);
 
     /**
+     * @param string $entityType
+     *
+     * @return WorkflowProfileCollectionInterface|null
+     */
+    public function getWorkflowProfileCollection($entityType);
+
+    /**
      * @param PerimeterInterface $perimeter
      */
     public function addPerimeter(PerimeterInterface $perimeter);
