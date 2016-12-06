@@ -119,12 +119,6 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
      */
     protected function createAggregationQueryBuilderWithSiteIds($siteIds = null)
     {
-        $qb = $this->getDocumentManager()->createQueryBuilder('OpenOrchestra\ModelBundle\Document\Site');
-        $qb->field('deleted')->equals(false)->hydrate(false);
-        $sites = $qb->getQuery()->toArray();
-
-        $siteIds = (is_array($siteIds)) ? array_intersect(array_keys($sites), $siteIds) : array_keys($sites);
-
         $qa = $this->createAggregationQuery();
         if (!is_null($siteIds)) {
             foreach ($siteIds as $key => $siteId) {
