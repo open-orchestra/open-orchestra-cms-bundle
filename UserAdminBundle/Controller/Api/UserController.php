@@ -2,11 +2,10 @@
 
 namespace OpenOrchestra\UserAdminBundle\Controller\Api;
 
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
-use OpenOrchestra\UserBundle\Event\UserEvent;
-use OpenOrchestra\UserBundle\UserEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,11 +50,27 @@ class UserController extends BaseController
             'groups' => 'groups.label'
         );
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
-
         $repository = $this->get('open_orchestra_user.repository.user');
-        $collection = $repository->findForPaginate($configuration);
-        $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countWithFilter($configuration);
+
+        if (
+            $this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) ||
+            $this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER)
+        ) {
+            $collection = $repository->findForPaginate($configuration);
+            $recordsTotal = $repository->count();
+            $recordsFiltered = $repository->countWithFilter($configuration);
+        } else {
+            $sitesId = array();
+            $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+            foreach ($availableSites as $site) {
+                $sitesId[] = $site->getId();
+            }
+
+            $collection = $repository->findForPaginateFilterBySitesId($configuration, $sitesId);
+            $recordsTotal = $repository->countFilterBySiteId($sitesId);
+            $recordsFiltered = $repository->countWithFilterAndSitesId($configuration, $sitesId);
+        }
+
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
         $facade = $collectionTransformer->transform($collection);
@@ -157,7 +172,6 @@ class UserController extends BaseController
      */
     public function deleteUsersAction(Request $request)
     {
-        dump($request);
         $format = $request->get('_format', 'json');
 
         $facade = $this->get('jms_serializer')->deserialize(
@@ -165,8 +179,7 @@ class UserController extends BaseController
             $this->getParameter('open_orchestra_user_admin.facade.user_collection.class'),
             $format
         );
-        $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
-        dump($facade);
+        //$this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
 
         /*$user = $this->get('open_orchestra_user.repository.user')->find($userId);
         $dm = $this->get('object_manager');

@@ -34,7 +34,7 @@ class AbstractDataTableView extends OrchestraView
         this._tableRegion = this.$el;
         this._collection = collection;
         this._settings = this._resolveSettings(settings);
-        console.log(this.events);
+        console.log(this._settings);
     }
 
     /**
@@ -84,7 +84,7 @@ class AbstractDataTableView extends OrchestraView
         return {
             serverSide: true,
             processing: true,
-            pageLength: 10,
+            pageLength: 1,
             page: 0,
             searching: true,
             ordering: true,

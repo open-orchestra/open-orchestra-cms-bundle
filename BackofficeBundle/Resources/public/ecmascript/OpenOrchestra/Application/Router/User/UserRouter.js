@@ -57,13 +57,27 @@ class UserRouter extends OrchestraRouter
             page = 1
         }
         this._diplayLoader(Application.getRegion('content'));
-        let collection = new Users();
-        let usersView = new UsersView({
-            collection: collection,
-            settings: {page: Number(page) - 1}
+        let pageLength = 10;
+        page = Number(page) - 1;
+        new Users().fetch({
+            data : {
+                start: page * pageLength,
+                length: pageLength
+            },
+            success: (users) => {
+                let usersView = new UsersView({
+                    collection: users,
+                    settings: {
+                        page: page,
+                        deferLoading: [users.recordsTotal, users.recordsFiltered],
+                        data: users.models,
+                        pageLength: pageLength
+                    }
+                });
+                let el = usersView.render().$el;
+                Application.getRegion('content').html(el);
+            }
         });
-        let el = usersView.render().$el;
-        Application.getRegion('content').html(el);
     }
 }
 

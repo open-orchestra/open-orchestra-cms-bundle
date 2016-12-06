@@ -11,6 +11,8 @@ open_orchestra_backoffice:
         yes: Yes
         no: No
         filter: Filter results
+    no_item: There are no items for this view
+    add: Add
     navigation:
         hide_menu: Hide menu
         dashboard:

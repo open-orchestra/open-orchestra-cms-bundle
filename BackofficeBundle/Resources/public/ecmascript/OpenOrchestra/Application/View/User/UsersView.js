@@ -28,13 +28,18 @@ class UsersView extends OrchestraView
      * Render nodes view
      */
     render() {
-        let template = this._renderTemplate('User/usersView');
-        this.$el.html(template);
-        this._listView = new UserListView({
-            collection: this._collection,
-            settings: this._settings
-        });
-        $('.users-list', this.$el).html(this._listView.render().$el);
+        if (0 === this._collection.recordsTotal) {
+            let template = this._renderTemplate('User/usersEmptyListView');
+            this.$el.html(template);
+        } else {
+            let template = this._renderTemplate('User/usersView');
+            this.$el.html(template);
+            this._listView = new UserListView({
+                collection: this._collection,
+                settings: this._settings
+            });
+            $('.users-list', this.$el).html(this._listView.render().$el);
+        }
 
         return this;
     }

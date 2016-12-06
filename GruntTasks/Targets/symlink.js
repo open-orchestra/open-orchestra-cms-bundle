@@ -242,6 +242,10 @@ module.exports = {
       src: 'web/bundles/openorchestrabackoffice/images/state.png',
       dest: 'web/images/state.png'
     },
+    no_item: {
+      src: 'web/bundles/openorchestrabackoffice/images/no-item.png',
+      dest: 'web/images/no-item.png'
+    },
     //--[ SELECT2 ]--//
     select2: {
         src: 'vendor/bower_components/select2/select2.png',
