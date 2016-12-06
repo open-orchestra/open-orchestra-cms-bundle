@@ -27,24 +27,24 @@ interface GroupRepositoryInterface
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param array|null                  $siteId
+     * @param array                       $siteId
      *
      * @return array
      */
-    public function findForPaginate(PaginateFinderConfiguration $configuration, array $siteIds = null);
+    public function findForPaginate(PaginateFinderConfiguration $configuration, array $siteIds);
 
     /**
-     * @param array|null $siteId
+     * @param array $siteId
      *
      * @return int
      */
-    public function count(array $siteIds = null);
+    public function count(array $siteIds);
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param array|null                  $siteId
+     * @param array                       $siteId
      *
      * @return int
      */
-    public function countWithFilter(PaginateFinderConfiguration $configuration, array $siteIds = null);
+    public function countWithFilter(PaginateFinderConfiguration $configuration, array $siteIds);
 }

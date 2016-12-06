@@ -3,16 +3,16 @@
 namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 
 use Phake;
-use OpenOrchestra\GroupBundle\Form\Type\GroupType;
+use OpenOrchestra\GroupBundle\Form\Type\GroupElementType;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
- * Class GroupTypeTest
+ * Class GroupElementTypeTest
  */
-class GroupTypeTest extends Phake
+class GroupElementTypeTest extends Phake
 {
     /**
-     * @var GroupType
+     * @var GroupElementType
      */
     protected $form;
 
@@ -23,7 +23,7 @@ class GroupTypeTest extends Phake
     {
         $groupRepository = Phake::mock('OpenOrchestra\GroupBundle\Repository\GroupRepository');
         $multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
-        $this->form = new GroupType($groupRepository, $multiLanguagesChoiceManager);
+        $this->form = new GroupElementType($groupRepository, $multiLanguagesChoiceManager);
     }
 
     /**
@@ -83,7 +83,7 @@ class GroupTypeTest extends Phake
         Phake::when($groupRepository)->find(Phake::anyParameters())->thenReturn($group);
         $multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         Phake::when($multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn('fakeLabel');
-        $form = new GroupType($groupRepository, $multiLanguagesChoiceManager);
+        $form = new GroupElementType($groupRepository, $multiLanguagesChoiceManager);
 
         $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
         $formView = Phake::mock('Symfony\Component\Form\FormView');

@@ -12,9 +12,9 @@ use OpenOrchestra\GroupBundle\Repository\GroupRepository;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
- * Class GroupType
+ * Class GroupElementType
  */
-class GroupType extends AbstractType
+class GroupElementType extends AbstractType
 {
     protected $multiLanguagesChoiceManager;
     protected $groupRepository;
@@ -84,6 +84,6 @@ class GroupType extends AbstractType
      */
     public function getName()
     {
-        return 'oo_group';
+        return 'oo_group_element';
     }
 }

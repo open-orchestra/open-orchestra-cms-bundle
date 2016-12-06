@@ -140,7 +140,6 @@ class UserType extends AbstractType
             'data_class' => $this->class,
             'edit_groups' => true,
             'self_editing' => false,
-            'current_user' => null,
             'group_enabled' => true,
             'group_render' => array(
                 'information' => array(

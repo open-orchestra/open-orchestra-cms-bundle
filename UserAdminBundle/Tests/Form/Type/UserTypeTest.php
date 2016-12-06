@@ -74,11 +74,8 @@ class UserTypeTest extends AbstractUserTypeTest
         $site = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
         Phake::when($site)->getLanguageBySites()->thenReturn(array('en' => 'fakeLanguage', 'fr' => 'fakeLanguage'));
 
-        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($user)->getGroups()->thenReturn(array());
-
         return array(
-            'without_groups_edition' => array(array('edit_groups' => 'false', 'self_editing' => false, 'data' => $site, 'current_user' => $user), true, 5),
+            'without_groups_edition' => array(array('edit_groups' => 'false', 'self_editing' => false, 'data' => $site,), true, 5),
             'with_groups_edition' => array(array('edit_groups' => 'true', 'self_editing' => true, 'data' => $site), false, 7)
         );
     }
@@ -93,7 +90,6 @@ class UserTypeTest extends AbstractUserTypeTest
             'data_class' => $this->class,
             'edit_groups' => true,
             'self_editing' => false,
-            'current_user' => null,
             'group_enabled' => true,
             'group_render' => array(
                 'information' => array(

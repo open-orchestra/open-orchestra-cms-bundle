@@ -32,7 +32,7 @@ class GroupListType extends AbstractType
         $builder->addModelTransformer($this->groupListToArrayTransformer);
 
         $builder->add('groups_collection', 'collection', array(
-                'type' => 'oo_group',
+                'type' => 'oo_group_element',
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,

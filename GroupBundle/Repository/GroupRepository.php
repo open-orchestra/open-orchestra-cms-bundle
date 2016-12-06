@@ -46,11 +46,11 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param array|null                  $siteId
+     * @param array                       $siteId
      *
      * @return array
      */
-    public function findForPaginate(PaginateFinderConfiguration $configuration, array $siteIds = null)
+    public function findForPaginate(PaginateFinderConfiguration $configuration, array $siteIds)
     {
         $order = $configuration->getOrder();
         $qa = $this->createQueryWithFilter($configuration, $siteIds, $order);
@@ -62,11 +62,11 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
     }
 
     /**
-     * @param array|null $siteId
+     * @param array $siteId
      *
      * @return int
      */
-    public function count(array $siteIds = null)
+    public function count(array $siteIds)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIds($siteIds);
 
@@ -75,11 +75,11 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param array|null                  $siteId
+     * @param array                       $siteId
      *
      * @return int
      */
-    public function countWithFilter(PaginateFinderConfiguration $configuration, array $siteIds = null)
+    public function countWithFilter(PaginateFinderConfiguration $configuration, array $siteIds)
     {
         $qa = $this->createQueryWithFilter($configuration, $siteIds);
 
@@ -89,14 +89,14 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param array|null                  $siteIds
+     * @param array                       $siteIds
      * @param array                       $order
      *
      * @return Stage
      */
     protected function createQueryWithFilter(
         PaginateFinderConfiguration $configuration,
-        $siteIds = null,
+        array $siteIds,
         $order = array()
     ){
         $qa = $this->createAggregationQueryBuilderWithSiteIds($siteIds);
@@ -113,19 +113,17 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
     }
 
     /**
-     * @param array|null $siteIds
+     * @param array $siteIds
      *
      * @return Stage
      */
-    protected function createAggregationQueryBuilderWithSiteIds($siteIds = null)
+    protected function createAggregationQueryBuilderWithSiteIds(array $siteIds)
     {
         $qa = $this->createAggregationQuery();
-        if (!is_null($siteIds)) {
-            foreach ($siteIds as $key => $siteId) {
-                $siteIds[$key] = new \MongoId($siteId);
-            }
-            $qa->match(array('site.$id' => array('$in' => $siteIds)));
+        foreach ($siteIds as $key => $siteId) {
+            $siteIds[$key] = new \MongoId($siteId);
         }
+        $qa->match(array('site.$id' => array('$in' => $siteIds)));
 
         return $qa;
     }
