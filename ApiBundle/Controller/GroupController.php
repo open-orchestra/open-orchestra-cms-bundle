@@ -99,15 +99,9 @@ class GroupController extends BaseController
     public function listUserAction(Request $request)
     {
         $siteIds = null;
-        if (!$this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) &&
-            $this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER)
-        ) {
-            foreach ($this->getUser()->getGroups() as $group) {
-                $site = $group->getSite();
-                if (!$site->isDeleted() && !in_array($site->getSiteId(), $siteIds)) {
-                    $siteIds[] = $site->getId();
-                }
-            }
+        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        foreach ($availableSites as $site) {
+            $siteIds[] = $site->getId();
         }
         $mapping = array(
             'label' => 'labels',

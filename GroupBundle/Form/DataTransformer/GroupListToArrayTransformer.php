@@ -3,21 +3,33 @@
 namespace OpenOrchestra\GroupBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\GroupBundle\Repository\GroupRepository;
-use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class GroupListToArrayTransformer
  */
 class GroupListToArrayTransformer implements DataTransformerInterface
 {
+    protected $groupRepository;
+    protected $availableSiteIds;
+
     /**
-     * @param GroupRepository $groupRepository
+     * @param GroupRepository        $groupRepository
+     * @param CurrentSiteIdInterface $contextManager
      */
-    public function __construct(GroupRepository $groupRepository)
-    {
+    public function __construct(
+        GroupRepository $groupRepository,
+        CurrentSiteIdInterface $contextManager
+    ) {
         $this->groupRepository = $groupRepository;
+        $this->availableSiteIds = array();
+
+        foreach ($contextManager->getAvailableSites() as $site) {
+            $this->availableSiteIds[] = $site->getId();
+        }
     }
 
     /**
@@ -50,13 +62,12 @@ class GroupListToArrayTransformer implements DataTransformerInterface
     public function reverseTransform($groups)
     {
         $value = new ArrayCollection();
-
         if (is_array($groups) && array_key_exists('groups_collection', $groups)) {
             $groups = $groups['groups_collection'];
             foreach ($groups as $groupId => $group) {
                 if (array_key_exists('group', $group) && $group['group']) {
                     $group = $this->groupRepository->find($groupId);
-                    if (null !== $group) {
+                    if (null !== $group && in_array($group->getSiteId(), $this->availableSiteIds)) {
                         $value->add($group);
                     }
                 }

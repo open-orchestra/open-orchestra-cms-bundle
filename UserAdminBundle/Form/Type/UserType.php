@@ -5,11 +5,11 @@ namespace OpenOrchestra\UserAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
 use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class UserType

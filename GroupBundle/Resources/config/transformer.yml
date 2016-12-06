@@ -6,3 +6,4 @@ services:
         class: '%open_orchestra_group.transformer.group_list_to_array.class%'
         arguments:
             - '@open_orchestra_user.repository.group'
+            - '@open_orchestra_backoffice.context_manager'
