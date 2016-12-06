@@ -13,6 +13,7 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
     protected $voter;
 
     protected $perimeterManager;
+    protected $group;
     protected $token;
     protected $user;
     protected $perimeter;
@@ -29,11 +30,11 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
         $this->perimeterManager = Phake::mock('OpenOrchestra\Backoffice\Perimeter\PerimeterManager');
         Phake::when($this->perimeterManager)->createPerimeter(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\Backoffice\Model\PerimeterInterface'));
 
-        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        Phake::when($group)->getPerimeter(Phake::anyParameters())->thenReturn($this->perimeter);
+        $this->group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        Phake::when($this->group)->getPerimeter(Phake::anyParameters())->thenReturn($this->perimeter);
 
         $this->user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($this->user)->getGroups()->thenReturn(array($group));
+        Phake::when($this->user)->getGroups()->thenReturn(array($this->group));
         Phake::when($this->user)->getUsername()->thenReturn($this->username);
 
         $this->token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
@@ -290,5 +291,15 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
     protected function createPhakeStatus()
     {
         return Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+    }
+
+    /**
+     * Create a Phake transition
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeTransition()
+    {
+        return Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface');
     }
 }

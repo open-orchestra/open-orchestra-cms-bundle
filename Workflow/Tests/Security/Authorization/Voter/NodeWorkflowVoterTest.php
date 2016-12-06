@@ -6,12 +6,16 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use OpenOrchestra\Workflow\Security\Authorization\Voter\NodeWorkflowVoter;
+use Phake;
 
 /**
  * Class NodeWorkflowVoterTest
  */
 class NodeWorkflowVoterTest extends AbstractVoterTest
 {
+    protected $workflowRepository;
+    protected $profile;
+
     /**
      * Set up the test
      */
@@ -19,7 +23,30 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new NodeWorkflowVoter($this->perimeterManager);
+        $this->profile = Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface');
+        Phake::when($this->group)->getWorkflowProfileCollection(Phake::anyParameters())->thenReturn(array($this->profile));
+
+        $this->workflowRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface');
+
+        $this->voter = new NodeWorkflowVoter($this->perimeterManager, $this->workflowRepository);
+    }
+
+    /**
+     * @param mixed   $object       the object to secure
+     * @param string  $attribute    the action to test
+     * @param array   $roles        the user's roles
+     * @param boolean $inPerimeter  if the object is in the user perimeter
+     * @param int     $expectedVote the expected result of the vote (GRANTED, ABSTAIN or DENIED)
+     * @param boolean $inProfile    if the transition is in a user's profile
+     *
+     * @dataProvider provideDataToVote
+     */
+    public function testVote($object, $attribute, array $roles, $inPerimeter, $expectedVote, $inProfile = true)
+    {
+        Phake::when($this->profile)->hasTransition(Phake::anyParameters())->thenReturn($inProfile);
+        Phake::when($this->workflowRepository)->hasTransition(Phake::anyParameters())->thenReturn($inProfile);
+
+        parent::testVote($object, $attribute, $roles, $inPerimeter, $expectedVote);
     }
 
     /**
@@ -39,20 +66,21 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
         $contentType = $this->createPhakeContentType();
         $profile = $this->createPhakeWorkflowProfile();
         $status = $this->createPhakeStatus();
+        $transition = $this->createPhakeTransition();
 
         return array(
-            'Bad subject : Content'          => array($content,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Trash Item'       => array($trashItem,   ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Site'             => array($site,        ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Redirection'      => array($redirection, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Log'              => array($log,         ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : User'             => array($user,        ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Group'            => array($group,       ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Keyword'          => array($keyword,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Api client'       => array($client,      ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Content type'     => array($contentType, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Workflow profile' => array($profile,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Status'           => array($status,      ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Content'          => array($content    , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Trash Item'       => array($trashItem  , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Site'             => array($site       , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Redirection'      => array($redirection, $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Log'              => array($log        , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : User'             => array($user       , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Group'            => array($group      , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Keyword'          => array($keyword    , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Api client'       => array($client     , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Content type'     => array($contentType, $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Workflow profile' => array($profile    , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Status'           => array($status     , $transition, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
         );
     }
 
@@ -64,12 +92,12 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
         $node = $this->createPhakeNode();
 
         return array(
-            'Bad action : Read'          => array($node, ContributionActionInterface::READ         ,   array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad action : Edit'          => array($node, ContributionActionInterface::EDIT         ,   array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad action : Create'        => array($node, ContributionActionInterface::CREATE       ,   array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad action : Delete'        => array($node, ContributionActionInterface::DELETE       ,   array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad action : Trash Purge'   => array($node, ContributionActionInterface::TRASH_PURGE  ,   array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad action : Trash Restore' => array($node, ContributionActionInterface::TRASH_RESTORE, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad attribute : Read'          => array($node, ContributionActionInterface::READ         , array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad attribute : Edit'          => array($node, ContributionActionInterface::EDIT         , array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad attribute : Create'        => array($node, ContributionActionInterface::CREATE       , array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad attribute : Delete'        => array($node, ContributionActionInterface::DELETE       , array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad attribute : Trash Purge'   => array($node, ContributionActionInterface::TRASH_PURGE  , array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad attribute : Trash Restore' => array($node, ContributionActionInterface::TRASH_RESTORE, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
         );
     }
 
@@ -79,14 +107,11 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
     protected function getNotInPerimeter()
     {
         $node = $this->createPhakeNode();
-        $nodeSelf = $this->createPhakeNode(true);
+        $transition = $this->createPhakeTransition();
 
         return array(
-            'Not in perimeter : Read self'    => array($nodeSelf, ContributionActionInterface::READ,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     false, VoterInterface::ACCESS_DENIED),
-            'Not in perimeter : Edit self'    => array($nodeSelf, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     false, VoterInterface::ACCESS_DENIED),
-            'Not in perimeter : Delete self'  => array($nodeSelf, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),     false, VoterInterface::ACCESS_DENIED),
-            'Not in perimeter : Edit other'   => array($node,     ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_EDITOR),    false, VoterInterface::ACCESS_DENIED),
-            'Not in perimeter : Delete other' => array($node,     ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR), false, VoterInterface::ACCESS_DENIED),
+            'Not in perimeter : Contributor'         => array($node, $transition, array(ContributionRoleInterface::NODE_CONTRIBUTOR), false, VoterInterface::ACCESS_DENIED, false),
+            'Transition does not exist : Developper' => array($node, $transition, array(ContributionRoleInterface::DEVELOPER)       , false, VoterInterface::ACCESS_DENIED, false),
         );
     }
 
@@ -95,24 +120,7 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
      */
     protected function getBadRoles()
     {
-        $node = $this->createPhakeNode();
-
-        return array(
-            'Bad role (Edit) : None'                      => array($node, ContributionActionInterface::EDIT,   array(),                                                   true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Content contributor'       => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Content super editor'      => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Content super supressor'   => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Site Admin'                => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::SITE_ADMIN),              true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Trash Restorer'            => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_RESTORER),          true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) : Trash Supressor'           => array($node, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::TRASH_SUPRESSOR),         true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : None'                    => array($node, ContributionActionInterface::DELETE, array(),                                                   true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Content contributor'     => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Content super editor'    => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Content super supressor' => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Site Admin'              => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::SITE_ADMIN),              true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Trash Restorer'          => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::TRASH_RESTORER),          true, VoterInterface::ACCESS_DENIED),
-            'Bad role (Delete) : Trash Supressor'         => array($node, ContributionActionInterface::DELETE, array(ContributionRoleInterface::TRASH_SUPRESSOR),         true, VoterInterface::ACCESS_DENIED),
-        );
+        return array();
     }
 
     /**
@@ -121,15 +129,11 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
     protected function getOkVotes()
     {
         $node = $this->createPhakeNode();
-        $nodeSelf = $this->createPhakeNode(true);
+        $transition = $this->createPhakeTransition();
 
         return array(
-            'Ok : Read'         => array($node,     ContributionActionInterface::READ,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
-            'Ok : Add self'     => array($nodeSelf, ContributionActionInterface::CREATE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
-            'Ok : Edit self'    => array($nodeSelf, ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
-            'Ok : Delete self'  => array($nodeSelf, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
-            'Ok : Edit other'   => array($node,     ContributionActionInterface::EDIT,   array(ContributionRoleInterface::NODE_SUPER_EDITOR),    true, VoterInterface::ACCESS_GRANTED),
-            'Ok : Delete other' => array($node,     ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_GRANTED),
+            'Ok : Contributor' => array($node, $transition, array(ContributionRoleInterface::NODE_CONTRIBUTOR), true , VoterInterface::ACCESS_GRANTED, true),
+            'Ok : Developper'  => array($node, $transition, array(ContributionRoleInterface::DEVELOPER)       , false, VoterInterface::ACCESS_GRANTED, true),
         );
     }
 }
