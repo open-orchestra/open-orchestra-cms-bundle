@@ -5,6 +5,8 @@ namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\AbstractPerimeterVoter;
 use OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
+use OpenOrchestra\Backoffice\Perimeter\PerimeterManager;
+use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 
 /**
  * Class AbstractWorkflowVoter
@@ -13,6 +15,20 @@ use OpenOrchestra\UserBundle\Model\UserInterface;
  */
 abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
 {
+    protected $workflowRepository;
+    
+    /**
+     * @param PerimeterManager                   $perimeterManager
+     * @param WorkflowProfileRepositoryInterface $workflowRepository
+     */
+    public function __construct(
+        PerimeterManager $perimeterManager,
+        WorkflowProfileRepositoryInterface $workflowRepository
+        ){
+            parent::__construct($perimeterManager);
+            $this->workflowRepository = $workflowRepository;
+    }
+
     /**
      * @return array
      */
@@ -71,6 +87,21 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
                     }
                 }
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * SuperAdmin can use $transition if $transition exists
+     *
+     * @param WorkflowTransitionInterface $transition
+     *
+     * @return boolean
+     */
+    protected function voteForSuperAdmin(WorkflowTransitionInterface $transition) {
+        if ($this->workflowRepository->hasTransition($transition)) {
+            return true;
         }
 
         return false;
