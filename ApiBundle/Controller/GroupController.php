@@ -88,7 +88,7 @@ class GroupController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/user/group", name="open_orchestra_api_group_user_list")
+     * @Config\Route("/user/list", name="open_orchestra_api_group_user_list")
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
@@ -98,7 +98,7 @@ class GroupController extends BaseController
      */
     public function listUserAction(Request $request)
     {
-        $siteIds = null;
+        $siteIds = array();
         $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
         foreach ($availableSites as $site) {
             $siteIds[] = $site->getId();
