@@ -2,7 +2,6 @@ import NodeRouter            from './Router/Node/NodeRouter'
 import KeywordRouter         from './Router/Keyword/KeywordRouter'
 import DashboardRouter       from './Router/Dashboard/DashboardRouter'
 import SiteRouter            from './Router/Site/SiteRouter'
-import UserRouter            from './Router/User/UserRouter'
 import ErrorView             from './View/Error/ErrorView'
 import ApplicationError      from '../Service/Error/ApplicationError'
 import AjaxError             from '../Service/Error/AjaxError'
@@ -17,7 +16,6 @@ import DatePicker            from '../Service/Form/Behavior/DatePicker'
 import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
 import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
-import GroupTable            from '../Service/Form/Behavior/GroupTable'
 
 /**
  * @class Application
@@ -40,11 +38,13 @@ class Application
         this._initRouting();
         this._initTranslator();
         this._initRouter();
-        this._initLayoutView();
         this._initFormBehaviorManager();
 
         Backbone.Events.trigger('application:before:start');
+
+        this._initLayoutView();
         Backbone.history.start();
+
         Backbone.Events.trigger('application:after:start');
     }
 
@@ -133,7 +133,6 @@ class Application
         new NodeRouter();
         new KeywordRouter();
         new SiteRouter();
-        new UserRouter();
     }
 
     /**
@@ -190,7 +189,6 @@ class Application
         FormBehaviorManager.add(NodeChoice);
         FormBehaviorManager.add(DatePicker);
         FormBehaviorManager.add(GenerateId);
-        FormBehaviorManager.add(GroupTable);
     }
 
 }

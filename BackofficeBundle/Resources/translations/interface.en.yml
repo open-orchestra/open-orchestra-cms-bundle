@@ -11,6 +11,8 @@ open_orchestra_backoffice:
         yes: Yes
         no: No
         filter: Filter results
+    no_item: There are no item for this view
+    add: Add
     navigation:
         hide_menu: Hide menu
         dashboard:
@@ -31,6 +33,7 @@ open_orchestra_backoffice:
         configuration:
           title:  Configuration
     table:
+        delete_button: Remove selected items
         keywords:
             label: Label
         node:
@@ -38,10 +41,6 @@ open_orchestra_backoffice:
             author: Author
             updated_at: Updated date
             current_status: Current status
-        group:
-            label: Label
-            site_name: Site name
-            site: Site
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -74,9 +73,6 @@ open_orchestra_backoffice:
             displayed_menu: Displayed in the menu
             na: N/A
             reset: Reset
-    user:
-        add_group: Add a group to user
-        select: Select
     form:
         keyword:
             new: new

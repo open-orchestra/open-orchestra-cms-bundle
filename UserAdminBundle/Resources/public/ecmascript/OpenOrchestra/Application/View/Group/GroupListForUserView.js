@@ -34,14 +34,14 @@ class GroupListForUserView extends AbstractDataTableView
             },
             {
                 name: "label",
-                title: Translator.trans('open_orchestra_backoffice.table.group.label'),
+                title: Translator.trans('open_orchestra_user_admin.table.group.label'),
                 orderable: true,
                 orderDirection: 'desc',
                 visibile: true
             },
             {
                 name: "site.name",
-                title: Translator.trans('open_orchestra_backoffice.table.group.site_name'),
+                title: Translator.trans('open_orchestra_user_admin.table.group.site_name'),
                 orderable: false,
                 visibile: true
             }

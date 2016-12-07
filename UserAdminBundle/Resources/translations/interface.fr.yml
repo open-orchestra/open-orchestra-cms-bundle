@@ -1,0 +1,19 @@
+open_orchestra_user_admin:
+    navigation:
+        user:
+          users: Tous les utilisateurs
+    table:
+        group:
+            label: Label
+            site_name: Nom du site
+            site: Site
+        users:
+            username: Nom d'utilisateur
+            groups: Groupes
+    user:
+        add_group: Ajouter un group à l'utilisateur
+        select: Sélectionner
+        title_list: Liste des utilisateurs
+        title_edit: Modifier l'utilisateur
+        search_engine:
+          search: Rechercher

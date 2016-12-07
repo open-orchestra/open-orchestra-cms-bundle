@@ -22,14 +22,15 @@ class AbstractDataTableView extends OrchestraView
      */
     preinitialize(options) {
         this.tagName = 'div';
-        this.api = null;
-        this.table = null;
     }
 
     /**
      * @inheritdoc
      */
     initialize({collection, settings}) {
+        this.api = null;
+        this.table = null;
+        this._tableRegion = this.$el;
         this._collection = collection;
         this._settings = this._resolveSettings(settings);
     }
@@ -41,7 +42,7 @@ class AbstractDataTableView extends OrchestraView
         this.$table = $("<table></table>");
         this.$table.addClass(this._settings.tableClassName);
         this.$table.attr('id', 'dt-' + this.getTableId());
-        this.$el.append(this.$table);
+        this._tableRegion.append(this.$table);
 
         this.$table.DataTable(this._settings);
 
