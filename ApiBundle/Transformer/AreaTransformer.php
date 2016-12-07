@@ -9,8 +9,8 @@ use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class AreaTransformer
@@ -57,7 +57,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new AreaTransformerHttpException();
         }
 
-        $facade->editable = $this->authorizationChecker->isGranted($this->getEditionNodeRole($node), $node);
+        $facade->editable = $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node);
 
         foreach ($area->getBlocks() as $blockPosition => $block) {
             $facade->addBlock($this->getTransformer('block')->transform($block, $blockPosition));
@@ -68,20 +68,6 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         return $facade;
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return string
-     */
-    protected function getEditionNodeRole(NodeInterface $node)
-    {
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 
     /**

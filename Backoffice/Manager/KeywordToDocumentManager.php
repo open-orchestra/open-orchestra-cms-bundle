@@ -5,9 +5,9 @@ namespace OpenOrchestra\Backoffice\Manager;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class KeywordToDocumentManager
@@ -43,7 +43,9 @@ class KeywordToDocumentManager
         $keywordClass = $this->keywordClass;
         $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
 
-        if (is_null($keywordEntity) && !$this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD)) {
+        if (is_null($keywordEntity)
+            && !$this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, KeywordInterface::ENTITY_TYPE)
+        ) {
             throw new AccessDeniedHttpException();
         }
         if (is_null($keywordEntity)) {

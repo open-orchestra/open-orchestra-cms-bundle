@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
@@ -11,6 +10,7 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ContentTypeTransformer
@@ -64,13 +64,8 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
             }
         }
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_content_type_show',
-            array('contentTypeId' => $contentType->getContentTypeId())
-        ));
-
         if (0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()) 
-            && $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE)
+            && $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType)
         ) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_content_type_delete',
@@ -78,7 +73,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
             ));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $contentType)) {
             $facade->addLink('_self_form', $this->generateRoute(
                 'open_orchestra_backoffice_content_type_form',
                 array('contentTypeId' => $contentType->getContentTypeId())

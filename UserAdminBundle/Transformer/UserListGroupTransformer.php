@@ -3,10 +3,11 @@
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\UserBundle\Document\User;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserListGroupTransformer
@@ -28,7 +29,9 @@ class UserListGroupTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->lastName = $mixed->getLastName();
         $facade->email = $mixed->getEmail();
 
-        if (null !== $group && $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
+        if (null !== $group
+            && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, UserInterface::ENTITY_TYPE)
+        ) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_user_remove_group',
                 array(

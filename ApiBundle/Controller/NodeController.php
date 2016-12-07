@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -100,10 +99,10 @@ class NodeController extends BaseController
             $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
 
             if ($oldNode) {
-                $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $oldNode);
+                $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $oldNode);
                 $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
             } elseif ($errorNode) {
-                $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_ERROR_NODE);
+                $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $errorNode);
                 $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
             }
 
@@ -129,7 +128,7 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSiteSortedByVersion($nodeId, $siteId);
         $node = !empty($nodes) ? $nodes[0] : null;
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $node);
 
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('object_manager')->flush();

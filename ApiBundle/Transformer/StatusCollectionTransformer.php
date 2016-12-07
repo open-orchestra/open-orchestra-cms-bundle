@@ -3,10 +3,11 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class StatusCollectionTransformer
@@ -27,7 +28,7 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
             $facade->addStatus($this->getTransformer('status')->transform($status, $document));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_STATUS)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, StatusInterface::ENTITY_TYPE)) {
             $facade->addLink('_self_add', $this->generateRoute(
                 'open_orchestra_backoffice_status_new',
                 array()

@@ -88,7 +88,6 @@ class GroupTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\GroupFacade', $facade);
         if ($right) {
-            $this->assertArrayHasKey('_self', $facade->getLinks());
             $this->assertArrayHasKey('_self_delete', $facade->getLinks());
             $this->assertArrayHasKey('_self_form', $facade->getLinks());
             $this->assertArrayHasKey('_self_edit', $facade->getLinks());

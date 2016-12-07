@@ -3,9 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\BaseApi\Model\ApiClientInterface;
 
 /**
  * Class ApiClientCollectionTransformer
@@ -25,7 +26,7 @@ class ApiClientCollectionTransformer extends AbstractSecurityCheckerAwareTransfo
             $facade->addApiClient($this->getTransformer('api_client')->transform($apiClient));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_API_CLIENT)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ApiClientInterface::ENTITY_TYPE)) {
             $facade->addLink('_self_add', $this->generateRoute('open_orchestra_backoffice_api_client_new'));
         }
 

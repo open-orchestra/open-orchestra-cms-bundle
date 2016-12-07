@@ -3,9 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentTypeCollectionTransformer
@@ -25,7 +26,7 @@ class ContentTypeCollectionTransformer extends AbstractSecurityCheckerAwareTrans
             $facade->addContentType($this->getTransformer('content_type')->transform($contentType));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentTypeInterface::ENTITY_TYPE)) {
             $facade->addLink('_self_add', $this->generateRoute(
                 'open_orchestra_backoffice_content_type_new',
                 array()

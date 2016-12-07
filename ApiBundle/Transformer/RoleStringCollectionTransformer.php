@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
@@ -23,13 +22,6 @@ class RoleStringCollectionTransformer extends AbstractSecurityCheckerAwareTransf
 
         foreach ($roleCollection as $role => $translation) {
             $facade->addRole($this->getTransformer('role_string')->transform($role, $translation));
-        }
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_ROLE)) {
-            $facade->addLink('_self', $this->generateRoute(
-                'open_orchestra_api_role_list_by_type',
-                array('type' => $type)
-            ));
         }
 
         return $facade;

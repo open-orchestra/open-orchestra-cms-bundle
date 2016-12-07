@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFacadeEvent;
 use OpenOrchestra\GroupBundle\GroupFacadeEvents;
@@ -13,6 +12,7 @@ use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class GroupTransformer
@@ -105,21 +105,14 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     protected function addLinks(FacadeInterface $facade, GroupInterface $group)
     {
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {
-            $facade->addLink('_self', $this->generateRoute(
-                'open_orchestra_api_group_show',
-                array('groupId' => $group->getId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_GROUP)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group)) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_group_delete',
                 array('groupId' => $group->getId())
             ));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_GROUP)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $group)) {
             $facade->addLink('_self_form', $this->generateRoute(
                 'open_orchestra_backoffice_group_form',
                 array('groupId' => $group->getId())
@@ -135,7 +128,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             );
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_GROUP)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, $group)) {
             $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_group_duplicate', array(
                 'groupId' => $group->getId(),
             )));

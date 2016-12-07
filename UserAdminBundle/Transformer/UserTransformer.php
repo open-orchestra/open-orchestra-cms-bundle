@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
@@ -11,6 +10,7 @@ use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
 use OpenOrchestra\UserAdminBundle\Event\UserFacadeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class UserTransformer
@@ -59,23 +59,18 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
 
             $facade->groups = implode(',', $labels);
 
-            $facade->addLink('_self', $this->generateRoute(
-                'open_orchestra_api_user_show',
-                array('userId' => $mixed->getId())
-            ));
-            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_USER)) {
+            if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $mixed)) {
                 $facade->addLink('_self_delete', $this->generateRoute(
                     'open_orchestra_api_user_delete',
                     array('userId' => $mixed->getId())
                 ));
             }
-            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
+            if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $mixed)) {
                 $facade->addLink('_self_form', $this->generateRoute(
                     'open_orchestra_user_admin_user_form',
                     array('userId' => $mixed->getId())
                 ));
-            }
-            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
+
                 $facade->addLink('_self_panel_password_change', $this->generateRoute(
                     'open_orchestra_user_admin_user_change_password',
                     array('userId' => $mixed->getId())));

@@ -129,7 +129,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertSame($getVersion, array_key_exists('_self_new_version', $facade->getLinks()));
         $this->assertSame($getVersion, array_key_exists('_self_version', $facade->getLinks()));
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
-        $this->assertArrayHasKey('_self', $facade->getLinks());
         $this->assertArrayHasKey('_self_without_parameters', $facade->getLinks());
         $this->assertArrayHasKey('_self_delete', $facade->getLinks());
         $this->assertArrayHasKey('_status_list', $facade->getLinks());

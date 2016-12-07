@@ -3,9 +3,10 @@
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserCollectionTransformer
@@ -25,7 +26,7 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addUser($this->getTransformer('user')->transform($user));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_USER)) {
+        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, UserInterface::ENTITY_TYPE)) {
             $facade->addLink('_self_add', $this->generateRoute('open_orchestra_user_admin_new'));
         }
 

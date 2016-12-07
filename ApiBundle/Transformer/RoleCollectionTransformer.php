@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
@@ -23,18 +22,6 @@ class RoleCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
         foreach ($roleCollection as $role) {
             $facade->addRole($this->getTransformer('role')->transform($role));
-        }
-
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_role_list',
-            array()
-        ));
-
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_ROLE)) {
-            $facade->addLink('_self_add', $this->generateRoute(
-                'open_orchestra_backoffice_role_new',
-                array()
-            ));
         }
 
         return $facade;

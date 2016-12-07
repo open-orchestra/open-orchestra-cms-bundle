@@ -4,9 +4,10 @@ namespace OpenOrchestra\UserAdminBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserListGroupCollectionTransformer
@@ -27,7 +28,9 @@ class UserListGroupCollectionTransformer extends AbstractSecurityCheckerAwareTra
             $facade->addUser($this->getTransformer('user_list_group')->transform($user, $group));
         }
 
-        if (null !== $group && $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER)) {
+        if (null !== $group
+            && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, UserInterface::ENTITY_TYPE)
+        ) {
             $facade->addLink('_list_without_group', $this->generateRoute(
                 'open_orchestra_api_user_list_by_username_without_group',
                 array(
