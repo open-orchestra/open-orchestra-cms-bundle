@@ -21,7 +21,7 @@ class TwigGlobalsCompilerPass implements CompilerPassInterface
     {
         if ($container->hasDefinition('twig')) {
             $formResources = $container->getParameter('twig.form.resources');
-            $formResources[] = 'OpenOrchestraUserAdminBundle:Form:form_div_layout.html.twig';
+            $formResources[] = 'OpenOrchestraGroupBundle:Form:form_div_layout.html.twig';
             $container->setParameter('twig.form.resources', $formResources);
         }
     }
