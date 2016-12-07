@@ -23,7 +23,6 @@ install:
 
 script:
   - ./bin/phpunit
-  - ./node_modules/.bin/grunt test
 
 addons:
   code_climate:
