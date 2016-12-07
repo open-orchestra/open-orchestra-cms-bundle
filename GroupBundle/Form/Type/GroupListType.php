@@ -3,7 +3,6 @@
 namespace OpenOrchestra\GroupBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\GroupBundle\Form\DataTransformer\GroupListToArrayTransformer;
 

@@ -6,7 +6,6 @@ use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class UserGroupsSubscriber
