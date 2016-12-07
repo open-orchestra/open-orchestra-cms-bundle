@@ -6,6 +6,18 @@ import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 class UserFormView extends AbstractFormView
 {
     /**
+     * @inheritdoc
+     */
+    render() {
+        let template = this._renderTemplate('User/userFormView');
+        this.$el.html(template);
+        this._$formRegion = $('.form-edit', this.$el);
+        super.render();
+
+        return this;
+    }
+
+    /**
      * @return {Object}
      */
     getStatusCodeForm() {

@@ -14,5 +14,6 @@ open_orchestra_user_admin:
         add_group: Ajouter un group à l'utilisateur
         select: Sélectionner
         title_list: Liste des utilisateurs
+        title_edit: Modifier l'utilisateur
         search_engine:
           search: Rechercher

@@ -69,7 +69,6 @@
     {% endif %}
 {% endblock %}
 
-
 {% block choice_widget %}
     {% spaceless %}
         {% if expanded and multiple %}
@@ -89,27 +88,27 @@
 {% block oo_group_list_widget %}
     {% spaceless %}
         <div class="user-groups-list">
-        	<table class="table table-striped">
-        		<tbody>
+            <table class="table table-striped">
+                <tbody>
             {% for child in form['groups_collection'] %}
-            	{{ form_widget(child) }}
+                {{ form_widget(child) }}
             {% endfor %}
-				</tbody>
+                </tbody>
             </table>
             <div class="prototype hidden" data-prototype="{{ form_widget(form['groups_collection'].vars.prototype)|e('html') }}"></div>
             <div>
-            	<button class="open-groups-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
+                <button class="open-groups-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
             </div>
         </div>
     {% endspaceless %}
 {% endblock oo_group_list_widget %}
 
 {% block oo_group_element_widget %}
-	<tr>
-	    <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.parameters['groupName'] }}</td>
-	    <td>{{ form.vars.parameters['siteName'] }}</td>
-	    <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-close" aria-hidden="true"></i>{% endif %}</td>
-	</tr>
+    <tr>
+        <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.parameters['groupName'] }}</td>
+        <td>{{ form.vars.parameters['siteName'] }}</td>
+        <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-close" aria-hidden="true"></i>{% endif %}</td>
+    </tr>
 {% endblock oo_group_element_widget %}
 
 {% block oo_language_by_sites_widget %}
