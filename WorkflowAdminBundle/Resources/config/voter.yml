@@ -7,13 +7,13 @@ services:
         class: '%open_orchestra_workflow.voter.node_workflow.class%'
         arguments:
             - '@open_orchestra_group.perimeter_manager'
-            - '@open_orchestra_model.repository.workflow_profiles'
+            - '@open_orchestra_model.repository.workflow_profile'
         tags:
             - { name: security.voter }
     open_orchestra_workflow.voter.content_workflow:
         class: '%open_orchestra_workflow.voter.content_workflow.class%'
         arguments:
             - '@open_orchestra_group.perimeter_manager'
-            - '@open_orchestra_model.repository.workflow_profiles'
+            - '@open_orchestra_model.repository.workflow_profile'
         tags:
             - { name: security.voter }
