@@ -7,6 +7,15 @@ import UrlPaginateViewMixin from '../../../Service/DataTable/Mixin/UrlPaginateVi
 class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
 {
     /**
+     * @inheritdoc
+     */
+    preinitialize(options) {
+        this.events = {
+            'change .delete-checkbox' : '_changeDeleteCheckbox'
+        };
+    }
+
+    /**
      * @inheritDoc
      */
     getTableId() {
@@ -78,12 +87,21 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
      */
     _createCheckbox(td, cellData, rowData) {
         let id = 'checkbox' + rowData.cid;
-        let $checkbox = $('<input>', {type: 'checkbox', id: id});
-        $checkbox.on('change', (event) => {
-            rowData.set('delete', $(event.currentTarget).prop('checked'));
-        });
+        let $checkbox = $('<input>', {type: 'checkbox', id: id, class:'delete-checkbox'});
+        $checkbox.data(rowData);
         $(td).append($checkbox);
         $(td).append($('<label>', {for: id}))
+    }
+
+    /**
+     * @param {Object} event
+     *
+     * @private
+     */
+    _changeDeleteCheckbox(event) {
+        let user = $(event.currentTarget).data();
+        user.set('delete', $(event.currentTarget).prop('checked'));
+        console.log(user);
     }
 }
 

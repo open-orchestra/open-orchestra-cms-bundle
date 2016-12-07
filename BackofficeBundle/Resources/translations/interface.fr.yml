@@ -11,7 +11,7 @@ open_orchestra_backoffice:
         yes: Oui
         no: Non
         filter: Filtrer les résultats
-    no_item: Il n’y a pas encore d’éléments pour cette vue
+    no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
     navigation:
         hide_menu: Réduire le menu

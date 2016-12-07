@@ -29,7 +29,10 @@ class UsersView extends OrchestraView
      */
     render() {
         if (0 === this._collection.recordsTotal) {
-            let template = this._renderTemplate('User/usersEmptyListView');
+            let template = this._renderTemplate('List/emptyListView' , {
+                title: Translator.trans('open_orchestra_user_admin.user.title_list'),
+                urlAdd: ''
+            });
             this.$el.html(template);
         } else {
             let template = this._renderTemplate('User/usersView');
@@ -65,11 +68,14 @@ class UsersView extends OrchestraView
         return false;
     }
 
+    /**
+     * Remove
+     *
+     * @private
+     */
     _remove() {
         let users = this._collection.where({'delete': true});
-        console.log(users);
         this._collection.destroyModels(users);
-        console.log(this._collection);
     }
 }
 

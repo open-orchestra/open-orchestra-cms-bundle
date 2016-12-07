@@ -165,7 +165,7 @@ class UserController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/delete/users", name="open_orchestra_api_user_delete_multiple")
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_user_delete_multiple")
      * @Config\Method({"DELETE"})
      *
      * @return Response
@@ -179,9 +179,9 @@ class UserController extends BaseController
             $this->getParameter('open_orchestra_user_admin.facade.user_collection.class'),
             $format
         );
-        //$this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
+        /*$this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
 
-        /*$user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
         $dm = $this->get('object_manager');
         $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
         $dm->remove($user);
