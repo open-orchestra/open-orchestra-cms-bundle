@@ -3,7 +3,6 @@
 namespace OpenOrchestra\UserAdminBundle;
 
 use OpenOrchestra\UserAdminBundle\DependencyInjection\Compiler\RoleUsageCompilerPass;
-use OpenOrchestra\UserAdminBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -19,7 +18,6 @@ class OpenOrchestraUserAdminBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new TwigGlobalsCompilerPass());
         $container->addCompilerPass(new RoleUsageCompilerPass());
     }
 }

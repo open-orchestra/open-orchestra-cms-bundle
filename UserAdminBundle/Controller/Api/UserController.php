@@ -66,9 +66,9 @@ class UserController extends BaseController
                 $sitesId[] = $site->getId();
             }
 
-            $collection = $repository->findForPaginateFilterBySitesId($configuration, $sitesId);
-            $recordsTotal = $repository->countFilterBySitesId($sitesId);
-            $recordsFiltered = $repository->countWithFilterAndSitesId($configuration, $sitesId);
+            $collection = $repository->findForPaginateFilterBySiteIds($configuration, $sitesId);
+            $recordsTotal = $repository->countFilterBySiteIds($sitesId);
+            $recordsFiltered = $repository->countWithFilterAndSiteIds($configuration, $sitesId);
         }
 
 
