@@ -67,7 +67,7 @@ class GroupListToArrayTransformer implements DataTransformerInterface
             foreach ($groups as $groupId => $group) {
                 if (array_key_exists('group', $group) && $group['group']) {
                     $group = $this->groupRepository->find($groupId);
-                    if (null !== $group && in_array($group->getSiteId(), $this->availableSiteIds)) {
+                    if (null !== $group && in_array($group->getSite()->getSiteId(), $this->availableSiteIds)) {
                         $value->add($group);
                     }
                 }
