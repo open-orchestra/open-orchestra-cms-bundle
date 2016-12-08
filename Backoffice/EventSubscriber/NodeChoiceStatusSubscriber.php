@@ -2,25 +2,31 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class NodeChoiceStatusSubscriber
  */
 class NodeChoiceStatusSubscriber implements EventSubscriberInterface
 {
-    protected $authorizeStatusChangeManager;
+    protected $statusRepository;
+    protected $authorizationChecker;
 
     /**
-     * @param AuthorizeStatusChangeManager $authorizeStatusChangeManager
+     * @param StatusRepositoryInterface     $statusRepository
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(AuthorizeStatusChangeManager $authorizeStatusChangeManager)
-    {
-        $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
+     public function __construct(
+        StatusRepositoryInterface $statusRepository,
+        AuthorizationCheckerInterface $authorizationChecker
+    ) {
+        $this->statusRepository = $statusRepository;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -59,16 +65,13 @@ class NodeChoiceStatusSubscriber implements EventSubscriberInterface
      */
     protected function getStatusChoices(NodeInterface $node)
     {
-        $choices = array();
-        $transitions = $node->getStatus()->getFromRoles();
+        $choices = array($node->getStatus());
+        $availableStatus = $this->statusRepository->findAll();
 
-        foreach ($transitions as $transition) {
-            $status = $transition->getToStatus();
-            // Adding original status
-            if (empty($choices)) {
-                $choices[] = $transition->getFromStatus();
-            }
-            if ($this->authorizeStatusChangeManager->isGranted($node, $status)) {
+        foreach ($availableStatus as $status) {
+            if ($status->getId() != $node->getStatus()->getId()
+                && $this->authorizationChecker->isGranted($status, $node)
+            ) {
                 $choices[] = $status;
             }
         }

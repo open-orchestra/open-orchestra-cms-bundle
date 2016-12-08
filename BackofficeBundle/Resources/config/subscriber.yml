@@ -1,25 +1,25 @@
 parameters:
-    open_orchestra_backoffice.subscriber.update_child_node_path.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateChildNodePathSubscriber
-    open_orchestra_backoffice.subscriber.update_redirection_node.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRedirectionNodeSubscriber
-    open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\Backoffice\EventSubscriber\FlushNodeCacheSubscriber
-    open_orchestra_backoffice.subscriber.block_menu_cache.class: OpenOrchestra\Backoffice\EventSubscriber\BlockMenuCacheSubscriber
-    open_orchestra_backoffice.subscriber.content_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
-    open_orchestra_backoffice.subscriber.content_type_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
-    open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
-    open_orchestra_backoffice.subscriber.update_status.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber
-    open_orchestra_backoffice.subscriber.update_nodes_theme.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateNodesThemeSubscriber
-    open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
-    open_orchestra_backoffice.subscriber.delete_content.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteContentSubscriber
-    open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
-    open_orchestra_backoffice.subscriber.create_root_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateRootNodeSubscriber
+    open_orchestra_backoffice.subscriber.update_child_node_path.class            : OpenOrchestra\Backoffice\EventSubscriber\UpdateChildNodePathSubscriber
+    open_orchestra_backoffice.subscriber.update_redirection_node.class           : OpenOrchestra\Backoffice\EventSubscriber\UpdateRedirectionNodeSubscriber
+    open_orchestra_backoffice.subscriber.flush_node_clache.class                 : OpenOrchestra\Backoffice\EventSubscriber\FlushNodeCacheSubscriber
+    open_orchestra_backoffice.subscriber.block_menu_cache.class                  : OpenOrchestra\Backoffice\EventSubscriber\BlockMenuCacheSubscriber
+    open_orchestra_backoffice.subscriber.content_update_cache.class              : OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
+    open_orchestra_backoffice.subscriber.content_type_update_cache.class         : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
+    open_orchestra_backoffice.subscriber.content_type.class                      : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
+    open_orchestra_backoffice.subscriber.update_status.class                     : OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber
+    open_orchestra_backoffice.subscriber.update_nodes_theme.class                : OpenOrchestra\Backoffice\EventSubscriber\UpdateNodesThemeSubscriber
+    open_orchestra_backoffice.subscriber.delete_node.class                       : OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
+    open_orchestra_backoffice.subscriber.delete_content.class                    : OpenOrchestra\Backoffice\EventSubscriber\DeleteContentSubscriber
+    open_orchestra_backoffice.subscriber.update_route_document.class             : OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
+    open_orchestra_backoffice.subscriber.create_root_node.class                  : OpenOrchestra\Backoffice\EventSubscriber\CreateRootNodeSubscriber
     open_orchestra_backoffice.subscriber.update_site_alias_redirection_site.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateSiteAliasRedirectionSiteSubscriber
-    open_orchestra_backoffice.subscriber.block_form_type.class: OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber
-    open_orchestra_backoffice.subscriber.update_reference.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateReferenceSubscriber
-    open_orchestra_backoffice.subscriber.update_history_list.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateHistoryListSubscriber
-    open_orchestra_backoffice.subscriber.content_type_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber
-    open_orchestra_backoffice.subscriber.content_type_statusable.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber
-    open_orchestra_backoffice.subscriber.node_choice_status.class: OpenOrchestra\Backoffice\EventSubscriber\NodeChoiceStatusSubscriber
-    open_orchestra_backoffice.subscriber.sortable_collection.class: OpenOrchestra\Backoffice\EventSubscriber\SortableCollectionSubscriber
+    open_orchestra_backoffice.subscriber.block_form_type.class                   : OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber
+    open_orchestra_backoffice.subscriber.update_reference.class                  : OpenOrchestra\Backoffice\EventSubscriber\UpdateReferenceSubscriber
+    open_orchestra_backoffice.subscriber.update_history_list.class               : OpenOrchestra\Backoffice\EventSubscriber\UpdateHistoryListSubscriber
+    open_orchestra_backoffice.subscriber.content_type_type.class                 : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber
+    open_orchestra_backoffice.subscriber.content_type_statusable.class           : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber
+    open_orchestra_backoffice.subscriber.node_choice_status.class                : OpenOrchestra\Backoffice\EventSubscriber\NodeChoiceStatusSubscriber
+    open_orchestra_backoffice.subscriber.sortable_collection.class               : OpenOrchestra\Backoffice\EventSubscriber\SortableCollectionSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -30,6 +30,7 @@ services:
             - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.update_redirection_node:
         class: '%open_orchestra_backoffice.subscriber.update_redirection_node.class%'
         arguments:
@@ -37,6 +38,7 @@ services:
             - '@open_orchestra_backoffice.manager.redirection'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.flush_node_clache:
         class: '%open_orchestra_backoffice.subscriber.flush_node_clache.class%'
         arguments:
@@ -44,6 +46,7 @@ services:
             - '@open_orchestra_base.manager.tag'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.block_menu_cache:
         class: '%open_orchestra_backoffice.subscriber.block_menu_cache.class%'
         arguments:
@@ -51,6 +54,7 @@ services:
             - '@open_orchestra_base.manager.tag'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.content_update_cache:
         class: '%open_orchestra_backoffice.subscriber.content_update_cache.class%'
         arguments:
@@ -58,12 +62,14 @@ services:
             - '@open_orchestra_base.manager.tag'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.content_type_update_cache:
         class: '%open_orchestra_backoffice.subscriber.content_type_update_cache.class%'
         arguments:
             - '@open_orchestra_display.manager.cacheable'
             - '@open_orchestra_base.manager.tag'
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.content_type:
         class: '%open_orchestra_backoffice.subscriber.content_type.class%'
         arguments:
@@ -73,12 +79,14 @@ services:
             - '%open_orchestra_backoffice.field_types%'
             - '@open_orchestra_backoffice.value_transformer.manager'
             - '@translator'
+
     open_orchestra_backoffice.subscriber.update_status:
         class: '%open_orchestra_backoffice.subscriber.update_status.class%'
         arguments:
             - '@open_orchestra_backoffice.authorize_status_change_manager'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.update_nodes_theme:
         class: '%open_orchestra_backoffice.subscriber.update_nodes_theme.class%'
         arguments:
@@ -86,6 +94,7 @@ services:
             - '@object_manager'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.delete_node:
         class: '%open_orchestra_backoffice.subscriber.delete_node.class%'
         arguments:
@@ -93,6 +102,7 @@ services:
             - '%open_orchestra_model.document.trash_item.class%'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.delete_content:
         class: '%open_orchestra_backoffice.subscriber.delete_content.class%'
         arguments:
@@ -100,6 +110,7 @@ services:
             - '%open_orchestra_model.document.trash_item.class%'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.update_route_document:
         class: '%open_orchestra_backoffice.subscriber.update_route_document.class%'
         arguments:
@@ -107,6 +118,7 @@ services:
             - '@open_orchestra_backoffice.manager.route_document'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.create_root_node:
         class: '%open_orchestra_backoffice.subscriber.create_root_node.class%'
         arguments:
@@ -115,6 +127,7 @@ services:
             - '@translator'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.update_site_alias_redirection_site:
         class: '%open_orchestra_backoffice.subscriber.update_site_alias_redirection_site.class%'
         arguments:
@@ -123,18 +136,21 @@ services:
             - '@open_orchestra_model.repository.node'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.block_form_type:
         class: '%open_orchestra_backoffice.subscriber.block_form_type.class%'
         arguments:
             - '%open_orchestra_backoffice.block.fixed_attributes%'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.update_reference:
         class: '%open_orchestra_backoffice.subscriber.update_reference.class%'
         arguments:
             - '@open_orchestra_backoffice.reference.manager'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.update_history_list:
         class: '%open_orchestra_backoffice.subscriber.update_history_list.class%'
         arguments:
@@ -143,10 +159,12 @@ services:
             - '%open_orchestra_model.document.history.class%'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.content_type_type:
         class: '%open_orchestra_backoffice.subscriber.content_type_type.class%'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.content_type_statusable:
         class: '%open_orchestra_backoffice.subscriber.content_type_statusable.class%'
         arguments:
@@ -154,10 +172,13 @@ services:
             - '@open_orchestra_model.repository.status'
         tags:
             - { name: kernel.event_subscriber }
+
     open_orchestra_backoffice.subscriber.node_choice_status:
         class: '%open_orchestra_backoffice.subscriber.node_choice_status.class%'
         arguments:
-            - '@open_orchestra_backoffice.authorize_status_change_manager'
+            - '@open_orchestra_model.repository.status'
+            - '@security.authorization_checker'
+
     open_orchestra_backoffice.subscriber.sortable_collection:
         class: '%open_orchestra_backoffice.subscriber.sortable_collection.class%'
         tags:

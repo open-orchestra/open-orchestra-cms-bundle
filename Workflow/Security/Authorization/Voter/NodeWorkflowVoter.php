@@ -32,17 +32,14 @@ class NodeWorkflowVoter extends AbstractWorkflowVoter
         $user = $token->getUser();
 
         if ($this->isSuperAdmin($user)) {
-            return $this->voteForSuperAdmin($attribute);
+            return $this->voteForSuperAdmin($subject->getStatus(), $attribute);
         }
 
         if (!$this->isSubjectInPerimeter($subject->getPath(), $user, NodeInterface::ENTITY_TYPE)) {
+
             return false;
         }
 
-        if ($this->userHasTransitionOnEntity($user, $attribute, NodeInterface::ENTITY_TYPE)) {
-            return true;
-        }
-
-        return false;
+        return ($this->userCanUpdateToStatus($user, $attribute, $subject));
     }
 }

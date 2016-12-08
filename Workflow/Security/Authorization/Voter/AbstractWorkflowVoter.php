@@ -3,10 +3,11 @@
 namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\AbstractPerimeterVoter;
-use OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Perimeter\PerimeterManager;
 use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class AbstractWorkflowVoter
@@ -24,9 +25,9 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
     public function __construct(
         PerimeterManager $perimeterManager,
         WorkflowProfileRepositoryInterface $workflowRepository
-        ){
-            parent::__construct($perimeterManager);
-            $this->workflowRepository = $workflowRepository;
+    ) {
+        parent::__construct($perimeterManager);
+        $this->workflowRepository = $workflowRepository;
     }
 
     /**
@@ -34,7 +35,7 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
      */
     protected function getSupportedAttributes()
     {
-        return array('OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface');
+        return array('OpenOrchestra\ModelInterface\Model\StatusInterface');
     }
 
     /**
@@ -59,7 +60,7 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
         }
 
         foreach ($this->getSupportedClasses() as $supportedClass) {
-            if ($subject instanceof $supportedClass) {
+            if ($subject instanceof StatusableInterface && $subject instanceof $supportedClass) {
                 return true;
             }
         }
@@ -68,20 +69,20 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
     }
 
     /**
-     * Check if $user can use $transition on $entityType
+     * Check if $user can update $subject to $status
      *
-     * @param UserInterface               $user
-     * @param WorkflowTransitionInterface $transition
-     * @param string                      $entityType
+     * @param UserInterface       $user
+     * @param StatusInterface     $status
+     * @param StatusableInterface $subject
      *
      * @return boolean
      */
-    protected function userHasTransitionOnEntity(UserInterface $user, WorkflowTransitionInterface $transition, $entityType)
+    protected function userCanUpdateToStatus(UserInterface $user, StatusInterface $status, $subject)
     {
         foreach ($user->getGroups() as $group) {
-            if ($group->getWorkflowProfileCollection($entityType)) {
-                foreach ($group->getWorkflowProfileCollection($entityType) as $profile) {
-                    if ($profile->hasTransition($transition)) {
+            if ($group->getWorkflowProfileCollection($subject::ENTITY_TYPE)) {
+                foreach ($group->getWorkflowProfileCollection($subject::ENTITY_TYPE)->getProfiles() as $profile) {
+                    if ($profile->hasTransition($subject->getStatus(), $status)) {
 
                         return true;
                     }
@@ -93,14 +94,15 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
     }
 
     /**
-     * SuperAdmin can use $transition if $transition exists
+     * SuperAdmin can use pass a subject from $fromStatus to $toStatus if such a transition exists
      *
-     * @param WorkflowTransitionInterface $transition
+     * @param StatusInterface $fromStatus
+     * @param StatusInterface StatusInterface $toStatus
      *
      * @return boolean
      */
-    protected function voteForSuperAdmin(WorkflowTransitionInterface $transition) {
-        if ($this->workflowRepository->hasTransition($transition)) {
+    protected function voteForSuperAdmin(StatusInterface $fromStatus, StatusInterface $toStatus) {
+        if ($this->workflowRepository->hasTransition($fromStatus, $toStatus)) {
             return true;
         }
 
