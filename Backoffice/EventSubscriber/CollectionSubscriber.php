@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Class CollectionSubscriber
@@ -24,14 +25,18 @@ class CollectionSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $data = $form->getData();
-        $order = array_flip(array_keys($event->getData()));
 
-        foreach ($order as $key => $value) {
-            $child = $data->get($key);
-            $data->remove($key);
-            $data->set($key, $child);
+        if($data instanceof Collection) {
+            $order = array_flip(array_keys($event->getData()));
+
+            foreach ($order as $key => $value) {
+                $child = $data->get($key);
+                $data->remove($key);
+                $data->set($key, $child);
+            }
+
+            $form->setData($data);
         }
-        $form->setData($data);
     }
 
     /**
