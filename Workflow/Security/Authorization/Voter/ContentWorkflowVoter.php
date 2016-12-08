@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class ContentWorkflowVoter
@@ -21,28 +21,13 @@ class ContentWorkflowVoter extends AbstractWorkflowVoter
     }
 
     /**
-     * @param string         $attribute
-     * @param mixed          $subject
-     * @param TokenInterface $token
+     * Check if $subject is in $user perimeter
      *
-     * @return bool
+     * @param StatusableInterface $subject
+     * @param UserInterface       $user
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function isInPerimeter($subject, UserInterface $user)
     {
-        $user = $token->getUser();
-
-        if ($this->isSuperAdmin($user)) {
-            return $this->voteForSuperAdmin($attribute);
-        }
-
-        if (!$this->isSubjectInPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE)) {
-            return false;
-        }
-
-        if ($this->userHasTransitionOnEntity($user, $attribute, ContentInterface::ENTITY_TYPE)) {
-            return true;
-        }
-
-        return false;
+        return $this->isSubjectInPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 }

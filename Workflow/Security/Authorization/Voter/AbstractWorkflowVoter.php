@@ -8,6 +8,7 @@ use OpenOrchestra\Backoffice\Perimeter\PerimeterManager;
 use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Class AbstractWorkflowVoter
@@ -17,7 +18,7 @@ use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
 {
     protected $workflowRepository;
-    
+
     /**
      * @param PerimeterManager                   $perimeterManager
      * @param WorkflowProfileRepositoryInterface $workflowRepository
@@ -69,6 +70,52 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
     }
 
     /**
+     * @param string         $attribute
+     * @param mixed          $subject
+     * @param TokenInterface $token
+     *
+     * @return bool
+     */
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    {
+        $user = $token->getUser();
+
+        if ($this->isSuperAdmin($user)) {
+            return $this->voteForSuperAdmin($subject->getStatus(), $attribute);
+        }
+
+        if (!$this->isInPerimeter($subject, $user)) {
+            return false;
+        }
+
+        return $this->userCanUpdateToStatus($user, $attribute, $subject);
+    }
+
+    /**
+     * Check if $subject is in $user perimeter
+     *
+     * @param StatusableInterface $subject
+     * @param UserInterface       $user
+     */
+    abstract protected function isInPerimeter($subject, UserInterface $user);
+
+    /**
+     * SuperAdmin can use pass a subject from $fromStatus to $toStatus if such a transition exists
+     *
+     * @param StatusInterface $fromStatus
+     * @param StatusInterface StatusInterface $toStatus
+     *
+     * @return boolean
+     */
+    protected function voteForSuperAdmin(StatusInterface $fromStatus, StatusInterface $toStatus) {
+        if ($this->workflowRepository->hasTransition($fromStatus, $toStatus)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Check if $user can update $subject to $status
      *
      * @param UserInterface       $user
@@ -88,22 +135,6 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
                     }
                 }
             }
-        }
-
-        return false;
-    }
-
-    /**
-     * SuperAdmin can use pass a subject from $fromStatus to $toStatus if such a transition exists
-     *
-     * @param StatusInterface $fromStatus
-     * @param StatusInterface StatusInterface $toStatus
-     *
-     * @return boolean
-     */
-    protected function voteForSuperAdmin(StatusInterface $fromStatus, StatusInterface $toStatus) {
-        if ($this->workflowRepository->hasTransition($fromStatus, $toStatus)) {
-            return true;
         }
 
         return false;

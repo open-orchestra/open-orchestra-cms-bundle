@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class NodeWorkflowVoter
@@ -21,25 +21,13 @@ class NodeWorkflowVoter extends AbstractWorkflowVoter
     }
 
     /**
-     * @param string         $attribute
-     * @param mixed          $subject
-     * @param TokenInterface $token
+     * Check if $subject is in $user perimeter
      *
-     * @return boolean
+     * @param StatusableInterface $subject
+     * @param UserInterface       $user
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function isInPerimeter($subject, UserInterface $user)
     {
-        $user = $token->getUser();
-
-        if ($this->isSuperAdmin($user)) {
-            return $this->voteForSuperAdmin($subject->getStatus(), $attribute);
-        }
-
-        if (!$this->isSubjectInPerimeter($subject->getPath(), $user, NodeInterface::ENTITY_TYPE)) {
-
-            return false;
-        }
-
-        return ($this->userCanUpdateToStatus($user, $attribute, $subject));
+        return $this->isSubjectInPerimeter($subject->getPath(), $user, NodeInterface::ENTITY_TYPE);
     }
 }
