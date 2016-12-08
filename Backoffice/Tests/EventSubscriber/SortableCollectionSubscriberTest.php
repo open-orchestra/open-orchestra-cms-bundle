@@ -48,6 +48,7 @@ class SortableCollectionSubscriberTest extends AbstractBaseTestCase
      * Test preSubmit
      * @param mixed $formData
      * @param array $data
+     * @param array $expectedOrder
      *
      * @dataProvider provideEvent
      */
