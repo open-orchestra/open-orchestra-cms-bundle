@@ -42,7 +42,7 @@ class CollectionExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if ($options['sortable']) {
-            if(array_key_exists('class', $view->vars['attr'])) {
+            if (array_key_exists('class', $view->vars['attr'])) {
                 $view->vars['attr']['class'] = $view->vars['attr']['class'] . ' collection-sortable';
             } else {
                 $view->vars['attr'] = array_merge_recursive($view->vars['attr'], array('class' => 'collection-sortable'));
