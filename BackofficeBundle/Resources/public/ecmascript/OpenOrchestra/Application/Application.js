@@ -16,6 +16,7 @@ import DatePicker            from '../Service/Form/Behavior/DatePicker'
 import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
 import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
+import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
 
 /**
  * @class Application
@@ -189,6 +190,7 @@ class Application
         FormBehaviorManager.add(NodeChoice);
         FormBehaviorManager.add(DatePicker);
         FormBehaviorManager.add(GenerateId);
+        FormBehaviorManager.add(CollectionSortable);
     }
 
 }

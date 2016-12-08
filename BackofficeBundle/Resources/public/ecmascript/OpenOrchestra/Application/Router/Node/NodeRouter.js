@@ -76,6 +76,7 @@ class NodeRouter extends OrchestraRouter
             Application.getRegion('content').html(nodeFormView.render().$el);
         });
     }
+
     /**
      *  New tree node
      *

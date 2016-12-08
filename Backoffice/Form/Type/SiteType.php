@@ -57,6 +57,7 @@ class SiteType extends AbstractType
                     'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_option.new'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
                 ),
+                'sortable' => true,
                 'options' => array( 'label' => false ),
                 'group_id' => 'alias',
             ))

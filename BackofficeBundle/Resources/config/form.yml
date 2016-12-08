@@ -39,6 +39,7 @@ parameters:
     open_orchestra_backoffice.type.language_by_sites.class: OpenOrchestra\Backoffice\Form\Type\Component\LanguageBySitesType
     open_orchestra_backoffice.type.template_set.class: OpenOrchestra\Backoffice\Form\Type\Component\TemplateSetType
     open_orchestra_backoffice.type_extension.form_group.class: OpenOrchestra\Backoffice\Form\Type\Extension\FormTypeGroupExtension
+    open_orchestra_backoffice.type_extension.collection.class: OpenOrchestra\Backoffice\Form\Type\Extension\CollectionExtension
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -370,3 +371,7 @@ services:
         class: '%open_orchestra_backoffice.type_extension.form_group.class%'
         tags:
           - { name: "form.type_extension", alias: "form" }
+    open_orchestra_backoffice.type_extension.collection:
+        class: '%open_orchestra_backoffice.type_extension.collection.class%'
+        tags:
+          - { name: "form.type_extension", alias: "collection" }
