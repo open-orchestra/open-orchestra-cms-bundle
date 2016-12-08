@@ -47,7 +47,7 @@ class SiteType extends AbstractType
                 'group_id' => 'information',
                 'sub_group_id' => 'property',
             ))
-            ->add('aliases', 'bootstrap_collection', array(
+            ->add('aliases', 'collection', array(
                 'type' => 'oo_site_alias',
                 'label' => false,
                 'allow_add' => true,
@@ -56,8 +56,8 @@ class SiteType extends AbstractType
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_option.add'),
                     'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_option.new'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
-                    'class' => 'collection-sortable',
                 ),
+                'sortable' => true,
                 'options' => array( 'label' => false ),
                 'group_id' => 'alias',
             ))
