@@ -36,6 +36,19 @@ abstract class AbstractPerimeterVoter extends AbstractVoter
      */
     protected function isSubjectInPerimeter($subjectKey, UserInterface $user, $entityType)
     {
+        $perimeter = $this->getAgglomeratedPerimeter($user, $entityType);
+
+        return $this->perimeterManager->isInPerimeter($subjectKey, $perimeter);
+    }
+
+    /**
+     * @param UserInterface $user
+     * @param string        $entityType
+     *
+     * @return PerimeterInterface
+     */
+    protected function getAgglomeratedPerimeter(UserInterface $user, $entityType)
+    {
         if (false === $this->hasCachedPerimeters($user, $entityType)) {
             $cachedPerimeter = $this->perimeterManager->createPerimeter($entityType);
             foreach ($user->getGroups() as $group) {
@@ -48,7 +61,7 @@ abstract class AbstractPerimeterVoter extends AbstractVoter
             $this->cachedPerimeters[$user->getId()][$entityType] = $cachedPerimeter;
         }
 
-        return $this->perimeterManager->isInPerimeter($subjectKey, $this->cachedPerimeters[$user->getId()][$entityType]);
+        return $this->cachedPerimeters[$user->getId()][$entityType];
     }
 
     /**
