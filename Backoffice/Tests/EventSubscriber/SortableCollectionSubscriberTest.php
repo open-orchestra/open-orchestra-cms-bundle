@@ -7,8 +7,8 @@ use Phake;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use OpenOrchestra\Backoffice\EventSubscriber\SortableCollectionSubscriber;
-use Symfony\Component\Form\FormInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\Form;
 
 /**
  * Class SortableCollectionSubscriberTest
@@ -46,21 +46,34 @@ class SortableCollectionSubscriberTest extends AbstractBaseTestCase
 
     /**
      * Test preSubmit
-     * @param FormEvent $event
-     * @param int       $isInitial
-     * @param int       $isOutOfWorkflow
-     * @param int       $isUdpated
+     * @param mixed $formData
+     * @param array $data
      *
      * @dataProvider provideEvent
      */
-    public function testPreSubmit(FormInterface $form, array $data)
+    public function testPreSubmit($formData, array $data, array $expectedOrder)
     {
+        $config = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        $eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        Phake::when($config)->getEventDispatcher()->thenReturn($eventDispatcher);
+        Phake::when($config)->getModelTransformers()->thenReturn(array());
+
+        $form = new Form($config);
+        $form->setData($formData);
+
         $event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($event)->getForm()->thenReturn($form);
         Phake::when($event)->getData()->thenReturn($data);
 
         $this->subscriber->preSubmit($event);
-        Phake::verify($form)->setData(Phake::anyParameters());
+
+        $newData = $form->getData();
+
+        if (!is_array($newData)) {
+            $newData = $newData->toArray();
+        }
+
+        $this->assertEquals($expectedOrder, array_keys($newData));
     }
 
     /**
@@ -68,22 +81,42 @@ class SortableCollectionSubscriberTest extends AbstractBaseTestCase
      */
     public function provideEvent()
     {
-        $form = Phake::mock('Symfony\Component\Form\FormInterface');
-        Phake::when($form)->getData()->thenReturn(new ArrayCollection(array(
+        $formData0 = new ArrayCollection(array(
             'order0' => true,
             'order1' => true,
             'order2' => true,
             'order3' => true,
-       )));
-       $data = array(
+       ));
+       $data0 = array(
             'order3' => true,
             'order2' => true,
             'order1' => true,
             'order0' => true,
        );
 
+        $formData1 = array(
+            'order0' => true,
+            'order1' => true,
+            'order2' => true,
+            'order3' => true,
+       );
+       $data1 = array(
+            'order3' => true,
+            'order2' => true,
+            'order1' => true,
+            'order0' => true,
+       );
+
+       $expectedOrder = array(
+           'order3',
+           'order2',
+           'order1',
+           'order0',
+       );
+
        return array(
-           array($form, $data),
+           array($formData0, $data0, $expectedOrder),
+           array($formData1, $data1, $expectedOrder),
        );
     }
 }
