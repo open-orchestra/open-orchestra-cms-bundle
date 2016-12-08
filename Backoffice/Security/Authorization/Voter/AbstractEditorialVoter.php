@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
+use OpenOrchestra\ModelInterface\Model\BlameableInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
@@ -9,7 +10,7 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 /**
  * Class AbstractEditorialVoter
  *
- * Abstract class for voters associated with editorial $suject
+ * Abstract class for voters associated with editorial $subject
  */
 abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
 {
@@ -60,14 +61,26 @@ abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
             return true;
         }
 
-        if (ContributionActionInterface::READ == $attribute) {
+        if (ContributionActionInterface::READ === $attribute) {
             return $this->voteForReadAction($subject, $user);
         }
 
-        if ($subject->getCreatedBy() == $user->getUsername()) {
+        if ($this->isCreator($subject, $user)) {
             return $this->voteForOwnedSubject($attribute, $subject, $user);
         }
 
         return $this->voteForSomeoneElseSubject($attribute, $subject, $user);
+    }
+
+    /**
+     * @param mixed         $subject
+     * @param UserInterface $user
+     *
+     * @return string
+     */
+    protected function isCreator($subject, UserInterface $user)
+    {
+        return $subject instanceof BlameableInterface &&
+               $subject->getCreatedBy() === $user->getUsername();
     }
 }

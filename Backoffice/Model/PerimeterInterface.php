@@ -23,6 +23,11 @@ interface PerimeterInterface
     public function addItem($item);
 
     /**
+     * @param array $items
+     */
+    public function addItems(array $items);
+
+    /**
      * @return array
      */
     public function getItems();

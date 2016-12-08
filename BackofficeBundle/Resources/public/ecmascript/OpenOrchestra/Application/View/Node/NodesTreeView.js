@@ -59,8 +59,9 @@ class NodesTreeView extends OrchestraView
      */
     _enableTreeSortable($tree) {
         $tree.sortable({
-            connectWith: '.tree .children',
+            connectWith: '.tree .children.sortable-container',
             handle: '.sortable-handler',
+            items: '> li.sortable-node',
             zIndex: 20,
             stop: (event, ui) => {
                 let $nodes = $(ui.item).parent().children();

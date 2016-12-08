@@ -2,14 +2,15 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class NodeTreeLeafTransformer
  */
-class NodeTreeLeafTransformer extends AbstractTransformer
+class NodeTreeLeafTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param array $node
@@ -28,7 +29,12 @@ class NodeTreeLeafTransformer extends AbstractTransformer
         $facade->order = $node['order'];
         $facade->status = $this->getTransformer('status_node_tree')->transform($node['status']);
 
-        $facade->addRight('can_create', (NodeInterface::TYPE_DEFAULT === $node['nodeType']));
+        $facade->addRight('can_create', (
+            $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, $node) &&
+            NodeInterface::TYPE_DEFAULT === $node['nodeType']
+        ));
+        $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
+        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
 
         return $facade;
     }

@@ -66,6 +66,7 @@ services:
         class: '%open_orchestra_api.transformer.node_tree_leaf.class%'
         arguments:
             - '%open_orchestra_api.facade.node.class%'
+            - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.status_node_tree:

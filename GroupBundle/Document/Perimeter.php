@@ -30,6 +30,8 @@ class Perimeter implements PerimeterInterface
 
     /**
      * Constructor
+     *
+     * @param string $type
      */
     public function __construct($type = '')
     {
@@ -61,6 +63,14 @@ class Perimeter implements PerimeterInterface
     public function addItem($item)
     {
         $this->items[] = $item;
+    }
+
+    /**
+     * @param array $items
+     */
+    public function addItems(array $items)
+    {
+        $this->items = array_unique (array_merge ($this->items, $items));;
     }
 
     /**

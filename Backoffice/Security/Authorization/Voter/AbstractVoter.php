@@ -17,7 +17,9 @@ abstract class AbstractVoter extends Voter
      *
      * @return array
      */
-    abstract protected function getSupportedClasses();
+    protected function getSupportedClasses() {
+        return array();
+    }
 
     /**
      * @return array
