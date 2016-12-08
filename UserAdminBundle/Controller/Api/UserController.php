@@ -183,12 +183,12 @@ class UserController extends BaseController
         );
         $userRepository = $this->get('open_orchestra_user.repository.user');
         $users = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->reverseTransform($facade);
-        $usersId = array();
+        $userIds = array();
         foreach ($users as $user) {
-            $usersId[] = $user->getId();
+            $userIds[] = $user->getId();
             $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
         }
-        $userRepository->removeUsers($usersId);
+        $userRepository->removeUsers($userIds);
 
         return array();
     }
