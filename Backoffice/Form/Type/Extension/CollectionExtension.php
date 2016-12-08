@@ -5,7 +5,7 @@ namespace OpenOrchestra\Backoffice\Form\Type\Extension;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\Backoffice\EventSubscriber\CollectionSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\SortableCollectionSubscriber;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
@@ -21,7 +21,7 @@ class CollectionExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['sortable']) {
-            $builder->addEventSubscriber(new CollectionSubscriber());
+            $builder->addEventSubscriber(new SortableCollectionSubscriber());
         }
     }
 
@@ -42,7 +42,11 @@ class CollectionExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if ($options['sortable']) {
-            $view->vars['attr'] = array_merge_recursive($view->vars['attr'], array('class' => 'collection-sortable'));
+            if(array_key_exists('class', $view->vars['attr'])) {
+                $view->vars['attr']['class'] = $view->vars['attr']['class'] . ' collection-sortable';
+            } else {
+                $view->vars['attr'] = array_merge_recursive($view->vars['attr'], array('class' => 'collection-sortable'));
+            }
         }
     }
 

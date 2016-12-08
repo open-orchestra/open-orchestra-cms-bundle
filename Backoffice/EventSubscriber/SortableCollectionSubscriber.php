@@ -9,10 +9,9 @@ use Symfony\Component\Form\FormInterface;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Class CollectionSubscriber
- *
+ * Class SortableCollectionSubscriber
  */
-class CollectionSubscriber implements EventSubscriberInterface
+class SortableCollectionSubscriber implements EventSubscriberInterface
 {
     /**
      * Triggered when a collection is submitted
@@ -26,7 +25,7 @@ class CollectionSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $form->getData();
 
-        if(is_array($event->getData()) && $data instanceof Collection) {
+        if (is_array($event->getData()) && $data instanceof Collection) {
             $order = array_flip(array_keys($event->getData()));
 
             foreach ($order as $key => $value) {

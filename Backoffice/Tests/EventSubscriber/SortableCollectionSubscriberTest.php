@@ -6,17 +6,17 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use OpenOrchestra\Backoffice\EventSubscriber\CollectionSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\SortableCollectionSubscriber;
 use Symfony\Component\Form\FormInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class CollectionSubscriberTest
+ * Class SortableCollectionSubscriberTest
  */
-class CollectionSubscriberTest extends AbstractBaseTestCase
+class SortableCollectionSubscriberTest extends AbstractBaseTestCase
 {
     /**
-     * @var CollectionSubscriber
+     * @var SortableCollectionSubscriber
      */
     protected $subscriber;
 
@@ -25,8 +25,7 @@ class CollectionSubscriberTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->subscriber = new CollectionSubscriber();
-
+        $this->subscriber = new SortableCollectionSubscriber();
     }
 
     /**
