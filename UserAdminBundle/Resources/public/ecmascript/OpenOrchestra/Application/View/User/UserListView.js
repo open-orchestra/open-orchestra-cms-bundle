@@ -10,9 +10,8 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
      * @inheritdoc
      */
     preinitialize(options) {
-        this.events = {
-            'change .delete-checkbox' : '_changeDeleteCheckbox'
-        };
+        super.preinitialize(options);
+        this.events['change .delete-checkbox'] = '_changeDeleteCheckbox';
     }
 
     /**

@@ -21,9 +21,16 @@ class OrchestraCollection extends mix(Backbone.Collection).with(OrchestraApiSync
      * @param {Object} options
      */
     destroyModels(models, options = {}) {
-        this.remove(models);
-        options.data = JSON.stringify(this.toJSON());
-        this.sync('delete', this, options);
+        if (0 !== models.length) {
+            let removeCollection = new this.constructor(models, {
+                model: this.model,
+                comparator: this.comparator
+            });
+            this.remove(models);
+
+            options.data = JSON.stringify(removeCollection.toJSON());
+            removeCollection.sync('delete', removeCollection, options);
+        }
     }
 
     /**

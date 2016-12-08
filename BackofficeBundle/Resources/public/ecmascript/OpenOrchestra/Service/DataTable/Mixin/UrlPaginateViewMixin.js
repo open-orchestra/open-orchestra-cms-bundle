@@ -5,9 +5,8 @@ let UrlPaginateViewMixin = (superclass) => class extends superclass {
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events = {
-            'draw.dt table': '_updatePage'
-        };
+        this.events = this.events || {};
+        this.events['draw.dt table'] = '_updatePage';
     }
 
     /**

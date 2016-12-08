@@ -7,6 +7,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\UserBundle\Event\UserEvent;
+use OpenOrchestra\UserBundle\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -179,13 +181,14 @@ class UserController extends BaseController
             $this->getParameter('open_orchestra_user_admin.facade.user_collection.class'),
             $format
         );
-        /*$this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
-
-        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $dm = $this->get('object_manager');
-        $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
-        $dm->remove($user);
-        $dm->flush();*/
+        $userRepository = $this->get('open_orchestra_user.repository.user');
+        $users = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->reverseTransform($facade);
+        $usersId = array();
+        foreach ($users as $user) {
+            $usersId[] = $user->getId();
+            $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
+        }
+        $userRepository->removeUsers($usersId);
 
         return array();
     }

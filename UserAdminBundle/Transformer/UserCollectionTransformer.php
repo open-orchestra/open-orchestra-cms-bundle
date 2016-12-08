@@ -34,6 +34,26 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return UserInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        $users = array();
+        $usersFacade = $facade->getUsers();
+        foreach ($usersFacade as $userFacade) {
+            $user = $this->getTransformer('user')->reverseTransform($userFacade);
+            if (null !== $user) {
+                $users[] = $user;
+            }
+        }
+
+        return $users;
+    }
+
+    /**
      * @return string
      */
     public function getName()
