@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class CollectionSubscriber
@@ -16,8 +17,10 @@ class CollectionSubscriber implements EventSubscriberInterface
      * Triggered when a collection is submitted
      *
      * @param FormEvent $event
+     *
+     * @return FormInterface
      */
-    public function changeCollection(FormEvent $event)
+    public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $form->getData();
@@ -37,7 +40,7 @@ class CollectionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SUBMIT => 'changeCollection',
+            FormEvents::PRE_SUBMIT => 'preSubmit',
         );
     }
 }
