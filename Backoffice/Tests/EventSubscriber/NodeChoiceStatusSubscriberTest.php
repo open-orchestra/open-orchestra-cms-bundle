@@ -18,7 +18,8 @@ class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
      */
     protected $subscriber;
 
-    protected $authorizeStatusChangeManager;
+    protected $statusRepository;
+    protected $authorizationChecker;
     protected $event;
     protected $object;
     protected $form;
@@ -32,12 +33,13 @@ class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
 
-        $this->authorizeStatusChangeManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager');
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
 
         Phake::when($this->event)->getData()->thenReturn($this->object);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new NodeChoiceStatusSubscriber($this->authorizeStatusChangeManager);
+        $this->subscriber = new NodeChoiceStatusSubscriber($this->statusRepository, $this->authorizationChecker);
     }
 
     /**
@@ -65,14 +67,15 @@ class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
      *
      * @param StatusInterface $status
      * @param bool            $isGranted
-     * @param array           $expected
+     * @param array           $expectedStatus
      *
      * @dataProvider provideStatus
      */
-    public function testPreSetData($status, $isGranted, array $expected)
+    public function testPreSetData($status, $isGranted, array $expectedStatus)
     {
-        Phake::when($this->authorizeStatusChangeManager)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
         Phake::when($this->object)->getId()->thenReturn('fakeId');
+        Phake::when($this->statusRepository)->findAll()->thenReturn($expectedStatus);
         Phake::when($this->object)->getStatus()->thenReturn($status);
 
         $this->subscriber->preSetData($this->event);
@@ -82,7 +85,7 @@ class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
                 'label' => 'open_orchestra_backoffice.form.node.status',
                 'group_id' => 'properties',
                 'sub_group_id' => 'publication',
-                'choices' => $expected
+                'choices' => $expectedStatus
         ));
     }
 
@@ -92,15 +95,12 @@ class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
     public function provideStatus()
     {
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->getId()->thenReturn('status');
         $status2 = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        $role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
-        $fromRoles = array($role);
-        Phake::when($status)->getFromRoles()->thenReturn($fromRoles);
-        Phake::when($role)->getToStatus()->thenReturn($status2);
-        Phake::when($role)->getFromStatus()->thenReturn($status);
+        Phake::when($status2)->getId()->thenReturn('status2');
 
         return array(
-            array($status, true, array($status, $status2)),
+            array($status, true , array($status, $status2)),
             array($status, false, array($status)),
         );
     }
