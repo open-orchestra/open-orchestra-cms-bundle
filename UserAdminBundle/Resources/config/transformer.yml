@@ -11,6 +11,7 @@ services:
             - '%open_orchestra_user_admin.facade.user.class%'
             - '@event_dispatcher'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
+            - '@open_orchestra_user.repository.user'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_user_admin.transformer.user_collection:

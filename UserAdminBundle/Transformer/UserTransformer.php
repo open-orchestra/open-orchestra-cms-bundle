@@ -3,10 +3,11 @@
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\UserBundle\Document\User;
+use OpenOrchestra\UserBundle\Model\UserInterface;
+use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -16,20 +17,24 @@ class UserTransformer extends AbstractTransformer
 {
     protected $eventDispatcher;
     protected $multiLanguagesChoiceManager;
+    protected $userRepository;
 
     /**
      * @param string                               $facadeClass
      * @param EventDispatcherInterface             $eventDispatcher
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+     * @param UserRepositoryInterface              $userRepository
      */
     public function __construct(
         $facadeClass,
         EventDispatcherInterface $eventDispatcher,
-        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
+        MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
+        UserRepositoryInterface $userRepository
     ) {
         parent::__construct($facadeClass);
         $this->eventDispatcher = $eventDispatcher;
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -56,6 +61,21 @@ class UserTransformer extends AbstractTransformer
         }
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return UserInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if (null !== $facade->id) {
+            return $this->userRepository->find($facade->id);
+        }
+
+        return null;
     }
 
     /**

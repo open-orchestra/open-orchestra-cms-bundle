@@ -28,4 +28,12 @@ class UserCollectionFacade extends PaginateCollectionFacade
     {
         $this->users[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

@@ -29,7 +29,7 @@ class AbstractDataTableView extends OrchestraView
      */
     initialize({collection, settings}) {
         this.api = null;
-        this.table = null;
+        this.$table = null;
         this._tableRegion = this.$el;
         this._collection = collection;
         this._settings = this._resolveSettings(settings);
@@ -44,7 +44,7 @@ class AbstractDataTableView extends OrchestraView
         this.$table.attr('id', 'dt-' + this.getTableId());
         this._tableRegion.append(this.$table);
 
-        this.$table.DataTable(this._settings);
+        this.api = this.$table.DataTable(this._settings);
 
         return this;
     }

@@ -75,7 +75,11 @@ class UsersView extends OrchestraView
      */
     _remove() {
         let users = this._collection.where({'delete': true});
-        this._collection.destroyModels(users);
+        this._collection.destroyModels(users, {
+            success: () => {
+                this._listView.api.draw(false);
+            }
+        });
     }
 }
 
