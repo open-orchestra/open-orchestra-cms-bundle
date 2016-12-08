@@ -39,7 +39,7 @@ class Form
         let promise = $.ajax({
                 url: this.action,
                 method: this.method,
-                data: this.$form.serialize(),
+                data: this.$form.serializeArray(),
                 statusCode: statusCode,
                 context: this
             });

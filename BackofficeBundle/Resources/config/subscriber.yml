@@ -19,6 +19,7 @@ parameters:
     open_orchestra_backoffice.subscriber.content_type_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber
     open_orchestra_backoffice.subscriber.content_type_statusable.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber
     open_orchestra_backoffice.subscriber.node_choice_status.class: OpenOrchestra\Backoffice\EventSubscriber\NodeChoiceStatusSubscriber
+    open_orchestra_backoffice.subscriber.collection.class: OpenOrchestra\Backoffice\EventSubscriber\CollectionSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -157,3 +158,7 @@ services:
         class: '%open_orchestra_backoffice.subscriber.node_choice_status.class%'
         arguments:
             - '@open_orchestra_backoffice.authorize_status_change_manager'
+    open_orchestra_backoffice.subscriber.collection:
+        class: '%open_orchestra_backoffice.subscriber.collection.class%'
+        tags:
+            - { name: kernel.event_subscriber }

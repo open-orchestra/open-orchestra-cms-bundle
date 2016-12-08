@@ -72,6 +72,7 @@ class UserType extends AbstractType
                 'sub_group_id' => 'contact_information',
                 'disabled' => $disabled,
             ));
+
         if ($options['self_editing']) {
             $builder
                 ->add('current_password', 'password', array(
