@@ -50,7 +50,7 @@ class UserType extends AbstractType
         $disabled = false;
         if (array_key_exists('data', $options) && ($user = $options['data']) instanceof UserInterface) {
             $sitesId = array_keys($user->getLanguageBySites());
-            $disabled = !$user->isEditAllowed();
+            $disabled = !$user->isEditAllowed() && $options['self_editing'];
         }
 
         $builder
