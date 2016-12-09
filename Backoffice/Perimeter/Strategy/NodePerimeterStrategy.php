@@ -21,7 +21,8 @@ class NodePerimeterStrategy implements PerimeterStrategyInterface
     /**
      * Check if $item is contained in $perimeter
      *
-     * @param string $item
+     * @param string             $item
+     * @param PerimeterInterface $perimeter
      *
      * @return boolean
      */

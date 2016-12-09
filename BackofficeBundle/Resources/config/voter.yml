@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_backoffice.voter.node.class:                    OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVoter
+    open_orchestra_backoffice.voter.node_not_hydrated.class:       OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeNotHydratedVoter
     open_orchestra_backoffice.voter.content.class:                 OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVoter
     open_orchestra_backoffice.voter.trash_item.class:              OpenOrchestra\Backoffice\Security\Authorization\Voter\TrashItemVoter
     open_orchestra_backoffice.voter.site_administration.class:     OpenOrchestra\Backoffice\Security\Authorization\Voter\SiteAdministrationVoter
@@ -9,6 +10,12 @@ parameters:
 services:
     open_orchestra_backoffice.voter.node:
         class: '%open_orchestra_backoffice.voter.node.class%'
+        arguments:
+            - '@open_orchestra_group.perimeter_manager'
+        tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.node_not_hydrated:
+        class: '%open_orchestra_backoffice.voter.node_not_hydrated.class%'
         arguments:
             - '@open_orchestra_group.perimeter_manager'
         tags:

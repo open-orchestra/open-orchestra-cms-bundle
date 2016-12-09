@@ -14,6 +14,7 @@ use OpenOrchestra\Backoffice\Perimeter\PerimeterManager;
 abstract class AbstractPerimeterVoter extends AbstractVoter
 {
     protected $perimeterManager;
+    protected $cachedPerimeters = array();
 
     /**
      * @param PerimeterManager $perimeterManager
@@ -35,16 +36,46 @@ abstract class AbstractPerimeterVoter extends AbstractVoter
      */
     protected function isSubjectInPerimeter($subjectKey, UserInterface $user, $entityType)
     {
-        foreach ($user->getGroups() as $group) {
-            $perimeter = $group->getPerimeter($entityType);
+        $perimeter = $this->getAgglomeratedPerimeter($user, $entityType);
 
-            if ($perimeter instanceof PerimeterInterface
-                && $this->perimeterManager->isInPerimeter($subjectKey, $perimeter)
-            ) {
-                return true;
+        return $this->perimeterManager->isInPerimeter($subjectKey, $perimeter);
+    }
+
+    /**
+     * @param UserInterface $user
+     * @param string        $entityType
+     *
+     * @return PerimeterInterface
+     */
+    protected function getAgglomeratedPerimeter(UserInterface $user, $entityType)
+    {
+        if (false === $this->hasCachedPerimeters($user, $entityType)) {
+            $cachedPerimeter = $this->perimeterManager->createPerimeter($entityType);
+            foreach ($user->getGroups() as $group) {
+                $perimeter = $group->getPerimeter($entityType);
+                if ($perimeter instanceof PerimeterInterface) {
+                    $cachedPerimeter->addItems($perimeter->getItems());
+                }
             }
+
+            $this->cachedPerimeters[$user->getId()][$entityType] = $cachedPerimeter;
         }
 
-        return false;
+        return $this->cachedPerimeters[$user->getId()][$entityType];
+    }
+
+    /**
+     * @param UserInterface $user
+     * @param string        $entityType
+     *
+     * @return bool
+     */
+    protected function hasCachedPerimeters(UserInterface $user, $entityType)
+    {
+        $userId = $user->getId();
+
+        return array_key_exists($userId, $this->cachedPerimeters) &&
+               array_key_exists($entityType, $this->cachedPerimeters[$userId]) &&
+               $this->cachedPerimeters[$userId] instanceof PerimeterInterface;
     }
 }

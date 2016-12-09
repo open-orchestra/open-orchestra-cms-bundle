@@ -17,7 +17,8 @@ interface PerimeterStrategyInterface
     /**
      * Check if $item is contained in $perimeter
      *
-     * @param string $path
+     * @param string             $item
+     * @param PerimeterInterface $perimeter
      *
      * @return boolean
      */

@@ -1,31 +1,38 @@
-<li data-node-id="<%= nodeTree.get('node').get('node_id') %>">
+<li data-node-id="<%= nodeTree.get('node').get('node_id') %>" <% if (true === nodeTree.get('node').get('rights').can_edit) {%> class="sortable-node"<% }%> >
     <div>
-        <i class="fa fa-arrows sortable-handler" aria-hidden="true"></i>
+        <% if (true === nodeTree.get('node').get('rights').can_edit) {%>
+            <i class="fa fa-arrows sortable-handler" aria-hidden="true"></i>
+        <% }; %>
         <% if ( 0 !== nodeTree.get('children').length) { %>
             <i class="fa fa-chevron-down toggle-tree" aria-hidden="true"></i>
         <% }; %>
         <span><%= nodeTree.get('node').get('name') %></span>
-        <i class="state state-<%= nodeTree.get('node').get('status').get('code_color') %>" aria-hidden="true"></i>
-        <div class="links">
-            <a href="#<%= Backbone.history.generateUrl('editNode', {
-                language: nodeTree.get('node').get('language'),
-                nodeId: nodeTree.get('node').get('node_id'),
-                version: nodeTree.get('node').get('version')
-            }) %>">
-                <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
-            </a>
-            <% if (true === nodeTree.get('node').get('rights').can_create) {%>
-                <a href="#<%= Backbone.history.generateUrl('newTreeNode', {
+
+        <% if (true === nodeTree.get('node').get('rights').can_read) {%>
+            <i class="state state-<%= nodeTree.get('node').get('status').get('code_color') %>" aria-hidden="true"></i>
+            <div class="links">
+                <a href="#<%= Backbone.history.generateUrl('editNode', {
                     language: nodeTree.get('node').get('language'),
-                    parentId: nodeTree.get('node').get('node_id')
+                    nodeId: nodeTree.get('node').get('node_id'),
+                    version: nodeTree.get('node').get('version')
                 }) %>">
-                    <%= Translator.trans('open_orchestra_backoffice.node.add') %>
+                    <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
                 </a>
-            <% };%>
-        </div>
+                <% if (true === nodeTree.get('node').get('rights').can_create) {%>
+                    <a href="#<%= Backbone.history.generateUrl('newTreeNode', {
+                        language: nodeTree.get('node').get('language'),
+                        parentId: nodeTree.get('node').get('node_id')
+                    }) %>">
+                        <%= Translator.trans('open_orchestra_backoffice.node.add') %>
+                    </a>
+                <% };%>
+            </div>
+        <% } else {%>
+            <i class="state out-of-bounds" aria-hidden="true"></i>
+        <% }; %>
     </div>
     <% if ( 0 !== nodeTree.get('children').length) { %>
-        <ul class="children">
+        <ul class="children <% if (true === nodeTree.get('node').get('rights').can_edit) {%> sortable-container<% }%>">
             <% _.each(nodeTree.get('children'), function(nodeTree, key) { %>
                 <%= renderTemplate('Node/nodeElementTreeView', {renderTemplate: renderTemplate, nodeTree: nodeTree}) %>
             <% }); %>

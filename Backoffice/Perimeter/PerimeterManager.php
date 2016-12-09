@@ -10,6 +10,18 @@ use OpenOrchestra\Backoffice\Perimeter\Strategy\PerimeterStrategyInterface;
  */
 class PerimeterManager
 {
+    protected $perimeterClass;
+
+    /**
+     * PerimeterManager constructor
+     *
+     * @param string $perimeterClass
+     */
+    public function __construct($perimeterClass)
+    {
+        $this->perimeterClass = $perimeterClass;
+    }
+
     protected $strategies = array();
 
     /**
@@ -25,7 +37,8 @@ class PerimeterManager
     /**
      * Check if a path is contained in the perimeter
      *
-     * @param string $path
+     * @param string             $item
+     * @param PerimeterInterface $perimeter
      *
      * @return boolean
      */
@@ -36,5 +49,15 @@ class PerimeterManager
         }
 
         return false;
+    }
+
+    /**
+     * @param $type
+     *
+     * @return PerimeterInterface
+     */
+    public function createPerimeter($type)
+    {
+        return new $this->perimeterClass($type);
     }
 }

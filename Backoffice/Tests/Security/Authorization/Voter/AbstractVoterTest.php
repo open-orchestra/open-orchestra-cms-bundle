@@ -24,8 +24,10 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->perimeter = Phake::mock('OpenOrchestra\Backoffice\Model\PerimeterInterface');
+        Phake::when($this->perimeter)->getItems(Phake::anyParameters())->thenReturn(array());
 
         $this->perimeterManager = Phake::mock('OpenOrchestra\Backoffice\Perimeter\PerimeterManager');
+        Phake::when($this->perimeterManager)->createPerimeter(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\Backoffice\Model\PerimeterInterface'));
 
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group)->getPerimeter(Phake::anyParameters())->thenReturn($this->perimeter);
@@ -126,6 +128,27 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
 
         if ($owner) {
             Phake::when($node)->getCreatedBy()->thenReturn($this->username);
+        }
+
+        return $node;
+    }
+
+    /**
+     * Create a Phake node
+     *
+     * @param bool $owner
+     *
+     * @return Phake_IMock
+     */
+    protected function createPhakeNodeNotHydrated($owner = false)
+    {
+        $node = array(
+            'nodeId' => 'fakeNodeId',
+            'path' => 'fakePath'
+        );
+
+        if ($owner) {
+            $node['createdBy'] = $this->username;
         }
 
         return $node;
