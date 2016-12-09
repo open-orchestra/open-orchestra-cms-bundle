@@ -117,7 +117,9 @@ class GroupController extends BaseController
         $siteIds = array();
         $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
         foreach ($availableSites as $site) {
-            $siteIds[] = $site->getId();
+            if ($this->isGranted(ContributionActionInterface::READ, $site)) {
+                $siteIds[] = $site->getId();
+            }
         }
         $mapping = array(
             'label' => 'labels',

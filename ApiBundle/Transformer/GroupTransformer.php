@@ -106,7 +106,6 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     protected function addRights(FacadeInterface $facade, GroupInterface $group)
     {
 
-        $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $group));
         $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $group));
         $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group));
 
