@@ -111,7 +111,7 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
         $status = $this->createPhakeStatus();
 
         return array(
-            'Not in perimeter : Contributor'         => array($node, $status, array(ContributionRoleInterface::NODE_CONTRIBUTOR), false, VoterInterface::ACCESS_DENIED, false),
+            'Not in perimeter : Contributor' => array($node, $status, array(ContributionRoleInterface::NODE_CONTRIBUTOR), false, VoterInterface::ACCESS_DENIED, false),
         );
     }
 
