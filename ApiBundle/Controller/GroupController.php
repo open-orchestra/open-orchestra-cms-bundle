@@ -72,17 +72,33 @@ class GroupController extends BaseController
      * @Config\Route("", name="open_orchestra_api_group_list")
      * @Config\Method({"GET"})
      *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
+     * })
      * @return FacadeInterface
      */
     public function listAction(Request $request)
     {
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_user.document.group.class'));
+        $siteIds = array();
+        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        foreach ($availableSites as $site) {
+            $siteIds[] = $site->getId();
+        }
+        $mapping = array(
+            'label' => 'labels',
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_user.repository.group');
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
+        $collection = $repository->findForPaginate($configuration, $siteIds);
+        $recordsTotal = $repository->count($siteIds);
+        $recordsFiltered = $repository->countWithFilter($configuration, $siteIds);
 
-        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
     }
 
     /**

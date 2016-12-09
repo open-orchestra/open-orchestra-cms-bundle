@@ -60,7 +60,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->addSite($facade, $group);
         $facade = $this->addRoles($facade, $group);
-        $facade = $this->addLinks($facade, $group);
+        $facade = $this->addRights($facade, $group);
 
         return $facade;
     }
@@ -103,36 +103,12 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      *
      * @return FacadeInterface
      */
-    protected function addLinks(FacadeInterface $facade, GroupInterface $group)
+    protected function addRights(FacadeInterface $facade, GroupInterface $group)
     {
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group)) {
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_group_delete',
-                array('groupId' => $group->getId())
-            ));
-        }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $group)) {
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_backoffice_group_form',
-                array('groupId' => $group->getId())
-            ));
-            $facade->addLink('_self_edit', $this->generateRoute(
-                'open_orchestra_api_group_edit',
-                array('groupId' => $group->getId())
-            ));
-
-            $this->eventDispatcher->dispatch(
-                GroupFacadeEvents::POST_GROUP_TRANSFORMATION,
-                new GroupFacadeEvent($group, $facade)
-            );
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, $group)) {
-            $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_group_duplicate', array(
-                'groupId' => $group->getId(),
-            )));
-        }
+        $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $group));
+        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $group));
+        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group));
 
         return $facade;
     }
