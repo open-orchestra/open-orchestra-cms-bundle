@@ -176,7 +176,7 @@ class ContextManagerTest extends AbstractBaseTestCase
         Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
 
         $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
-        Phake::when($user)->isSuperAdmin()->thenReturn(true);
+        Phake::when($user)->hasRole(Phake::anyParameters())->thenReturn(true);
 
         Phake::when($this->token)->getUser()->thenReturn($user);
 

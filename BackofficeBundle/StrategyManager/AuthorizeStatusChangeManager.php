@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
 use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
@@ -63,7 +64,10 @@ class AuthorizeStatusChangeManager
             throw new AuthenticationCredentialsNotFoundException('The token storage contains no authentication token. One possible reason may be that there is no firewall configured for this URL.');
         }
 
-        if (($user = $token->getUser()) instanceof UserInterface && $user->isSuperAdmin()) {
+        if (($user = $token->getUser()) instanceof UserInterface &&
+             $user->hasRole(ContributionRoleInterface::DEVELOPER) ||
+             $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN)
+        ) {
             return true;
         }
 

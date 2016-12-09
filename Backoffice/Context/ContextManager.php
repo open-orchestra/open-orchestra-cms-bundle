@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Context;
 
 use FOS\UserBundle\Model\GroupableInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -102,7 +103,9 @@ class ContextManager implements CurrentSiteIdInterface
         $sites = array();
 
         if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
-            if ($user->isSuperAdmin()) {
+            if ($user->hasRole(ContributionRoleInterface::DEVELOPER) ||
+                $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN)
+            ) {
                 return $this->siteRepository->findByDeleted(false);
             }
             foreach ($user->getGroups() as $group) {

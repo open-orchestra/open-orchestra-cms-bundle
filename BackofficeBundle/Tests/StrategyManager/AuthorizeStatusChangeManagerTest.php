@@ -58,7 +58,7 @@ class AuthorizeStatusChangeManagerTest extends AbstractBaseTestCase
     {
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $toStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($this->user)->isSuperAdmin()->thenReturn(false);
+        Phake::when($this->user)->hasRole(Phake::anyParameters())->thenReturn(false);
 
         Phake::when($this->strategy1)->isGranted(Phake::anyParameters())->thenReturn($isGranted1);
         Phake::when($this->strategy2)->isGranted(Phake::anyParameters())->thenReturn($isGranted2);
@@ -91,7 +91,7 @@ class AuthorizeStatusChangeManagerTest extends AbstractBaseTestCase
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $toStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
-        Phake::when($this->user)->isSuperAdmin()->thenReturn(true);
+        Phake::when($this->user)->hasRole(Phake::anyParameters())->thenReturn(true);
 
         $this->assertTrue($this->manager->isGranted($document, $toStatus));
     }

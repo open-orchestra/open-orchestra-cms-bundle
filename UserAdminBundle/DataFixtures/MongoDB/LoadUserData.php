@@ -19,12 +19,10 @@ class LoadUserData extends AbstractLoadUserData implements OrchestraFunctionalFi
     {
         $developer = $this->generate('developer');
         $developer->addRole(ContributionRoleInterface::DEVELOPER);
-        $developer->addRole(UserInterface::ROLE_SUPER_ADMIN);
         $manager->persist($developer);
 
         $padmin = $this->generate('p-admin');
         $padmin->addRole(ContributionRoleInterface::PLATFORM_ADMIN);
-        $padmin->addRole(UserInterface::ROLE_SUPER_ADMIN);
         $this->addReference('p-admin', $padmin);
         $manager->persist($padmin);
 
