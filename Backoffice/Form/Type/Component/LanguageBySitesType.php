@@ -47,7 +47,7 @@ class LanguageBySitesType extends AbstractType
                         'choice_attr' => function ($key, $val, $index) use ($aliasLanguages) {
                             return in_array($key, $aliasLanguages) ? array() : array('disabled' => 'disabled');
                         },
-                        'label' => $site->getSiteId(),
+                        'label' => $site->getName(),
                         'expanded' => true,
                 ));
             }
