@@ -104,7 +104,6 @@ class ContextManager implements CurrentSiteIdInterface
         if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
             if ($user->isSuperAdmin()) {
                 return $this->siteRepository->findByDeleted(false);
-
             }
             foreach ($user->getGroups() as $group) {
                 /** @var SiteInterface $site */
