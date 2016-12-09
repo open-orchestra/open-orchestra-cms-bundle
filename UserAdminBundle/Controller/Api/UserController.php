@@ -2,12 +2,14 @@
 
 namespace OpenOrchestra\UserAdminBundle\Controller\Api;
 
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\UserBundle\Event\UserEvent;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\UserBundle\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +49,7 @@ class UserController extends BaseController
      */
     public function listAction(Request $request)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, UserInterface::ENTITY_TYPE);
         $mapping = array(
             'username' => 'username',
             'groups' => 'groups.label'
@@ -92,6 +95,8 @@ class UserController extends BaseController
      */
     public function listByGroupAction($groupId)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, UserInterface::ENTITY_TYPE);
+
         $group =  $this->get('open_orchestra_user.repository.group')->find($groupId);
         if (null !== $group) {
             $users = $this->get('open_orchestra_user.repository.user')->findByGroup($group);
@@ -113,6 +118,8 @@ class UserController extends BaseController
      */
     public function listByUsernameWithoutGroupAction(Request $request, $groupId)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, UserInterface::ENTITY_TYPE);
+
         $userName = $request->get('username');
         $group =  $this->get('open_orchestra_user.repository.group')->find($groupId);
         if (null !== $group) {
@@ -137,6 +144,8 @@ class UserController extends BaseController
     {
         $group =  $this->get('open_orchestra_user.repository.group')->find($groupId);
         $user =  $this->get('open_orchestra_user.repository.user')->find($userId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
+
         $user->removeGroup($group);
 
         $this->get('object_manager')->flush($user);
@@ -157,6 +166,8 @@ class UserController extends BaseController
     {
         $group =  $this->get('open_orchestra_user.repository.group')->find($groupId);
         $user =  $this->get('open_orchestra_user.repository.user')->find($userId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
+
         $user->addGroup($group);
 
         $this->get('object_manager')->flush($user);
@@ -185,8 +196,10 @@ class UserController extends BaseController
         $users = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->reverseTransform($facade);
         $userIds = array();
         foreach ($users as $user) {
-            $userIds[] = $user->getId();
-            $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
+            if ($this->isGranted(ContributionActionInterface::DELETE, $user)) {
+                $userIds[] = $user->getId();
+                $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
+            }
         }
         $userRepository->removeUsers($userIds);
 

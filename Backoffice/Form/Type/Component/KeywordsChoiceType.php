@@ -68,7 +68,7 @@ class KeywordsChoiceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $isGranted = $this->authorizationChecker->isGranted(ContributionActionInterface::READ, KeywordInterface::ENTITY_TYPE);
+        $isGranted = $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, KeywordInterface::ENTITY_TYPE);
 
         $resolver->setDefaults(array(
             'attr' => function(Options $options) use ($isGranted) {

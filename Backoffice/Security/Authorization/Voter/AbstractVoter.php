@@ -13,15 +13,6 @@ use OpenOrchestra\UserBundle\Model\UserInterface;
 abstract class AbstractVoter extends Voter
 {
     /**
-     * Return the list of supported classes
-     *
-     * @return array
-     */
-    protected function getSupportedClasses() {
-        return array();
-    }
-
-    /**
      * @return array
      */
     protected function getSupportedAttributes()
@@ -46,7 +37,24 @@ abstract class AbstractVoter extends Voter
             return false;
         }
 
-        foreach ($this->getSupportedClasses() as $supportedClass) {
+        return $this->supportSubject($subject);
+    }
+
+    /**
+     * @param mixed $subject
+     *
+     * @return bool
+     */
+    abstract protected function supportSubject($subject);
+
+    /**
+     * @param mixed $subject
+     * @param array $classes
+     *
+     * @return bool
+     */
+    protected function supportedClasses($subject, array $classes) {
+        foreach ($classes as $supportedClass) {
             if ($subject instanceof $supportedClass) {
                 return true;
             }

@@ -29,11 +29,11 @@ class UserController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, UserInterface::ENTITY_TYPE);
         $userClass = $this->container->getParameter('open_orchestra_user.document.user.class');
         /** @var UserInterface $user */
         $user = new $userClass();
         $user = $this->refreshLanguagesByAliases($user);
-        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $user);
 
         $form = $this->createForm('oo_registration_user', $user, array(
             'action' => $this->generateUrl('open_orchestra_user_admin_new'),
@@ -96,7 +96,6 @@ class UserController extends AbstractAdminController
      * @param Request       $request
      * @param UserInterface $user
      * @param boolean       $selfEdit
-     * @param array         $allowedSites
      *
      * @return Response
      */
@@ -115,7 +114,8 @@ class UserController extends AbstractAdminController
             'edit_groups' => $editGroups,
             'self_editing' => $selfEdit,
             'validation_groups' => array('Profile', 'UpdatePassword', 'Default'),
-        ));
+            )
+        );
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -135,47 +135,6 @@ class UserController extends AbstractAdminController
     }
 
     /**
-     * @param Request $request
-     * @param string  $userId
-     *
-     * @Config\Route("/password/change/{userId}", name="open_orchestra_user_admin_user_change_password")
-     * @Config\Method({"GET", "POST"})
-     *
-     * @return Response
-     */
-    public function changePasswordAction(Request $request, $userId)
-    {
-        /* @var UserInterface $user */
-        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
-
-        $url = 'open_orchestra_user_admin_user_change_password';
-
-        return $this->renderChangePassword($request, $user, $url);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @Config\Route("/password/change", name="open_orchestra_user_admin_user_self_change_password")
-     * @Config\Method({"GET", "POST"})
-     *
-     * @return Response
-     */
-    public function selfChangePasswordAction(Request $request)
-    {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $url = "open_orchestra_user_admin_user_self_change_password";
-
-        return $this->renderChangePassword($request, $user, $url);
-    }
-
-    /**
-     * @param Request       $request
      * @param UserInterface $user
      *
      * @return UserInterface

@@ -7,6 +7,8 @@ namespace OpenOrchestra\LogBundle\Model;
  */
 interface LogInterface
 {
+    const ENTITY_TYPE = 'log';
+
     /**
      * @return string
      */

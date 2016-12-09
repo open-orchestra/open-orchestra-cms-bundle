@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
+use OpenOrchestra\BaseApi\Model\ApiClientInterface;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
@@ -12,18 +14,33 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 class PlatformAdministrationVoter extends AbstractVoter
 {
     /**
-     * @return array
+     * @param mixed $subject
+     *
+     * @return bool
      */
-    protected function getSupportedClasses()
+    protected function supportSubject($subject)
     {
-        return array(
-            'OpenOrchestra\ModelInterface\Model\KeywordInterface',
-            'OpenOrchestra\BaseApi\Model\ApiClientInterface'
+        if (is_object($subject)) {
+            return $this->supportedClasses(
+                $subject,
+                array(
+                    'OpenOrchestra\ModelInterface\Model\KeywordInterface',
+                    'OpenOrchestra\BaseApi\Model\ApiClientInterface'
+                )
+            );
+        }
+
+        return in_array(
+            $subject,
+            array(
+                KeywordInterface::ENTITY_TYPE,
+                ApiClientInterface::ENTITY_TYPE
+            )
         );
     }
 
     /**
-     * Only SuperAdmin (Dev & Plaform admin) can manage Keywords & Api clients
+     * Only SuperAdmin (Dev & Platform admin) can manage Keywords & Api clients
      *
      * @param string         $attribute
      * @param mixed          $subject

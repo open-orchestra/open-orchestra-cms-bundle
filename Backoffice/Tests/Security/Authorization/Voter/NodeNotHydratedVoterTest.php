@@ -6,6 +6,17 @@ use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeNotHydratedVoter;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use OpenOrchestra\BaseApi\Model\ApiClientInterface;
+use OpenOrchestra\LogBundle\Model\LogInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
+use OpenOrchestra\ModelInterface\Model\RoleInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
  * Class NodeNotHydratedVoterTest
@@ -42,19 +53,30 @@ class NodeNotHydratedVoterTest extends AbstractVoterTest
         $node = $this->createPhakeNode();
 
         return array(
-            'Bad subject : Content'          => array($content,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Trash Item'       => array($trashItem,   ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Site'             => array($site,        ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Redirection'      => array($redirection, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Log'              => array($log,         ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : User'             => array($user,        ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Group'            => array($group,       ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Keyword'          => array($keyword,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Api client'       => array($client,      ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Content type'     => array($contentType, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Workflow profile' => array($profile,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Status'           => array($status,      ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Node'             => array($node,      ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Content'                 => array($content,                              ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Trash Item'              => array($trashItem,                            ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Site'                    => array($site,                                 ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Redirection'             => array($redirection,                          ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Log'                     => array($log,                                  ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : User'                    => array($user,                                 ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Group'                   => array($group,                                ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Keyword'                 => array($keyword,                              ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Api client'              => array($client,                               ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Content type'            => array($contentType,                          ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Workflow profile'        => array($profile,                              ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Status'                  => array($status,                               ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Node'                    => array($node,                                 ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), true, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type ContentType' => array(ContentTypeInterface::ENTITY_TYPE,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Workflow'    => array(WorkflowProfileInterface::ENTITY_TYPE, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Role'        => array(RoleInterface::ENTITY_TYPE,            ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Status'      => array(StatusInterface::ENTITY_TYPE,          ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Site'        => array(SiteInterface::ENTITY_TYPE,            ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Redirection' => array(RedirectionInterface::ENTITY_TYPE,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type User'        => array(UserInterface::ENTITY_TYPE,            ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Group'       => array(GroupInterface::ENTITY_TYPE,           ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Log'         => array(LogInterface::ENTITY_TYPE,             ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Keyword'     => array(KeywordInterface::ENTITY_TYPE,         ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
+            'Bad subject : Entity type Api client'  => array(ApiClientInterface::ENTITY_TYPE,       ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
         );
     }
 

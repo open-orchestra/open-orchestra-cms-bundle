@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use OpenOrchestra\ModelInterface\Model\BlameableInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
@@ -59,6 +60,10 @@ abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
 
         if ($this->isSuperAdmin($user)) {
             return true;
+        }
+
+        if (ContributionActionInterface::CREATE === $attribute) {
+            return $this->voteForReadAction($subject, $user);
         }
 
         if (ContributionActionInterface::READ === $attribute) {

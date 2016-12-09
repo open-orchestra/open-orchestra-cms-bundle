@@ -177,6 +177,8 @@ class NodeController extends BaseController
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_LINKS
      * })
+     *
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function listNodeByAuthorAndSiteIdAction($published)
     {
@@ -205,6 +207,7 @@ class NodeController extends BaseController
      *     name="open_orchestra_api_node_list_tree"
      * )
      * @Config\Method({"GET"})
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @return FacadeInterface
      */
@@ -313,6 +316,7 @@ class NodeController extends BaseController
      *
      * @Config\Route("/list/{siteId}/{language}", name="open_orchestra_api_node_list")
      * @Config\Method({"GET"})
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      *  @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
