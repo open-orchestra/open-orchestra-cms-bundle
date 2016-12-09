@@ -18,7 +18,7 @@ class NodeVoter extends AbstractNodeVoter
      */
     protected function supportSubject($subject)
     {
-        return $this->supportedClasses(
+        return $this->supportClasses(
             $subject,
             array('OpenOrchestra\ModelInterface\Model\NodeInterface')
         );

@@ -21,7 +21,7 @@ class PlatformAdministrationVoter extends AbstractVoter
     protected function supportSubject($subject)
     {
         if (is_object($subject)) {
-            return $this->supportedClasses(
+            return $this->supportClasses(
                 $subject,
                 array(
                     'OpenOrchestra\ModelInterface\Model\KeywordInterface',

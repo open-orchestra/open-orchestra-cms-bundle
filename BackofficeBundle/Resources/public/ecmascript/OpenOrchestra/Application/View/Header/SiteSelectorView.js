@@ -1,5 +1,5 @@
-import OrchestraView from '../OrchestraView'
-import Application   from '../../Application'
+import OrchestraView    from '../OrchestraView'
+import Application      from '../../Application'
 
 /**
  * @class SiteSelectorView
@@ -26,6 +26,9 @@ class SiteSelectorView extends OrchestraView
      */
     render() {
         let currentSite = this._getCurrentSite();
+        if (0 === this.sites.length || null == currentSite) {
+            return this;
+        }
         let linkMainAlias = this._getLinkSiteAlias(currentSite.get('main_alias'));
         let template = this._renderTemplate(
             'Header/siteSelectorView',
@@ -37,6 +40,7 @@ class SiteSelectorView extends OrchestraView
             }
         );
         this.$el.html(template);
+
 
         return this;
     }

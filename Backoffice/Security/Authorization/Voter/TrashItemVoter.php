@@ -20,7 +20,7 @@ class TrashItemVoter extends AbstractVoter
      */
     protected function supportSubject($subject)
     {
-        return $this->supportedClasses(
+        return $this->supportClasses(
             $subject,
             array('OpenOrchestra\ModelInterface\Model\TrashItemInterface')
         );

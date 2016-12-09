@@ -83,7 +83,6 @@ class NodeController extends AbstractAdminController
      */
     public function newAction(Request $request, $siteId, $language, $parentId, $order)
     {
-
         $order = (int) $order;
         $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
         $nodeRepository = $this->get('open_orchestra_model.repository.node');

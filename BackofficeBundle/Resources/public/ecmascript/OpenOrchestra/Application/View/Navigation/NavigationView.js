@@ -37,7 +37,8 @@ class NavigationView extends OrchestraView
 
         let template = this._renderTemplate('Navigation/navigationView',
             {
-                navConfig: Orchestra.Config.Navigation
+                navConfig: Orchestra.Config.Navigation,
+                user: Application.getContext().user
             }
         );
 

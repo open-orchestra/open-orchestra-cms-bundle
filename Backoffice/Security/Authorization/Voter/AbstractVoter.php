@@ -53,7 +53,7 @@ abstract class AbstractVoter extends Voter
      *
      * @return bool
      */
-    protected function supportedClasses($subject, array $classes) {
+    protected function supportClasses($subject, array $classes) {
         foreach ($classes as $supportedClass) {
             if ($subject instanceof $supportedClass) {
                 return true;
