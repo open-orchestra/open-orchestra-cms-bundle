@@ -41,7 +41,6 @@ class SiteSelectorView extends OrchestraView
         );
         this.$el.html(template);
 
-
         return this;
     }
 
