@@ -150,7 +150,7 @@ class ContextManagerTest extends AbstractBaseTestCase
 
         Phake::when($this->token)->getUser()->thenReturn($user);
 
-        $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
+        $this->assertEquals(array($site1, $site2), array_values($this->contextManager->getAvailableSites()));
     }
 
     /**
@@ -166,24 +166,6 @@ class ContextManagerTest extends AbstractBaseTestCase
     /**
      * Test with no site in group
      */
-    public function testGetAvailableSitesIfNoSiteGroup()
-    {
-        $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-        $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-        Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
-
-        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        Phake::when($group)->getSite()->thenReturn(null);
-        $groups = array($group);
-
-        $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
-        Phake::when($user)->getGroups()->thenReturn($groups);
-
-        Phake::when($this->token)->getUser()->thenReturn($user);
-
-        $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
-    }
-
     /**
      * Test with an user super admin
      */
