@@ -1,4 +1,5 @@
 @import "bootstrap/less/mixins/clearfix";
+@import "bootstrap/less/variables";
 @import "variables.less";
 
 /* ===================================================================
@@ -1742,6 +1743,14 @@ fieldset {
     background: #e6e6e6;
     color: #737687;
     .site-name { color: @darkBlue;}
+    &.warning {
+      background: @brand-warning;
+      color: @paleBlue;
+    }
+    &.danger {
+      background-color: @red;
+      color: @paleBlue;
+    }
   }
   .modal-body {
     padding: 35px 45px;

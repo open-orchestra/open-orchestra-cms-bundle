@@ -1,30 +1,31 @@
 import OrchestraView from '../OrchestraView'
+import ModalView     from '../../../Service/Modal/View/ModalView'
 
 /**
  * @class ErrorView
  */
-class ErrorView extends OrchestraView
+class ErrorView extends ModalView
 {
     /**
-     * @inheritdoc
-     */
-    preinitialize() {
-        this.tagName = 'div';
-    }
-
-    /**
      * Initialize
+     *
      * @param {Error} error
+     * @param {String} type
      */
-    initialize({error}) {
+    initialize({error, type}) {
         this._error = error;
+        this._type = type;
     }
 
     /**
-     * Render node tree
+     * Render error
      */
     render() {
-        this.$el = $('<p>' + this._error.message + '</p>');
+        let template = this._renderTemplate('Error/errorModalView', {
+            error: this._error,
+            type: this._type
+        });
+        this.$el.html(template);
 
         return this;
     }

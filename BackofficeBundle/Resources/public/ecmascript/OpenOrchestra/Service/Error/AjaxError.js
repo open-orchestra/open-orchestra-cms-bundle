@@ -12,6 +12,7 @@ class AjaxError extends Error
         super(message);
         this._content = content;
         this._statusCode = statusCode;
+        this.name = 'AjaxError';
     }
 
      /**
