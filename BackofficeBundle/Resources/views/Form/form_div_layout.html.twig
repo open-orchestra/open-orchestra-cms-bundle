@@ -16,6 +16,9 @@
 {% block form_widget %}
     {% set groups  = [] %}
     {% if form.vars.group_enabled is defined and true == form.vars.group_enabled %}
+        {% if form.parent is empty %}
+            {{ block('global_form_errors') }}
+        {% endif %}
         {%  set active = -1 %}
         {% for group in form.vars.group %}
             {% set err = false %}
@@ -48,24 +51,24 @@
             {% set groups = groups|merge([{'group_name': group_name,'label': group_label, 'html': current_group, 'err': err, 'req': req}]) %}
         {% endfor %}
         {% set active = (active == -1) ? 0 : active %}
-    <ul role="tablist" class="nav nav-tabs">
-        {% for group in groups %}
-            <li class="{% if active == loop.index0 %}active{% endif %}">
-                <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
-                    {{ group.label|default(loop.index0)|trans }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-    <div class="tab-content">
-        {% for group in groups %}
-            <div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if group.group_name != '' %} tab-{{ group.group_name }} {% endif %}">
-                {{ group.html }}
-            </div>
-        {% endfor %}
-    </div>
-{% else %}
-    {{ parent() }}
+        <ul role="tablist" class="nav nav-tabs">
+            {% for group in groups %}
+                <li class="{% if active == loop.index0 %}active{% endif %}">
+                    <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
+                        {{ group.label|default(loop.index0)|trans }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for group in groups %}
+                <div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if group.group_name != '' %} tab-{{ group.group_name }} {% endif %}">
+                    {{ group.html }}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
@@ -439,7 +442,7 @@
             {% set attr = attr|merge({ 'role': 'form' }) %}
         {% endif %}
 
-        <form  name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+        <form  name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} novalidate>
         {% if form_method != method %}
             <input type="hidden" name="_method" value="{{ method }}" />
         {% endif %}
