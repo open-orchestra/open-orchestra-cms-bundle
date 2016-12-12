@@ -108,11 +108,7 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
      * @return boolean
      */
     protected function voteForSuperAdmin(StatusInterface $fromStatus, StatusInterface $toStatus) {
-        if ($this->workflowRepository->hasTransition($fromStatus, $toStatus)) {
-            return true;
-        }
-
-        return false;
+        return $this->workflowRepository->hasTransition($fromStatus, $toStatus);
     }
 
     /**
