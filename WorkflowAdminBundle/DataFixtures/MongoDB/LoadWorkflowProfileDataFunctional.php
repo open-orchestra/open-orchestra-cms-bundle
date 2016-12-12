@@ -25,9 +25,10 @@ class LoadWorkflowProfileDataFunctional extends AbstractFixture implements Order
         $transitionToTranslateToPending = $this->createTransition('status-toTranslate', 'status-pending');
         $transitionPendingToPublished = $this->createTransition('status-pending', 'status-published');
         $transitionPublishedToDraft = $this->createTransition('status-published', 'status-draft');
+        $transitionDraftToPublished = $this->createTransition('status-draft', 'status-published');
 
         $profileContributor = $this->createProfile('Contributor', array($transitionDraftToPending, $transitionToTranslateToPending));
-        $profileValidator = $this->createProfile('Validator', array($transitionPendingToPublished, $transitionPublishedToDraft));
+        $profileValidator = $this->createProfile('Validator', array($transitionPendingToPublished, $transitionPublishedToDraft, $transitionDraftToPublished));
 
         $manager->persist($profileContributor);
         $manager->persist($profileValidator);

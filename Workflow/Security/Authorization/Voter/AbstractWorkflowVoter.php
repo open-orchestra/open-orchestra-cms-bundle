@@ -56,10 +56,16 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
             }
         }
 
-        if (!$isSupportedAttribute) {
-            return false;
-        }
+        return $isSupportedAttribute && $this->supportSubject($subject);
+    }
 
+    /**
+     * @param mixed $subject
+     *
+     * @return bool
+     */
+    protected function supportSubject($subject)
+    {
         foreach ($this->getSupportedClasses() as $supportedClass) {
             if ($subject instanceof StatusableInterface && $subject instanceof $supportedClass) {
                 return true;
