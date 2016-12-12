@@ -70,6 +70,7 @@ class AbstractBehavior
         $(this.getSelector(), view.$el).each(function(){
             behavior.deactivate($(this));
         });
+        view.delegateEvents();
     }
 
     /**
