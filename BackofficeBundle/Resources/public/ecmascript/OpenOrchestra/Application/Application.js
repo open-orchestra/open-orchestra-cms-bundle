@@ -119,10 +119,11 @@ class Application
         if (error instanceof AjaxError && error.getStatusCode() === 401) {
             window.location.pathname = Routing.generate('fos_user_security_login', true);
         }
-        if (this.getConfiguration().getParameter('debug')) {
-            let errorView = new ErrorView({error: error});
-            this.getRegion('content').html(errorView.render().$el);
-        }
+        let type = ('ApiError' === error.name) ? 'warning' : 'danger';
+        let errorView = new ErrorView({error: error, type: type});
+        this.getRegion('modal').html(errorView.render().$el);
+        errorView.show();
+
     }
 
     /**
