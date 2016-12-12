@@ -12,17 +12,12 @@ use OpenOrchestra\UserBundle\Model\UserInterface;
 class NodeNotHydratedVoter extends AbstractNodeVoter
 {
     /**
-     * @param string $attribute
-     * @param mixed  $subject
+     * @param mixed $subject
      *
      * @return bool
      */
-    protected function supports($attribute, $subject)
+    protected function supportSubject($subject)
     {
-        if (!in_array($attribute, $this->getSupportedAttributes())) {
-            return false;
-        }
-
         return (is_array($subject) &&
             array_key_exists('nodeId', $subject) &&
             array_key_exists('path', $subject)

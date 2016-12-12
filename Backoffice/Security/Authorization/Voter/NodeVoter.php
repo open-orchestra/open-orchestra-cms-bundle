@@ -12,11 +12,16 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 class NodeVoter extends AbstractNodeVoter
 {
     /**
-     * @return array
+     * @param mixed $subject
+     *
+     * @return bool
      */
-    protected function getSupportedClasses()
+    protected function supportSubject($subject)
     {
-        return array('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        return $this->supportClasses(
+            $subject,
+            array('OpenOrchestra\ModelInterface\Model\NodeInterface')
+        );
     }
 
     /**

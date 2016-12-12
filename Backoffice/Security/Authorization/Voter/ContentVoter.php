@@ -15,25 +15,39 @@ use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 class ContentVoter extends AbstractEditorialVoter
 {
     /**
-     * @return array
+     * @param mixed $subject
+     *
+     * @return bool
      */
-    protected function getSupportedClasses()
+    protected function supportSubject($subject)
     {
-        return array('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        if (is_object($subject)) {
+            return $this->supportClasses(
+                $subject,
+                array('OpenOrchestra\ModelInterface\Model\ContentInterface')
+            );
+        }
+
+        return $subject === ContentInterface::ENTITY_TYPE;
     }
 
     /**
      * Vote for Read action
      * A user can read a content if it is in his perimeter
      *
-     * @param ContentInterface $content
-     * @param UserInterface    $user
+     * @param ContentInterface|string $subject
+     * @param UserInterface           $user
      *
      * @return bool
      */
-    protected function voteForReadAction($content, UserInterface $user)
+    protected function voteForReadAction($subject, UserInterface $user)
     {
-        return $this->isSubjectInPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+        $contentType = $subject;
+        if (is_object($subject)) {
+            $contentType = $subject->getContentType();
+        }
+
+        return $this->isSubjectInPerimeter($contentType, $user, ContentInterface::ENTITY_TYPE);
     }
 
     /**
@@ -56,14 +70,18 @@ class ContentVoter extends AbstractEditorialVoter
      * Vote for $action on $content not owned by $user
      * A user can act on someone else's content if he has the matching super role and the content is in his perimeter
      *
-     * @param string           $action
-     * @param ContentInterface $content
-     * @param UserInterface    $user
+     * @param string                  $action
+     * @param ContentInterface|string $subject
+     * @param UserInterface           $user
      *
      * @return bool
      */
-    protected function voteForSomeoneElseSubject($action, $content, UserInterface $user)
+    protected function voteForSomeoneElseSubject($action, $subject, UserInterface $user)
     {
+        if (!is_object($subject)) {
+            return false;
+        }
+
         $requiredRole = ContributionRoleInterface::CONTENT_CONTRIBUTOR;
 
         switch ($action) {
@@ -76,6 +94,6 @@ class ContentVoter extends AbstractEditorialVoter
         }
 
         return $user->hasRole($requiredRole)
-            && $this->isSubjectInPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE);
     }
 }

@@ -58,11 +58,18 @@
                     lastName : '{{ app.user.lastName }}',
                     language: {
                         contribution: {% if app.user.languageBySites[siteIdKey] is defined %} '{{ app.user.languageBySites[siteIdKey] }}' {% else %} '{{context.currentSiteDefaultLanguage}}' {% endif %}
+                    },
+                    access_section: {
+                        'dashboard': true,
+                        'contribution': true,
+                        'user': {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles  or 'ROLE_SITE_ADMIN' in app.user.roles)|json_encode()|raw }},
+                        'configuration': {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles  or 'ROLE_SITE_ADMIN' in app.user.roles)|json_encode()|raw }},
+                        'platform': {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles)|json_encode()|raw  }},
+                        'developer': {{ ('ROLE_DEVELOPER' in app.user.roles)|json_encode()|raw }}
                     }
                 }
             };
         </script>
-
         {{ tinymce_init() }}
 
         {% if app.debug %}

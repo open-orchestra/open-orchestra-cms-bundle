@@ -31,7 +31,6 @@ class HeaderView extends OrchestraView
      * Render header
      */
     render() {
-        let $siteSelector = new SiteSelectorView({sites: this.sites}).render().$el;
         let template = this._renderTemplate(
             'Header/headerView',
             {
@@ -39,6 +38,8 @@ class HeaderView extends OrchestraView
             }
         );
         this.$el.html(template);
+
+        let $siteSelector = new SiteSelectorView({sites: this.sites}).render().$el;
         $('.site-selector', this.$el).replaceWith($siteSelector);
 
         return this;

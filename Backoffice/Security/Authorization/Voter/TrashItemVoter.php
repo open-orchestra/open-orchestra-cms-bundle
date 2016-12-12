@@ -14,11 +14,16 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 class TrashItemVoter extends AbstractVoter
 {
     /**
-     * @return array
+     * @param mixed $subject
+     *
+     * @return bool
      */
-    protected function getSupportedClasses()
+    protected function supportSubject($subject)
     {
-        return array('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        return $this->supportClasses(
+            $subject,
+            array('OpenOrchestra\ModelInterface\Model\TrashItemInterface')
+        );
     }
 
     /**

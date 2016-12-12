@@ -18,16 +18,34 @@ use OpenOrchestra\LogBundle\Model\LogInterface;
 class SiteAdministrationVoter extends AbstractPerimeterVoter
 {
     /**
-     * @return array
+     * @param mixed $subject
+     *
+     * @return bool
      */
-    protected function getSupportedClasses()
+    protected function supportSubject($subject)
     {
-        return array(
-            'OpenOrchestra\ModelInterface\Model\SiteInterface',
-            'OpenOrchestra\ModelInterface\Model\RedirectionInterface',
-            'OpenOrchestra\LogBundle\Model\LogInterface',
-            'OpenOrchestra\UserBundle\Model\UserInterface',
-            'OpenOrchestra\Backoffice\Model\GroupInterface'
+        if (is_object($subject)) {
+            return $this->supportClasses(
+                $subject,
+                array(
+                    'OpenOrchestra\ModelInterface\Model\SiteInterface',
+                    'OpenOrchestra\ModelInterface\Model\RedirectionInterface',
+                    'OpenOrchestra\LogBundle\Model\LogInterface',
+                    'OpenOrchestra\UserBundle\Model\UserInterface',
+                    'OpenOrchestra\Backoffice\Model\GroupInterface'
+                )
+            );
+        }
+
+        return in_array(
+            $subject,
+            array(
+                SiteInterface::ENTITY_TYPE,
+                RedirectionInterface::ENTITY_TYPE,
+                LogInterface::ENTITY_TYPE,
+                UserInterface::ENTITY_TYPE,
+                GroupInterface::ENTITY_TYPE,
+            )
         );
     }
 
@@ -53,12 +71,19 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
             return false;
         }
 
-        if ($subject instanceof LogInterface) {
+        if (is_string($subject)) {
             return true;
         }
 
-        if ($subject instanceof RedirectionInterface || $subject instanceof SiteInterface) {
+        if(
+            $subject instanceof RedirectionInterface ||
+            $subject instanceof SiteInterface
+        ) {
             return $this->canActOnSite($subject->getSiteId(), $user);
+        }
+
+        if ($subject instanceof LogInterface) {
+            return true;
         }
 
         if ($subject instanceof UserInterface) {

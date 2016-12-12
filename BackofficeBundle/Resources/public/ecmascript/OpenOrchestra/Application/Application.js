@@ -143,9 +143,6 @@ class Application
     _initLayoutView() {
         new SitesAvailable().fetch({
             success: (sites) => {
-                if (0 === sites.length) {
-                    throw new ApplicationError('No websites availables');
-                }
                 let headerView = new HeaderView({sites : sites});
                 this.getRegion('header').html(headerView.render().$el);
             }
