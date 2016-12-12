@@ -69,7 +69,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
 
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
-        Phake::when($this->status)->isPublished()->thenReturn(true);
+        Phake::when($this->status)->isPublishedState()->thenReturn(true);
         Phake::when($this->status)->getLabels()->thenReturn(array());
         Phake::when($this->status)->getToRoles()->thenReturn(array());
         Phake::when($this->status)->getFromRoles()->thenReturn(array());
@@ -115,7 +115,7 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         $newNode = $this->manager->duplicateNode($nodeId, $siteId, $language, $version);
 
-        Phake::verify($newNode)->setCurrentlyPublished($this->status->isPublished());
+        Phake::verify($newNode)->setCurrentlyPublished($this->status->isPublishedState());
         Phake::verify($newNode)->setVersion($version + 1);
 
         Phake::verify($this->blockRepository)->getDocumentManager();

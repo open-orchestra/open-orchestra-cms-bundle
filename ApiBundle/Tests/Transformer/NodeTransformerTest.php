@@ -44,7 +44,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->node)->getStatus()->thenReturn($status);
-        Phake::when($status)->isPublished()->thenReturn(false);
+        Phake::when($status)->isPublishedState()->thenReturn(false);
 
         $siteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');

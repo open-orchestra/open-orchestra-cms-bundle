@@ -75,7 +75,7 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->routeDocumentManager)->createForNode(Phake::anyParameters())->thenReturn(array($route));
         Phake::when($this->routeDocumentManager)->clearForNode(Phake::anyParameters())->thenReturn(array($route));
 
-        Phake::when($this->status)->isPublished()->thenReturn($published);
+        Phake::when($this->status)->isPublishedState()->thenReturn($published);
 
         $this->subscriber->updateRouteDocument($this->event);
 

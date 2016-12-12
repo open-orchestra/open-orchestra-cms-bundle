@@ -61,7 +61,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
     public function testUpdateFlag($repositoryCall, $managerCall, $lastPublishedCall, $statusPublished, $nodeVersion, $publishedFlag, $lastPublishedNodeVersion, $previousStatusPublished)
     {
         $status = Phake::mock(StatusInterface::CLASS);
-        Phake::when($status)->isPublished()->thenReturn($statusPublished);
+        Phake::when($status)->isPublishedState()->thenReturn($statusPublished);
         $node = Phake::mock(StatusableInterface::CLASS);
         Phake::when($node)->getStatus()->thenReturn($status);
         Phake::when($node)->getVersion()->thenReturn($nodeVersion);
@@ -74,7 +74,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
         Phake::when($this->repository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters())->thenReturn($lastPublishedNode);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
-        Phake::when($previousStatus)->isPublished()->thenReturn($previousStatusPublished);
+        Phake::when($previousStatus)->isPublishedState()->thenReturn($previousStatusPublished);
         Phake::when($this->event)->getPreviousStatus()->thenReturn($previousStatus);
 
         $wrongPublishedNode = Phake::mock(StatusableInterface::CLASS);
@@ -112,7 +112,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
     public function testUpdateFlagWithNoPreviousPublishedNode()
     {
         $status = Phake::mock(StatusInterface::CLASS);
-        Phake::when($status)->isPublished()->thenReturn(true);
+        Phake::when($status)->isPublishedState()->thenReturn(true);
         $node = Phake::mock(StatusableInterface::CLASS);
         Phake::when($node)->getStatus()->thenReturn($status);
         Phake::when($node)->getVersion()->thenReturn(1);
@@ -120,7 +120,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
         Phake::when($this->event)->getStatusableElement()->thenReturn($node);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
-        Phake::when($previousStatus)->isPublished()->thenReturn(false);
+        Phake::when($previousStatus)->isPublishedState()->thenReturn(false);
         Phake::when($this->event)->getPreviousStatus()->thenReturn($previousStatus);
 
         $this->subscriber->updateFlag($this->event);
@@ -136,7 +136,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
     public function testUpdateFlagWhenUnpblishNodeAndNoOtherPublishedNode()
     {
         $status = Phake::mock(StatusInterface::CLASS);
-        Phake::when($status)->isPublished()->thenReturn(false);
+        Phake::when($status)->isPublishedState()->thenReturn(false);
         $node = Phake::mock(StatusableInterface::CLASS);
         Phake::when($node)->getStatus()->thenReturn($status);
         Phake::when($node)->getVersion()->thenReturn(2);
@@ -144,7 +144,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
         Phake::when($this->event)->getStatusableElement()->thenReturn($node);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
-        Phake::when($previousStatus)->isPublished()->thenReturn(true);
+        Phake::when($previousStatus)->isPublishedState()->thenReturn(true);
         Phake::when($this->event)->getPreviousStatus()->thenReturn($previousStatus);
 
         $wrongPublishedNode = Phake::mock(StatusableInterface::CLASS);

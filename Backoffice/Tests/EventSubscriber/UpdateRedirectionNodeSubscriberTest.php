@@ -33,7 +33,7 @@ class UpdateRedirectionNodeSubscriberTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($this->status)->isPublished()->thenReturn(false);
+        Phake::when($this->status)->isPublishedState()->thenReturn(false);
 
         $this->previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
@@ -80,14 +80,14 @@ class UpdateRedirectionNodeSubscriberTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param boolean $isPublished
+     * @param boolean $isPublishedState
      * @param integer $nbrCall
      *
      * @dataProvider providePublished
      */
-    public function testUpdateRedirection($isPublished, $nbrCall)
+    public function testUpdateRedirection($isPublishedState, $nbrCall)
     {
-        Phake::when($this->previousStatus)->isPublished()->thenReturn($isPublished);
+        Phake::when($this->previousStatus)->isPublishedState()->thenReturn($isPublishedState);
         $this->subscriber->updateRedirection($this->nodeEvent);
         Phake::verify($this->redirectionManager, Phake::times($nbrCall))->generateRedirectionForNode($this->node);
     }

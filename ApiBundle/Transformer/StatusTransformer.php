@@ -69,10 +69,10 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
 
-        $facade->published = $status->isPublished();
-        $facade->initial = $status->isInitial();
-        $facade->autoPublishFrom = $status->isAutoPublishFrom();
-        $facade->autoUnpublishTo = $status->isAutoUnpublishTo();
+        $facade->publishedState = $status->isPublishedState();
+        $facade->initialState = $status->isInitialState();
+        $facade->autoPublishFromState = $status->isAutoPublishFromState();
+        $facade->autoUnpublishToState = $status->isAutoUnpublishToState();
         $facade->translationState = $status->isTranslationState();
         $facade->name = $status->getName();
         $facade->label = $this->multiLanguagesChoiceManager->choose($status->getLabels());

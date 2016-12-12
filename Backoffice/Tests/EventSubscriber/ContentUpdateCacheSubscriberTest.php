@@ -80,7 +80,7 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
     public function testContentChangeStatus($countInvalidate, $isPublishedPrevious)
     {
         $previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($previousStatus)->isPublished()->thenReturn($isPublishedPrevious);
+        Phake::when($previousStatus)->isPublishedState()->thenReturn($isPublishedPrevious);
         Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($previousStatus);
 
         $this->subscriber->invalidateCacheOnStatusChanged($this->contentEvent);
@@ -101,14 +101,14 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
 
     /**
      * @param int  $countInvalidate
-     * @param bool $isPublished
+     * @param bool $isPublishedState
      *
      * @dataProvider provideCountInvalidateAndStatusOnUpdate
      */
-    public function testInvalidateCacheOnUpdatePublishedContent($countInvalidate, $isPublished)
+    public function testInvalidateCacheOnUpdatePublishedContent($countInvalidate, $isPublishedState)
     {
         $previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($previousStatus)->isPublished()->thenReturn($isPublished);
+        Phake::when($previousStatus)->isPublishedState()->thenReturn($isPublishedState);
         Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($previousStatus);
 
         $this->subscriber->invalidateCacheOnUpdatePublishedContent($this->contentEvent);
@@ -129,14 +129,14 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
 
     /**
      * @param int  $countInvalidate
-     * @param bool $isPublished
+     * @param bool $isPublishedState
      *
      * @dataProvider provideCountInvalidateAndStatusOnDelete
      */
-    public function testDeleteContent($countInvalidate, $isPublished)
+    public function testDeleteContent($countInvalidate, $isPublishedState)
     {
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($status)->isPublished()->thenReturn($isPublished);
+        Phake::when($status)->isPublishedState()->thenReturn($isPublishedState);
         Phake::when($this->content)->getStatus()->thenReturn($status);
         $this->subscriber->invalidateCacheOnDeletePublishedContent($this->contentEvent);
 
