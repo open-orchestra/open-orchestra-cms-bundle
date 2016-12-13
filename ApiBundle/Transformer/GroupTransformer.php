@@ -117,7 +117,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      *
      * @return GroupInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = NULL)
+    public function reverseTransform(FacadeInterface $facade, $source = null)
     {
         if (null !== $facade->id) {
             return $this->groupRepository->find($facade->id);

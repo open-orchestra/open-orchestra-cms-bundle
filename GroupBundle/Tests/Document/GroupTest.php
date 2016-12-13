@@ -77,7 +77,7 @@ class GroupTest extends AbstractBaseTestCase
         $cloneGroup = clone $this->group;
 
         $this->assertNull($cloneGroup->getId());
-        $this->assertSame($cloneGroup->getName(), $expectedName);
+        $this->assertEquals(0, strpos($cloneGroup->getName(), $expectedName));
         $this->assertSame($cloneGroup->getLabels(), $expectedLabels);
     }
 
@@ -87,9 +87,9 @@ class GroupTest extends AbstractBaseTestCase
     public function provideLabelLanguageAndName()
     {
         return array(
-            array('name', 'name_2', array('en' => 'labelen'), array('en' => 'labelen_2')),
-            array('name_2', 'name_3', array('en' => 'labelen_2'), array('en' => 'labelen_3')),
-            array('name_2_55', 'name_2_56', array('en' => 'labelen2_5'), array('en' => 'labelen2_6')),
+            array('name', 'name_', array('en' => 'labelen'), array('en' => 'labelen')),
+            array('name_2', 'name_2_', array('en' => 'labelen_2'), array('en' => 'labelen_2')),
+            array('name_2_55', 'name_2_55_', array('en' => 'labelen2_5'), array('en' => 'labelen2_5')),
         );
     }
 }
