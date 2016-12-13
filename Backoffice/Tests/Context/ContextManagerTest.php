@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackOffice\Tests\Context;
 
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Context\ContextManager;
@@ -21,6 +22,7 @@ class ContextManagerTest extends AbstractBaseTestCase
     protected $tokenStorage;
     protected $defaultLocale;
     protected $siteRepository;
+    protected $authorizationChecker;
 
     /**
      * Tests setup
@@ -35,8 +37,9 @@ class ContextManagerTest extends AbstractBaseTestCase
 
         $this->defaultLocale = 'en';
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
-        $this->contextManager = new ContextManager($this->session, $this->tokenStorage, $this->defaultLocale, $this->siteRepository);
+        $this->contextManager = new ContextManager($this->session, $this->tokenStorage, $this->defaultLocale, $this->siteRepository, $this->authorizationChecker);
     }
 
     /**
@@ -147,6 +150,7 @@ class ContextManagerTest extends AbstractBaseTestCase
         $groups = array($group1, $group2, $group3);
         $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
         Phake::when($user)->getGroups()->thenReturn($groups);
+        Phake::when($this->token)->getRoles()->thenReturn(array());
 
         Phake::when($this->token)->getUser()->thenReturn($user);
 
@@ -159,6 +163,7 @@ class ContextManagerTest extends AbstractBaseTestCase
     public function testGetAvailableSitesIfNoUser()
     {
         Phake::when($this->token)->getUser()->thenReturn(null);
+        Phake::when($this->token)->getRoles()->thenReturn(array());
 
         $this->assertEmpty($this->contextManager->getAvailableSites());
     }
@@ -174,11 +179,7 @@ class ContextManagerTest extends AbstractBaseTestCase
         $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
-
-        $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
-        Phake::when($user)->hasRole(Phake::anyParameters())->thenReturn(true);
-
-        Phake::when($this->token)->getUser()->thenReturn($user);
+        Phake::when($this->authorizationChecker)->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)->thenReturn(true);
 
         $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
     }

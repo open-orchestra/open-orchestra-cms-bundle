@@ -11,36 +11,46 @@ services:
     open_orchestra_backoffice.voter.node:
         class: '%open_orchestra_backoffice.voter.node.class%'
         arguments:
+            - '@security.access.decision_manager'
             - '@open_orchestra_group.perimeter_manager'
         tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.node_not_hydrated:
         class: '%open_orchestra_backoffice.voter.node_not_hydrated.class%'
         arguments:
+            - '@security.access.decision_manager'
             - '@open_orchestra_group.perimeter_manager'
         tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.content:
         class: '%open_orchestra_backoffice.voter.content.class%'
         arguments:
+            - '@security.access.decision_manager'
             - '@open_orchestra_group.perimeter_manager'
         tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.trash_item:
         class: '%open_orchestra_backoffice.voter.trash_item.class%'
+        arguments:
+            - '@security.access.decision_manager'
         tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.site_administration:
         class: '%open_orchestra_backoffice.voter.site_administration.class%'
         arguments:
+            - '@security.access.decision_manager'
             - '@open_orchestra_group.perimeter_manager'
         tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.platform_administration:
         class: '%open_orchestra_backoffice.voter.platform_administration.class%'
+        arguments:
+            - '@security.access.decision_manager'
         tags:
             - { name: security.voter }
     open_orchestra_backoffice.voter.developer_tool:
         class: '%open_orchestra_backoffice.voter.developer_tool.class%'
+        arguments:
+            - '@security.access.decision_manager'
         tags:
             - { name: security.voter }

@@ -16,8 +16,9 @@ services:
         arguments:
             - '@session'
             - '@security.token_storage'
-            - "%kernel.default_locale%"
+            - '%kernel.default_locale%'
             - '@open_orchestra_model.repository.site'
+            - '@security.authorization_checker'
     open_orchestra_backoffice.manager.multi_languages_choice:
         class: '%open_orchestra_backoffice.manager.multi_languages_choice.class%'
         arguments:

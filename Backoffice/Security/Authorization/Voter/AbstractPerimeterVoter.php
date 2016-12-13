@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Perimeter\PerimeterManager;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 /**
  * Class AbstractPerimeterVoter
@@ -17,10 +18,12 @@ abstract class AbstractPerimeterVoter extends AbstractVoter
     protected $cachedPerimeters = array();
 
     /**
-     * @param PerimeterManager $perimeterManager
+     * @param AccessDecisionManagerInterface $decisionManager
+     * @param PerimeterManager              $perimeterManager
      */
-    public function __construct(PerimeterManager $perimeterManager)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, PerimeterManager $perimeterManager)
     {
+        parent::__construct($decisionManager);
         $this->perimeterManager = $perimeterManager;
     }
 

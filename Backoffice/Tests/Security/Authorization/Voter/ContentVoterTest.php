@@ -31,7 +31,7 @@ class ContentVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new ContentVoter($this->perimeterManager);
+        $this->voter = new ContentVoter($this->accessDecisionManager, $this->perimeterManager);
     }
 
     /**

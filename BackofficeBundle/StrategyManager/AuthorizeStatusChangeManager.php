@@ -6,8 +6,10 @@ use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterfac
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 
 /**
@@ -16,13 +18,14 @@ use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundE
 class AuthorizeStatusChangeManager
 {
     protected $strategies = array();
+    protected $authorizationChecker;
 
     /**
-     * @param TokenStorageInterface $tokenStorage
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -41,7 +44,7 @@ class AuthorizeStatusChangeManager
      */
     public function isGranted(StatusableInterface $document, StatusInterface $toStatus)
     {
-        if ($this->isSuperAdmin()) {
+        if ($this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
             return true;
         }
 
@@ -53,24 +56,5 @@ class AuthorizeStatusChangeManager
         }
 
         return true;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isSuperAdmin()
-    {
-        if (null === ($token = $this->tokenStorage->getToken())) {
-            throw new AuthenticationCredentialsNotFoundException('The token storage contains no authentication token. One possible reason may be that there is no firewall configured for this URL.');
-        }
-
-        if (($user = $token->getUser()) instanceof UserInterface &&
-             $user->hasRole(ContributionRoleInterface::DEVELOPER) ||
-             $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN)
-        ) {
-            return true;
-        }
-
-        return false;
     }
 }

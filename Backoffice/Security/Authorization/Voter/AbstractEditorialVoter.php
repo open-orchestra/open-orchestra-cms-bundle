@@ -17,34 +17,34 @@ abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
     /**
      * Vote for Read action
      *
-     * @param mixed         $subject
-     * @param UserInterface $user
+     * @param mixed          $subject
+     * @param TokenInterface $token
      *
      * @return bool
      */
-    abstract protected function voteForReadAction($subject, UserInterface $user);
+    abstract protected function voteForReadAction($subject, TokenInterface $token);
 
     /**
      * Vote for $action on $subject owned by $user
      *
-     * @param string        $action
-     * @param mixed         $subject
-     * @param UserInterface $user
+     * @param string         $action
+     * @param mixed          $subject
+     * @param TokenInterface $token
      *
      * @return bool
      */
-    abstract protected function voteForOwnedSubject($action, $subject, UserInterface $user);
+    abstract protected function voteForOwnedSubject($action, $subject, TokenInterface $token);
 
     /**
      * Vote for $action on $subject not owned by $user
      *
-     * @param string        $action
-     * @param mixed         $subject
-     * @param UserInterface $user
+     * @param string         $action
+     * @param mixed          $subject
+     * @param TokenInterface $token
      *
      * @return bool
      */
-    abstract protected function voteForSomeoneElseSubject($action, $subject, UserInterface $user);
+    abstract protected function voteForSomeoneElseSubject($action, $subject, TokenInterface $token);
 
     /**
      * @param string         $attribute
@@ -55,23 +55,21 @@ abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user = $token->getUser();
-
-        if ($this->isSuperAdmin($user)) {
+        if ($this->isSuperAdmin($token)) {
             return true;
         }
 
         if (ContributionActionInterface::CREATE === $attribute ||
             ContributionActionInterface::READ === $attribute
         )  {
-            return $this->voteForReadAction($subject, $user);
+            return $this->voteForReadAction($subject, $token);
         }
 
-        if ($this->isCreator($subject, $user)) {
-            return $this->voteForOwnedSubject($attribute, $subject, $user);
+        if ($this->isCreator($subject, $token->getUser())) {
+            return $this->voteForOwnedSubject($attribute, $subject, $token);
         }
 
-        return $this->voteForSomeoneElseSubject($attribute, $subject, $user);
+        return $this->voteForSomeoneElseSubject($attribute, $subject, $token);
     }
 
     /**

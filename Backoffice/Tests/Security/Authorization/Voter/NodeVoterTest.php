@@ -30,7 +30,7 @@ class NodeVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new NodeVoter($this->perimeterManager);
+        $this->voter = new NodeVoter($this->accessDecisionManager, $this->perimeterManager);
     }
 
     /**

@@ -61,13 +61,12 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user = $token->getUser();
 
-        if ($this->isSuperAdmin($user)) {
+        if ($this->isSuperAdmin($token)) {
             return true;
         }
 
-        if (!$user->hasRole(ContributionRoleInterface::SITE_ADMIN)) {
+        if (!$this->hasRole($token, ContributionRoleInterface::SITE_ADMIN)) {
             return false;
         }
 
@@ -75,6 +74,7 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
             return true;
         }
 
+        $user = $token->getUser();
         if(
             $subject instanceof RedirectionInterface ||
             $subject instanceof SiteInterface

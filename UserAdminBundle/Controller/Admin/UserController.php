@@ -143,7 +143,7 @@ class UserController extends AbstractAdminController
     {
         $sites = array();
         $siteIds = array();
-        $allSite = $this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) || $this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER);
+        $allSite = $this->get('security.authorization_checker')->isGranted(ContributionRoleInterface::PLATFORM_ADMIN);
 
         if ($allSite) {
             $sites = $this->container->get('open_orchestra_model.repository.site')->findByDeleted(false);

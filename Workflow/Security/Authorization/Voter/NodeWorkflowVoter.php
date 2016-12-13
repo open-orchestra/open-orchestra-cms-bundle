@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
@@ -25,6 +26,8 @@ class NodeWorkflowVoter extends AbstractWorkflowVoter
      *
      * @param StatusableInterface $subject
      * @param UserInterface       $user
+     *
+     * @return boolean
      */
     protected function isInPerimeter($subject, UserInterface $user)
     {

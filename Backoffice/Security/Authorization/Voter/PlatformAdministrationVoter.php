@@ -50,7 +50,7 @@ class PlatformAdministrationVoter extends AbstractVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        if ($this->isSuperAdmin($token->getUser())) {
+        if ($this->isSuperAdmin($token)) {
             return true;
         }
 

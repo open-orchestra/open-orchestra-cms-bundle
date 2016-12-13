@@ -30,7 +30,7 @@ class NodeWorkflowVoterTest extends AbstractVoterTest
 
         $this->workflowRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface');
 
-        $this->voter = new NodeWorkflowVoter($this->perimeterManager, $this->workflowRepository);
+        $this->voter = new NodeWorkflowVoter($this->accessDecisionManager, $this->perimeterManager, $this->workflowRepository);
     }
 
     /**
