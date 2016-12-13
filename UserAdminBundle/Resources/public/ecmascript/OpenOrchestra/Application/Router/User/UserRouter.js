@@ -4,6 +4,7 @@ import UserFormView    from '../../View/User/UserFormView'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import Users           from '../../Collection/User/Users'
 import UsersView       from '../../View/User/UsersView'
+import NewUserView     from '../../View/User/NewUserView'
 
 /**
  * @class UserRouter
@@ -17,7 +18,8 @@ class UserRouter extends OrchestraRouter
         this.routes = {
             'user/selfedit': 'editSelfUser',
             'user/edit/:userId': 'editUser',
-            'user/list(/:page)': 'listUser'
+            'user/list(/:page)': 'listUser',
+            'user/new/': 'newUser'
         };
     }
 
@@ -42,7 +44,7 @@ class UserRouter extends OrchestraRouter
         let url = Routing.generate('open_orchestra_user_admin_user_form', {userId: userId});
         this._diplayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let userFormView = new UserFormView({form: form, userId: userId});
+            let userFormView = new UserFormView({form: form});
             Application.getRegion('content').html(userFormView.render().$el);
         });
     }
@@ -78,6 +80,15 @@ class UserRouter extends OrchestraRouter
                 Application.getRegion('content').html(el);
             }
         });
+    }
+
+    /**
+     * New user
+     */
+    newUser() {
+        this._diplayLoader(Application.getRegion('content'));
+        let newUserView = new NewUserView();
+        Application.getRegion('content').html(newUserView.render().$el);
     }
 }
 

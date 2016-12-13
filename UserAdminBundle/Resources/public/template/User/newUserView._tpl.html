@@ -1,0 +1,46 @@
+<div class="top-action-buttons">
+    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('listUser') %>" role="button">
+        <%= Translator.trans('open_orchestra_backoffice.node.back_to_list') %>
+    </a>
+</div>
+<h1> <%= Translator.trans('open_orchestra_user_admin.user.title_new') %></h1>
+<div class='form-new'>
+    <form class="form-horizontal">
+        <div class="tab-content">
+            <fieldset>
+                <legend class="underline-label"><%= Translator.trans('open_orchestra_user_admin.user.new.contact_information') %></legend>
+                <div class="form-group ">
+                    <label class="control-label col-lg-3 required" for="firstName">
+                        <%= Translator.trans('open_orchestra_user_admin.user.new.first_name') %>
+                    </label>
+                    <div class="col-lg-9">
+                        <input type="text" id="firstName" name="firstName" required="required" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label col-lg-3 required" for="lastName">
+                        <%= Translator.trans('open_orchestra_user_admin.user.new.last_name') %>
+                    </label>
+                    <div class="col-lg-9">
+                        <input type="text" id="lastName" name="lastName" required="required" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label col-lg-3 required" for="email">
+                        <%= Translator.trans('open_orchestra_user_admin.user.new.email') %>
+                    </label>
+                    <div class="col-lg-9">
+                        <input type="email" id="email" name="email" required="required" class="form-control">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-12">
+                <button type="submit" class="submit-form btn btn-primary">
+                    <%= Translator.trans('open_orchestra_user_admin.user.new.check_correspondence') %>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

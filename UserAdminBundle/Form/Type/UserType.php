@@ -90,7 +90,7 @@ class UserType extends AbstractType
                     'invalid_message' => 'fos_user.password.mismatch',
                     'group_id' => 'authentication',
                     'sub_group_id' => 'identifier',
-                    'required' => false,
+                    'required' => $options['required_password'],
                 ))
                 ->add('language', 'choice', array(
                     'choices' => $this->getLanguages(),
@@ -114,7 +114,7 @@ class UserType extends AbstractType
                     'invalid_message' => 'fos_user.password.mismatch',
                     'group_id' => 'authentication',
                     'sub_group_id' => 'identifier',
-                    'required' => false,
+                    'required' => $options['required_password'],
                 ))
                 ->add('editAllowed', 'radio', array(
                     'label' => 'open_orchestra_user_admin.form.user.edit_allowed',
@@ -141,6 +141,7 @@ class UserType extends AbstractType
             'edit_groups' => true,
             'self_editing' => false,
             'group_enabled' => true,
+            'required_password' => false,
             'group_render' => array(
                 'information' => array(
                     'rank' => 0,

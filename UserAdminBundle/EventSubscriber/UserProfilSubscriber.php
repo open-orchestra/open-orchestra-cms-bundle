@@ -89,6 +89,6 @@ class UserProfilSubscriber implements EventSubscriberInterface
                 $user->addRole(ContributionRoleInterface::DEVELOPER);
             }
         }
-        $this->objectManager->flush($user);
+        //$this->objectManager->flush($user);
     }
 }

@@ -15,6 +15,9 @@ services:
     open_orchestra_user_admin.type.registration_user:
         class: '%open_orchestra_user_admin.type.registration_user.class%'
         arguments:
+            - '@object_manager'
+            - '@security.token_storage'
             - '%open_orchestra_user.document.user.class%'
+            - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_registration_user}

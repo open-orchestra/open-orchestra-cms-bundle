@@ -30,22 +30,24 @@ class UserController extends AbstractAdminController
     public function newAction(Request $request)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, UserInterface::ENTITY_TYPE);
+
         $userClass = $this->container->getParameter('open_orchestra_user.document.user.class');
         /** @var UserInterface $user */
         $user = new $userClass();
-        $user = $this->refreshLanguagesByAliases($user);
+        $user->setEmail($request->get('email'));
+        $user->setLastName($request->get('lastName'));
+        $user->setFirstName($request->get('firstName'));
 
         $form = $this->createForm('oo_registration_user', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_new'),
-            'validation_groups' => array('Registration')
-        ));
+                'action' => $this->generateUrl('open_orchestra_user_admin_new'),
+                'required_password' => true,
+                'validation_groups' => array('Registration'),
+            )
+        );
+
         $form->handleRequest($request);
         if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_user_admin.new.success'), $user)) {
-            $url = $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $user->getId()));
-
             $this->dispatchEvent(UserEvents::USER_CREATE, new UserEvent($user));
-
-            return $this->redirect($url);
         }
 
         return $this->renderAdminForm($form);
@@ -128,10 +130,7 @@ class UserController extends AbstractAdminController
             $this->dispatchEvent(UserEvents::USER_UPDATE, new UserEvent($user));
         }
 
-        $title = 'open_orchestra_user_admin.form.title';
-        $title = $this->get('translator')->trans($title);
-
-        return $this->renderAdminForm($form, array('title' => $title));
+        return $this->renderAdminForm($form);
     }
 
     /**
