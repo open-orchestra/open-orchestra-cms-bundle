@@ -66,7 +66,7 @@ class BlockNodePatternValidatorTest extends AbstractBaseTestCase
         Phake::when($area)->getBlocks()->thenReturn($blocks);
         $areas = array($area);
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($status)->isPublished()->thenReturn(true);
+        Phake::when($status)->isPublishedState()->thenReturn(true);
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getStatus()->thenReturn($status);
         Phake::when($node)->getAreas()->thenReturn($areas);

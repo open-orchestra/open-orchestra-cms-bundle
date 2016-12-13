@@ -29,7 +29,7 @@ class BlockNodePatternValidator extends ConstraintValidator
      */
     public function validate($node, Constraint $constraint)
     {
-        if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
+        if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublishedState()) {
             $areas = $node->getAreas();
             $routePattern = $node->getRoutePattern();
             foreach ($areas as $area) {

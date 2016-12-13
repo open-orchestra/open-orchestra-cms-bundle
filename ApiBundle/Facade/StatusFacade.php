@@ -13,22 +13,22 @@ class StatusFacade extends AbstractFacade
     /**
      * @Serializer\Type("boolean")
      */
-    public $published;
+    public $publishedState;
 
     /**
      * @Serializer\Type("boolean")
      */
-    public $initial;
+    public $initialState;
 
     /**
      * @Serializer\Type("boolean")
      */
-    public $autoPublishFrom;
+    public $autoPublishFromState;
 
     /**
      * @Serializer\Type("boolean")
      */
-    public $autoUnpublishTo;
+    public $autoUnpublishToState;
 
     /**
      * @Serializer\Type("boolean")

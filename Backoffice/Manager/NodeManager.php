@@ -81,7 +81,7 @@ class NodeManager
         /** @var NodeInterface $newNode */
         $newNode = clone $node;
         $newNode->setStatus($status);
-        $newNode->setCurrentlyPublished($status->isPublished());
+        $newNode->setCurrentlyPublished($status->isPublishedState());
         $newNode->setVersion($lastNodeVersion + 1);
         $this->duplicateBlockAndArea($node, $newNode);
 

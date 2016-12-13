@@ -34,7 +34,7 @@ class UpdateRedirectionNodeSubscriber implements EventSubscriberInterface
     {
         $node = $event->getNode();
         $previousStatus = $event->getPreviousStatus();
-        if ($node->getStatus()->isPublished() || (!$node->getStatus()->isPublished() && $previousStatus->isPublished())) {
+        if ($node->getStatus()->isPublishedState() || (!$node->getStatus()->isPublishedState() && $previousStatus->isPublishedState())) {
             $this->redirectionManager->generateRedirectionForNode($node);
         }
     }

@@ -67,14 +67,14 @@ class StatusTransformerTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param bool $published
-     * @param bool $initial
+     * @param bool $publishedState
+     * @param bool $initialState
      * @param bool $isGranted
      * @param bool $hasGroup
      *
      * @dataProvider provideTransformData
      */
-    public function testTransform($published, $initial, $isGranted, $hasGroup)
+    public function testTransform($publishedState, $initialState, $isGranted, $hasGroup)
     {
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
@@ -91,8 +91,8 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($this->groupContext)->hasGroup(Phake::anyParameters())->thenReturn($hasGroup);
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('trans_display_color');
         Phake::when($this->status)->getDisplayColor()->thenReturn('display_color');
-        Phake::when($this->status)->isPublished()->thenReturn($published);
-        Phake::when($this->status)->isInitial()->thenReturn($initial);
+        Phake::when($this->status)->isPublishedState()->thenReturn($publishedState);
+        Phake::when($this->status)->isInitialState()->thenReturn($initialState);
         Phake::when($this->status)->getFromRoles()->thenReturn($roles);
         Phake::when($this->status)->getToRoles()->thenReturn($roles);
         Phake::when($this->status)->getLabels()->thenReturn(array());
@@ -101,8 +101,8 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $facade = $this->transformer->transform($this->status, $document);
 
         $this->assertInstanceOf('OpenOrchestra\BaseApi\Facade\FacadeInterface', $facade);
-        $this->assertSame($published, $facade->published);
-        $this->assertSame($initial, $facade->initial);
+        $this->assertSame($publishedState, $facade->publishedState);
+        $this->assertSame($initialState, $facade->initialState);
         $this->assertSame($isGranted, $facade->allowed);
 
         if (!$hasGroup) {

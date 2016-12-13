@@ -32,7 +32,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListener
     {
         $statusableElement = $event->getStatusableElement();
 
-        if ($statusableElement->getStatus()->isPublished()) {
+        if ($statusableElement->getStatus()->isPublishedState()) {
             $lastPublishedNode = $this->repository->findOneCurrentlyPublishedByElement($statusableElement);
             if (!($lastPublishedNode instanceof StatusableInterface) || $lastPublishedNode->getVersion() <= $statusableElement->getVersion()) {
                 $this->updatePublishedFlag($statusableElement);

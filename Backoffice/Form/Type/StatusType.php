@@ -33,7 +33,7 @@ class StatusType extends AbstractType
         $builder->add('name', 'text', array(
             'label' => 'open_orchestra_backoffice.form.status.name'
         ))
-            ->add('published', 'checkbox', array(
+            ->add('publishedState', 'checkbox', array(
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.status.published.label',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.published.helper')
@@ -48,7 +48,7 @@ class StatusType extends AbstractType
                 'required' => false,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.out_of_workflow.helper'),
             ))
-            ->add('initial', 'checkbox', array(
+            ->add('initialState', 'checkbox', array(
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.status.initial.label',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.initial.helper')
@@ -57,12 +57,12 @@ class StatusType extends AbstractType
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.status.translation_state'
             ))
-            ->add('autoPublishFrom', 'checkbox', array(
+            ->add('autoPublishFromState', 'checkbox', array(
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.status.auto_publish_from.label',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.auto_publish_from.helper')
             ))
-            ->add('autoUnpublishTo', 'checkbox', array(
+            ->add('autoUnpublishToState', 'checkbox', array(
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.status.auto_unpublish_to.label',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.status.auto_unpublish_to.helper')
