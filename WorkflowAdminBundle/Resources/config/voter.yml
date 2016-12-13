@@ -6,6 +6,7 @@ services:
     open_orchestra_workflow.voter.node_workflow:
         class: '%open_orchestra_workflow.voter.node_workflow.class%'
         arguments:
+            - '@security.access.decision_manager'
             - '@open_orchestra_group.perimeter_manager'
             - '@open_orchestra_model.repository.workflow_profile'
         tags:
@@ -13,6 +14,7 @@ services:
     open_orchestra_workflow.voter.content_workflow:
         class: '%open_orchestra_workflow.voter.content_workflow.class%'
         arguments:
+            - '@security.access.decision_manager'
             - '@open_orchestra_group.perimeter_manager'
             - '@open_orchestra_model.repository.workflow_profile'
         tags:

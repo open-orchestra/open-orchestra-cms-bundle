@@ -56,7 +56,7 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
      */
     public function testVote($object, $attribute, array $roles, $inPerimeter, $expectedVote)
     {
-        if (in_array(ContributionRoleInterface::PLATFORM_ADMIN, $roles)) {
+        if (in_array(ContributionRoleInterface::PLATFORM_ADMIN, $roles) || in_array(ContributionRoleInterface::DEVELOPER, $roles)) {
             Phake::when($this->accessDecisionManager)->decide(Phake::anyParameters())->thenReturn(true);
         }
         Phake::when($this->token)->getRoles()->thenReturn($roles);

@@ -9,6 +9,7 @@ use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 /**
  * Class AbstractWorkflowVoter
@@ -22,12 +23,14 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
     /**
      * @param PerimeterManager                   $perimeterManager
      * @param WorkflowProfileRepositoryInterface $workflowRepository
+     * @param AccessDecisionManagerInterface     $decisionManager
      */
     public function __construct(
+        AccessDecisionManagerInterface $decisionManager,
         PerimeterManager $perimeterManager,
         WorkflowProfileRepositoryInterface $workflowRepository
     ) {
-        parent::__construct($perimeterManager);
+        parent::__construct($decisionManager,$perimeterManager);
         $this->workflowRepository = $workflowRepository;
     }
 
@@ -84,12 +87,11 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user = $token->getUser();
-
-        if ($this->isSuperAdmin($user)) {
+        if ($this->isSuperAdmin($token)) {
             return $this->voteForSuperAdmin($subject->getStatus(), $attribute);
         }
 
+        $user = $token->getUser();
         if (!$this->isInPerimeter($subject, $user)) {
             return false;
         }

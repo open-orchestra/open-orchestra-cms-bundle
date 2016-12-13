@@ -30,7 +30,7 @@ class ContentWorkflowVoterTest extends AbstractVoterTest
 
         $this->workflowRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface');
 
-        $this->voter = new ContentWorkflowVoter($this->perimeterManager, $this->workflowRepository);
+        $this->voter = new ContentWorkflowVoter($this->accessDecisionManager, $this->perimeterManager, $this->workflowRepository);
     }
 
     /**
