@@ -3,10 +3,11 @@ open_orchestra_user_admin:
         user:
           users: Tous les utilisateurs
     table:
-        group:
+        groups:
             label: Label
             site_name: Nom du site
             site: Site
+            nbr_users: Nombre de membres
         users:
             username: Nom d'utilisateur
             groups: Groupes
@@ -17,3 +18,9 @@ open_orchestra_user_admin:
         title_edit: Modifier l'utilisateur
         search_engine:
           search: Rechercher
+    group:
+        title_list: Liste des groupes
+        title_edit: Modifier le groupe
+        search_engine:
+          search: Rechercher
+          

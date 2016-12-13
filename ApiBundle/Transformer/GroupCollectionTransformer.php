@@ -15,15 +15,16 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param Collection $groupCollection
+     * @param array      $nbrGroupsUsers
      *
      * @return FacadeInterface
      */
-    public function transform($groupCollection)
+    public function transform($groupCollection, array $nbrGroupsUsers = array())
     {
         $facade = $this->newFacade();
 
         foreach ($groupCollection as $group) {
-            $facade->addGroup($this->getTransformer('group')->transform($group));
+            $facade->addGroup($this->getTransformer('group')->transform($group, (array_key_exists($group->getId(), $nbrGroupsUsers)) ? $nbrGroupsUsers[$group->getId()] : 0));
         }
 
         if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE)) {
@@ -34,6 +35,26 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null            $source
+     *
+     * @return array
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = NULL)
+    {
+        $groups = array();
+        $groupsFacade = $facade->getGroups();
+        foreach ($groupsFacade as $groupFacade) {
+            $group = $this->getTransformer('group')->reverseTransform($groupFacade);
+            if (null !== $group) {
+                $groups[] = $group;
+            }
+        }
+
+        return $groups;
     }
 
     /**

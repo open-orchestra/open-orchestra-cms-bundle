@@ -19,6 +19,16 @@ class Group extends OrchestraModel
 
         return response;
     }
+
+    /**
+     * @inheritdoc
+     */
+    _getSyncUrl(method) {
+        switch (method) {
+            case "create":
+                return Routing.generate('open_orchestra_api_group_duplicate');
+        }
+    }
 }
 
 export default Group

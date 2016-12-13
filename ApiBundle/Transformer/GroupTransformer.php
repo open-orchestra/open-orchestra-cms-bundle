@@ -2,51 +2,49 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\GroupBundle\Event\GroupFacadeEvent;
-use OpenOrchestra\GroupBundle\GroupFacadeEvents;
-use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 
 /**
  * Class GroupTransformer
  */
 class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 {
-    protected $eventDispatcher;
     protected $multiLanguagesChoiceManager;
 
     /**
      * @param string                               $facadeClass
      * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
-     * @param EventDispatcherInterface             $eventDispatcher
+     * @param GroupRepositoryInterface             $groupRepository
      */
     public function __construct(
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        EventDispatcherInterface $eventDispatcher
+        GroupRepositoryInterface $groupRepository
     ){
         parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->groupRepository = $groupRepository;
     }
 
     /**
      * @param GroupInterface $group
+     * @param integer        $nbrUsers
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($group)
+    public function transform($group, $nbrUsers = 0)
     {
         if (!$group instanceof GroupInterface) {
             throw new TransformerParameterTypeException();
@@ -57,10 +55,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->id = $group->getId();
         $facade->name = $group->getName();
         $facade->label = $this->multiLanguagesChoiceManager->choose($group->getLabels());
+        $facade->nbrUsers = $nbrUsers;
 
         $facade = $this->addSite($facade, $group);
         $facade = $this->addRoles($facade, $group);
-        $facade = $this->addRights($facade, $group);
+        $facade = $this->addRights($facade, $group, $nbrUsers);
 
         return $facade;
     }
@@ -103,30 +102,28 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      *
      * @return FacadeInterface
      */
-    protected function addRights(FacadeInterface $facade, GroupInterface $group)
+    protected function addRights(FacadeInterface $facade, GroupInterface $group, $nbrUsers = 0)
     {
 
         $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $group));
-        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group));
+        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group) && $nbrUsers == 0);
 
         return $facade;
     }
 
     /**
-     * @param FacadeInterface     $facade
-     * @param GroupInterface|null $group
+     * @param FacadeInterface $facade
+     * @param null            $source
      *
-     * @return mixed
-     * @throws
+     * @return GroupInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $group = null)
+    public function reverseTransform(FacadeInterface $facade, $source = NULL)
     {
-        $this->eventDispatcher->dispatch(
-            GroupFacadeEvents::POST_GROUP_REVERSE_TRANSFORMATION,
-            new GroupFacadeEvent($group, $facade)
-        );
+        if (null !== $facade->id) {
+            return $this->groupRepository->find($facade->id);
+        }
 
-        return $group;
+        return null;
     }
 
     /**

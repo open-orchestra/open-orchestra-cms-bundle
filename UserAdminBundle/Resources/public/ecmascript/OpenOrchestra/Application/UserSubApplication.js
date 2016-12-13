@@ -1,4 +1,5 @@
 import UserRouter           from './Router/User/UserRouter'
+import GroupRouter          from './Router/Group/GroupRouter'
 import FormBehaviorManager  from '../Service/Form/Behavior/Manager'
 import GroupTable           from '../Service/Form/Behavior/GroupTable'
 
@@ -21,6 +22,7 @@ class UserSubApplication
      */
     _initRouter() {
         new UserRouter();
+        new GroupRouter();
     }
 
     /**

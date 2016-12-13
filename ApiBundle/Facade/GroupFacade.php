@@ -16,6 +16,11 @@ class GroupFacade extends AbstractFacade
     public $name;
 
     /**
+     * @Serializer\Type("integer")
+     */
+    public $nbrUsers;
+
+    /**
      * @Serializer\Type("string")
      */
     public $label;

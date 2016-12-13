@@ -2,17 +2,18 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class GroupController
@@ -23,28 +24,6 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
  */
 class GroupController extends BaseController
 {
-    use HandleRequestDataTable;
-
-    /**
-     * @param string $groupId
-     *
-     * @return FacadeInterface
-     *
-     * @Config\Route("/{groupId}", name="open_orchestra_api_group_show")
-     * @Config\Method({"GET"})
-     *
-     * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::GROUP_ROLES,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
-     * })
-     */
-    public function showAction($groupId)
-    {
-        $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('group')->transform($group);
-    }
-
     /**
      * @param Request $request
      * @param string  $groupId
@@ -69,7 +48,9 @@ class GroupController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("", name="open_orchestra_api_group_list")
+     * @Config\Route("/list", name="open_orchestra_api_group_list", defaults={"withCount" = 1})
+     * @Config\Route("/user/list", name="open_orchestra_api_group_user_list", defaults={"withCount" = 0})
+     *
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
@@ -77,42 +58,7 @@ class GroupController extends BaseController
      * })
      * @return FacadeInterface
      */
-    public function listAction(Request $request)
-    {
-        $siteIds = array();
-        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
-        foreach ($availableSites as $site) {
-            $siteIds[] = $site->getId();
-        }
-        $mapping = array(
-            'label' => 'labels',
-        );
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
-        $repository = $this->get('open_orchestra_user.repository.group');
-        $collection = $repository->findForPaginate($configuration, $siteIds);
-        $recordsTotal = $repository->count($siteIds);
-        $recordsFiltered = $repository->countWithFilter($configuration, $siteIds);
-
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
-        $facade = $collectionTransformer->transform($collection);
-        $facade->recordsTotal = $recordsTotal;
-        $facade->recordsFiltered = $recordsFiltered;
-
-        return $facade;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @Config\Route("/user/list", name="open_orchestra_api_group_user_list")
-     * @Config\Method({"GET"})
-     *
-     * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
-     * })
-     * @return FacadeInterface
-     */
-    public function listUserAction(Request $request)
+    public function listAction(Request $request, $withCount)
     {
         $siteIds = array();
         $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
@@ -124,14 +70,23 @@ class GroupController extends BaseController
         $mapping = array(
             'label' => 'labels',
         );
+
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_user.repository.group');
         $collection = $repository->findForPaginate($configuration, $siteIds);
+
+        $nbrGroupsUsers = array();
+        if ($withCount) {
+            $filter = $collection;
+            array_walk($filter, function(&$item) {$item = $item->getId();});
+            $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->countUserByGroup($filter);
+        }
+
         $recordsTotal = $repository->count($siteIds);
         $recordsFiltered = $repository->countWithFilter($configuration, $siteIds);
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $collectionTransformer->transform($collection, $nbrGroupsUsers);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -139,45 +94,71 @@ class GroupController extends BaseController
     }
 
     /**
-     * @param string $groupId
+     * @param Request $request
      *
-     * @Config\Route("/{groupId}/delete", name="open_orchestra_api_group_delete")
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_group_delete_multiple")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
-    public function deleteAction($groupId)
+    public function deleteGroupsAction(Request $request)
     {
-        $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
-        $dm = $this->get('object_manager');
-        $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
-        $dm->remove($group);
-        $dm->flush();
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.group_collection.class'),
+            $format
+        );
+        $groupRepository = $this->get('open_orchestra_user.repository.group');
+        $groups = $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->reverseTransform($facade);
+        $groupIds = array();
+        foreach ($groups as $group) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
+                $groupIds[] = $group->getId();
+                $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
+            }
+        }
+
+        $groupRepository->removeGroups($groupIds);
 
         return array();
     }
 
     /**
-     * @param string $groupId
+     * @param Request $request
      *
-     * @Config\Route("/{groupId}/duplicate", name="open_orchestra_api_group_duplicate")
+     * @Config\Route("/duplicate/datatable", name="open_orchestra_api_group_duplicate")
      * @Config\Method({"POST"})
      *
      * @return Response
      */
-    public function duplicateAction($groupId)
+    public function duplicateAction(Request $request)
     {
-        $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.group.class'),
+            $format
+        );
+        $group = $this->get('open_orchestra_api.transformer_manager')->get('group')->reverseTransform($facade);
 
         $newGroup = clone $group;
 
-        if (! $this->isValid($newGroup)) {
-            return $this->getViolations();
-        }
+        $currentSiteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
 
-        $objectManager = $this->get('object_manager');
-        $objectManager->persist($newGroup);
-        $objectManager->flush();
+        $newGroup->setWorkflowProfileCollections($group->getWorkflowProfileCollections());
+
+        if ($newGroup->getSite()->getId() === $currentSite->getId()) {
+            $newGroup->setPerimeters($group->getPerimeters());
+        }
+        $newGroup->setSite($currentSite);
+
+        if ($this->isGranted(ContributionActionInterface::CREATE, $newGroup)) {
+            $objectManager = $this->get('object_manager');
+            $objectManager->persist($newGroup);
+            $objectManager->flush();
+        }
 
         return array();
     }

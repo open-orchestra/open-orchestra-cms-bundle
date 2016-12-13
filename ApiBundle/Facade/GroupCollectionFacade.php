@@ -27,4 +27,12 @@ class GroupCollectionFacade extends PaginateCollectionFacade
     {
         $this->groups[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
 }

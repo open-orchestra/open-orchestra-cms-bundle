@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Model;
 
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
 
@@ -53,9 +54,19 @@ interface GroupInterface extends BaseGroupInterface
 
     /**
      * @param string                             $entityType
-     * @param WorkflowProfileCollectionInterface $profileCollection
+     * @param WorkflowProfileCollectionInterface $workflowProfileCollection
      */
-    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $profileCollection);
+    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $workflowProfileCollection);
+
+    /**
+     * @param Collection $workflowProfileCollections
+     */
+    public function setWorkflowProfileCollections(Collection $workflowProfileCollections);
+
+    /**
+     * @return Collection
+     */
+    public function getWorkflowProfileCollections();
 
     /**
      * @param string $entityType
@@ -70,9 +81,19 @@ interface GroupInterface extends BaseGroupInterface
     public function addPerimeter(PerimeterInterface $perimeter);
 
     /**
+     * @param Collection $perimeters
+     */
+    public function setPerimeters(Collection $perimeters);
+
+    /**
      * @param string $perimeterType
      *
      * @return array
      */
     public function getPerimeter($perimeterType);
+
+    /**
+     * @return Collection
+     */
+    public function getPerimeters();
 }

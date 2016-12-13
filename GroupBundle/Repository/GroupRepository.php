@@ -86,6 +86,21 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
         return $this->countDocumentAggregateQuery($qa);
     }
 
+    /**
+     * @param array $groupIds
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeGroups(array $groupIds)
+    {
+        array_walk($groupIds, function(&$item) {$item = new \MongoId($item);});
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+        ->field('id')->in($groupIds)
+        ->getQuery()
+        ->execute();
+    }
 
     /**
      * @param PaginateFinderConfiguration $configuration

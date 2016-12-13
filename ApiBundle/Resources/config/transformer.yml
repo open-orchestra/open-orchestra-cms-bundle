@@ -223,7 +223,7 @@ services:
             - '%open_orchestra_api.facade.group.class%'
             - '@security.authorization_checker'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
-            - '@event_dispatcher'
+            - '@open_orchestra_user.repository.group'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.group_collection:
