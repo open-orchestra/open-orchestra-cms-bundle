@@ -1,6 +1,6 @@
 import OrchestraView        from '../OrchestraView'
 import ModalView            from '../../../Service/Modal/View/ModalView'
-import UserGroups           from '../../Collection/Group/UserGroups'
+import UserGroups               from '../../Collection/Group/UserGroups'
 import GroupListForUserView from './GroupListForUserView'
 import Application          from '../../Application'
 

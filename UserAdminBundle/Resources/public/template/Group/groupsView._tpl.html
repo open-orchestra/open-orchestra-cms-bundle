@@ -1,0 +1,37 @@
+<div class="top-action-buttons">
+    <a class="btn btn-info" href="#" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+</div>
+<h1> <%= Translator.trans('open_orchestra_user_admin.group.title_list') %></h1>
+<form class="form-horizontal search-engine">
+          <input type="hidden" name='language' value="<%= language %>">
+    <div class="form-group col-lg-6">
+        <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_user_admin.table.groups.label')%></label>
+        <div class="col-md-8">
+            <input type="text" name='label' class="form-control" placeholder="">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_user_admin.table.groups.site')%></label>
+        <div class="col-md-8">
+			<div class="styled-select">
+				<select class="form-control" name='site'>
+                    <option></option>
+                    <% _.each(sites, function(site, key) { %>
+                            <option value="<%= site.get('id') %>"><%= site.get('name') %></option>
+                    <% }); %>
+				</select>
+			</div>
+        </div>
+    </div>
+    <div class="form-group col-lg-12">
+        <div class="col-lg-6">
+            <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+            <button class="btn btn-border btn-large hidden reset"><%= Translator.trans('open_orchestra_backoffice.node.search_engine.reset')%></button>
+        </div>
+    </div>
+</form>
+<div class="groups-list">
+</div>
+<div class="bottom-action-buttons">
+    <button class="btn btn-danger btn-delete"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
+</div>

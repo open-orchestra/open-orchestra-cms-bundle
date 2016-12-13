@@ -13,16 +13,17 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 class SiteCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param Collection $siteCollection
+     * @param Collection $groupCollection
+     * @param array      $nbrGroupsUsers
      *
      * @return FacadeInterface
      */
-    public function transform($siteCollection)
+    public function transform($groupCollection, array $nbrGroupsUsers = array())
     {
         $facade = $this->newFacade();
 
-        foreach ($siteCollection as $site) {
-            $facade->addSite($this->getTransformer('site')->transform($site));
+        foreach ($groupCollection as $group) {
+            $facade->addGroup($this->getTransformer('group')->transform($group, (array_key_exists($group->getId(), $nbrGroupsUsers)) ? $nbrGroupsUsers[$group->getId()] : 0));
         }
 
         return $facade;
@@ -47,6 +48,26 @@ class SiteCollectionTransformer extends AbstractTransformer
         }
 
         return $sites;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null            $source
+     *
+     * @return array
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = NULL)
+    {
+        $groups = array();
+        $groupsFacade = $facade->getGroups();
+        foreach ($groupsFacade as $groupFacade) {
+            $group = $this->getTransformer('group')->reverseTransform($groupFacade);
+            if (null !== $group) {
+                $groups[] = $group;
+            }
+        }
+
+        return $groups;
     }
 
     /**
