@@ -99,12 +99,15 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
      * @private
      */
     _createDeleteCheckbox(td, cellData, rowData) {
-        console.log(rowData);
-        let id = 'checkbox' + rowData.cid;
-        let $checkbox = $('<input>', {type: 'checkbox', id: id, class:'delete-checkbox'});
-        $checkbox.data(rowData);
-        $(td).append($checkbox);
-        $(td).append($('<label>', {for: id}))
+        let $cell = $('<div>');
+        if (rowData.get('rights').can_delete) {
+            let id = 'checkbox' + rowData.cid;
+            let $checkbox = $('<input>', {type: 'checkbox', id: id, class:'delete-checkbox'});
+            $checkbox.data(rowData);
+            $cell.append($checkbox);
+            $cell.append($('<label>', {for: id}))
+        }
+        $(td).append($cell);
     }
 
     /**
