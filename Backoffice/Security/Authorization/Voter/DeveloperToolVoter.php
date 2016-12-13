@@ -55,6 +55,6 @@ class DeveloperToolVoter extends AbstractVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        return $token->getUser()->hasRole(ContributionRoleInterface::DEVELOPER);
+        return $this->hasRole($token, ContributionRoleInterface::DEVELOPER);
     }
 }

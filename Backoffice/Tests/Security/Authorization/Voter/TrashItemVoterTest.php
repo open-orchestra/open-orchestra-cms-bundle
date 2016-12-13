@@ -31,7 +31,7 @@ class TrashItemVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new TrashItemVoter();
+        $this->voter = new TrashItemVoter($this->accessDecisionManager);
     }
 
     /**

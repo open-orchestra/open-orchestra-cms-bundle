@@ -30,7 +30,7 @@ class PlatformAdministrationVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new PlatformAdministrationVoter();
+        $this->voter = new PlatformAdministrationVoter($this->accessDecisionManager);
     }
 
     /**

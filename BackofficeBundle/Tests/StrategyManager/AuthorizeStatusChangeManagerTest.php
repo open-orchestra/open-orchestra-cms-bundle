@@ -2,12 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\StrategyManager;
 
-use OpenOrchestra\UserBundle\Model\UserInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager;
-use OpenOrchestra\BaseApi\Model\TokenInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelBundle\Document\Authorization;
 use Phake;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 
 /**
@@ -22,27 +24,21 @@ class AuthorizeStatusChangeManagerTest extends AbstractBaseTestCase
 
     protected $strategy1;
     protected $strategy2;
-    protected $tokenStorage;
-    protected $user;
+    protected $authorizationChecker;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->tokenStorage = Phake::mock(TokenStorageInterface::class);
         $this->strategy1 = Phake::mock('OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface');
         Phake::when($this->strategy1)->getName()->thenReturn('strategy1');
         $this->strategy2 = Phake::mock('OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface');
         Phake::when($this->strategy2)->getName()->thenReturn('strategy2');
 
-        $this->user  = Phake::mock(UserInterface::class);
+        $this->authorizationChecker = Phake::mock(AuthorizationCheckerInterface::class);
 
-        $token = Phake::mock(TokenInterface::class);
-        Phake::when($token)->getUser()->thenReturn($this->user);
-        Phake::when($this->tokenStorage)->getToken()->thenReturn($token);
-
-        $this->manager = new AuthorizeStatusChangeManager($this->tokenStorage);
+        $this->manager = new AuthorizeStatusChangeManager($this->authorizationChecker);
         $this->manager->addStrategy($this->strategy1);
         $this->manager->addStrategy($this->strategy2);
     }
@@ -58,7 +54,7 @@ class AuthorizeStatusChangeManagerTest extends AbstractBaseTestCase
     {
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $toStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($this->user)->hasRole(Phake::anyParameters())->thenReturn(false);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(false);
 
         Phake::when($this->strategy1)->isGranted(Phake::anyParameters())->thenReturn($isGranted1);
         Phake::when($this->strategy2)->isGranted(Phake::anyParameters())->thenReturn($isGranted2);
@@ -91,22 +87,7 @@ class AuthorizeStatusChangeManagerTest extends AbstractBaseTestCase
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $toStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
-        Phake::when($this->user)->hasRole(Phake::anyParameters())->thenReturn(true);
-
-        $this->assertTrue($this->manager->isGranted($document, $toStatus));
-    }
-
-    /**
-     * Test exception is granted
-     */
-    public function testIsGrantedException()
-    {
-        $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-        $toStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-
-        Phake::when($this->tokenStorage)->getToken()->thenReturn(null);
-
-        $this->expectException(AuthenticationCredentialsNotFoundException::class);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->assertTrue($this->manager->isGranted($document, $toStatus));
     }

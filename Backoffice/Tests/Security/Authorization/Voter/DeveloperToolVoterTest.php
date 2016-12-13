@@ -30,7 +30,7 @@ class DeveloperToolVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new DeveloperToolVoter();
+        $this->voter = new DeveloperToolVoter($this->accessDecisionManager);
     }
 
     /**

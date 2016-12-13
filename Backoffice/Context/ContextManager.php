@@ -10,6 +10,8 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Centralize app contextual datas
@@ -26,26 +28,30 @@ class ContextManager implements CurrentSiteIdInterface
     protected $currentSiteLanguages = array();
     protected $defaultLocale;
     protected $siteRepository;
+    protected $authorizationChecker;
 
     /**
      * Constructor
      *
-     * @param Session                 $session
-     * @param TokenStorageInterface   $tokenStorage
-     * @param string                  $defaultLocale
-     * @param SiteRepositoryInterface $siteRepository
+     * @param Session                       $session
+     * @param TokenStorageInterface         $tokenStorage
+     * @param string                        $defaultLocale
+     * @param SiteRepositoryInterface       $siteRepository
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         Session $session,
         TokenStorageInterface $tokenStorage,
         $defaultLocale,
-        SiteRepositoryInterface $siteRepository
+        SiteRepositoryInterface $siteRepository,
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->defaultLocale = $defaultLocale;
         $this->siteRepository = $siteRepository;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -99,15 +105,16 @@ class ContextManager implements CurrentSiteIdInterface
      */
     public function getAvailableSites()
     {
-        $token = $this->tokenStorage->getToken();
         $sites = array();
 
-        if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
-            if ($user->hasRole(ContributionRoleInterface::DEVELOPER) ||
-                $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN)
-            ) {
-                return $this->siteRepository->findByDeleted(false);
-            }
+        if ($this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
+            return $this->siteRepository->findByDeleted(false);
+        }
+
+        $token = $this->tokenStorage->getToken();
+        if ($token instanceof TokenInterface &&
+            ($user = $token->getUser()) instanceof GroupableInterface
+        ) {
             foreach ($user->getGroups() as $group) {
                 /** @var SiteInterface $site */
                 $site = $group->getSite();
@@ -116,6 +123,7 @@ class ContextManager implements CurrentSiteIdInterface
                 }
             }
         }
+
 
         return $sites;
     }

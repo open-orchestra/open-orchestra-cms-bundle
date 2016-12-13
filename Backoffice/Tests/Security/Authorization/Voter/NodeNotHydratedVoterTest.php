@@ -30,7 +30,7 @@ class NodeNotHydratedVoterTest extends AbstractVoterTest
     {
         parent::setUp();
 
-        $this->voter = new NodeNotHydratedVoter($this->perimeterManager);
+        $this->voter = new NodeNotHydratedVoter($this->accessDecisionManager, $this->perimeterManager);
     }
 
     /**

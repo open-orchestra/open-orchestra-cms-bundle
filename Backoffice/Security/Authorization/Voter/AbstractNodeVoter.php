@@ -3,9 +3,9 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Class NodeVoter
@@ -25,14 +25,16 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
      * Vote for Read action
      * A user can read a node if it is in his perimeter
      *
-     * @param NodeInterface $node
-     * @param UserInterface $user
+     * @param NodeInterface  $node
+     * @param TokenInterface $token
      *
      * @return bool
      */
-    protected function voteForReadAction($node, UserInterface $user)
+    protected function voteForReadAction($node, TokenInterface $token)
     {
-        return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
+        $user = $token->getUser();
+
+        return $this->hasRole($token, ContributionRoleInterface::NODE_CONTRIBUTOR)
             && $this->isSubjectInPerimeter($this->getPath($node), $user, NodeInterface::ENTITY_TYPE);
     }
 
@@ -40,15 +42,17 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
      * Vote for $action on $node owned by $user
      * A user can act on his own nodes if he has the NODE_CONTRIBUTOR role and the node is in his perimeter 
      *
-     * @param string        $action
-     * @param NodeInterface $node
-     * @param UserInterface $user
+     * @param string         $action
+     * @param NodeInterface  $node
+     * @param TokenInterface $token
      *
      * @return bool
      */
-    protected function voteForOwnedSubject($action, $node, UserInterface $user)
+    protected function voteForOwnedSubject($action, $node, TokenInterface $token)
     {
-        return $user->hasRole(ContributionRoleInterface::NODE_CONTRIBUTOR)
+        $user = $token->getUser();
+
+        return $this->hasRole($token, ContributionRoleInterface::NODE_CONTRIBUTOR)
             && $this->isSubjectInPerimeter($this->getPath($node), $user, NodeInterface::ENTITY_TYPE);
     }
 
@@ -56,14 +60,15 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
      * Vote for $action on $node not owned by $user
      * A user can act on someone else's node if he has the matching super role and the node is in his perimeter
      *
-     * @param string        $action
-     * @param NodeInterface $node
-     * @param UserInterface $user
+     * @param string         $action
+     * @param NodeInterface  $node
+     * @param TokenInterface $token
      *
      * @return bool
      */
-    protected function voteForSomeoneElseSubject($action, $node, UserInterface $user)
+    protected function voteForSomeoneElseSubject($action, $node, TokenInterface $token)
     {
+        $user = $token->getUser();
         $requiredRole = ContributionRoleInterface::NODE_CONTRIBUTOR;
 
         switch ($action) {
@@ -75,7 +80,7 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
             break;
         }
 
-        return $user->hasRole($requiredRole)
+        return $this->hasRole($token, $requiredRole)
             && $this->isSubjectInPerimeter($this->getPath($node), $user, NodeInterface::ENTITY_TYPE);
     }
 }

@@ -50,9 +50,7 @@ class TrashItemVoter extends AbstractVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user = $token->getUser();
-
-        if ($this->isSuperAdmin($user)) {
+        if ($this->isSuperAdmin($token)) {
             return true;
         }
 
@@ -65,6 +63,6 @@ class TrashItemVoter extends AbstractVoter
             ContributionActionInterface::TRASH_PURGE   => ContributionRoleInterface::TRASH_SUPRESSOR
         );
 
-        return $user->hasRole($actionMapping[$attribute]);
+        return $this->hasRole($token, $actionMapping[$attribute]);
     }
 }

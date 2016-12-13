@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
@@ -16,6 +17,7 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
     protected $group;
     protected $token;
     protected $user;
+    protected $accessDecisionManager;
     protected $perimeter;
     protected $username = 'User Name';
 
@@ -39,6 +41,8 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
 
         $this->token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         Phake::when($this->token)->getUser()->thenReturn($this->user);
+
+        $this->accessDecisionManager = Phake::mock('Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface');
     }
 
     /**
@@ -52,9 +56,10 @@ abstract class AbstractVoterTest extends AbstractBaseTestCase
      */
     public function testVote($object, $attribute, array $roles, $inPerimeter, $expectedVote)
     {
-        foreach ($roles as $role) {
-            Phake::when($this->user)->hasRole($role)->thenReturn(true);
+        if (in_array(ContributionRoleInterface::PLATFORM_ADMIN, $roles)) {
+            Phake::when($this->accessDecisionManager)->decide(Phake::anyParameters())->thenReturn(true);
         }
+        Phake::when($this->token)->getRoles()->thenReturn($roles);
 
         Phake::when($this->perimeterManager)->isInPerimeter(Phake::anyParameters())->thenReturn($inPerimeter);
 
