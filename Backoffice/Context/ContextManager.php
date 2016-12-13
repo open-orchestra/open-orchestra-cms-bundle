@@ -105,24 +105,22 @@ class ContextManager implements CurrentSiteIdInterface
     public function getAvailableSites()
     {
         $sites = array();
-
-        if ($this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
-            return $this->siteRepository->findByDeleted(false);
-        }
-
         $token = $this->tokenStorage->getToken();
-        if ($token instanceof TokenInterface &&
-            ($user = $token->getUser()) instanceof GroupableInterface
-        ) {
-            foreach ($user->getGroups() as $group) {
-                /** @var SiteInterface $site */
-                $site = $group->getSite();
-                if (null !== $site && !$site->isDeleted()) {
-                    $sites[$site->getId()] = $site;
+        if ($token instanceof TokenInterface) {
+            if ($this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
+                return $this->siteRepository->findByDeleted(false);
+            }
+
+            if (($user = $token->getUser()) instanceof GroupableInterface) {
+                foreach ($user->getGroups() as $group) {
+                    /** @var SiteInterface $site */
+                    $site = $group->getSite();
+                    if (null !== $site && !$site->isDeleted()) {
+                        $sites[$site->getId()] = $site;
+                    }
                 }
             }
         }
-
 
         return $sites;
     }
