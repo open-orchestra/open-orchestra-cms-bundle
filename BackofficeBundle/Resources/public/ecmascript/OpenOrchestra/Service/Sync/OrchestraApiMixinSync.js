@@ -21,6 +21,7 @@ let OrchestraApiSyncMixin = (superclass) => class extends superclass {
         if (typeof url != 'undefined') {
             options.url = url;
         }
+
         return Backbone.sync.apply(this, [method, model, options]);
     }
 
