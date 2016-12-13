@@ -32,10 +32,8 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
      */
     protected function voteForReadAction($node, TokenInterface $token)
     {
-        $user = $token->getUser();
-
         return $this->hasRole($token, ContributionRoleInterface::NODE_CONTRIBUTOR)
-            && $this->isSubjectInPerimeter($this->getPath($node), $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($this->getPath($node), $token->getUser(), NodeInterface::ENTITY_TYPE);
     }
 
     /**
@@ -50,10 +48,8 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
      */
     protected function voteForOwnedSubject($action, $node, TokenInterface $token)
     {
-        $user = $token->getUser();
-
         return $this->hasRole($token, ContributionRoleInterface::NODE_CONTRIBUTOR)
-            && $this->isSubjectInPerimeter($this->getPath($node), $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($this->getPath($node), $token->getUser(), NodeInterface::ENTITY_TYPE);
     }
 
     /**
@@ -68,7 +64,6 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
      */
     protected function voteForSomeoneElseSubject($action, $node, TokenInterface $token)
     {
-        $user = $token->getUser();
         $requiredRole = ContributionRoleInterface::NODE_CONTRIBUTOR;
 
         switch ($action) {
@@ -81,6 +76,6 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
         }
 
         return $this->hasRole($token, $requiredRole)
-            && $this->isSubjectInPerimeter($this->getPath($node), $user, NodeInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($this->getPath($node), $token->getUser(), NodeInterface::ENTITY_TYPE);
     }
 }

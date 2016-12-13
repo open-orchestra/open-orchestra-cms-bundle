@@ -42,13 +42,12 @@ class ContentVoter extends AbstractEditorialVoter
      */
     protected function voteForReadAction($subject, TokenInterface $token)
     {
-        $user = $token->getUser();
         $contentType = $subject;
         if (is_object($subject)) {
             $contentType = $subject->getContentType();
         }
 
-        return $this->isSubjectInPerimeter($contentType, $user, ContentInterface::ENTITY_TYPE);
+        return $this->isSubjectInPerimeter($contentType, $token->getUser(), ContentInterface::ENTITY_TYPE);
     }
 
     /**
@@ -63,10 +62,8 @@ class ContentVoter extends AbstractEditorialVoter
      */
     protected function voteForOwnedSubject($action, $content, TokenInterface $token)
     {
-        $user = $token->getUser();
-
         return $this->hasRole($token, ContributionRoleInterface::CONTENT_CONTRIBUTOR)
-            && $this->isSubjectInPerimeter($content->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($content->getContentType(), $token->getUser(), ContentInterface::ENTITY_TYPE);
     }
 
     /**
@@ -85,7 +82,6 @@ class ContentVoter extends AbstractEditorialVoter
             return false;
         }
 
-        $user = $token->getUser();
         $requiredRole = ContributionRoleInterface::CONTENT_CONTRIBUTOR;
 
         switch ($action) {
@@ -98,6 +94,6 @@ class ContentVoter extends AbstractEditorialVoter
         }
 
         return $this->hasRole($token, $requiredRole)
-            && $this->isSubjectInPerimeter($subject->getContentType(), $user, ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($subject->getContentType(), $token->getUser(), ContentInterface::ENTITY_TYPE);
     }
 }

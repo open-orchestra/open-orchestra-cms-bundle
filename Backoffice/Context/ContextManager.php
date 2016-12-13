@@ -45,8 +45,7 @@ class ContextManager implements CurrentSiteIdInterface
         $defaultLocale,
         SiteRepositoryInterface $siteRepository,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
+    ) {
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->defaultLocale = $defaultLocale;

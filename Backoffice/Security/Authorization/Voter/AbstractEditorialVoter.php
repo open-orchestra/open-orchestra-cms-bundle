@@ -65,8 +65,7 @@ abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
             return $this->voteForReadAction($subject, $token);
         }
 
-        $user = $token->getUser();
-        if ($this->isCreator($subject, $user)) {
+        if ($this->isCreator($subject, $token->getUser())) {
             return $this->voteForOwnedSubject($attribute, $subject, $token);
         }
 
