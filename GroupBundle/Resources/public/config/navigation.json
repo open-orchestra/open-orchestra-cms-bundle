@@ -1,8 +1,8 @@
 {
-  "group": {
+  "user": {
     "groups": {
-      "template": "Navigation/Group/groups",
-      "rank": 2
+      "template": "Navigation/User/groups",
+      "rank": 1
     }
   }
 }
