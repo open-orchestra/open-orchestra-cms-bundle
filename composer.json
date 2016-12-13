@@ -13,7 +13,7 @@
     "php": "~5.6.0",
     "braincrafted/bootstrap-bundle": "~2.2.0",
     "doctrine/data-fixtures": "~1.2.0",
-    "koala-framework/composer-extra-assets": "~2.0.4",
+    "alav/composer-assets": "~1.0.0",
     "sensio/generator-bundle": "~3.0.0",
     "stfalcon/tinymce-bundle": "~1.1.0",
     "symfony/assetic-bundle": "~2.8.0",
@@ -64,7 +64,7 @@
         "version": "~4.4.3"
       }
     },
-    "require-npm": {
+    "npm-assets": {
       "bower": "~1.7",
       "grunt": "~0.4",
       "grunt-cli": "~1.2",
@@ -86,8 +86,7 @@
       "grunt-babel": "~6.0.0",
       "grunt-browserify": "~5.0.0"
     },
-    "expose-npm-packages": true,
-    "require-bower": {
+    "bower-assets": {
       "datatables.net-buttons-bs": "1.1.0",
       "jquery": "~2.1.1",
       "jquery-tokeninput": "1.7.0",
