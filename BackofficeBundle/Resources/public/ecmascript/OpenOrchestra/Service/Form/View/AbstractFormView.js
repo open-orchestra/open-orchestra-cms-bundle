@@ -21,7 +21,7 @@ class AbstractFormView extends OrchestraView
      */
     preinitialize(options) {
         this.events = {
-            'click button[type="submit"]': '_submit'
+            'click button.submit-form': '_submit'
         };
     }
 
@@ -78,10 +78,8 @@ class AbstractFormView extends OrchestraView
      * @param {object} event
      */
     _submit(event) {
-        if (this._form.isValid()) {
-            event.preventDefault();
-            this._form.submit(this.getStatusCodeForm());
-        }
+        event.preventDefault();
+        this._form.submit(this.getStatusCodeForm());
     }
 }
 

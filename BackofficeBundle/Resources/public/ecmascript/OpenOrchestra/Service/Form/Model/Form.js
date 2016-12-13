@@ -82,7 +82,7 @@ class Form
         this.$form = $('form', $form);
         this.$messages = $('.alert', $form).toArray();
         this.method = this.$form.attr('method');
-        this.action = this.$form.attr('data-action');
+        this.action = this.$form.attr('action');
     }
 }
 
