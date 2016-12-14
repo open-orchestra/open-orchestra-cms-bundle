@@ -26,27 +26,6 @@ class GroupController extends BaseController
 {
     /**
      * @param Request $request
-     * @param string  $groupId
-     *
-     * @Config\Route("/{groupId}", name="open_orchestra_api_group_edit")
-     * @Config\Method({"POST"})
-     *
-     * @return array
-     */
-    public function editAction(Request $request, $groupId)
-    {
-        $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'OpenOrchestra\ApiBundle\Facade\GroupFacade', $request->get('_format', 'json'));
-        $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
-
-        $this->get('open_orchestra_api.transformer_manager')->get('group')->reverseTransform($facade, $group);
-
-        $this->get('object_manager')->flush();
-
-        return array();
-    }
-
-    /**
-     * @param Request $request
      *
      * @Config\Route("/list", name="open_orchestra_api_group_list", defaults={"withCount" = true})
      * @Config\Route("/user/list", name="open_orchestra_api_group_user_list", defaults={"withCount" = false})
@@ -127,7 +106,7 @@ class GroupController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/duplicate/datatable", name="open_orchestra_api_group_duplicate")
+     * @Config\Route("/duplicate", name="open_orchestra_api_group_duplicate")
      * @Config\Method({"POST"})
      *
      * @return Response
@@ -148,7 +127,6 @@ class GroupController extends BaseController
         $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
 
         $newGroup->setWorkflowProfileCollections($group->getWorkflowProfileCollections());
-
         if ($newGroup->getSite()->getId() === $currentSite->getId()) {
             $newGroup->setPerimeters($group->getPerimeters());
         }
