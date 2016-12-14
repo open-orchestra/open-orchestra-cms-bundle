@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Form\Type;
+namespace OpenOrchestra\GroupBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,22 +34,22 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name', null, array(
-                'label' => 'open_orchestra_backoffice.form.group.name'
+                'label' => 'open_orchestra_group.form.group.name'
             ))
             ->add('labels', 'oo_multi_languages', array(
-                'label' => 'open_orchestra_backoffice.form.group.label',
+                'label' => 'open_orchestra_group.form.group.label',
                 'languages' => $this->backOfficeLanguages
             ))
             ->add('site', 'oo_group_site_choice', array(
-                'label' => 'open_orchestra_backoffice.form.group.site',
+                'label' => 'open_orchestra_group.form.group.site',
                 'required' => false,
             ))
             ->add('roles', 'oo_role_choice', array(
-                'label' => 'open_orchestra_backoffice.form.group.roles',
+                'label' => 'open_orchestra_group.form.group.roles',
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
-                'attr' => array('help_text' => 'open_orchestra_backoffice.form.group.role_helper'),
+                'attr' => array('help_text' => 'open_orchestra_group.form.group.role_helper'),
             ));
 
         if (array_key_exists('disabled', $options)) {

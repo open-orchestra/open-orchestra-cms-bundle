@@ -24,7 +24,6 @@ parameters:
     open_orchestra_backoffice.type.keyword.class: OpenOrchestra\Backoffice\Form\Type\KeywordType
     open_orchestra_backoffice.type.keywords_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\KeywordsChoiceType
     open_orchestra_backoffice.type.role.class: OpenOrchestra\Backoffice\Form\Type\RoleType
-    open_orchestra_backoffice.type.group.class: OpenOrchestra\Backoffice\Form\Type\GroupType
     open_orchestra_backoffice.type.redirection.class: OpenOrchestra\Backoffice\Form\Type\RedirectionType
     open_orchestra_backoffice.type.video.class: OpenOrchestra\Backoffice\Form\Type\VideoType
     open_orchestra_backoffice.type.color_picker.class: OpenOrchestra\Backoffice\Form\Type\Component\ColorPickerType
@@ -271,13 +270,6 @@ services:
             - '%open_orchestra_model.document.role.class%'
         tags:
             - { name: form.type, alias: oo_role }
-    open_orchestra_backoffice.type.group:
-        class: '%open_orchestra_backoffice.type.group.class%'
-        arguments:
-            - '%open_orchestra_user.document.group.class%'
-            - '%open_orchestra_base.administration_languages%'
-        tags:
-            - { name: form.type, alias: oo_group }
     open_orchestra_backoffice.type.redirection:
         class: '%open_orchestra_backoffice.type.redirection.class%'
         arguments:

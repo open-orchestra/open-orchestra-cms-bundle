@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\GroupBundle\Controller\Api;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,7 +58,7 @@ class GroupController extends BaseController
         if ($withCount) {
             $filter = $collection;
             array_walk($filter, function(&$item) {$item = $item->getId();});
-            $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->countsUsersByGroups($filter);
+            $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups($filter);
         }
 
         $recordsTotal = $repository->count($siteIds);
@@ -85,7 +85,7 @@ class GroupController extends BaseController
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
-            $this->getParameter('open_orchestra_api.facade.group_collection.class'),
+            $this->getParameter('open_orchestra_group.facade.group_collection.class'),
             $format
         );
         $groupRepository = $this->get('open_orchestra_user.repository.group');
@@ -116,9 +116,10 @@ class GroupController extends BaseController
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
-            $this->getParameter('open_orchestra_api.facade.group.class'),
+            $this->getParameter('open_orchestra_group.facade.group.class'),
             $format
         );
+
         $group = $this->get('open_orchestra_api.transformer_manager')->get('group')->reverseTransform($facade);
 
         $newGroup = clone $group;

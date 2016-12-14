@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\GroupBundle\Transformer;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;

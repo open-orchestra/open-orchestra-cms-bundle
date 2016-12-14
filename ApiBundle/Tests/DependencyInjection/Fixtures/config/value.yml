@@ -12,8 +12,6 @@ open_orchestra_api:
         content_type_collection:  FacadeClass
         datatable_translation:    FacadeClass
         field_type:               FacadeClass
-        group:                    FacadeClass
-        group_collection:         FacadeClass
         keyword:                  FacadeClass
         keyword_collection:       FacadeClass
         link:                     FacadeClass

@@ -24,8 +24,6 @@ parameters:
     open_orchestra_api.transformer.role_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleCollectionTransformer
     open_orchestra_api.transformer.role_string.class: OpenOrchestra\ApiBundle\Transformer\RoleStringTransformer
     open_orchestra_api.transformer.role_string_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleStringCollectionTransformer
-    open_orchestra_api.transformer.group.class: OpenOrchestra\ApiBundle\Transformer\GroupTransformer
-    open_orchestra_api.transformer.group_collection.class: OpenOrchestra\ApiBundle\Transformer\GroupCollectionTransformer
     open_orchestra_api.transformer.redirection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer
     open_orchestra_api.transformer.redirection_collection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
     open_orchestra_api.transformer.field_type.class: OpenOrchestra\ApiBundle\Transformer\FieldTypeTransformer
@@ -214,22 +212,6 @@ services:
         class: '%open_orchestra_api.transformer.role_string_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.role_string_collection.class%'
-            - '@security.authorization_checker'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.group:
-        class: '%open_orchestra_api.transformer.group.class%'
-        arguments:
-            - '%open_orchestra_api.facade.group.class%'
-            - '@security.authorization_checker'
-            - '@open_orchestra_backoffice.manager.multi_languages_choice'
-            - '@open_orchestra_user.repository.group'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.group_collection:
-        class: '%open_orchestra_api.transformer.group_collection.class%'
-        arguments:
-            - '%open_orchestra_api.facade.group_collection.class%'
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}

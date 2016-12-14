@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\GroupBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use Doctrine\Common\Collections\Collection;
@@ -25,13 +25,6 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
         foreach ($groupCollection as $group) {
             $facade->addGroup($this->getTransformer('group')->transform($group, (array_key_exists($group->getId(), $nbrGroupsUsers)) ? $nbrGroupsUsers[$group->getId()] : 0));
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE)) {
-            $facade->addLink('_self_add', $this->generateRoute(
-                'open_orchestra_backoffice_group_new',
-                array()
-            ));
         }
 
         return $facade;

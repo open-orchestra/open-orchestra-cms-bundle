@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Tests\Transformer;
+namespace OpenOrchestra\GroupBundle\Tests\Transformer;
 
-use OpenOrchestra\ApiBundle\Transformer\GroupTransformer;
+use OpenOrchestra\GroupBundle\Transformer\GroupTransformer;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
@@ -16,7 +16,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
      */
     protected $transformer;
 
-    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\GroupFacade';
+    protected $facadeClass = 'OpenOrchestra\GroupBundle\Facade\GroupFacade';
     protected $router;
     protected $context;
     protected $transformerInterface;
@@ -88,7 +88,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
 
         $facade = $this->transformer->transform($group);
 
-        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\GroupFacade', $facade);
+        $this->assertInstanceOf('OpenOrchestra\GroupBundle\Facade\GroupFacade', $facade);
         if ($right) {
             $this->assertArrayHasKey('can_edit', $facade->getRights());
             $this->assertArrayHasKey('can_delete', $facade->getRights());
@@ -111,7 +111,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
      */
     public function testReverseTransform()
     {
-        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\GroupFacade');
+        $facade = Phake::mock('OpenOrchestra\GroupBundle\Facade\GroupFacade');
 
         $transformedGroup = $this->transformer->reverseTransform($facade);
 

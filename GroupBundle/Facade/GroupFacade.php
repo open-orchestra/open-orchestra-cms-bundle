@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\GroupBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;

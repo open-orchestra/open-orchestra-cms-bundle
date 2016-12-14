@@ -1,5 +1,7 @@
 parameters:
     open_orchestra_group.transformer.group_list_to_array.class: OpenOrchestra\GroupBundle\Form\DataTransformer\GroupListToArrayTransformer
+    open_orchestra_group.transformer.group.class: OpenOrchestra\GroupBundle\Transformer\GroupTransformer
+    open_orchestra_group.transformer.group_collection.class: OpenOrchestra\GroupBundle\Transformer\GroupCollectionTransformer
 
 services:
     open_orchestra_group.transformer.group_list_to_array:
@@ -7,3 +9,20 @@ services:
         arguments:
             - '@open_orchestra_user.repository.group'
             - '@open_orchestra_backoffice.context_manager'
+    open_orchestra_group.transformer.group:
+        class: '%open_orchestra_group.transformer.group.class%'
+        arguments:
+            - '%open_orchestra_group.facade.group.class%'
+            - '@security.authorization_checker'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
+            - '@open_orchestra_user.repository.group'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_group.transformer.group_collection:
+        class: '%open_orchestra_group.transformer.group_collection.class%'
+        arguments:
+            - '%open_orchestra_group.facade.group_collection.class%'
+            - '@security.authorization_checker'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+            

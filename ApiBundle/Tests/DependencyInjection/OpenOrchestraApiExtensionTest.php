@@ -61,8 +61,6 @@ class OpenOrchestraApiExtensionTest extends AbstractBaseTestCase
             array('content_type_collection', 'ContentTypeCollectionFacade'),
             array('datatable_translation', 'DatatableTranslationFacade'),
             array('field_type', 'FieldTypeFacade'),
-            array('group', 'GroupFacade'),
-            array('group_collection', 'GroupCollectionFacade'),
             array('keyword', 'KeywordFacade'),
             array('keyword_collection', 'KeywordCollectionFacade'),
             array('link', 'LinkFacade'),
