@@ -48,8 +48,8 @@ class GroupController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/list", name="open_orchestra_api_group_list", defaults={"withCount" = 1})
-     * @Config\Route("/user/list", name="open_orchestra_api_group_user_list", defaults={"withCount" = 0})
+     * @Config\Route("/list", name="open_orchestra_api_group_list", defaults={"withCount" = true})
+     * @Config\Route("/user/list", name="open_orchestra_api_group_user_list", defaults={"withCount" = false})
      *
      * @Config\Method({"GET"})
      *

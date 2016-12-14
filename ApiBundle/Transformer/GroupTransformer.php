@@ -99,6 +99,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param FacadeInterface $facade
      * @param GroupInterface  $group
+     * @param integer         $nbrUsers
      *
      * @return FacadeInterface
      */
