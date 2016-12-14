@@ -2,14 +2,13 @@
 
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\UserBundle\Model\UserInterface;
-use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
-use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
 
 /**
  * Class UserType
@@ -17,27 +16,27 @@ use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
 class UserType extends AbstractType
 {
     protected $objectManager;
-    protected $tokenStorage;
     protected $class;
     protected $availableLanguages;
-    protected $user;
+    protected $userProfileSubscriber;
+    protected $userGroupSubscriber;
 
     /**
-     * @param ObjectManager         $objectManager
-     * @param TokenStorageInterface $tokenStorage
-     * @param string                $class
-     * @param array                 $availableLanguages
+     * @param string                   $class
+     * @param array                    $availableLanguages
+     * @param EventSubscriberInterface $userProfilSubscriber,
+     * @param EventSubscriberInterface $userGroupSubscriber,
      */
     public function __construct(
-        ObjectManager $objectManager,
-        TokenStorageInterface $tokenStorage,
         $class,
-        array $availableLanguages
+        array $availableLanguages,
+        EventSubscriberInterface $userProfilSubscriber,
+        EventSubscriberInterface $userGroupSubscriber
     ) {
-        $this->objectManager = $objectManager;
         $this->class = $class;
         $this->availableLanguages = $availableLanguages;
-        $this->user = $tokenStorage->getToken()->getUser();
+        $this->userProfileSubscriber = $userProfilSubscriber;
+        $this->userGroupSubscriber = $userGroupSubscriber;
     }
 
     /**
@@ -122,8 +121,8 @@ class UserType extends AbstractType
                     'group_id' => 'information',
                     'sub_group_id' => 'profil',
                 ));
-            $builder->addEventSubscriber(new UserProfilSubscriber($this->user, $this->objectManager));
-            $builder->addEventSubscriber(new UserGroupsSubscriber());
+            $builder->addEventSubscriber($this->userProfileSubscriber);
+            $builder->addEventSubscriber($this->userGroupSubscriber);
         }
 
         if (array_key_exists('disabled', $options)) {

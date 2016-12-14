@@ -1,9 +1,9 @@
-import OrchestraView from '../OrchestraView'
-import ModalView     from '../../../Service/Modal/View/ModalView'
-import Application   from '../../Application'
-import FormBuilder   from '../../../Service/Form/Model/FormBuilder'
-import LoaderView    from '../Loader/LoaderView'
-import UserFormView  from './UserFormView'
+import OrchestraView   from '../OrchestraView'
+import ModalView       from '../../../Service/Modal/View/ModalView'
+import Application     from '../../Application'
+import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
+import LoaderView      from '../Loader/LoaderView'
+import NewUserFormView from './NewUserFormView'
 
 /**
  * @class NewUserModalView
@@ -47,7 +47,7 @@ class NewUserModalView extends ModalView
         let url = Routing.generate('open_orchestra_user_admin_new');
         Application.getRegion('content').html(new LoaderView().render().$el);
         FormBuilder.createFormFromUrl(url, (form) => {
-            let userFormView = new UserFormView({form: form});
+            let userFormView = new NewUserFormView({form: form});
             Application.getRegion('content').html(userFormView.render().$el);
         }, this._user.toJSON());
         this.$el.modal('hide');

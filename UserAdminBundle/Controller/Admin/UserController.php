@@ -3,6 +3,7 @@
 namespace OpenOrchestra\UserAdminBundle\Controller\Admin;
 
 use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
+use OpenOrchestra\BaseApi\Exceptions\HttpException\UserNotFoundHttpException;
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -48,6 +49,9 @@ class UserController extends AbstractAdminController
         $form->handleRequest($request);
         if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_user_admin.new.success'), $user)) {
             $this->dispatchEvent(UserEvents::USER_CREATE, new UserEvent($user));
+            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
         }
 
         return $this->renderAdminForm($form);
@@ -61,6 +65,7 @@ class UserController extends AbstractAdminController
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
+     * @throws UserNotFoundHttpException
      */
     public function formAction(Request $request, $userId)
     {
@@ -73,7 +78,7 @@ class UserController extends AbstractAdminController
             return $this->renderForm($request, $user, false);
         }
 
-        return new Response();
+        throw new UserNotFoundHttpException();
     }
 
     /**

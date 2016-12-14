@@ -5,9 +5,9 @@ namespace OpenOrchestra\UserAdminBundle\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class UserProfilSubscriber
@@ -16,17 +16,14 @@ class UserProfilSubscriber implements EventSubscriberInterface
 {
     protected $allowedToSetPlatformAdmin;
     protected $allowedToSetDeveloper;
-    protected $objectManager;
 
     /**
-     * @param UserInterface $user
-     * @param ObjectManager $objectManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(UserInterface $user, ObjectManager $objectManager)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->allowedToSetPlatformAdmin = $user->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) || $user->hasRole(ContributionRoleInterface::DEVELOPER);
-        $this->allowedToSetDeveloper = $user->hasRole(ContributionRoleInterface::DEVELOPER);
-        $this->objectManager = $objectManager;
+        $this->allowedToSetPlatformAdmin = $authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN);
+        $this->allowedToSetDeveloper = $authorizationChecker->isGranted(ContributionRoleInterface::DEVELOPER);
     }
 
     /**
@@ -89,6 +86,5 @@ class UserProfilSubscriber implements EventSubscriberInterface
                 $user->addRole(ContributionRoleInterface::DEVELOPER);
             }
         }
-        //$this->objectManager->flush($user);
     }
 }

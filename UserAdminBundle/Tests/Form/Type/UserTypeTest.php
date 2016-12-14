@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Form\Type;
 
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
 use OpenOrchestra\UserAdminBundle\Form\Type\UserType;
 use Phake;
 
@@ -23,16 +25,11 @@ class UserTypeTest extends AbstractUserTypeTest
     public function setUp()
     {
         parent::setUp();
-        $objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
-        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($user)->getGroups()->thenReturn(array());
-        $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        Phake::when($token)->getUser()->thenReturn($user);
-        $tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
-        Phake::when($tokenStorage)->getToken()->thenReturn($token);
         $parameters = array(0 => 'en', 1 => 'fr');
+        $userProfilSubscriber = Phake::mock(UserProfilSubscriber::class);
+        $userGroupSubscriber = Phake::mock(UserGroupsSubscriber::class);
 
-        $this->form = new UserType($objectManager, $tokenStorage, $this->class, $parameters);
+        $this->form = new UserType($this->class, $parameters, $userProfilSubscriber, $userGroupSubscriber);
     }
 
     /**

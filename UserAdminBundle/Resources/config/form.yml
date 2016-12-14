@@ -6,18 +6,18 @@ services:
     open_orchestra_user_admin.type.user:
         class: '%open_orchestra_user_admin.type.user.class%'
         arguments:
-            - '@object_manager'
-            - '@security.token_storage'
             - '%open_orchestra_user.document.user.class%'
             - '%open_orchestra_base.administration_languages%'
+            - '@open_orchestra_user_admin.subscriber.user_profile'
+            - '@open_orchestra_user_admin.subscriber.user_group'
         tags:
             - { name: form.type, alias: oo_user}
     open_orchestra_user_admin.type.registration_user:
         class: '%open_orchestra_user_admin.type.registration_user.class%'
         arguments:
-            - '@object_manager'
-            - '@security.token_storage'
             - '%open_orchestra_user.document.user.class%'
             - '%open_orchestra_base.administration_languages%'
+            - '@open_orchestra_user_admin.subscriber.user_profile'
+            - '@open_orchestra_user_admin.subscriber.user_group'
         tags:
             - { name: form.type, alias: oo_registration_user}
