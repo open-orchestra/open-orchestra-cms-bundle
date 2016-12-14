@@ -20,10 +20,6 @@ parameters:
     open_orchestra_api.transformer.site_collection.class: OpenOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
     open_orchestra_api.transformer.theme.class: OpenOrchestra\ApiBundle\Transformer\ThemeTransformer
     open_orchestra_api.transformer.theme_collection.class: OpenOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
-    open_orchestra_api.transformer.role.class: OpenOrchestra\ApiBundle\Transformer\RoleTransformer
-    open_orchestra_api.transformer.role_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleCollectionTransformer
-    open_orchestra_api.transformer.role_string.class: OpenOrchestra\ApiBundle\Transformer\RoleStringTransformer
-    open_orchestra_api.transformer.role_string_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleStringCollectionTransformer
     open_orchestra_api.transformer.redirection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer
     open_orchestra_api.transformer.redirection_collection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
     open_orchestra_api.transformer.field_type.class: OpenOrchestra\ApiBundle\Transformer\FieldTypeTransformer
@@ -186,6 +182,7 @@ services:
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
+<<<<<<< 82b59e68d15377b40edb1e163017554dbf893640
     open_orchestra_api.transformer.role:
         class: '%open_orchestra_api.transformer.role.class%'
         arguments:
@@ -212,6 +209,21 @@ services:
         class: '%open_orchestra_api.transformer.role_string_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.role_string_collection.class%'
+=======
+    open_orchestra_api.transformer.group:
+        class: '%open_orchestra_api.transformer.group.class%'
+        arguments:
+            - '%open_orchestra_api.facade.group.class%'
+            - '@security.authorization_checker'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
+            - '@event_dispatcher'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.group_collection:
+        class: '%open_orchestra_api.transformer.group_collection.class%'
+        arguments:
+            - '%open_orchestra_api.facade.group_collection.class%'
+>>>>>>> remove role, workflowfunction and worklow right
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
@@ -247,7 +259,6 @@ services:
         class: '%open_orchestra_api.transformer.status.class%'
         arguments:
             - '%open_orchestra_api.facade.status.class%'
-            - '@open_orchestra_model.repository.role'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@translator'
             - '@security.authorization_checker'

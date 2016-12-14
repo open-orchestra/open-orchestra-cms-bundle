@@ -41,10 +41,6 @@ open_orchestra_log:
     keyword:
         create: Create a keyword with label keyword_label
         delete: Delete a keyword with label keyword_label
-    role:
-        create: Create a new role with role name role_name
-        delete: Delete a role with role name role_name
-        update: Update a role with role name role_name
     group:
         create: Create a new group with group name group_name
         delete: Delete a group with group name group_name

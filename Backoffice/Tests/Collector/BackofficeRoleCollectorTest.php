@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class BackofficeRoleCollectorTest extends AbstractBaseTestCase
 {
-    protected $roleRepository;
     protected $translator;
     protected $multiLanguagesChoiceManager;
     protected $fakeTrans = 'fakeTrans';
@@ -22,7 +21,6 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->roleRepository = \Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         $this->translator = \Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->fakeTrans);
@@ -36,7 +34,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
     {
         $this->assertInstanceOf(
             'OpenOrchestra\Backoffice\Collector\RoleCollectorInterface',
-            new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false)
+            new BackofficeRoleCollector($this->translator, $this->multiLanguagesChoiceManager)
         );
     }
     /**
@@ -47,34 +45,10 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
      */
     public function testAddAndGetRoles(array $newRoles, array $expectedRoles)
     {
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->translator, $this->multiLanguagesChoiceManager);
         foreach ($newRoles as $newRole) {
             $collector->addRole($newRole);
         }
-
-        $this->assertSame($expectedRoles, $collector->getRoles());
-    }
-
-    /**
-     * @param array $newRoles
-     * @param array $expectedRoles
-     *
-     * @dataProvider provideRolesAndExpected
-     */
-    public function testLoadWorkflowRole(array $newRoles, array $expectedRoles)
-    {
-        $roles = new ArrayCollection();
-
-        foreach ($newRoles as $newRole) {
-            $role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
-            Phake::when($role)->getName()->thenReturn($newRole);
-            Phake::when($role)->getDescriptions()->thenReturn(array());
-            $roles->add($role);
-        }
-
-        Phake::when($this->roleRepository)->findWorkflowRole()->thenReturn($roles);
-
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, true);
 
         $this->assertSame($expectedRoles, $collector->getRoles());
     }
@@ -101,7 +75,7 @@ class BackofficeRoleCollectorTest extends AbstractBaseTestCase
      */
     public function testHasTest(array $roles, $roleToCheck, $answer)
     {
-        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->multiLanguagesChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->translator, $this->multiLanguagesChoiceManager);
         foreach ($roles as $newRole) {
             $collector->addRole($newRole);
         }

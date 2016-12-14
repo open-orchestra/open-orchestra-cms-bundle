@@ -3,15 +3,12 @@
 namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
-use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class NodeManagerTest
@@ -71,8 +68,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         Phake::when($this->status)->isPublishedState()->thenReturn(true);
         Phake::when($this->status)->getLabels()->thenReturn(array());
-        Phake::when($this->status)->getToRoles()->thenReturn(array());
-        Phake::when($this->status)->getFromRoles()->thenReturn(array());
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($this->status);
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn('fakeLanguage');

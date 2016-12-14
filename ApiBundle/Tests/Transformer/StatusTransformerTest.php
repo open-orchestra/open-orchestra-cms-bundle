@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BackofficeBundle\StrategyManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
@@ -36,7 +35,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         $statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
-        $roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         $router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
         $statusId = 'StatusId';
@@ -56,7 +54,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
 
         $this->transformer = new StatusTransformer(
             $this->facadeClass,
-            $roleRepository,
             $multiLanguagesChoiceManager,
             $this->translator,
             $this->authorizationChecker,
@@ -78,13 +75,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
-        $role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
-
-        $roles = new ArrayCollection();
-
-        Phake::when($role)->getName()->thenReturn('role_name');
-
-        $roles->add($role);
 
         Phake::when($this->authorizationChecker)->isGranted($this->status, $document)->thenReturn($isGranted);
         Phake::when($this->authorizationChecker)->isGranted(ContributionActionInterface::DELETE, $this->status)->thenReturn($isGranted);
@@ -94,8 +84,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($this->status)->getDisplayColor()->thenReturn('display_color');
         Phake::when($this->status)->isPublishedState()->thenReturn($publishedState);
         Phake::when($this->status)->isInitialState()->thenReturn($initialState);
-        Phake::when($this->status)->getFromRoles()->thenReturn($roles);
-        Phake::when($this->status)->getToRoles()->thenReturn($roles);
         Phake::when($this->status)->getLabels()->thenReturn(array());
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
 

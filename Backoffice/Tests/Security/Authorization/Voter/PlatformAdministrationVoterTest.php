@@ -11,7 +11,6 @@ use OpenOrchestra\Backoffice\Security\Authorization\Voter\PlatformAdministration
 use OpenOrchestra\LogBundle\Model\LogInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
-use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface;
@@ -64,7 +63,6 @@ class PlatformAdministrationVoterTest extends AbstractVoterTest
             'Bad subject : Status'                  => array($status,                               ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Entity type ContentType' => array(ContentTypeInterface::ENTITY_TYPE,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Entity type Workflow'    => array(WorkflowProfileInterface::ENTITY_TYPE, ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
-            'Bad subject : Entity type Role'        => array(RoleInterface::ENTITY_TYPE,            ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Entity type Status'      => array(StatusInterface::ENTITY_TYPE,          ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Entity type Site'        => array(SiteInterface::ENTITY_TYPE,            ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
             'Bad subject : Entity type Redirection' => array(RedirectionInterface::ENTITY_TYPE,     ContributionActionInterface::READ, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_ABSTAIN),
@@ -150,7 +148,7 @@ class PlatformAdministrationVoterTest extends AbstractVoterTest
             'Bad role (Edit) keyword entity type: Content super suppressor'     => array(KeywordInterface::ENTITY_TYPE, ContributionActionInterface::EDIT, array(ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR), null, VoterInterface::ACCESS_DENIED),
             'Bad role (Edit) keyword entity type: Site Admin'                   => array(KeywordInterface::ENTITY_TYPE, ContributionActionInterface::EDIT, array(ContributionRoleInterface::SITE_ADMIN),              null, VoterInterface::ACCESS_DENIED),
             'Bad role (Edit) keyword entity type: Trash Restorer'               => array(KeywordInterface::ENTITY_TYPE, ContributionActionInterface::EDIT, array(ContributionRoleInterface::TRASH_RESTORER),          null, VoterInterface::ACCESS_DENIED),
-            'Bad role (Edit) keyword entity type: Trash Suppressor'             => array(KeywordInterface::ENTITY_TYPE, ContributionActionInterface::EDIT, array(ContributionRoleInterface::TRASH_SUPRESSOR),         null, VoterInterface::ACCESS_DENIED),            'Bad role (Delete) keyword entity type: Node contributor'        => array(KeywordInterface::ENTITY_TYPE, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_CONTRIBUTOR),        null, VoterInterface::ACCESS_DENIED),
+            'Bad role (Edit) keyword entity type: Trash Suppressor'             => array(KeywordInterface::ENTITY_TYPE, ContributionActionInterface::EDIT, array(ContributionRoleInterface::TRASH_SUPRESSOR),         null, VoterInterface::ACCESS_DENIED),
             'Bad role (Delete) api client entity type: Node super editor'       => array(ApiClientInterface::ENTITY_TYPE, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_EDITOR),       null, VoterInterface::ACCESS_DENIED),
             'Bad role (Delete) api client entity type: Node super suppressor'   => array(ApiClientInterface::ENTITY_TYPE, ContributionActionInterface::DELETE, array(ContributionRoleInterface::NODE_SUPER_SUPRESSOR),    null, VoterInterface::ACCESS_DENIED),
             'Bad role (Delete) api client entity type: Content contributor'     => array(ApiClientInterface::ENTITY_TYPE, ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     null, VoterInterface::ACCESS_DENIED),

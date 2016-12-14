@@ -48,16 +48,6 @@ class StatusFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $fromRole;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $toRole;
-
-    /**
-     * @Serializer\Type("string")
-     */
     public $displayColor;
 
     /**

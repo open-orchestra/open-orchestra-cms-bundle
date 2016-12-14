@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -29,7 +28,6 @@ class DeveloperToolVoter extends AbstractVoter
                 array(
                     'OpenOrchestra\ModelInterface\Model\ContentTypeInterface',
                     'OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface',
-                    'OpenOrchestra\ModelInterface\Model\RoleInterface',
                     'OpenOrchestra\ModelInterface\Model\StatusInterface'
                 )
             );
@@ -40,7 +38,6 @@ class DeveloperToolVoter extends AbstractVoter
             array(
                 ContentTypeInterface::ENTITY_TYPE,
                 WorkflowProfileInterface::ENTITY_TYPE,
-                RoleInterface::ENTITY_TYPE,
                 StatusInterface::ENTITY_TYPE
             )
         );

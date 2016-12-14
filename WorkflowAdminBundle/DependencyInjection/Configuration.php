@@ -16,17 +16,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('open_orchestra_workflow_admin');
-
-        $rootNode->children()
-            ->arrayNode('facades')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->scalarNode('workflow_function')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowFunctionFacade')->end()
-                    ->scalarNode('workflow_function_collection')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowFunctionCollectionFacade')->end()
-                ->end()
-            ->end()
-        ->end();
+        $treeBuilder->root('open_orchestra_workflow_admin');
 
         return $treeBuilder;
     }

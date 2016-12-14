@@ -52,8 +52,6 @@ open_orchestra_backoffice:
                 label: Statut de dépublication automatique
                 helper: Si réglé à "Oui", ce statut sera utilisé pour dépublier les noeuds par le processus de dépublication automatique. Le régler à "Oui" supprimera ce réglage des autres statuts car un seul statut peut avoir cette fonctionnalité.
             labels: Libellé
-            from_role: Rôle requis pour partir de ce statut
-            to_role: Rôle requis pour arriver sur ce statut
             color:
                 red: Rouge
                 orange: Orange
@@ -255,7 +253,6 @@ open_orchestra_backoffice:
                 canonical: Canonique
                 keywords: Mot-clés / moteur de recherche
                 cache: Cache
-                roles: Rôles
         changefreq:
             always: Toujours
             hourly: Toutes les heures
@@ -339,15 +336,6 @@ open_orchestra_backoffice:
             label: Libellé
             creation: Le mot-clé a été créé
             success: Le mot-clé a été mis à jour avec succès
-        role:
-            new:
-                success: Le rôle a été créé
-            edit:
-                success: Le rôle a été mis à jour
-            name: Nom
-            descriptions: Description
-            from_status: Statut de provenance
-            to_status: Statut de destination
         group:
             new:
                 success: Le groupe a été créé
@@ -406,50 +394,6 @@ open_orchestra_backoffice:
                 meta: Meta
                 google_marker: Marqueur Google Analytics / GTM
                 xiti: Marqueur ATinternet (Xiti)
-    left_menu:
-        tree:
-            new_page: Nouvelle page
-            new_template: Nouveau gabarit
-            delete_node: Etes vous sûr de supprimer le noeud %nodeName% ?
-            delete_template: Etes vous sûr de supprimer le gabarit %templateName% ?
-            confirm_move:
-                title: Déplacement de la page ?
-                text: En acceptant, la page sera déplacé pour être fils de "%nodeName%"
-        dashboard:
-            title: Tableau de bord
-        editorial:
-            title: Contribution
-            nodes: Pages
-            templates: Gabarits
-            contents: Contenus
-            error_nodes:
-                error_404: Erreur 404
-                error_503: Erreur 503
-        administration:
-            translation: Traduction
-            title: Administration
-            sites:
-                list: Sites
-            themes:
-                list: Thèmes
-            content_type:
-                list: Types de contenu
-            status:
-                list: Etapes de workflow
-            user:
-                list: Utilisateurs
-            api_client:
-                list: Clients d'API
-            role:
-                list: Transitions de workflow
-            group:
-                list: Groupes
-            redirection:
-                list: Redirections
-            keyword:
-                list: Mots-clés
-            trashcan:
-                list: Corbeille
     block:
         configurable_content:
             title: Contenu paramétrable
@@ -647,10 +591,6 @@ open_orchestra_backoffice:
             version: Version
             status_label: Statut
             linked_to_site: Liaison au site
-        role:
-            description: Description
-            from_status: Depuis le statut
-            to_status: Vers le statut
         group:
             name: Nom
             label: Libellé
