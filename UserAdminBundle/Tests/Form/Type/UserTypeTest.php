@@ -16,7 +16,6 @@ class UserTypeTest extends AbstractUserTypeTest
     protected $form;
 
     protected $class = 'OpenOrchestra\UserBundle\Document\User';
-    protected $twig;
 
     /**
      * Set up the test
@@ -31,7 +30,6 @@ class UserTypeTest extends AbstractUserTypeTest
         Phake::when($token)->getUser()->thenReturn($user);
         $tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         Phake::when($tokenStorage)->getToken()->thenReturn($token);
-        $this->twig = Phake::mock('Twig_Environment');
         $parameters = array(0 => 'en', 1 => 'fr');
 
         $this->form = new UserType($objectManager, $tokenStorage, $this->class, $parameters);
@@ -75,8 +73,8 @@ class UserTypeTest extends AbstractUserTypeTest
         Phake::when($site)->getLanguageBySites()->thenReturn(array('en' => 'fakeLanguage', 'fr' => 'fakeLanguage'));
 
         return array(
-            'without_groups_edition' => array(array('edit_groups' => 'false', 'self_editing' => false, 'data' => $site,), true, 5),
-            'with_groups_edition' => array(array('edit_groups' => 'true', 'self_editing' => true, 'data' => $site), false, 7)
+            'without_groups_edition' => array(array('edit_groups' => 'false', 'required_password' => false, 'self_editing' => false, 'data' => $site,), true, 5),
+            'with_groups_edition' => array(array('edit_groups' => 'true', 'required_password' => false, 'self_editing' => true, 'data' => $site), false, 7)
         );
     }
 
@@ -91,6 +89,7 @@ class UserTypeTest extends AbstractUserTypeTest
             'edit_groups' => true,
             'self_editing' => false,
             'group_enabled' => true,
+            'required_password' => false,
             'group_render' => array(
                 'information' => array(
                     'rank' => 0,
