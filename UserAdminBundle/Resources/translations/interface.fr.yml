@@ -24,7 +24,7 @@ open_orchestra_user_admin:
           first_name: Prénom
           last_name: Nom
           email: Email
-          check_correspondence: Vérifier la correspondance
+          check_matching: Vérifier la correspondance
           user_found:
             title: Utilisateur retrouvé
             message: L'email utilisé correspond à l'utilisateur

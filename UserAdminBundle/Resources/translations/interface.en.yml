@@ -24,11 +24,11 @@ open_orchestra_user_admin:
           first_name: First name
           last_name: Last name
           email: Email
-          check_correspondence: Check correspondence
+          check_matching: Check matching
           user_found:
             title: User found
             message: The email used match with an user
-            associate: Associate this user at my website
+            associate: Associate this user with my website
           not_found:
             title: User not existing
             create: Create the user for my website

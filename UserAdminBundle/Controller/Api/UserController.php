@@ -37,8 +37,11 @@ class UserController extends BaseController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, UserInterface::ENTITY_TYPE);
         $user = $this->get('open_orchestra_user.repository.user')->findOneByEmail($email);
+        if ($user instanceof UserInterface) {
+            return $this->get('open_orchestra_api.transformer_manager')->get('user')->transform($user);
+        }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('user')->transform($user);
+        return array();
     }
 
 
