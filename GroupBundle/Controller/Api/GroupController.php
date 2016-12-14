@@ -5,6 +5,7 @@ namespace OpenOrchestra\GroupBundle\Controller\Api;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
@@ -12,7 +13,6 @@ use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
  * Class GroupController
@@ -38,7 +38,6 @@ class GroupController extends BaseController
      */
     public function listAction(Request $request, $withCount)
     {
-        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, GroupInterface::ENTITY_TYPE);
         $siteIds = array();
         $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
         foreach ($availableSites as $site) {
@@ -133,7 +132,7 @@ class GroupController extends BaseController
         }
         $newGroup->setSite($currentSite);
 
-        if ($this->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE)) {
+        if ($this->isGranted(ContributionActionInterface::CREATE, $newGroup)) {
             $objectManager = $this->get('object_manager');
             $objectManager->persist($newGroup);
             $objectManager->flush();
