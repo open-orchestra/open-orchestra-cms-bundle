@@ -6,6 +6,7 @@ use OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use Phake;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Test UpdateStatusSubscriberTest
@@ -20,7 +21,7 @@ class UpdateStatusSubscriberTest extends AbstractBaseTestCase
     protected $event;
     protected $toStatus;
     protected $document;
-    protected $authorizationChangeManager;
+    protected $authorizationChecker;
 
     /**
      * Set up the test
@@ -32,9 +33,9 @@ class UpdateStatusSubscriberTest extends AbstractBaseTestCase
         $this->event = Phake::mock('OpenOrchestra\ModelInterface\Event\StatusableEvent');
         Phake::when($this->event)->getStatusableElement()->thenReturn($this->document);
         Phake::when($this->event)->getToStatus()->thenReturn($this->toStatus);
-        $this->authorizationChangeManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager');
+        $this->authorizationChecker = Phake::mock(AuthorizationCheckerInterface::class);
 
-        $this->subscriber = new UpdateStatusSubscriber($this->authorizationChangeManager);
+        $this->subscriber = new UpdateStatusSubscriber($this->authorizationChecker);
     }
 
     /**
@@ -58,7 +59,7 @@ class UpdateStatusSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateStatusWhenOk()
     {
-        Phake::when($this->authorizationChangeManager)->isGranted(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->subscriber->updateStatus($this->event);
 
@@ -70,9 +71,9 @@ class UpdateStatusSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateStatusWhenNotOk()
     {
-        Phake::when($this->authorizationChangeManager)->isGranted(Phake::anyParameters())->thenReturn(false);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(false);
 
-        $this->setExpectedException('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException');
+        $this->expectException('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException');
         $this->subscriber->updateStatus($this->event);
 
         Phake::verify($this->document, Phake::never())->setStatus(Phake::anyParameters());

@@ -28,6 +28,5 @@ class OpenOrchestraGroupExtension extends Extension
         $loader->load('services.yml');
         $loader->load('form.yml');
         $loader->load('transformer.yml');
-        $loader->load('authorize_status_change.yml');
     }
 }

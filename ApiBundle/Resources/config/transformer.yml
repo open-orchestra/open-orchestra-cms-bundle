@@ -247,7 +247,6 @@ services:
         class: '%open_orchestra_api.transformer.status.class%'
         arguments:
             - '%open_orchestra_api.facade.status.class%'
-            - '@open_orchestra_backoffice.authorize_status_change_manager'
             - '@open_orchestra_model.repository.role'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@translator'

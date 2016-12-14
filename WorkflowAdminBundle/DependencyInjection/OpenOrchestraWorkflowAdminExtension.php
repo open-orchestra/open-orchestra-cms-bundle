@@ -30,7 +30,6 @@ class OpenOrchestraWorkflowAdminExtension extends Extension
         $loader->load('form.yml');
         $loader->load('transformer.yml');
         $loader->load('manager.yml');
-        $loader->load('authorize_status_change.yml');
         $loader->load('subscriber.yml');
         $loader->load('role_parameter.yml');
         $loader->load('voter.yml');
