@@ -79,7 +79,7 @@ class GroupController extends BaseController
         if ($withCount) {
             $filter = $collection;
             array_walk($filter, function(&$item) {$item = $item->getId();});
-            $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->countUserByGroup($filter);
+            $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->countsUsersByGroups($filter);
         }
 
         $recordsTotal = $repository->count($siteIds);
