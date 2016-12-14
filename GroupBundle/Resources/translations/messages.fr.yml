@@ -21,3 +21,13 @@ open_orchestra_group:
             access_denied: Refusé
             access_granted: Autorisé
             access_inherit: Hérité
+            group:
+                property: Propriétés
+                right: Droits
+                perimeter: Périmetre
+                member: List de membres
+            sub_group:
+                property: Propriété
+                contribution: Contribution
+                administration: Administration
+                page: Pages

@@ -34,27 +34,21 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name', null, array(
-                'label' => 'open_orchestra_group.form.group.name'
+                'label' => 'open_orchestra_group.form.group.name',
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('labels', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_group.form.group.label',
-                'languages' => $this->backOfficeLanguages
+                'languages' => $this->backOfficeLanguages,
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ))
             ->add('site', 'oo_group_site_choice', array(
                 'label' => 'open_orchestra_group.form.group.site',
-                'required' => false,
-            ))
-            ->add('roles', 'oo_role_choice', array(
-                'label' => 'open_orchestra_group.form.group.roles',
-                'multiple' => true,
-                'expanded' => true,
-                'required' => false,
-                'attr' => array('help_text' => 'open_orchestra_group.form.group.role_helper'),
+                'group_id' => 'information',
+                'sub_group_id' => 'property',
             ));
-
-        if (array_key_exists('disabled', $options)) {
-            $builder->setAttribute('disabled', $options['disabled']);
-        }
     }
 
     /**
@@ -64,7 +58,45 @@ class GroupType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->groupClass,
-        ));
+                'group_enabled' => true,
+                'group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.group.property',
+                    ),
+                    'right' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_group.form.group.group.right',
+                    ),
+                    'perimeter' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_group.form.group.group.perimeter',
+                    ),
+                    'member' => array(
+                        'rank' => 4,
+                        'label' => 'open_orchestra_group.form.group.group.member',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.sub_group.property',
+                    ),
+                    'contribution' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.sub_group.contribution',
+                    ),
+                    'administration' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_group.form.group.sub_group.administration',
+                    ),
+                    'page' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.sub_group.page',
+                    ),
+                ),
+            )
+        );
     }
 
     /**
