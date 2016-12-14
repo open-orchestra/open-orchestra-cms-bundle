@@ -44,7 +44,6 @@ class UserController extends BaseController
         return array();
     }
 
-
     /**
      * @param Request $request
      *
