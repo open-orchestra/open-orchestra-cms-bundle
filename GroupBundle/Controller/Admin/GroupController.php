@@ -1,14 +1,15 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\GroupBundle\Controller\Admin;
 
-use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\UserBundle\Event\GroupEvent;
-use OpenOrchestra\UserBundle\GroupEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
+use OpenOrchestra\UserBundle\Event\GroupEvent;
+use OpenOrchestra\UserBundle\GroupEvents;
 
 /**
  * Class GroupController
@@ -20,7 +21,7 @@ class GroupController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/new", name="open_orchestra_backoffice_group_new")
+     * @Config\Route("/new", name="open_orchestra_group_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -33,12 +34,12 @@ class GroupController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $group);
 
         $form = $this->createForm('oo_group', $group, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_group_new'),
+            'action' => $this->generateUrl('open_orchestra_group_new'),
             'method' => 'POST',
         ));
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.group.new.success');
+        $message = $this->get('translator')->trans('open_orchestra_group.form.group.new.success');
 
         if ($this->handleForm($form, $message, $group)) {
             $this->dispatchEvent(GroupEvents::GROUP_CREATE, new GroupEvent($group));
@@ -71,11 +72,11 @@ class GroupController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.group.edit.success');
+        $message = $this->get('translator')->trans('open_orchestra_group.form.group.edit.success');
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(GroupEvents::GROUP_UPDATE, new GroupEvent($group));
         }
-        $title = $this->get('translator')->trans('open_orchestra_backoffice.form.group.title');
+        $title = $this->get('translator')->trans('open_orchestra_group.form.group.title');
 
         return $this->renderAdminForm($form, array('title' => $title));
     }

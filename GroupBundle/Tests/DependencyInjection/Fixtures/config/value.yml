@@ -1,0 +1,4 @@
+open_orchestra_group:
+    facades:
+        group:                    FacadeClass
+        group_collection:         FacadeClass

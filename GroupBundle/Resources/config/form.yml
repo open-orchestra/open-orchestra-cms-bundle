@@ -1,6 +1,7 @@
 parameters:
     open_orchestra_group.type.group_list.class: OpenOrchestra\GroupBundle\Form\Type\GroupListType
     open_orchestra_group.type.group_element.class: OpenOrchestra\GroupBundle\Form\Type\GroupElementType
+    open_orchestra_group.type.group.class: OpenOrchestra\GroupBundle\Form\Type\GroupType
 
 services:
     open_orchestra_group.type.group_list:
@@ -17,3 +18,10 @@ services:
             - '@security.authorization_checker'
         tags:
             - { name: form.type, alias: oo_group_element }
+    open_orchestra_group.type.group:
+        class: '%open_orchestra_group.type.group.class%'
+        arguments:
+            - '%open_orchestra_user.document.group.class%'
+            - '%open_orchestra_base.administration_languages%'
+        tags:
+            - { name: form.type, alias: oo_group }

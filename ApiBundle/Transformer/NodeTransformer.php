@@ -28,9 +28,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $encrypter;
     protected $siteRepository;
-    protected $eventDispatcher;
     protected $statusRepository;
-    protected $facadeClass;
+    protected $eventDispatcher;
 
     /**
      * @param string                        $facadeClass
@@ -39,7 +38,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param array                         $templateSetparameters
      */
     public function __construct(
         $facadeClass,
@@ -47,15 +45,13 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker,
-        array $templateSetparameters
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
-        $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
-        $this->templateSetparameters = $templateSetparameters;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

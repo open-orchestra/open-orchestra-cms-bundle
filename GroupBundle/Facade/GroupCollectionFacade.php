@@ -1,9 +1,10 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\GroupBundle\Facade;
 
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\PaginateCollectionFacade;
 
 /**
  * Class GroupCollection
@@ -16,7 +17,7 @@ class GroupCollectionFacade extends PaginateCollectionFacade
     public $collectionName = 'groups';
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\GroupFacade>")
+     * @Serializer\Type("array<OpenOrchestra\GroupBundle\Facade\GroupFacade>")
      */
     protected $groups = array();
 
@@ -26,5 +27,13 @@ class GroupCollectionFacade extends PaginateCollectionFacade
     public function addGroup(FacadeInterface $facade)
     {
         $this->groups[] = $facade;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

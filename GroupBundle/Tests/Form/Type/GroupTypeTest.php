@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenOrchestra\UserBundle\Tests\Form\Type;
+namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\Form\Type\GroupType;
+use OpenOrchestra\GroupBundle\Form\Type\GroupType;
 
 /**
  * Class GroupTypeTest

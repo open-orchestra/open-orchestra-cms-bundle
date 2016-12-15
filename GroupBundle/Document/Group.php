@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
@@ -78,10 +79,10 @@ class Group extends BaseGroup implements GroupInterface
     {
         $this->id = null;
         $this->initCollections();
-        $this->setName($this->cloneLabel($this->name));
+        $this->setName($this->name . '_' . uniqid());
 
         foreach ($this->getLabels() as $language => $label) {
-            $this->addLabel($language, $this->cloneLabel($label));
+            $this->addLabel($language, $label);
         }
     }
 
@@ -156,11 +157,30 @@ class Group extends BaseGroup implements GroupInterface
 
     /**
      * @param string                             $entityType
-     * @param WorkflowProfileCollectionInterface $profileCollection
+     * @param WorkflowProfileCollectionInterface $workflowProfileCollection
      */
-    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $profileCollection)
+    public function addWorkflowProfileCollection($entityType, WorkflowProfileCollectionInterface $workflowProfileCollection)
     {
-        $this->workflowProfileCollections->set($entityType, $profileCollection);
+        $this->workflowProfileCollections->set($entityType, $workflowProfileCollection);
+    }
+
+    /**
+     * @param Collection $workflowProfileCollections
+     */
+    public function setWorkflowProfileCollections(Collection $workflowProfileCollections)
+    {
+        $this->workflowProfileCollections->clear();
+        foreach ($workflowProfileCollections as $entityType => $workflowProfileCollection) {
+            $this->workflowProfileCollections->set($entityType, $workflowProfileCollection);
+        }
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getWorkflowProfileCollections()
+    {
+        return $this->workflowProfileCollections;
     }
 
     /**
@@ -182,6 +202,17 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
+     * @param Collection $perimeters
+     */
+    public function setPerimeters(Collection $perimeters)
+    {
+        $this->perimeters->clear();
+        foreach ($perimeters as $perimeter) {
+            $this->perimeters->add($perimeter);
+        }
+    }
+
+    /**
      * @param string $perimeterType
      *
      * @return array
@@ -192,27 +223,19 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
+     * @return Collection
+     */
+    public function getPerimeters()
+    {
+        return $this->perimeters;
+    }
+
+    /**
      * Initialize collections
      */
     protected function initCollections()
     {
         $this->workflowProfileCollections = new ArrayCollection();
         $this->perimeters = new ArrayCollection();
-    }
-
-    /**
-     * @param string $label
-     *
-     * @return string
-     */
-    protected function cloneLabel($label)
-    {
-        $patternNameVersion = '/.*_([0-9]+$)/';
-        if (0 !== preg_match_all($patternNameVersion, $label, $matches)) {
-            $version = (int) $matches[1][0] + 1;
-            return preg_replace('/[0-9]+$/', $version, $label);
-        }
-
-        return $label . '_2';
     }
 }

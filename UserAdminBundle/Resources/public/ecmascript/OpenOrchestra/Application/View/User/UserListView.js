@@ -100,7 +100,6 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
     _changeDeleteCheckbox(event) {
         let user = $(event.currentTarget).data();
         user.set('delete', $(event.currentTarget).prop('checked'));
-        console.log(user);
     }
 }
 

@@ -1,6 +1,5 @@
 parameters:
     open_orchestra_user_admin.subscriber.delete_group.class: OpenOrchestra\UserAdminBundle\EventSubscriber\DeleteGroupSubscriber
-    open_orchestra_user_admin.subscriber.group_user_list.class: OpenOrchestra\UserAdminBundle\EventSubscriber\GroupUserListTransformSubscriber
 
 services:
     open_orchestra_user_admin.subscriber.delete_group:
@@ -8,12 +7,5 @@ services:
         arguments:
             - '@object_manager'
             - '@open_orchestra_user.repository.user'
-        tags:
-            - { name: kernel.event_subscriber }
-    open_orchestra_user_admin.subscriber.group_user_list:
-        class: '%open_orchestra_user_admin.subscriber.group_user_list.class%'
-        arguments:
-            - '@router'
-            - '@security.authorization_checker'
         tags:
             - { name: kernel.event_subscriber }

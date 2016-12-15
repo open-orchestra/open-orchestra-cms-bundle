@@ -47,4 +47,11 @@ interface GroupRepositoryInterface
      * @return int
      */
     public function countWithFilter(PaginateFinderConfiguration $configuration, array $siteIds);
+
+    /**
+     * @param array $groupIds
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeGroups(array $groupIds);
 }
