@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\WorkflowAdminBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -75,21 +75,20 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         if ($this->hasGroup(CMSGroupContext::STATUS_LINKS)) {
-            if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
+            $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
                 && !$this->usageFinder->hasUsage($status)
-            ) {
-                $facade->addLink('_self_delete', $this->generateRoute(
-                    'open_orchestra_api_status_delete',
-                    array('statusId' => $status->getId())
-                ));
-            }
+                && !$status->isInitialState()
+                && !$status->isPublishedState()
+                && !$status->isTranslationState()
+                && !$status->isAutoPublishFromState()
+                && !$status->isAutoUnpublishToState();
 
-            if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $status)) {
-                $facade->addLink('_self_form', $this->generateRoute(
-                    'open_orchestra_backoffice_status_form',
-                    array('statusId' => $status->getId())
-                ));
-            }
+            $facade->addRight('can_delete', $canDelete);
+
+            $facade->addRight(
+                'can_edit',
+                $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $status)
+            );
         }
 
         return $facade;

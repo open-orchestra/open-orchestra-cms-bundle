@@ -1,19 +1,18 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Tests\Transformer;
+namespace OpenOrchestra\WorkflowAdminBundle\Tests\Transformer;
 
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\BackofficeBundle\StrategyManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\ApiBundle\Transformer\StatusTransformer;
+use OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer;
 
 /**
  * Class StatusTransformerTest
  */
 class StatusTransformerTest extends AbstractBaseTestCase
 {
-    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\StatusFacade';
+    protected $facadeClass = 'OpenOrchestra\WorkflowAdminBundle\Facade\StatusFacade';
     protected $authorizationChecker;
     protected $transformerManager;
     protected $groupContext;
@@ -95,10 +94,10 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->assertSame($isGranted, $facade->allowed);
 
         if (!$hasGroup && $isGranted) {
-            $this->assertArrayHasKey('_self_delete', $facade->getLinks());
-            $this->assertArrayHasKey('_self_form', $facade->getLinks());
+            $this->assertArrayHasKey('can_delete', $facade->getRights());
+            $this->assertArrayHasKey('can_edit', $facade->getRights());
         } else {
-            $this->isEmpty($facade->getLinks());
+            $this->isEmpty($facade->getRights());
         }
     }
 

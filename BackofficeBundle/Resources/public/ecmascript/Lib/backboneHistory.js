@@ -33,7 +33,7 @@ _.extend(Backbone.history, {
                 return ''
             }
 
-            throw new Error('Missing parameter ' + key + 'for route' + route);
+            throw new Error('Missing parameter ' + key + ' for route ' + route);
         };
 
         if ('undefined' !== typeof route) {
@@ -43,6 +43,6 @@ _.extend(Backbone.history, {
             return route
         }
 
-        throw new Error('route' + name + 'is unknown');
+        throw new Error('route ' + name + ' is unknown');
     }
 });

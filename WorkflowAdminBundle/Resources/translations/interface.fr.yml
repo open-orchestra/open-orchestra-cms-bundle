@@ -1,0 +1,16 @@
+open_orchestra_workflow_admin:
+    navigation:
+        developer:
+          status: Tous les statuts
+    status:
+        title_list: Liste des statuts
+        initial_state: Etat initial
+        translation_state: Etat de traduction
+        published_state: Etat de publication
+        auto_publish_from_state: Etat de publication automatique
+        auto_unpublish_to_state: Etat de dépublication automatique
+    table:
+        statuses:
+            label: Libellé
+            display_color: Couleur d'affichage
+            specificities: Spécificités

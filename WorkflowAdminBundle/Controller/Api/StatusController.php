@@ -1,8 +1,7 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\WorkflowAdminBundle\Controller\Api;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\DeleteStatusNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
@@ -12,8 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class StatusController
@@ -24,8 +25,6 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
  */
 class StatusController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param Request $request
      *
@@ -38,13 +37,21 @@ class StatusController extends BaseController
      */
     public function listTableAction(Request $request)
     {
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_model.document.status.class'));
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, StatusInterface::ENTITY_TYPE);
+        $mapping = array(
+            'label' => 'labels'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.status');
+        $collection = $repository->findForPaginate($configuration);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countWithFilter($configuration);
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
-        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+        return $facade;
     }
 
     /**
@@ -74,9 +81,16 @@ class StatusController extends BaseController
     public function deleteAction($statusId)
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
-        if (!$this->isGranted(ContributionActionInterface::DELETE, $status)
-            || $this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
-        ) {
+
+        $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
+            && !$this->usageFinder->hasUsage($status)
+            && !$status->isInitialState()
+            && !$status->isPublishedState()
+            && !$status->isTranslationState()
+            && !$status->isAutoPublishFromState()
+            && !$status->isAutoUnpublishToState();
+
+        if ($canDelete) {
             throw new DeleteStatusNotGrantedHttpException();
         }
         $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));

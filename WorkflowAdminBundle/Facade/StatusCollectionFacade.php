@@ -1,9 +1,10 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\WorkflowAdminBundle\Facade;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\ApiBundle\Facade\PaginateCollectionFacade;
 
 /**
  * Class StatusCollectionFacade
@@ -16,7 +17,7 @@ class StatusCollectionFacade extends PaginateCollectionFacade
     public $collectionName = 'statuses';
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\StatusFacade>")
+     * @Serializer\Type("array<OpenOrchestra\WorkflowAdminBundle\Facade\StatusFacade>")
      */
     protected $statuses = array();
 
