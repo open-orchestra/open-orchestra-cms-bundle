@@ -12,7 +12,7 @@ use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
  */
 interface GroupInterface extends BaseGroupInterface
 {
-    const ENTITY_TYPE = 'Group';
+    const ENTITY_TYPE = 'group';
 
     /**
      * @param ReadSiteInterface|null $site
