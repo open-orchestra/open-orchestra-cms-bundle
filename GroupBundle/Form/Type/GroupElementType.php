@@ -8,8 +8,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\GroupBundle\Repository\GroupRepository;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 
 /**
  * Class GroupElementType
@@ -22,12 +22,12 @@ class GroupElementType extends AbstractType
 
     /**
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
-     * @param GroupRepository                      $groupRepository
+     * @param GroupRepositoryInterface             $groupRepository
      * @param AuthorizationCheckerInterface        $authorizationChecker
      */
     public function __construct(
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        GroupRepository $groupRepository,
+        GroupRepositoryInterface $groupRepository,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;

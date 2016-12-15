@@ -5,23 +5,28 @@ namespace OpenOrchestra\GroupBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class GroupType
  */
 class GroupType extends AbstractType
 {
+    protected $groupMemberSubscriber;
     protected $groupClass;
     protected $backOfficeLanguages;
 
     /**
-     * @param string $groupClass
-     * @param array  $backOfficeLanguages
+     * @param EventSubscriberInterface $groupMemberSubscriber
+     * @param string                   $groupClass
+     * @param array                    $backOfficeLanguages
      */
     public function __construct(
+        EventSubscriberInterface $groupMemberSubscriber,
         $groupClass,
         array $backOfficeLanguages
     ) {
+        $this->groupMemberSubscriber = $groupMemberSubscriber;
         $this->groupClass = $groupClass;
         $this->backOfficeLanguages = $backOfficeLanguages;
     }
@@ -35,20 +40,21 @@ class GroupType extends AbstractType
         $builder
             ->add('name', null, array(
                 'label' => 'open_orchestra_group.form.group.name',
-                'group_id' => 'information',
+                'group_id' => 'property',
                 'sub_group_id' => 'property',
             ))
             ->add('labels', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_group.form.group.label',
                 'languages' => $this->backOfficeLanguages,
-                'group_id' => 'information',
+                'group_id' => 'property',
                 'sub_group_id' => 'property',
             ))
             ->add('site', 'oo_group_site_choice', array(
                 'label' => 'open_orchestra_group.form.group.site',
-                'group_id' => 'information',
+                'group_id' => 'property',
                 'sub_group_id' => 'property',
             ));
+        $builder->addEventSubscriber($this->groupMemberSubscriber);
     }
 
     /**

@@ -21,6 +21,7 @@ services:
     open_orchestra_group.type.group:
         class: '%open_orchestra_group.type.group.class%'
         arguments:
+            - '@open_orchestra_group.subscriber.group_member'
             - '%open_orchestra_user.document.group.class%'
             - '%open_orchestra_base.administration_languages%'
         tags:

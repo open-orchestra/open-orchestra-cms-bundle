@@ -3,6 +3,7 @@ import Application     from '../../Application'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import Groups          from '../../Collection/Group/Groups'
 import GroupsView      from '../../View/Group/GroupsView'
+import GroupFormView   from '../../View/Group/GroupFormView'
 import SitesAvailable  from '../../../Application/Collection/Site/SitesAvailable'
 
 /**
@@ -82,8 +83,8 @@ class GroupRouter extends OrchestraRouter
         let url = Routing.generate('open_orchestra_group_form', {groupId: groupId});
         this._diplayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let groupFormView = new GroupFormView({form: form, userId: userId});
-            Application.getRegion('content').html(userFormView.render().$el);
+            let groupFormView = new GroupFormView({form: form, groupId: groupId});
+            Application.getRegion('content').html(groupFormView.render().$el);
         });
     }
 }

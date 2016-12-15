@@ -21,6 +21,7 @@ open_orchestra_group:
             access_denied: Denied
             access_granted: Granted
             access_inherit: Inherited
+            member: Members
             group:
                 property: Properties
                 right: Rights

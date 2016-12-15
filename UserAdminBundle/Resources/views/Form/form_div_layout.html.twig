@@ -8,3 +8,26 @@
         {{ block('button_widget') }}
     {% endspaceless %}
 {% endblock oo_registration_user_submit_widget %}
+{% block oo_member_list_widget %}
+	{% set collection = form|first %}
+    {% spaceless %}
+        <div class="group-users-list">
+            <table class="table table-striped">
+                <tbody>
+            {% for child in collection %}
+                {{ form_widget(child) }}
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endspaceless %}
+{% endblock oo_member_list_widget %}
+
+{% block oo_member_element_widget %}
+    <tr>
+        <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.parameters['firstName'] }}</td>
+        <td>{{ form.vars.parameters['lastName'] }}</td>
+        <td>{{ form.vars.parameters['email'] }}</td>
+        <td><i class="fa fa-close" aria-hidden="true"></i></td>
+    </tr>
+{% endblock oo_member_element_widget %}

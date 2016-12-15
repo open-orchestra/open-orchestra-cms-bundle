@@ -55,7 +55,7 @@ class GroupController extends AbstractAdminController
      * @param Request $request
      * @param string  $groupId
      *
-     * @Config\Route("/form/{groupId}", name="open_orchestra_backoffice_group_form")
+     * @Config\Route("/form/{groupId}", name="open_orchestra_group_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -66,7 +66,7 @@ class GroupController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $group);
 
         $form = $this->createForm('oo_group', $group, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_group_form', array(
+            'action' => $this->generateUrl('open_orchestra_group_form', array(
                 'groupId' => $groupId,
             )))
         );

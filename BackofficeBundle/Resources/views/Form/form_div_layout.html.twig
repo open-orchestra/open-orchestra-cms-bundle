@@ -508,13 +508,12 @@
 {% block oo_multi_languages_widget %}
     {% spaceless %}
         <div {{ block('widget_container_attributes') }}>
-            <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <ul class="nav nav-tabs multi-languages" role="tablist" id="myTab">
                 {% for key, field in form %}
                     <li {% if loop.first %}class="active" {% endif %}>
                         <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
                             <img
-                                    src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
-                                    class="flag flag-{{ key }}"
+                                    src="/images/languages/{{ key }}.png"
                                     alt="{{ ('open_orchestra_backoffice.language.' ~ key)|trans }}"
                             >
                             {{ form_label(field) }}

@@ -64,6 +64,8 @@ class Group extends BaseGroup implements GroupInterface
      */
     protected $perimeters;
 
+    protected $members;
+
     /**
      * Constructor
      */
