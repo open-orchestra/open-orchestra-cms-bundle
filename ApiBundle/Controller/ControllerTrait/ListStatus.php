@@ -12,7 +12,7 @@ trait ListStatus
     /**
      * @param StatusableInterface $document
      *
-     * @return \OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade
+     * @return \OpenOrchestra\WorkflowAdminBundle\Facade\StatusCollectionFacade
      */
     protected function listStatuses(StatusableInterface $document)
     {

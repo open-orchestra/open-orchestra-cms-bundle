@@ -74,7 +74,7 @@ class NodeFacade extends DeletedFacade
     public $metaFollow = false;
 
     /**
-     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\StatusFacade")
+     * @Serializer\Type("OpenOrchestra\WorkflowAdminBundle\Facade\StatusFacade")
      */
     public $status;
 
