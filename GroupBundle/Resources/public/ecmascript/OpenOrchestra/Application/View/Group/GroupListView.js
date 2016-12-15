@@ -79,12 +79,9 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        console.log(rowData.get('id'));
-        console.log(rowData);
         let link = Backbone.history.generateUrl('editGroup', {
             groupId: rowData.get('id')
         });
-        console.log(link);
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link
