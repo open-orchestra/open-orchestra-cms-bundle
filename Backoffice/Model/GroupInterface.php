@@ -5,12 +5,13 @@ namespace OpenOrchestra\Backoffice\Model;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
 
 /**
  * Interface GroupInterface
  */
-interface GroupInterface extends BaseGroupInterface
+interface GroupInterface extends BaseGroupInterface, SoftDeleteableInterface
 {
     const ENTITY_TYPE = 'group';
 
