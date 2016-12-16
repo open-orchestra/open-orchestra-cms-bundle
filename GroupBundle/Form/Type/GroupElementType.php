@@ -72,6 +72,7 @@ class GroupElementType extends AbstractType
             $view->vars['parameters'] = array(
                 'groupName' => $this->multiLanguagesChoiceManager->choose($group->getLabels()),
                 'siteName' => $group->getSite()->getName(),
+                'deleted' => $group->isDeleted(),
                 'disabled' => !$this->authorizationChecker->isGranted(ContributionActionInterface::READ, $group),
             );
         }
