@@ -5,6 +5,7 @@
 </div>
 <h1> <%= Translator.trans('open_orchestra_user_admin.user.title_new') %></h1>
 <div class='form-new'>
+    <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
     <form class="form-horizontal">
         <div class="tab-content">
             <fieldset>

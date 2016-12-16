@@ -2,12 +2,13 @@
 
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class UserType
  */
-class RegistrationUserType extends UserType
+class RegistrationUserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -32,5 +33,10 @@ class RegistrationUserType extends UserType
     public function getName()
     {
         return 'oo_registration_user';
+    }
+
+    public function getParent()
+    {
+        return 'oo_user';
     }
 }

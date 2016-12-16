@@ -384,10 +384,13 @@
     {% if no_submit_button is not defined or no_submit_button != true %}
         {% spaceless %}
             <div class="form-group">
-                <div class="col-lg-12">
-                    {% set label = 'open_orchestra_backoffice.form.submit' %}
-                    {% set id = 'submit_' ~ form.vars.name %}
-                    {{ block('submit_widget') }}
+                <div class="col-lg-12 bottom-action-buttons">
+                    {% set blockSubmitWidget = block(name ~ '_submit_widget') %}
+                    {% if blockSubmitWidget is not empty %}
+                        {{ blockSubmitWidget|raw }}
+                    {% else %}
+                        {{ block('submit_widget') }}
+                    {% endif %}
                 </div>
             </div>
             {{ parent() }}
@@ -397,6 +400,8 @@
 
 {% block submit_widget %}
     {% spaceless %}
+        {% set label = 'open_orchestra_backoffice.form.submit' %}
+        {% set id = 'submit_' ~ form.vars.name %}
         {% set attr = {'class': 'submit-form'} %}
         {% set button_class= 'primary' %}
         {{ block('button_widget') }}

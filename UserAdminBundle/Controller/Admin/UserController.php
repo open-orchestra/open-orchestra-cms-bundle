@@ -47,11 +47,21 @@ class UserController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_user_admin.new.success'), $user)) {
-            $this->dispatchEvent(UserEvents::USER_CREATE, new UserEvent($user));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($user);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_user_admin.new.success');
+
+            $this->dispatchEvent(UserEvents::USER_CREATE, new UserEvent($user));
+            $response = new Response(
+                $message,
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/plain; charset=utf-8', 'userId' => $user->getId())
+            );
+
+            return $response;
         }
 
         return $this->renderAdminForm($form);

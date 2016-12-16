@@ -3,6 +3,8 @@ import Application           from '../../Application'
 import User                  from '../../Model/User/User'
 import NewUserModalView      from './NewUserModalView'
 import ExistingUserModalView from './ExistingUserModalView'
+import FlashMessageBag       from '../../../Service/FlashMessage/FlashMessageBag'
+
 
 /**
  * @class NewUserView
@@ -22,7 +24,7 @@ class NewUserView extends OrchestraView
      * Render view
      */
     render() {
-        let template = this._renderTemplate('User/newUserView');
+        let template = this._renderTemplate('User/newUserView', {messages: FlashMessageBag.getMessages()});
         this.$el.html(template);
 
         return this;

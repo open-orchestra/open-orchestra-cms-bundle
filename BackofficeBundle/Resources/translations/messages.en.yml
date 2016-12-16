@@ -20,6 +20,7 @@ open_orchestra_backoffice:
     form:
         personnal_account: My account
         submit: Save
+        submit_continue: Save and continue
         edit: Edit
         duplicate: Duplicate
         delete: Delete
