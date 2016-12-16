@@ -63,7 +63,8 @@ class GroupElementType extends AbstractType
         $view->vars['parameters'] = array(
             'groupName' => '__label__',
             'siteName' => '__site.name__',
-            'disabled' => false
+            'deleted' => false,
+            'disabled' => false,
         );
         $groupId = $view->vars['name'];
         $group = $this->groupRepository->find($groupId);
