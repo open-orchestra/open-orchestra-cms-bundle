@@ -27,6 +27,8 @@ class ModalView extends OrchestraView
      * Hide modal
      */
     hide() {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
         this.remove();
     }
 }

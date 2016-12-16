@@ -19,13 +19,14 @@ class FormBuilder
      *
      * @param {string} url
      * @param {Function} callbackCreate
+     * @param {Object}   data
      * @param {Function} done
      * @param {Function} error
      */
-    static createFormFromUrl(url, callbackCreate, done = null, error = null) {
+    static createFormFromUrl(url, callbackCreate, data = null, done = null, error = null) {
         error = error || FormBuilder._errorGetForm;
         done = done || FormBuilder._successGetForm;
-        let promise = Backbone.ajax({method: 'GET',url: url});
+        let promise = Backbone.ajax({method: 'GET', url: url, data: data});
             promise.fail(error);
             promise.done((data) => done(data, callbackCreate));
     }

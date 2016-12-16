@@ -1,0 +1,10 @@
+{% block oo_registration_user_submit_widget %}
+    {% spaceless %}
+        {{ block('submit_widget') }}
+        {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
+        {% set id = 'submit_' ~ form.vars.name %}
+        {% set attr = {'class': 'submit-continue-form'} %}
+        {% set button_class= 'primary' %}
+        {{ block('button_widget') }}
+    {% endspaceless %}
+{% endblock oo_registration_user_submit_widget %}

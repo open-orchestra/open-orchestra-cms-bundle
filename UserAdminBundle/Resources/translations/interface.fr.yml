@@ -15,9 +15,23 @@ open_orchestra_user_admin:
         add_group: Ajouter un group à l'utilisateur
         select: Sélectionner
         title_list: Liste des utilisateurs
+        title_new: Nouvel utilisateur
         title_edit: Modifier l'utilisateur
         search_engine:
           search: Rechercher
+        new:
+          contact_information: Coordonées
+          first_name: Prénom
+          last_name: Nom
+          email: Email
+          check_matching: Vérifier la correspondance
+          user_found:
+            title: Utilisateur retrouvé
+            message: L'email utilisé correspond à l'utilisateur
+            associate: Associer cet utilisateur à mon site
+          not_found:
+            title: Utilisateur inexistant
+            create: Créer le compte pour mon site
     group:
         title_list: Liste des groupes
         title_edit: Modifier le groupe

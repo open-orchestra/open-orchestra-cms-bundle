@@ -4,7 +4,6 @@ namespace OpenOrchestra\UserAdminBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
-use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Form\FormEvents;
 use Phake;
@@ -19,6 +18,7 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
     protected $user;
     protected $form;
     protected $subscriber;
+    protected $authorizationChecker;
 
     /**
      * Set up common test part
@@ -26,14 +26,13 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
-
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->event)->getData()->thenReturn($this->user);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new UserProfilSubscriber($this->user, $this->objectManager);
+        $this->subscriber = new UserProfilSubscriber($this->authorizationChecker);
     }
 
     /**
@@ -56,15 +55,17 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
     /**
      * Test pre set data
      *
-     * @param UserInterface $user
-     * @param integer       $nbrAdd
+     * @param bool    $developer
+     * @param bool    $adminPlatform
+     * @param integer $nbrAdd
      *
      * @dataProvider provideUser
      */
-    public function testPreSetData(UserInterface $user, $nbrAdd)
+    public function testPreSetData($developer, $adminPlatform, $nbrAdd)
     {
-        $subscriber = new UserProfilSubscriber($user, $this->objectManager);
-
+        Phake::when($this->authorizationChecker)->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)->thenReturn($developer);
+        Phake::when($this->authorizationChecker)->isGranted(ContributionRoleInterface::DEVELOPER)->thenReturn($adminPlatform);
+        $subscriber = new UserProfilSubscriber($this->authorizationChecker);
         $subscriber->preSetData($this->event);
 
         Phake::verify($this->form, Phake::times($nbrAdd))->add(Phake::anyParameters());
@@ -75,15 +76,9 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
      */
     public function provideUser()
     {
-        $developper = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($developper)->hasRole(ContributionRoleInterface::DEVELOPER)->thenReturn(true);
-
-        $admin = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($admin)->hasRole(ContributionRoleInterface::PLATFORM_ADMIN)->thenReturn(true);
-
         return array(
-            array($developper, 2),
-            array($admin, 1),
+            array(true, true, 2),
+            array(false, true, 1),
         );
     }
 
@@ -91,20 +86,23 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
     /**
      * Test pre submit
      *
-     * @param UserInterface $user
-     * @param array         $data
-     * @param integer       $nbrAdd
+     * @param bool    $developer
+     * @param bool    $adminPlatform
+     * @param array   $data
+     * @param integer $nbrAdd
      *
      * @dataProvider provideSubmit
      */
-    public function testPreSubmit(UserInterface $user, $data, $nbrAdd)
+    public function testPreSubmit($developer, $adminPlatform, $data, $nbrAdd)
     {
+        Phake::when($this->authorizationChecker)->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)->thenReturn($developer);
+        Phake::when($this->authorizationChecker)->isGranted(ContributionRoleInterface::DEVELOPER)->thenReturn($adminPlatform);
+        $subscriber = new UserProfilSubscriber($this->authorizationChecker);
+
         $fakeUser = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
         Phake::when($this->event)->getData()->thenReturn($data);
         Phake::when($this->form)->getData()->thenReturn($fakeUser);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
-
-        $subscriber = new UserProfilSubscriber($user, $this->objectManager);
 
         $subscriber->preSubmit($this->event);
 
@@ -116,15 +114,9 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
      */
     public function provideSubmit()
     {
-        $developper = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($developper)->hasRole(ContributionRoleInterface::DEVELOPER)->thenReturn(true);
-
-        $admin = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($admin)->hasRole(ContributionRoleInterface::PLATFORM_ADMIN)->thenReturn(true);
-
         return array(
-            array($developper, array('platform_admin' => true, 'developer' => true), 2),
-            array($admin, array('platform_admin' => true, 'developer' => true), 1),
+            array(true, true, array('platform_admin' => true, 'developer' => true), 2),
+            array(false, true, array('platform_admin' => true, 'developer' => true), 1),
         );
     }
 

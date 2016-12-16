@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
-use FOS\UserBundle\Form\Type\RegistrationFormType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class UserType
  */
-class RegistrationUserType extends RegistrationFormType
+class RegistrationUserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,18 +17,14 @@ class RegistrationUserType extends RegistrationFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', 'text', array(
-                'label' => 'open_orchestra_user_admin.form.registration_user.first_name'
-            ))
-            ->add('lastName', 'text', array(
-                'label' => 'open_orchestra_user_admin.form.registration_user.last_name'
+            ->add('username', 'text', array(
+                'label' => 'form.username',
+                'translation_domain' => 'FOSUserBundle',
+                'group_id' => 'information',
+                'sub_group_id' => 'contact_information',
             ));
 
         parent::buildForm($builder, $options);
-
-        if (array_key_exists('disabled', $options)) {
-            $builder->setAttribute('disabled', $options['disabled']);
-        }
     }
 
     /**
@@ -37,5 +33,10 @@ class RegistrationUserType extends RegistrationFormType
     public function getName()
     {
         return 'oo_registration_user';
+    }
+
+    public function getParent()
+    {
+        return 'oo_user';
     }
 }

@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Form\Type;
 
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber;
 use OpenOrchestra\UserAdminBundle\Form\Type\UserType;
 use Phake;
 
@@ -16,7 +18,6 @@ class UserTypeTest extends AbstractUserTypeTest
     protected $form;
 
     protected $class = 'OpenOrchestra\UserBundle\Document\User';
-    protected $twig;
 
     /**
      * Set up the test
@@ -24,17 +25,11 @@ class UserTypeTest extends AbstractUserTypeTest
     public function setUp()
     {
         parent::setUp();
-        $objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
-        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($user)->getGroups()->thenReturn(array());
-        $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        Phake::when($token)->getUser()->thenReturn($user);
-        $tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
-        Phake::when($tokenStorage)->getToken()->thenReturn($token);
-        $this->twig = Phake::mock('Twig_Environment');
         $parameters = array(0 => 'en', 1 => 'fr');
+        $userProfilSubscriber = Phake::mock(UserProfilSubscriber::class);
+        $userGroupSubscriber = Phake::mock(UserGroupsSubscriber::class);
 
-        $this->form = new UserType($objectManager, $tokenStorage, $this->class, $parameters);
+        $this->form = new UserType($this->class, $parameters, $userProfilSubscriber, $userGroupSubscriber);
     }
 
     /**
@@ -75,8 +70,8 @@ class UserTypeTest extends AbstractUserTypeTest
         Phake::when($site)->getLanguageBySites()->thenReturn(array('en' => 'fakeLanguage', 'fr' => 'fakeLanguage'));
 
         return array(
-            'without_groups_edition' => array(array('edit_groups' => 'false', 'self_editing' => false, 'data' => $site,), true, 5),
-            'with_groups_edition' => array(array('edit_groups' => 'true', 'self_editing' => true, 'data' => $site), false, 7)
+            'without_groups_edition' => array(array('edit_groups' => 'false', 'required_password' => false, 'self_editing' => false, 'data' => $site,), true, 5),
+            'with_groups_edition' => array(array('edit_groups' => 'true', 'required_password' => false, 'self_editing' => true, 'data' => $site), false, 7)
         );
     }
 
@@ -91,6 +86,7 @@ class UserTypeTest extends AbstractUserTypeTest
             'edit_groups' => true,
             'self_editing' => false,
             'group_enabled' => true,
+            'required_password' => false,
             'group_render' => array(
                 'information' => array(
                     'rank' => 0,

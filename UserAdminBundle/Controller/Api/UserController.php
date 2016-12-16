@@ -26,18 +26,22 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 class UserController extends BaseController
 {
     /**
-     * @param string $userId
+     * @param string $email
      *
-     * @Config\Route("/{userId}", name="open_orchestra_api_user_show")
+     * @Config\Route("/{email}", name="open_orchestra_api_user_show")
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
      */
-    public function showAction($userId)
+    public function showAction($email)
     {
-        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, UserInterface::ENTITY_TYPE);
+        $user = $this->get('open_orchestra_user.repository.user')->findOneByEmail($email);
+        if ($user instanceof UserInterface) {
+            return $this->get('open_orchestra_api.transformer_manager')->get('user')->transform($user);
+        }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('user')->transform($user);
+        return array();
     }
 
     /**

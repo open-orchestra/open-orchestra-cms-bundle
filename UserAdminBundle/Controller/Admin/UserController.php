@@ -3,6 +3,7 @@
 namespace OpenOrchestra\UserAdminBundle\Controller\Admin;
 
 use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
+use OpenOrchestra\BaseApi\Exceptions\HttpException\UserNotFoundHttpException;
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -30,22 +31,37 @@ class UserController extends AbstractAdminController
     public function newAction(Request $request)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, UserInterface::ENTITY_TYPE);
+
         $userClass = $this->container->getParameter('open_orchestra_user.document.user.class');
         /** @var UserInterface $user */
         $user = new $userClass();
-        $user = $this->refreshLanguagesByAliases($user);
+        $user->setEmail($request->get('email'));
+        $user->setLastName($request->get('lastName'));
+        $user->setFirstName($request->get('firstName'));
 
         $form = $this->createForm('oo_registration_user', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_new'),
-            'validation_groups' => array('Registration')
-        ));
+                'action' => $this->generateUrl('open_orchestra_user_admin_new'),
+                'required_password' => true,
+                'validation_groups' => array('Registration'),
+            )
+        );
+
         $form->handleRequest($request);
-        if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_user_admin.new.success'), $user)) {
-            $url = $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $user->getId()));
+
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($user);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_user_admin.new.success');
 
             $this->dispatchEvent(UserEvents::USER_CREATE, new UserEvent($user));
+            $response = new Response(
+                $message,
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/plain; charset=utf-8', 'userId' => $user->getId())
+            );
 
-            return $this->redirect($url);
+            return $response;
         }
 
         return $this->renderAdminForm($form);
@@ -59,6 +75,7 @@ class UserController extends AbstractAdminController
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
+     * @throws UserNotFoundHttpException
      */
     public function formAction(Request $request, $userId)
     {
@@ -71,7 +88,7 @@ class UserController extends AbstractAdminController
             return $this->renderForm($request, $user, false);
         }
 
-        return new Response();
+        throw new UserNotFoundHttpException();
     }
 
     /**
@@ -128,10 +145,7 @@ class UserController extends AbstractAdminController
             $this->dispatchEvent(UserEvents::USER_UPDATE, new UserEvent($user));
         }
 
-        $title = 'open_orchestra_user_admin.form.title';
-        $title = $this->get('translator')->trans($title);
-
-        return $this->renderAdminForm($form, array('title' => $title));
+        return $this->renderAdminForm($form);
     }
 
     /**

@@ -69,9 +69,11 @@ class AbstractFormView extends OrchestraView
     }
 
     /**
+     * @param  {Object} event
+     * 
      * @return {Object}
      */
-    getStatusCodeForm() {}
+    getStatusCodeForm(event) {}
 
     /**
      * Submit form
@@ -79,7 +81,7 @@ class AbstractFormView extends OrchestraView
      */
     _submit(event) {
         event.preventDefault();
-        this._form.submit(this.getStatusCodeForm());
+        this._form.submit(this.getStatusCodeForm(event));
     }
 }
 
