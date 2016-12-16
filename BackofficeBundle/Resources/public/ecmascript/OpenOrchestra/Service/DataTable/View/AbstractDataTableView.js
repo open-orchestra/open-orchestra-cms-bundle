@@ -43,7 +43,6 @@ class AbstractDataTableView extends OrchestraView
         this.$table.addClass(this._settings.tableClassName);
         this.$table.attr('id', 'dt-' + this.getTableId());
         this._tableRegion.append(this.$table);
-
         this.api = this.$table.DataTable(this._settings);
 
         return this;
@@ -137,6 +136,7 @@ class AbstractDataTableView extends OrchestraView
             settings.ordering = false;
         }
         settings.language = this._getLanguage();
+        settings.preDrawCallback = settings.preDrawCallback || this._preDrawCallback;
 
         return settings
     }
@@ -155,6 +155,18 @@ class AbstractDataTableView extends OrchestraView
         }
 
         return {columns : columns, columnDefs: columnDefs}
+    }
+
+    /**
+     * Hide pagination when there is one page
+     * @private
+     */
+    _preDrawCallback() {
+        let api = this.api();
+        $('.content-pager', $(api.table().container())).show();
+        if (api.page.info().recordsDisplay <= api.page.info().length) {
+            $('.content-pager', $(api.table().container())).hide();
+        }
     }
 
     /**
