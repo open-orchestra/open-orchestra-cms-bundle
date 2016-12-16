@@ -96,7 +96,7 @@ class SiteController extends BaseController
      * @param string $siteId
      *
      * @Config\Route("/{siteId}/delete", name="open_orchestra_api_site_delete")
-     * @Config\Method({"DELETE"})
+     * @Config\Method({"DELETE", "GET"})
      *
      * @return Response
      */
@@ -114,6 +114,7 @@ class SiteController extends BaseController
     }
 
     /**
+     * @param string $siteId
      * @Config\Route("/{siteId}/languages", name="open_orchestra_api_site_languages_show")
      * @Config\Method({"GET"})
      *

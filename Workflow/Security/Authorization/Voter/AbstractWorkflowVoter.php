@@ -131,7 +131,7 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
     protected function userCanUpdateToStatus(UserInterface $user, StatusInterface $status, $subject)
     {
         foreach ($user->getGroups() as $group) {
-            if ($group->getWorkflowProfileCollection($subject::ENTITY_TYPE)) {
+            if (!$group->isDeleted() && $group->getWorkflowProfileCollection($subject::ENTITY_TYPE)) {
                 foreach ($group->getWorkflowProfileCollection($subject::ENTITY_TYPE)->getProfiles() as $profile) {
                     if ($profile->hasTransition($subject->getStatus(), $status)) {
 

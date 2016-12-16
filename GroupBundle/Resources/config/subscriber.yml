@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_group.subscriber.soft_delete_group.class : OpenOrchestra\GroupBundle\EventSubscriber\SoftDeleteGroupSubscriber
+
+services:
+    open_orchestra_group.subscriber.soft_delete_group:
+        class: '%open_orchestra_group.subscriber.soft_delete_group.class%'
+        arguments:
+            - '@open_orchestra_user.repository.group'
+        tags:
+            - { name: kernel.event_subscriber }

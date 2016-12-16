@@ -3,6 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Repository;
 
 use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 
@@ -46,7 +47,7 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param array                       $siteId
+     * @param array                       $siteIds
      *
      * @return array
      */
@@ -62,7 +63,7 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
     }
 
     /**
-     * @param array $siteId
+     * @param array $siteIds
      *
      * @return int
      */
@@ -75,7 +76,7 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param array                       $siteId
+     * @param array                       $siteIds
      *
      * @return int
      */
@@ -100,6 +101,21 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
         ->field('id')->in($groupIds)
         ->getQuery()
         ->execute();
+    }
+
+    /**
+     * @param SiteInterface $site
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function softDeleteGroupsBySite(SiteInterface $site)
+    {
+        $this->createQueryBuilder()
+            ->updateMany()
+            ->field('site')->equals($site)
+            ->field('deleted')->set(true)
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -138,7 +154,10 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
         foreach ($siteIds as $key => $siteId) {
             $siteIds[$key] = new \MongoId($siteId);
         }
-        $qa->match(array('site.$id' => array('$in' => $siteIds)));
+        $qa->match(
+            array('site.$id' => array('$in' => $siteIds)),
+            array('deleted' => false)
+        );
 
         return $qa;
     }
