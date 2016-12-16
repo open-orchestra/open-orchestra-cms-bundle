@@ -45,14 +45,14 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
                 title: Translator.trans('open_orchestra_workflow_admin.table.statuses.specificities'),
                 orderable: false,
                 visibile: true,
-                createdCell: this._agglomerateProperties
+                render: this._getAgglomeratedProperties
             },
             {
                 name: "display_color",
                 title: Translator.trans('open_orchestra_workflow_admin.table.statuses.display_color'),
                 orderable: false,
                 visibile: true,
-                createdCell: this._formatColor
+                render: this._getFormatedColor
             }
         ];
     }
@@ -115,46 +115,48 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
         status.set('delete', $(event.currentTarget).prop('checked'));
     }
 
-   /**
+    /**
     *
-    * @param {Object} td
-    * @param {Object} cellData
-    * @param {Object} rowData
+    * @param {Object} data
+    * @param {string} type
+    * @param {Status} full
+    * @param {Object} meta
     *
     * @private
     */
-    _formatColor(td, cellData, rowData) {
-        $(td).html('<span style="color:' + rowData.get('code_color') + '">' + rowData.get('display_color') + '</span>');
+    _getAgglomeratedProperties(data, type, full, meta) {
+        let attributes = [];
+
+        if (full.get('initial_state')) {
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.initial_state')); 
+        }
+        if (full.get('translation_state')) {
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.translation_state')); 
+        }
+        if (full.get('published_state')) {
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.published_state')); 
+        }
+        if (full.get('auto_publish_from_state')) {
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_publish_from_state')); 
+        }
+        if (full.get('auto_unpublish_to_state')) {
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_unpublish_to_state')); 
+        }
+
+        return attributes.join(', ');
     }
 
     /**
     *
-    * @param {Object} td
-    * @param {Object} cellData
-    * @param {Object} rowData
+    * @param {Object} data
+    * @param {string} type
+    * @param {Status} full
+    * @param {Object} meta
     *
     * @private
     */
-    _agglomerateProperties(td, cellData, rowData) {
-        let attributes = [];
-
-        if (rowData.get('initial_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.initial_state')); 
-        }
-        if (rowData.get('translation_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.translation_state')); 
-        }
-        if (rowData.get('published_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.published_state')); 
-        }
-        if (rowData.get('auto_publish_from_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_publish_from_state')); 
-        }
-        if (rowData.get('auto_unpublish_to_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_unpublish_to_state')); 
-        }
-
-        $(td).html(attributes.join(', '));
+    _getFormatedColor(data, type, full, meta) {
+        return '<span style="color:' + full.get('code_color') + '">' + full.get('display_color') + '</span>';
     }
 }
 

@@ -52,7 +52,6 @@ class StatusRouter extends OrchestraRouter
                 length: pageLength
             },
             success: (statuses) => {
-            	console.log(statuses);
                 let statusesView = new StatusesView({
                     collection: statuses,
                     settings: {

@@ -1,6 +1,4 @@
-import StatusRouter        from './Router/Status/StatusRouter'
-import FormBehaviorManager from '../Service/Form/Behavior/Manager'
-import GroupTable          from '../Service/Form/Behavior/GroupTable'
+import StatusRouter from './Router/Status/StatusRouter'
 
 /**
  * @class StatusSubApplication
@@ -12,7 +10,6 @@ class StatusSubApplication
      */
     run() {
         this._initRouter();
-        this._initFormBehaviorManager();
     }
 
     /**
@@ -21,14 +18,6 @@ class StatusSubApplication
      */
     _initRouter() {
         new StatusRouter();
-    }
-
-    /**
-     * Initialize form behavior library
-     * @private
-     */
-    _initFormBehaviorManager() {
-        FormBehaviorManager.add(GroupTable);
     }
 }
 
