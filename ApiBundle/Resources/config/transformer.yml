@@ -20,10 +20,6 @@ parameters:
     open_orchestra_api.transformer.site_collection.class: OpenOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
     open_orchestra_api.transformer.theme.class: OpenOrchestra\ApiBundle\Transformer\ThemeTransformer
     open_orchestra_api.transformer.theme_collection.class: OpenOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
-    open_orchestra_api.transformer.role.class: OpenOrchestra\ApiBundle\Transformer\RoleTransformer
-    open_orchestra_api.transformer.role_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleCollectionTransformer
-    open_orchestra_api.transformer.role_string.class: OpenOrchestra\ApiBundle\Transformer\RoleStringTransformer
-    open_orchestra_api.transformer.role_string_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleStringCollectionTransformer
     open_orchestra_api.transformer.redirection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer
     open_orchestra_api.transformer.redirection_collection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
     open_orchestra_api.transformer.field_type.class: OpenOrchestra\ApiBundle\Transformer\FieldTypeTransformer
@@ -186,35 +182,6 @@ services:
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.role:
-        class: '%open_orchestra_api.transformer.role.class%'
-        arguments:
-            - '%open_orchestra_api.facade.role.class%'
-            - '@open_orchestra_backoffice.manager.multi_languages_choice'
-            - '@security.authorization_checker'
-            - '@open_orchestra_backoffice.usage_finder.role'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.role_collection:
-        class: '%open_orchestra_api.transformer.role_collection.class%'
-        arguments:
-            - '%open_orchestra_api.facade.role_collection.class%'
-            - '@security.authorization_checker'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.role_string:
-        class: '%open_orchestra_api.transformer.role_string.class%'
-        arguments:
-            - '%open_orchestra_api.facade.role_string.class%'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.role_string_collection:
-        class: '%open_orchestra_api.transformer.role_string_collection.class%'
-        arguments:
-            - '%open_orchestra_api.facade.role_string_collection.class%'
-            - '@security.authorization_checker'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.redirection:
         class: '%open_orchestra_api.transformer.redirection.class%'
         arguments:
@@ -247,8 +214,6 @@ services:
         class: '%open_orchestra_api.transformer.status.class%'
         arguments:
             - '%open_orchestra_api.facade.status.class%'
-            - '@open_orchestra_backoffice.authorize_status_change_manager'
-            - '@open_orchestra_model.repository.role'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@translator'
             - '@security.authorization_checker'

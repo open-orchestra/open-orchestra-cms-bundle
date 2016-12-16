@@ -7,8 +7,6 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
-use OpenOrchestra\BackofficeBundle\StrategyManager\authorizeStatusChangeManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
@@ -21,16 +19,12 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
  */
 class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 {
-    protected $authorizeStatusChangeManager;
-    protected $roleRepository;
     protected $multiLanguagesChoiceManager;
     protected $translator;
     protected $usageFinder;
 
     /**
      * @param string                               $facadeClass
-     * @param AuthorizeStatusChangeManager         $authorizeStatusChangeManager
-     * @param RoleRepositoryInterface              $roleRepository
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param TranslatorInterface                  $translator
      * @param AuthorizationCheckerInterface        $authorizationChecker
@@ -38,16 +32,12 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function __construct(
         $facadeClass,
-        AuthorizeStatusChangeManager $authorizeStatusChangeManager,
-        RoleRepositoryInterface $roleRepository,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         TranslatorInterface $translator,
         AuthorizationCheckerInterface $authorizationChecker,
         StatusUsageFinder $usageFinder
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
-        $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
-        $this->roleRepository = $roleRepository;
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->translator = $translator;
         $this->usageFinder = $usageFinder;
@@ -81,21 +71,10 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->id = $status->getId();
         $facade->allowed = false;
         if ($document) {
-            $facade->allowed = $this->authorizeStatusChangeManager->isGranted($document, $status);
+            $facade->allowed = $this->authorizationChecker->isGranted($status, $document);
         }
 
         if ($this->hasGroup(CMSGroupContext::STATUS_LINKS)) {
-            $toRoles = array();
-            foreach ($status->getToRoles() as $toRole) {
-                $toRoles[] = $toRole->getName();
-            }
-            $facade->toRole = implode(',', $toRoles);
-            $fromRoles = array();
-            foreach ($status->getFromRoles() as $fromRole) {
-                $fromRoles[] = $fromRole->getName();
-            }
-            $facade->fromRole = implode(',', $fromRoles);
-
             if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
                 && !$this->usageFinder->hasUsage($status)
             ) {

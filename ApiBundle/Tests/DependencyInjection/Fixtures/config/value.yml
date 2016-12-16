@@ -20,10 +20,6 @@ open_orchestra_api:
         node_tree:                FacadeClass
         redirection:              FacadeClass
         redirection_collection:   FacadeClass
-        role:                     FacadeClass
-        role_collection:          FacadeClass
-        role_string:              FacadeClass
-        role_string_collection:   FacadeClass
         site:                     FacadeClass
         site_collection:          FacadeClass
         status:                   FacadeClass

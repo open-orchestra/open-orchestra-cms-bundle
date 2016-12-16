@@ -16,12 +16,15 @@ trait ListStatus
      */
     protected function listStatuses(StatusableInterface $document)
     {
-        $transitions = $document->getStatus()->getFromRoles();
+        $possibleStatuses = array($document->getStatus());
+        $availableStatus = $this->get('open_orchestra_model.repository.status')->findAll();
 
-        $possibleStatuses = array();
-
-        foreach ($transitions as $transition) {
-            $possibleStatuses[] = $transition->getToStatus();
+        foreach ($availableStatus as $status) {
+            if ($status->getId() != $document->getStatus()->getId()
+                && $this->isGranted($status, $document)
+            ) {
+                $possibleStatuses[] = $status;
+            }
         }
 
         return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $document);

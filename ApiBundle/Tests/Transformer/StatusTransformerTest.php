@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BackofficeBundle\StrategyManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
@@ -14,20 +14,19 @@ use OpenOrchestra\ApiBundle\Transformer\StatusTransformer;
 class StatusTransformerTest extends AbstractBaseTestCase
 {
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\StatusFacade';
-    protected $authorizeStatusChangeManager;
     protected $authorizationChecker;
     protected $transformerManager;
     protected $groupContext;
     protected $transformer;
     protected $translator;
     protected $status;
+    protected $usageFinder;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->authorizeStatusChangeManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager');
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
         $multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
@@ -36,12 +35,10 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         $statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
-        $roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         $router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
         $statusId = 'StatusId';
 
-        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
         Phake::when($this->status)->getId()->thenReturn($statusId);
         Phake::when($router)->generateRoute(Phake::anyParameters())->thenReturn('route');
         Phake::when($statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
@@ -53,11 +50,10 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
 
         $this->usageFinder = Phake::mock('OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder');
+        Phake::when($this->usageFinder)->hasUsage(Phake::anyParameters())->thenReturn(false);
 
         $this->transformer = new StatusTransformer(
             $this->facadeClass,
-            $this->authorizeStatusChangeManager,
-            $roleRepository,
             $multiLanguagesChoiceManager,
             $this->translator,
             $this->authorizationChecker,
@@ -79,22 +75,15 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
-        $role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
 
-        $roles = new ArrayCollection();
-
-        Phake::when($role)->getName()->thenReturn('role_name');
-
-        $roles->add($role);
-
-        Phake::when($this->authorizeStatusChangeManager)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
+        Phake::when($this->authorizationChecker)->isGranted($this->status, $document)->thenReturn($isGranted);
+        Phake::when($this->authorizationChecker)->isGranted(ContributionActionInterface::DELETE, $this->status)->thenReturn($isGranted);
+        Phake::when($this->authorizationChecker)->isGranted(ContributionActionInterface::EDIT, $this->status)->thenReturn($isGranted);
         Phake::when($this->groupContext)->hasGroup(Phake::anyParameters())->thenReturn($hasGroup);
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('trans_display_color');
         Phake::when($this->status)->getDisplayColor()->thenReturn('display_color');
         Phake::when($this->status)->isPublishedState()->thenReturn($publishedState);
         Phake::when($this->status)->isInitialState()->thenReturn($initialState);
-        Phake::when($this->status)->getFromRoles()->thenReturn($roles);
-        Phake::when($this->status)->getToRoles()->thenReturn($roles);
         Phake::when($this->status)->getLabels()->thenReturn(array());
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
 
@@ -105,7 +94,7 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->assertSame($initialState, $facade->initialState);
         $this->assertSame($isGranted, $facade->allowed);
 
-        if (!$hasGroup) {
+        if (!$hasGroup && $isGranted) {
             $this->assertArrayHasKey('_self_delete', $facade->getLinks());
             $this->assertArrayHasKey('_self_form', $facade->getLinks());
         } else {
@@ -143,7 +132,7 @@ class StatusTransformerTest extends AbstractBaseTestCase
      */
     public function testExceptionTransform()
     {
-        $this->setExpectedException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
+        $this->expectException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->transformer->transform(Phake::mock('stdClass'));
     }
 

@@ -76,13 +76,6 @@ class Configuration implements ConfigurationInterface
                 ))
                 ->prototype('scalar')->end()
             ->end()
-            ->arrayNode('collector')
-                ->useAttributeAsKey('key')
-                ->defaultValue( array(
-                    'workflow_role_in_group' => true
-                ))
-                ->prototype('scalar')->end()
-            ->end()
             ->append($this->addTemplateSetConfiguration())
             ->append($this->addSpecialPageConfiguration())
         ->end();

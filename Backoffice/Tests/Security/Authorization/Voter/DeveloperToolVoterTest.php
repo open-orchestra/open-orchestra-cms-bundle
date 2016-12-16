@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -108,7 +107,6 @@ class DeveloperToolVoterTest extends AbstractVoterTest
             'status'                    => $this->createPhakeStatus(),
             'entity type content type'  => ContentTypeInterface::ENTITY_TYPE,
             'entity type workflow'      => WorkflowProfileInterface::ENTITY_TYPE,
-            'entity type role'          => RoleInterface::ENTITY_TYPE,
             'entity type status'        => StatusInterface::ENTITY_TYPE,
         );
 
@@ -167,11 +165,9 @@ class DeveloperToolVoterTest extends AbstractVoterTest
             'Ok : Delete status'                   => array($status,                               ContributionActionInterface::DELETE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete entity type content type' => array(ContentTypeInterface::ENTITY_TYPE,     ContributionActionInterface::READ,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Read entity type workflow'       => array(WorkflowProfileInterface::ENTITY_TYPE, ContributionActionInterface::READ,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
-            'Ok : Read entity type role'           => array(RoleInterface::ENTITY_TYPE,            ContributionActionInterface::READ,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Read entity type status'         => array(StatusInterface::ENTITY_TYPE,          ContributionActionInterface::READ,   array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Create entity type content type' => array(ContentTypeInterface::ENTITY_TYPE,     ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Create entity type workflow'     => array(WorkflowProfileInterface::ENTITY_TYPE, ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
-            'Ok : Create entity type role'         => array(RoleInterface::ENTITY_TYPE,            ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
             'Ok : Create entity type status'       => array(StatusInterface::ENTITY_TYPE,          ContributionActionInterface::CREATE, array(ContributionRoleInterface::DEVELOPER), null, VoterInterface::ACCESS_GRANTED),
         );
     }

@@ -20,7 +20,6 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\NodeFacade';
     protected $authorizationChecker;
-    protected $roleName = 'ROLE_NAME';
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
@@ -32,7 +31,6 @@ class NodeTransformerTest extends AbstractBaseTestCase
     protected $status;
     protected $node;
     protected $site;
-    protected $role;
 
     /**
      * Set up the test
@@ -50,13 +48,9 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn(array($siteAlias));
 
-        $this->role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
-        Phake::when($this->role)->getName()->thenReturn($this->roleName);
-
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
-        Phake::when($this->status)->getToRoles()->thenReturn(new ArrayCollection(array($this->role)));
 
         $this->encryptionManager = Phake::mock('OpenOrchestra\BaseBundle\Manager\EncryptionManager');
 

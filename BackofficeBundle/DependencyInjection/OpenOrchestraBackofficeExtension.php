@@ -41,7 +41,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
         $container->setParameter('open_orchestra_user.base_layout', 'OpenOrchestraBackofficeBundle::layout.html.twig');
         $container->setParameter('open_orchestra_user.form_template', 'OpenOrchestraBackofficeBundle::form.html.twig');
-        $container->setParameter('open_orchestra_backoffice.collector.backoffice_role.workflow_role_in_group', $config['collector']['workflow_role_in_group']);
         $fixedAttributes = array_merge($config['fixed_attributes'], $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
         $container->setParameter('open_orchestra_backoffice.block_default_configuration', $config['block_default_configuration']);
@@ -63,7 +62,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('group.yml');
         $loader->load('voter.yml');
         $loader->load('validator.yml');
-        $loader->load('authorize_status_change.yml');
         $loader->load('restore_entity.yml');
         $loader->load('remove_trashcan_entity.yml');
         $loader->load('collector.yml');

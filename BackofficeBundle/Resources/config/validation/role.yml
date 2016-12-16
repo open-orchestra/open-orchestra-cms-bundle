@@ -1,3 +1,0 @@
-OpenOrchestra\ModelInterface\Model\RoleInterface:
-    constraints:
-        - OpenOrchestra\Backoffice\Validator\Constraints\RoleStatuses: ~

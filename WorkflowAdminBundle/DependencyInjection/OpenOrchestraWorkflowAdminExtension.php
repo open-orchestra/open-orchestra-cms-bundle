@@ -20,21 +20,10 @@ class OpenOrchestraWorkflowAdminExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
-
-        foreach ($config['facades'] as $transformer => $facade) {
-            $container->setParameter('open_orchestra_workflow_admin.facade.' . $transformer .'.class', $facade);
-        }
+        $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('form.yml');
-        $loader->load('transformer.yml');
-        $loader->load('manager.yml');
-        $loader->load('authorize_status_change.yml');
-        $loader->load('subscriber.yml');
         $loader->load('role_parameter.yml');
         $loader->load('voter.yml');
-
-        $container->setParameter('open_orchestra_backoffice.collector.backoffice_role.workflow_role_in_group', false);
     }
 }

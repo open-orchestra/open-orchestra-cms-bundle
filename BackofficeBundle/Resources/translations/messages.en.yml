@@ -52,8 +52,6 @@ open_orchestra_backoffice:
                 label: Automatic unpublish status
                 helper: If set to "Yes", this status will be used to unpublish nodes by the auto-unpublish process. Setting it to "Yes" will remove this setting from other status as only one status can have this feature.
             labels: Label
-            from_role: Role needed to change the status from this one
-            to_role: Role needed to get to this status
             color:
                 red: Red
                 orange: Orange
@@ -255,7 +253,6 @@ open_orchestra_backoffice:
                 canonical: Canonique
                 keywords: Mot-clés / moteur de recherche
                 cache: Cache
-                roles: Rôles
         changefreq:
             always: Always
             hourly: Hourly
@@ -339,15 +336,6 @@ open_orchestra_backoffice:
             label: Label
             creation: Keyword has been created
             success: Keyword has been successfully updated
-        role:
-            new:
-                success: The role has been successfully created
-            edit:
-                success: The role has been updated
-            name: Name
-            descriptions: Description
-            from_status: Status from
-            to_status: Status destination
         group:
             new:
                 success: The group has been successfully created
@@ -406,50 +394,6 @@ open_orchestra_backoffice:
                 meta: Meta
                 google_marker: Google Analytics marker / GTM
                 xiti: AT Internet tag (Xiti)
-    left_menu:
-        tree:
-            new_page: New page
-            new_template: New template
-            delete_node: Are you sure to delete the page %nodeName%?
-            delete_template: Are you sure to delete the template %templateName%?
-            confirm_move:
-                title: Reorder the page?
-                text: By accepting, the page will be moved as child of "%nodeName%"
-        dashboard:
-            title: Dashboard
-        editorial:
-            title: Contribution
-            nodes: Pages
-            templates: Templates
-            contents: Contents
-            error_nodes:
-                error_404: Error 404
-                error_503: Error 503
-        administration:
-            translation: Translation
-            title: Administration
-            sites:
-                list: Websites
-            themes:
-                list: Themes
-            content_type:
-                list: Content types
-            status:
-                list: Workflow status
-            user:
-                list: Users
-            api_client:
-                list: Api Clients
-            role:
-                list: Workflow transitions
-            group:
-                list: Groups
-            redirection:
-                list: Redirections
-            keyword:
-                list: Keywords
-            trashcan:
-                list: Trashcan
     block:
         configurable_content:
             title: Configurable content
@@ -647,10 +591,6 @@ open_orchestra_backoffice:
             version: Version
             status_label: Status label
             linked_to_site: Site linked
-        role:
-            description: Description
-            from_status: From status
-            to_status: To status
         group:
             name: Name
             label: Label

@@ -6,10 +6,8 @@ services:
     open_orchestra_backoffice.collector.backoffice_role:
         class: '%open_orchestra_backoffice.collector.backoffice_role.class%'
         arguments:
-            - '@open_orchestra_model.repository.role'
             - '@translator'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
-            - '%open_orchestra_backoffice.collector.backoffice_role.workflow_role_in_group%'
     open_orchestra_backoffice.collector.front_role:
         class: '%open_orchestra_backoffice.collector.front_role.class%'
         arguments:

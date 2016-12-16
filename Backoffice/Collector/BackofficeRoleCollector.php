@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Collector;
 
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -17,19 +16,13 @@ class BackofficeRoleCollector implements RoleCollectorInterface
     protected $multiLanguagesChoiceManager;
 
     /**
-     * @param RoleRepositoryInterface              $roleRepository
      * @param TranslatorInterface                  $translator
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
-     * @param boolean                              $workflowRoleInGroup
      */
-    public function __construct(RoleRepositoryInterface $roleRepository, TranslatorInterface $translator, MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager, $workflowRoleInGroup)
+    public function __construct(TranslatorInterface $translator, MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager)
     {
-        $this->roleRepository = $roleRepository;
         $this->translator = $translator;
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
-        if ($workflowRoleInGroup) {
-            $this->loadWorkflowRole();
-        }
     }
 
     /**
@@ -46,17 +39,6 @@ class BackofficeRoleCollector implements RoleCollectorInterface
     public function addRole($role)
     {
         $this->addRoleWithTranslation($role, $this->translator->trans('open_orchestra_role.' . strtolower($role), array(), 'role'));
-    }
-
-    /**
-     * add workflow roles from repository
-     */
-    protected function loadWorkflowRole()
-    {
-        $workflowRoles = $this->roleRepository->findWorkflowRole();
-        foreach ($workflowRoles as $workflowRole) {
-            $this->addRoleWithTranslation($workflowRole->getName(), $this->multiLanguagesChoiceManager->choose($workflowRole->getDescriptions()));
-        }
     }
 
     /**

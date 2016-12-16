@@ -5,22 +5,22 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
-use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class UpdateStatusSubscriber
  */
 class UpdateStatusSubscriber implements EventSubscriberInterface
 {
-    protected $authorizeStatusChangeManager;
+    protected $authorizationChecker;
 
     /**
-     * @param AuthorizeStatusChangeManager $authorizeStatusChangeManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(AuthorizeStatusChangeManager $authorizeStatusChangeManager)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -32,7 +32,7 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
     {
         $document = $event->getStatusableElement();
         $toStatus = $event->getToStatus();
-        if ($this->authorizeStatusChangeManager->isGranted($document, $toStatus)) {
+        if ($this->authorizationChecker->isGranted($toStatus, $document)) {
             $document->setStatus($toStatus);
         } else {
             throw new StatusChangeNotGrantedException();

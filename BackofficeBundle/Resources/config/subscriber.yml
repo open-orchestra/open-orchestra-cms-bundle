@@ -83,7 +83,7 @@ services:
     open_orchestra_backoffice.subscriber.update_status:
         class: '%open_orchestra_backoffice.subscriber.update_status.class%'
         arguments:
-            - '@open_orchestra_backoffice.authorize_status_change_manager'
+            - '@security.authorization_checker'
         tags:
             - { name: kernel.event_subscriber }
 

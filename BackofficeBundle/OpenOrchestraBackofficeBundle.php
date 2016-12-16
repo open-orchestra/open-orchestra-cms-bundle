@@ -12,7 +12,6 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RestoreEntityCom
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AuthorizeStatusChangeCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ReferenceCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TemplateCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -38,7 +37,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new BlockParameterCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());
-        $container->addCompilerPass(new AuthorizeStatusChangeCompilerPass());
         $container->addCompilerPass(new RestoreEntityCompilerPass());
         $container->addCompilerPass(new RemoveTrashcanEntityCompilerPass());
         $container->addCompilerPass(new FieldToElasticaTypeCompilerPass());

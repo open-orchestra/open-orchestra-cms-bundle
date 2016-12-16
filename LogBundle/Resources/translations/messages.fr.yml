@@ -41,10 +41,6 @@ open_orchestra_log:
     keyword:
         create: Crée un tag avec le label keyword_label
         delete: Supprime un tag avec le label keyword_label
-    role:
-        create: Crée un nouveau rôle nommé role_name
-        delete: Supprime un rôle nommé role_name
-        update: Met à jour un rôle nommé role_name
     group:
         create: Crée un nouveau group nommé group_name
         delete: Supprime un group nommé group_name
