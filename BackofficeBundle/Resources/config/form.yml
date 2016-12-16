@@ -262,23 +262,6 @@ services:
             - '@security.authorization_checker'
         tags:
             - { name: form.type, alias: oo_keywords_choice}
-<<<<<<< 82b59e68d15377b40edb1e163017554dbf893640
-    open_orchestra_backoffice.type.role:
-        class: '%open_orchestra_backoffice.type.role.class%'
-        arguments:
-            - '%open_orchestra_base.administration_languages%'
-            - '%open_orchestra_model.document.role.class%'
-        tags:
-            - { name: form.type, alias: oo_role }
-=======
-    open_orchestra_backoffice.type.group:
-        class: '%open_orchestra_backoffice.type.group.class%'
-        arguments:
-            - '%open_orchestra_user.document.group.class%'
-            - '%open_orchestra_base.administration_languages%'
-        tags:
-            - { name: form.type, alias: oo_group }
->>>>>>> remove role, workflowfunction and worklow right
     open_orchestra_backoffice.type.redirection:
         class: '%open_orchestra_backoffice.type.redirection.class%'
         arguments:
