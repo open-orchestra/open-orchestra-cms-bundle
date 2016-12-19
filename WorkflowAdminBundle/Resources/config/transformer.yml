@@ -1,28 +1,9 @@
 parameters:
-    open_orchestra_workflow_admin.transformer.workflow_function_collection.class: OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowFunctionCollectionTransformer
-    open_orchestra_workflow_admin.transformer.workflow_function.class:            OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowFunctionTransformer
     open_orchestra_workflow_admin.transformer.status.class:                       OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer
     open_orchestra_workflow_admin.transformer.status_collection.class:            OpenOrchestra\WorkflowAdminBundle\Transformer\StatusCollectionTransformer
     open_orchestra_workflow_admin.transformer.status_node_tree.class:             OpenOrchestra\WorkflowAdminBundle\Transformer\StatusNodeTreeTransformer
 
 services:
-    open_orchestra_workflow_admin.transformer.workflow_function_collection:
-        class: '%open_orchestra_workflow_admin.transformer.workflow_function_collection.class%'
-        arguments:
-            - '%open_orchestra_workflow_admin.facade.workflow_function_collection.class%'
-            - '@security.authorization_checker'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
-    open_orchestra_workflow_admin.transformer.log:
-        class: '%open_orchestra_workflow_admin.transformer.workflow_function.class%'
-        arguments:
-            - '%open_orchestra_workflow_admin.facade.workflow_function.class%'
-            - '@open_orchestra_backoffice.manager.multi_languages_choice'
-            - '@security.authorization_checker'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
     open_orchestra_workflow_admin.transformer.status:
         class: '%open_orchestra_workflow_admin.transformer.status.class%'
         arguments:
