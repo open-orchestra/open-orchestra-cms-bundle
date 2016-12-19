@@ -22,8 +22,6 @@ open_orchestra_api:
         redirection_collection:   FacadeClass
         site:                     FacadeClass
         site_collection:          FacadeClass
-        status:                   FacadeClass
-        status_collection:        FacadeClass
         template:                 FacadeClass
         theme:                    FacadeClass
         theme_collection:         FacadeClass

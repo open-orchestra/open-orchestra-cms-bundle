@@ -49,7 +49,7 @@ class OpenOrchestraLogExtensionTest extends AbstractBaseTestCase
     public function provideFacadesConfig()
     {
         return array(
-            array('log', 'LogFacade'),
+            array('log'           , 'LogFacade'),
             array('log_collection', 'LogCollectionFacade'),
         );
     }

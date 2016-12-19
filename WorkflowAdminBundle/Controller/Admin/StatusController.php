@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\WorkflowAdminBundle\Controller\Admin;
 
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
 
 /**
  * Class StatusController

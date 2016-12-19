@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\WorkflowAdminBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -28,12 +28,10 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
             $facade->addStatus($this->getTransformer('status')->transform($status, $document));
         }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, StatusInterface::ENTITY_TYPE)) {
-            $facade->addLink('_self_add', $this->generateRoute(
-                'open_orchestra_backoffice_status_new',
-                array()
-            ));
-        }
+        $facade->addRight(
+            'can_create',
+            $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, StatusInterface::ENTITY_TYPE)
+        );
 
         return $facade;
     }

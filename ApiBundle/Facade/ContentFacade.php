@@ -34,7 +34,7 @@ class ContentFacade extends DeletedFacade
     public $language;
 
     /**
-     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\StatusFacade")
+     * @Serializer\Type("OpenOrchestra\WorkflowAdminBundle\Facade\StatusFacade")
      */
     public $status;
 

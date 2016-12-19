@@ -4,39 +4,39 @@
             <h4 class="modal-title"><%= Translator.trans('open_orchestra_user_admin.user.add_group') %></h4>
         </div>
         <div class="modal-body">
-			<form class="form-horizontal search-engine">
-	            <input type="hidden" name='language' value="<%= language %>">
-			    <div class="form-group col-lg-6">
-			        <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_user_admin.table.groups.label')%></label>
-			        <div class="col-md-8">
-			            <input type="text" name='label' class="form-control" placeholder="">
-			        </div>
-			    </div>
-			    <div class="form-group col-lg-6">
-			        <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_user_admin.table.groups.site')%></label>
-			        <div class="col-md-8">
-						<div class="styled-select">
-							<select class="form-control" name='site'>
-			                    <option></option>
-			                    <% _.each(sites, function(site, key) { %>
-			                            <option value="<%= site.get('id') %>"><%= site.get('name') %></option>
-			                    <% }); %>
-							</select>
-						</div>
-			        </div>
-			    </div>
-			    <div class="form-group col-lg-12">
-			        <div class="col-lg-12">
-			            <button class="btn btn-info submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
-			            <button class="btn btn-border btn-large reset hidden"><%= Translator.trans('open_orchestra_backoffice.node.search_engine.reset')%></button>
-			        </div>
-			    </div>
-			</form>
-			<div class='groups-list'>
-			</div>
+            <form class="form-horizontal search-engine">
+                <input type="hidden" name='language' value="<%= language %>">
+                <div class="form-group col-lg-6">
+                    <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_user_admin.table.groups.label')%></label>
+                    <div class="col-md-8">
+                        <input type="text" name='label' class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_user_admin.table.groups.site')%></label>
+                    <div class="col-md-8">
+                        <div class="styled-select">
+                            <select class="form-control" name='site'>
+                                <option></option>
+                                <% _.each(sites, function(site, key) { %>
+                                        <option value="<%= site.get('id') %>"><%= site.get('name') %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12">
+                    <div class="col-lg-12">
+                        <button class="btn btn-info submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+                        <button class="btn btn-border btn-large reset hidden"><%= Translator.trans('open_orchestra_backoffice.node.search_engine.reset')%></button>
+                    </div>
+                </div>
+            </form>
+            <div class='groups-list'>
+            </div>
         </div>
         <div class="modal-footer">
-          	<button class="select-group btn btn-primary" type="button"><%= Translator.trans('open_orchestra_user_admin.user.select') %></button>
+            <button class="select-group btn btn-primary" type="button"><%= Translator.trans('open_orchestra_user_admin.user.select') %></button>
         </div>
     </div>
 </div>
