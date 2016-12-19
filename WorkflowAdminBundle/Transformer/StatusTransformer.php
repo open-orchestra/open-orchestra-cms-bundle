@@ -13,6 +13,7 @@ use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class StatusTransformer
@@ -22,6 +23,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $multiLanguagesChoiceManager;
     protected $translator;
     protected $usageFinder;
+    protected $statusRepository;
 
     /**
      * @param string                               $facadeClass
@@ -29,18 +31,21 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param TranslatorInterface                  $translator
      * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param StatusUsageFinder                    $usageFinder
+     * @param StatusRepositoryInterface            $statusRepository
      */
     public function __construct(
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         TranslatorInterface $translator,
         AuthorizationCheckerInterface $authorizationChecker,
-        StatusUsageFinder $usageFinder
+        StatusUsageFinder $usageFinder,
+        StatusRepositoryInterface $statusRepository
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->translator = $translator;
         $this->usageFinder = $usageFinder;
+        $this->statusRepository = $statusRepository;
     }
 
     /**
@@ -89,6 +94,21 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return UserInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if (null !== $facade->id) {
+            return $this->statusRepository->find($facade->id);
+        }
+
+        return null;
     }
 
     /**

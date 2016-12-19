@@ -28,4 +28,12 @@ class StatusCollectionFacade extends PaginateCollectionFacade
     {
         $this->statuses[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getStatuses()
+    {
+        return $this->statuses;
+    }
 }
