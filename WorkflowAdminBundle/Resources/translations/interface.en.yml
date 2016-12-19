@@ -1,26 +1,27 @@
 open_orchestra_workflow_admin:
     navigation:
         developer:
-          title: Developer
+          title   : Developer
           workflow: Workflow
     status:
-        title: Statuses
-        title_list: Statuses list
-        initial_state: Initial state
-        translation_state: Translation state
-        published_state: Publication state
+        title                  : Statuses
+        title_list             : Statuses list
+        title_edit             : Edit a status
+        initial_state          : Initial state
+        translation_state      : Translation state
+        published_state        : Publication state
         auto_publish_from_state: Auto-publish state
         auto_unpublish_to_state: Auto-unpublish state
     workflow_profile:
-        title: Profiles
+        title     : Profiles
         title_list: Workflow profile list
-        title_new:  New workflow profile
+        title_new :  New workflow profile
         title_edit: Edit workflow profile
     table:
         statuses:
-            label: Label
+            label        : Label
             display_color: Display color
             specificities: Specificities
         workflow_profile:
-            label: Label
+            label      : Label
             description: Description

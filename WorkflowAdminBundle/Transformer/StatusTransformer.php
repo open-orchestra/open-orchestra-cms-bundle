@@ -72,7 +72,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->translationState = $status->isTranslationState();
         $facade->name = $status->getName();
         $facade->label = $this->multiLanguagesChoiceManager->choose($status->getLabels());
-        $facade->displayColor = $this->translator->trans('open_orchestra_backoffice.form.status.color.' . $status->getDisplayColor());
+        $facade->displayColor = $this->translator->trans('open_orchestra_workflow_admin.form.status.color.' . $status->getDisplayColor());
         $facade->codeColor = $status->getDisplayColor();
         $facade->id = $status->getId();
 

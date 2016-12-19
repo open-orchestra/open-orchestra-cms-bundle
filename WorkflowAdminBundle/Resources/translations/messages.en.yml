@@ -1,13 +1,33 @@
 open_orchestra_workflow_admin:
     form:
-        workflow_profile:
-            creation : The new workflow profile has been created
-            success : The workflow profile has been modified
-            labels : Labels
-            descriptions : Descriptions
+        status:
+            creation     : The new status has been created
+            success      : The status has been updated
+            name         : Name
+            labels       : Label
+            display_color: Diplay color
+            blocked_edition:
+                label : Block edition
+                helper: If set to "Yes", the contents with this status can not be changed.
+            out_of_workflow:
+                label : Out of validation workflow
+                helper: If set to "Yes", this status will be used to characterize contents with no validation workflow.
+            color:
+                red     : Red
+                orange  : Orange
+                green   : Green
+                grayDark: Grey
+                blue    : Blue
             group:
                 properties: Properties
-        profile: Workflow profiles 
-        backoffice: Back-office    
+        workflow_profile:
+            creation    : The new workflow profile has been created
+            success     : The workflow profile has been modified
+            labels      : Labels
+            descriptions: Descriptions
+            group:
+                properties: Properties
+        profile   : Workflow profiles 
+        backoffice: Back Office
     profile:
-        page : Page
+        page: Page

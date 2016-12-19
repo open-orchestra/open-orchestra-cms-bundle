@@ -1,4 +1,5 @@
 parameters:
+    open_orchestra_workflow_admin.type.status.class          : OpenOrchestra\Workflow\Form\Type\StatusType
     open_orchestra_workflow_admin.type.workflow_profile.class: OpenOrchestra\Workflow\Form\Type\WorkflowProfileType
 
 services:
@@ -9,3 +10,19 @@ services:
             - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_workflow_profile }
+
+    open_orchestra_workflow_admin.type.status:
+        class: '%open_orchestra_workflow_admin.type.status.class%'
+        arguments:
+            - '%open_orchestra_model.document.status.class%'
+            - '%open_orchestra_base.administration_languages%'
+        tags:
+            - { name: form.type, alias: oo_status }
+
+    open_orchestra_workflow_admin.type.orchestra_color_choice:
+        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
+        arguments:
+            - '%open_orchestra_workflow_admin.choice.available_color%'
+            - 'orchestra_color_choice'
+        tags:
+            - { name: form.type, alias: orchestra_color_choice}

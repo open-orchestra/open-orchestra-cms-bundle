@@ -7,7 +7,6 @@ parameters:
     open_orchestra_backoffice.type.orchestra_content.class : OpenOrchestra\Backoffice\Form\Type\ContentType
     open_orchestra_backoffice.type.content_type.class: OpenOrchestra\Backoffice\Form\Type\ContentTypeType
     open_orchestra_backoffice.type.orchestra_choice.class: OpenOrchestra\Backoffice\Form\Type\OrchestraChoiceType
-    open_orchestra_backoffice.type.status.class: OpenOrchestra\Backoffice\Form\Type\StatusType
     open_orchestra_backoffice.type.field_type.class: OpenOrchestra\Backoffice\Form\Type\FieldTypeType
     open_orchestra_backoffice.type.field_option.class: OpenOrchestra\Backoffice\Form\Type\FieldOptionType
     open_orchestra_backoffice.type.choices_option.class: OpenOrchestra\Backoffice\Form\Type\Component\ChoicesOptionType
@@ -165,15 +164,6 @@ services:
         tags:
             - { name: form.type, alias: oo_date_picker}
 
-    # Status Type
-    open_orchestra_backoffice.type.status:
-        class: '%open_orchestra_backoffice.type.status.class%'
-        arguments:
-            - '%open_orchestra_model.document.status.class%'
-            - '%open_orchestra_base.administration_languages%'
-        tags:
-            - { name: form.type, alias: oo_status }
-
     # Content Form Builder
     open_orchestra_backoffice.type.orchestra_content:
         class: '%open_orchestra_backoffice.type.orchestra_content.class%'
@@ -233,13 +223,6 @@ services:
             - 'content'
         tags:
             - { name: form.type, alias: oo_content_choice}
-    open_orchestra_backoffice.type.orchestra_color_choice:
-        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
-        arguments:
-            - '%open_orchestra_backoffice.choice.available_color%'
-            - 'orchestra_color_choice'
-        tags:
-            - { name: form.type, alias: orchestra_color_choice}
     open_orchestra_backoffice.type.orchestra_frequence_choice:
         class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
         arguments:

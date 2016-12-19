@@ -1,5 +1,6 @@
 import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
 import Application            from '../../Application'
+import StatusFormView         from '../../View/Status/StatusFormView'
 import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
 import Statuses               from '../../Collection/Status/Statuses'
 import StatusesView           from '../../View/Status/StatusesView'

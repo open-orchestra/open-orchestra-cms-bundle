@@ -1,3 +1,4 @@
+
 {% extends 'BraincraftedBootstrapBundle:Form:bootstrap.html.twig' %}
 
 {% block form %}
@@ -213,9 +214,9 @@
     {% set collection = form|first %}
     {% spaceless %}
          <div class="perimeter-tree tree tree-form">
-	        <ul class="children">
-    	        {{ _self.tabulation(form.vars.configuration, collection) }}
-	        </ul>
+            <ul class="children">
+                {{ _self.tabulation(form.vars.configuration, collection) }}
+            </ul>
         </div>
     {% endspaceless %}
 {% endblock oo_tree_list_widget %}
@@ -224,14 +225,14 @@
     {% set key = configuration['node']['path'] %}
     {% set name = configuration['node']['name'] %}
     {% spaceless %}
-    	<li>
-        	<div>
-        		{% if configuration['child'] is defined %}<i aria-hidden="true" class="fa fa-chevron-down toggle-tree"></i>{% endif %}
+        <li>
+            <div>
+                {% if configuration['child'] is defined %}<i aria-hidden="true" class="fa fa-chevron-down toggle-tree"></i>{% endif %}
                 <input type="checkbox" id="{{ collection[key].vars.id }}" name="{{ collection[key].vars.full_name }}" {% if collection[key].vars.value is defined %} value="{{ collection[key].vars.value }}"{% endif %}{% if collection[key].vars.checked %} checked="checked"{% endif %} />
                 <label for="{{ collection[key].vars.id }}">{{ name }}</label>
             </div>
             {% if configuration['child'] is defined %}
-            	<ul class="children">
+                <ul class="children">
                 {% for child in configuration['child'] %}
                     {{ _self.tabulation(child, collection) }}
                 {% endfor %}
