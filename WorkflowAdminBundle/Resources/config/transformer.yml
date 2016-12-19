@@ -1,7 +1,7 @@
 parameters:
-    open_orchestra_workflow_admin.transformer.status.class:                       OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer
-    open_orchestra_workflow_admin.transformer.status_collection.class:            OpenOrchestra\WorkflowAdminBundle\Transformer\StatusCollectionTransformer
-    open_orchestra_workflow_admin.transformer.status_node_tree.class:             OpenOrchestra\WorkflowAdminBundle\Transformer\StatusNodeTreeTransformer
+    open_orchestra_workflow_admin.transformer.status.class:            OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer
+    open_orchestra_workflow_admin.transformer.status_collection.class: OpenOrchestra\WorkflowAdminBundle\Transformer\StatusCollectionTransformer
+    open_orchestra_workflow_admin.transformer.status_node_tree.class:  OpenOrchestra\WorkflowAdminBundle\Transformer\StatusNodeTreeTransformer
 
 services:
     open_orchestra_workflow_admin.transformer.status:
