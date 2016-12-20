@@ -10,6 +10,7 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_workflow_profile_submit_widget %}
+
 {% block oo_workflow_right_widget %}
     {% spaceless %}
         <div class="table-responsive">
@@ -66,3 +67,14 @@
         {% endfor %}
     {% endspaceless %}
 {% endblock %}
+
+{% block _oo_status_properties_widget %}
+    {% spaceless %}
+        {% set properties = [] %}
+        {% for property in form.parent.vars.properties %}
+            {% set properties = properties | merge([property | trans]) %}
+        {% endfor %}
+        {% set value = properties | join(', ') %}
+        {{ block('form_widget_simple') }}
+    {% endspaceless %}
+{% endblock _oo_status_properties_widget %}

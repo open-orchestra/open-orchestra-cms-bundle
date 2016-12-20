@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\Form\Type;
+namespace OpenOrchestra\Workflow\Tests\Form\Type;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\Form\Type\StatusType;
+use OpenOrchestra\Workflow\Form\Type\StatusType;
 
 /**
  * Class StatusTypeTest

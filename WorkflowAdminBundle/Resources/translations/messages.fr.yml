@@ -6,6 +6,14 @@ open_orchestra_workflow_admin:
             name         : Nom
             labels       : Libellé
             display_color: Couleur du statut
+            properties   : Propriétés
+            properties   :
+                label                  : Propriétés
+                initial_state          : Etat initial
+                translation_state      : Etat de traduction
+                published_state        : Etat de publication
+                auto_publish_from_state: Etat de publication automatique
+                auto_unpublish_to_state: Etat de dépublication automatique
             blocked_edition:
                 label : Bloquer l'édition
                 helper: Si réglé à "Oui", les contenus ayant ce statut ne peuvent être modifiés.

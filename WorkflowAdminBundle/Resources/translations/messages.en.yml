@@ -6,6 +6,13 @@ open_orchestra_workflow_admin:
             name         : Name
             labels       : Label
             display_color: Diplay color
+            properties   :
+                label                  : Properties
+                initial_state          : Initial state
+                translation_state      : Translation state
+                published_state        : Publication state
+                auto_publish_from_state: Auto-publish state
+                auto_unpublish_to_state: Auto-unpublish state
             blocked_edition:
                 label : Block edition
                 helper: If set to "Yes", the contents with this status can not be changed.
