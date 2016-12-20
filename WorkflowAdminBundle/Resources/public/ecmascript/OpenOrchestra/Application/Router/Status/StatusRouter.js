@@ -1,5 +1,6 @@
 import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
 import Application            from '../../Application'
+import NewStatusView          from '../../View/Status/NewStatusView'
 import StatusFormView         from '../../View/Status/StatusFormView'
 import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
 import Statuses               from '../../Collection/Status/Statuses'
@@ -15,9 +16,22 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     preinitialize(options) {
         this.routes = {
+            'status/new'           : 'newStatus',
             'status/edit/:statusId': 'editStatus',
-            'status/list(/:page)': 'listStatus'
+            'status/list(/:page)'  : 'listStatus'
         };
+    }
+
+    /**
+     * New status
+     */
+    newStatus() {
+        let url = Routing.generate('open_orchestra_workflow_admin_status_new');
+        this._diplayLoader(Application.getRegion('content'));
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let newStatusView = new NewStatusView({form: form});
+            Application.getRegion('content').html(newStatusView.render().$el);
+        });
     }
 
     /**

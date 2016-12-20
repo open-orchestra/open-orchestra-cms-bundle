@@ -50,13 +50,13 @@
         </div>
         {{ form_rest(form) }}
     {% endspaceless %}
-{% endblock %}
+{% endblock oo_workflow_right_widget %}
 
 {% block oo_authorization_widget %}
     {% spaceless %}
         {{ form_widget(form.workflowFunctions) }}
     {% endspaceless %}
-{% endblock %}
+{% endblock oo_authorization_widget %}
 
 {% block oo_workflow_function_choice_widget %}
     {% spaceless %}
@@ -66,7 +66,15 @@
             </td>
         {% endfor %}
     {% endspaceless %}
-{% endblock %}
+{% endblock oo_workflow_function_choice_widget %}
+
+{% block _oo_status_properties_row %}
+    {% spaceless %}
+        {% if(form.parent.vars.value.id is not null) %}
+            {{ block('form_row') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock _oo_status_properties_row %}
 
 {% block _oo_status_properties_widget %}
     {% spaceless %}

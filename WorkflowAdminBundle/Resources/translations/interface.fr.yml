@@ -7,6 +7,7 @@ open_orchestra_workflow_admin:
         title                  : Statuts
         title_list             : Liste des statuts
         title_edit             : Editer un statut
+        title_new              : Créer un statut
         initial_state          : Etat initial
         translation_state      : Etat de traduction
         published_state        : Etat de publication
@@ -15,7 +16,7 @@ open_orchestra_workflow_admin:
     workflow_profile:
         title     : Profils
         title_list: Liste des profiles
-        title_new :  Nouveau profil de workflow
+        title_new : Nouveau profil de workflow
         title_edit: Modifier le profil de workflow
     table:
         statuses:
