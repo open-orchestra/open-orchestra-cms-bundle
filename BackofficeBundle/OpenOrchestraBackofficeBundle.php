@@ -5,7 +5,6 @@ namespace OpenOrchestra\BackofficeBundle;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RemoveTrashcanEntityCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\FieldToElasticaTypeCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RestoreEntityCompilerPass;
@@ -33,7 +32,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new ReferenceCompilerPass());
         $container->addCompilerPass(new TwigGlobalsCompilerPass());
         $container->addCompilerPass(new TinymceCompilerPass());
-        $container->addCompilerPass(new DisplayIconCompilerPass());
         $container->addCompilerPass(new BlockParameterCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());

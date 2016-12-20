@@ -179,14 +179,10 @@ class NodeManager
     {
         $siteId = $this->contextManager->getCurrentSiteId();
         $oldNode = $this->nodeRepository->findInLastVersion($nodeId, $node->getLanguage(), $siteId);
-        dump($oldNode);
-        dump($node->getLanguage());
-        dump($siteId);
         if ($oldNode) {
             $node->setTemplate($oldNode->getTemplate());
             $this->duplicateBlockAndArea($oldNode, $node);
         }
-        dump($node);
 
         return $node;
     }

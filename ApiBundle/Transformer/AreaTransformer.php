@@ -16,24 +16,18 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param AreaInterface      $area
-     * @param NodeInterface|null $node
-     * @param string|null        $areaId
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      * @throws AreaTransformerHttpException
      */
-    public function transform($area, NodeInterface $node = null, $areaId = null)
+    public function transform($area)
     {
         $facade = $this->newFacade();
 
         if (!$area instanceof AreaInterface) {
             throw new TransformerParameterTypeException();
-        }
-
-        if (!$node instanceof NodeInterface) {
-            throw new AreaTransformerHttpException();
         }
 
         foreach ($area->getBlocks() as $block) {

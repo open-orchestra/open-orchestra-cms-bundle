@@ -88,7 +88,6 @@ class ConfigurationManipulatorTest extends AbstractBaseTestCase
     {
         return array(
             array('OpenOrchestra\Backoffice\Manipulator\FrontDisplayConfigurationManipulator', 'OpenOrchestra\DisplayBundle', 'front.yml'),
-            array('OpenOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator', 'OpenOrchestra\Backoffice', 'icon.yml'),
             array('OpenOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator', 'OpenOrchestra\Backoffice', 'generator.yml'),
         );
     }
@@ -96,7 +95,7 @@ class ConfigurationManipulatorTest extends AbstractBaseTestCase
     /**
      * Test add resources
      *
-     * @expectedException OpenOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException
+     * @expectedException \OpenOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException
      */
     public function testDoNotAddIfExisting()
     {

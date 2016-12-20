@@ -1,84 +1,19 @@
 parameters:
-    open_orchestra_backoffice.display.contact.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ContactStrategy
-    open_orchestra_backoffice.display.footer.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\FooterStrategy
-    open_orchestra_backoffice.display.menu.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\MenuStrategy
+    open_orchestra_backoffice.display_block.manager.class: OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager
     open_orchestra_backoffice.display.tiny_mce_wysiwyg.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
-    open_orchestra_backoffice.display.configurable_content.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ConfigurableContentStrategy
-    open_orchestra_backoffice.display.login.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\LoginStrategy
-    open_orchestra_backoffice.display.sub_menu.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\SubMenuStrategy
-    open_orchestra_backoffice.display.content_list.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ContentListStrategy
-    open_orchestra_backoffice.display.content.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ContentStrategy
-    open_orchestra_backoffice.display.language_list.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\LanguageListStrategy
-    open_orchestra_backoffice.display.audience_analysis.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\AudienceAnalysisStrategy
-    open_orchestra_backoffice.display.gmap.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\GmapStrategy
-    open_orchestra_backoffice.display.add_this.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\AddThisStrategy
-    open_orchestra_backoffice.display.video.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\VideoStrategy
+    open_orchestra_backoffice.display.default.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\DefaultStrategy
 
 services:
     open_orchestra_backoffice.display_block_manager:
-        class: '%open_orchestra_display.display_block_manager.class%'
+        class: '%open_orchestra_backoffice.display_block.manager.class%'
         arguments:
             - '@templating'
-            - '@open_orchestra_display.manager.cacheable'
-            - '@open_orchestra_base.manager.tag'
-            - '@open_orchestra_backoffice.context_manager'
-            - '@event_dispatcher'
+            - '@open_orchestra_backoffice.display.default'
 
-    open_orchestra_backoffice.display.contact:
-        class: '%open_orchestra_backoffice.display.contact.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.footer:
-        class: '%open_orchestra_backoffice.display.footer.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.menu:
-        class: '%open_orchestra_backoffice.display.menu.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.login:
-        class: '%open_orchestra_backoffice.display.login.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.sub_menu:
-        class: '%open_orchestra_backoffice.display.sub_menu.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.content_list:
-        class: '%open_orchestra_backoffice.display.content_list.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.content:
-        class: '%open_orchestra_backoffice.display.content.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.language_list:
-        class: '%open_orchestra_backoffice.display.language_list.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
+    open_orchestra_backoffice.display.default:
+        class: '%open_orchestra_backoffice.display.default.class%'
+
     open_orchestra_backoffice.display.tiny_mce_wysiwyg:
         class: '%open_orchestra_backoffice.display.tiny_mce_wysiwyg.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.configurable_content:
-        class: '%open_orchestra_backoffice.display.configurable_content.class%'
-        arguments:
-            - '@open_orchestra_model.repository.content'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.gmap:
-        class: '%open_orchestra_backoffice.display.gmap.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.add_this:
-        class: '%open_orchestra_backoffice.display.add_this.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.audience_analysis:
-        class: '%open_orchestra_backoffice.display.audience_analysis.class%'
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }
-    open_orchestra_backoffice.display.video:
-        class: '%open_orchestra_backoffice.display.video.class%'
         tags:
             - { name: open_orchestra_backoffice.display_block.strategy }

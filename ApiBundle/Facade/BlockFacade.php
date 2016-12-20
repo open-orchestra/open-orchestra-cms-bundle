@@ -36,14 +36,9 @@ class BlockFacade extends AbstractFacade
     public $class;
 
     /**
-     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\UiModelFacade")
+     * @Serializer\Type("string")
      */
-    public $uiModel;
-
-    /**
-     * @Serializer\Type("boolean")
-     */
-    public $isDeletable = true;
+    public $previewContent;
 
     /**
      * @Serializer\Type("array<string,string>")

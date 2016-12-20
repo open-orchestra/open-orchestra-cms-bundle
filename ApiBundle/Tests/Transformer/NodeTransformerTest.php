@@ -103,7 +103,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         Phake::verify($this->router, Phake::times(1))->generate(Phake::anyParameters());
-        Phake::verify($this->transformer)->transform($area, $this->node, 0);
+        Phake::verify($this->transformer)->transform($area);
         Phake::verify($this->siteRepository, Phake::times(2))->findOneBySiteId(Phake::anyParameters());
     }
 
@@ -124,7 +124,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->assertSame($facade->getRights()['can_read'], false);
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         Phake::verify($this->router, Phake::times(1))->generate(Phake::anyParameters());
-        Phake::verify($this->transformer)->transform($area, $this->node, 0);
+        Phake::verify($this->transformer)->transform($area);
         Phake::verify($this->siteRepository, Phake::times(2))->findOneBySiteId(Phake::anyParameters());
     }
 

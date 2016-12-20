@@ -28,4 +28,3 @@ open_orchestra_api:
         trash_item:               FacadeClass
         trash_item_collection:    FacadeClass
         translation:              FacadeClass
-        ui_model:                 FacadeClass

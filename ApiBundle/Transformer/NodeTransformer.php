@@ -127,7 +127,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         if ($this->hasGroup(CMSGroupContext::AREAS)) {
             foreach ($node->getAreas() as $key => $area) {
-                $facade->setAreas($this->getTransformer('area')->transform($area, $node, $key), $key);
+                $facade->setAreas($this->getTransformer('area')->transform($area), $key);
             }
         }
 

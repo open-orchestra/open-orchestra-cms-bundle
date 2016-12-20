@@ -2,17 +2,14 @@
 
 namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class LoginStrategy
+ * Class DefaultStrategy
  */
-class LoginStrategy extends AbstractStrategy
+class DefaultStrategy extends AbstractDisplayBlockStrategy
 {
-    const LOGIN = 'login';
-
     /**
      * Check if the strategy support this block
      *
@@ -22,7 +19,7 @@ class LoginStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return self::LOGIN == $block->getComponent();
+        return true;
     }
 
     /**
@@ -34,17 +31,10 @@ class LoginStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Login:show.html.twig');
-    }
-
-    /**
-     * @param ReadBlockInterface $block
-     *
-     * @return Array
-     */
-    public function getCacheTags(ReadBlockInterface $block)
-    {
-        return array();
+        return $this->render(
+            'OpenOrchestraBackofficeBundle:Block/Default:show.html.twig',
+            array('label' => $block->getLabel())
+        );
     }
 
     /**
@@ -54,6 +44,6 @@ class LoginStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'login';
+        return 'default';
     }
 }

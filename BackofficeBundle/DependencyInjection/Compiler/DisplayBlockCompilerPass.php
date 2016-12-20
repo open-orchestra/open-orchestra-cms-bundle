@@ -22,9 +22,6 @@ class DisplayBlockCompilerPass extends AbstractTaggedCompiler implements Compile
     {
         $managerName = 'open_orchestra_backoffice.display_block_manager';
 
-        $tagName = 'open_orchestra_display.display_block.strategy';
-        $this->addStrategyToManager($container, $managerName, $tagName);
-
         $tagName = 'open_orchestra_backoffice.display_block.strategy';
         $this->addStrategyToManager($container, $managerName, $tagName);
     }

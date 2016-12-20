@@ -5,32 +5,26 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
+use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-
 /**
  * Class BlockTransformer
  */
 class BlockTransformer extends AbstractTransformer
 {
     protected $displayBlockManager;
-    protected $nodeRepository;
 
     /**
      * @param string                   $facadeClass
      * @param DisplayBlockManager      $displayBlockManager
-     * @param NodeRepositoryInterface  $nodeRepository
      */
     public function __construct(
         $facadeClass,
-        DisplayBlockManager $displayBlockManager,
-        NodeRepositoryInterface $nodeRepository
+        DisplayBlockManager $displayBlockManager
     )
     {
         parent::__construct($facadeClass);
         $this->displayBlockManager = $displayBlockManager;
-        $this->nodeRepository = $nodeRepository;
     }
 
     /**
@@ -60,15 +54,7 @@ class BlockTransformer extends AbstractTransformer
             $facade->addAttribute($key, $attribute);
         }
 
-
-        $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
-            'html' => $this->displayBlockManager->show($block)->getContent()
-        ));
-
-        $facade->isDeletable = true;
-        if ($this->nodeRepository->isBlockUsed($block->getId())) {
-            $facade->isDeletable = false;
-        }
+        $facade->previewContent = $this->displayBlockManager->show($block);
 
         return $facade;
     }
