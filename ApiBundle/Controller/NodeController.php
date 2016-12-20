@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -30,28 +31,34 @@ class NodeController extends BaseController
     use ListStatus;
 
     /**
-     * @param Request $request
      * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     * @param string $version
      *
      * @return FacadeInterface
      *
-     * @Config\Route("/{nodeId}", name="open_orchestra_api_node_show")
+     * @Config\Route(
+     *     "/show/{nodeId}/{siteId}/{language}/{version}",
+     *     name="open_orchestra_api_node_show",
+     *     defaults={"version": null},
+     * )
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_LINKS
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
      * })
+     *
+     * @throws NodeNotFoundHttpException
      */
-    public function showAction(Request $request, $nodeId)
+    public function showAction($nodeId, $siteId, $language, $version)
     {
-        $currentSiteManager = $this->get('open_orchestra_backoffice.context_manager');
-        $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
-        $language = $request->get('language', $currentSiteDefaultLanguage);
-        $siteId = $currentSiteManager->getCurrentSiteId();
-        $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
+        $node = $this->findOneNode($nodeId, $language, $siteId, $version);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
@@ -72,9 +79,7 @@ class NodeController extends BaseController
      *  @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_LINKS,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_GENERAL_LINKS
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
      * })
      */
     public function showOrCreateAction(Request $request, $nodeId, $errorNode)
@@ -173,10 +178,6 @@ class NodeController extends BaseController
      * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_node_list_author_and_site_not_published", defaults={"published": false})
      * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author_and_site", defaults={"published": null})
      * @Config\Method({"GET"})
-     *
-     * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::NODE_LINKS
-     * })
      *
      * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */

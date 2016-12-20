@@ -17,11 +17,6 @@ class AreaFacade extends AbstractFacade
     protected $blocks = array();
 
     /**
-     * @Serializer\Type("boolean")
-     */
-    public $editable;
-
-    /**
      * @param FacadeInterface $facade
      */
     public function addBlock(FacadeInterface $facade)

@@ -11,8 +11,6 @@ class CMSGroupContext
     const BLOCKS = 'blocks';
     const FIELD_TYPES = 'field_types';
     const GROUP_ROLES = 'group_roles';
-    const NODE_GENERAL_LINKS = 'node_general_links';
-    const NODE_LINKS = 'node_links';
     const PREVIEW = 'preview';
     const SITE = 'site';
     const STATUS = 'status';

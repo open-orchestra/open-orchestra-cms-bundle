@@ -1,4 +1,7 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
+import ApplicationError from '../../../Service/Error/ApplicationError'
+import FlashMessage     from '../../../Service/FlashMessage/FlashMessage'
+import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class NewNodeFormView
@@ -43,9 +46,8 @@ class NewNodeFormView extends AbstractFormView
     /**
      * @return {Object}
      */
-    getStatusCodeForm() {
+    getStatusCodeForm(event) {
         return {
-            '200': $.proxy(this.refreshRender, this),
             '201': $.proxy(this._redirectNew, this),
             '422': $.proxy(this.refreshRender, this)
         }
@@ -56,8 +58,16 @@ class NewNodeFormView extends AbstractFormView
      *
      * @private
      */
-    _redirectNew() {
-        let url = Backbone.history.generateUrl('showNodes', {language: this._language});
+    _redirectNew(data, textStatus, jqXHR) {
+        let nodeId = jqXHR.getResponseHeader('nodeId');
+        if (null === nodeId) {
+            throw new ApplicationError('Invalid nodeId');
+        }
+        let url = Backbone.history.generateUrl('showNode', {nodeId: nodeId, language: this._language});
+        let message = new FlashMessage(data, 'success');
+        FlashMessageBag.addMessageFlash(message);
+
+        Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
 }

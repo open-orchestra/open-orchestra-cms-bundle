@@ -10,18 +10,10 @@ use OpenOrchestra\BaseApi\Facade\AbstractFacade;
  */
 class BlockFacade extends AbstractFacade
 {
-    const GENERATE = 'generate';
-    const LOAD = 'load';
-
     /**
      * @Serializer\Type("string")
      */
     public $id;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $method;
 
     /**
      * @Serializer\Type("string")

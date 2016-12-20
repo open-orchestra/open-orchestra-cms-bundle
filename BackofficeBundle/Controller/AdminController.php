@@ -30,6 +30,10 @@ class AdminController extends Controller
             $contextManager->setCurrentsite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage(), $site->getLanguages());
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle::layout.html.twig');
+        $templateSetConfig = $this->getParameter('open_orchestra_backoffice.template_set');
+
+        return $this->render('OpenOrchestraBackofficeBundle::layout.html.twig' , array(
+            'templateSetConfig' => $templateSetConfig
+        ));
     }
 }

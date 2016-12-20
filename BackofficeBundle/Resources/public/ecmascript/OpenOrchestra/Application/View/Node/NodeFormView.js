@@ -13,13 +13,15 @@ class NodeFormView extends AbstractFormView
      * @param {string} siteId
      * @param {string} nodeId
      * @param {string} language
+     * @param {string} version
      */
-    initialize({form, siteLanguages, siteId, nodeId, language}) {
+    initialize({form, siteLanguages, siteId, nodeId, language, version}) {
         super.initialize({form : form});
         this._siteLanguages = siteLanguages;
         this._siteId = siteId;
         this._nodeId = nodeId;
         this._language = language;
+        this._version = version;
     }
 
     /**
@@ -30,7 +32,8 @@ class NodeFormView extends AbstractFormView
             {
                 language: this._language,
                 nodeId: this._nodeId,
-                siteLanguages: this._siteLanguages
+                siteLanguages: this._siteLanguages,
+                version: this._version
             }
         );
         this.$el.html(template);

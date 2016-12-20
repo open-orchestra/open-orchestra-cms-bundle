@@ -56,6 +56,7 @@ open_orchestra_backoffice:
     node:
         title: Pages
         parameterize: Parameterize
+        move: Move
         add: Add a page
         new: New page
         back_to_list: Back to list
@@ -78,6 +79,8 @@ open_orchestra_backoffice:
         title_list: Sites
         search_engine:
             name: Name
+    block:
+      add_block: Add a block
     form:
         keyword:
             new: new

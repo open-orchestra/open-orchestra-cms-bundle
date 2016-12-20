@@ -17,11 +17,12 @@ class LastContentsWidgetView extends AbstractWidgetView
 
     /**
      * Get link edit element
+     * @param {Model} entity
      *
      * @return {String}
      * @todo Add link when edit content is refacto
      */
-    getEditLink() {
+    getEditLink(entity) {
         return '';
     }
 }

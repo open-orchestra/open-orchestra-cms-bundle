@@ -1,0 +1,61 @@
+<div class="top-action-buttons">
+    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: node.get('language')}) %>" role="button">
+        <%= Translator.trans('open_orchestra_backoffice.node.back_to_list') %>
+    </a>
+    <a class="btn btn-border" role="button" href="#<%= Backbone.history.generateUrl('editNode', {nodeId: node.get('node_id'), language: node.get('language'), version: node.get('version')}) %>">
+        <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
+    </a>
+    <a class="btn btn-blue" role="button"><%= Translator.trans('open_orchestra_backoffice.node.edit') %></a>
+</div>
+<div class="pull-right languages">
+    <ul>
+        <% _.each(siteLanguages, function(siteLanguage, key) { %>
+            <% if (siteLanguage === node.get('language')) { %>
+                <li class="active">
+                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                </li>
+            <% } else { %>
+                <li>
+                    <a href="#<%= Backbone.history.generateUrl('showNode', {language: siteLanguage, nodeId: node.get('node_id')}) %>">
+                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    </a>
+                </li>
+            <% }; %>
+        <% }); %>
+    </ul>
+</div>
+<h1> <%= Translator.trans('open_orchestra_backoffice.node.move') %></h1>
+<%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
+<div class="node-template movement <%= (node.get('rights').can_edit) ? '' : 'node-disabled' %>">
+    <!--<form class="form-inline search-engine">
+        <div class="form-group">
+            <label for="select-version" class="control-label">Version</label>
+            <div class="styled-select">
+                <select class="form-control" id="select-version">
+                    <option>Publié - actualité - version - date</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-info">Nouvelle version</button>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-border btn-large">Prévisualiser</button>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Workflow</label>
+            <div class="styled-select">
+                <select class="form-control" id="select-workflow">
+                    <option></option>
+                    <option class="draft">Brouillon</option>
+                    <option class="translate">A traduire</option>
+                    <option class="publish">A publier</option>
+                    <option class="online">En ligne</option>
+                    <option class="offline">Hors ligne</option>
+                </select>
+            </div>
+        </div>
+    </form>-->
+    <div class="well">
+    </div>
+</div>

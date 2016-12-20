@@ -43,10 +43,11 @@ class AbstractWidgetView extends OrchestraView
 
     /**
      * Get link edit element
+     * @param {Model} entity
      *
      * @return {String}
      */
-    getEditLink() {
+    getEditLink(entity) {
         throw new TypeError("Please implement abstract method getEditLink.");
     }
 
@@ -58,7 +59,7 @@ class AbstractWidgetView extends OrchestraView
             'Dashboard/listWidgetView',
             {
                 title: this.getTitleKey(),
-                editLink: this.getEditLink(),
+                editLink: this.getEditLink,
                 entities: this.collection.models
             }
         );

@@ -1,0 +1,17 @@
+<div class="panel">
+    <div class="panel-heading">
+        <strong><%= block.get('component') %></strong>
+        <ul class="toolbar pull-right">
+            <li><a href="#"><i class="fa fa-pencil"></i></a></li>
+            <li><a href="#"><i class="fa fa-trash"></i></a></li>
+            <li><a href="#"><i class="fa fa-arrows"></i></a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <p><%= block.get('label') %></p>
+        <%= block.get('ui_model').html %>
+    </div>
+</div>
+
+<%= renderTemplate('Block/addBlockLink') %>
+

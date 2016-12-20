@@ -1120,14 +1120,22 @@ table.dataTable thead .sorting_desc:after {
  * MOVEMENT
  * =================================================================*/
 .movement {
-  div[class*="col-"] { padding: 0 10px; }
-  .section {
+  .row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+  }
+  .row {
+    padding: 10px;
+  }
+  .area {
     background-color: #fff;
+    height: 100%;
     border: 2px solid @grey;
     margin: 10px 0;
     position: relative;
     padding: 15px 10px;
-    &:hover{ background-color: @paleBlue;}
     & > span {
       .Montserrat;
       color: @darkBlue;
@@ -1139,9 +1147,8 @@ table.dataTable thead .sorting_desc:after {
       display: block;
       margin-bottom: 15px;
     }
-    &.header { z-index: 1;}
     &.disabled {
-      background: url("../../images/block-disabled.png") repeat 0 0;
+      background: url("/images/block-disabled.png") repeat 0 0;
       text-align: center;
       & > span {
         color: @grey;
@@ -1155,30 +1162,45 @@ table.dataTable thead .sorting_desc:after {
           display: block;
         }
       }
-      &.header span::before { content: "\f01b"; }
-      &.sidebar1 span::before { content: "\f18e"; }
-      &.footer1 span::before { content: "\f01a"; }
+      &.sidebar span::before {
+        content: "\f18e";
+      }
     }
     &.active {
       border-color: #8e8e8e;
       background-color: @paleBlue;
+
+      &::before {
+        color: #fff;
+        position: absolute;
+        left: -15px;
+        top: -15px;
+        background: #8e8e8e;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: block;
+        text-align: center;
+        line-height: 30px;
+        .FontAwesome;
+        content: "\f040";
+      }
+
+      .toolbar, .add-block {
+        display: block;
+      }
     }
   }
-  .edited {
-    .fontSize(18);
-    color: #fff;
-    position: absolute;
-    left: -15px;
-    top: -15px;
-    background: #8e8e8e;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: block;
-    text-align: center;
-    line-height: 30px;
+  &:not(.node-disabled) {
+    .area {
+      &:not(.disabled):hover {
+        background-color: @paleBlue;
+        cursor: pointer;
+      }
+    }
   }
   .add-block {
+    display: none;
     text-align: center;
     position: relative;
     margin-bottom: 20px;
@@ -1222,6 +1244,7 @@ table.dataTable thead .sorting_desc:after {
   }
 }
 .toolbar {
+  display: none;
   float: right;
   .fontSize(18);
   ul, li {
