@@ -70,9 +70,13 @@ class StatusController extends AbstractAdminController
 
         if ($this->handleForm($form, $message, $status)) {
             $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+            $response = new Response(
+                $message,
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId())
+            );
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+            return $response;
         }
 
         return $this->renderAdminForm($form);

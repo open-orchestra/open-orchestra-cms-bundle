@@ -20,14 +20,33 @@ class NewStatusView extends AbstractFormView
     }
 
     /**
+     * @param  {Object} event
+     *
      * @return {Object}
      */
-    getStatusCodeForm() {
+    getStatusCodeForm(event) {
         return {
-            '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
-            '422': $.proxy(this.refreshRender, this)
+            '422': $.proxy(this.refreshRender, this),
+            '201': $.proxy(this._redirectEditStatus, this)
+        };
+    }
+
+    /**
+     * Redirect to edit status view
+     *
+     * @param {mixed}  data
+     * @param {string} textStatus
+     * @param {object} jqXHR
+     * @private
+     */
+    _redirectEditStatus(data, textStatus, jqXHR) {
+        let statusId = jqXHR.getResponseHeader('statusId');
+        if (null === statusId) {
+            throw new ApplicationError('Invalid statusId');
         }
+        let url = Backbone.history.generateUrl('editStatus', {statusId: statusId});
+        Backbone.Events.trigger('form:deactivate', this);
+        Backbone.history.navigate(url, true);
     }
 }
 
