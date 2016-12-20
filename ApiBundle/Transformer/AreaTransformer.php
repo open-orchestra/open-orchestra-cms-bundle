@@ -7,7 +7,6 @@ use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class AreaTransformer

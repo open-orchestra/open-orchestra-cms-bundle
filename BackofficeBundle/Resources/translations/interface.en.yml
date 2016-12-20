@@ -62,6 +62,14 @@ open_orchestra_backoffice:
         back_to_list: Back to list
         edit: Edit
         redirections: Redirections
+        preview: Preview
+        new_version: New version
+        message_online:
+            title: The node is actually online.
+            message: |
+                Editing an online page is not possible. \n
+                To modify the contents of the page please create a new version. \n
+                You can also modify the workflow of this version but the page will not be visible on the site
         tree:
             open: Open the tree
             close: Close the tree

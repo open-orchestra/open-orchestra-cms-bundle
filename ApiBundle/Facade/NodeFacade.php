@@ -106,7 +106,7 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("boolean")
      */
-    public $editable;
+    public $currentlyPublished;
 
     /**
      * @Serializer\Type("array<string,OpenOrchestra\ApiBundle\Facade\AreaFacade>")

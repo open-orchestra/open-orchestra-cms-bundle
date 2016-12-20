@@ -20,7 +20,6 @@ class DraftContentsWidgetView extends AbstractWidgetView
      * @param {Model} entity
      *
      * @return {String}
-     * @todo Add link when edit content is refacto
      */
     getEditLink(entity) {
         return '';

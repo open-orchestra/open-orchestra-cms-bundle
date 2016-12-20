@@ -266,17 +266,25 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param string $nodeMongoId
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     * @param string $version
      *
-     * @Config\Route("/{nodeMongoId}/list-statuses", name="open_orchestra_api_node_list_status")
+     * @Config\Route(
+     *     "/list-statuses/{nodeId}/{siteId}/{language}/{version}",
+     *     name="open_orchestra_api_node_list_status")
      * @Config\Method({"GET"})
      *
      * @return Response
+     * @throws NodeNotFoundHttpException
      */
-    public function listStatusesForNodeAction($nodeMongoId)
+    public function listStatusesForNodeAction($nodeId, $language, $siteId, $version)
     {
-        /** @var NodeInterface $node */
-        $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
+        $node = $this->findOneNode($nodeId, $language, $siteId, $version);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         return $this->listStatuses($node);

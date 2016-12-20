@@ -113,7 +113,6 @@ class NodeController extends AbstractAdminController
         if ($form->isValid()) {
             $nodesEvent = array();
             $documentManager = $this->get('object_manager');
-            dump($node);
             $documentManager->persist($node);
             $nodesEvent[] = new NodeEvent($node);
 
