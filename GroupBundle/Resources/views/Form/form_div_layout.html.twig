@@ -24,3 +24,15 @@
         <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-close" aria-hidden="true"></i>{% endif %}</td>
     </tr>
 {% endblock oo_group_element_widget %}
+
+{% block oo_group_role_widget %}
+    {% spaceless %}
+        {% set collection = form|first %}
+        <div class="hierarchical-check-list">
+	        {% for table in form.vars.configuration %}
+	            {{ form_widget(collection[table]) }}
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock oo_group_role_widget %}
+

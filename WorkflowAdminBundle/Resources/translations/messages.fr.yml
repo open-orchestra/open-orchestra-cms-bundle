@@ -7,3 +7,5 @@ open_orchestra_workflow_admin:
             descriptions : Descriptions
             group:
                 properties: Propriétés
+    profile:
+        page : Page

@@ -29,6 +29,5 @@ open_orchestra_group:
                 member: Liste des membres
             sub_group:
                 property: Propriété
-                contribution: Contribution
-                administration: Administration
+                right: Droits
                 page: Pages

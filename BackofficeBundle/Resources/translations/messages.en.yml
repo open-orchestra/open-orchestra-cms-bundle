@@ -336,27 +336,6 @@ open_orchestra_backoffice:
             label: Label
             creation: Keyword has been created
             success: Keyword has been successfully updated
-        group:
-            new:
-                success: The group has been successfully created
-            edit:
-                success: The group has been updated
-            name: Name
-            label: Label
-            roles: Roles
-            role_helper: Roles page per page are not taken into account if general right is not enabled
-            role_front_title: Front Office
-            site: Website
-            title: Group edition
-            user_list: User List
-            select_user: Select an user
-            add_user: Add an user in the group
-            node_role_edition: Node role list
-            node_role_no_site: The group must be linked to a site to manage roles page by page
-            page_list: Page list
-            access_denied: Denied
-            access_granted: Granted
-            access_inherit: Inherited
         redirection:
             new:
                 success: The redirection has been successfully created
@@ -626,3 +605,9 @@ open_orchestra_backoffice:
                 default: Default
             style:
                 default: Default
+    role:
+        contributor: Contribuer
+        editor: Modifier
+        suppresor: Supprimer
+        restorer: Restaurer
+        administrator: Gérer

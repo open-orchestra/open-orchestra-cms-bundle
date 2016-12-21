@@ -72,6 +72,47 @@
     {% endif %}
 {% endblock %}
 
+{% block oo_check_list_collection_widget %}
+    {% spaceless %}
+        {% set collection = form|first %}
+	    <table class="table table-striped">
+        	<thead>
+                <tr>
+                	<th>&nbsp;</th>
+                	{% for cell in form.vars.configuration.row %}
+                	    <th>{{ cell }}</th>
+                	{% endfor %}
+                </tr>
+        	</thead>
+            <tbody>
+            {% for name, cell in form.vars.configuration.column %}
+                <tr>
+                	<td>{{ cell }}</td>
+                	{{ form_widget(collection[name]) }}
+                </tr>
+            {% endfor %}
+            </tbody>
+    	</table>
+    {% endspaceless %}
+{% endblock oo_check_list_collection_widget %}
+
+{% block oo_check_list_widget %}
+	{% set collection = form|first %}
+    {% spaceless %}
+        {% for child in collection %}
+            <td>
+            	<input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+    			<label for="{{ child.vars.id }}"></label>
+        	</td>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock oo_check_list_widget %}
+
+{% block oo_check_widget %}
+    {% spaceless %}
+    {% endspaceless %}
+{% endblock oo_check_widget %}
+
 {% block choice_widget %}
     {% spaceless %}
         {% if expanded and multiple %}

@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\DataTransformerInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\GroupBundle\Event\GroupFormEvent;
+use OpenOrchestra\GroupBundle\GroupFormEvents;
 
 /**
  * Class GroupType
@@ -13,20 +18,27 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class GroupType extends AbstractType
 {
     protected $groupMemberSubscriber;
+    protected $groupRoleTransformer;
     protected $groupClass;
     protected $backOfficeLanguages;
 
     /**
      * @param EventSubscriberInterface $groupMemberSubscriber
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param DataTransformerInterface $groupRoleTransformer
      * @param string                   $groupClass
      * @param array                    $backOfficeLanguages
      */
     public function __construct(
         EventSubscriberInterface $groupMemberSubscriber,
+        EventDispatcherInterface $eventDispatcher,
+        DataTransformerInterface $groupRoleTransformer,
         $groupClass,
         array $backOfficeLanguages
     ) {
         $this->groupMemberSubscriber = $groupMemberSubscriber;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->groupRoleTransformer = $groupRoleTransformer;
         $this->groupClass = $groupClass;
         $this->backOfficeLanguages = $backOfficeLanguages;
     }
@@ -53,8 +65,16 @@ class GroupType extends AbstractType
                 'label' => 'open_orchestra_group.form.group.site',
                 'group_id' => 'property',
                 'sub_group_id' => 'property',
+            ))
+            ->add('roles', 'oo_group_role', array(
+                'label' => false,
+                'group_id' => 'right',
+                'sub_group_id' => 'right',
             ));
+
+        $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
         $builder->addEventSubscriber($this->groupMemberSubscriber);
+        $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder, $this));
     }
 
     /**
@@ -62,8 +82,9 @@ class GroupType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => $this->groupClass,
+        $resolver->setDefaults(
+            array(
+                'data_class' => $this->groupClass,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(
@@ -88,13 +109,9 @@ class GroupType extends AbstractType
                         'rank' => 0,
                         'label' => 'open_orchestra_group.form.group.sub_group.property',
                     ),
-                    'contribution' => array(
+                    'right' => array(
                         'rank' => 0,
-                        'label' => 'open_orchestra_group.form.group.sub_group.contribution',
-                    ),
-                    'administration' => array(
-                        'rank' => 1,
-                        'label' => 'open_orchestra_group.form.group.sub_group.administration',
+                        'label' => 'open_orchestra_group.form.group.sub_group.right',
                     ),
                     'page' => array(
                         'rank' => 0,
