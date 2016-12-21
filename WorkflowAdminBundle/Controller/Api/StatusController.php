@@ -82,9 +82,7 @@ class StatusController extends BaseController
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
 
-        if ($this->canDelete($status)) {
-            throw new DeleteStatusNotGrantedHttpException();
-        }
+        $this->denyDeleteUnlessGranted($status);
         $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));
         $this->get('object_manager')->remove($status);
         $this->get('object_manager')->flush();
@@ -114,10 +112,9 @@ class StatusController extends BaseController
 
         $statusIds = array();
         foreach ($statuses as $status) {
-            if ($this->canDelete($status)) {
-                $statusIds[] = $status->getId();
-                $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
-            }
+            $this->denyDeleteUnlessGranted($status);
+            $statusIds[] = $status->getId();
+            $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
         }
         $statusRepository->removeStatuses($statusIds);
 
@@ -125,14 +122,14 @@ class StatusController extends BaseController
     }
 
     /**
-     * Check if $status can be deleted by connected user
+     * Deny delete unless granted
      *
      * @param StatusInterface $status
      *
      * @throws AccessDeniedException
      * @return boolean
      */
-    protected function canDelete(StatusInterface $status)
+    protected function denyDeleteUnlessGranted(StatusInterface $status)
     {
         if (!$this->isGranted(ContributionActionInterface::DELETE, $status)
             || $this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
@@ -142,9 +139,7 @@ class StatusController extends BaseController
             || $status->isAutoPublishFromState()
             || $status->isAutoUnpublishToState()
         ) {
-            throw $this->createAccessDeniedException($message);
+            throw $this->DeleteStatusNotGrantedHttpException($message);
         }
-
-        return true;
     }
 }
