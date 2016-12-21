@@ -53,7 +53,7 @@ class StatusTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(10))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(6))->add(Phake::anyParameters());
     }
 
     /**
@@ -66,7 +66,14 @@ class StatusTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->statusClass
+            'data_class'    => $this->statusClass,
+            'group_enabled' => true,
+            'group_render'  => array(
+                'properties' => array(
+                    'rank'  => 0,
+                    'label' => 'open_orchestra_workflow_admin.form.status.group.properties',
+                ),
+            ),
         ));
     }
 }

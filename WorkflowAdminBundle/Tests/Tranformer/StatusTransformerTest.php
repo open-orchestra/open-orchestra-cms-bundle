@@ -20,6 +20,7 @@ class StatusTransformerTest extends AbstractBaseTestCase
     protected $translator;
     protected $status;
     protected $usageFinder;
+    protected $statusRepository;
 
     /**
      * Set up the test
@@ -51,12 +52,16 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->usageFinder = Phake::mock('OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder');
         Phake::when($this->usageFinder)->hasUsage(Phake::anyParameters())->thenReturn(false);
 
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
+
         $this->transformer = new StatusTransformer(
             $this->facadeClass,
             $multiLanguagesChoiceManager,
             $this->translator,
             $this->authorizationChecker,
-            $this->usageFinder
+            $this->usageFinder,
+            $this->statusRepository
         );
         $this->transformer->setContext($transformerManager);
     }
@@ -106,22 +111,22 @@ class StatusTransformerTest extends AbstractBaseTestCase
     public function provideTransformData()
     {
         return array(
-            array(true, true, true, false),
-            array(true, false, true, false),
-            array(false, true, true, false),
-            array(false, false, true, false),
-            array(true, true, false, false),
-            array(true, false, false, false),
-            array(false, true, false, false),
-            array(false, false, false, false),
-            array(true, true, true, true),
-            array(true, false, true, true),
-            array(false, true, true, true),
-            array(false, false, true, true),
-            array(true, true, false, true),
-            array(true, false, false, true),
-            array(false, true, false, true),
-            array(false, false, false, true),
+            1  => array(true , true , true , false),
+            2  => array(true , false, true , false),
+            3  => array(false, true , true , false),
+            4  => array(false, false, true , false),
+            5  => array(true , true , false, false),
+            6  => array(true , false, false, false),
+            7  => array(false, true , false, false),
+            8  => array(false, false, false, false),
+            9  => array(true , true , true , true),
+            10 => array(true , false, true , true),
+            11 => array(false, true , true , true),
+            12 => array(false, false, true , true),
+            13 => array(true , true , false, true),
+            14 => array(true , false, false, true),
+            15 => array(false, true , false, true),
+            16 => array(false, false, false, true),
         );
     }
 

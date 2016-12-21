@@ -4,7 +4,6 @@ namespace OpenOrchestra\UserAdminBundle\Tests\Form\Type;
 
 use OpenOrchestra\UserAdminBundle\Form\Type\RegistrationUserType;
 use Phake;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class RegistrationUserTypeTest
