@@ -62,6 +62,7 @@ open_orchestra_backoffice:
         edit: Modifier
         redirections: Redirections
         preview: Prévisualiser
+        version: Version
         new_version: Nouvelle version
         message_online:
             title: La page est actuellement en ligne sur votre site.

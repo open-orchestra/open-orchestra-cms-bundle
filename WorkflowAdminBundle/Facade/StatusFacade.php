@@ -54,9 +54,4 @@ class StatusFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $codeColor;
-
-    /**
-     * @Serializer\Type("boolean")
-     */
-    public $allowed;
 }

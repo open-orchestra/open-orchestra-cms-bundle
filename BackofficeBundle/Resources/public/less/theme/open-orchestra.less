@@ -799,6 +799,17 @@ input[type=date].datepicker::-webkit-inner-spin-button, input[type=date].datepic
 /* Workflow */
 .workflow .underline-label { margin-bottom: 30px; }
 
+.dropdown-workflow {
+  & button {
+    padding-right: 30px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+  }
+  li a:hover {
+    cursor: pointer;
+  }
+}
+
 /* ===================================================================
  * TABLES
  * =================================================================*/
@@ -1452,16 +1463,6 @@ table.dataTable thead .sorting_desc:after {
 
   /* checkboxes */
   .checkbox-inline { padding-left: 0; }
-
-  /* select workflow with colors */
-  #select-workflow {
-    &.draft { color: #e68532; }
-    &.translate { color: #e68636; }
-    &.publish { color: #e6cc00; }
-    &.online { color: #5db801; }
-    &.offline { color: #999; }
-    option { color: @baseColor; }
-  }
 
   /* colonnage 30% */
   .col-30 { float: left; width: 30%;}

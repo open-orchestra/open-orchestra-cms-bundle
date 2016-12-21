@@ -16,16 +16,15 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
 {
     /**
      * @param Collection               $statusCollection
-     * @param StatusableInterface|null $document
      *
      * @return FacadeInterface
      */
-    public function transform($statusCollection, $document = null)
+    public function transform($statusCollection)
     {
         $facade = $this->newFacade();
 
         foreach ($statusCollection as $status) {
-            $facade->addStatus($this->getTransformer('status')->transform($status, $document));
+            $facade->addStatus($this->getTransformer('status')->transform($status));
         }
 
         $facade->addRight(

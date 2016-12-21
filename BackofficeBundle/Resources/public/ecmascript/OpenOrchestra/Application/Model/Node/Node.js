@@ -48,6 +48,8 @@ class Node extends OrchestraModel
         switch (method) {
             case "read":
                 return Routing.generate('open_orchestra_api_node_show', urlParameter);
+            case "update":
+                return Routing.generate('open_orchestra_api_node_update');
         }
     }
 }

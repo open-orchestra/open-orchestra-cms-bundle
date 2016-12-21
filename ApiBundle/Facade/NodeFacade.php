@@ -81,11 +81,6 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("string")
      */
-    public $statusId;
-
-    /**
-     * @Serializer\Type("string")
-     */
     public $theme;
 
     /**

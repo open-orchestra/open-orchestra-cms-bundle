@@ -27,50 +27,7 @@
 <h1> <%= Translator.trans('open_orchestra_backoffice.node.move') %></h1>
 <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
 <div class="node-template movement <%= (node.get('rights').can_edit) ? '' : 'node-disabled' %>">
-    <form class="form-inline search-engine">
-        <!--<div class="form-group">
-            <label for="select-version" class="control-label">Version</label>
-            <div class="styled-select">
-                <select class="form-control" id="select-version">
-                    <option>Publié - actualité - version - date</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-info">Nouvelle version</button>
-        </div>
-        -->
-        <% if ( 0 !== node.get('preview_links').length) { %>
-            <div class="form-group">
-                <div class="dropdown ">
-                    <button class="dropdown-toggle btn btn-border btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <%= Translator.trans('open_orchestra_backoffice.node.preview') %>
-                        <span class="caret"></span>
-                    </button>
-                        <ul class="dropdown-menu">
-                            <% _.each(node.get('preview_links'), function(previewLink, key) { %>
-                                <li>
-                                    <a href="<%= previewLink.link %>"><%= previewLink.name %></a>
-                                </li>
-                            <% }); %>
-                        </ul>
-                </div>
-            </div>
-        <% }; %>
-        <div class="form-group">
-            <label class="control-label">Workflow</label>
-            <div class="styled-select">
-                <select class="form-control" id="select-workflow">
-                    <option></option>
-                    <option class="draft">Brouillon</option>
-                    <option class="translate">A traduire</option>
-                    <option class="publish">A publier</option>
-                    <option class="online">En ligne</option>
-                    <option class="offline">Hors ligne</option>
-                </select>
-            </div>
-        </div>
-
+    <form class="form-inline search-engine node-action-toolbar">
     </form>
     <% if (true === node.get('currently_published')) {%>
         <div class="alert alert-success" role="alert">

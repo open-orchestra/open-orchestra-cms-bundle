@@ -141,7 +141,9 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->nodeTransformer->reverseTransform($facade, $source);
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
-        Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
+        if (null !== $source) {
+            Phake::verify($source, Phake::times($setCount))->setStatus(Phake::anyParameters());
+        }
     }
 
     /**
@@ -154,22 +156,6 @@ class NodeTransformerTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test Exception reverse transform with wrong object a parameters
-     */
-    public function testExceptionReverseTransform()
-    {
-        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
-        $source = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-
-        $facade->statusId = 'statusId';
-
-        Phake::when($this->eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
-
-        $this->expectException('OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException');
-        $this->nodeTransformer->reverseTransform($facade, $source);
-    }
-
-    /**
      * @return array
      */
     public function getChangeStatus()
@@ -177,28 +163,16 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $facadeA = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeFacade');
 
         $facadeB = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeFacade');
-        $facadeB->statusId = 'fakeId';
+        $facadeStatus = Phake::mock('OpenOrchestra\WorkflowAdminBundle\Facade\StatusFacade');
+        $facadeB->status = $facadeStatus;
+        $facadeStatus->id = 'fakeId';
 
-        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
-        Phake::when($node1)->getStatus()->thenReturn($fromStatus);
-
-        $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
-        Phake::when($node2)->getStatus()->thenReturn($fromStatus);
-
-        $node3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
-        Phake::when($node3)->getStatus()->thenReturn($fromStatus);
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         return array(
             array($facadeA, null, 0, 0),
-            array($facadeA, $node1, 0, 0),
-            array($facadeB, $node2, 1, 1),
-            array($facadeB, $node3, 1, 1),
+            array($facadeA, $node, 0, 0),
+            array($facadeB, $node, 1, 1),
         );
     }
 

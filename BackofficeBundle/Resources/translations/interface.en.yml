@@ -63,6 +63,7 @@ open_orchestra_backoffice:
         edit: Edit
         redirections: Redirections
         preview: Preview
+        version: Version
         new_version: New version
         message_online:
             title: The node is actually online.

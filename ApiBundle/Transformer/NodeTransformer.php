@@ -4,13 +4,11 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
-use OpenOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\BaseBundle\Manager\EncryptionManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -237,17 +235,14 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
-        if ($source) {
-            if ($facade->statusId) {
-                $toStatus = $this->statusRepository->find($facade->statusId);
-                if ($toStatus) {
-                    $event = new StatusableEvent($source, $toStatus);
-                    try {
-                        $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
-                    } catch (StatusChangeNotGrantedException $e) {
-                        throw new StatusChangeNotGrantedHttpException();
-                    }
-                }
+        if (
+            $source instanceof NodeInterface &&
+            null !== $facade->status &&
+            null !== $facade->status->id
+        ) {
+            $status = $this->statusRepository->find($facade->status->id);
+            if ($status instanceof StatusInterface) {
+                $source->setStatus($status);
             }
         }
 

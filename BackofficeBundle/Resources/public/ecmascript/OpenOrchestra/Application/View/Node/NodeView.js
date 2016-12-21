@@ -4,6 +4,8 @@ import ServerError      from '../../../Service/Error/ServerError'
 import ApplicationError from '../../../Service/Error/ApplicationError'
 import AreaView         from '../Area/AreaView'
 import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
+import Statuses         from '../../Collection/Status/Statuses'
+import Status           from '../../Model/Status/Status'
 
 /**
  * @class NodeView
@@ -15,7 +17,8 @@ class NodeView extends OrchestraView
      */
     preinitialize() {
         this.events = {
-            'click .area:not(.disabled)': '_activeArea'
+            'click .area:not(.disabled)': '_activeArea',
+            'click .dropdown-workflow li a': '_changeStatus'
         }
     }
 
@@ -42,9 +45,38 @@ class NodeView extends OrchestraView
         );
         this.$el.html(template);
         this._diplayLoader($('.well', this.$el));
+        this._diplayLoader($('.node-action-toolbar', this.$el));
+        this._renderNodeActionToolbar($('.node-action-toolbar', this.$el));
         this._renderNodeTemplate($('.node-template .well', this.$el));
 
         return this;
+    }
+
+    /**
+     * @param {Object} $selector
+     * @private
+     */
+    _renderNodeActionToolbar($selector) {
+        let statuses = new Statuses();
+        $.when(
+            statuses.fetch({
+                context: 'node',
+                urlParameter: {
+                    nodeId: this._node.get('node_id'),
+                    siteId: this._node.get('site_id'),
+                    language: this._node.get('language'),
+                    version: this._node.get('version')
+                }
+            })
+        ).done( () => {
+            let template = this._renderTemplate('Node/nodeToolbarView',
+                {
+                    node: this._node,
+                    statuses: statuses.models
+                }
+            );
+            $selector.html(template);
+        });
     }
 
     /**
@@ -123,6 +155,20 @@ class NodeView extends OrchestraView
         if (this._node.get('rights').can_edit) {
             $(event.currentTarget).addClass('active');
         }
+    }
+
+    /**
+     * @param {Object} event
+     * @private
+     */
+    _changeStatus(event) {
+        let statusId = $(event.currentTarget).attr('data-id');
+        let status = new Status({id: statusId});
+        this._node.save({ 'status': status}, {
+            success: (data) => {
+                Backbone.history.loadUrl(Backbone.history.fragment);
+            }
+        });
     }
 }
 

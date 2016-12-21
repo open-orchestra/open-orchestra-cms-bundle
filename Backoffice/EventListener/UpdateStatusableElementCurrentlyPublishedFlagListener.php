@@ -30,6 +30,8 @@ class UpdateStatusableElementCurrentlyPublishedFlagListener
      */
     public function updateFlag(EventStatusableInterface $event)
     {
+        dump('udate');
+        dump('udate');
         $statusableElement = $event->getStatusableElement();
 
         if ($statusableElement->getStatus()->isPublishedState()) {

@@ -2,7 +2,7 @@ import OrchestraRouter from '../OrchestraRouter'
 import Application     from '../../Application'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import NodesTree       from '../../Collection/Node/NodesTree'
-import Statuses        from '../../Collection/Statuses/Statuses'
+import Statuses        from '../../Collection/Status/Statuses'
 import Nodes           from '../../Collection/Node/Nodes'
 import NewNodeTreeView from '../../View/Node/NewNodeTreeView'
 import NodeFormView    from '../../View/Node/NodeFormView'
@@ -56,6 +56,7 @@ class NodeRouter extends OrchestraRouter
 
         this._diplayLoader(Application.getRegion('content'));
         new Statuses().fetch({
+            context: 'nodes',
             success: (statuses) => {
                 let nodesView = new NodesView({
                     statuses: statuses,

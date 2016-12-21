@@ -5,11 +5,15 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
+use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -244,25 +248,41 @@ class NodeController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $nodeMongoId
      *
-     * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
-     * @Config\Method({"POST"})
+     * @Config\Route("/update-status", name="open_orchestra_api_node_update")
+     * @Config\Method({"PUT"})
      *
      * @return Response
+     * @throws NodeNotFoundHttpException
+     * @throws StatusChangeNotGrantedHttpException
      */
-    public function changeStatusAction(Request $request, $nodeMongoId)
+    public function changeStatusAction(Request $request)
     {
-        /** @var NodeInterface $node */
-        $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
-        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
-
-        return $this->reverseTransform(
-            $request, $nodeMongoId,
-            'node',
-            NodeEvents::NODE_CHANGE_STATUS,
-            'OpenOrchestra\ModelInterface\Event\NodeEvent'
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\NodeFacade',
+            $request->get('_format', 'json')
         );
+
+        $node = $this->get('open_orchestra_model.repository.node')->find($facade->id);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+        $nodeSource = clone $node;
+
+        $this->get('open_orchestra_api.transformer_manager')->get('node')->reverseTransform($facade, $node);
+        $status = $node->getStatus();
+        if ($status !== $nodeSource->getStatus()) {
+            if (!$this->isGranted($status, $nodeSource)) {
+                throw new StatusChangeNotGrantedHttpException();
+            }
+            $event = new NodeEvent($node, $nodeSource->getStatus());
+            $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, $event);
+            $this->get('object_manager')->flush();
+        }
+
+        return array();
     }
 
     /**
