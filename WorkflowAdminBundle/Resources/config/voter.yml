@@ -1,6 +1,6 @@
 parameters:
     open_orchestra_workflow.voter.node_workflow.class   : OpenOrchestra\Workflow\Security\Authorization\Voter\NodeWorkflowVoter
-    open_orchestra_workflow.voter.content_workflow.class: OpenOrchestra\Workflow\Security\Authorization\Voter\NodeWorkflowVoter
+    open_orchestra_workflow.voter.content_workflow.class: OpenOrchestra\Workflow\Security\Authorization\Voter\ContentWorkflowVoter
 
 services:
     open_orchestra_workflow.voter.node_workflow:
