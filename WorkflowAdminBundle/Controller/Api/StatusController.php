@@ -73,7 +73,7 @@ class StatusController extends BaseController
      *
      * @return Response
      * @throws DeleteStatusNotGrantedHttpException
-     * 
+     *
      * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
      * @Config\Method({"DELETE"})
      */

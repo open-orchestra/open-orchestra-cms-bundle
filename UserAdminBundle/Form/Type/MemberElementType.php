@@ -6,10 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\GroupBundle\Repository\GroupRepository;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
 
 /**

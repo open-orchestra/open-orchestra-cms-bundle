@@ -70,7 +70,6 @@ class WorkflowProfileCollectionTransformer implements DataTransformerInterface
             }
         }
 
-        var_dump($result);
         return $result;
     }
 

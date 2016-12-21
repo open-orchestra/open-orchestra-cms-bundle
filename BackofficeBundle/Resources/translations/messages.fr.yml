@@ -373,6 +373,11 @@ open_orchestra_backoffice:
                 meta: Meta
                 google_marker: Marqueur Google Analytics / GTM
                 xiti: Marqueur ATinternet (Xiti)
+        role:
+            page: Page
+            content: Contenu
+            trash: Corbeille
+            configuration: Configuration
     block:
         configurable_content:
             title: Contenu paramétrable

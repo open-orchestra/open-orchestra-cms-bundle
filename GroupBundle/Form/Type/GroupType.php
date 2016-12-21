@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFormEvent;
 use OpenOrchestra\GroupBundle\GroupFormEvents;
 
