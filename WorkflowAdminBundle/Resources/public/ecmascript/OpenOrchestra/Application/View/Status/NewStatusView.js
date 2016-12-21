@@ -1,12 +1,22 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 import Status           from '../../Model/Status/Status'
 import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage     from '../../../Service/FlashMessage/FlashMessage'
 
 /**
  * @class NewStatusView
  */
 class NewStatusView extends AbstractFormView
 {
+    /**
+     * Pre initialize
+     * @param {Object} options
+     */
+    preinitialize(options) {
+        super.preinitialize(options);
+        this.events['click button.submit-continue-form'] = '_submit';
+    }
+
     /**
      * Render view
      */
@@ -25,10 +35,16 @@ class NewStatusView extends AbstractFormView
      * @return {Object}
      */
     getStatusCodeForm(event) {
-        return {
+        let statusCodeForm = {
             '422': $.proxy(this.refreshRender, this),
             '201': $.proxy(this._redirectEditStatus, this)
         };
+
+        if ($(event.currentTarget).hasClass('submit-continue-form')) {
+            statusCodeForm['201'] = $.proxy(this._redirectNewStatus, this);
+        }
+
+        return statusCodeForm;
     }
 
     /**
@@ -47,6 +63,19 @@ class NewStatusView extends AbstractFormView
         let url = Backbone.history.generateUrl('editStatus', {statusId: statusId});
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
+    }
+
+    /**
+     * Redirect to new status view
+     *
+     * @param {mixed}  data
+     * @private
+     */
+    _redirectNewStatus(data) {
+        let message = new FlashMessage(data, 'success');
+        FlashMessageBag.addMessageFlash(message);
+        Backbone.Events.trigger('form:deactivate', this);
+        Backbone.history.loadUrl(Backbone.history.fragment);
     }
 }
 

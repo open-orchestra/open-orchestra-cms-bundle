@@ -86,3 +86,16 @@
         {{ block('form_widget_simple') }}
     {% endspaceless %}
 {% endblock _oo_status_properties_widget %}
+
+{% block oo_status_submit_widget %}
+    {% spaceless %}
+        {{ block('submit_widget') }}
+        {% if(form.vars.value.id is null) %}
+            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
+            {% set id = 'submit_' ~ form.vars.name %}
+            {% set attr = {'class': 'submit-continue-form'} %}
+            {% set button_class= 'primary' %}
+            {{ block('button_widget') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock oo_status_submit_widget %}
