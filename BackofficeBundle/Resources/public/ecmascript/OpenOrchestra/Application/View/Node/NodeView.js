@@ -169,7 +169,6 @@ class NodeView extends OrchestraView
      * @private
      */
     _activateSortableBlocks($template) {
-        console.log('activate');
         $('.block-container > div', $template).sortable({
             items: '> .block-item',
             handle: '.move-block',
