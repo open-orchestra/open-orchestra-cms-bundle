@@ -1,6 +1,7 @@
-import GroupRouter       from './Router/Group/GroupRouter'
-import FormBehaviorManager  from '../Service/Form/Behavior/Manager'
-import HierarchicalCheck from '../Service/Form/Behavior/HierarchicalCheck'
+import GroupRouter         from './Router/Group/GroupRouter'
+import FormBehaviorManager from '../Service/Form/Behavior/Manager'
+import HierarchicalCheck   from '../Service/Form/Behavior/HierarchicalCheck'
+import TreeCheck           from '../Service/Form/Behavior/TreeCheck'
 
 /**
  * @class GroupSubApplication
@@ -29,6 +30,7 @@ class GroupSubApplication
     */
    _initFormBehaviorManager() {
        FormBehaviorManager.add(HierarchicalCheck);
+       FormBehaviorManager.add(TreeCheck);
    }
 }
 

@@ -25,6 +25,8 @@ services:
             - '@open_orchestra_group.subscriber.group_member'
             - '@event_dispatcher'
             - '@open_orchestra_group.transformer.group_role'
+            - '@open_orchestra_group.transformer.group_perimeter'
+            - '@open_orchestra_group.generate_perimeter_manager'
             - '%open_orchestra_user.document.group.class%'
             - '%open_orchestra_base.administration_languages%'
         tags:

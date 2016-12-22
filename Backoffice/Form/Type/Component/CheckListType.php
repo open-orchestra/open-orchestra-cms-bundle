@@ -44,5 +44,4 @@ class CheckListType extends AbstractType
     {
         return "oo_check_list";
     }
-
 }

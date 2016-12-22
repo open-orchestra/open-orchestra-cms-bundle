@@ -10,6 +10,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFormEvent;
 use OpenOrchestra\GroupBundle\GroupFormEvents;
+use OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager;
 
 /**
  * Class GroupType
@@ -25,6 +26,8 @@ class GroupType extends AbstractType
      * @param EventSubscriberInterface $groupMemberSubscriber
      * @param EventDispatcherInterface $eventDispatcher
      * @param DataTransformerInterface $groupRoleTransformer
+     * @param DataTransformerInterface $groupPerimeterTransformer
+     * @param GeneratePerimeterManager $generatePerimeterManager
      * @param string                   $groupClass
      * @param array                    $backOfficeLanguages
      */
@@ -32,12 +35,16 @@ class GroupType extends AbstractType
         EventSubscriberInterface $groupMemberSubscriber,
         EventDispatcherInterface $eventDispatcher,
         DataTransformerInterface $groupRoleTransformer,
+        DataTransformerInterface $groupPerimeterTransformer,
+        GeneratePerimeterManager $generatePerimeterManager,
         $groupClass,
         array $backOfficeLanguages
     ) {
         $this->groupMemberSubscriber = $groupMemberSubscriber;
         $this->eventDispatcher = $eventDispatcher;
         $this->groupRoleTransformer = $groupRoleTransformer;
+        $this->groupPerimeterTransformer = $groupPerimeterTransformer;
+        $this->generatePerimeterManager = $generatePerimeterManager;
         $this->groupClass = $groupClass;
         $this->backOfficeLanguages = $backOfficeLanguages;
     }
@@ -48,6 +55,11 @@ class GroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $configuration = $this->generatePerimeterManager->getPerimetersConfiguration();
+        array_walk_recursive($configuration, function(&$item) {
+            $item = str_replace('/', '::', $item);
+        });
+
         $builder
             ->add('name', null, array(
                 'label' => 'open_orchestra_group.form.group.name',
@@ -69,9 +81,15 @@ class GroupType extends AbstractType
                 'label' => false,
                 'group_id' => 'right',
                 'sub_group_id' => 'right',
+            ))
+            ->add('perimeters', 'oo_tree_list_collection', array(
+                'label' => false,
+                'configuration' => $configuration,
+                'group_id' => 'perimeter',
+                'sub_group_id' => 'page',
             ));
-
         $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
+        $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);
         $builder->addEventSubscriber($this->groupMemberSubscriber);
         $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder, $this));
     }

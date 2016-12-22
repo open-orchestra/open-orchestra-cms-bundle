@@ -9,7 +9,6 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class GroupRoleTransformer implements DataTransformerInterface
 {
-
     protected $groupRolesConfiguration;
 
     /**

@@ -5,9 +5,9 @@ namespace OpenOrchestra\Backoffice\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * Class CheckListCollectionTransformer
+ * Class TreeListCollectionTransformer
  */
-class CheckListCollectionTransformer implements DataTransformerInterface
+class TreeListCollectionTransformer implements DataTransformerInterface
 {
     /**
      * @param array $value
@@ -16,7 +16,7 @@ class CheckListCollectionTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        return array('check_list_collection' => $value);
+        return array('tree_list_collection' => $value);
     }
 
     /**

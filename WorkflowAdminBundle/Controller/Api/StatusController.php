@@ -14,6 +14,7 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class StatusController

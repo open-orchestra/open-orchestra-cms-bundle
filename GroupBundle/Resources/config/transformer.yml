@@ -3,6 +3,7 @@ parameters:
     open_orchestra_group.transformer.group.class: OpenOrchestra\GroupBundle\Transformer\GroupTransformer
     open_orchestra_group.transformer.group_collection.class: OpenOrchestra\GroupBundle\Transformer\GroupCollectionTransformer
     open_orchestra_group.transformer.group_role.class: OpenOrchestra\GroupBundle\Form\DataTransformer\GroupRoleTransformer
+    open_orchestra_group.transformer.group_perimeter.class: OpenOrchestra\GroupBundle\Form\DataTransformer\GroupPerimeterTransformer
 
 services:
     open_orchestra_group.transformer.group_list_to_array:
@@ -26,10 +27,11 @@ services:
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-<<<<<<< HEAD
-=======
     open_orchestra_group.transformer.group_role:
         class: '%open_orchestra_group.transformer.group_role.class%'
         arguments:
             - '%open_orchestra_backoffice.configuration.roles%'
->>>>>>> add workflow profile tabulation in group
+    open_orchestra_group.transformer.group_perimeter:
+        class: '%open_orchestra_group.transformer.group_perimeter.class%'
+        arguments:
+            - '@open_orchestra_group.generate_perimeter_manager'
