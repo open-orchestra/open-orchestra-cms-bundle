@@ -54,7 +54,9 @@ class UserTransformer extends AbstractTransformer
             $groups = $mixed->getGroups();
             $labels = array();
             foreach($groups as $group){
-                $labels[] = $this->multiLanguagesChoiceManager->choose($group->getLabels());
+                if (!$group->isDeleted()) {
+                    $labels[] = $this->multiLanguagesChoiceManager->choose($group->getLabels());
+                }
             }
 
             $facade->groups = implode(',', $labels);

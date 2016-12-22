@@ -28,5 +28,6 @@ class OpenOrchestraGroupExtension extends Extension
         $loader->load('services.yml');
         $loader->load('form.yml');
         $loader->load('transformer.yml');
+        $loader->load('subscriber.yml');
     }
 }

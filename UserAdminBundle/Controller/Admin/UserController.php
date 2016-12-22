@@ -165,7 +165,7 @@ class UserController extends AbstractAdminController
             foreach ($user->getGroups() as $group) {
                 /** @var SiteInterface $site */
                 $site = $group->getSite();
-                if (!$site->isDeleted() && !in_array($site->getSiteId(), $siteIds)) {
+                if (!$group->isDeleted() && !$site->isDeleted() && !in_array($site->getSiteId(), $siteIds)) {
                     $siteIds[] = $site->getSiteId();
                     $sites[] = $site;
                 }

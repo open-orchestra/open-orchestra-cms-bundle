@@ -56,7 +56,7 @@ abstract class AbstractPerimeterVoter extends AbstractVoter
             $cachedPerimeter = $this->perimeterManager->createPerimeter($entityType);
             foreach ($user->getGroups() as $group) {
                 $perimeter = $group->getPerimeter($entityType);
-                if ($perimeter instanceof PerimeterInterface) {
+                if (!$group->isDeleted() && $perimeter instanceof PerimeterInterface) {
                     $cachedPerimeter->addItems($perimeter->getItems());
                 }
             }

@@ -4,6 +4,7 @@ namespace OpenOrchestra\GroupBundle\Document;
 
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
@@ -20,6 +21,8 @@ use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
  */
 class Group extends BaseGroup implements GroupInterface
 {
+    use SoftDeleteable;
+
     /**
      * @ODM\ReferenceOne(
      *  targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface"

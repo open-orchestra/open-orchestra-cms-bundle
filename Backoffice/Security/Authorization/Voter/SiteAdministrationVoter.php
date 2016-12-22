@@ -109,7 +109,7 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
     protected function voteForUser(UserInterface $subject, UserInterface $user)
     {
         foreach ($subject->getGroups() as $group) {
-            if ($this->canActOnSite($group->getSite()->getSiteId(), $user)) {
+            if (!$group->isDeleted() && $this->canActOnSite($group->getSite()->getSiteId(), $user)) {
                 return true;
             }
         }
