@@ -1,6 +1,7 @@
 open_orchestra_user_admin:
     navigation:
         user:
+          title: Users
           users: All users
     table:
         groups:

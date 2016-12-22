@@ -1,0 +1,23 @@
+<ol class="breadcrumb">
+    <% _.each(breadcrumb, function(item, key) { %>
+        <% if (item instanceof Array) { %>
+
+            <li class="breadcrumb-tab">
+                <ul class="nav nav-tabs page-tabs" role="tablist">
+                    <% _.each(item, function(tab) { %>
+                        <li><a href="<%= tab.link %>"><%= tab.label%></a></li>
+                    <% }); %>
+                </ul>
+            </li>
+
+        <% } else if (item.hasOwnProperty('link')) { %>
+
+            <li><a href="<%= item.link %>"><%= item.label %></a></li>
+
+        <%} else {%>
+
+            <li><%= item.label %></li>
+
+        <%}%>
+    <% }); %>
+</ol>

@@ -20,6 +20,26 @@ class StatusRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getBreadcrumb() {
+        return [
+            {
+                label:Translator.trans('open_orchestra_workflow_admin.navigation.developer.title')
+            },
+            {
+                label: Translator.trans('open_orchestra_workflow_admin.navigation.developer.workflow')
+            },
+            [
+                {
+                    label: Translator.trans('open_orchestra_workflow_admin.navigation.developer.statuses'),
+                    link: '#'+Backbone.history.generateUrl('listStatus')
+                }
+            ]
+        ]
+    }
+
+    /**
      * Edit Status
      *
      * @param  {String} statusId

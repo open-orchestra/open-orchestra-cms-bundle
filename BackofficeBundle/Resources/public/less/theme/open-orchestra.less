@@ -363,25 +363,34 @@ img {
 /* ===================================================================
  * BREADCRUMB
  * =================================================================*/
+.breadcrumb-region {
+  & > div { display: inline; }
+}
 .breadcrumb {
   background: @lightGrey;
   color: @darkBlue;
   .Montserrat;
   text-transform: uppercase;
-  .fontSize(11);
   padding: 0;
   margin: 0;
   border-radius: 0;
   overflow: hidden;
   float: left;
   & > li {
+    &:not(.breadcrumb-tab) {
+      .fontSize(11);
+      padding: 10px;
+    }
     background: @lightGrey;
     float: left;
-    padding: 10px;
     position: relative;
     line-height: 20px;
     &:first-child { padding-left: 30px; }
-    & + li {
+    & + li.breadcrumb-tab::before, &.breadcrumb-tab + li::before {
+      content: '';
+      padding: 0;
+    }
+    &:not(.breadcrumb-tab) + li:not(.breadcrumb-tab) {
       &::before {
         content: '>';
         color: @darkBlue;

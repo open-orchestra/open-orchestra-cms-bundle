@@ -20,6 +20,21 @@ class GroupRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getBreadcrumb() {
+        return [
+            {
+                label:Translator.trans('open_orchestra_group.navigation.group.title')
+            },
+            {
+                label: Translator.trans('open_orchestra_group.navigation.group.groups'),
+                link: '#'+Backbone.history.generateUrl('listGroup')
+            }
+        ]
+    }
+
+    /**
      *  List Group
      *
      * @param {String} page

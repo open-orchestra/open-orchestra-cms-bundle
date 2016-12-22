@@ -1,7 +1,9 @@
 open_orchestra_workflow_admin:
     navigation:
         developer:
-          status: Tous les statuts
+          title: Développeur
+          workflow: Workflow
+          statuses: Statuts
     status:
         title_list: Liste des statuts
         initial_state: Etat initial

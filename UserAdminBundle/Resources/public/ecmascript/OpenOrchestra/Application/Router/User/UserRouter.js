@@ -25,6 +25,21 @@ class UserRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getBreadcrumb() {
+        return [
+            {
+                label:Translator.trans('open_orchestra_user_admin.navigation.user.title')
+            },
+            {
+                label: Translator.trans('open_orchestra_user_admin.navigation.user.users'),
+                link: '#'+Backbone.history.generateUrl('listUser')
+            }
+        ]
+    }
+
+    /**
      * Edit user preference
      */
     editSelfUser() {
