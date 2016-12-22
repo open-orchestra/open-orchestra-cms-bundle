@@ -168,6 +168,9 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $facadeStatus->id = 'fakeId';
 
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->getId()->thenReturn('otherFakeId');
+        Phake::when($node)->getStatus()->thenReturn($status);
 
         return array(
             array($facadeA, null, 0, 0),

@@ -235,16 +235,17 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
-        if (
-            $source instanceof NodeInterface &&
+        if ($source instanceof NodeInterface &&
             null !== $facade->status &&
-            null !== $facade->status->id
+            null !== $facade->status->id &&
+            $source->getStatus()->getId() !== $facade->status->id
         ) {
             $status = $this->statusRepository->find($facade->status->id);
             if ($status instanceof StatusInterface) {
                 $source->setStatus($status);
             }
         }
+
 
         return $source;
     }

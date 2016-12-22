@@ -28,6 +28,11 @@ class StatusFacade extends AbstractFacade
     /**
      * @Serializer\Type("boolean")
      */
+    public $blockedEdtion;
+
+    /**
+     * @Serializer\Type("boolean")
+     */
     public $autoUnpublishToState;
 
     /**

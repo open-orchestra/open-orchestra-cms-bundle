@@ -6,6 +6,7 @@ import AreaView         from '../Area/AreaView'
 import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
 import Statuses         from '../../Collection/Status/Statuses'
 import Status           from '../../Model/Status/Status'
+import Node             from '../../Model/Node/Node'
 
 /**
  * @class NodeView
@@ -89,6 +90,9 @@ class NodeView extends OrchestraView
             .done((data) => {
                 let $template = $(data);
                 this._renderAreas($template);
+                if (false === this._node.get('status').get('published_state')) {
+                    this._activateSortableBlocks($template);
+                }
                 $selector.html($template);
             })
             .fail((xhr, textStatus) => {
@@ -142,7 +146,7 @@ class NodeView extends OrchestraView
         }
 
         let area = this._node.getArea(areaId);
-        let areaView = new AreaView({area: area});
+        let areaView = new AreaView({area: area,  node: this._node});
         $blockContainer.html(areaView.render().$el);
     }
 
@@ -158,14 +162,60 @@ class NodeView extends OrchestraView
     }
 
     /**
+     * Activate sortable blocks
+     *
+     * @param {Object} $template
+     *
+     * @private
+     */
+    _activateSortableBlocks($template) {
+        console.log('activate');
+        $('.block-container > div', $template).sortable({
+            items: '> .block-item',
+            handle: '.move-block',
+            connectWith: '.block-container > div',
+            update: (event, ui) => {
+                let $blockItem = $(ui.item);
+                let $area = ui.sender || $blockItem.parent();
+                let area = $area.data('area');
+                area.set('hasChanged', true);
+                let $blocks = $area.children('.block-item');
+                let blocks = _.map($blocks, ($block) => {
+                    return $($block).data('block')
+                });
+
+                area.get('blocks').set(blocks);
+            },
+            stop: () => {
+                let changedAreas = this._node.getChangedArea();
+                let areas = this._node.get('areas');
+                this._node.save({'areas': changedAreas}, {
+                    context: 'update_position_block',
+                    urlParameter: {
+                        'nodeId': this._node.get('node_id'),
+                        'siteId': this._node.get('site_id'),
+                        'language': this._node.get('language'),
+                        'version': this._node.get('version')
+                    }
+                });
+                for (let index in changedAreas) {
+                    changedAreas[index].set('hasChanged', false);
+                }
+                this._node.set('areas', areas);
+            }
+        });
+    }
+
+    /**
      * @param {Object} event
      * @private
      */
     _changeStatus(event) {
         let statusId = $(event.currentTarget).attr('data-id');
         let status = new Status({id: statusId});
-        this._node.save({ 'status': status}, {
-            success: (data) => {
+        this._node.save({'status': status}, {
+            context: 'update_status',
+            success: () => {
                 Backbone.history.loadUrl(Backbone.history.fragment);
             }
         });

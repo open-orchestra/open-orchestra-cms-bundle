@@ -61,6 +61,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->publishedState = $status->isPublishedState();
         $facade->initialState = $status->isInitialState();
+        $facade->blockedEdtion = $status->isBlockedEdition();
         $facade->autoPublishFromState = $status->isAutoPublishFromState();
         $facade->autoUnpublishToState = $status->isAutoUnpublishToState();
         $facade->translationState = $status->isTranslationState();

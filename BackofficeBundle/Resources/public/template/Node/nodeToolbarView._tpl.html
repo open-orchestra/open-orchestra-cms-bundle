@@ -2,7 +2,7 @@
     <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.node.version') %></label>
     <div class="styled-select">
         <select class="form-control" id="select-version">
-            <option></option>
+            <option><%= node.get('status').get('label') %> - <%= node.get('name') %> - <%= node.get('version') %></option>
         </select>
     </div>
 </div>

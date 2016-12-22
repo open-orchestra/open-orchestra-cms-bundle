@@ -5,12 +5,12 @@ namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
 
 /**
- * Class NodeNotFoundHttpException
+ * Class BlockNotFoundHttpException
  */
-class NodeNotFoundHttpException extends ApiException
+class BlockNotFoundHttpException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'open_orchestra_api.node.not_found';
-    const HUMAN_MESSAGE      = 'open_orchestra_api.node.not_found';
+    const DEVELOPER_MESSAGE  = 'open_orchestra_api.block.not_found';
+    const HUMAN_MESSAGE      = 'open_orchestra_api.block.not_found';
     const STATUS_CODE        = '404';
     const ERROR_CODE         = 'x';
 

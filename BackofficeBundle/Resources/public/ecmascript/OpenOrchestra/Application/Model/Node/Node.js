@@ -20,7 +20,9 @@ class Node extends OrchestraModel
         if (response.hasOwnProperty('areas')) {
             let areas = {};
             for(let index in response.areas) {
-                areas[index] =  new Area(response.areas[index], {parse: true});
+                let attributes = response.areas[index];
+                attributes.name = attributes.name || index;
+                areas[index] =  new Area(attributes, {parse: true});
             }
             response.areas = areas;
         }
@@ -41,6 +43,23 @@ class Node extends OrchestraModel
     }
 
     /**
+     * Get changed area
+     * @returns
+     */
+    getChangedArea() {
+        let changedAreas = {};
+        let areas = this.get('areas');
+        for (let index in areas) {
+            let area = areas[index];
+            if (true === area.get('hasChanged')) {
+                changedAreas[index] = area;
+            }
+        }
+
+        return changedAreas;
+    }
+
+    /**
      * @inheritdoc
      */
     _getSyncUrl(method, options) {
@@ -49,7 +68,24 @@ class Node extends OrchestraModel
             case "read":
                 return Routing.generate('open_orchestra_api_node_show', urlParameter);
             case "update":
-                return Routing.generate('open_orchestra_api_node_update');
+                return this._getSyncUpdateUrl(options);
+        }
+    }
+
+    /**
+     * @param {Object} options
+     *
+     * @returns {string}
+     * @private
+     */
+    _getSyncUpdateUrl(options) {
+        let context = options.context || null;
+        let urlParameter = options.urlParameter || {};
+        switch (context) {
+            case "update_status":
+                return Routing.generate('open_orchestra_api_node_update_status');
+            case "update_position_block":
+                return Routing.generate('open_orchestra_node_update_block_position', urlParameter);
         }
     }
 }

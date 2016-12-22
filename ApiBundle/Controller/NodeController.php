@@ -2,18 +2,18 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
-use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
-use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -145,6 +145,107 @@ class NodeController extends BaseController
         return array();
     }
 
+
+    /**
+     * @param string  $nodeId
+     * @param string  $siteId
+     * @param string  $language
+     * @param string  $version
+     * @param string  $areaName
+     * @param string  $blockId
+     *
+     * @Config\Route("/delete-block/{nodeId}/{siteId}/{language}/{version}/{areaName}/{blockId}", name="open_orchestra_api_node_delete_block")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     * @throws NodeNotFoundHttpException
+     */
+    public function deleteBlockInAreaAction($nodeId, $siteId, $language, $version, $blockId, $areaName)
+    {
+        $version = (int) $version;
+        $node = $this->findOneNode($nodeId, $language, $siteId, $version);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+
+        if ($node->getStatus()->isBlockedEdition()) {
+            return array();
+        }
+
+        $block = $this->get('open_orchestra_model.repository.block')->findById($blockId);
+
+        if (!$block instanceof BlockInterface) {
+            throw new NodeNotFoundHttpException();
+        }
+
+        $this->get('open_orchestra_model.repository.node')->removeBlockInArea($blockId, $areaName, $nodeId, $siteId, $language, $version);
+
+        if (false === $block->isTransverse()) {
+            $objectManager = $this->get('object_manager');
+            $objectManager->remove($block);
+            $objectManager->flush();
+        }
+
+        return array();
+    }
+
+
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     * @param string  $language
+     * @param string  $version
+     * @param string  $siteId
+     *
+     * @Config\Route("/update-block-position/{siteId}/{nodeId}/{version}/{language}", name="open_orchestra_node_update_block_position")
+     * @Config\Method({"PUT"})
+     *
+     * @return FacadeInterface
+     *
+     * @throws NodeNotFoundHttpException
+     */
+    public function updateBlockPositionAction(Request $request, $nodeId, $language, $version, $siteId)
+    {
+        $version = (int) $version;
+        $node = $this->findOneNode($nodeId, $language, $siteId, $version);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+
+        if ($node->getStatus()->isBlockedEdition()) {
+            return array();
+        }
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\NodeFacade',
+            $request->get('_format', 'json')
+        );
+
+        $areaClass = $this->getParameter('open_orchestra_model.document.area.class');
+        $updatedBlock = array();
+        foreach ($facade->getAreas() as $key => $facadeArea) {
+            $blocks = new ArrayCollection();
+
+            foreach ($facadeArea->getBlocks() as $block) {
+                $block = $this->get('open_orchestra_model.repository.block')->findById($block->id);
+                $blocks[] = $block;
+                $updatedBlock[] = $block;
+            }
+            /** @var AreaInterface $area */
+            $area = new $areaClass();
+            $area->setBlocks($blocks);
+            $node->setArea($key, $area);
+        }
+
+        $this->get('object_manager')->flush();
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node, null, $updatedBlock));
+
+        return array();
+    }
+
     /**
      * @param Request      $request
      * @param string       $nodeId
@@ -249,7 +350,7 @@ class NodeController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/update-status", name="open_orchestra_api_node_update")
+     * @Config\Route("/update-status", name="open_orchestra_api_node_update_status")
      * @Config\Method({"PUT"})
      *
      * @return Response
