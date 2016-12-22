@@ -3,13 +3,9 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\HttpFoundation\Request;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
