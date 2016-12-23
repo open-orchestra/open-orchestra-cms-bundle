@@ -1,7 +1,7 @@
-import StatusSubApplication from './Application/StatusSubApplication'
+import WorkflowSubApplication from './Application/WorkflowSubApplication'
 
 $(() => {
     Backbone.Events.on('application:before:start', () => {
-        StatusSubApplication.run();
+        WorkflowSubApplication.run();
     });
 });
