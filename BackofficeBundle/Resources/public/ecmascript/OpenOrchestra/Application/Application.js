@@ -116,13 +116,14 @@ class Application
      * @private
      */
     _displayError(error) {
-        if (error instanceof AjaxError && error.getStatusCode() === 401) {
+        if (('ApiError' === error.name || 'ServerError' === error.name) && error.statusCode === 401) {
             window.location.pathname = Routing.generate('fos_user_security_login', true);
+        } else {
+            let type = ('ApiError' === error.name) ? 'warning' : 'danger';
+            let errorView = new ErrorView({error: error, type: type});
+            this.getRegion('modal').html(errorView.render().$el);
+            errorView.show();
         }
-        let type = ('ApiError' === error.name) ? 'warning' : 'danger';
-        let errorView = new ErrorView({error: error, type: type});
-        this.getRegion('modal').html(errorView.render().$el);
-        errorView.show();
 
     }
 

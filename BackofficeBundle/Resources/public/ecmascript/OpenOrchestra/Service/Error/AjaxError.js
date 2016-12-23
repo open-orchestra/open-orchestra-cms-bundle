@@ -10,23 +10,9 @@ class AjaxError extends Error
      */
     constructor(statusCode, content, message = '') {
         super(message);
-        this._content = content;
-        this._statusCode = statusCode;
+        this.content = content;
+        this.statusCode = statusCode;
         this.name = 'AjaxError';
-    }
-
-     /**
-     * @returns {string}
-     */
-    getContent() {
-        return this._content;
-    }
-
-    /**
-     * @returns {int}
-     */
-    getStatusCode() {
-        return this._statusCode;
     }
 }
 
