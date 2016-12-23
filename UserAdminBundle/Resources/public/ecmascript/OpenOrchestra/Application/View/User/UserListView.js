@@ -58,7 +58,6 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
     }
 
     /**
-     *
      * @param {Object} td
      * @param {Object} cellData
      * @param {Object} rowData
@@ -77,7 +76,6 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
     }
 
     /**
-     *
      * @param {Object} td
      * @param {Object} cellData
      * @param {Object} rowData

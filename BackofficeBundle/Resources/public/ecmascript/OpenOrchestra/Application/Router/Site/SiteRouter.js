@@ -2,7 +2,7 @@ import OrchestraRouter from '../OrchestraRouter'
 import Application     from '../../Application'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import Sites           from '../../Collection/Site/Sites'
-import SiteListView    from '../../View/Site/SiteListView'
+import SitesView       from '../../View/Site/SitesView'
 import SiteFormView    from '../../View/Site/SiteFormView'
 
 /**
@@ -16,7 +16,7 @@ class SiteRouter extends OrchestraRouter
     preinitialize(options) {
         this.routes = {
             'site/list(/:page)': 'listSite',
-            'site/edit/:siteId': 'editSite',
+            'site/edit/:siteId': 'editSite'
         };
     }
 
@@ -25,14 +25,17 @@ class SiteRouter extends OrchestraRouter
      *
      * @param {int} page
      */
-    listSite(page = 1) {
+    listSite(page) {
+        if (null === page) {
+            page = 1
+        }
         this._diplayLoader(Application.getRegion('content'));
         let collection = new Sites();
-        let siteView = new SiteListView({
+        let sitesView = new SitesView({
             collection: collection,
             settings: {page: Number(page) - 1}
         });
-        let el = siteView.render().$el;
+        let el = sitesView.render().$el;
         Application.getRegion('content').html(el);
     }
 

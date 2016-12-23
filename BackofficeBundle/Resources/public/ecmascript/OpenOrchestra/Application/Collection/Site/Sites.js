@@ -16,10 +16,21 @@ class Sites extends DataTableCollection
     /**
      * @inheritdoc
      */
+    toJSON(options) {
+        return {
+            'sites': super.toJSON(options)
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     _getSyncUrl(method) {
         switch (method) {
             case "read":
                 return Routing.generate('open_orchestra_api_site_list');
+            case "delete":
+                return Routing.generate('open_orchestra_api_site_delete_multiple');
         }
     }
 }

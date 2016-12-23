@@ -27,4 +27,12 @@ class SiteCollectionFacade extends PaginateCollectionFacade
     {
         $this->sites[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getSites()
+    {
+        return $this->sites;
+    }
 }
