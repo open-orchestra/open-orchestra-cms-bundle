@@ -135,8 +135,7 @@ class SiteController extends BaseController
             $this->getParameter('open_orchestra_api.facade.site_collection.class'),
             $format
         );
-        dump($facade);
-        dump($request->getContent());
+
         $siteRepository = $this->get('open_orchestra_model.repository.site');
         $sites = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->reverseTransform($facade);
 
