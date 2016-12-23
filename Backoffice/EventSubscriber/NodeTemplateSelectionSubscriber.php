@@ -54,6 +54,8 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
             '' != $data['nodeTemplateSelection']['nodeSource']
         ) {
             $this->nodeManager->hydrateNodeFromNodeId($formData, $data['nodeTemplateSelection']['nodeSource']);
+            $data['nodeTemplateSelection']['template'] = $formData->getTemplate();
+            $event->setData($data);
         }
     }
 
