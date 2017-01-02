@@ -16,6 +16,7 @@ class NodeGeneratePerimeterStrategy implements GeneratePerimeterStrategyInterfac
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
+     * @param CurrentSiteIdInterface $contextManager
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
@@ -57,7 +58,8 @@ class NodeGeneratePerimeterStrategy implements GeneratePerimeterStrategyInterfac
     public function getPerimeterConfiguration()
     {
         $treeNodes = $this->nodeRepository->findTreeNode($this->contextManager->getCurrentSiteId(), $this->contextManager->getUserCurrentSiteDefaultLanguage(), NodeInterface::ROOT_NODE_ID);
-        $treeNodes = $this->formatConfiguration($treeNodes[0]);
+
+        $treeNodes = (is_array($treeNodes)) ? $this->formatConfiguration($treeNodes[0]) : array();
 
         return $treeNodes;
     }
@@ -69,9 +71,9 @@ class NodeGeneratePerimeterStrategy implements GeneratePerimeterStrategyInterfac
      *
      * @return array
      */
-    protected function formatPerimeter(&$treeNodes)
+    protected function formatPerimeter(array $treeNodes)
     {
-        $path = $treeNodes['node']['path'];
+        $path = array_key_exists('path', $treeNodes['node']) ? $treeNodes['node']['path'] : '';
         $treeNodes[] = $path;
         unset($treeNodes['node']);
         foreach ($treeNodes['child'] as &$child) {

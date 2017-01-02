@@ -73,5 +73,4 @@ class CheckListCollectionType extends AbstractType
     {
         return "oo_check_list_collection";
     }
-
 }

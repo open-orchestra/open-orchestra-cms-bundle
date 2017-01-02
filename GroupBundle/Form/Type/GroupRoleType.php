@@ -13,7 +13,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class GroupRoleType extends AbstractType
 {
-
     protected $translator;
     protected $groupRolesConfiguration;
 
@@ -74,5 +73,4 @@ class GroupRoleType extends AbstractType
     {
         return 'oo_group_role';
     }
-
 }

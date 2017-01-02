@@ -14,15 +14,15 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class TreeListCollectionType extends AbstractType
 {
-    protected $TreeListCollectionTransformer;
+    protected $treeListCollectionTransformer;
 
     /**
-     * @param DataTransformerInterface $TreeListCollectionTransformer
+     * @param DataTransformerInterface $treeListCollectionTransformer
      */
     public function __construct(
-        DataTransformerInterface $TreeListCollectionTransformer
+        DataTransformerInterface $treeListCollectionTransformer
         ) {
-            $this->TreeListCollectionTransformer = $TreeListCollectionTransformer;
+            $this->treeListCollectionTransformer = $treeListCollectionTransformer;
     }
 
     /**
@@ -40,7 +40,7 @@ class TreeListCollectionType extends AbstractType
                 'label' => false,
          ));
 
-        $builder->addModelTransformer($this->TreeListCollectionTransformer);
+        $builder->addModelTransformer($this->treeListCollectionTransformer);
     }
 
     /**
@@ -71,5 +71,4 @@ class TreeListCollectionType extends AbstractType
     {
         return "oo_tree_list_collection";
     }
-
 }

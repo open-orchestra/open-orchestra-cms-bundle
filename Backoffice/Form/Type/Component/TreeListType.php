@@ -14,15 +14,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TreeListType extends AbstractType
 {
-    protected $TreeListTransformer;
+    protected $treeListTransformer;
 
     /**
-     * @param DataTransformerInterface $TreeListTransformer
+     * @param DataTransformerInterface $treeListTransformer
      */
     public function __construct(
-        DataTransformerInterface $TreeListTransformer
+        DataTransformerInterface $treeListTransformer
         ) {
-            $this->TreeListTransformer = $TreeListTransformer;
+            $this->treeListTransformer = $treeListTransformer;
     }
 
     /**
@@ -37,7 +37,7 @@ class TreeListType extends AbstractType
                 'label' => false,
         ));
 
-        $builder->addModelTransformer($this->TreeListTransformer);
+        $builder->addModelTransformer($this->treeListTransformer);
     }
 
     /**

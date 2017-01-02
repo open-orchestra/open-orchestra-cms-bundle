@@ -20,8 +20,6 @@ class CollectionTransformer implements DataTransformerInterface
         $this->name = $name;
     }
 
-
-
     /**
      * @param array $value
      *
