@@ -9,8 +9,15 @@ open_orchestra_workflow_admin:
         published_state: Etat de publication
         auto_publish_from_state: Etat de publication automatique
         auto_unpublish_to_state: Etat de dépublication automatique
+    workflow_profile:
+        title_list: Liste des profiles
+        title_new:  Nouveau profil de workflow
+        title_edit: Modifier le profil de workflow
     table:
         statuses:
             label: Libellé
             display_color: Couleur d'affichage
             specificities: Spécificités
+        workflow_profile:
+            label: Label
+            description: Description

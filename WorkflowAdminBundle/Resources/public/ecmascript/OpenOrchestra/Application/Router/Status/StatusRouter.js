@@ -1,6 +1,5 @@
 import OrchestraRouter from '../OrchestraRouter'
 import Application     from '../../Application'
-import UserFormView    from '../../View/User/UserFormView'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import Statuses        from '../../Collection/Status/Statuses'
 import StatusesView    from '../../View/Status/StatusesView'

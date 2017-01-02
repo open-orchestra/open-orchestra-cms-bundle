@@ -24,6 +24,8 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('status')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\StatusFacade')->end()
                     ->scalarNode('status_collection')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\StatusCollectionFacade')->end()
+                    ->scalarNode('workflow_profile')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowProfileFacade')->end()
+                    ->scalarNode('workflow_profile_collection')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowProfileCollectionFacade')->end()
                 ->end()
             ->end()
         ->end();

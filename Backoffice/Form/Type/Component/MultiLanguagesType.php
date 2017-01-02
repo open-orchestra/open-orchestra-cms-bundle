@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\Form\Type\Component;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class MultiLanguagesType
@@ -19,7 +20,8 @@ class MultiLanguagesType extends AbstractType
         $resolver->setDefaults(array(
             'label_attr' => array('class' => 'translated-value'),
             'languages' => array('en'),
-            'type' => 'text'
+            'type' => 'text',
+            'notBlank' => true
         ));
     }
 
@@ -38,7 +40,11 @@ class MultiLanguagesType extends AbstractType
         }
 
         foreach ($options['languages'] as $language) {
-            $builder->add($language, $options['type'], array('label' => $language));
+            $formOptions = array('label' => $language);
+            if (true === $options['notBlank']) {
+                $formOptions['constraints'] = new NotBlank();
+            }
+            $builder->add($language, $options['type'], $formOptions);
         }
     }
 

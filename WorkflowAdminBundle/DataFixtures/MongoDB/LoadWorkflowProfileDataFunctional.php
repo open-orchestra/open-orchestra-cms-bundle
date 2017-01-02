@@ -27,8 +27,18 @@ class LoadWorkflowProfileDataFunctional extends AbstractFixture implements Order
         $transitionPublishedToDraft = $this->createTransition('status-published', 'status-draft');
         $transitionDraftToPublished = $this->createTransition('status-draft', 'status-published');
 
-        $profileContributor = $this->createProfile('Contributor', array($transitionDraftToPending, $transitionToTranslateToPending));
-        $profileValidator = $this->createProfile('Validator', array($transitionPendingToPublished, $transitionPublishedToDraft, $transitionDraftToPublished));
+        $profileContributor = $this->createProfile(
+            array('en' => 'Contributor', 'fr' => 'Contributeur'),
+            array('en' => 'Member which must submit his content to validation for publication', 'fr' => 'Membre qui doit soumettre son contenu à validation pour publication'),
+            array($transitionDraftToPending, $transitionToTranslateToPending),
+            'Contributor'
+        );
+        $profileValidator = $this->createProfile(
+            array('en' => 'Validator', 'fr' => 'Validateur'),
+            array('en' => 'Member which can publish', 'fr' => 'Membre qui peut publier un contenu'),
+            array($transitionPendingToPublished, $transitionPublishedToDraft, $transitionDraftToPublished),
+            'Validator'
+        );
 
         $manager->persist($profileContributor);
         $manager->persist($profileValidator);
@@ -52,20 +62,25 @@ class LoadWorkflowProfileDataFunctional extends AbstractFixture implements Order
     }
 
     /**
-     * @param string                    $label
+     * @param array                     $labels
+     * @param array                     $descriptions
      * @param array<WorkflowTransition> $transitions
+     * @param string                    $referenceName
      *
      * @return WorkflowProfile
      */
-    protected function createProfile($label, array $transitions)
+    protected function createProfile(array $labels, array $descriptions, array $transitions, $referenceName)
     {
-        $profile = new WorkflowProfile($label);
+        $profile = new WorkflowProfile();
+        $profile->setLabels($labels);
+        $profile->setDescriptions($descriptions);
+
 
         foreach ($transitions as $transition) {
             $profile->addTransition($transition);
         }
 
-        $this->addReference('profile-' . $label, $profile);
+        $this->addReference('profile-' . $referenceName, $profile);
 
         return $profile;
     }

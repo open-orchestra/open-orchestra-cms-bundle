@@ -51,7 +51,7 @@ class MultiLanguagesTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array('type' => 'text', 'languages' => $languages));
+        $this->form->buildForm($builder, array('type' => 'text', 'languages' => $languages, 'notBlank' => true));
 
         Phake::verify($builder, Phake::times($expectedBuildCount))->add(Phake::anyParameters());
     }

@@ -1,0 +1,9 @@
+open_orchestra_workflow_admin:
+    form:
+        workflow_profile:
+            creation : Le nouveau profil de workflow a été créé
+            success : Le profil de workflow a été modifié
+            labels : Libellés
+            descriptions : Descriptions
+            group:
+                properties: Propriétés

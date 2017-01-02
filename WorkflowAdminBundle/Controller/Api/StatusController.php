@@ -14,7 +14,6 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
-use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class StatusController
@@ -33,7 +32,7 @@ class StatusController extends BaseController
      * @Config\Route("", name="open_orchestra_api_status_list_table")
      * @Config\Method({"GET"})
      *
-     * @Api\Groups({CMSGroupContext::STATUS_LINKS})
+     * @Api\Groups({OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS_LINKS})
      */
     public function listTableAction(Request $request)
     {

@@ -1,7 +1,9 @@
 parameters:
-    open_orchestra_workflow_admin.transformer.status.class:            OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer
-    open_orchestra_workflow_admin.transformer.status_collection.class: OpenOrchestra\WorkflowAdminBundle\Transformer\StatusCollectionTransformer
-    open_orchestra_workflow_admin.transformer.status_node_tree.class:  OpenOrchestra\WorkflowAdminBundle\Transformer\StatusNodeTreeTransformer
+    open_orchestra_workflow_admin.transformer.status.class:                      OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer
+    open_orchestra_workflow_admin.transformer.status_collection.class:           OpenOrchestra\WorkflowAdminBundle\Transformer\StatusCollectionTransformer
+    open_orchestra_workflow_admin.transformer.status_node_tree.class:            OpenOrchestra\WorkflowAdminBundle\Transformer\StatusNodeTreeTransformer
+    open_orchestra_workflow_admin.transformer.workflow_profile.class:            OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowProfileTransformer
+    open_orchestra_workflow_admin.transformer.workflow_profile_collection.class: OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowProfileCollectionTransformer
 
 services:
     open_orchestra_workflow_admin.transformer.status:
@@ -27,5 +29,21 @@ services:
         class: '%open_orchestra_workflow_admin.transformer.status_node_tree.class%'
         arguments:
             - '%open_orchestra_workflow_admin.facade.status.class%'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+
+    open_orchestra_workflow_admin.transformer.workflow_profile:
+        class: '%open_orchestra_workflow_admin.transformer.workflow_profile.class%'
+        arguments:
+            - '%open_orchestra_workflow_admin.facade.workflow_profile.class%'
+            - '@open_orchestra_backoffice.manager.multi_languages_choice'
+            - '@open_orchestra_model.repository.workflow_profile'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy }
+
+    open_orchestra_workflow_admin.transformer.workflow_profile_collection:
+        class: '%open_orchestra_workflow_admin.transformer.workflow_profile_collection.class%'
+        arguments:
+            - '%open_orchestra_workflow_admin.facade.workflow_profile_collection.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
