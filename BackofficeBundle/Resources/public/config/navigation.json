@@ -13,10 +13,20 @@
       "rank": 20
     }
   },
+  "configuration": {
+    "site": {
+      "template": "Navigation/Configuration/site",
+      "rank": 0
+    }
+  },
   "platform": {
     "tag": {
       "template": "Navigation/Platform/tag",
       "rank": 0
+    },
+    "site": {
+      "template": "Navigation/Configuration/site",
+      "rank": 20
     }
   }
 }

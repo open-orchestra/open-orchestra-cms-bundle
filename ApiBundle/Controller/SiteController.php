@@ -2,7 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\SiteEvents;
@@ -23,8 +24,6 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
  */
 class SiteController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param string $siteId
      *
@@ -55,25 +54,30 @@ class SiteController extends BaseController
      */
     public function listAction(Request $request)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
+        $mapping = array(
+            'name' => 'name'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository =  $this->get('open_orchestra_model.repository.site');
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('site_collection');
 
-        if ($entityId = $request->get('entityId')) {
-            $element = $repository->find($entityId);
-            return $transformer->transform(array($element));
+        $siteIds = null;
+        if (false === $this->get('security.authorization_checker')->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
+            $siteIds = array();
+            $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+            foreach ($availableSites as $site) {
+                $siteIds[] = $site->getSiteId();
+            }
         }
 
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        $configuration->addColumnSearch('deleted', false);
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_model.document.site.class'));
-        $configuration->setDescriptionEntity($mapping);
-        $siteCollection = $repository->findByDeletedForPaginate(false, $configuration);
-        $recordsTotal = $repository->countByDeleted(false);
-        $recordsFiltered = $repository->countWithSearchFilterByDeleted(false, $configuration);
+        $collection = $repository->findForPaginateFilterBySiteIds($configuration, $siteIds);
+        $recordsTotal = $repository->countFilterBySiteIds($siteIds);
+        $recordsFiltered = $repository->countWithFilterAndSiteIds($configuration, $siteIds);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
-        return $this->generateFacadeDataTable($transformer, $siteCollection, $recordsTotal, $recordsFiltered);
+        return $facade;
     }
 
     /**
@@ -109,6 +113,40 @@ class SiteController extends BaseController
             $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
             $this->get('object_manager')->flush();
         }
+
+        return array();
+    }
+
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_site_delete_multiple")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteSitesAction(Request $request)
+    {
+        $format = $request->get('_format', 'json');
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.site_collection.class'),
+            $format
+        );
+
+        $siteRepository = $this->get('open_orchestra_model.repository.site');
+        $sites = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->reverseTransform($facade);
+
+        $siteIds = array();
+        foreach ($sites as $site) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $site)) {
+                $siteIds[] = $site->getSiteId();
+                $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
+            }
+        }
+        $siteRepository->removeSites($siteIds);
 
         return array();
     }

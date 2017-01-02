@@ -1,18 +1,17 @@
 import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 
 /**
  * @class SiteListView
  */
-class SiteListView extends AbstractDataTableView
+class SiteListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events = {
-            'draw.dt table': '_updatePage'
-        };
+        this.events['change .delete-checkbox'] = '_changeDeleteCheckbox';
     }
 
     /**
@@ -28,40 +27,67 @@ class SiteListView extends AbstractDataTableView
     getColumnsDefinition() {
         return [
             {
-                name: "site_id",
-                title: Translator.trans('open_orchestra_backoffice.table.sites.site_id'),
-                orderable: true,
-                orderDirection: 'desc',
-                activateColvis: true,
-                visibile: true
+                name: "delete",
+                orderable: false,
+                width: '20px',
+                createdCell: this._createCheckbox
             },
             {
                 name: "name",
                 title: Translator.trans('open_orchestra_backoffice.table.sites.name'),
                 orderable: true,
                 orderDirection: 'desc',
-                activateColvis: true,
-                visibile: true
+                visibile: true,
+                createdCell: this._createEditLink
             },
             {
-                name: 'links',
+                name: "site_id",
+                title: Translator.trans('open_orchestra_backoffice.table.sites.site_id'),
                 orderable: false,
-                activateColvis: false,
-                createdCell: this._addLinkCell
+                visibile: true
             }
         ];
     }
 
     /**
+     * @inheritDoc
+     */
+    generateUrlUpdatePage(page) {
+        return Backbone.history.generateUrl('listSite', {page : page});
+    }
+
+    /**
      *
-     * @param td
-     * @param cellData
-     *
-     * Example of specif column
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
      * @private
      */
-    _addLinkCell(td, cellData) {
-        $(td).html('<a href="' + cellData._self_form + '">Edit</a>');
+    _createEditLink(td, cellData, rowData) {
+        let link = Backbone.history.generateUrl('editSite', {
+            siteId: rowData.get('site_id')
+        });
+        cellData = $('<a>',{
+            text: cellData,
+            href: '#'+link
+        });
+
+        $(td).html(cellData)
+    }
+
+    /**
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
+     *
+     * @private
+     */
+    _createCheckbox(td, cellData, rowData) {
+        let id = 'checkbox' + rowData.cid;
+        let $checkbox = $('<input>', {type: 'checkbox', id: id, class:'delete-checkbox'});
+        $checkbox.data(rowData);
+        $(td).append($checkbox);
+        $(td).append($('<label>', {for: id}))
     }
 
     /**
@@ -69,11 +95,9 @@ class SiteListView extends AbstractDataTableView
      *
      * @private
      */
-    _updatePage(event) {
-        let api = $(event.target).DataTable();
-        let page = api.page.info().page + 1;
-        let url = Backbone.history.generateUrl('listSite', {page : page});
-        Backbone.history.navigate(url);
+    _changeDeleteCheckbox(event) {
+        let site = $(event.currentTarget).data();
+        site.set('delete', $(event.currentTarget).prop('checked'));
     }
 }
 

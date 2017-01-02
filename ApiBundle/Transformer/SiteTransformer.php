@@ -4,16 +4,28 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class SiteTransformer
  */
-class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
+class SiteTransformer extends AbstractTransformer
 {
+    protected $siteRepository;
+
+    /**
+     * @param null|string             $facadeClass
+     * @param SiteRepositoryInterface $siteRepository
+     */
+    public function __construct($facadeClass, SiteRepositoryInterface $siteRepository)
+    {
+        parent::__construct($facadeClass);
+        $this->siteRepository = $siteRepository;
+    }
+
     /**
      * @param SiteInterface $site
      *
@@ -51,21 +63,22 @@ class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
             }
         }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $site)) {
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_site_delete',
-                array('siteId' => $site->getSiteId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $site)) {
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_backoffice_site_form',
-                array('siteId' => $site->getSiteId())
-            ));
-        }
-
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null            $source
+     *
+     * @return SiteInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if (null !== $facade->siteId) {
+            return $this->siteRepository->findOneBySiteId($facade->siteId);
+        }
+
+        return null;
     }
 
     /**

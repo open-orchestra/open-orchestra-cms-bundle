@@ -4,14 +4,13 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteCollectionTransformer
  */
-class SiteCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
+class SiteCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $siteCollection
@@ -26,13 +25,28 @@ class SiteCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addSite($this->getTransformer('site')->transform($site));
         }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, SiteInterface::ENTITY_TYPE)) {
-            $facade->addLink('_self_add', $this->generateRoute(
-                'open_orchestra_backoffice_site_new',
-                array()
-            ));
-        }
         return $facade;
+    }
+
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return SiteInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        $sites = array();
+        $sitesFacade = $facade->getSites();
+        foreach ($sitesFacade as $siteFacade) {
+            $site = $this->getTransformer('site')->reverseTransform($siteFacade);
+            if (null !== $site) {
+                $sites[] = $site;
+            }
+        }
+
+        return $sites;
     }
 
     /**

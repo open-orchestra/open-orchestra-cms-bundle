@@ -32,6 +32,7 @@ open_orchestra_backoffice:
           title:  Developer
         configuration:
           title:  Configuration
+          site: Site
     table:
         delete_button: Remove selected items
         keywords:
@@ -41,6 +42,9 @@ open_orchestra_backoffice:
             author: Author
             updated_at: Updated date
             current_status: Current status
+        sites:
+            site_id: Site id
+            name: Name
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -49,9 +53,6 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: No element to display
-        sites:
-            site_id: Site id
-            name: Name
     node:
         title: Pages
         parameterize: Parameterize
@@ -73,6 +74,10 @@ open_orchestra_backoffice:
             displayed_menu: Displayed in the menu
             na: N/A
             reset: Reset
+    site:
+        title_list: Sites
+        search_engine:
+            name: Name
     form:
         keyword:
             new: new

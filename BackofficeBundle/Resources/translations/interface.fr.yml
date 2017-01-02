@@ -41,6 +41,9 @@ open_orchestra_backoffice:
             author: Auteur
             updated_at: Date de modification
             current_status: Etat courant
+        sites:
+            site_id: Id
+            name: Nom
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -49,9 +52,6 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: Aucun élément à afficher
-        sites:
-            site_id: Id
-            name: Nom
     node:
         title: Pages
         parameterize: Paramètrer
@@ -73,6 +73,10 @@ open_orchestra_backoffice:
             displayed_menu: S'affiche dans le menu
             na: N/A
             reset: Reinitialiser
+    site:
+        title_list: Sites
+        search_engine:
+            name: Nom
     form:
         keyword:
             new: nouveau

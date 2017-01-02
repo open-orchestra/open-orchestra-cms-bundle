@@ -143,7 +143,7 @@ services:
         class: '%open_orchestra_api.transformer.site.class%'
         arguments:
             - '%open_orchestra_api.facade.site.class%'
-            - '@security.authorization_checker'
+            - '@open_orchestra_model.repository.site'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.site_alias:
@@ -156,7 +156,6 @@ services:
         class: '%open_orchestra_api.transformer.site_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.site_collection.class%'
-            - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.theme:
