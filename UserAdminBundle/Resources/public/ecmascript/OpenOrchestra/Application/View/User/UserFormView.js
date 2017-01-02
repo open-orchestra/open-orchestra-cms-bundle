@@ -1,4 +1,5 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
+import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class UserFormView
@@ -9,7 +10,7 @@ class UserFormView extends AbstractFormView
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('User/userFormView');
+        let template = this._renderTemplate('User/userFormView', {messages: FlashMessageBag.getMessages()});
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
