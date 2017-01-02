@@ -15,6 +15,7 @@ before_install:
   - if [ -f ~/composer/composer.phar ]; then mv ~/composer/composer.phar ./; else wget https://getcomposer.org/composer.phar; fi
   - mkdir -p ~/composer
   - cp composer.phar ~/composer/composer.phar
+  - phpenv config-rm xdebug.ini
 
 install:
   - export COMPOSER_ROOT_VERSION=dev-master
