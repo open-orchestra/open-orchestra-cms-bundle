@@ -18,6 +18,21 @@ class KeywordRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getBreadcrumb() {
+        return [
+            {
+                label: Translator.trans('open_orchestra_backoffice.navigation.platform.title')
+            },
+            {
+                label: Translator.trans('open_orchestra_backoffice.navigation.platform.tag'),
+                link: '#'+Backbone.history.generateUrl('listKeyword')
+            }
+        ]
+    }
+
+    /**
      * List Keyword
      *
      * @param {int} page

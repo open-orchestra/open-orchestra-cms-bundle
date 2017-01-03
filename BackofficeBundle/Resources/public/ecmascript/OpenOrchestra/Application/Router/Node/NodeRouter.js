@@ -27,6 +27,21 @@ class NodeRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getBreadcrumb() {
+        return [
+            {
+                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.title')
+            },
+            {
+                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.nodes'),
+                link: '#'+Backbone.history.generateUrl('showNodes')
+            }
+        ]
+    }
+
+    /**
      * Show nodes
      *
      * @param {string} language

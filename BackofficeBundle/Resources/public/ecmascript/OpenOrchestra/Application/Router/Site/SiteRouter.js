@@ -21,6 +21,21 @@ class SiteRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getBreadcrumb() {
+        return [
+            {
+                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+            },
+            {
+                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.site'),
+                link: '#'+Backbone.history.generateUrl('listSite')
+            }
+        ]
+    }
+
+    /**
      * List Site
      *
      * @param {int} page

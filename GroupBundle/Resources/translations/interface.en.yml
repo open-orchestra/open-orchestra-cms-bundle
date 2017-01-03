@@ -1,6 +1,7 @@
 open_orchestra_group:
     navigation:
         group:
+          title: Groups
           groups: All groups
     table:
         groups:

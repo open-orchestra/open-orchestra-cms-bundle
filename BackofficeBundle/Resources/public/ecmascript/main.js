@@ -10,7 +10,8 @@ $(() => {
     Application.setRegions({
         'header': $('.header-region'),
         'left_column': $('#left-column'),
-        'content': $('#central-column'),
+        'content': $('.content-region'),
+        'breadcrumb': $('.breadcrumb-region'),
         'modal': $('.modal-region')
     });
     Application.run();

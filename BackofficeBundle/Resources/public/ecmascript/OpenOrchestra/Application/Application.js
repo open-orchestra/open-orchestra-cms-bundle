@@ -17,7 +17,7 @@ import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
 import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
 import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
-
+import BreadcrumbView        from './View/Breadcrumb/BreadcrumbView'
 /**
  * @class Application
  */
@@ -151,6 +151,9 @@ class Application
         });
         let navigationView = new NavigationView();
         this.getRegion('left_column').html(navigationView.render().$el);
+
+        this.breadcrumbView = new BreadcrumbView();
+        this.getRegion('breadcrumb').html(this.breadcrumbView.render().$el);
     }
 
     /**

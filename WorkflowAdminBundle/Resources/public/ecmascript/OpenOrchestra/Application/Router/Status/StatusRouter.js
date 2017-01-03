@@ -1,13 +1,13 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import Statuses        from '../../Collection/Status/Statuses'
-import StatusesView    from '../../View/Status/StatusesView'
+import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
+import Application            from '../../Application'
+import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
+import Statuses               from '../../Collection/Status/Statuses'
+import StatusesView           from '../../View/Status/StatusesView'
 
 /**
  * @class StatusRouter
  */
-class StatusRouter extends OrchestraRouter
+class StatusRouter extends AbstractWorkflowRouter
 {
     /**
      * @inheritdoc
