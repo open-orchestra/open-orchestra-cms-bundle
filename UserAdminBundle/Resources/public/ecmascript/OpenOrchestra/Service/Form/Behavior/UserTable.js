@@ -13,6 +13,7 @@ class UserTable extends AbstractBehavior
     getExtraEvents() {
         return {
             'click .fa-close': '_deleteUser',
+            'click a.member-link': '_redirectToUser'
         }
     }
     
@@ -30,6 +31,15 @@ class UserTable extends AbstractBehavior
      */
     _deleteUser(event) {
         $(event.currentTarget).closest('tr').remove();
+    }
+
+    /**
+     * Redirect to User view
+     */
+    _redirectToUser(event) {
+        event.preventDefault();
+        let url = Backbone.history.generateUrl('editUser', {userId : $(event.currentTarget).data('id')});
+        Backbone.history.navigate(url, true);
     }
 }
 

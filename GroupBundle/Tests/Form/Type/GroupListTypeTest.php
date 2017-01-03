@@ -3,12 +3,13 @@
 namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 
 use Phake;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\Form\Type\GroupListType;
 
 /**
  * Class GroupListTypeTest
  */
-class GroupListTypeTest extends Phake
+class GroupListTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupListType

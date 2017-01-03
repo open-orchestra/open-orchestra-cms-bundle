@@ -25,8 +25,7 @@
 
 {% block oo_member_element_widget %}
     <tr>
-        <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.parameters['firstName'] }}</td>
-        <td>{{ form.vars.parameters['lastName'] }}</td>
+        <td><div class="hide">{{ form_widget(form) }}</div><a href="#" data-id="{{ form.vars.parameters['id'] }}" class="member-link">{{ form.vars.parameters['firstName'] }}&nbsp;{{ form.vars.parameters['lastName'] }}</a></td>
         <td>{{ form.vars.parameters['email'] }}</td>
         <td><i class="fa fa-close" aria-hidden="true"></i></td>
     </tr>

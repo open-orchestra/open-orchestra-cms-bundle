@@ -92,6 +92,42 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
         $this->assertEquals($choice_frequence, $container->getParameter('open_orchestra_backoffice.choice.frequence'));
 
         $this->assertEmpty($container->getDefinition('open_orchestra_backoffice.collector.front_role')->getMethodCalls());
+
+
+        $configurationRoles = array (
+            'firstpackage' =>
+            array (
+                'page' =>
+                array (
+                    'EDITORIAL_NODE_CONTRIBUTOR' => 'open_orchestra_backoffice.role.contributor',
+                    'EDITORIAL_NODE_SUPER_EDITOR' => 'open_orchestra_backoffice.role.editor',
+                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => 'open_orchestra_backoffice.role.suppresor',
+                ),
+                'content' =>
+                array (
+                    'EDITORIAL_CONTENT_CONTRIBUTOR' => 'open_orchestra_backoffice.role.contributor',
+                    'EDITORIAL_CONTENT_SUPER_EDITOR' => 'open_orchestra_backoffice.role.editor',
+                    'EDITORIAL_CONTENT_SUPER_SUPRESSOR' => 'open_orchestra_backoffice.role.suppresor',
+                ),
+            ),
+            'secondpackage' =>
+            array (
+                'trash' =>
+                array (
+                    'EDITORIAL_TRASH_RESTORER' => 'open_orchestra_backoffice.role.restorer',
+                    'EDITORIAL_TRASH_SUPRESSOR' => 'open_orchestra_backoffice.role.contributor',
+                ),
+            ),
+            'thirdpackage' =>
+            array (
+                'configuration' =>
+                array (
+                    'ROLE_SITE_ADMIN' => 'open_orchestra_backoffice.role.administrator',
+                ),
+            ),
+        );
+
+        $this->assertEquals($configurationRoles, $container->getParameter('open_orchestra_backoffice.configuration.roles'));
    }
 
     /**

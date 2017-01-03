@@ -91,7 +91,7 @@ class NodeGeneratePerimeterStrategy implements GeneratePerimeterStrategyInterfac
      *
      * @return array
      */
-    protected function formatConfiguration(&$treeNodes)
+    protected function formatConfiguration(array $treeNodes)
     {
         $treeNodes['node'] = array('path' => $treeNodes['node']['path'], 'name' => $treeNodes['node']['name']);
         if (count($treeNodes['child']) == 0) {

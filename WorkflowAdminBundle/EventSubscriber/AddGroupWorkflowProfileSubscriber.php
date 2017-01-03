@@ -22,6 +22,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     protected $contentTypeRepository;
     protected $workflowProfileCollectionTransformer;
     protected $contextManager;
+    protected $translator;
 
     /**
      * @param WorkflowProfileRepositoryInterface $workflowProfileRepository
@@ -81,7 +82,6 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
             )
         ));
         $builder->setAttribute('sub_group_render', $subGroupRender);
-
         $builder->add('workflow_profile_collections', 'oo_check_list_collection', array(
             'label' => false,
             'configuration' => $configuration,

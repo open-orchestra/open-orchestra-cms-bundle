@@ -35,7 +35,6 @@ class GroupPerimeterTransformer implements DataTransformerInterface
         $result = array();
         $configuration = $this->generatePerimeterManager->generatePerimeters();
         $value = $value->toArray();
-
         foreach ($configuration as $type => &$paths) {
             $items = array_key_exists($type, $value) ? $value[$type]->getItems() : array();
             array_walk($paths, function($path) use (&$result, $items, $type) {
@@ -43,7 +42,7 @@ class GroupPerimeterTransformer implements DataTransformerInterface
                 $result[$type][$key] = in_array($path, $items);
                 $result[$type][$key] = false;
                 foreach($items as $item) {
-                    $result[$type][$key] = $result[$type][$key] || preg_match('/^' . preg_quote($item) . '.*$/', $path);
+                    $result[$type][$key] = $result[$type][$key] || preg_match('/^' . preg_quote($item, '/') . '.*$/', $path);
                 }
             });
         }

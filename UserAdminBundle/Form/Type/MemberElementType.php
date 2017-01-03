@@ -56,8 +56,8 @@ class MemberElementType extends AbstractType
         if (!is_null($user)) {
             $view->vars['parameters'] = array(
                 'id' => $user->getId(),
-                'firstName' => $user->getFirstname(),
-                'lastName' => $user->getLastname(),
+                'firstName' => $user->getFirstName(),
+                'lastName' => $user->getLastName(),
                 'email' => $user->getEmail(),
             );
         }

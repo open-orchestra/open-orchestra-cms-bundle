@@ -328,4 +328,38 @@ class ContextManagerTest extends AbstractBaseTestCase
         );
     }
 
+
+    /**
+     * @param string|null $expectedLocale
+     * @param string      $userLocale
+     * @param string      $userClass
+     *
+     * @dataProvider provideCurrentSiteDefaultLanguage
+     */
+    public function testGetUserCurrentSiteDefaultLanguage($expectedLocale, $userLocale, $userClass)
+    {
+
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en', 'languages' => array('en')));
+
+
+        $user = Phake::mock($userClass);
+        Phake::when($user)->hasLanguageBySite(Phake::anyParameters())->thenReturn(true);
+        Phake::when($user)->getLanguageBySite(Phake::anyParameters())->thenReturn($userLocale);
+        Phake::when($this->token)->getUser()->thenReturn($user);
+
+        $this->assertSame($expectedLocale, $this->contextManager->getUserCurrentSiteDefaultLanguage());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCurrentSiteDefaultLanguage()
+    {
+        return array(
+            array('fr', 'fr', 'OpenOrchestra\UserBundle\Model\UserInterface'),
+            array('en', 'en', 'OpenOrchestra\UserBundle\Model\UserInterface'),
+            array('en', 'fr', 'FOS\UserBundle\Model\UserInterface'),
+            array('en', 'en', 'FOS\UserBundle\Model\UserInterface'),
+        );
+    }
 }

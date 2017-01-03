@@ -57,7 +57,6 @@ class WorkflowProfileCollectionTransformer implements DataTransformerInterface
                 }
             }
         }
-
         foreach ($workflowProfiles as $workflowProfile) {
             $nodeTypeId = NodeInterface::ENTITY_TYPE;
             $result[$nodeTypeId][$workflowProfile->getId()] = array_key_exists($nodeTypeId, $settedWorkflowProfiles) && in_array($workflowProfile->getId(), $settedWorkflowProfiles[$nodeTypeId]);

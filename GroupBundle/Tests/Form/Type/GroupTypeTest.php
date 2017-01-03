@@ -15,6 +15,7 @@ class GroupTypeTest extends AbstractBaseTestCase
      * @var GroupType
      */
     protected $form;
+    protected $eventDispatcher;
 
     protected $groupClass = 'groupClass';
 
@@ -23,7 +24,20 @@ class GroupTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->form = new GroupType($this->groupClass, array());
+        $eventSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $dataTransformer0 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
+        $dataTransformer1 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
+        $generatePerimeterManager = Phake::mock('OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager');
+        Phake::when($generatePerimeterManager)->getPerimetersConfiguration()->thenReturn(array());
+        $this->form = new GroupType(
+            $eventSubscriber,
+            $this->eventDispatcher,
+            $dataTransformer0,
+            $dataTransformer1,
+            $generatePerimeterManager,
+            $this->groupClass,
+            array('en', 'fr'));
     }
 
     /**
@@ -49,11 +63,15 @@ class GroupTypeTest extends AbstractBaseTestCase
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->addModelTransformer(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
     }
 
     /**
@@ -66,7 +84,41 @@ class GroupTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->groupClass
-        ));
+                'data_class' => $this->groupClass,
+                'group_enabled' => true,
+                'group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.group.property',
+                    ),
+                    'right' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_group.form.group.group.right',
+                    ),
+                    'perimeter' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_group.form.group.group.perimeter',
+                    ),
+                    'member' => array(
+                        'rank' => 4,
+                        'label' => 'open_orchestra_group.form.group.group.member',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.sub_group.property',
+                    ),
+                    'right' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.sub_group.right',
+                    ),
+                    'page' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_group.form.group.sub_group.page',
+                    ),
+                ),
+            )
+        );
     }
 }
