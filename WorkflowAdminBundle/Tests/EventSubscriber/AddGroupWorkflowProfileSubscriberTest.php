@@ -28,7 +28,7 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
     public function setUp()
     {
         $workflowProfile = Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface');
-        Phake::when($workflowProfile)->getLabel()->thenReturn('fakeWorkflowProfileLabel');
+        Phake::when($workflowProfile)->getLabel(\Phake::anyParameters())->thenReturn('fakeWorkflowProfileLabel');
         $workflowProfileRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\WorkflowProfileRepository');
         Phake::when($workflowProfileRepository)->findAll()->thenReturn(array($workflowProfile));
 

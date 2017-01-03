@@ -27,7 +27,7 @@ class SoftDeleteGroupSubscriberTest extends AbstractBaseTestCase
     {
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
 
-        $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
+        $this->event = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteEvent');
         Phake::when($this->event)->getSite()->thenReturn($this->site);
 
         $this->groupRepository = Phake::mock('OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface');

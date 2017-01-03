@@ -55,7 +55,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
         $configuration = array();
         $workflowProfiles = $this->workflowProfileRepository->findAll();
         foreach ($workflowProfiles as $workflowProfile) {
-            $configuration['default']['row'][] = $workflowProfile->getLabel();
+            $configuration['default']['row'][] = $workflowProfile->getLabel($this->contextManager->getCurrentSiteDefaultLanguage());
         }
 
         $configuration['default']['column'][NodeInterface::ENTITY_TYPE] = $this->translator->trans('open_orchestra_workflow_admin.profile.page');

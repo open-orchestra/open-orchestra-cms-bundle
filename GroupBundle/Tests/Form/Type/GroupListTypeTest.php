@@ -55,18 +55,4 @@ class GroupListTypeTest extends AbstractBaseTestCase
         Phake::verify($builder, Phake::times(1))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(1))->addModelTransformer(Phake::anyParameters());
     }
-
-    /**
-     * Test resolver
-     */
-    public function testConfigureOptions()
-    {
-        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-
-        $this->form->configureOptions($resolver);
-
-        Phake::verify($resolver)->setDefaults(array(
-            'allowed_sites' => null,
-        ));
-    }
 }
