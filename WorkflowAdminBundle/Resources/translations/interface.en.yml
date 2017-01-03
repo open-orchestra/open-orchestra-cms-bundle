@@ -3,8 +3,8 @@ open_orchestra_workflow_admin:
         developer:
           title: Developer
           workflow: Workflow
-          statuses: Statuses
     status:
+        title: Statuses
         title_list: Statuses list
         initial_state: Initial state
         translation_state: Translation state
@@ -12,6 +12,7 @@ open_orchestra_workflow_admin:
         auto_publish_from_state: Auto-publish state
         auto_unpublish_to_state: Auto-unpublish state
     workflow_profile:
+        title: Profiles
         title_list: Workflow profile list
         title_new:  New workflow profile
         title_edit: Edit workflow profile
