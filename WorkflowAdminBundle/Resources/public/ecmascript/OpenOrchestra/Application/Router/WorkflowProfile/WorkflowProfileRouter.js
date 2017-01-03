@@ -1,4 +1,4 @@
-import OrchestraRouter            from '../OrchestraRouter'
+import AbstractWorkflowRouter     from '../AbstractWorkflowRouter'
 import Application                from '../../Application'
 import WorkflowProfiles           from '../../Collection/WorkflowProfiles/WorkflowProfiles'
 import WorkflowProfilesView       from '../../View/WorkflowProfile/WorkflowProfilesView'
@@ -9,7 +9,7 @@ import WorkflowProfileFormView    from '../../View/WorkflowProfile/WorkflowProfi
 /**
  * @class WorkflowProfileRouter
  */
-class WorkflowProfileRouter extends OrchestraRouter
+class WorkflowProfileRouter extends AbstractWorkflowRouter
 {
     /**
      * @inheritdoc

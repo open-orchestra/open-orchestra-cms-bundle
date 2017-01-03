@@ -1,13 +1,13 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import Statuses        from '../../Collection/Status/Statuses'
-import StatusesView    from '../../View/Status/StatusesView'
+import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
+import Application            from '../../Application'
+import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
+import Statuses               from '../../Collection/Status/Statuses'
+import StatusesView           from '../../View/Status/StatusesView'
 
 /**
  * @class StatusRouter
  */
-class StatusRouter extends OrchestraRouter
+class StatusRouter extends AbstractWorkflowRouter
 {
     /**
      * @inheritdoc
@@ -17,26 +17,6 @@ class StatusRouter extends OrchestraRouter
             'status/edit/:statusId': 'editStatus',
             'status/list(/:page)': 'listStatus'
         };
-    }
-
-    /**
-     * @inheritdoc
-     */
-    getBreadcrumb() {
-        return [
-            {
-                label:Translator.trans('open_orchestra_workflow_admin.navigation.developer.title')
-            },
-            {
-                label: Translator.trans('open_orchestra_workflow_admin.navigation.developer.workflow')
-            },
-            [
-                {
-                    label: Translator.trans('open_orchestra_workflow_admin.navigation.developer.statuses'),
-                    link: '#'+Backbone.history.generateUrl('listStatus')
-                }
-            ]
-        ]
     }
 
     /**
