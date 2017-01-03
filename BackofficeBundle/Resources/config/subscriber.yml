@@ -6,7 +6,6 @@ parameters:
     open_orchestra_backoffice.subscriber.content_update_cache.class              : OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type_update_cache.class         : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type.class                      : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
-    open_orchestra_backoffice.subscriber.update_status.class                     : OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber
     open_orchestra_backoffice.subscriber.update_nodes_theme.class                : OpenOrchestra\Backoffice\EventSubscriber\UpdateNodesThemeSubscriber
     open_orchestra_backoffice.subscriber.delete_node.class                       : OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
     open_orchestra_backoffice.subscriber.delete_content.class                    : OpenOrchestra\Backoffice\EventSubscriber\DeleteContentSubscriber
@@ -79,13 +78,6 @@ services:
             - '%open_orchestra_backoffice.field_types%'
             - '@open_orchestra_backoffice.value_transformer.manager'
             - '@translator'
-
-    open_orchestra_backoffice.subscriber.update_status:
-        class: '%open_orchestra_backoffice.subscriber.update_status.class%'
-        arguments:
-            - '@security.authorization_checker'
-        tags:
-            - { name: kernel.event_subscriber }
 
     open_orchestra_backoffice.subscriber.update_nodes_theme:
         class: '%open_orchestra_backoffice.subscriber.update_nodes_theme.class%'

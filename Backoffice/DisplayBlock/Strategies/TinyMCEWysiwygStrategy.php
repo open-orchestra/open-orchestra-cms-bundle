@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy as BaseTinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class TinyMCEWysiwygStrategy
  */
-class TinyMCEWysiwygStrategy extends AbstractStrategy
+class TinyMCEWysiwygStrategy extends AbstractDisplayBlockStrategy
 {
     /**
      * Check if the strategy support this block
@@ -39,28 +38,6 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
             'OpenOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
             array('htmlContent' => strip_tags($htmlContent))
         );
-    }
-
-    /**
-     * @param ReadBlockInterface $block
-     *
-     * @return array
-     */
-    public function getCacheTags(ReadBlockInterface $block)
-    {
-        return array();
-    }
-
-    /**
-     * Indicate if the block is public or private
-     *
-     * @param ReadBlockInterface $block
-     *
-     * @return bool
-     */
-    public function isPublic(ReadBlockInterface $block)
-    {
-        return true;
     }
 
     /**

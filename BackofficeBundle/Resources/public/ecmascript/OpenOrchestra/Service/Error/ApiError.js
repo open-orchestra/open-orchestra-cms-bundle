@@ -6,10 +6,12 @@ import AjaxError from './AjaxError'
 class ApiError extends AjaxError
 {
     /**
-     * @param message
+     * @param {int}    statusCode
+     * @param {string} content
+     * @param {string} message
      */
-    constructor(message){
-        super(message);
+    constructor(statusCode, content, message){
+        super(statusCode, content, message);
         this.name = "ApiError";
     }
 }

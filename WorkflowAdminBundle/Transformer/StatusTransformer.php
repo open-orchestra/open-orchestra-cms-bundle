@@ -51,7 +51,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($status, $document = null)
+    public function transform($status)
     {
         if (!$status instanceof StatusInterface) {
             throw new TransformerParameterTypeException();
@@ -61,6 +61,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->publishedState = $status->isPublishedState();
         $facade->initialState = $status->isInitialState();
+        $facade->blockedEdtion = $status->isBlockedEdition();
         $facade->autoPublishFromState = $status->isAutoPublishFromState();
         $facade->autoUnpublishToState = $status->isAutoUnpublishToState();
         $facade->translationState = $status->isTranslationState();
@@ -69,10 +70,6 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->displayColor = $this->translator->trans('open_orchestra_backoffice.form.status.color.' . $status->getDisplayColor());
         $facade->codeColor = $status->getDisplayColor();
         $facade->id = $status->getId();
-        $facade->allowed = false;
-        if ($document) {
-            $facade->allowed = $this->authorizationChecker->isGranted($status, $document);
-        }
 
         if ($this->hasGroup(CMSGroupContext::STATUS_LINKS)) {
             $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)

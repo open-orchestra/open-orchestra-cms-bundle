@@ -1,7 +1,8 @@
-import ApiError              from '../Error/AjaxError';
+import ApiError              from '../Error/ApiError';
 import ServerError           from '../Error/ServerError';
 
 let OrchestraApiSyncMixin = (superclass) => class extends superclass {
+
     /**
      * Get url by method
      *
@@ -32,7 +33,7 @@ let OrchestraApiSyncMixin = (superclass) => class extends superclass {
      */
     syncError(model, response, options) {
         var error;
-        if (typeof response.JSON != 'undefined') {
+        if (typeof response.responseJSON !== 'undefined') {
             error = new ApiError(response.status, response.responseJSON, response.statusText);
         } else {
             error = new ServerError(response.status, response.responseText, response.statusText)

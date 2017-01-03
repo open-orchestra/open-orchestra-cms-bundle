@@ -91,7 +91,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
         $this->assertInstanceOf('OpenOrchestra\BaseApi\Facade\FacadeInterface', $facade);
         $this->assertSame($publishedState, $facade->publishedState);
         $this->assertSame($initialState, $facade->initialState);
-        $this->assertSame($isGranted, $facade->allowed);
 
         if (!$hasGroup && $isGranted) {
             $this->assertArrayHasKey('can_delete', $facade->getRights());

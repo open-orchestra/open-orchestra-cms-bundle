@@ -17,6 +17,13 @@
                 }) %>">
                     <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
                 </a>
+                <a href="#<%= Backbone.history.generateUrl('showNode', {
+                    language: nodeTree.get('node').get('language'),
+                    nodeId: nodeTree.get('node').get('node_id'),
+                    version: nodeTree.get('node').get('version')
+                }) %>">
+                    <%= Translator.trans('open_orchestra_backoffice.node.edit') %>
+                </a>
                 <% if (true === nodeTree.get('node').get('rights').can_create) {%>
                     <a href="#<%= Backbone.history.generateUrl('newTreeNode', {
                         language: nodeTree.get('node').get('language'),

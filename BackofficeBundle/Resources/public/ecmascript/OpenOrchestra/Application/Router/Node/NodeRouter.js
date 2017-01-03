@@ -2,12 +2,14 @@ import OrchestraRouter from '../OrchestraRouter'
 import Application     from '../../Application'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import NodesTree       from '../../Collection/Node/NodesTree'
-import Statuses        from '../../Collection/Statuses/Statuses'
+import Statuses        from '../../Collection/Status/Statuses'
 import Nodes           from '../../Collection/Node/Nodes'
 import NewNodeTreeView from '../../View/Node/NewNodeTreeView'
 import NodeFormView    from '../../View/Node/NodeFormView'
 import NewNodeFormView from '../../View/Node/NewNodeFormView'
 import NodesView       from '../../View/Node/NodesView'
+import Node            from '../../Model/Node/Node'
+import NodeView        from '../../View/Node/NodeView'
 
 /**
  * @class NodeRouter
@@ -22,7 +24,8 @@ class NodeRouter extends OrchestraRouter
             'nodes(/:language)': 'showNodes',
             'node/edit/:nodeId/:language(/:version)': 'editNode',
             'node/new/tree/:language/:parentId': 'newTreeNode',
-            'node/new/:language/:parentId/:order': 'newNode'
+            'node/new/:language/:parentId/:order': 'newNode',
+            'node/:nodeId/:language(/:version)':  'showNode'
         };
     }
 
@@ -53,6 +56,7 @@ class NodeRouter extends OrchestraRouter
 
         this._diplayLoader(Application.getRegion('content'));
         new Statuses().fetch({
+            context: 'nodes',
             success: (statuses) => {
                 let nodesView = new NodesView({
                     statuses: statuses,
@@ -86,7 +90,8 @@ class NodeRouter extends OrchestraRouter
                 siteLanguages: Application.getContext().siteLanguages,
                 siteId : Application.getContext().siteId,
                 nodeId : nodeId,
-                language: language
+                language: language,
+                version: version
             });
             Application.getRegion('content').html(nodeFormView.render().$el);
         });
@@ -141,6 +146,31 @@ class NodeRouter extends OrchestraRouter
                 order: order
             });
             Application.getRegion('content').html(nodeFormView.render().$el);
+        });
+    }
+
+    /**
+     * @param {string}   nodeId
+     * @param {string}   language
+     * @param {int|null} version
+     */
+    showNode(nodeId, language, version = null) {
+        this._diplayLoader(Application.getRegion('content'));
+        let node = new Node();
+        node.fetch({
+            urlParameter: {
+                'language': language,
+                'nodeId': nodeId,
+                'siteId': Application.getContext().siteId,
+                'version': version
+            },
+            success: () => {
+                let nodeView = new NodeView({
+                    node: node,
+                    siteLanguages: Application.getContext().siteLanguages
+                });
+                Application.getRegion('content').html(nodeView.render().$el);
+            }
         });
     }
 }

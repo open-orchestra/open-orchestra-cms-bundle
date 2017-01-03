@@ -179,7 +179,6 @@ class NodeManager
     {
         $siteId = $this->contextManager->getCurrentSiteId();
         $oldNode = $this->nodeRepository->findInLastVersion($nodeId, $node->getLanguage(), $siteId);
-
         if ($oldNode) {
             $node->setTemplate($oldNode->getTemplate());
             $this->duplicateBlockAndArea($oldNode, $node);

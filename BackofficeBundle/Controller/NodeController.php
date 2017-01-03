@@ -113,7 +113,6 @@ class NodeController extends AbstractAdminController
         if ($form->isValid()) {
             $nodesEvent = array();
             $documentManager = $this->get('object_manager');
-
             $documentManager->persist($node);
             $nodesEvent[] = new NodeEvent($node);
 
@@ -133,9 +132,13 @@ class NodeController extends AbstractAdminController
             }
 
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
-            $this->get('session')->getFlashBag()->add('success', $message);
+            $response = new Response(
+                $message,
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/plain; charset=utf-8', 'nodeId' => $node->getNodeId())
+            );
 
-            return new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+            return $response;
         }
 
         return $this->renderAdminForm($form);

@@ -17,12 +17,16 @@ class DraftNodesWidgetView extends AbstractWidgetView
 
     /**
      * Get link edit element
+     * @param {Model} entity
      *
      * @return {String}
-     * @todo Add link when edit node is refacto
      */
-    getEditLink() {
-        return '';
+    getEditLink(entity) {
+        return Backbone.history.generateUrl('showNode', {
+            language: entity.get('language'),
+            nodeId: entity.get('node_id'),
+            version: entity.get('version')
+        });
     }
 }
 

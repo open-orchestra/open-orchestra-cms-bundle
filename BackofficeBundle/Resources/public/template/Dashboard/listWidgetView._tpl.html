@@ -11,7 +11,7 @@
         <% } else { %>
             <% _.each(entities, function(entity, key) { %>
                 <tr>
-                    <td><a href='<%= editLink %>'><%= entity.get('name') %></a></td>
+                    <td><a href='#<%= editLink(entity) %>'><%= entity.get('name') %></a></td>
                     <td><%= entity.get('language')  %></td>
                     <td><%= entity.get('updated_at')  %></td>
                 </tr>

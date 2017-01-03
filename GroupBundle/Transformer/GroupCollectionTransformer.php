@@ -5,8 +5,6 @@ namespace OpenOrchestra\GroupBundle\Transformer;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
  * Class GroupCollectionTransformer

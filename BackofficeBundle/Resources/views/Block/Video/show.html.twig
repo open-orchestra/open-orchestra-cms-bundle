@@ -1,5 +1,0 @@
-{{ display_icon('video') }}
-
-{% if 'videoType' in attributes|keys %}
-    {% include 'OpenOrchestraBackofficeBundle:Block/Video:'~attributes.videoType~'.html.twig' %}
-{% endif %}

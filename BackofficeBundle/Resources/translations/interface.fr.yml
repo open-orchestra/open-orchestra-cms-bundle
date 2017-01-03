@@ -55,11 +55,21 @@ open_orchestra_backoffice:
     node:
         title: Pages
         parameterize: Paramètrer
+        move: Déplacement
         add: Ajouter une page
         new: Nouvelle page
         back_to_list: Retour à la liste
         edit: Modifier
         redirections: Redirections
+        preview: Prévisualiser
+        version: Version
+        new_version: Nouvelle version
+        message_online:
+            title: La page est actuellement en ligne sur votre site.
+            message: |
+                L'édition d'une page en ligne est impossible. \n
+                Pour modifier  le contenu de la page veuillez créer une révision. \n
+                Vous pouvez également modifier le workflow de cette version mais la page ne sera plus visible sur le site
         tree:
             open: Déployer l'arborescence
             close: Fermer l'arborescence
@@ -77,6 +87,8 @@ open_orchestra_backoffice:
         title_list: Sites
         search_engine:
             name: Nom
+    block:
+      add_block: Ajouter un bloc
     form:
         keyword:
             new: nouveau

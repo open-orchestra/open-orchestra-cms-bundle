@@ -186,8 +186,12 @@ class Configuration implements ConfigurationInterface
                 'templates' => array(
                     'default' => array(
                         'label' => 'open_orchestra_backoffice.template_set.default.template_name.default',
-                        'path' => 'default/default.html'
-                    )
+                        'path' => '/bundles/openorchestrabackoffice/templateSet/default/default.html'
+                    ),
+                    'test' => array(
+                        'label' => 'open_orchestra_backoffice.template_set.default.template_name.default',
+                        'path' => '/bundles/openorchestrabackoffice/templateSet/default/test.html'
+                    ),
                 ),
                 'styles' => array(
                     'default' => 'open_orchestra_backoffice.template_set.default.style.default'

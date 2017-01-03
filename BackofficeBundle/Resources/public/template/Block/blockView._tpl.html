@@ -1,0 +1,16 @@
+<div class="panel">
+    <div class="panel-heading">
+        <strong><%= block.get('component') %></strong>
+        <ul class="toolbar pull-right">
+            <li><a href="#"><i class="fa fa-pencil"></i></a></li>
+            <li class="delete-block" ><a href="#"><i class="fa fa-trash"></i></a></li>
+            <li class="move-block" ><a href="#"><i class="fa fa-arrows"></i></a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <%= block.get('preview_content') %>
+    </div>
+</div>
+
+<%= renderTemplate('Block/addBlockLink') %>
+

@@ -18,6 +18,7 @@ import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelectio
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
 import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
 import BreadcrumbView        from './View/Breadcrumb/BreadcrumbView'
+
 /**
  * @class Application
  */
@@ -124,7 +125,6 @@ class Application
             this.getRegion('modal').html(errorView.render().$el);
             errorView.show();
         }
-
     }
 
     /**

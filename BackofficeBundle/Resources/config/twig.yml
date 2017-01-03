@@ -1,17 +1,10 @@
 parameters:
     open_orchestra_backoffice.twig_extension.muli_languages_choice.class: OpenOrchestra\BackofficeBundle\Twig\MultiLanguagesChoiceExtension
-    open_orchestra_backoffice.twig_extension.block_icon.class: OpenOrchestra\BackofficeBundle\Twig\BlockIconExtension
 
 services:
     open_orchestra_backoffice.twig_extension.muli_languages_choice:
         class: '%open_orchestra_backoffice.twig_extension.muli_languages_choice.class%'
         arguments:
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
-        tags:
-            - {name: twig.extension}
-    open_orchestra_backoffice.twig_extension.block_icon:
-        class: '%open_orchestra_backoffice.twig_extension.block_icon.class%'
-        arguments:
-            - '@open_orchestra_backoffice.display_icon_manager'
         tags:
             - {name: twig.extension}

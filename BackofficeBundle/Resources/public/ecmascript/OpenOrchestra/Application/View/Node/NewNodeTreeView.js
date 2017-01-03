@@ -2,7 +2,6 @@ import OrchestraView    from '../OrchestraView'
 import Nodes            from '../../Collection/Node/Nodes'
 import ApplicationError from '../../../Service/Error/ApplicationError'
 import Application      from '../../Application'
-import Statuses         from '../../Collection/Statuses/Statuses'
 
 /**
  * @class NewNodeTreeView

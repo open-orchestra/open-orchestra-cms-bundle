@@ -3,7 +3,9 @@
         <%= Translator.trans('open_orchestra_backoffice.node.back_to_list') %>
     </a>
     <a class="btn btn-blue" role="button"><%= Translator.trans('open_orchestra_backoffice.node.parameterize') %></a>
-    <a class="btn btn-border" role="button"><%= Translator.trans('open_orchestra_backoffice.node.edit') %></a>
+    <a class="btn btn-border" role="button" href="#<%= Backbone.history.generateUrl('showNode', {language: language, version: version, nodeId: nodeId}) %>">
+        <%= Translator.trans('open_orchestra_backoffice.node.edit') %>
+    </a>
 </div>
 <div class="pull-right languages">
     <ul>

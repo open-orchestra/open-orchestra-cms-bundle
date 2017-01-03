@@ -46,6 +46,7 @@ class StatusRouter extends AbstractWorkflowRouter
         let pageLength = 10;
         page = Number(page) - 1;
         new Statuses().fetch({
+            context: 'table',
             data : {
                 start: page * pageLength,
                 length: pageLength
