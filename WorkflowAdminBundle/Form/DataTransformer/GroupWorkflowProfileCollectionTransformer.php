@@ -14,7 +14,7 @@ use OpenOrchestra\ModelBundle\Document\WorkflowProfileCollection;
 /**
  * Class WorkflowProfileCollectionTransformer
  */
-class WorkflowProfileCollectionTransformer implements DataTransformerInterface
+class GroupWorkflowProfileCollectionTransformer implements DataTransformerInterface
 {
     protected $workflowProfileRepository;
     protected $contentTypeRepository;

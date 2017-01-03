@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Form\DataTransformer;
 
-use OpenOrchestra\WorkflowAdminBundle\Form\DataTransformer\WorkflowProfileCollectionTransformer;
+use OpenOrchestra\WorkflowAdminBundle\Form\DataTransformer\GroupWorkflowProfileCollectionTransformer;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class WorkflowProfileCollectionTransformerTest
+ * Class GroupWorkflowProfileCollectionTransformerTest
  */
-class WorkflowProfileCollectionTransformerTest extends AbstractBaseTestCase
+class GroupWorkflowProfileCollectionTransformerTest extends AbstractBaseTestCase
 {
     /**
      * Set up the test
@@ -31,7 +31,7 @@ class WorkflowProfileCollectionTransformerTest extends AbstractBaseTestCase
 
         $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
 
-        $this->transformer = new WorkflowProfileCollectionTransformer(
+        $this->transformer = new GroupWorkflowProfileCollectionTransformer(
             $workflowProfileRepository,
             $contentTypeRepository,
             $contextManager
