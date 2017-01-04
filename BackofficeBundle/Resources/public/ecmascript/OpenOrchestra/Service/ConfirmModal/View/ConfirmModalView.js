@@ -1,7 +1,7 @@
 import ModalView from '../../../Service/Modal/View/ModalView'
 
 /**
- * @class LogOutModalView
+ * @class ConfirmModalView
  */
 class ConfirmModalView extends ModalView
 {
