@@ -121,6 +121,7 @@ open_orchestra_backoffice:
       confirm_remove:
           title: Supprimer ce bloc ?
           message: La suppression sera définitive
+      edit_title: Edition du bloc
     form:
         keyword:
             new: nouveau

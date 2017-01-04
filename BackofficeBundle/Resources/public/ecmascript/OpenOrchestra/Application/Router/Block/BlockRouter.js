@@ -2,6 +2,8 @@ import OrchestraRouter  from '../OrchestraRouter'
 import Application      from '../../Application'
 import Blocks           from '../../Collection/Blocks/Blocks'
 import SharedBlocksView from '../../View/Block/SharedBlocksView'
+import FormBuilder      from '../../../Service/Form/Model/FormBuilder'
+import BlockFormView     from '../../View/Block/BlockFormView'
 
 /**
  * @class BlockRouter
@@ -13,7 +15,8 @@ class BlockRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'shared-block/list(/:language)(/:page)': 'listSharedBlock'
+            'shared-block/list(/:language)(/:page)': 'listSharedBlock',
+            'block/edit/:blockId': 'editBlock'
         };
     }
 
@@ -65,6 +68,24 @@ class BlockRouter extends OrchestraRouter
                 let el = sharedBlocksView.render().$el;
                 Application.getRegion('content').html(el);
             }
+        });
+    }
+
+    /**
+     * Edit block
+     *
+     * @param {string} blockId
+     */
+    editBlock(blockId) {
+        this._diplayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_backoffice_block_form', {
+            blockId : blockId
+        });
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let blockFormView = new BlockFormView({
+                form : form
+            });
+            Application.getRegion('content').html(blockFormView.render().$el);
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,18 +61,18 @@ class BlockController extends AbstractAdminController
     /**
      * @param Request $request
      * @param string  $blockId
-     * @param string  $nodeId
      *
-     * @Config\Route("/form/{blockId}/{nodeId}", name="open_orchestra_backoffice_block_form", defaults={"nodeId" = null})
+     * @Config\Route("/block/form/{blockId}", name="open_orchestra_backoffice_block_form")
      * @Config\Method({"GET", "POST"})
-     *
-     * Config\Security("is_granted('')")
      *
      * @return Response
      */
-    public function formAction(Request $request, $blockId, $nodeId)
+    public function formAction(Request $request, $blockId)
     {
-        $block = $this->get('open_orchestra_model.repository.block')->find($blockId);
+        $block = $this->get('open_orchestra_model.repository.block')->findById($blockId);
+        if (!$block instanceof BlockInterface) {
+            throw new \UnexpectedValueException();
+        }
 
         $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
         $form = $this->createForm($formType, $block, array(

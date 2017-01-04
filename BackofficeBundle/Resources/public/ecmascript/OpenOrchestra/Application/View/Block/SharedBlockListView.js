@@ -73,7 +73,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = '';
+        let link = Backbone.history.generateUrl('editBlock', {blockId: rowData.get('id')});
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link
