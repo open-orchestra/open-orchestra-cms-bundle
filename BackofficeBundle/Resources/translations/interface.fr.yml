@@ -4,13 +4,14 @@ open_orchestra_backoffice:
         sign_out: Déconnexion
         preference: Préférences
     log_out_modal:
-        yes: Oui
-        no: Non
         security_message: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
     search_engine:
         yes: Oui
         no: Non
         filter: Filtrer les résultats
+    confirm_modal:
+        yes: Oui
+        no: Non
     no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
     back_to_list: Retour à la liste
@@ -90,6 +91,9 @@ open_orchestra_backoffice:
             name: Nom
     block:
       add_block: Ajouter un bloc
+      confirm_remove:
+          title: Supprimer ce bloc ?
+          message: La suppression sera définitif
     form:
         keyword:
             new: nouveau

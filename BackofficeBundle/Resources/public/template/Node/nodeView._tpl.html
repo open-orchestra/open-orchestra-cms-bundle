@@ -1,6 +1,6 @@
 <div class="top-action-buttons">
     <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: node.get('language')}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.node.back_to_list') %>
+        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
     </a>
     <a class="btn btn-border" role="button" href="#<%= Backbone.history.generateUrl('editNode', {nodeId: node.get('node_id'), language: node.get('language'), version: node.get('version')}) %>">
         <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
