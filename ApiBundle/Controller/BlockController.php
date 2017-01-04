@@ -2,10 +2,14 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class BlockController
@@ -16,6 +20,38 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class BlockController extends BaseController
 {
+    /**
+     * @param Request $request
+     * @param string  $language
+     *
+     * @return FacadeInterface
+     *
+     * @Config\Route("/list/shared/{language}", name="open_orchestra_api_block_list_shared_table")
+     * @Config\Method({"GET"})
+     */
+    public function listSharedBlockTableAction(Request $request, $language)
+    {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, BlockInterface::ENTITY_TYPE);
+        $mapping = array(
+            'label' => 'label'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+        $repository = $this->get('open_orchestra_model.repository.block');
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+
+        $collection = $repository->findForPaginateBySiteIdAndLanguage($configuration, $siteId, $language, true);
+        //$recordsTotal = $repository->countBySiteIdAndLanguage($siteId, $language, true);
+        //$recordsFiltered = $repository->countWithFilterBySiteIdAndLanguage($configuration, $siteId, $language, true);
+
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('block_collection');
+        $facade = $collectionTransformer->transform($collection);
+        //$facade->recordsTotal = $recordsTotal;
+        //$facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
+    }
+
+
     /**
      * @param string $language
      *

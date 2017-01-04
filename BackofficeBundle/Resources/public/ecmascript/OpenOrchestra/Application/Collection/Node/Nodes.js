@@ -1,4 +1,3 @@
-import OrchestraCollection from '../OrchestraCollection'
 import Node                from '../../Model/Node/Node'
 import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
 

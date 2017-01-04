@@ -68,7 +68,8 @@ class Configuration implements ConfigurationInterface
             ->append($this->addTemplateSetConfiguration())
             ->append($this->addSpecialPageConfiguration())
             ->append($this->addConfigurationRoleConfiguration())
-            ->end();
+            ->append($this->addBlockConfiguration())
+        ->end();
 
         return $treeBuilder;
     }
@@ -222,9 +223,9 @@ class Configuration implements ConfigurationInterface
         $configurationRole
             ->info('Array configuration roles')
             ->prototype('array')
-                ->useAttributeAsKey('name')
-                ->prototype('array')
-                ->end()
+            ->useAttributeAsKey('name')
+            ->prototype('array')
+            ->end()
             ->end();
 
         $configurationRole->defaultValue(array(
@@ -254,5 +255,27 @@ class Configuration implements ConfigurationInterface
         ));
 
         return $configurationRole;
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public function addBlockConfiguration()
+    {
+        $builder = new TreeBuilder();
+        $blockConfiguration = $builder->root('block_configuration');
+
+        $blockConfiguration
+            ->info('Configure block description (category)')
+            ->useAttributeAsKey('block_name')
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('category')
+                        ->info('Translation key of block category (navigation, search, ...)')
+                    ->end()
+                ->end()
+            ->end();
+
+        return $blockConfiguration;
     }
 }

@@ -17,6 +17,10 @@
     "site": {
       "template": "Navigation/Configuration/site",
       "rank": 0
+    },
+    "shared_block": {
+      "template": "Navigation/Configuration/shared_block",
+      "rank": 0
     }
   },
   "platform": {

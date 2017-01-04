@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserAdminBundle\DependencyInjection;
 
+use OpenOrchestra\UserBundle\DisplayBlock\LoginStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -35,6 +36,7 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader->load('role_parameter.yml');
 
         $this->addOrchestraHierarchy($container, $loader);
+        $this->updateBlockConfiguration($container);
     }
 
     /**
@@ -53,5 +55,24 @@ class OpenOrchestraUserAdminExtension extends Extension
         }
 
         $container->setParameter('security.role_hierarchy.roles', array_merge($orchestraHierarchy, $roleHierarchy));
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    protected function updateBlockConfiguration(ContainerBuilder $container)
+    {
+        $userBlockConfiguration = array(
+            LoginStrategy::NAME => array(
+                'category' => 'open_orchestra_user_admin.block_configuration.category.user',
+            ),
+        );
+
+        $blockConfiguration = array();
+        if ($container->hasParameter('open_orchestra_backoffice.block_configuration')) {
+            $blockConfiguration = $container->getParameter('open_orchestra_backoffice.block_configuration');
+        }
+        $blockConfiguration = array_merge($blockConfiguration, $userBlockConfiguration);
+        $container->setParameter('open_orchestra_backoffice.block_configuration', $blockConfiguration);
     }
 }

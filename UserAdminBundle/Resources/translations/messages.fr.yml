@@ -51,3 +51,6 @@ open_orchestra_user_admin:
         success: L'utilisateur a bien été créé.
     update:
         success: L'utilisateur a bien été mis à jour.
+    block_configuration:
+        category:
+            user: Utilisateur

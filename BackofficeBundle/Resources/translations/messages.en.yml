@@ -635,3 +635,10 @@ open_orchestra_backoffice:
         suppresor: Supprimer
         restorer: Restaurer
         administrator: Gérer
+    block_configuration:
+        category:
+            navigation: Navigation
+            widget: Widget
+            content: Text and content
+            media: Media
+            default: Default

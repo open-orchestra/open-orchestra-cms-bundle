@@ -4,12 +4,15 @@ namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;
+use OpenOrchestra\BaseApi\Facade\Traits\TimestampableFacade;
 
 /**
  * Class BlockFacade
  */
 class BlockFacade extends AbstractFacade
 {
+    use TimestampableFacade;
+
     /**
      * @Serializer\Type("string")
      */
@@ -19,6 +22,11 @@ class BlockFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $component;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $category;
 
     /**
      * @Serializer\Type("boolean")
@@ -33,12 +41,12 @@ class BlockFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $class;
+    public $previewContent;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("integer")
      */
-    public $previewContent;
+    public $use;
 
     /**
      * @Serializer\Type("array<string,string>")
