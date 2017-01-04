@@ -13,6 +13,7 @@ open_orchestra_backoffice:
         filter: Filter results
     no_item: There are no item for this view
     add: Add
+    back_to_list: Back to list
     navigation:
         hide_menu: Hide menu
         dashboard:
@@ -59,7 +60,6 @@ open_orchestra_backoffice:
         move: Move
         add: Add a page
         new: New page
-        back_to_list: Back to list
         edit: Edit
         redirections: Redirections
         preview: Preview

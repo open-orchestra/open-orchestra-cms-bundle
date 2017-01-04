@@ -188,6 +188,26 @@ class ContextManager implements CurrentSiteIdInterface
     }
 
     /**
+     * Get the current default language setted by the user for the current site
+     *
+     * @return string
+     */
+    public function getUserCurrentSiteDefaultLanguage()
+    {
+        $currentLanguage = $this->getCurrentSite()['defaultLanguage'];
+
+        $token = $this->tokenStorage->getToken();
+        if ($token instanceof TokenInterface) {
+            if (($user = $token->getUser()) instanceof UserInterface && $user->hasLanguageBySite($this->getCurrentSiteId())) {
+                $currentLanguage = $user->getLanguageBySite($this->getCurrentSiteId());
+            }
+        }
+
+        return $currentLanguage;
+    }
+
+
+    /**
      * Get languages of the current site
      *
      * @return array

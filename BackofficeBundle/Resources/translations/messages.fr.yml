@@ -336,27 +336,6 @@ open_orchestra_backoffice:
             label: Libellé
             creation: Le mot-clé a été créé
             success: Le mot-clé a été mis à jour avec succès
-        group:
-            new:
-                success: Le groupe a été créé
-            edit:
-                success: Le groupe a été mis à jour
-            name: Nom
-            label: Libellé
-            roles: Rôles
-            role_helper: Les rôles page par page ne sont pas pris en compte si le droit général correspondant n'est pas activé
-            role_front_title: Front Office
-            site: Site
-            title: Édition de groupe
-            user_list: Liste des utilisateurs
-            select_user: Sélectionner un utilisateur
-            add_user: Ajouter un utilisateur au groupe
-            node_role_edition: Liste des rôles par page
-            node_role_no_site: Le groupe doit être lié a un site pour gérer les rôles page par page
-            page_list: Liste des pages
-            access_denied: Refusé
-            access_granted: Autorisé
-            access_inherit: Hérité
         redirection:
             new:
                 success: La redirection a été créée
@@ -394,6 +373,11 @@ open_orchestra_backoffice:
                 meta: Meta
                 google_marker: Marqueur Google Analytics / GTM
                 xiti: Marqueur ATinternet (Xiti)
+        role:
+            page: Page
+            content: Contenu
+            trash: Corbeille
+            configuration: Configuration
     block:
         configurable_content:
             title: Contenu paramétrable
@@ -626,3 +610,9 @@ open_orchestra_backoffice:
                 default: Défaut
             style:
                 default: Default
+    role:
+        contributor: Contribuer
+        editor: Modifier
+        suppresor: Supprimer
+        restorer: Restaurer
+        administrator: Gérer

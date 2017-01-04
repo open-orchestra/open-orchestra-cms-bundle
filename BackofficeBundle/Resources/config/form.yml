@@ -36,6 +36,10 @@ parameters:
     open_orchestra_backoffice.type.multi_languages.class: OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType
     open_orchestra_backoffice.type.language_by_sites.class: OpenOrchestra\Backoffice\Form\Type\Component\LanguageBySitesType
     open_orchestra_backoffice.type.template_set.class: OpenOrchestra\Backoffice\Form\Type\Component\TemplateSetType
+    open_orchestra_backoffice.type.check_list_collection.class: OpenOrchestra\Backoffice\Form\Type\Component\CheckListCollectionType
+    open_orchestra_backoffice.type.check_list.class: OpenOrchestra\Backoffice\Form\Type\Component\CheckListType
+    open_orchestra_backoffice.type.tree_list_collection.class: OpenOrchestra\Backoffice\Form\Type\Component\TreeListCollectionType
+    open_orchestra_backoffice.type.tree_list.class: OpenOrchestra\Backoffice\Form\Type\Component\TreeListType
     open_orchestra_backoffice.type_extension.form_group.class: OpenOrchestra\Backoffice\Form\Type\Extension\FormTypeGroupExtension
     open_orchestra_backoffice.type_extension.collection.class: OpenOrchestra\Backoffice\Form\Type\Extension\CollectionExtension
 
@@ -351,6 +355,30 @@ services:
             - '%open_orchestra_backoffice.orchestra_choice.front_language%'
         tags:
             - { name: form.type, alias: oo_language_by_sites }
+    open_orchestra_backoffice.type.check_list_collection:
+        class: '%open_orchestra_backoffice.type.check_list_collection.class%'
+        arguments:
+            - '@open_orchestra_backoffice.transformer.check_list_collection'
+        tags:
+            - { name: form.type, alias: oo_check_list_collection }
+    open_orchestra_backoffice.type.check_list:
+        class: '%open_orchestra_backoffice.type.check_list.class%'
+        arguments:
+            - '@open_orchestra_backoffice.transformer.check_list'
+        tags:
+            - { name: form.type, alias: oo_check_list }
+    open_orchestra_backoffice.type.tree_list_collection:
+        class: '%open_orchestra_backoffice.type.tree_list_collection.class%'
+        arguments:
+            - '@open_orchestra_backoffice.transformer.tree_list_collection'
+        tags:
+            - { name: form.type, alias: oo_tree_list_collection }
+    open_orchestra_backoffice.type.tree_list:
+        class: '%open_orchestra_backoffice.type.tree_list.class%'
+        arguments:
+            - '@open_orchestra_backoffice.transformer.tree_list'
+        tags:
+            - { name: form.type, alias: oo_tree_list }
     open_orchestra_backoffice.type_extension.form_group:
         class: '%open_orchestra_backoffice.type_extension.form_group.class%'
         tags:

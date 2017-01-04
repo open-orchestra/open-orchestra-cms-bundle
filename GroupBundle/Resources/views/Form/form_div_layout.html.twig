@@ -1,14 +1,15 @@
 {% block oo_group_list_widget %}
+	{% set collection = form|first %}
     {% spaceless %}
         <div class="user-groups-list">
             <table class="table table-striped">
                 <tbody>
-            {% for child in form['groups_collection'] %}
+            {% for child in collection %}
                 {{ form_widget(child) }}
             {% endfor %}
                 </tbody>
             </table>
-            <div class="prototype hidden" data-prototype="{{ form_widget(form['groups_collection'].vars.prototype)|e('html') }}"></div>
+            <div class="prototype hidden" data-prototype="{{ form_widget(collection.vars.prototype)|e('html') }}"></div>
             <div>
                 <button class="open-groups-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
             </div>
@@ -23,3 +24,15 @@
         <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-close" aria-hidden="true"></i>{% endif %}</td>
     </tr>
 {% endblock oo_group_element_widget %}
+
+{% block oo_group_role_widget %}
+    {% spaceless %}
+        {% set collection = form|first %}
+        <div class="hierarchical-check-list">
+	        {% for table in form.vars.configuration %}
+	            {{ form_widget(collection[table]) }}
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock oo_group_role_widget %}
+

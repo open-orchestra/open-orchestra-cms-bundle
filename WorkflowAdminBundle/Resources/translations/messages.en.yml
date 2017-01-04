@@ -7,3 +7,7 @@ open_orchestra_workflow_admin:
             descriptions : Descriptions
             group:
                 properties: Properties
+        profile: Workflow profiles 
+        backoffice: Back-office    
+    profile:
+        page : Page

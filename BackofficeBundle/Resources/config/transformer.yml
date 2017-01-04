@@ -7,6 +7,7 @@ parameters:
     open_orchestra_backoffice.transformer.csv_to_reference_keyword.class: OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer
     open_orchestra_backoffice.transformer.condition_to_reference_keyword.class: OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer
     open_orchestra_backoffice.transformer.content_type_order_field.class: OpenOrchestra\Backoffice\Form\DataTransformer\ContentTypeOrderFieldTransformer
+    open_orchestra_backoffice.transformer.collection.class: OpenOrchestra\Backoffice\Form\DataTransformer\CollectionTransformer
 
 services:
     open_orchestra_backoffice.transformer.video_url_to_id:
@@ -39,3 +40,19 @@ services:
             - '@open_orchestra_model.repository.keyword'
     open_orchestra_backoffice.transformer.content_type_order_field:
         class: '%open_orchestra_backoffice.transformer.content_type_order_field.class%'
+    open_orchestra_backoffice.transformer.check_list_collection:
+        class: '%open_orchestra_backoffice.transformer.collection.class%'
+        arguments:
+            - 'check_list_collection'
+    open_orchestra_backoffice.transformer.check_list:
+        class: '%open_orchestra_backoffice.transformer.collection.class%'
+        arguments:
+            - 'check_list'
+    open_orchestra_backoffice.transformer.tree_list_collection:
+        class: '%open_orchestra_backoffice.transformer.collection.class%'
+        arguments:
+            - 'tree_list_collection'
+    open_orchestra_backoffice.transformer.tree_list:
+        class: '%open_orchestra_backoffice.transformer.collection.class%'
+        arguments:
+            - 'tree_list'

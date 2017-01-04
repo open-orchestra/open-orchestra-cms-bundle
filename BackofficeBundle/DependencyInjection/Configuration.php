@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -78,7 +79,8 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->append($this->addTemplateSetConfiguration())
             ->append($this->addSpecialPageConfiguration())
-        ->end();
+            ->append($this->addConfigurationRoleConfiguration())
+            ->end();
 
         return $treeBuilder;
     }
@@ -219,5 +221,50 @@ class Configuration implements ConfigurationInterface
         ));
 
         return $specialPageNames;
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public function addConfigurationRoleConfiguration()
+    {
+        $builder = new TreeBuilder();
+        $configurationRole = $builder->root('configuration_roles');
+
+        $configurationRole
+            ->info('Array configuration roles')
+            ->prototype('array')
+                ->useAttributeAsKey('name')
+                ->prototype('array')
+                ->end()
+            ->end();
+
+        $configurationRole->defaultValue(array(
+            'firstpackage' => array(
+                'page' => array(
+                    ContributionRoleInterface::NODE_CONTRIBUTOR => 'open_orchestra_backoffice.role.contributor',
+                    ContributionRoleInterface::NODE_SUPER_EDITOR => 'open_orchestra_backoffice.role.editor',
+                    ContributionRoleInterface::NODE_SUPER_SUPRESSOR => 'open_orchestra_backoffice.role.suppresor',
+                ),
+                'content' => array(
+                    ContributionRoleInterface::CONTENT_CONTRIBUTOR => 'open_orchestra_backoffice.role.contributor',
+                    ContributionRoleInterface::CONTENT_SUPER_EDITOR => 'open_orchestra_backoffice.role.editor',
+                    ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR => 'open_orchestra_backoffice.role.suppresor',
+                ),
+            ),
+            'secondpackage' => array(
+                'trash' => array(
+                    ContributionRoleInterface::TRASH_RESTORER => 'open_orchestra_backoffice.role.restorer',
+                    ContributionRoleInterface::TRASH_SUPRESSOR => 'open_orchestra_backoffice.role.contributor',
+                ),
+            ),
+            'thirdpackage' => array(
+                'configuration' => array(
+                    ContributionRoleInterface::SITE_ADMIN => 'open_orchestra_backoffice.role.administrator',
+                ),
+            ),
+        ));
+
+        return $configurationRole;
     }
 }

@@ -211,7 +211,7 @@ class Group extends BaseGroup implements GroupInterface
     {
         $this->perimeters->clear();
         foreach ($perimeters as $perimeter) {
-            $this->perimeters->add($perimeter);
+            $this->perimeters->set($perimeter->getType(), $perimeter);
         }
     }
 

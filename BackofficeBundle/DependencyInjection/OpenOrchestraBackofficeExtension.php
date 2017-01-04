@@ -47,6 +47,12 @@ class OpenOrchestraBackofficeExtension extends Extension
         $container->setParameter('open_orchestra_backoffice.template_set', $config['template_set']);
         $container->setParameter('open_orchestra_backoffice.special_page_name', $config['special_page_name']);
 
+        $configurationRoles = $config['configuration_roles'];
+        if ($container->hasParameter('open_orchestra_backoffice.configuration.roles')) {
+            $configurationRoles = array_merge_recursive($container->getParameter('open_orchestra_backoffice.configuration.roles'), $configurationRoles);
+        }
+        $container->setParameter('open_orchestra_backoffice.configuration.roles', $configurationRoles);
+
         $loader->load('services.yml');
         $loader->load('form.yml');
         $loader->load('generator.yml');

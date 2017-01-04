@@ -112,7 +112,6 @@ class GroupTransformerTest extends AbstractBaseTestCase
     public function testReverseTransform()
     {
         $facade = Phake::mock('OpenOrchestra\GroupBundle\Facade\GroupFacade');
-
         $transformedGroup = $this->transformer->reverseTransform($facade);
 
         $this->assertEquals(null, $transformedGroup);

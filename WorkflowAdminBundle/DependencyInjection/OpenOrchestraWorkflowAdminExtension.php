@@ -31,5 +31,6 @@ class OpenOrchestraWorkflowAdminExtension extends Extension
         $loader->load('role_parameter.yml');
         $loader->load('voter.yml');
         $loader->load('form.yml');
+        $loader->load('subscriber.yml');
     }
 }

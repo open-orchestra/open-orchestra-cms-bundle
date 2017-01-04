@@ -3,6 +3,7 @@ import Application     from '../../Application'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import Groups          from '../../Collection/Group/Groups'
 import GroupsView      from '../../View/Group/GroupsView'
+import GroupFormView   from '../../View/Group/GroupFormView'
 import SitesAvailable  from '../../../Application/Collection/Site/SitesAvailable'
 
 /**
@@ -15,7 +16,8 @@ class GroupRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'group/list(/:page)': 'listGroup'
+            'group/list(/:page)': 'listGroup',
+            'group/edit/:groupId': 'editGroup'
         };
     }
 
@@ -69,6 +71,20 @@ class GroupRouter extends OrchestraRouter
                     }
                 });
             }
+        });
+    }
+    
+    /**
+     * Edit Group
+     *
+     * @param  {String} groupId
+     */
+    editGroup(groupId) {
+        let url = Routing.generate('open_orchestra_group_form', {groupId: groupId});
+        this._diplayLoader(Application.getRegion('content'));
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let groupFormView = new GroupFormView({form: form, groupId: groupId});
+            Application.getRegion('content').html(groupFormView.render().$el);
         });
     }
 }

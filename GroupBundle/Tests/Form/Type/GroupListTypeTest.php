@@ -3,12 +3,13 @@
 namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 
 use Phake;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\Form\Type\GroupListType;
 
 /**
  * Class GroupListTypeTest
  */
-class GroupListTypeTest extends Phake
+class GroupListTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupListType
@@ -53,19 +54,5 @@ class GroupListTypeTest extends Phake
 
         Phake::verify($builder, Phake::times(1))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(1))->addModelTransformer(Phake::anyParameters());
-    }
-
-    /**
-     * Test resolver
-     */
-    public function testConfigureOptions()
-    {
-        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-
-        $this->form->configureOptions($resolver);
-
-        Phake::verify($resolver)->setDefaults(array(
-            'allowed_sites' => null,
-        ));
     }
 }

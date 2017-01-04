@@ -10,3 +10,59 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_workflow_profile_submit_widget %}
+{% block oo_workflow_right_widget %}
+    {% spaceless %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped workflow-right-widget">
+                {% if form.authorizations is defined and form.authorizations|length > 0 and form.authorizations[0].workflowFunctions is defined %}
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        {{ form.authorizations[0].workflowFunctions.vars.label }}
+                        {% for child in form.authorizations[0].workflowFunctions %}
+                            <th>{{ child.vars.label }}</th>
+                        {% endfor %}
+                        <th>{{ 'open_orchestra_workflow_admin.right.owner'|trans({}, translation_domain)|raw }}</th>
+                    </tr>
+                </thead>
+                {% endif %}
+                <tbody>
+                {% for child in form.authorizations %}
+                    <tr>
+                        <td>
+                            {% if child.vars.label is iterable %}
+                                {{ child.vars.label| multi_languages_choose}}
+                            {% else %}
+                                {{ child.vars.label |trans({}, translation_domain)|raw }}
+                            {% endif %}
+
+                            {{ form_widget(child.referenceId) }}
+                        </td>
+                        {{ form_widget(child.workflowFunctions) }}
+                        <td>
+                            {{ form_widget(child.owner) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block oo_authorization_widget %}
+    {% spaceless %}
+        {{ form_widget(form.workflowFunctions) }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block oo_workflow_function_choice_widget %}
+    {% spaceless %}
+        {% for child in form %}
+            <td>
+               {{ form_widget(child) }}
+            </td>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock %}

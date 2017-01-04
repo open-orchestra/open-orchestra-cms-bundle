@@ -29,5 +29,6 @@ class OpenOrchestraGroupExtension extends Extension
         $loader->load('form.yml');
         $loader->load('transformer.yml');
         $loader->load('subscriber.yml');
+        $loader->load('generate_perimeter.yml');
     }
 }

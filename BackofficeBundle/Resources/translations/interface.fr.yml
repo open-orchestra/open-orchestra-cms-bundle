@@ -13,6 +13,7 @@ open_orchestra_backoffice:
         filter: Filtrer les résultats
     no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
+    back_to_list: Retour à la liste
     navigation:
         hide_menu: Réduire le menu
         dashboard:
@@ -58,7 +59,6 @@ open_orchestra_backoffice:
         move: Déplacement
         add: Ajouter une page
         new: Nouvelle page
-        back_to_list: Retour à la liste
         edit: Modifier
         redirections: Redirections
         preview: Prévisualiser

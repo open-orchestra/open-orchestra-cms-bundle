@@ -110,6 +110,8 @@ class GroupController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
+     *
+     * @throws AccessDeniedException
      */
     public function duplicateAction(Request $request)
     {
@@ -133,11 +135,11 @@ class GroupController extends BaseController
         }
         $newGroup->setSite($currentSite);
 
-        if ($this->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE)) {
-            $objectManager = $this->get('object_manager');
-            $objectManager->persist($newGroup);
-            $objectManager->flush();
-        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE);
+
+        $objectManager = $this->get('object_manager');
+        $objectManager->persist($newGroup);
+        $objectManager->flush();
 
         return array();
     }
