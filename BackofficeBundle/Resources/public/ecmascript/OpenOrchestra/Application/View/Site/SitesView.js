@@ -11,8 +11,7 @@ class SitesView extends OrchestraView
      */
     preinitialize() {
         this.events = {
-            'click .search-engine button.submit': '_search',
-            'click .btn-delete': '_remove'
+            'click .search-engine button.submit': '_search'
         }
     }
 
@@ -59,20 +58,6 @@ class SitesView extends OrchestraView
         this._listView.filter(filters);
 
         return false;
-    }
-
-    /**
-     * Remove
-     *
-     * @private
-     */
-    _remove() {
-        let sites = this._collection.where({'delete': true});
-        this._collection.destroyModels(sites, {
-            success: () => {
-                this._listView.api.draw(false);
-            }
-        });
     }
 }
 
