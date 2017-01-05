@@ -72,8 +72,6 @@ class NewStatusView extends AbstractFormView
      * @private
      */
     _redirectNewStatus(data) {
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.loadUrl(Backbone.history.fragment);
     }

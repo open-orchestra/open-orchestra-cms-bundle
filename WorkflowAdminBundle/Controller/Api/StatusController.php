@@ -112,9 +112,10 @@ class StatusController extends BaseController
 
         $statusIds = array();
         foreach ($statuses as $status) {
-            $this->denyDeleteUnlessGranted($status);
-            $statusIds[] = $status->getId();
-            $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
+            if ($this->isDeleteGranted($status)) {
+                $statusIds[] = $status->getId();
+                $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
+            }
         }
         $statusRepository->removeStatuses($statusIds);
 
@@ -127,19 +128,30 @@ class StatusController extends BaseController
      * @param StatusInterface $status
      *
      * @throws AccessDeniedException
-     * @return boolean
      */
     protected function denyDeleteUnlessGranted(StatusInterface $status)
     {
-        if (!$this->isGranted(ContributionActionInterface::DELETE, $status)
-            || $this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
-            || $status->isInitialState()
-            || $status->isPublishedState()
-            || $status->isTranslationState()
-            || $status->isAutoPublishFromState()
-            || $status->isAutoUnpublishToState()
-        ) {
+        if ($this->isDeleteGranted($status)) {
             throw $this->DeleteStatusNotGrantedHttpException($message);
         }
+    }
+
+    /**
+     * Check if current user can delete $status
+     *
+     * @param StatusInterface $status
+     *
+     * @return boolean
+     */
+    protected function isDeleteGranted(StatusInterface $status)
+    {
+        return ($this->isGranted(ContributionActionInterface::DELETE, $status)
+            && !$this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
+            && !$status->isInitialState()
+            && !$status->isPublishedState()
+            && !$status->isTranslationState()
+            && !$status->isAutoPublishFromState()
+            && !$status->isAutoUnpublishToState()
+        );
     }
 }

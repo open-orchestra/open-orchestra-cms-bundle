@@ -58,7 +58,7 @@ class StatusController extends AbstractAdminController
         $statusClass = $this->getParameter('open_orchestra_model.document.status.class');
         /** @var StatusInterface $status */
         $status = new $statusClass();
-        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $status);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, StatusInterface::ENTITY_TYPE);
 
         $form = $this->createForm('oo_status', $status, array(
             'action' => $this->generateUrl('open_orchestra_workflow_admin_status_new'),
@@ -71,7 +71,7 @@ class StatusController extends AbstractAdminController
         if ($this->handleForm($form, $message, $status)) {
             $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
             $response = new Response(
-                $message,
+                '',
                 Response::HTTP_CREATED,
                 array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId())
             );
