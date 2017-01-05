@@ -7,25 +7,12 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
-use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class SiteTransformer
  */
 class SiteTransformer extends AbstractTransformer
 {
-    protected $siteRepository;
-
-    /**
-     * @param null|string             $facadeClass
-     * @param SiteRepositoryInterface $siteRepository
-     */
-    public function __construct($facadeClass, SiteRepositoryInterface $siteRepository)
-    {
-        parent::__construct($facadeClass);
-        $this->siteRepository = $siteRepository;
-    }
-
     /**
      * @param SiteInterface $site
      *
@@ -64,21 +51,6 @@ class SiteTransformer extends AbstractTransformer
         }
 
         return $facade;
-    }
-
-    /**
-     * @param FacadeInterface $facade
-     * @param null            $source
-     *
-     * @return SiteInterface|null
-     */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
-    {
-        if (null !== $facade->siteId) {
-            return $this->siteRepository->findOneBySiteId($facade->siteId);
-        }
-
-        return null;
     }
 
     /**

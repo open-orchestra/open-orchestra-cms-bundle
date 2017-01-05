@@ -117,40 +117,6 @@ class SiteController extends BaseController
         return array();
     }
 
-
-    /**
-     * @param Request $request
-     *
-     * @Config\Route("/delete-multiple", name="open_orchestra_api_site_delete_multiple")
-     * @Config\Method({"DELETE"})
-     *
-     * @return Response
-     */
-    public function deleteSitesAction(Request $request)
-    {
-        $format = $request->get('_format', 'json');
-
-        $facade = $this->get('jms_serializer')->deserialize(
-            $request->getContent(),
-            $this->getParameter('open_orchestra_api.facade.site_collection.class'),
-            $format
-        );
-
-        $siteRepository = $this->get('open_orchestra_model.repository.site');
-        $sites = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->reverseTransform($facade);
-
-        $siteIds = array();
-        foreach ($sites as $site) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, $site)) {
-                $siteIds[] = $site->getSiteId();
-                $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
-            }
-        }
-        $siteRepository->removeSites($siteIds);
-
-        return array();
-    }
-
     /**
      * @Config\Route("/{siteId}/languages", name="open_orchestra_api_site_languages_show")
      * @Config\Method({"GET"})

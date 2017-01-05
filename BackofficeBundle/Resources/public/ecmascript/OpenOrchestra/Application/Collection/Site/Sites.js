@@ -29,8 +29,6 @@ class Sites extends DataTableCollection
         switch (method) {
             case "read":
                 return Routing.generate('open_orchestra_api_site_list');
-            case "delete":
-                return Routing.generate('open_orchestra_api_site_delete_multiple');
         }
     }
 }

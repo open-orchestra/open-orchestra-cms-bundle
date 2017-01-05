@@ -132,7 +132,6 @@ services:
         class: '%open_orchestra_api.transformer.site.class%'
         arguments:
             - '%open_orchestra_api.facade.site.class%'
-            - '@open_orchestra_model.repository.site'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.site_alias:
