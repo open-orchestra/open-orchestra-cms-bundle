@@ -14,6 +14,7 @@ open_orchestra_backoffice_validators:
         row_layout: The column layout is incorrect
     website:
         exists_main_alias: An alias must be principal
+        unique_main_alias: Principal alias has to be unique
     trashitem:
         remove_node_date: You must wait 7 days to permanently delete a page
     boolean_condition:

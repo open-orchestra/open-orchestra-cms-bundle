@@ -13,6 +13,7 @@ open_orchestra_backoffice_validators:
         row_layout: Die Spalten-Layout ist falsch
     website:
         exists_main_alias: Ein Alias muss haupt sein
+        unique_main_alias: Hauptaliasnamen muss eindeutig sein
     trashitem:
         remove_node_date: Sie müssen 7 Tage warten, um dauerhaft eine Seite löschen
     boolean_condition:

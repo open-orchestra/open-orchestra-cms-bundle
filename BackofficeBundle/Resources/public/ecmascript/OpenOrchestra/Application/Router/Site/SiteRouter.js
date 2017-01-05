@@ -16,7 +16,7 @@ class SiteRouter extends OrchestraRouter
     preinitialize(options) {
         this.routes = {
             'site/list(/:page)': 'listSite',
-            'site/edit/:siteId': 'editSite'
+            'site/edit/:siteId/:name': 'editSite'
         };
     }
 
@@ -59,14 +59,16 @@ class SiteRouter extends OrchestraRouter
      *
      * @param {string} siteId
      */
-    editSite(siteId) {
+    editSite(siteId, name) {
         this._diplayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_site_form', {
             siteId : siteId
         });
         FormBuilder.createFormFromUrl(url, (form) => {
             let siteFormView = new SiteFormView({
-                form : form
+                form: form,
+                name: name,
+                siteId: siteId
             });
             Application.getRegion('content').html(siteFormView.render().$el);
         });

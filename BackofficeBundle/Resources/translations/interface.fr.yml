@@ -33,6 +33,7 @@ open_orchestra_backoffice:
           title: Développeur
         configuration:
           title: Configuration
+          site: Sites
     table:
         delete_button: Supprimer les éléments sélectionnés
         keywords:

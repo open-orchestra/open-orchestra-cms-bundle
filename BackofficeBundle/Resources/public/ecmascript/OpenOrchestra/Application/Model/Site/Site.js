@@ -7,6 +7,18 @@ import SiteAlias      from './SiteAlias'
 class Site extends OrchestraModel
 {
     /**
+     * @inheritdoc
+     */
+    _getSyncUrl(method, options) {
+        let urlParameter = options.urlParameter || {};
+        urlParameter.siteId = this.get('siteId');
+        switch (method) {
+            case "delete":
+                return Routing.generate('open_orchestra_api_site_delete', urlParameter);
+        }
+    }
+
+    /**
      * Parse server response to create nested object
      * @param response
      *

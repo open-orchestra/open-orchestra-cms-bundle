@@ -37,6 +37,12 @@ open_orchestra_backoffice:
           error: An error occurs on your browser during form submission!
         allowed_characters:
           helper: "Allowed characters: a-z, 0-9, _, -"
+        collection:
+            close_forms: Close list
+            open_forms: Open list
+            open_form: Edit
+            close_form: Close
+            new_form: New enter
         status:
             name: Name
             published:
@@ -121,6 +127,7 @@ open_orchestra_backoffice:
             name: Name
             aliases: Aliases
             alias: Alias
+            add_alias: Add an alias
             default_language: Default language
             language: Language
             prefix: Language prefix

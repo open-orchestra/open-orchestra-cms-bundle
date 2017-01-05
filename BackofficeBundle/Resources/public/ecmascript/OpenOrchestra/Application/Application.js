@@ -17,6 +17,7 @@ import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
 import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
 import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
+import Accordion             from '../Service/Form/Behavior/Accordion'
 import BreadcrumbView        from './View/Breadcrumb/BreadcrumbView'
 
 /**
@@ -193,6 +194,7 @@ class Application
         FormBehaviorManager.add(DatePicker);
         FormBehaviorManager.add(GenerateId);
         FormBehaviorManager.add(CollectionSortable);
+        FormBehaviorManager.add(Accordion);
     }
 
 }

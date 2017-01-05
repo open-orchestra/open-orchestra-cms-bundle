@@ -27,7 +27,6 @@ class SitesView extends OrchestraView
      * Render sites view
      */
     render() {
-
         let template = this._renderTemplate('Site/sitesView');
         this.$el.html(template);
         this._listView = new SiteListView({
