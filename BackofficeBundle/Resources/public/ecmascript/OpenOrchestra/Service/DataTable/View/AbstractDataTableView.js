@@ -326,12 +326,12 @@ class AbstractDataTableView extends OrchestraView
     }
 
     /**
-     * Return url parameter used ton fetch collection
+     * Return options used to fetch collection
      *
      * @returns {{}}
      * @private
      */
-    _getSyncUrlParameter() {
+    _getSyncOptions() {
         return {};
     }
 
@@ -341,9 +341,10 @@ class AbstractDataTableView extends OrchestraView
      */
     _dataTableAjaxCollection() {
         let collection = this._collection;
+
         return (request, drawCallback, settings) => {
-           settings.jqXHR = collection.fetch({
-                urlParameter: this._getSyncUrlParameter(),
+            let options = {
+                urlParameter: {},
                 data: request,
                 processData: true,
                 success: (collection) => {
@@ -351,10 +352,11 @@ class AbstractDataTableView extends OrchestraView
 
                     return drawCallback(collection);
                 }
-            });
+            };
+            options = Object.assign(options, this._getSyncOptions());
+            settings.jqXHR = collection.fetch(options);
         }
     }
-
 }
 
 export default AbstractDataTableView

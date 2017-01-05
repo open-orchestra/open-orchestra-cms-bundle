@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle;
 
-use OpenOrchestra\WorkflowAdminBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use OpenOrchestra\WorkflowAdminBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
