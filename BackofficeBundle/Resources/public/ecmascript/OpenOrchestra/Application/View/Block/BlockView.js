@@ -1,4 +1,6 @@
-import OrchestraView from '../OrchestraView'
+import OrchestraView    from '../OrchestraView'
+import Application      from '../../Application'
+import ConfirmModalView from '../../../Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class BlockView
@@ -11,7 +13,7 @@ class BlockView extends OrchestraView
     preinitialize() {
         this.className = 'block-item';
         this.events = {
-            'click .delete-block': '_deleteBlock',
+            'click .delete-block': '_confirmDeleteBlock'
         }
     }
 
@@ -44,12 +46,33 @@ class BlockView extends OrchestraView
     }
 
     /**
-     * @param event
+     * Show modal confirm to delete a block
+     *
+     * @param {Object} event
+     *
      * @returns {boolean}
      * @private
      */
-    _deleteBlock(event) {
+    _confirmDeleteBlock(event) {
         event.stopPropagation();
+        let confirmModalView = new ConfirmModalView({
+            confirmTitle: Translator.trans('open_orchestra_backoffice.block.confirm_remove.title'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.block.confirm_remove.message'),
+            yesCallback: this._deleteBlock,
+            context: this
+        });
+
+        Application.getRegion('modal').html(confirmModalView.render().$el);
+        confirmModalView.show();
+
+        return false;
+    }
+
+    /**
+     * Delete block
+     * @private
+     */
+    _deleteBlock() {
         this._block.destroy({
             urlParameter: {
                 nodeId: this._node.get('node_id'),

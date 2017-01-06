@@ -8,7 +8,7 @@ class ModalView extends OrchestraView
     /**
      * @inheritdoc
      */
-    preinitialize() {
+    preinitialize(options) {
         this.tagName = 'div';
         this.className = 'modal fade';
         this.events = {

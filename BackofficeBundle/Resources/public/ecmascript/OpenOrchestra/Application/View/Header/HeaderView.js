@@ -1,7 +1,7 @@
 import OrchestraView    from '../OrchestraView'
 import Application      from '../../Application'
 import SiteSelectorView from './SiteSelectorView'
-import LogOutModalView  from './LogOutModalView'
+import ConfirmModalView from '../../../Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class HeaderView
@@ -16,7 +16,7 @@ class HeaderView extends OrchestraView
         this.className = 'header';
         this.events = {
             'click .expand': '_toggleFullscreen',
-            'click .logout': '_showLogOutModal',
+            'click .logout': '_showLogOutModal'
         }
     }
 
@@ -49,7 +49,11 @@ class HeaderView extends OrchestraView
      * Show log Out modal
      */
     _showLogOutModal() {
-        let logOutModalView = new LogOutModalView();
+        let logOutModalView = new ConfirmModalView({
+            confirmTitle: Translator.trans('open_orchestra_backoffice.header.sign_out'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.log_out_modal.security_message'),
+            yesCallback: () => { window.location.href = Routing.generate('fos_user_security_logout')}
+        });
         Application.getRegion('modal').html(logOutModalView.render().$el);
         logOutModalView.show();
 
