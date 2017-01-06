@@ -18,6 +18,8 @@ open_orchestra_workflow_admin:
         title_list: Workflow profile list
         title_new : New workflow profile
         title_edit: Edit workflow profile
+    parameters:
+        title: Parameters
     table:
         statuses:
             label        : Label
