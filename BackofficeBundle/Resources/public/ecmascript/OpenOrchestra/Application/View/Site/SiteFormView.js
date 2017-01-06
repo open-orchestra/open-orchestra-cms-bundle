@@ -58,9 +58,8 @@ class SiteFormView extends AbstractFormView
      * @param {event} event
      */
     _deleteSite(event) {
-        this._diplayLoader(Application.getRegion('content'));
-        let site = new Site({'siteId': this._siteId});
-        site.sync('delete', site, {
+        let site = new Site({'site_id': this._siteId});
+        site.destroy({
             success: () => {
                 let url = Backbone.history.generateUrl('listSite');
                 Backbone.history.navigate(url, true);

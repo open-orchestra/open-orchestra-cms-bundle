@@ -697,7 +697,7 @@
                         <div class="form-group{% if field.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_widget(field) }}
                             {{ form_rest(field) }}
-                            Done6{{ form_errors(field) }}
+                            {{ form_errors(field) }}
                         </div>
                     </div>
                 {% endfor %}

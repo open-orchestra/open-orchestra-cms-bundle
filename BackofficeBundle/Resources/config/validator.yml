@@ -49,5 +49,3 @@ services:
         class: '%open_orchestra_model.validator.unique_main_alias.class%'
         tags:
             - { name: validator.constraint_validator, alias: unique_main_alias}
-
-            
