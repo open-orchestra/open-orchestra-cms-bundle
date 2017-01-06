@@ -79,6 +79,14 @@ class TestContextManager extends ContextManager
     }
 
     /**
+     * @return string
+     */
+    public function getUserCurrentSiteDefaultLanguage()
+    {
+        return $this->defaultLanguage;
+    }
+
+    /**
      * @return array
      */
     public function getAvailableSites()

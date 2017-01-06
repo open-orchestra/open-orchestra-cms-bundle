@@ -21,7 +21,7 @@
     <tr {{ (form.vars.parameters['deleted'] ) ? 'class="hide"' : '' }}>
         <td><div class="hide">{{ form_widget(form) }}</div>{{ form.vars.parameters['groupName'] }}</td>
         <td>{{ form.vars.parameters['siteName'] }}</td>
-        <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-close" aria-hidden="true"></i>{% endif %}</td>
+        <td>{% if form.vars.parameters['disabled'] %}&nbsp;{%  else %}<i class="fa fa-trash" aria-hidden="true"></i>{% endif %}</td>
     </tr>
 {% endblock oo_group_element_widget %}
 
