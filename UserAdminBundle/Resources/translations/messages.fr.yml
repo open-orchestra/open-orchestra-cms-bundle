@@ -16,6 +16,10 @@ open_orchestra_user_admin:
             title: Supprimer cette utilisateur du groupe ?
     password:
         title: Mot de passe
+    block:
+        login:
+            title: Connexion
+            description: Affiche un formulaire pour ce logger.
     form:
         title: Général
         super_admin_help_text: Cet utilisateur est super admin, il est donc impossible de sélectionner des droits car il possède déjà tous les accès.

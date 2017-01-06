@@ -65,6 +65,8 @@ class OpenOrchestraUserAdminExtension extends Extension
         $userBlockConfiguration = array(
             LoginStrategy::NAME => array(
                 'category' => 'open_orchestra_user_admin.block_configuration.category.user',
+                'name'     => 'open_orchestra_user_admin.block.login.title',
+                'description' => 'open_orchestra_user_admin.block.login.description',
             ),
         );
 

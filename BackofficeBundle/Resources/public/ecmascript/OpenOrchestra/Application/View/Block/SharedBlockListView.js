@@ -27,7 +27,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
         return [
             {
                 name: "label",
-                title: Translator.trans('open_orchestra_backoffice.table.shared_block.name'),
+                title: Translator.trans('open_orchestra_backoffice.table.shared_block.label'),
                 orderable: true,
                 orderDirection: 'desc',
                 visibile: true,
@@ -73,7 +73,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = Backbone.history.generateUrl('editBlock', {blockId: rowData.get('id')});
+        let link = Backbone.history.generateUrl('editBlock', {blockId: rowData.get('id'), blockLabel: rowData.get('label')});
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link

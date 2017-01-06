@@ -15,13 +15,13 @@ class BlockTypeTest extends AbstractBaseTestCase
      * @var BlockType
      */
     protected $blockType;
-    protected $blockClass = 'fakeBlockClass';
     protected $templateManager;
     protected $contextManager;
     protected $generateFormManager;
     protected $blockToArrayTransformer;
     protected $blockFormTypeSubscriber;
     protected $templateName = 'template';
+    protected $siteRepository;
 
     /**
      * Set up the test
@@ -43,7 +43,6 @@ class BlockTypeTest extends AbstractBaseTestCase
         Phake::when($this->generateFormManager)->getTemplate(Phake::anyParameters())->thenReturn($this->templateName);
 
         $this->blockType = new BlockType(
-            $this->blockClass,
             $this->templateManager,
             $this->contextManager,
             $this->siteRepository,

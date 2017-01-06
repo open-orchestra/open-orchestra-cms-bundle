@@ -7,6 +7,8 @@ parameters:
     open_orchestra_api.transformer.area.class: OpenOrchestra\ApiBundle\Transformer\AreaTransformer
     open_orchestra_api.transformer.block.class: OpenOrchestra\ApiBundle\Transformer\BlockTransformer
     open_orchestra_api.transformer.block_collection.class: OpenOrchestra\ApiBundle\Transformer\BlockCollectionTransformer
+    open_orchestra_api.transformer.block_component_collection.class: OpenOrchestra\ApiBundle\Transformer\BlockComponentCollectionTransformer
+    open_orchestra_api.transformer.block_component.class: OpenOrchestra\ApiBundle\Transformer\BlockComponentTransformer
     open_orchestra_api.transformer.content_type.class: OpenOrchestra\ApiBundle\Transformer\ContentTypeTransformer
     open_orchestra_api.transformer.content_type_collection.class: OpenOrchestra\ApiBundle\Transformer\ContentTypeCollectionTransformer
     open_orchestra_api.transformer.content.class: OpenOrchestra\ApiBundle\Transformer\ContentTransformer
@@ -81,7 +83,6 @@ services:
         arguments:
             - '%open_orchestra_api.facade.block.class%'
             - '@open_orchestra_backoffice.display_block_manager'
-            - '@open_orchestra_model.repository.node'
             - '@open_orchestra_backoffice.manager.block_configuration'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
@@ -89,6 +90,19 @@ services:
         class: '%open_orchestra_api.transformer.block_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.block_collection.class%'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.block_component:
+        class: '%open_orchestra_api.transformer.block_component.class%'
+        arguments:
+            - '%open_orchestra_api.facade.block_component.class%'
+            - '@open_orchestra_backoffice.manager.block_configuration'
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.block_component_collection:
+        class: '%open_orchestra_api.transformer.block_component_collection.class%'
+        arguments:
+            - '%open_orchestra_api.facade.block_component_collection.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content_type:

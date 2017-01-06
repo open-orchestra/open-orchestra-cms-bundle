@@ -11,8 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class VideoStrategy extends AbstractBlockStrategy
 {
-    const TEMPLATE = 'OpenOrchestraBackofficeBundle:Block/Video/Form:form.html.twig';
-
     /**
      * @param BlockInterface $block
      *
@@ -51,86 +49,72 @@ class VideoStrategy extends AbstractBlockStrategy
      */
     protected function addYoutubeForm(FormBuilderInterface $builder)
     {
-        $builder
+        $builder->add('youtube', 'form', array(
+            'inherit_data' => true,
+            'label' => false,
+            'mapped' => false,
+            'required' => false,
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
+            'attr' => array(
+                'data-video-type' => 'youtube'
+            )
+        ));
+
+        $builder->get('youtube')
             ->add('youtubeVideoId', 'oo_video', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.video_id',
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeWidth', 'text', array(
                 'empty_data' => '480',
                 'label' => 'open_orchestra_backoffice.block.video.youtube.width',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeHeight', 'text', array(
                 'empty_data' => '269',
                 'label' => 'open_orchestra_backoffice.block.video.youtube.height',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeAutoplay', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.autoplay',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeFs', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.fs',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeHl', 'orchestra_language', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.hl',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeShowinfo', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.showinfo',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeRel', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.rel.title',
                 'required'  => false,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.block.video.youtube.rel.helper'),
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeDisablekb', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.disablekb',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeLoop', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.loop',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeControls', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.controls',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeTheme', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.theme',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
             ->add('youtubeColor', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.color',
                 'required'  => false,
-                'group_id' => 'data',
-                'sub_group_id' => 'content',
             ))
         ;
     }
@@ -142,7 +126,18 @@ class VideoStrategy extends AbstractBlockStrategy
      */
     protected function addDailyMotionForm($builder)
     {
-        $builder
+        $builder->add('dailymotion', 'form', array(
+            'virtual' => true,
+            'label' => false,
+            'mapped' => false,
+            'required' => false,
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
+            'attr' => array(
+                'data-video-type' => 'dailymotion'
+            )
+        ));
+        $builder->get('dailymotion')
             ->add('dailymotionVideoId', 'oo_video', array(
                 'label' => 'open_orchestra_backoffice.block.video.dailymotion.video_id',
                 'group_id' => 'data',
@@ -227,7 +222,18 @@ class VideoStrategy extends AbstractBlockStrategy
      */
     protected function addVimeoForm($builder)
     {
-        $builder
+        $builder->add('vimeo', 'form', array(
+            'virtual' => true,
+            'label' => false,
+            'mapped' => false,
+            'required' => false,
+            'group_id' => 'data',
+            'sub_group_id' => 'content',
+            'attr' => array(
+                'data-video-type' => 'vimeo'
+            )
+        ));
+        $builder->get('vimeo')
             ->add('vimeoVideoId', 'oo_video', array(
                 'label' => 'open_orchestra_backoffice.block.video.vimeo.video_id',
                 'group_id' => 'data',
@@ -327,16 +333,6 @@ class VideoStrategy extends AbstractBlockStrategy
             'vimeoBadge' => false,
             'vimeoColor' => false,
         );
-    }
-
-    /**
-     * Get block form template
-     *
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return self::TEMPLATE;
     }
 
     /**

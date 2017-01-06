@@ -16,6 +16,10 @@ open_orchestra_user_admin:
             title: Remove this user of group?
     password:
         title: Password
+    block:
+        login:
+            title: Login
+            description: Display a log form.
     form:
         title: General
         super_admin_help_text: This user is super admin, so it is impossible to select rights because he already has all the access.

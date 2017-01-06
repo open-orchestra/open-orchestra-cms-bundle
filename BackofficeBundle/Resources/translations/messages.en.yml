@@ -298,6 +298,7 @@ open_orchestra_backoffice:
                 manually: Or specify manually
         block:
             success: The block has been modified
+            creation: The block has been created
             label: Block label
             max_age: Max age of the response for this block
             id: Html id for the block
@@ -444,9 +445,6 @@ open_orchestra_backoffice:
         language_list:
             title: Language choice
             description: Display dropdown list with all the languages of the site.
-        login:
-            title: Login
-            description: Display a log form.
         delete_question: Delete this block?
         delete_explanation: The removal will be final.
         video:

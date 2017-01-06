@@ -71,6 +71,7 @@ class BlockToArrayTransformerTest extends AbstractBaseTestCase
         Phake::when($data)->getAttributes()->thenReturn(array('foo' => $element));
 
         $this->assertSame(array(
+            'id' => $element,
             'label' => $element,
             'style' => $element,
             'maxAge' => $element,

@@ -30,7 +30,7 @@ class BlockView extends OrchestraView
     }
 
     /**
-     * Render area
+     * Render block
      */
     render() {
         let template = this._renderTemplate('Block/blockView',
@@ -74,6 +74,7 @@ class BlockView extends OrchestraView
      */
     _deleteBlock() {
         this._block.destroy({
+            context: 'node',
             urlParameter: {
                 nodeId: this._node.get('node_id'),
                 siteId: this._node.get('site_id'),

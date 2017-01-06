@@ -7,9 +7,7 @@ use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager;
-use OpenOrchestra\ModelBundle\Repository\NodeRepository;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class BlockTransformer
@@ -17,25 +15,20 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 class BlockTransformer extends AbstractTransformer
 {
     protected $displayBlockManager;
-    /** @var  NodeRepositoryInterface */
-    protected $nodeRepository;
     protected $blockConfigurationManager;
 
     /**
      * @param string                    $facadeClass
      * @param DisplayBlockManager       $displayBlockManager
-     * @param NodeRepositoryInterface   $nodeRepository
      * @param BlockConfigurationManager $blockConfigurationManager
      */
     public function __construct(
         $facadeClass,
         DisplayBlockManager      $displayBlockManager,
-        NodeRepositoryInterface  $nodeRepository,
         BlockConfigurationManager $blockConfigurationManager
     ) {
         parent::__construct($facadeClass);
         $this->displayBlockManager = $displayBlockManager;
-        $this->nodeRepository = $nodeRepository;
         $this->blockConfigurationManager = $blockConfigurationManager;
     }
 
@@ -54,6 +47,7 @@ class BlockTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         $facade->component = $block->getComponent();
+        $facade->name = $this->blockConfigurationManager->getBlockComponentName($block->getComponent());
         $facade->label = $block->getLabel();
         $facade->style = $block->getStyle();
         $facade->id = $block->getId();

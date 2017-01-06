@@ -18,15 +18,14 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
  */
 class BlockType extends AbstractType
 {
-    protected $blockClass;
     protected $templateManager;
     protected $contextManager;
     protected $generateFormManager;
+    protected $siteRepository;
     protected $blockToArrayTransformer;
     protected $blockFormTypeSubscriber;
 
     /**
-     * @param string                   $blockClass
      * @param TemplateManager          $templateManager
      * @param CurrentSiteIdInterface   $contextManager
      * @param GenerateFormManager      $generateFormManager
@@ -35,7 +34,6 @@ class BlockType extends AbstractType
      * @param EventSubscriberInterface $blockFormTypeSubscriber
      */
     public function __construct(
-        $blockClass,
         TemplateManager $templateManager,
         CurrentSiteIdInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
@@ -43,7 +41,6 @@ class BlockType extends AbstractType
         BlockToArrayTransformer $blockToArrayTransformer,
         EventSubscriberInterface $blockFormTypeSubscriber
     ) {
-        $this->blockClass = $blockClass;
         $this->templateManager = $templateManager;
         $this->contextManager = $contextManager;
         $this->siteRepository = $siteRepository;

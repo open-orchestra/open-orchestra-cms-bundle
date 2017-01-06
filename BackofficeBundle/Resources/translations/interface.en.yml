@@ -61,7 +61,7 @@ open_orchestra_backoffice:
                 'true': 'True'
                 'false': 'False'
         shared_block:
-            name: Name
+            label: Label
             updated_at: Updated date
             type: Type
     dashboard:
@@ -114,8 +114,11 @@ open_orchestra_backoffice:
             linked_to_site: Shared on other sites
     shared_block:
         title_list: Blocs partagés
+        title_list_new: Select a block to parameterize
+        title_new: Parameterize the block
         search_engine:
-            name: Name
+            label: Label
+            type: Type
     block:
       add_block: Add a block
       confirm_remove:

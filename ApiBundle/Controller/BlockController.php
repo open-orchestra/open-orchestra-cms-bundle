@@ -5,11 +5,14 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\BlockEvents;
+use OpenOrchestra\ModelInterface\Event\BlockEvent;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class BlockController
@@ -51,6 +54,46 @@ class BlockController extends BaseController
         return $facade;
     }
 
+    /**
+     * @return FacadeInterface
+     *
+     * @Config\Route("/list/block-component", name="open_orchestra_api_block_list_block-component")
+     * @Config\Method({"GET"})
+     */
+    public function listAvailableBlockComponentAction()
+    {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+
+        $availableBlocks = $site->getBlocks();
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('block_component_collection')->transform($availableBlocks);
+    }
+
+    /**
+     * @param string  $blockId
+     *
+     * @Config\Route("/delete-block/{blockId}", name="open_orchestra_api_block_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteBlockAction($blockId)
+    {
+        $block = $this->get('open_orchestra_model.repository.block')->findById($blockId);
+        if (!$block instanceof BlockInterface) {
+            throw new \UnexpectedValueException();
+        }
+
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $block);
+
+        $objectManager = $this->get('object_manager');
+        $objectManager->remove($block);
+        $objectManager->flush();
+        $this->dispatchEvent(BlockEvents::POST_BLOCK_DELETE, new BlockEvent($block));
+
+        return array();
+    }
 
     /**
      * @param string $language

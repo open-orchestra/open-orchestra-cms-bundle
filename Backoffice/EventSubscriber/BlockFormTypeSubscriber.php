@@ -3,9 +3,11 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Util\Inflector;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class BlockFormTypeSubscriber
@@ -20,8 +22,7 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::SUBMIT => 'submit',
-            FormEvents::PRE_SET_DATA => 'preSetData',
+            FormEvents::SUBMIT => 'submit'
         );
     }
 
@@ -36,27 +37,33 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent $event
      */
-    public function preSetData(FormEvent $event)
-    {
-        $form = $event->getForm();
-        $data = $event->getData();
-        $label = $data->getLabel();
-        $blockPosition = $form->getConfig()->getOption('blockPosition');
-        if ('' == $label && null !== $blockPosition) {
-            $label = $this->generateLabel($data->getComponent(), $blockPosition);
-            $data->setLabel($label);
-        }
-    }
-
-    /**
-     * @param FormEvent $event
-     */
     public function submit(FormEvent $event)
     {
         $block = $event->getForm()->getData();
         if (null !== $block) {
             $blockAttributes = array();
-            foreach ($event->getForm()->all() as $key => $children) {
+            $blockAttributes = $this->getBlockAttributes($event->getForm(), $block, $blockAttributes);
+
+            $block->setAttributes($blockAttributes);
+        }
+    }
+
+    /**
+     * @param FormInterface  $form
+     * @param BlockInterface $block
+     * @param array          $blockAttributes
+     *
+     * @return array
+     */
+    protected function getBlockAttributes(
+        FormInterface $form,
+        BlockInterface $block,
+        array $blockAttributes
+    ) {
+        foreach ($form->all() as $key => $children) {
+            if ($children->count() > 0) {
+                $blockAttributes = $this->getBlockAttributes($children, $block, $blockAttributes);
+            } else {
                 $value = $children->getData();
                 if (in_array($key, $this->fixedParameters)) {
                     $setter = 'set' . Inflector::classify($key);
@@ -68,18 +75,8 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
                 }
                 $blockAttributes[$key] = $value;
             }
-            $block->setAttributes($blockAttributes);
         }
-    }
 
-    /**
-     * @param string $component
-     * @param int    $blockPosition
-     *
-     * @return string
-     */
-    protected function generateLabel($component, $blockPosition)
-    {
-        return $component . ' #'. ($blockPosition +1);
+        return $blockAttributes;
     }
 }

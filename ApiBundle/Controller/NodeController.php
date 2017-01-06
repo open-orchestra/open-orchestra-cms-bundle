@@ -145,7 +145,6 @@ class NodeController extends BaseController
         return array();
     }
 
-
     /**
      * @param string  $nodeId
      * @param string  $siteId

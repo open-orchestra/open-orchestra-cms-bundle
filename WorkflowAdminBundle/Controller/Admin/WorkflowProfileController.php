@@ -44,6 +44,7 @@ class WorkflowProfileController extends AbstractAdminController
                 Response::HTTP_CREATED,
                 array('Content-type' => 'text/html; charset=utf-8', 'workflowProfileId' => $workflowProfile->getId())
             );
+
             return $response;
         }
 

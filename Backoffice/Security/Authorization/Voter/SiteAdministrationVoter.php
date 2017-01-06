@@ -34,7 +34,7 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
                     'OpenOrchestra\LogBundle\Model\LogInterface',
                     'OpenOrchestra\UserBundle\Model\UserInterface',
                     'OpenOrchestra\Backoffice\Model\GroupInterface',
-                    'OpenOrchestra\Backoffice\Model\BlockInterface',
+                    'OpenOrchestra\ModelInterface\Model\BlockInterface',
                 )
             );
         }
@@ -64,7 +64,6 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-
         if ($this->isSuperAdmin($token)) {
             return true;
         }

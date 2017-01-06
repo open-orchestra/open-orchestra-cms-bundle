@@ -47,6 +47,10 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('fixed_attributes')
                 ->info('Add the global block attributes')
                 ->prototype('scalar')->end()
+                ->defaultValue(array(
+                    'maxAge',
+                    'label'
+                ))
             ->end()
             ->arrayNode('front_roles')
                 ->info('Role than can be given to the user on the Front website')
@@ -272,6 +276,12 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('category')
                         ->info('Translation key of block category (navigation, search, ...)')
+                    ->end()
+                    ->scalarNode('name')
+                        ->info('Translation key of block component')
+                    ->end()
+                    ->scalarNode('description')
+                        ->info('Translation key of description of block component')
                     ->end()
                 ->end()
             ->end();

@@ -1,0 +1,55 @@
+<div class="top-action-buttons">
+    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('listSharedBlock') %>" role="button">
+        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
+    </a>
+</div>
+<h1> <%= Translator.trans('open_orchestra_backoffice.shared_block.title_list_new') %></h1>
+<%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
+<div>
+    <form class="form-horizontal search-engine">
+        <div class="form-group col-lg-6">
+            <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.shared_block.search_engine.name')%></label>
+            <div class="col-md-8">
+                <input type="text" name='name' class="form-control" id="title" placeholder="">
+            </div>
+        </div>
+        <div class="form-group col-lg-6">
+            <label for="select-state" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.shared_block.search_engine.type')%></label>
+            <div class="col-md-8">
+                <div class="styled-select">
+                    <select class="form-control" name='category'>
+                        <option></option>
+                        <% _.each(categories, function(category, key) { %>
+                            <option value="<%= category %>"><%= category %></option>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-lg-12">
+            <div class="col-lg-6">
+                <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+            </div>
+        </div>
+    </form>
+    <div class="header-results clearfix">
+        <div class="nb-results pull-left">
+            <%= Translator.trans('open_orchestra_datatable.info', {total: '<span>'+numberResult+'</span>'}) %>
+        </div>
+    </div>
+    <div class="well add-block clearfix">
+        <% _.each(orderedBlockComponents, function(blockComponents, category) { %>
+            <div class="group">
+                <div class="underline-label"><%= category %></div>
+                <% _.each(blockComponents, function(blockComponent, key) { %>
+                    <div class="col-lg-3">
+                        <a class="block" href="#<%= Backbone.history.generateUrl('newBlock', {language: language, component: blockComponent.get('component'), name: blockComponent.get('name')}) %>">
+                            <span><%= blockComponent.get('name')%></span>
+                            <p><%= blockComponent.get('description')%></p>
+                        </a>
+                    </div>
+                <% }); %>
+            </div>
+        <% }); %>
+    </div>
+</div>

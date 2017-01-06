@@ -29,6 +29,8 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('area')->defaultValue('OpenOrchestra\ApiBundle\Facade\AreaFacade')->end()
                     ->scalarNode('block')->defaultValue('OpenOrchestra\ApiBundle\Facade\BlockFacade')->end()
                     ->scalarNode('block_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\BlockCollectionFacade')->end()
+                    ->scalarNode('block_component')->defaultValue('OpenOrchestra\ApiBundle\Facade\BlockComponentFacade')->end()
+                    ->scalarNode('block_component_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\BlockComponentCollectionFacade')->end()
                     ->scalarNode('content_type')->defaultValue('OpenOrchestra\ApiBundle\Facade\ContentTypeFacade')->end()
                     ->scalarNode('content_type_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\ContentTypeCollectionFacade')->end()
                     ->scalarNode('content')->defaultValue('OpenOrchestra\ApiBundle\Facade\ContentFacade')->end()
