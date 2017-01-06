@@ -62,6 +62,8 @@ class BlockController extends BaseController
      */
     public function listAvailableBlockComponentAction()
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, BlockInterface::ENTITY_TYPE);
+
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
