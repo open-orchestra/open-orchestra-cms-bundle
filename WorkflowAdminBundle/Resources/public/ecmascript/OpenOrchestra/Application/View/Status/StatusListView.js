@@ -1,19 +1,12 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin  from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class StatusListView
  */
-class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
+class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
-    /**
-     * @inheritdoc
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['change .delete-checkbox'] = '_changeDeleteCheckbox';
-    }
-
     /**
      * @inheritDoc
      */
@@ -26,12 +19,7 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
      */
     getColumnsDefinition() {
         return [
-            {
-                name: "delete",
-                orderable: false,
-                width: '20px',
-                createdCell: this._createCheckbox
-            },
+            this._getColumnsDefinitionDeleteCheckbox(),
             {
                 name: "label",
                 title: Translator.trans('open_orchestra_workflow_admin.table.statuses.label'),
@@ -93,7 +81,6 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
      */
     _createCheckbox(td, cellData, rowData) {
         let id = 'checkbox' + rowData.cid;
-
         let attributes = {type: 'checkbox', id: id, class:'delete-checkbox'};
         if (!rowData.get('rights').can_delete) {
             attributes.disabled = 'disabled';
@@ -103,16 +90,6 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
         $checkbox.data(rowData);
         $(td).append($checkbox);
         $(td).append($('<label>', {for: id}))
-    }
-
-    /**
-     * @param {Object} event
-     *
-     * @private
-     */
-    _changeDeleteCheckbox(event) {
-        let status = $(event.currentTarget).data();
-        status.set('delete', $(event.currentTarget).prop('checked'));
     }
 
     /**

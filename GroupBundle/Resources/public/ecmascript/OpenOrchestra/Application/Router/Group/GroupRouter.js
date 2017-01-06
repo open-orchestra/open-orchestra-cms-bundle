@@ -45,7 +45,7 @@ class GroupRouter extends OrchestraRouter
         if (null === page) {
             page = 1
         }
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let pageLength = 10;
         page = Number(page) - 1;
         new SitesAvailable().fetch({
@@ -81,7 +81,7 @@ class GroupRouter extends OrchestraRouter
      */
     editGroup(groupId) {
         let url = Routing.generate('open_orchestra_group_form', {groupId: groupId});
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let groupFormView = new GroupFormView({form: form, groupId: groupId});
             Application.getRegion('content').html(groupFormView.render().$el);

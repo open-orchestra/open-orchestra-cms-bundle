@@ -45,8 +45,8 @@ class NodeView extends OrchestraView
             }
         );
         this.$el.html(template);
-        this._diplayLoader($('.well', this.$el));
-        this._diplayLoader($('.node-action-toolbar', this.$el));
+        this._displayLoader($('.well', this.$el));
+        this._displayLoader($('.node-action-toolbar', this.$el));
         this._renderNodeActionToolbar($('.node-action-toolbar', this.$el));
         this._renderNodeTemplate($('.node-template .well', this.$el));
 

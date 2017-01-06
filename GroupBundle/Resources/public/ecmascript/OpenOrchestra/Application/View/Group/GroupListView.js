@@ -1,17 +1,17 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin  from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class GroupListView
  */
-class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
+class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
     /**
      * @inheritdoc
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events['change .delete-checkbox'] = '_clickDeleteCheckbox';
         this.events['click .clone-icon'] = '_clickDuplicateIcon';
     }
 
@@ -27,12 +27,7 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
      */
     getColumnsDefinition() {
         return [
-            {
-                name: "delete",
-                orderable: false,
-                width: '20px',
-                createdCell: this._createDeleteCheckbox
-            },
+            this._getColumnsDefinitionDeleteCheckbox(),
             {
                 name: "label",
                 title: Translator.trans('open_orchestra_group.table.groups.label'),
@@ -123,16 +118,6 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
        $icon.data(rowData);
        $(td).append($icon);
    }
-
-    /**
-     * @param {Object} event
-     *
-     * @private
-     */
-    _clickDeleteCheckbox(event) {
-        let group = $(event.currentTarget).data();
-        group.set('delete', $(event.currentTarget).prop('checked'));
-    }
 
     /**
      * @param {Object} event
