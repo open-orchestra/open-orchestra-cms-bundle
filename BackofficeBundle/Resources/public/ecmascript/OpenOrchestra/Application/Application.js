@@ -22,12 +22,9 @@ import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
 import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
 import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
-<<<<<<< a239e585bc27572331c50d5a61194a86e0b38095
 import Accordion             from '../Service/Form/Behavior/Accordion'
-=======
 import BlockVideoType        from '../Service/Form/Behavior/BlockVideoType'
 import ColorPicker           from '../Service/Form/Behavior/ColorPicker'
->>>>>>> add edit block
 
 import ApplicationError      from '../Service/Error/ApplicationError'
 import AjaxError             from '../Service/Error/AjaxError'
@@ -210,12 +207,9 @@ class Application
         FormBehaviorManager.add(DatePicker);
         FormBehaviorManager.add(GenerateId);
         FormBehaviorManager.add(CollectionSortable);
-<<<<<<< a239e585bc27572331c50d5a61194a86e0b38095
         FormBehaviorManager.add(Accordion);
-=======
         FormBehaviorManager.add(BlockVideoType);
         FormBehaviorManager.add(ColorPicker);
->>>>>>> add edit block
     }
 }
 

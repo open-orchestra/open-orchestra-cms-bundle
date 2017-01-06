@@ -24,8 +24,8 @@ class BlockVideoType extends AbstractBehavior
      */
     activate($element) {
         let type = $('select#video_videoType', $element).val();
-        $('div[data-video-type]', $element).closest('.form-group').hide();
-        $('div[data-video-type="'+ type +'"]', $element).closest('.form-group').show();
+        $('[data-video-type]', $element).closest('.form-group').hide();
+        $('[data-video-type="'+ type +'"]', $element).closest('.form-group').show();
     }
 
     /**
@@ -36,8 +36,8 @@ class BlockVideoType extends AbstractBehavior
      */
     _changeVideoType(event) {
         let type = $(event.currentTarget).val();
-        $('div[data-video-type]', this.$el).closest('.form-group').hide();
-        $('div[data-video-type="'+ type +'"]', this.$el).closest('.form-group').show();
+        $('[data-video-type]', this.$el).closest('.form-group').hide();
+        $('[data-video-type="'+ type +'"]', this.$el).closest('.form-group').show();
     }
 
     /**

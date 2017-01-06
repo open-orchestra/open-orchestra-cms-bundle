@@ -49,7 +49,8 @@ class Configuration implements ConfigurationInterface
                 ->prototype('scalar')->end()
                 ->defaultValue(array(
                     'maxAge',
-                    'label'
+                    'label',
+                    'style'
                 ))
             ->end()
             ->arrayNode('front_roles')

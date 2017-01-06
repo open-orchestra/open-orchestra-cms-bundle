@@ -3,11 +3,9 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Util\Inflector;
-use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * Class BlockFormTypeSubscriber
@@ -42,28 +40,7 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
         $block = $event->getForm()->getData();
         if (null !== $block) {
             $blockAttributes = array();
-            $blockAttributes = $this->getBlockAttributes($event->getForm(), $block, $blockAttributes);
-
-            $block->setAttributes($blockAttributes);
-        }
-    }
-
-    /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
-     * @param array          $blockAttributes
-     *
-     * @return array
-     */
-    protected function getBlockAttributes(
-        FormInterface $form,
-        BlockInterface $block,
-        array $blockAttributes
-    ) {
-        foreach ($form->all() as $key => $children) {
-            if ($children->count() > 0) {
-                $blockAttributes = $this->getBlockAttributes($children, $block, $blockAttributes);
-            } else {
+            foreach ($event->getForm()->all() as $key => $children) {
                 $value = $children->getData();
                 if (in_array($key, $this->fixedParameters)) {
                     $setter = 'set' . Inflector::classify($key);
@@ -75,8 +52,7 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
                 }
                 $blockAttributes[$key] = $value;
             }
+            $block->setAttributes($blockAttributes);
         }
-
-        return $blockAttributes;
     }
 }
