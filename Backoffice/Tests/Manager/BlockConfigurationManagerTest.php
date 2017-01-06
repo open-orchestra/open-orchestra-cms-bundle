@@ -22,7 +22,7 @@ class BlockConfigurationManagerTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $blockConfiguration = array(
             'menu' => array(
                 'category' => 'category',
