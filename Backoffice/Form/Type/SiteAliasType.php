@@ -121,6 +121,7 @@ class SiteAliasType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => $this->siteAliasClass,
+                'columns' => array('domain', 'language', 'prefix'),
                 'group_enabled' => true,
                 'group_render' => array(
                     'information' => array(

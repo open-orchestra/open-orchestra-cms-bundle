@@ -52,12 +52,11 @@ class SiteType extends AbstractType
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'error_bubbling' => false,
                 'attr' => array(
-                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_option.add'),
-                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_option.new'),
-                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
+                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.website.add_alias'),
+                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.delete'),
                 ),
-                'sortable' => true,
                 'options' => array( 'label' => false ),
                 'group_id' => 'alias',
             ))
@@ -154,6 +153,10 @@ class SiteType extends AbstractType
                     'sitemap' => array(
                         'rank' => 1,
                         'label' => 'open_orchestra_backoffice.form.website.sub_group.sitemap',
+                    ),
+                    'robot' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.robot',
                     ),
                     'alias' => array(
                         'rank' => 2,

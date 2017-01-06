@@ -7,7 +7,7 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class UserTypeTest
+ * Class CollectionExtensionTest
  */
 class CollectionExtensionTest extends AbstractBaseTestCase
 {

@@ -6,6 +6,26 @@ import SiteAlias      from './SiteAlias'
  */
 class Site extends OrchestraModel
 {
+
+    /**
+     * Pre initialize
+     */
+    preinitialize() {
+        this.idAttribute = 'site_id';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    _getSyncUrl(method, options) {
+        let urlParameter = options.urlParameter || {};
+        urlParameter.siteId = this.get('site_id');
+        switch (method) {
+            case "delete":
+                return Routing.generate('open_orchestra_api_site_delete', urlParameter);
+        }
+    }
+
     /**
      * Parse server response to create nested object
      * @param response
