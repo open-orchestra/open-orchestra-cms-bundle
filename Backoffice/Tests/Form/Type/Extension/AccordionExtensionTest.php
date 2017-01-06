@@ -46,7 +46,7 @@ class AccordionExtensionTest extends AbstractBaseTestCase
 
         $formView = Phake::mock('Symfony\Component\Form\FormView');
 
-        $this->formExtension->buildView($formView, $form);
+        $this->formExtension->buildView($formView, $form, array());
 
         $this->assertEquals($formView->vars['attr']['class'], 'collection-sortable');
     }

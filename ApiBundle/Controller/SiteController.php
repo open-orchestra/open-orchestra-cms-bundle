@@ -107,7 +107,7 @@ class SiteController extends BaseController
     public function deleteAction($siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, SiteInterface::ENTITY_TYPE);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $site);
 
         if ($site instanceof SiteInterface) {
             $site->setDeleted(true);
