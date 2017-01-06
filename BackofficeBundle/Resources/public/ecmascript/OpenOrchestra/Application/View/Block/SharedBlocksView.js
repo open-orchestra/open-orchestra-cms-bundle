@@ -36,9 +36,11 @@ class SharedBlocksView extends OrchestraView
             });
             this.$el.html(template);
         } else {
+            let categories = _.uniq(this._collection.pluck('category'));
             let template = this._renderTemplate('Block/sharedBlocksView', {
                 language: this._language,
-                siteLanguages: this._siteLanguages
+                siteLanguages: this._siteLanguages,
+                categories: categories
             });
             this.$el.html(template);
             this._listView = new SharedBlockListView({
@@ -63,11 +65,10 @@ class SharedBlocksView extends OrchestraView
         event.stopPropagation();
 
         let formData = $('form.search-engine', this.$el).serializeArray();
-        let filters = {};
         for (let data of formData) {
-            filters[data.name] = data.value;
+            this._listView.api.column(data.name+':name').search(data.value);
         }
-        this._listView.filter(filters);
+        this._listView.api.draw();
 
         return false;
     }

@@ -35,21 +35,14 @@ class BlockController extends BaseController
     public function listSharedBlockTableAction(Request $request, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, BlockInterface::ENTITY_TYPE);
-        $mapping = array(
-            'label' => 'label'
-        );
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, array());
         $repository = $this->get('open_orchestra_model.repository.block');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
 
         $collection = $repository->findForPaginateBySiteIdAndLanguage($configuration, $siteId, $language, true);
-        //$recordsTotal = $repository->countBySiteIdAndLanguage($siteId, $language, true);
-        //$recordsFiltered = $repository->countWithFilterBySiteIdAndLanguage($configuration, $siteId, $language, true);
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('block_collection');
         $facade = $collectionTransformer->transform($collection);
-        //$facade->recordsTotal = $recordsTotal;
-        //$facade->recordsFiltered = $recordsFiltered;
 
         return $facade;
     }
