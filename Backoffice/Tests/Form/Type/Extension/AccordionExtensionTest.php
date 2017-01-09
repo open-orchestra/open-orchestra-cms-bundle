@@ -64,8 +64,14 @@ class AccordionExtensionTest extends AbstractBaseTestCase
         $this->formExtension->buildView($formView, $form, array());
 
         $this->assertEquals($formView->vars['columns'], array(
-            'fakeColumn0Label' => 'fakeColumn0Data',
-            'fakeColumn1Label' => 'fakeColumn1Data',
+            'fakeColumn0' => array(
+                'label' => 'fakeColumn0Label',
+                'data' => 'fakeColumn0Data'
+            ),
+            'fakeColumn1' => array(
+                'label' => 'fakeColumn1Label',
+                'data' => 'fakeColumn1Data'
+            ),
         ));
     }
 

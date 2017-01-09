@@ -20,17 +20,28 @@ class ContentTypeTypeSubscriberTest extends AbstractBaseTestCase
     protected $event;
     protected $form;
     protected $data;
+    protected $formConfig;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = Phake::mock('Symfony\Component\Form\Form');
+        $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
         $this->data = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
+        $child = Phake::mock('Symfony\Component\Form\FormInterface');;
+        $resolvedFormType = Phake::mock('Symfony\Component\Form\ResolvedFormTypeInterface');
+        $this->formConfig = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+
+        Phake::when($resolvedFormType)->getName()->thenReturn('text');
+        Phake::when($this->formConfig)->getType()->thenReturn($resolvedFormType);
+        Phake::when($child)->getConfig()->thenReturn($this->formConfig);
+        Phake::when($child)->getName()->thenReturn('contentTypeId');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->data);
+        Phake::when($this->event)->getData()->thenReturn($this->data);
+        Phake::when($this->form)->get('contentTypeId')->thenReturn($child);
 
         $this->subscriber = new ContentTypeTypeSubscriber();
     }
@@ -54,16 +65,18 @@ class ContentTypeTypeSubscriberTest extends AbstractBaseTestCase
     /**
      * @param string $contentTypeId
      * @param array $options
+     * @param array $expectedOptions
      *
      * @dataProvider generateOptions
      */
-    public function testOnPreSetData($contentTypeId, $options)
+    public function testOnPreSetData($contentTypeId, array $options, $nbrCall, array $expectedOptions)
     {
         Phake::when($this->data)->getContentTypeId()->thenReturn($contentTypeId);
+        Phake::when($this->formConfig)->getOptions()->thenReturn($options);
 
         $this->subscriber->onPreSetData($this->event);
 
-        Phake::verify($this->form)->add('contentTypeId', 'text', $options);
+        Phake::verify($this->form, Phake::times($nbrCall))->add('contentTypeId', 'text', $expectedOptions);
     }
 
     /**
@@ -72,21 +85,35 @@ class ContentTypeTypeSubscriberTest extends AbstractBaseTestCase
     public function generateOptions()
     {
         return array(
-            array(null, array(
-                'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
-                'attr' => array(
-                    'class' => 'generate-id-dest',
-                    'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
-                )
-            )),
-            array('fakeContentId', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
-                'attr' => array(
-                    'class' => 'generate-id-dest',
-                    'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+            array(null,
+                array(
+                    'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
+                    'attr' => array(
+                        'class' => 'generate-id-dest',
+                        'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+                    )
                 ),
-                'disabled' => true
-            ))
+                0,
+                array()
+            ),
+            array('fakeContentId',
+                array(
+                    'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
+                    'attr' => array(
+                        'class' => 'generate-id-dest',
+                        'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+                    )
+                ),
+                1,
+                array(
+                    'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
+                    'attr' => array(
+                        'class' => 'generate-id-dest',
+                        'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+                    ),
+                    'disabled' => true
+                )
+            )
         );
     }
 }

@@ -23,7 +23,7 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->form = new SiteAliasType($this->siteAliasClass);
+        $this->form = new SiteAliasType($this->siteAliasClass, array('en' => 'open_orchestra_backoffice.language.en', 'fr' => 'open_orchestra_backoffice.language.fr', 'de' => 'open_orchestra_backoffice.language.de'));
     }
 
     /**

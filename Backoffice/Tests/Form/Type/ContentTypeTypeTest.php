@@ -58,7 +58,7 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(10))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber($this->contentTypeTypeSubscriber);
         Phake::verify($builder)->addEventSubscriber($this->contentTypeStatusableSubscriber);
 
@@ -76,8 +76,43 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
 
         $this->form->configureOptions($resolverMock);
 
-        Phake::verify($resolverMock)->setDefaults(array(
-            'data_class' => $this->class,
-        ));
+        Phake::verify($resolverMock)->setDefaults(
+            array(
+                'data_class' => $this->class,
+                'group_enabled' => true,
+                'group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content_type.group.property',
+                    ),
+                    'field' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.content_type.group.field',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content_type.sub_group.property',
+                    ),
+                    'customization' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.content_type.sub_group.customization',
+                    ),
+                    'share' => array(
+                        'rank' => 2,
+                        'label' => 'open_orchestra_backoffice.form.content_type.sub_group.share',
+                    ),
+                    'visible' => array(
+                        'rank' => 3,
+                        'label' => 'open_orchestra_backoffice.form.content_type.sub_group.visible',
+                    ),
+                    'version' => array(
+                        'rank' => 4,
+                        'label' => 'open_orchestra_backoffice.form.content_type.sub_group.version',
+                    ),
+                ),
+            )
+        );
     }
 }
