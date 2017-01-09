@@ -5,6 +5,8 @@ namespace OpenOrchestra\Backoffice\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 
 /**
@@ -14,18 +16,21 @@ class SiteAliasType extends AbstractType
 {
     protected $siteAliasClass;
     protected $schemeChoices;
+    protected $frontLanguages;
 
     /**
      * @param string $siteAliasClass
      */
     public function __construct(
-        $siteAliasClass
+        $siteAliasClass,
+        array $frontLanguages
     ) {
         $this->siteAliasClass = $siteAliasClass;
         $this->schemeChoices = array(
             SchemeableInterface::SCHEME_HTTP => 'open_orchestra_backoffice.scheme.http',
             SchemeableInterface::SCHEME_HTTPS => 'open_orchestra_backoffice.scheme.https'
         );
+        $this->frontLanguages = $frontLanguages;
     }
 
     /**
@@ -153,6 +158,17 @@ class SiteAliasType extends AbstractType
                 ),
             )
         );
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $data = $view->vars['columns']['language']['data'];
+        $view->vars['columns']['language']['data'] = (array_key_exists($data, $this->frontLanguages)) ? $this->frontLanguages[$data] : '';
     }
 
     /**

@@ -1,5 +1,5 @@
 import OrchestraRouter from '../OrchestraRouter'
-import app             from '../../Application'
+import Application     from '../../Application'
 import KeywordListView from '../../View/Keyword/KeywordListView'
 import Keywords        from '../../Collection/Keyword/Keywords'
 
@@ -38,14 +38,14 @@ class KeywordRouter extends OrchestraRouter
      * @param {int} page
      */
     listKeyword(page = 1) {
-        this._displayLoader(app.getRegion('content'));
+        this._diplayLoader(Application.getRegion('content'));
         let collection = new Keywords();
         let keywordView = new KeywordListView({
             collection: collection,
             settings: {page: Number(page) - 1}
         });
         let el = keywordView.render().$el;
-        app.getRegion('content').html(el);
+        Application.getRegion('content').html(el);
     }
 }
 

@@ -482,6 +482,9 @@ img {
     background-color: transparent;
     padding: 0;
   }
+  .tab-content {
+	  background: transparent;
+  }
 }
 .blue-tabs {
   background: #c9dae7;
@@ -868,10 +871,9 @@ table.dataTable thead .sorting_desc:after {
   background-color: #f1f5f8;
   &:nth-of-type(2n+1) { background-color: #fff; }
 }
-.table-hide-striped > tbody > tr {
+.table-hide-striped > tbody {
   background-color: #f1f5f8;
-  &:nth-of-type(4n) { background-color: #fff; }
-  &:nth-of-type(4n+3) { background-color: #fff; }
+  &:nth-of-type(2n +1) { background-color: #fff; }
 }
 .table-form {
   border-radius: 0 0 30px 0;
@@ -1747,7 +1749,7 @@ fieldset {
  * GROUP EDIT
  * =================================================================*/
 .multi-languages.nav-tabs > li > a {
-	background-color: #fff;
+	background-color: transparent;
 	opacity: 0.5;
 }
 .multi-languages.nav-tabs > li.active > a {

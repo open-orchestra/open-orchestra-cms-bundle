@@ -98,8 +98,8 @@ open_orchestra_backoffice:
               asc: Croissant
               desc: Décroissant
             type_searchable: Type de champ de recherche
-            translatable: Traduisible
-            listable: Visible dans les listes du Backoffice
+            translatable: Champ multilingue
+            listable: Restituer dans le tableau back-office
             type: Type
             options: Champ existant
             field_searchable_view:
@@ -118,6 +118,9 @@ open_orchestra_backoffice:
                 date: Date
                 choice: Choix
                 content: Choix d'un contenu
+            sub_group:
+                property: Propriétés
+                parameter: Paramètres
         website:
             success: Le site a été modifié
             creation: Le site a été créé
@@ -177,28 +180,28 @@ open_orchestra_backoffice:
             name: Nom du contenu
             status: Statut
             language: Langue
-            linked_to_site: Lié au site courant
+            linked_to_site: Partagé sur les autres sites
             keywords: Mots-clé
             content_id: Id du contenu
         content_type:
             success: Le type de contenu a été modifié
             creation: Le type de contenu a été créé
             content_type_id: Id
-            names: Nom dans toutes les langues
+            names: Libellé back-office
             version: Version
             status: Statut
-            linked_to_site: Lié au site courant
+            linked_to_site: Partagé sur les autres sites
+            always_shared: Toujours (ou à la demande)
             default_display: Visible par défaut dans les listes du Backoffice
             default_listable_label:
                 name: Nom
-                status_label: Libellé du statut
-                version: Version
+                status_label: Etat workflow
                 language: Langue
-                linked_to_site: Lié au site courant
-                created_at: Créé le
-                created_by: Créé par
-                updated_at: Mis à jour le
-                updated_by: Mis à jour par
+                linked_to_site: Partagé sur les autres sites
+                created_at: Date de création
+                created_by: Auteur
+                updated_at: Date de mise à jour
+                updated_by: Auteur de la mise à jour
             fields: Champs
             keywords: Mots-clé
             template:
@@ -210,6 +213,15 @@ open_orchestra_backoffice:
             defining_statusable:
                 label: Définit des contenus ayant un workflow de validation
                 helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition intégreront un workflow de publication.
+            group:
+                property: Propriétés
+                field: Champs
+            sub_group:
+                property: Propriétés
+                customization: Personnalisation
+                share: Partage des contenus
+                visible: Eléments à afficher dans la liste back-office
+                version: Version
         template:
             success: Le gabarit a été sauvegardé
             name: Nom
@@ -322,7 +334,7 @@ open_orchestra_backoffice:
             use: Utiliser les champs de recherche pour obtenir une liste de contenus filtrés
         orchestra_fields:
             max_length: Longueur max
-            required_field: Champ requis
+            required_field: Champ obligatoire
             format: Format
             rounding_mode: Type d'arrondi
             choices: Choix

@@ -97,9 +97,9 @@ open_orchestra_backoffice:
             order_direction_choice:
               asc: Ascending
               desc: Descending
-            type_searchable: Field's type searchable
+            type_searchable: Multilingual field
             translatable: Translatable
-            listable: Visible in BackOffice list
+            listable: Return to the backoffice table
             type: Type
             options: Existing field
             field_searchable_view:
@@ -118,6 +118,9 @@ open_orchestra_backoffice:
                 date: Date
                 choice: Choice
                 content: Content choice
+            sub_group:
+                property: Properties
+                parameter: Parameters
         website:
             success: The website has been modified
             creation: The website has been created
@@ -177,28 +180,28 @@ open_orchestra_backoffice:
             name: Content name
             status: Status
             language: Language
-            linked_to_site: Link to the current site
+            linked_to_site: Shared on other sites
             keywords: Keywords
             content_id: Content id
         content_type:
             success: The content type has been modified
             creation: The content type has been created
             content_type_id: Id
-            names: Names in all the languages
+            names: Backoffice name
             version: Version
             status: Status
-            linked_to_site: Link to the current site
+            linked_to_site: Shared on other sites
+            always_shared: Always (or on demand)
             default_display: Visible by default in BackOffice list
             default_listable_label:
               name: Name
-              status_label: Status label
-              version: Version
+              status_label: Workflow state
               language: Language
-              linked_to_site: Linked to site
+              linked_to_site: Shared on other sites
               created_at: Created at
-              created_by: Created by
+              created_by: Author
               updated_at: Updated at
-              updated_by: Updated by
+              updated_by: Author of the update
             fields: Fields
             keywords: Keywords
             template:
@@ -210,6 +213,15 @@ open_orchestra_backoffice:
             defining_statusable:
                 label: Defines statusable contents
                 helper: If set to "Yes", The contents with this content type for model will use a validation workflow.
+            group:
+                property: Properties
+                field: Fields
+            sub_group:
+                property: Properties
+                customization: Customization
+                share: Content sharing
+                visible: Items to display in the backoffice list
+                version: Version
         template:
             success: The template has been saved
             name: Name

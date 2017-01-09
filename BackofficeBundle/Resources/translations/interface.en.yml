@@ -35,6 +35,7 @@ open_orchestra_backoffice:
         configuration:
           title:  Configuration
           site: Sites
+          content_type: Content Types
     table:
         delete_button: Remove selected items
         keywords:

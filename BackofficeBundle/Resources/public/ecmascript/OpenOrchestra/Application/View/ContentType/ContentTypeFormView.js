@@ -1,18 +1,17 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 import Application      from '../../Application'
-import Site             from '../../Model/Site/Site'
 
 /**
- * @class SiteFormView
+ * @class ContentTypeFormView
  */
-class SiteFormView extends AbstractFormView
+class ContentTypeFormView extends AbstractFormView
 {
     /**
      * @inheritdoc
      */
     preinitialize() {
         super.preinitialize();
-        this.events['click #delete_oo_site'] = '_deleteSite';
+        this.events['click #oo_content_type_linkedToSite'] = '_toogleAlwaysShared';
     }
 
     /**
@@ -20,22 +19,22 @@ class SiteFormView extends AbstractFormView
      * @param {Form}   form
      * @param {Array}  name
      */
-    initialize({form, name, siteId}) {
+    initialize({form, name, contentTypeId}) {
         super.initialize({form : form});
         this._name = name;
-        this._siteId = siteId;
     }
 
     /**
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Site/siteEditView', {
+        let template = this._renderTemplate('ContentType/contentTypeEditView', {
             name: this._name
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
+        this._toogleAlwaysShared();
 
         return this;
     }
@@ -56,15 +55,13 @@ class SiteFormView extends AbstractFormView
      * Delete
      * @param {event} event
      */
-    _deleteSite(event) {
-        let site = new Site({'site_id': this._siteId});
-        site.destroy({
-            success: () => {
-                let url = Backbone.history.generateUrl('listSite');
-                Backbone.history.navigate(url, true);
-            }
-        });
+    _toogleAlwaysShared(event) {
+        if ($('#oo_content_type_linkedToSite:checked', this._$formRegion).length == 0) {
+            $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').hide();
+        } else {
+            $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').show();
+        }
     }
 }
 
-export default SiteFormView;
+export default ContentTypeFormView;

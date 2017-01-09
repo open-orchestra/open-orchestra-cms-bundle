@@ -25,7 +25,6 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
-        $contentTypeOrderFieldTransformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $this->contentTypeTypeSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber');
         $this->contentTypeStatusableSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber');
 
@@ -33,7 +32,6 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
             $this->class,
             $this->translator,
             array(),
-            $contentTypeOrderFieldTransformer,
             $this->contentTypeTypeSubscriber,
             $this->contentTypeStatusableSubscriber
         );
