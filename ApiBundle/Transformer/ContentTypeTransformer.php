@@ -4,18 +4,16 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ContentTypeTransformer
  */
-class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
+class ContentTypeTransformer extends AbstractTransformer
 {
     protected $multiLanguagesChoiceManager;
     protected $contentRepository;
@@ -23,16 +21,14 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
-     * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param ContentRepositoryInterface           $contentRepository
      */
     public function __construct(
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        AuthorizationCheckerInterface $authorizationChecker,
         ContentRepositoryInterface $contentRepository
     ) {
-        parent::__construct($facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->contentRepository = $contentRepository;
     }
@@ -62,22 +58,6 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
             foreach ($contentType->getFields() as $field) {
                 $facade->addField($this->getTransformer('field_type')->transform($field));
             }
-        }
-
-        if (0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()) 
-            && $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType)
-        ) {
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_content_type_delete',
-                array('contentTypeId' => $contentType->getContentTypeId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $contentType)) {
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_backoffice_content_type_form',
-                array('contentTypeId' => $contentType->getContentTypeId())
-            ));
         }
 
         return $facade;

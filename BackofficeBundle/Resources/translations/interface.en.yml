@@ -52,6 +52,13 @@ open_orchestra_backoffice:
         sites:
             site_id: Site id
             name: Name
+        content_types:
+            name: Name
+            content_type_id: Id
+            linked_to_site:
+                label: Shared on other sites
+                'true': 'True'
+                'false': 'False'
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -94,6 +101,12 @@ open_orchestra_backoffice:
         title_list: Sites
         search_engine:
             name: Name
+    content_type:
+        title_list: Content types
+        search_engine:
+            name: Name
+            id: Id
+            linked_to_site: Shared on other sites
     block:
       add_block: Add a block
       confirm_remove:

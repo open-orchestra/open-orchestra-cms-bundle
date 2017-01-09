@@ -94,7 +94,6 @@ services:
         arguments:
             - '%open_orchestra_api.facade.content_type.class%'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
-            - '@security.authorization_checker'
             - '@open_orchestra_model.repository.content'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
@@ -102,7 +101,6 @@ services:
         class: '%open_orchestra_api.transformer.content_type_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.content_type_collection.class%'
-            - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content:

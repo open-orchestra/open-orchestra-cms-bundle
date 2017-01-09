@@ -2,6 +2,9 @@ import OrchestraRouter    from '../OrchestraRouter'
 import Application        from '../../Application'
 import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
 import ContentTypeFormView from '../../View/ContentType/ContentTypeFormView'
+import ContentTypes     from '../../Collection/ContentType/ContentTypes'
+import ContentTypesView from '../../View/ContentType/ContentTypesView'
+
 
 /**
  * @class ContentTypeRouter
@@ -13,11 +16,13 @@ class ContentTypeRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'contentType/edit/:contentTypeId/:name': 'editContentType'
+            'contentType/edit/:contentTypeId/:name': 'editContentType',
+            'content-type/list(/:page)': 'listContentType'
         };
     }
 
     /**
+
      * @inheritdoc
      */
     getBreadcrumb() {
@@ -36,11 +41,12 @@ class ContentTypeRouter extends OrchestraRouter
      * Edit contentType
      *
      * @param {string} contentTypeId
+     * @param {string} name
      */
     editContentType(contentTypeId, name) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_content_type_form', {
-            contentTypeId : contentTypeId
+            contentTypeId: contentTypeId
         });
         FormBuilder.createFormFromUrl(url, (form) => {
             let contentTypeFormView = new ContentTypeFormView({
@@ -49,6 +55,25 @@ class ContentTypeRouter extends OrchestraRouter
             });
             Application.getRegion('content').html(contentTypeFormView.render().$el);
         });
+    }
+
+    /**
+     * List content type
+     *
+     * @param {int} page
+     */
+    listContentType(page) {
+        if (null === page) {
+            page = 1
+        }
+        this._displayLoader(Application.getRegion('content'));
+        let collection = new ContentTypes();
+        let contentTypesView = new ContentTypesView({
+            collection: collection,
+            settings: {page: Number(page) - 1}
+        });
+        let el = contentTypesView.render().$el;
+        Application.getRegion('content').html(el);
     }
 }
 

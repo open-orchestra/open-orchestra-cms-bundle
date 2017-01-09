@@ -4,14 +4,12 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class ContentTypeCollectionTransformer
  */
-class ContentTypeCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
+class ContentTypeCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $contentTypeCollection
@@ -24,13 +22,6 @@ class ContentTypeCollectionTransformer extends AbstractSecurityCheckerAwareTrans
 
         foreach ($contentTypeCollection as $contentType) {
             $facade->addContentType($this->getTransformer('content_type')->transform($contentType));
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentTypeInterface::ENTITY_TYPE)) {
-            $facade->addLink('_self_add', $this->generateRoute(
-                'open_orchestra_backoffice_content_type_new',
-                array()
-            ));
         }
 
         return $facade;

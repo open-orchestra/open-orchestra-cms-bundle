@@ -2,11 +2,12 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +25,6 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
  */
 class ContentTypeController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param string $contentTypeId
      *
@@ -55,24 +54,55 @@ class ContentTypeController extends BaseController
      */
     public function listAction(Request $request)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, ContentTypeInterface::ENTITY_TYPE);
+        $mapping = array(
+            'name' => 'names',
+            'content_type_id' => 'contentTypeId',
+            'linked_to_site' => 'linkedToSite'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.content_type');
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
 
-        if ($request->get('entityId')) {
-            $element = $repository->find($request->get('entityId'));
-            return $transformer->transform(array($element));
-        }
-
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_model.document.content_type.class'));
-        $configuration->setDescriptionEntity($mapping);
-        $contentTypeCollection = $repository->findAllNotDeletedInLastVersionForPaginate($configuration);
+        $collection = $repository->findAllNotDeletedInLastVersionForPaginate($configuration);
         $recordsTotal = $repository->countByContentTypeInLastVersion();
         $recordsFiltered = $repository->countNotDeletedInLastVersionWithSearchFilter($configuration);
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
-        return $this->generateFacadeDataTable($transformer, $contentTypeCollection, $recordsTotal, $recordsFiltered);
+        return $facade;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_content_type_delete_multiple")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteContentTypesAction(Request $request)
+    {
+        $format = $request->get('_format', 'json');
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.content_type.class'),
+            $format
+        );
+        $contentTypeRepository = $this->get('open_orchestra_model.repository.content_type');
+        $contentTypes = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection')->reverseTransform($facade);
+        $contentTypeIds = array();
+        foreach ($contentTypes as $contentType) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $contentTypes)) {
+                $contentTypeIds[] = $contentType->getContentTypeId();
+                $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentType));
+            }
+        }
+        $contentTypeRepository->removeByContentTypeId($contentTypeIds);
+
+        return array();
     }
 
     /**
