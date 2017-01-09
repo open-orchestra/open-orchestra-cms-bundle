@@ -18,7 +18,7 @@ class OrchestraRouter extends Backbone.Router
      * @param {Object} $region - Jquery selector
      * @private
      */
-    _diplayLoader($region) {
+    _displayLoader($region) {
         let loaderView = new LoaderView();
         $region.html(loaderView.$el);
     }

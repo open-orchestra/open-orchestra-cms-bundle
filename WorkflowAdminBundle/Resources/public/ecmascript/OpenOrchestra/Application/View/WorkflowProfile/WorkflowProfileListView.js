@@ -1,19 +1,12 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin  from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class WorkflowProfileListView
  */
-class WorkflowProfileListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
+class WorkflowProfileListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
-    /**
-     * @inheritdoc
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['change .delete-checkbox'] = '_changeDeleteCheckbox';
-    }
-
     /**
      * @inheritDoc
      */
@@ -26,12 +19,7 @@ class WorkflowProfileListView extends mix(AbstractDataTableView).with(UrlPaginat
      */
     getColumnsDefinition() {
         return [
-            {
-                name: "delete",
-                orderable: false,
-                width: '20px',
-                createdCell: this._createCheckbox
-            },
+            this._getColumnsDefinitionDeleteCheckbox(),
             {
                 name: "label",
                 title: Translator.trans('open_orchestra_workflow_admin.table.workflow_profile.label'),
@@ -57,7 +45,6 @@ class WorkflowProfileListView extends mix(AbstractDataTableView).with(UrlPaginat
     }
 
     /**
-     *
      * @param {Object} td
      * @param {Object} cellData
      * @param {Object} rowData
@@ -71,35 +58,6 @@ class WorkflowProfileListView extends mix(AbstractDataTableView).with(UrlPaginat
         });
 
         $(td).html(cellData)
-    }
-
-    /**
-     *
-     * @param {Object} td
-     * @param {Object} cellData
-     * @param {Object} rowData
-     *
-     * @private
-     */
-    _createCheckbox(td, cellData, rowData) {
-        let id = 'checkbox' + rowData.cid;
-
-        let attributes = {type: 'checkbox', id: id, class:'delete-checkbox'};
-
-        let $checkbox = $('<input>', attributes);
-        $checkbox.data(rowData);
-        $(td).append($checkbox);
-        $(td).append($('<label>', {for: id}))
-    }
-
-    /**
-     * @param {Object} event
-     *
-     * @private
-     */
-    _changeDeleteCheckbox(event) {
-        let workflowProfile = $(event.currentTarget).data();
-        workflowProfile.set('delete', $(event.currentTarget).prop('checked'));
     }
 }
 

@@ -44,7 +44,7 @@ class SiteRouter extends OrchestraRouter
         if (null === page) {
             page = 1
         }
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let collection = new Sites();
         let sitesView = new SitesView({
             collection: collection,
@@ -60,7 +60,7 @@ class SiteRouter extends OrchestraRouter
      * @param {string} siteId
      */
     editSite(siteId, name) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_site_form', {
             siteId : siteId
         });

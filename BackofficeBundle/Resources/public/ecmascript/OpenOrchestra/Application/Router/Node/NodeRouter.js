@@ -54,7 +54,7 @@ class NodeRouter extends OrchestraRouter
             language = Application.getContext().user.language.contribution
         }
 
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         new Statuses().fetch({
             context: 'nodes',
             success: (statuses) => {
@@ -77,7 +77,7 @@ class NodeRouter extends OrchestraRouter
      * @param {string} language
      */
     editNode(nodeId, language, version = null) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_node_form', {
             siteId : Application.getContext().siteId,
             nodeId : nodeId,
@@ -104,7 +104,7 @@ class NodeRouter extends OrchestraRouter
      * @param {string} parentId
      */
     newTreeNode(language, parentId) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         new NodesTree().fetch({
             urlParameter: {
                 'language': language,
@@ -130,7 +130,7 @@ class NodeRouter extends OrchestraRouter
      * @param {int}    order
      */
     newNode(language, parentId, order) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_node_new', {
             siteId : Application.getContext().siteId,
             language: language,
@@ -155,7 +155,7 @@ class NodeRouter extends OrchestraRouter
      * @param {int|null} version
      */
     showNode(nodeId, language, version = null) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let node = new Node();
         node.fetch({
             urlParameter: {

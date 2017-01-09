@@ -51,7 +51,7 @@ class NodesView extends OrchestraView
             'nodesList' : $('.nodes-list', this.$el),
             'nodesTree' : $('.nodes-tree', this.$el)
         };
-        this._diplayLoader(this._nodesRegion.nodesList);
+        this._displayLoader(this._nodesRegion.nodesList);
         this._nodesRegion.nodesList.hide();
 
         this._treeView = this._initializeTree();
