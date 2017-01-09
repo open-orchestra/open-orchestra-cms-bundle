@@ -45,7 +45,8 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-        $contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        Phake::when($contextManager)->getCurrentLocale()->thenReturn('en');
 
         $this->form = new FieldTypeType(
             $contextManager,
@@ -108,6 +109,31 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
         Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
+    }
+
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+        $fieldOption = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
+        Phake::when($fieldOption)->getKey()->thenReturn('required');
+        Phake::when($fieldOption)->getValue()->thenReturn(true);
+
+        $formView->vars['columns']['labels']['data'] = array('en' => 'fakeEn');
+        $formView->vars['columns']['type']['data'] =  'text';
+        $formView->vars['columns']['options']['data'] = array($fieldOption);
+
+        $this->form->buildView($formView, $formInterface, array());
+
+        $this->assertEquals('fakeEn', $formView->vars['columns']['labels']['data']);
+        $this->assertEquals('foo', $formView->vars['columns']['type']['data']);
+        $this->assertEquals(array(
+            'label' => 'open_orchestra_backoffice.form.orchestra_fields.required_field',
+            'data' => 'open_orchestra_backoffice.form.swchoff.on',), $formView->vars['columns']['options']);
     }
 
     /**
