@@ -4,6 +4,7 @@ namespace OpenOrchestra\Workflow\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use OpenOrchestra\Workflow\Validator\Constraints\WorkflowParameter;
 
 /**
  * Class WorkflowParametersType
@@ -20,7 +21,8 @@ class WorkflowParametersType extends AbstractType
             ->add('statuses', 'collection', array(
                 'type'         => 'oo_workflow_status_parameters',
                 'allow_add'    => false,
-                'allow_delete' => false
+                'allow_delete' => false,
+                'constraints'  => array(new WorkflowParameter())
             ))
         ;
     }

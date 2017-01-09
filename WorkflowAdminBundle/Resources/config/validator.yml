@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_workflow_admin.validator.workflow_parameters.class: OpenOrchestra\Workflow\Validator\Constraints\WorkflowParameterValidator
+
+services:
+    open_orchestra_workflow_admin.validator.workflow_parameters:
+        class: '%open_orchestra_workflow_admin.validator.workflow_parameters.class%'
+        arguments:
+            - '@translator'
+        tags:
+            - { name: validator.constraint_validator, alias: workflow_parameters}

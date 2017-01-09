@@ -125,7 +125,7 @@ class ParametersController extends AbstractAdminController
     }
 
     /**
-     * Check if $parameter is requested to be turned on
+     * Check if $parameter is requested to be turned off
      *
      * @param string  $parameter
      * @param boolean $oldValue

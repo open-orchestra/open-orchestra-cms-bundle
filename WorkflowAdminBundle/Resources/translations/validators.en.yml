@@ -1,0 +1,4 @@
+open_orchestra_workflow_admin_validators:
+    workflow_parameters:
+        unique  : '%parameter%: attribute has to be unique among statuses'
+        required: '%parameter%: attribute must be set on a status'
