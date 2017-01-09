@@ -100,4 +100,18 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
             )
         );
     }
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+
+        $formView->vars['columns']['language']['data'] = 'de';
+
+        $this->form->buildView($formView, $formInterface, array());
+        $this->assertEquals('open_orchestra_backoffice.language.de', $formView->vars['columns']['language']['data']);
+    }
 }
