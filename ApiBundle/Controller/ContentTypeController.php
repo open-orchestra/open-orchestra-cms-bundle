@@ -49,7 +49,9 @@ class ContentTypeController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_content_type_list")
      * @Config\Method({"GET"})
-     *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::CONTENT_TYPE_RIGHTS
+     * })
      * @return FacadeInterface
      */
     public function listAction(Request $request)
@@ -88,14 +90,16 @@ class ContentTypeController extends BaseController
 
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
-            $this->getParameter('open_orchestra_api.facade.content_type.class'),
+            $this->getParameter('open_orchestra_api.facade.content_type_collection.class'),
             $format
         );
         $contentTypeRepository = $this->get('open_orchestra_model.repository.content_type');
         $contentTypes = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection')->reverseTransform($facade);
         $contentTypeIds = array();
         foreach ($contentTypes as $contentType) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, $contentTypes)) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $contentType) &&
+                0 == $this->get('open_orchestra_model.repository.content')->countByContentType($contentType->getContentTypeId())
+            ) {
                 $contentTypeIds[] = $contentType->getContentTypeId();
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentType));
             }

@@ -1,10 +1,11 @@
 import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
 import UrlPaginateViewMixin from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class ContentTypesListView
  */
-class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
+class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
     /**
      * @inheritDoc
@@ -18,6 +19,7 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
      */
     getColumnsDefinition() {
         return [
+            this._getColumnsDefinitionDeleteCheckbox(),
             {
                 name: "name",
                 title: Translator.trans('open_orchestra_backoffice.table.content_types.name'),
@@ -64,6 +66,20 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
         });
 
         $(td).html(cellData)
+    }
+
+    /**
+     *
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
+     *
+     * @private
+     */
+    _createCheckbox(td, cellData, rowData) {
+        if (rowData.get('rights').can_delete) {
+            super._createCheckbox(td, cellData, rowData)
+        }
     }
 
     /**

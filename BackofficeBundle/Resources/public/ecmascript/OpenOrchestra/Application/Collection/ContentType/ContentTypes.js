@@ -16,6 +16,15 @@ class ContentTypes extends DataTableCollection
     /**
      * @inheritdoc
      */
+    toJSON(options) {
+        return {
+            'content_types': super.toJSON(options)
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     _getSyncUrl(method, options) {
         switch (method) {
             case "read":
@@ -36,6 +45,8 @@ class ContentTypes extends DataTableCollection
                 return Routing.generate('open_orchestra_api_content_type_list_for_content');
             case "list":
                 return Routing.generate('open_orchestra_api_content_type_list');
+            case "delete":
+                return Routing.generate('open_orchestra_api_content_type_delete_multiple');
         }
     }
 }

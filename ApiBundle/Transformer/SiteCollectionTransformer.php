@@ -28,27 +28,6 @@ class SiteCollectionTransformer extends AbstractTransformer
         return $facade;
     }
 
-
-    /**
-     * @param FacadeInterface $facade
-     * @param null $source
-     *
-     * @return SiteInterface|null
-     */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
-    {
-        $sites = array();
-        $sitesFacade = $facade->getSites();
-        foreach ($sitesFacade as $siteFacade) {
-            $site = $this->getTransformer('site')->reverseTransform($siteFacade);
-            if (null !== $site) {
-                $sites[] = $site;
-            }
-        }
-
-        return $sites;
-    }
-
     /**
      * @return string
      */

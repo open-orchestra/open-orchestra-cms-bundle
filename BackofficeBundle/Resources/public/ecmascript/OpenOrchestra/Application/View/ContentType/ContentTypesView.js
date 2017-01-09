@@ -12,7 +12,8 @@ class ContentTypesView extends OrchestraView
      */
     preinitialize() {
         this.events = {
-            'click .search-engine button.submit': '_search'
+            'click .search-engine button.submit': '_search',
+            'click .btn-delete': '_remove'
         }
     }
 
@@ -60,6 +61,20 @@ class ContentTypesView extends OrchestraView
         this._listView.filter(filters);
 
         return false;
+    }
+
+    /**
+     * Remove
+     *
+     * @private
+     */
+    _remove() {
+        let contentTypes = this._collection.where({'delete': true});
+        this._collection.destroyModels(contentTypes, {
+            success: () => {
+                this._listView.api.draw(false);
+            }
+        });
     }
 }
 

@@ -27,4 +27,12 @@ class ContentTypeCollectionFacade extends PaginateCollectionFacade
     {
         $this->contentTypes[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getContentTypes()
+    {
+        return $this->contentTypes;
+    }
 }

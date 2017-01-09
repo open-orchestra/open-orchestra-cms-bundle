@@ -9,6 +9,7 @@ use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTypeTransformer
@@ -17,20 +18,25 @@ class ContentTypeTransformer extends AbstractTransformer
 {
     protected $multiLanguagesChoiceManager;
     protected $contentRepository;
+    protected $contentTypeRepository;
 
     /**
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param ContentRepositoryInterface           $contentRepository
+     * @param ContentTypeRepositoryInterface       $contentTypeRepository
      */
     public function __construct(
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        ContentRepositoryInterface $contentRepository
+        ContentRepositoryInterface $contentRepository,
+        ContentTypeRepositoryInterface $contentTypeRepository
     ) {
         parent::__construct($facadeClass);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->contentRepository = $contentRepository;
+        $this->contentTypeRepository = $contentTypeRepository;
+
     }
 
     /**
@@ -54,6 +60,10 @@ class ContentTypeTransformer extends AbstractTransformer
         $facade->version = $contentType->getVersion();
         $facade->linkedToSite = $contentType->isLinkedToSite();
 
+        if ($this->hasGroup(CMSGroupContext::CONTENT_TYPE_RIGHTS)) {
+            $facade->addRight('can_delete', 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
+        }
+
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {
             foreach ($contentType->getFields() as $field) {
                 $facade->addField($this->getTransformer('field_type')->transform($field));
@@ -61,6 +71,21 @@ class ContentTypeTransformer extends AbstractTransformer
         }
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return ContentTypeInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if (null !== $facade->contentTypeId) {
+            return $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($facade->contentTypeId);
+        }
+
+        return null;
     }
 
     /**
