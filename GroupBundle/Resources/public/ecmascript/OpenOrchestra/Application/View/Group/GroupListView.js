@@ -55,7 +55,7 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
                 orderable: false,
                 width: '20px',
                 createdCell: this._createDuplicateIcon
-            },
+            }
         ];
     }
 
@@ -83,26 +83,6 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
         });
 
         $(td).html(cellData)
-    }
-
-    /**
-     *
-     * @param {Object} td
-     * @param {Object} cellData
-     * @param {Object} rowData
-     *
-     * @private
-     */
-    _createDeleteCheckbox(td, cellData, rowData) {
-        let $cell = $('<div>');
-        if (rowData.get('rights').can_delete) {
-            let id = 'checkbox' + rowData.cid;
-            let $checkbox = $('<input>', {type: 'checkbox', id: id, class:'delete-checkbox'});
-            $checkbox.data(rowData);
-            $cell.append($checkbox);
-            $cell.append($('<label>', {for: id}))
-        }
-        $(td).append($cell);
     }
 
     /**

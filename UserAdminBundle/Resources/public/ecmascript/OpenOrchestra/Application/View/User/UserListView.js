@@ -31,8 +31,7 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin,
             {
                 name: "groups",
                 title: Translator.trans('open_orchestra_user_admin.table.users.groups'),
-                orderable: true,
-                orderDirection: 'desc',
+                orderable: false,
                 visibile: true
             }
         ];

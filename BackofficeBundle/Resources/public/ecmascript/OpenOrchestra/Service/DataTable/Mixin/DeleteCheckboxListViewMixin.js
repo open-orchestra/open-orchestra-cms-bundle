@@ -32,11 +32,15 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
     _createCheckbox(td, cellData, rowData) {
         let id = 'checkbox' + rowData.cid;
         let attributes = {type: 'checkbox', id: id, class:'delete-checkbox'};
+        if (rowData.get('rights').hasOwnProperty('can_delete') &&
+            !rowData.get('rights').can_delete) {
+            attributes.disabled = 'disabled';
+        }
 
         let $checkbox = $('<input>', attributes);
         $checkbox.data(rowData);
         $(td).append($checkbox);
-        $(td).append($('<label>', {for: id}))
+        $(td).append($('<label>', {for: id}));
     }
 
     /**

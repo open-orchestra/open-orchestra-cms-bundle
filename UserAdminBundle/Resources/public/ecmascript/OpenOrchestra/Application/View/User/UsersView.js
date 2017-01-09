@@ -1,31 +1,13 @@
-import OrchestraView from '../OrchestraView'
-import UserListView  from '../../View/User/UserListView'
+import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
+import UserListView           from '../../View/User/UserListView'
 
 /**
  * @class UsersView
  */
-class UsersView extends OrchestraView
+class UsersView extends AbstractCollectionView
 {
     /**
-     * @inheritdoc
-     */
-    preinitialize() {
-        this.events = {
-            'click .search-engine button.submit': '_search',
-            'click .btn-delete': '_remove'
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    initialize({collection, settings}) {
-        this._collection = collection;
-        this._settings = settings;
-    }
-
-    /**
-     * Render nodes view
+     * Render users view
      */
     render() {
         if (0 === this._collection.recordsTotal) {
@@ -45,41 +27,6 @@ class UsersView extends OrchestraView
         }
 
         return this;
-    }
-
-
-    /**
-     * Search node in list
-     * @param {Object} event
-     *
-     * @returns {boolean}
-     * @private
-     */
-    _search(event) {
-        event.stopPropagation();
-
-        let formData = $('form.search-engine', this.$el).serializeArray();
-        let filters = {};
-        for (let data of formData) {
-            filters[data.name] = data.value;
-        }
-        this._listView.filter(filters);
-
-        return false;
-    }
-
-    /**
-     * Remove
-     *
-     * @private
-     */
-    _remove() {
-        let users = this._collection.where({'delete': true});
-        this._collection.destroyModels(users, {
-            success: () => {
-                this._listView.api.draw(false);
-            }
-        });
     }
 }
 

@@ -1,26 +1,16 @@
-import OrchestraView from '../OrchestraView'
-import SiteListView  from '../../View/Site/SiteListView'
+import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
+import SiteListView           from '../../View/Site/SiteListView'
 
 /**
  * @class SitesView
  */
-class SitesView extends OrchestraView
+class SitesView extends AbstractCollectionView
 {
     /**
      * @inheritdoc
      */
     preinitialize() {
-        this.events = {
-            'click .search-engine button.submit': '_search'
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    initialize({collection, settings}) {
-        this._collection = collection;
-        this._settings = settings;
+        super.preinitialize({ removeMultiple: false });
     }
 
     /**
@@ -36,27 +26,6 @@ class SitesView extends OrchestraView
         $('.sites-list', this.$el).html(this._listView.render().$el);
 
         return this;
-    }
-
-
-    /**
-     * Search node in list
-     * @param {Object} event
-     *
-     * @returns {boolean}
-     * @private
-     */
-    _search(event) {
-        event.stopPropagation();
-
-        let formData = $('form.search-engine', this.$el).serializeArray();
-        let filters = {};
-        for (let data of formData) {
-            filters[data.name] = data.value;
-        }
-        this._listView.filter(filters);
-
-        return false;
     }
 }
 

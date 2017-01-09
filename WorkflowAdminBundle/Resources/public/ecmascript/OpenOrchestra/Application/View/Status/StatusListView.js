@@ -72,27 +72,6 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
     }
 
     /**
-     *
-     * @param {Object} td
-     * @param {Object} cellData
-     * @param {Object} rowData
-     *
-     * @private
-     */
-    _createCheckbox(td, cellData, rowData) {
-        let id = 'checkbox' + rowData.cid;
-        let attributes = {type: 'checkbox', id: id, class:'delete-checkbox'};
-        if (!rowData.get('rights').can_delete) {
-            attributes.disabled = 'disabled';
-        }
-
-        let $checkbox = $('<input>', attributes);
-        $checkbox.data(rowData);
-        $(td).append($checkbox);
-        $(td).append($('<label>', {for: id}))
-    }
-
-    /**
     *
     * @param {Object} data
     * @param {string} type

@@ -12,6 +12,9 @@ open_orchestra_backoffice:
     confirm_modal:
         yes: Oui
         no: Non
+    confirm_remove:
+        title: Supprimer les élements selectionner ?
+        message: La suppression sera définitif
     no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
     back_to_list: Retour à la liste

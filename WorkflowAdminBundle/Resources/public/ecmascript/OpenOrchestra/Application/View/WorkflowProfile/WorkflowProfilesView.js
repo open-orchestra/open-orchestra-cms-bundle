@@ -1,30 +1,12 @@
-import OrchestraView           from '../OrchestraView'
+import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
 import WorkflowProfileListView from '../../View/WorkflowProfile/WorkflowProfileListView'
 import Application             from '../../Application'
 
 /**
  * @class WorkflowProfilesView
  */
-class WorkflowProfilesView extends OrchestraView
+class WorkflowProfilesView extends AbstractCollectionView
 {
-    /**
-     * @inheritdoc
-     */
-    preinitialize() {
-        this.events = {
-            'click .search-engine button.submit': '_search',
-            'click .btn-delete': '_remove'
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    initialize({collection, settings}) {
-        this._collection = collection;
-        this._settings = settings;
-    }
-
     /**
      * Render workflow profiles view
      */
@@ -49,41 +31,6 @@ class WorkflowProfilesView extends OrchestraView
         }
 
         return this;
-    }
-
-
-    /**
-     * Search workflow profile in list
-     * @param {Object} event
-     *
-     * @returns {boolean}
-     * @private
-     */
-    _search(event) {
-        event.stopPropagation();
-
-        let formData = $('form.search-engine', this.$el).serializeArray();
-        let filters = {};
-        for (let data of formData) {
-            filters[data.name] = data.value;
-        }
-        this._listView.filter(filters);
-
-        return false;
-    }
-
-    /**
-     * Remove
-     *
-     * @private
-     */
-    _remove() {
-        let workflowProfiles = this._collection.where({'delete': true});
-        this._collection.destroyModels(workflowProfiles, {
-            success: () => {
-                this._listView.api.draw(false);
-            }
-        });
     }
 }
 
