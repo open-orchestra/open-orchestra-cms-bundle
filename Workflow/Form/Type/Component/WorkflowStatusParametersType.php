@@ -29,10 +29,10 @@ class WorkflowStatusParametersType extends AbstractType
     {
         $builder
             ->add('initialState'        , 'checkbox', array('required' => false))
+            ->add('translationState'    , 'checkbox', array('required' => false))
             ->add('publishedState'      , 'checkbox', array('required' => false))
             ->add('autoPublishFromState', 'checkbox', array('required' => false))
             ->add('autoUnpublishToState', 'checkbox', array('required' => false))
-            ->add('translationState'    , 'checkbox', array('required' => false))
         ;
     }
 

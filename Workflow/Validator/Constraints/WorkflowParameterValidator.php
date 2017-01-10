@@ -24,22 +24,25 @@ class WorkflowParameterValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param array      $value      The value that should be validated
+     * @param array      $value      Array of altered statuses
      * @param Constraint $constraint The constraint for the validation
      */
     public function validate($value, Constraint $constraint)
     {
         $parameters = array(
             'initial_state' => 0,
+            'translation_state' => 0,
             'published_state' => 0,
             'auto_publish_from_state' => 0,
             'auto_unpublish_to_state' => 0,
-            'translation_state' => 0
         );
 
         foreach ($value as $status) {
             if ($status->isInitialState()) {
                 $parameters['initial_state']++;
+            }
+            if ($status->isTranslationState()) {
+                $parameters['translation_state']++;
             }
             if ($status->isPublishedState()) {
                 $parameters['published_state']++;
@@ -49,9 +52,6 @@ class WorkflowParameterValidator extends ConstraintValidator
             }
             if ($status->isAutoUnpublishToState()) {
                 $parameters['auto_unpublish_to_state']++;
-            }
-            if ($status->isTranslationState()) {
-                $parameters['translation_state']++;
             }
         }
 

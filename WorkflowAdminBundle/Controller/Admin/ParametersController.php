@@ -35,13 +35,13 @@ class ParametersController extends AbstractAdminController
                 $this->get('translator')
                     ->trans('open_orchestra_workflow_admin.status.initial_state'          , array(), 'interface'),
                 $this->get('translator')
+                    ->trans('open_orchestra_workflow_admin.status.translation_state'      , array(), 'interface'),
+                $this->get('translator')
                     ->trans('open_orchestra_workflow_admin.status.published_state'        , array(), 'interface'),
                 $this->get('translator')
                     ->trans('open_orchestra_workflow_admin.status.auto_publish_from_state', array(), 'interface'),
                 $this->get('translator')
                     ->trans('open_orchestra_workflow_admin.status.auto_unpublish_to_state', array(), 'interface'),
-                $this->get('translator')
-                    ->trans('open_orchestra_workflow_admin.status.translation_state'      , array(), 'interface')
             )
         );
 
@@ -89,10 +89,10 @@ class ParametersController extends AbstractAdminController
         foreach ($statusCollection as $index => $status) {
             $statusMap[$index] = array(
                 'initialState'         => $status->isInitialState(),
+                'translationState'     => $status->isTranslationState(),
                 'publishedState'       => $status->isPublishedState(),
                 'autoPublishFromState' => $status->isAutoPublishFromState(),
                 'autoUnpublishToState' => $status->isAutoUnpublishToState(),
-                'translationState'     => $status->isTranslationState()
             );
         }
 
