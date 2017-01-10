@@ -8,6 +8,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class BlockTransformer
@@ -16,20 +17,24 @@ class BlockTransformer extends AbstractTransformer
 {
     protected $displayBlockManager;
     protected $blockConfigurationManager;
+    protected $translator;
 
     /**
      * @param string                    $facadeClass
      * @param DisplayBlockManager       $displayBlockManager
      * @param BlockConfigurationManager $blockConfigurationManager
+     * @param TranslatorInterface       $translator
      */
     public function __construct(
         $facadeClass,
         DisplayBlockManager      $displayBlockManager,
-        BlockConfigurationManager $blockConfigurationManager
+        BlockConfigurationManager $blockConfigurationManager,
+        TranslatorInterface $translator
     ) {
         parent::__construct($facadeClass);
         $this->displayBlockManager = $displayBlockManager;
         $this->blockConfigurationManager = $blockConfigurationManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -53,7 +58,11 @@ class BlockTransformer extends AbstractTransformer
         $facade->id = $block->getId();
         $facade->transverse = $block->isTransverse();
         $facade->updatedAt = $block->getUpdatedAt();
-        $facade->category = $this->blockConfigurationManager->getBlockCategory($block->getComponent());
+        $categoryKey = $this->blockConfigurationManager->getBlockCategory($block->getComponent());
+        $facade->category = array(
+            'label' => $this->translator->trans($categoryKey),
+            'key' => $categoryKey
+        );
 
         foreach ($block->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {

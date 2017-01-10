@@ -34,11 +34,10 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
                 createdCell: this._createEditLink
             },
             {
-                name: "category",
+                name: "category.label",
                 title: Translator.trans('open_orchestra_backoffice.table.shared_block.type'),
-                orderable: true,
-                orderDirection: 'desc',
-                visibile: true
+                visibile: true,
+                orderable: false
             },
             {
                 name: "updated_at",

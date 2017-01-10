@@ -23,7 +23,7 @@ class NewBlockListView extends OrchestraView
     initialize({blockComponents, language}) {
         this._blockComponents = blockComponents;
         this._listBlockComponents = blockComponents.models;
-        this._categories = _.uniq(blockComponents.pluck('category'));
+        this._categories = _.uniq(this._blockComponents.pluck('category'), false, (blockCategory) => {return blockCategory.get('key')});
         this._language = language;
 
     }
@@ -56,7 +56,8 @@ class NewBlockListView extends OrchestraView
     _orderBlockComponentByCategory(blockComponents) {
         let orderedList = {};
         for (let blockComponent of blockComponents) {
-            let blockCategory = blockComponent.get('category');
+            console.log(blockComponent);
+            let blockCategory = blockComponent.get('category').get('label');
             if (!orderedList.hasOwnProperty(blockCategory)) {
                 orderedList[blockCategory] = [];
             }
@@ -84,7 +85,7 @@ class NewBlockListView extends OrchestraView
             let pattern = new RegExp(filters.name,"gi");
             let testName = pattern.test(blockComponent.get("name"));
             if ('' !== filters.category ) {
-                return testName && filters.category === blockComponent.get("category");
+                return testName && filters.category === blockComponent.get("category").get("key");
             }
 
             return testName;

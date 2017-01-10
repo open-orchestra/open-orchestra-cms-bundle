@@ -26,7 +26,7 @@ class BlockComponentFacade implements FacadeInterface
     public $description;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("array<string,string>")
      */
-    public $category;
+    public $category = array();
 }

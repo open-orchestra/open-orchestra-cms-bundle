@@ -33,7 +33,7 @@
                 <select class="form-control" name='category'>
                     <option></option>
                     <% _.each(categories, function(category, key) { %>
-                        <option value="<%= category %>"><%= category %></option>
+                        <option value="<%= category.get('key') %>"><%= category.get('label') %></option>
                     <% }); %>
                 </select>
             </div>

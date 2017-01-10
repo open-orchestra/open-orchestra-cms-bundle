@@ -13,17 +13,21 @@ use Symfony\Component\Translation\TranslatorInterface;
 class BlockComponentTransformer extends AbstractTransformer
 {
     protected $blockConfigurationManager;
+    protected $translator;
 
     /**
      * @param string                    $facadeClass
      * @param BlockConfigurationManager $blockConfigurationManager
+     * @param TranslatorInterface       $translator
      */
     public function __construct(
         $facadeClass,
-        BlockConfigurationManager $blockConfigurationManager
+        BlockConfigurationManager $blockConfigurationManager,
+        TranslatorInterface $translator
     ) {
         parent::__construct($facadeClass);
         $this->blockConfigurationManager = $blockConfigurationManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -37,7 +41,11 @@ class BlockComponentTransformer extends AbstractTransformer
 
         $facade->component = $blockComponent;
         $facade->name = $this->blockConfigurationManager->getBlockComponentName($blockComponent);
-        $facade->category = $this->blockConfigurationManager->getBlockCategory($blockComponent);
+        $categoryKey = $this->blockConfigurationManager->getBlockCategory($blockComponent);
+        $facade->category = array(
+            'label' => $this->translator->trans($categoryKey),
+            'key' => $categoryKey
+        );
         $facade->description = $this->blockConfigurationManager->getBlockComponentDescription($blockComponent);
 
         return $facade;

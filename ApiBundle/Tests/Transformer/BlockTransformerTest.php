@@ -15,6 +15,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
     protected $displayBlockManager;
     protected $blockTransformer;
     protected $blockConfigurationManager;
+    protected $translator;
 
     /**
      * Set up the test
@@ -23,10 +24,12 @@ class BlockTransformerTest extends AbstractBaseTestCase
     {
         $this->displayBlockManager = Phake::mock('OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager');
         $this->blockConfigurationManager = Phake::mock('OpenOrchestra\Backoffice\Manager\BlockConfigurationManager');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->blockTransformer = new BlockTransformer(
             $this->facadeClass,
             $this->displayBlockManager,
-            $this->blockConfigurationManager
+            $this->blockConfigurationManager,
+            $this->translator
         );
     }
 

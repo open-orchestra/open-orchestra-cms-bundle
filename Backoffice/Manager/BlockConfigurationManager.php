@@ -25,6 +25,23 @@ class BlockConfigurationManager
     }
 
     /**
+     * @param string $category
+     *
+     * @return array
+     */
+    public function getComponentsWithCategory($category)
+    {
+        $components = array();
+        foreach ($this->blockConfiguration as $blockComponent => $configuration) {
+            if (isset($configuration['category']) && $category === $configuration['category']) {
+                $components[] = $blockComponent;
+            }
+        }
+
+        return $components;
+    }
+
+    /**
      * @param string $blockComponent
      *
      * @return string
@@ -40,7 +57,7 @@ class BlockConfigurationManager
             $category = $this->blockConfiguration[$blockComponent]['category'];
         }
 
-        return $this->translator->trans($category);
+        return $category;
     }
 
     /**

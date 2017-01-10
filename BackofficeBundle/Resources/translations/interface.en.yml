@@ -119,6 +119,7 @@ open_orchestra_backoffice:
         search_engine:
             label: Label
             type: Type
+            name: Name
     block:
       add_block: Add a block
       confirm_remove:

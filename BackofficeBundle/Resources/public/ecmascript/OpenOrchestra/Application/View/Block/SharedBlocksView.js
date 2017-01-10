@@ -18,8 +18,9 @@ class SharedBlocksView extends OrchestraView
     /**
      * @inheritdoc
      */
-    initialize({collection, language, siteLanguages, settings}) {
+    initialize({collection, blockComponents, language, siteLanguages, settings}) {
         this._collection = collection;
+        this._blockComponents = blockComponents;
         this._language = language;
         this._siteLanguages = siteLanguages;
         this._settings = settings;
@@ -36,7 +37,9 @@ class SharedBlocksView extends OrchestraView
             });
             this.$el.html(template);
         } else {
-            let categories = _.uniq(this._collection.pluck('category'));
+            let categories = _.uniq(this._blockComponents.pluck('category'), false, (blockCategory) => {return blockCategory.get('key')});
+            console.log(categories);
+            console.log(this._blockComponents);
             let template = this._renderTemplate('Block/sharedBlocksView', {
                 language: this._language,
                 siteLanguages: this._siteLanguages,
@@ -65,10 +68,11 @@ class SharedBlocksView extends OrchestraView
         event.stopPropagation();
 
         let formData = $('form.search-engine', this.$el).serializeArray();
+        let filters = {};
         for (let data of formData) {
-            this._listView.api.column(data.name+':name').search(data.value);
+            filters[data.name] = data.value;
         }
-        this._listView.api.draw();
+        this._listView.filter(filters);
 
         return false;
     }

@@ -53,26 +53,29 @@ class BlockRouter extends OrchestraRouter
         if (null === page) {
             page = 1
         }
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
+        let pageLength = 10;
         page = Number(page) - 1;
-        new Blocks().fetch({
-            urlParameter: {
-                language: language
-            },
-            success: (blocks) => {
-                let sharedBlocksView = new SharedBlocksView({
-                    collection: blocks,
-                    language: language,
-                    siteLanguages: Application.getContext().siteLanguages,
-                    settings: {
-                        page: page,
-                        serverSide: false,
-                        data: blocks.models
-                    }
-                });
-                let el = sharedBlocksView.render().$el;
-                Application.getRegion('content').html(el);
-            }
+        let blocks = new Blocks();
+        let blockComponents = new BlockComponents();
+        $.when(
+            blocks.fetch({urlParameter: { language: language }}),
+            blockComponents.fetch()
+        ).done(() => {
+            let sharedBlocksView = new SharedBlocksView({
+                collection: blocks,
+                blockComponents: blockComponents,
+                language: language,
+                siteLanguages: Application.getContext().siteLanguages,
+                settings: {
+                    page: page,
+                    deferLoading: [blocks.recordsTotal, blocks.recordsFiltered],
+                    data: blocks.models,
+                    pageLength: pageLength
+                }
+            });
+            let el = sharedBlocksView.render().$el;
+            Application.getRegion('content').html(el);
         });
     }
 
@@ -82,7 +85,7 @@ class BlockRouter extends OrchestraRouter
      * @param {string} language
      */
     newBlockList(language) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         new BlockComponents().fetch({
             success: (blockComponents) => {
                 let newBlockListView = new NewBlockListView({
@@ -102,7 +105,7 @@ class BlockRouter extends OrchestraRouter
      * @param {string} name
      */
     newBlock(component, language, name) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_shared_block_new', {
             component : component,
             language : language
@@ -124,7 +127,7 @@ class BlockRouter extends OrchestraRouter
      * @param {string} blockLabel
      */
     editBlock(blockId, blockLabel) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_block_form', {
             blockId : blockId
         });

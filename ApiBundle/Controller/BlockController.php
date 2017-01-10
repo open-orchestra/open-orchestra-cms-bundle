@@ -35,14 +35,25 @@ class BlockController extends BaseController
     public function listSharedBlockTableAction(Request $request, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, BlockInterface::ENTITY_TYPE);
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request, array());
+        $mapping = array(
+            'label' => 'label',
+            'updated_at' => 'updatedAt'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.block');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-
+        if ($configuration->getSearchIndex('category') && '' !== $configuration->getSearchIndex('category')) {
+            $components = $this->get('open_orchestra_backoffice.manager.block_configuration')->getComponentsWithCategory($configuration->getSearchIndex('category'));
+            $configuration->addSearch('components', $components);
+        }
         $collection = $repository->findForPaginateBySiteIdAndLanguage($configuration, $siteId, $language, true);
+        $recordsTotal = $repository->countBySiteIdAndLanguage($siteId, $language, true);
+        $recordsFiltered = $repository->countWithFilterBySiteIdAndLanguage($configuration, $siteId, $language, true);
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('block_collection');
         $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
         return $facade;
     }
