@@ -3,6 +3,7 @@ import KeywordRouter         from './Router/Keyword/KeywordRouter'
 import DashboardRouter       from './Router/Dashboard/DashboardRouter'
 import SiteRouter            from './Router/Site/SiteRouter'
 import ContentTypeRouter     from './Router/ContentType/ContentTypeRouter'
+import ContentRouter         from './Router/Content/ContentRouter'
 import ErrorView             from './View/Error/ErrorView'
 import ApplicationError      from '../Service/Error/ApplicationError'
 import AjaxError             from '../Service/Error/AjaxError'
@@ -139,6 +140,7 @@ class Application
         new KeywordRouter();
         new SiteRouter();
         new ContentTypeRouter();
+        new ContentRouter();
     }
 
     /**

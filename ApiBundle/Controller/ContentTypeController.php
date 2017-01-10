@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentTypeController
@@ -71,6 +73,25 @@ class ContentTypeController extends BaseController
         $recordsFiltered = $repository->countNotDeletedInLastVersionWithSearchFilter($configuration);
 
         return $this->generateFacadeDataTable($transformer, $contentTypeCollection, $recordsTotal, $recordsFiltered);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/content/content-type-list", name="open_orchestra_api_content_type_list_for_content")
+     * @Config\Method({"GET"})
+     * @return FacadeInterface
+     */
+    public function listForContentAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, ContentTypeInterface::ENTITY_TYPE);
+        $repository = $this->get('open_orchestra_model.repository.content_type');
+
+        $collection = $repository->findAllNotDeletedInLastVersion();
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
+        $facade = $collectionTransformer->transform($collection);
+
+        return $facade;
     }
 
     /**
