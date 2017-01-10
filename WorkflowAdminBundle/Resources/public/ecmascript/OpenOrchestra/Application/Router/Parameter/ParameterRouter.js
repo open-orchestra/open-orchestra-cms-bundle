@@ -22,7 +22,7 @@ class ParameterRouter extends AbstractWorkflowRouter
      */
     editParameters() {
         let url = Routing.generate('open_orchestra_workflow_admin_parameters_form');
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let parametersFormView = new ParametersFormView({form: form});
             Application.getRegion('content').html(parametersFormView.render().$el);
