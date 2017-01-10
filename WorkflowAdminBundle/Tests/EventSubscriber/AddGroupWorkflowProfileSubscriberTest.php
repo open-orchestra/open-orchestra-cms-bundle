@@ -6,6 +6,7 @@ use OpenOrchestra\WorkflowAdminBundle\EventSubscriber\AddGroupWorkflowProfileSub
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\GroupBundle\GroupFormEvents;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class BlockTypeSubscriberTest
@@ -66,6 +67,7 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(GroupFormEvents::GROUP_FORM_CREATION, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::POST_SUBMIT, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -98,5 +100,22 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
         ));
 
         Phake::verify($builder, Phake::times(1))->addModelTransformer(Phake::anyParameters());
+    }
+
+    /**
+     * Test postSubmit
+     */
+    public function testPostSubmit()
+    {
+        $event = Phake::mock('Symfony\Component\Form\FormEvent');
+        $workflowProfileCollectionInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface');
+        Phake::when($workflowProfileCollectionInterface)->getProfiles()->thenReturn(array());
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        Phake::when($group)->getWorkflowProfileCollections()->thenReturn(array($workflowProfileCollectionInterface));
+        Phake::when($event)->getData()->thenReturn($group);
+
+        $this->subscriber->postSubmit($event);
+
+        Phake::verify($group)->addPerimeter(Phake::anyParameters());
     }
 }

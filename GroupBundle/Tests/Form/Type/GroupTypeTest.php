@@ -24,14 +24,16 @@ class GroupTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $eventSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        $eventSubscriber0 = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        $eventSubscriber1 = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $dataTransformer0 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $dataTransformer1 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $generatePerimeterManager = Phake::mock('OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager');
         Phake::when($generatePerimeterManager)->getPerimetersConfiguration()->thenReturn(array());
         $this->form = new GroupType(
-            $eventSubscriber,
+            $eventSubscriber0,
+            $eventSubscriber1,
             $this->eventDispatcher,
             $dataTransformer0,
             $dataTransformer1,
@@ -70,7 +72,7 @@ class GroupTypeTest extends AbstractBaseTestCase
 
         Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addModelTransformer(Phake::anyParameters());
-        Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
     }
 
