@@ -27,7 +27,7 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     newStatus() {
         let url = Routing.generate('open_orchestra_workflow_admin_status_new');
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let newStatusView = new NewStatusView({form: form});
             Application.getRegion('content').html(newStatusView.render().$el);

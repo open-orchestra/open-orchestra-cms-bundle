@@ -6,7 +6,6 @@ open_orchestra_workflow_admin:
             name         : Nom
             labels       : Libellé
             display_color: Couleur du statut
-            properties   : Propriétés
             properties   :
                 label                  : Propriétés
                 initial_state          : Etat initial
@@ -29,10 +28,10 @@ open_orchestra_workflow_admin:
             group:
                 properties: Propriétés
         workflow_profile:
-            creation     : Le nouveau profil de workflow a été créé
-            success      : Le profil de workflow a été modifié
-            labels       : Libellés
-            descriptions : Descriptions
+            creation    : Le nouveau profil de workflow a été créé
+            success     : Le profil de workflow a été modifié
+            labels      : Libellés
+            descriptions: Descriptions
             group:
                 properties: Propriétés
         profile   : Profils de workflow
