@@ -10,6 +10,7 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_workflow_profile_submit_widget %}
+
 {% block oo_workflow_right_widget %}
     {% spaceless %}
         <div class="table-responsive">
@@ -49,13 +50,13 @@
         </div>
         {{ form_rest(form) }}
     {% endspaceless %}
-{% endblock %}
+{% endblock oo_workflow_right_widget %}
 
 {% block oo_authorization_widget %}
     {% spaceless %}
         {{ form_widget(form.workflowFunctions) }}
     {% endspaceless %}
-{% endblock %}
+{% endblock oo_authorization_widget %}
 
 {% block oo_workflow_function_choice_widget %}
     {% spaceless %}
@@ -65,4 +66,36 @@
             </td>
         {% endfor %}
     {% endspaceless %}
-{% endblock %}
+{% endblock oo_workflow_function_choice_widget %}
+
+{% block _oo_status_properties_row %}
+    {% spaceless %}
+        {% if(form.parent.vars.value.id is not null) %}
+            {{ block('form_row') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock _oo_status_properties_row %}
+
+{% block _oo_status_properties_widget %}
+    {% spaceless %}
+        {% set properties = [] %}
+        {% for property in form.parent.vars.properties %}
+            {% set properties = properties | merge([property | trans]) %}
+        {% endfor %}
+        {% set value = properties | join(', ') %}
+        {{ block('form_widget_simple') }}
+    {% endspaceless %}
+{% endblock _oo_status_properties_widget %}
+
+{% block oo_status_submit_widget %}
+    {% spaceless %}
+        {{ block('submit_widget') }}
+        {% if(form.vars.value.id is null) %}
+            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
+            {% set id = 'submit_' ~ form.vars.name %}
+            {% set attr = {'class': 'submit-continue-form'} %}
+            {% set button_class= 'primary' %}
+            {{ block('button_widget') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock oo_status_submit_widget %}

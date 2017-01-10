@@ -32,5 +32,7 @@ class OpenOrchestraWorkflowAdminExtension extends Extension
         $loader->load('voter.yml');
         $loader->load('form.yml');
         $loader->load('subscriber.yml');
+
+        $container->setParameter('open_orchestra_workflow_admin.choice.available_color', $config['available_color']);
     }
 }

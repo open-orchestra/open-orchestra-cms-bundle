@@ -35,6 +35,26 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
     }
 
     /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return UserInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        $statuses = array();
+        $statusesFacade = $facade->getStatuses();
+        foreach ($statusesFacade as $statusFacade) {
+            $status = $this->getTransformer('status')->reverseTransform($statusFacade);
+            if (null !== $status) {
+                $statuses[] = $status;
+            }
+        }
+
+        return $statuses;
+    }
+
+    /**
      * @return string
      */
     public function getName()

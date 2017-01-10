@@ -28,7 +28,19 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('workflow_profile_collection')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowProfileCollectionFacade')->end()
                 ->end()
             ->end()
-        ->end();
+            ->arrayNode('available_color')
+                ->info('List of the color available, in the status for instance')
+                ->useAttributeAsKey('key')
+                    ->defaultValue( array(
+                        'red'      => 'open_orchestra_workflow_admin.form.status.color.red',
+                        'green'    => 'open_orchestra_workflow_admin.form.status.color.green',
+                        'orange'   => 'open_orchestra_workflow_admin.form.status.color.orange',
+                        'grayDark' => 'open_orchestra_workflow_admin.form.status.color.grayDark',
+                        'blue'     => 'open_orchestra_workflow_admin.form.status.color.blue',
+                    ))
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

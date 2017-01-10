@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use Phake;
 use OpenOrchestra\Backoffice\Form\DataTransformer\CollectionTransformer;
 
 /**

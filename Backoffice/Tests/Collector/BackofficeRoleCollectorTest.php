@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Collector;
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class BackofficeRoleCollectorTest

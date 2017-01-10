@@ -6,6 +6,7 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class StatusTransformerTest
@@ -20,6 +21,7 @@ class StatusTransformerTest extends AbstractBaseTestCase
     protected $translator;
     protected $status;
     protected $usageFinder;
+    protected $statusRepository;
 
     /**
      * Set up the test
@@ -33,14 +35,14 @@ class StatusTransformerTest extends AbstractBaseTestCase
 
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
-        $statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         $router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
         $statusId = 'StatusId';
 
         Phake::when($this->status)->getId()->thenReturn($statusId);
         Phake::when($router)->generateRoute(Phake::anyParameters())->thenReturn('route');
-        Phake::when($statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
+        Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
         Phake::when($transformerManager)->getGroupContext()->thenReturn($this->groupContext);
         Phake::when($transformerManager)->getRouter()->thenReturn($router);
 
@@ -56,7 +58,8 @@ class StatusTransformerTest extends AbstractBaseTestCase
             $multiLanguagesChoiceManager,
             $this->translator,
             $this->authorizationChecker,
-            $this->usageFinder
+            $this->usageFinder,
+            $this->statusRepository
         );
         $this->transformer->setContext($transformerManager);
     }
@@ -106,22 +109,22 @@ class StatusTransformerTest extends AbstractBaseTestCase
     public function provideTransformData()
     {
         return array(
-            array(true, true, true, false),
-            array(true, false, true, false),
-            array(false, true, true, false),
-            array(false, false, true, false),
-            array(true, true, false, false),
-            array(true, false, false, false),
-            array(false, true, false, false),
-            array(false, false, false, false),
-            array(true, true, true, true),
-            array(true, false, true, true),
-            array(false, true, true, true),
-            array(false, false, true, true),
-            array(true, true, false, true),
-            array(true, false, false, true),
-            array(false, true, false, true),
-            array(false, false, false, true),
+            1  => array(true , true , true , false),
+            2  => array(true , false, true , false),
+            3  => array(false, true , true , false),
+            4  => array(false, false, true , false),
+            5  => array(true , true , false, false),
+            6  => array(true , false, false, false),
+            7  => array(false, true , false, false),
+            8  => array(false, false, false, false),
+            9  => array(true , true , true , true),
+            10 => array(true , false, true , true),
+            11 => array(false, true , true , true),
+            12 => array(false, false, true , true),
+            13 => array(true , true , false, true),
+            14 => array(true , false, false, true),
+            15 => array(false, true , false, true),
+            16 => array(false, false, false, true),
         );
     }
 
@@ -132,6 +135,40 @@ class StatusTransformerTest extends AbstractBaseTestCase
     {
         $this->expectException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->transformer->transform(Phake::mock('stdClass'));
+    }
+
+    /**
+     * test reverseTransform
+     *
+     * @param string $id
+     *
+     * @dataProvider provideId
+     */
+    public function testReverseTransform($id)
+    {
+        $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
+        $facade->id = $id;
+
+        $status = $this->transformer->reverseTransform($facade);
+
+        if (is_null($id)) {
+            $this->assertSame(null, $status);
+        } else {
+            $this->assertSame($this->status, $status);
+        }
+    }
+
+    /**
+     * Provide status id
+     *
+     * @return array
+     */
+    public function provideId()
+    {
+        return array(
+            array(null),
+            array('fakeId'),
+        );
     }
 
     /**

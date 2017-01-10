@@ -3,7 +3,6 @@
 namespace OpenOrchestra\UserAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use FOS\UserBundle\Model\UserInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 

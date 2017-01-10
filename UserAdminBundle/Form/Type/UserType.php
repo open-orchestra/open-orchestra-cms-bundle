@@ -13,7 +13,6 @@ use OpenOrchestra\UserBundle\Model\UserInterface;
  */
 class UserType extends AbstractType
 {
-    protected $objectManager;
     protected $class;
     protected $availableLanguages;
     protected $userProfileSubscriber;

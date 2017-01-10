@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BaseApiBundle\DependencyInjection;
+namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
 use OpenOrchestra\BackofficeBundle\DependencyInjection\OpenOrchestraBackofficeExtension;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
@@ -62,15 +62,6 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
             'maxAge',
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
-
-        $defaultColor =  array(
-            'red' => 'open_orchestra_backoffice.form.status.color.red',
-            'green' => 'open_orchestra_backoffice.form.status.color.green',
-            'orange' => 'open_orchestra_backoffice.form.status.color.orange',
-            'grayDark' => 'open_orchestra_backoffice.form.status.color.grayDark',
-            'blue' => 'open_orchestra_backoffice.form.status.color.blue',
-        );
-        $this->assertEquals($defaultColor, $container->getParameter('open_orchestra_backoffice.choice.available_color'));
 
         $this->assertEquals($this->defaultBlocks, $container->getParameter('open_orchestra.blocks'));
 
@@ -152,9 +143,6 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
             'maxAge',
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
-
-        $defaultColor =  array("fake_color" => "fake_translation_color");
-        $this->assertEquals($defaultColor, $container->getParameter('open_orchestra_backoffice.choice.available_color'));
 
         $fields = $container->getParameter('open_orchestra_backoffice.field_types');
         $this->assertArrayHasKey('fake_field', $fields);

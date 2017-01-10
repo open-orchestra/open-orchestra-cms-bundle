@@ -15,6 +15,7 @@ services:
             - '@translator'
             - '@security.authorization_checker'
             - '@open_orchestra_backoffice.usage_finder.status'
+            - '@open_orchestra_model.repository.status'
         tags:
             - { name: open_orchestra_api.transformer.strategy }
     open_orchestra_workflow_admin.transformer.status_collection:

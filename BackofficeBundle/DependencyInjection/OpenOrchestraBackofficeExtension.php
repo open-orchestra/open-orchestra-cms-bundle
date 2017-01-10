@@ -90,8 +90,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         if (isset($config['front_roles'])) {
             $this->addFrontRoles($config['front_roles'], $container);
         }
-
-        $container->setParameter('open_orchestra_backoffice.choice.available_color', $config['available_color']);
     }
 
     /**

@@ -8,8 +8,6 @@ open_orchestra_backoffice:
     front_roles:
         - role_foo
         - role_bar
-    available_color:
-        fake_color : fake_translation_color
     field_types:
         fake_field:
             label: fake_label

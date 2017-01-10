@@ -2,11 +2,9 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Tests\Transformer;
 
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowProfileTransformer;
 use Phake;
-use OpenOrchestra\WorkflowAdminBundle\Transformer\StatusTransformer;
 
 /**
  * Class WorkflowProfileTransformerTest

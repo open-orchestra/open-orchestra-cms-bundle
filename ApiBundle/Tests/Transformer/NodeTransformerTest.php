@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\NodeTransformer;

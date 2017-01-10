@@ -20,7 +20,7 @@ class StatusController extends AbstractAdminController
      * @param Request $request
      * @param int     $statusId
      *
-     * @Config\Route("/status/form/{statusId}", name="open_orchestra_backoffice_status_form")
+     * @Config\Route("/status/form/{statusId}", name="open_orchestra_workflow_admin_status_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -31,13 +31,13 @@ class StatusController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $status);
 
         $form = $this->createForm('oo_status', $status, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_status_form', array(
+            'action' => $this->generateUrl('open_orchestra_workflow_admin_status_form', array(
                 'statusId' => $statusId,
             )))
         );
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.success');
+        $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.status.success');
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(StatusEvents::STATUS_UPDATE, new StatusEvent($status));
         }
@@ -48,31 +48,35 @@ class StatusController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/status/new", name="open_orchestra_backoffice_status_new")
+     * @Config\Route("/status/new", name="open_orchestra_workflow_admin_status_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $statusClass = $this->container->getParameter('open_orchestra_model.document.status.class');
+        $statusClass = $this->getParameter('open_orchestra_model.document.status.class');
         /** @var StatusInterface $status */
         $status = new $statusClass();
-        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $status);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, StatusInterface::ENTITY_TYPE);
 
         $form = $this->createForm('oo_status', $status, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_status_new'),
+            'action' => $this->generateUrl('open_orchestra_workflow_admin_status_new'),
             'method' => 'POST',
         ));
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.creation');
+        $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.status.creation');
 
         if ($this->handleForm($form, $message, $status)) {
             $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+            $response = new Response(
+                '',
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId())
+            );
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+            return $response;
         }
 
         return $this->renderAdminForm($form);

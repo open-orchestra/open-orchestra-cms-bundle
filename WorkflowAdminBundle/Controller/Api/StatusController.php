@@ -82,21 +82,76 @@ class StatusController extends BaseController
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
 
-        $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
-            && !$this->usageFinder->hasUsage($status)
-            && !$status->isInitialState()
-            && !$status->isPublishedState()
-            && !$status->isTranslationState()
-            && !$status->isAutoPublishFromState()
-            && !$status->isAutoUnpublishToState();
-
-        if ($canDelete) {
-            throw new DeleteStatusNotGrantedHttpException();
-        }
+        $this->denyDeleteUnlessGranted($status);
         $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));
         $this->get('object_manager')->remove($status);
         $this->get('object_manager')->flush();
 
         return array();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_status_delete_multiple")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteStatusesAction(Request $request)
+    {
+        $format = $request->get('_format', 'json');
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_workflow_admin.facade.status_collection.class'),
+            $format
+        );
+        $statusRepository = $this->get('open_orchestra_model.repository.status');
+        $statuses = $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->reverseTransform($facade);
+
+        $statusIds = array();
+        foreach ($statuses as $status) {
+            if ($this->isDeleteGranted($status)) {
+                $statusIds[] = $status->getId();
+                $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
+            }
+        }
+        $statusRepository->removeStatuses($statusIds);
+
+        return array();
+    }
+
+    /**
+     * Deny delete unless granted
+     *
+     * @param StatusInterface $status
+     *
+     * @throws AccessDeniedException
+     */
+    protected function denyDeleteUnlessGranted(StatusInterface $status)
+    {
+        if ($this->isDeleteGranted($status)) {
+            throw $this->DeleteStatusNotGrantedHttpException($message);
+        }
+    }
+
+    /**
+     * Check if current user can delete $status
+     *
+     * @param StatusInterface $status
+     *
+     * @return boolean
+     */
+    protected function isDeleteGranted(StatusInterface $status)
+    {
+        return ($this->isGranted(ContributionActionInterface::DELETE, $status)
+            && !$this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
+            && !$status->isInitialState()
+            && !$status->isPublishedState()
+            && !$status->isTranslationState()
+            && !$status->isAutoPublishFromState()
+            && !$status->isAutoUnpublishToState()
+        );
     }
 }

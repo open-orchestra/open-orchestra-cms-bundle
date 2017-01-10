@@ -1,13 +1,41 @@
 open_orchestra_workflow_admin:
     form:
+        status:
+            creation     : Le nouveau statut a été créé
+            success      : Le statut a été modifié
+            name         : Nom
+            labels       : Libellé
+            display_color: Couleur du statut
+            properties   : Propriétés
+            properties   :
+                label                  : Propriétés
+                initial_state          : Etat initial
+                translation_state      : Etat de traduction
+                published_state        : Etat de publication
+                auto_publish_from_state: Etat de publication automatique
+                auto_unpublish_to_state: Etat de dépublication automatique
+            blocked_edition:
+                label : Bloquer l'édition
+                helper: Si réglé à "Oui", les contenus ayant ce statut ne peuvent être modifiés.
+            out_of_workflow:
+                label : En dehors du workflow de validation
+                helper: Si réglé à "Oui", ce statut sera utilisé pour caractériser des contenus n'ayant pas de workflow de validation.
+            color:
+                red     : Rouge
+                orange  : Orange
+                green   : Vert
+                grayDark: Gris
+                blue    : Bleu
+            group:
+                properties: Propriétés
         workflow_profile:
-            creation : Le nouveau profil de workflow a été créé
-            success : Le profil de workflow a été modifié
-            labels : Libellés
+            creation     : Le nouveau profil de workflow a été créé
+            success      : Le profil de workflow a été modifié
+            labels       : Libellés
             descriptions : Descriptions
             group:
                 properties: Propriétés
-        profile: Profils de workflow    
-        backoffice: Back-office    
+        profile   : Profils de workflow
+        backoffice: Back Office
     profile:
-        page : Page
+        page: Page

@@ -85,13 +85,14 @@ class NodeListView extends AbstractDataTableView
     /**
      * @inheritDoc
      */
-    _getSyncUrlParameter() {
+    _getSyncOptions() {
         return {
-            'language': this._language,
-            'siteId': this._siteId
+            'urlParameter': {
+                'language': this._language,
+                'siteId': this._siteId
+            }
         };
     }
-
 }
 
 export default NodeListView;
