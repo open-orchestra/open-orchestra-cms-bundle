@@ -5,12 +5,17 @@ namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use OpenOrchestra\GroupBundle\GroupFormEvents;
 use OpenOrchestra\GroupBundle\Event\GroupFormEvent;
 use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\GroupBundle\Document\Perimeter;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
  * Class AddGroupWorkflowProfileSubscriber
@@ -89,6 +94,28 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
             'sub_group_id' => 'backoffice',
         ));
         $builder->get('workflow_profile_collections')->addModelTransformer($this->workflowProfileCollectionTransformer);
+        $builder->addEventSubscriber($this);
+
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function postSubmit(FormEvent $event)
+    {
+        if (($group = $event->getData()) instanceof GroupInterface) {
+            $workflowProfileCollections = $group->getWorkflowProfileCollections();
+            $perimeter = new Perimeter();
+            $perimeter->setType(ContentTypeInterface::ENTITY_TYPE);
+
+            foreach ($workflowProfileCollections as $key => $workflowProfile) {
+                if ($key != NodeInterface::ENTITY_TYPE && count($workflowProfile->getProfiles()) > 0) {
+                    $perimeter->addItem($key);
+                }
+            }
+
+            $group->addPerimeter($perimeter);
+        }
     }
 
     /**
@@ -98,6 +125,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     {
         return array(
             GroupFormEvents::GROUP_FORM_CREATION => 'addWorkflowProfile',
+            FormEvents::POST_SUBMIT => 'postSubmit',
         );
     }
 }
