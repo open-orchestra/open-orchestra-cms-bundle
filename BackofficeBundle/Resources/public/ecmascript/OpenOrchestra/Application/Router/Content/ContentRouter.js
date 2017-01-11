@@ -1,7 +1,9 @@
 import OrchestraRouter    from '../OrchestraRouter'
 import Application        from '../../Application'
 import ContentSummaryView from '../../View/Content/ContentSummaryView'
+import ContentsView       from '../../View/Content/ContentsView'
 import ContentTypes       from '../../Collection/ContentType/ContentTypes'
+import Contents           from '../../Collection/Content/Contents'
 
 /**
  * @class ContentRouter
@@ -13,7 +15,8 @@ class ContentRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'content/summary': 'showContentSummary'
+            'content/summary': 'showContentSummary',
+            'content/list/:contentTypeId/:contentTypeName/(/:page)': 'listContent'
         };
     }
 
@@ -46,6 +49,30 @@ class ContentRouter extends OrchestraRouter
                     contentTypes: contentTypes
                 });
                 let el = contentSummaryView.render().$el;
+                Application.getRegion('content').html(el);
+            }
+        });
+    }
+
+    /**
+     * list content by content type
+     */
+    listContent(contentTypeId, contentTypeName, page) {
+        if (null === page) {
+            page = 1
+        }
+        this._displayLoader(Application.getRegion('content'));
+        new Contents().fetch({
+            urlParameter: {
+                'contentTypeId': contentTypeId,
+                'siteId': Application.getContext().siteId,
+            },
+            success: (collection) => {
+                let contentsView = new ContentsView({
+                    collection: collection,
+                    settings: {page: Number(page) - 1, contentTypeName: contentTypeName}
+                });
+                let el = contentsView.render().$el;
                 Application.getRegion('content').html(el);
             }
         });

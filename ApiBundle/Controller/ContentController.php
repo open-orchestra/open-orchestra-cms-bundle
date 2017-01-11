@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\BaseApi\Context\GroupContext;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class ContentController
@@ -99,41 +101,24 @@ class ContentController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("", name="open_orchestra_api_content_list")
+     * @Config\Route("/list/{contentTypeId}/{siteId}", name="open_orchestra_api_content_list")
      * @Config\Method({"GET"})
      *
      * @Api\Groups({GroupContext::G_HIDE_ROLES})
      *
      * @return FacadeInterface
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request, $contentTypeId, $siteId)
     {
-        $contentType = $request->get('content_type');
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
+        $mapping = array();
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository =  $this->get('open_orchestra_model.repository.content');
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_collection');
 
-        if ($request->get('entityId') && $request->get('language')) {
-            $content = $this->showOrCreate($request, $request->get('entityId'));
-
-            return $transformer->transform(array($content), $contentType);
-        }
-
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_model.document.content.class'));
-        $mappingAttributes = $this->get('open_orchestra_api.mapping.content_attribute')->getMapping($contentType);
-        $mapping = array_merge($mapping, $mappingAttributes);
-
-        $configuration->setDescriptionEntity($mapping);
-        $contentCollection = $repository->findPaginatedLastVersionByContentTypeAndSite($contentType, $configuration, $siteId);
-        $recordsTotal = $repository->countByContentTypeAndSiteInLastVersion($contentType, $siteId);
-        $recordsFiltered = $repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration, $siteId);
-
-        $facade = $transformer->transform($contentCollection, $contentType);
+        $collection = $repository->findForPaginateFilterByContentTypeAndSite($configuration, $contentTypeId, $siteId);
+        $recordsTotal = $repository->countFilterByContentTypeAndSite($contentTypeId, $siteId);
+        $recordsFiltered = $repository->countWithFilterAndContentTypeAndSite($configuration, $contentTypeId, $siteId);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
