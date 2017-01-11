@@ -52,6 +52,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
                     'type' => 'text',
                     'options' => array(
                         'required' => 'false',
+                        'sub_group_id' => 'parameter',
                     )
                 ),
                 'options' => array(
@@ -117,10 +118,11 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
             'allow_delete' => false,
             'label' => false,
             'options' => array( 'label' => false ),
+            'sub_group_id' => 'parameter',
         ));
-        Phake::verify($this->fieldType)->removeOption($option);
 
         $defaultValue = $this->options[$type]['default_value'];
+
         Phake::verify($this->form)->add('default_value', $defaultValue['type'], $defaultValue['options']);
     }
 
@@ -155,8 +157,8 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
             'allow_delete' => false,
             'label' => false,
             'options' => array( 'label' => false ),
+            'sub_group_id' => 'parameter',
         ));
-        Phake::verify($this->fieldType)->removeOption($option);
 
         $defaultValue = $this->options[$type]['default_value'];
         Phake::verify($this->form)->add('default_value', $defaultValue['type'], $defaultValue['options']);
@@ -169,9 +171,9 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
     {
         return array(
             array(false, false, 2),
-            array(false, true, 1),
-            array(true, false, 1),
-            array(true, true, 0),
+            array(false, true, 2),
+            array(true, false, 2),
+            array(true, true, 2),
         );
     }
 
@@ -185,7 +187,6 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->preSetData($this->event);
 
         Phake::verify($this->fieldType, Phake::never())->addOption(Phake::anyParameters());
-        Phake::verify($this->fieldType, Phake::never())->removeOption(Phake::anyParameters());
         Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
     }
 
@@ -228,6 +229,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
             'allow_delete' => false,
             'label' => false,
             'options' => array( 'label' => false ),
+            'sub_group_id' => 'parameter',
         ));
     }
 }

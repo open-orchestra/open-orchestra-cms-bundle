@@ -23,7 +23,7 @@ class CollectionSortable extends AbstractBehavior
      * @param {Object} $element - jQuery object
      */
     activate($element) {
-        // special sellector for bootstrap_collection formtype
+        // special selector for bootstrap_collection formtype
         if ($('.bc-collection', $element).length > 0) {
             $element = $('.bc-collection', $element);
         }

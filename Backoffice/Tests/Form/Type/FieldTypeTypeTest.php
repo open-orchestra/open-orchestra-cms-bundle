@@ -45,9 +45,13 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
+        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        Phake::when($contextManager)->getCurrentLocale()->thenReturn('en');
 
         $this->form = new FieldTypeType(
-            $this->fieldOptions, $this->fieldOptionClass,
+            $contextManager,
+            $this->fieldOptions,
+            $this->fieldOptionClass,
             $this->fieldTypeClass,
             $this->fieldTypeSearchable,
             array()
@@ -69,17 +73,31 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
     {
         $this->form->configureOptions($this->resolver);
 
-        Phake::verify($this->resolver)->setDefaults(array(
-            'data_class' => $this->fieldTypeClass,
-            'label' => 'open_orchestra_backoffice.form.field_type.label',
-            'prototype_data' => function(){
-                $default = each($this->fieldOptions);
-                $fieldType = new $this->fieldTypeClass();
-                $fieldType->setType($default['key']);
+        Phake::verify($this->resolver)->setDefaults(
+            array(
+                'data_class' => $this->fieldTypeClass,
+                'group_enabled' => true,
+                'sub_group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.field_type.sub_group.property',
+                    ),
+                    'parameter' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.field_type.sub_group.parameter',
+                    ),
+                ),
+                'columns' => array('labels', 'fieldId', 'type', 'options'),
+                'label' => 'open_orchestra_backoffice.form.field_type.label',
+                'prototype_data' => function(){
+                    $default = each($this->fieldOptions);
+                    $fieldType = new $this->fieldTypeClass();
+                    $fieldType->setType($default['key']);
 
-                return $fieldType;
-            }
-        ));
+                    return $fieldType;
+                }
+            )
+        );
     }
 
     /**
@@ -89,8 +107,33 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
+    }
+
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+        $fieldOption = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
+        Phake::when($fieldOption)->getKey()->thenReturn('required');
+        Phake::when($fieldOption)->getValue()->thenReturn(true);
+
+        $formView->vars['columns']['labels']['data'] = array('en' => 'fakeEn');
+        $formView->vars['columns']['type']['data'] =  'text';
+        $formView->vars['columns']['options']['data'] = array($fieldOption);
+
+        $this->form->buildView($formView, $formInterface, array());
+
+        $this->assertEquals('fakeEn', $formView->vars['columns']['labels']['data']);
+        $this->assertEquals('foo', $formView->vars['columns']['type']['data']);
+        $this->assertEquals(array(
+            'label' => 'open_orchestra_backoffice.form.orchestra_fields.required_field',
+            'data' => 'open_orchestra_backoffice.form.swchoff.on',), $formView->vars['columns']['options']);
     }
 
     /**
@@ -102,7 +145,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
 
-        Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->builder)->setData($closure());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }

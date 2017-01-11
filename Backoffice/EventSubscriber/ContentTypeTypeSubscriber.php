@@ -18,17 +18,13 @@ class ContentTypeTypeSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $data = $event->getData();
-        $options = array(
-            'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
-            'attr' => array(
-                'class' => 'generate-id-dest',
-                'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
-            )
-        );
         if (null !== $data->getContentTypeId()) {
-            $options['disabled'] = true;
+            $field = $form->get('contentTypeId');
+            $config = $field->getConfig();
+            $form->add($field->getName(),
+                $config->getType()->getName(),
+                array_merge($config->getOptions(), array('disabled' => true)));
         }
-        $form->add('contentTypeId', 'text', $options);
     }
 
     /**

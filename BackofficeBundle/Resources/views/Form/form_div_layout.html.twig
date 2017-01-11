@@ -52,22 +52,26 @@
             {% set groups = groups|merge([{'group_name': group_name,'label': group_label, 'html': current_group, 'err': err, 'req': req}]) %}
         {% endfor %}
         {% set active = (active == -1) ? 0 : active %}
-        <ul role="tablist" class="nav nav-tabs">
-            {% for group in groups %}
-                <li class="{% if active == loop.index0 %}active{% endif %}">
-                    <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
-                        {{ group.label|default(loop.index0)|trans }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="tab-content">
-            {% for group in groups %}
-                <div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if group.group_name != '' %} tab-{{ group.group_name }} {% endif %}">
-                    {{ group.html }}
-                </div>
-            {% endfor %}
-        </div>
+        {% if groups|length == 1 and (groups|first).group_name == constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_GROUP') %}
+        	{{ (groups|first).html }}
+        {%  else %}
+            <ul role="tablist" class="nav nav-tabs">
+                {% for group in groups %}
+                    <li class="{% if active == loop.index0 %}active{% endif %}">
+                        <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
+                            {{ group.label|default(loop.index0)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for group in groups %}
+                    <div id="tab-{{ form.vars.name }}-{{ loop.index0 }}" class="tab-pane{% if active == loop.index0 %} active{% endif %}{% if group.group_name != '' %} tab-{{ group.group_name }} {% endif %}">
+                        {{ group.html }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% else %}
         {{ parent() }}
     {% endif %}
@@ -80,29 +84,31 @@
             {% if prototype is defined %}
                 {% set prototype_html %}
                     {% spaceless %}
-                        <tr data-prototype-id="{{ prototype.vars.name }}">
-                            {% for i in 0..(model.vars.columns|length - 1) %}
-                        	<td>
-                                {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
-                        	</td>
-                        	{% endfor %}
-                        	<td>
-                                <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
-                                <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
-                        	</td>
-    	                    {% if form.vars.allow_delete %}
-        	                	<td>
-                                    <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
-    							</td>
-    	                    {% endif %}
-                       	</tr>
-                       	<tr>
-                       		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
-                                <div class="row">
-                                    {{ form_widget(prototype) }}
-                                </div>
-                            </td>
-                        </tr>
+                        <tbody data-prototype-id="{{ prototype.vars.name }}">
+                            <tr>
+                                {% for column in model.vars.columns %}
+                            	<td>
+                                    {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
+                            	</td>
+                            	{% endfor %}
+                            	<td>
+                                    <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
+                                    <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
+                            	</td>
+        	                    {% if form.vars.allow_delete %}
+            	                	<td>
+                                        <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
+        							</td>
+        	                    {% endif %}
+                           	</tr>
+                           	<tr>
+                           		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                                    <div class="row">
+                                        {{ form_widget(prototype) }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
 				    {% endspaceless %}
                 {% endset %}
                 {% set attr = attr|merge({'data-prototype': prototype_html|e }) %}
@@ -115,12 +121,12 @@
                         <a href="#" class="btn btn-primary btn-sm add-form">{{ form.vars.attr['data-prototype-label-add']|trans }}</a>
                     {% endif %}
                 </div>
-                <table class="table table-hide-striped">
+                <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
                 	<thead>
                         <tr>
-                            {% for name, data in model.vars.columns %}
+                            {% for column in model.vars.columns %}
                         	<th>
-                        		{{ name|trans }}
+                        		{{ column.label|trans }}
                         	</th>
                         	{% endfor %}
                         	<th>&nbsp;</th>
@@ -129,34 +135,34 @@
                             {% endif %}
                        	</tr>
                     </thead>
-                    <tbody>
                     {% for field in form %}
-                        <tr data-prototype-id="{{ field.vars.name }}">
-                            {% for name, data in field.vars.columns %}
-                        	<td>
-                        		{{ data }}
-                        	</td>
-                        	{% endfor %}
-                        	<td>
-                                <button type="button" class="btn btn-primary btn-sm not open-form{% if not field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
-                                <button type="button" class="btn btn-primary btn-sm close-form{% if field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
-                        	</td>
-    	                    {% if form.vars.allow_delete %}
-        	                	<td>
-                                    <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
-    							</td>
-    	                    {% endif %}
-                       	</tr>
-                       	<tr class="{% if field.vars.valid %}hide{% endif %}">
-                       		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
-                                <div class="row">
-                                    {{ form_widget(field) }}
-                                    {{ form_errors(field) }}
-                                </div>
-                            </td>
-                        </tr>
+                        <tbody data-prototype-id="{{ field.vars.name }}">
+                            <tr>
+                                {% for column in field.vars.columns %}
+                            	<td>
+                                    {{ column.data|trans }}
+                            	</td>
+                            	{% endfor %}
+                            	<td>
+                                    <button type="button" class="btn btn-primary btn-sm not open-form{% if not field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
+                                    <button type="button" class="btn btn-primary btn-sm close-form{% if field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
+                            	</td>
+        	                    {% if form.vars.allow_delete %}
+            	                	<td>
+                                        <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
+        							</td>
+        	                    {% endif %}
+                           	</tr>
+                           	<tr class="{% if field.vars.valid %}hide{% endif %}">
+                           		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                                    <div class="row">
+                                        {{ form_widget(field) }}
+                                        {{ form_errors(field) }}
+                                    </div>
+                                </td>
+                            </tr>
+	                    </tbody>
                     {% endfor %}
-                    </tbody>
                 </table>
             </div>
 		{% else %}
@@ -251,22 +257,27 @@
     {% spaceless %}
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
         {% set class = 'col-' ~ col_size ~ '-4' %}
-        {% if expanded and multiple %}
-            <div {{ block('widget_container_attributes') }} class="form-group {% if form.vars.errors|length > 0 %} has-error{% endif %}">
-            {% for child in form %}
-                <div class="{{ class }}">
-                    <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
-                    <label for="{{ child.vars.id }}">{{ child.vars.label|trans }}</label>
-                </div>
-            {% endfor %}
+        <div {{ block('widget_container_attributes') }} class="form-group {% if form.vars.errors|length > 0 %} has-error{% endif %}">
+        {% for child in form %}
+            <div class="{{ class }}">
+                <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                <label for="{{ child.vars.id }}">{{ child.vars.label|trans }}</label>
             </div>
-        {% else %}
-            <div class="styled-select">
-            {{ parent() }}
-          </div>
-        {% endif %}
+        {% endfor %}
+        </div>
     {% endspaceless %}
 {% endblock oo_block_choice_widget %}
+
+{% block oo_default_listable_checkbox_row %}
+    {% spaceless %}
+        {% set col_size = col_size|default(bootstrap_get_col_size()) %}
+        {% set class = 'col-' ~ col_size ~ '-6' %}
+        <div class="{{ class }} switch-button">
+            {{ form_label(form, null, {label_col: 6}) }}
+            {{ form_widget(form, {widget_col: 6}) }}
+        </div>
+    {% endspaceless %}
+{% endblock oo_default_listable_checkbox_row %}
 
 {% block oo_language_by_sites_widget %}
     {% spaceless %}
@@ -305,7 +316,15 @@
 
 {% block checkbox_widget %}
     {% spaceless %}
-        <div class="col-md-10 switch-button">
+        {% set col_size = col_size|default(bootstrap_get_col_size()) %}
+        {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
+        {% if attr.widget_col is defined and attr.widget_col is not empty %}
+            {% set widget_col = attr.widget_col %}
+        {% endif %}
+        {% if attr.col_size is defined and attr.col_size is not empty %}
+            {% set col_size = attr.col_size %}
+        {% endif %}
+        <div class="col-{{ col_size }}-{{ widget_col }} switch-button">
             <span>{{ 'open_orchestra_backoffice.form.swchoff.off'|trans }}</span>
             <label class="switch">
                 {{ parent() }}
@@ -654,26 +673,6 @@
             </div>
         {% endfor %}
     </div>
-{% endblock %}
-
-{% block oo_field_type_widget %}
-    {% spaceless %}
-        <div {{ block('widget_attributes') }}>
-            {{ form_row(form.fieldId) }}
-            {{ form_row(form.labels) }}
-            {{ form_row(form.type) }}
-            {{ form_row(form.listable) }}
-            {{ form_row(form.translatable) }}
-            {{ form_row(form.searchable) }}
-            {{ form_row(form.orderable) }}
-            {{ form_row(form.orderDirection) }}
-            {{ form_row(form.position) }}
-            <fieldset>
-                <legend>{{ 'open_orchestra_backoffice.form.field_type.additionalParameters'|trans }}</legend>
-                {{ form_rest(form) }}
-            </fieldset>
-        </div>
-    {% endspaceless %}
 {% endblock %}
 
 {% block oo_multi_languages_widget %}

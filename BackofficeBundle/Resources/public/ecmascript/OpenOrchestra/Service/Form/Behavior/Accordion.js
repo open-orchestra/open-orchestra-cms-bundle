@@ -42,10 +42,10 @@ class Accordion extends AbstractBehavior
      */
     _openForms(event) {
         event.preventDefault();
-        let $table = $(event.target).parent('.accordion').find('table').eq(0);
+        let $table = $(event.target).closest('.accordion').find('table').eq(0);
         $('.open-form', $table).addClass('hide');
         $('.close-form', $table).removeClass('hide');
-        $('tbody tr:nth-of-type(2n)', $table).removeClass('hide');
+        $('tbody > tr:nth-of-type(2n)', $table).removeClass('hide');
     }
 
     /**
@@ -55,10 +55,10 @@ class Accordion extends AbstractBehavior
      */
     _closeForms(event) {
         event.preventDefault();
-        let $table = $(event.target).parent('.accordion').find('table').eq(0);
+        let $table = $(event.target).closest('.accordion').find('table').eq(0);
         $('.open-form', $table).removeClass('hide');
         $('.close-form', $table).addClass('hide');
-        $('tbody tr:nth-of-type(2n)', $table).addClass('hide');
+        $('tbody > tr:nth-of-type(2n)', $table).addClass('hide');
     }
 
     /**
@@ -68,18 +68,18 @@ class Accordion extends AbstractBehavior
      */
     _addForm(event) {
         event.preventDefault();
-        let $accordion = $(event.target).parent('.accordion')
+        let $accordion = $(event.target).closest('.accordion')
         let $table = $accordion.find('table').eq(0);
         let prototype = $accordion.data('prototype');
         let prototypeName = /data-prototype-id=&quot;(.*?)&quot;/.exec(prototype)[1];
         let rank = -1;
-        $('tr[data-prototype-id]', $table).each(function(){
+        $('tbody[data-prototype-id]', $table).each(function(){
             rank = Math.max(parseInt($(this).data('prototypeId')) || 0, rank);
         })
         rank++;
         let regularExpression = new RegExp(prototypeName, 'g');
         let $prototype = $(_.unescape(prototype.replace(regularExpression, rank)));
-        $('tbody', $table).append($prototype);
+        $table.append($prototype);
         $('body, html').animate({ scrollTop: $prototype.offset().top }, 1000);
     }
 
@@ -90,9 +90,7 @@ class Accordion extends AbstractBehavior
      */
     _removeForm(event) {
         event.preventDefault();
-        let $tr = $(event.target).parent().parent();
-        $tr.next().remove();
-        $tr.remove();
+        $(event.target).closest('tbody').remove();
     }
 
     /**

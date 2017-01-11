@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -43,7 +42,6 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         if ($data instanceof FieldTypeInterface) {
             $type = $data->getType();
-
             $this->checkFieldType($data, $type, $form);
             $this->addDefaultValueField($data, $type, $form);
         }
@@ -111,6 +109,9 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         if (isset($this->options[$type]['default_value'])) {
             $defaultValueField = $this->options[$type]['default_value'];
             $defaultOption = (isset($defaultValueField['options'])) ? $defaultValueField['options'] : array();
+            $defaultOption = array_merge($defaultOption, array(
+                'sub_group_id' => 'parameter',
+            ));
             $form->add('default_value', $defaultValueField['type'], $defaultOption);
         }
     }
@@ -127,24 +128,17 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         }
 
         if (array_key_exists('options', $this->options[$type])) {
-            $keys = array();
-            foreach ($this->options[$type]['options'] as $key => $option) {
-                if (!$data->hasOption($key)) {
-                    $fieldOptionClass = $this->fieldOptionClass;
-                    /** @var FieldOptionInterface $fieldOption */
-                    $fieldOption = new $fieldOptionClass();
-                    $fieldOption->setKey($key);
-                    $fieldOption->setValue($option['default_value']);
-
-                    $data->addOption($fieldOption);
-                }
-                $keys[] = $key;
-            }
-
+            $options = array();
             foreach ($data->getOptions() as $option) {
-                if (!in_array($option->getKey(), $keys)) {
-                    $data->removeOption($option);
-                }
+                $options[$option->getKey()] = $option->getValue();
+            }
+            $data->clearOptions();
+            foreach ($this->options[$type]['options'] as $key => $option) {
+                $fieldOptionClass = $this->fieldOptionClass;
+                $fieldOption = new $fieldOptionClass();
+                $fieldOption->setKey($key);
+                $fieldOption->setValue(array_key_exists($key, $options) ? $options[$key] : $option['default_value']);
+                $data->addOption($fieldOption);
             }
         } else {
             $data->clearOptions();
@@ -156,6 +150,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             'allow_delete' => false,
             'label' => false,
             'options' => array( 'label' => false ),
+            'sub_group_id' => 'parameter',
         ));
     }
 }

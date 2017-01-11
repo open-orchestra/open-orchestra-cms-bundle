@@ -23,7 +23,7 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->form = new SiteAliasType($this->siteAliasClass);
+        $this->form = new SiteAliasType($this->siteAliasClass, array('en' => 'open_orchestra_backoffice.language.en', 'fr' => 'open_orchestra_backoffice.language.fr', 'de' => 'open_orchestra_backoffice.language.de'));
     }
 
     /**
@@ -99,5 +99,19 @@ class SiteAliasTypeTest extends AbstractBaseTestCase
                 ),
             )
         );
+    }
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+
+        $formView->vars['columns']['language']['data'] = 'de';
+
+        $this->form->buildView($formView, $formInterface, array());
+        $this->assertEquals('open_orchestra_backoffice.language.de', $formView->vars['columns']['language']['data']);
     }
 }

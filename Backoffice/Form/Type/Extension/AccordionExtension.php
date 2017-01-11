@@ -24,11 +24,23 @@ class AccordionExtension extends AbstractTypeExtension
         ) {
             $columns = $form->getConfig()->getOption('columns');
 
-            foreach($columns as $column) {
-                if ($form->has($column)) {
-                    $label = $form->get($column)->getConfig()->getOption('label');
-                    $data = $form->get($column)->getData();
-                    $view->vars['columns'][$label] = $data;
+            foreach ($columns as $column) {
+                $columnsDefinition = explode('.', $column);
+                $child = $form;
+
+                foreach($columnsDefinition as $columnDefinition) {
+                    if ($form->has($columnDefinition)) {
+                        $child = $child->get($columnDefinition);
+                    } else {
+                        $child = false;
+                        break;
+                    }
+                }
+                if ($child) {
+                    $view->vars['columns'][$columnDefinition] = array(
+                        'label' => $child->getConfig()->getOption('label'),
+                        'data' => $child->getData(),
+                    );
                 }
             }
         }
