@@ -14,11 +14,6 @@ class ContentFacade extends DeletedFacade
     use BlameableFacade;
 
     /**
-     * @Serializer\Type("string")
-     */
-    public $contentType;
-
-    /**
      * @Serializer\Type("integer")
      */
     public $version;
@@ -52,6 +47,11 @@ class ContentFacade extends DeletedFacade
      * @Serializer\Type("boolean")
      */
     public $linkedToSite;
+
+    /**
+     * @Serializer\Type("boolean")
+     */
+    public $used;
 
     /**
      * @Serializer\Type("array<string,OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade>")

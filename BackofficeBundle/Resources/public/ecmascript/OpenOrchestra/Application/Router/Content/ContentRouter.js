@@ -4,6 +4,7 @@ import ContentSummaryView from '../../View/Content/ContentSummaryView'
 import ContentsView       from '../../View/Content/ContentsView'
 import ContentTypes       from '../../Collection/ContentType/ContentTypes'
 import Contents           from '../../Collection/Content/Contents'
+import ContentType        from '../../Model/ContentType/ContentType'
 
 /**
  * @class ContentRouter
@@ -16,7 +17,7 @@ class ContentRouter extends OrchestraRouter
     preinitialize() {
         this.routes = {
             'content/summary': 'showContentSummary',
-            'content/list/:contentTypeId/:contentTypeName/(/:page)': 'listContent'
+            'content/list/:contentType/:language/:contentTypeName(/:page)': 'listContent'
         };
     }
 
@@ -57,20 +58,31 @@ class ContentRouter extends OrchestraRouter
     /**
      * list content by content type
      */
-    listContent(contentTypeId, contentTypeName, page) {
+    listContent(contentType, language, contentTypeName, page) {
+        
         if (null === page) {
             page = 1
         }
+        
         this._displayLoader(Application.getRegion('content'));
-        new Contents().fetch({
+        new ContentType().fetch({
             urlParameter: {
-                'contentTypeId': contentTypeId,
-                'siteId': Application.getContext().siteId,
+                contentTypeId: contentType
             },
-            success: (collection) => {
+            success: (contentType) => {
+                let collection = new Contents();
                 let contentsView = new ContentsView({
                     collection: collection,
-                    settings: {page: Number(page) - 1, contentTypeName: contentTypeName}
+                    settings: {
+                        page: Number(page) - 1,
+                    },
+                    urlParameter: {
+                        contentType: contentType,
+                        siteId: Application.getContext().siteId,
+                        language: language,
+                        contentTypeName: contentTypeName,
+                    },
+                    contentType: contentType
                 });
                 let el = contentsView.render().$el;
                 Application.getRegion('content').html(el);

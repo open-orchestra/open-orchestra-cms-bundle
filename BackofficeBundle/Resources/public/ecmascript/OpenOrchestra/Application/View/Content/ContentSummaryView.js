@@ -1,4 +1,5 @@
-import OrchestraView           from '../OrchestraView'
+import OrchestraView from '../OrchestraView'
+import Application   from '../../Application'
 
 /**
  * @class ContentSummaryView
@@ -29,7 +30,8 @@ class ContentSummaryView extends OrchestraView
             let template = this._renderTemplate('Content/summaryElementView',
                     {
                         name: contentType.get('name'),
-                        contentTypeId: contentType.get('content_type_id')
+                        contentType: contentType.get('content_type_id'),
+                        language: Application.getContext().user.language.contribution
                     }
                 );
             this.$el.append(template);

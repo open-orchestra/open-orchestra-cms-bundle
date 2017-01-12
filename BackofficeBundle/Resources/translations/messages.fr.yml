@@ -576,16 +576,6 @@ open_orchestra_backoffice:
             no: Non
     table:
         search : Rechercher
-        content_type:
-            name: Nom
-            status_label: Statut
-            version: Version
-            language: Langue
-            linked_to_site: Liaison au site
-            created_at: Date de création
-            created_by: Auteur
-            updated_at: Date de modification
-            updated_by: Dernier contributeur
         content_types:
             content_type_id: Id
             name: Nom

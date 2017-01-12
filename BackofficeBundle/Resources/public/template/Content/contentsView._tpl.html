@@ -1,6 +1,23 @@
 <div class="top-action-buttons">
     <a class="btn btn-info" href="" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
 </div>
+<div class="pull-right languages">
+    <ul>
+        <% _.each(siteLanguages, function(siteLanguage, key) { %>
+            <% if (siteLanguage === language) { %>
+                <li class="active">
+                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                </li>
+                <% } else { %>
+                <li>
+                    <a href="#<%= Backbone.history.generateUrl('listContent', {contentType: contentType, language: siteLanguage, contentTypeName: contentTypeName}) %>">
+                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    </a>
+                </li>
+            <% }; %>
+        <% }); %>
+    </ul>
+</div>
 <h1> <%= contentTypeName %></h1>
 <div class="contents-list">
 </div>

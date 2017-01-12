@@ -67,6 +67,11 @@ open_orchestra_backoffice:
             updated_at: Updated date
             type: Type
             number_use: Use
+        contents:
+            name: Name
+            updated_at: Updated at
+            created_by: Created by
+            duplicate: Duplicate
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents

@@ -67,6 +67,11 @@ open_orchestra_backoffice:
             type: Type
             number_use: Utilisation
             version: Version
+        contents:
+            name: Nom
+            updated_at: Mis à jour le
+            created_by: Créé par
+            duplicate: Dupliquer
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus

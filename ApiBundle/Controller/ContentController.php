@@ -101,23 +101,25 @@ class ContentController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/list/{contentTypeId}/{siteId}", name="open_orchestra_api_content_list")
+     * @Config\Route("/list/{contentType}/{siteId}/{language}", name="open_orchestra_api_content_list")
      * @Config\Method({"GET"})
      *
-     * @Api\Groups({GroupContext::G_HIDE_ROLES})
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::FIELD_TYPES
+     * })
      *
      * @return FacadeInterface
      */
-    public function listAction(Request $request, $contentTypeId, $siteId)
+    public function listAction(Request $request, $contentType, $siteId, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         $mapping = array();
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository =  $this->get('open_orchestra_model.repository.content');
 
-        $collection = $repository->findForPaginateFilterByContentTypeAndSite($configuration, $contentTypeId, $siteId);
-        $recordsTotal = $repository->countFilterByContentTypeAndSite($contentTypeId, $siteId);
-        $recordsFiltered = $repository->countWithFilterAndContentTypeAndSite($configuration, $contentTypeId, $siteId);
+        $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentType, $siteId, $language);
+        $recordsTotal = $repository->countFilterByContentTypeSiteAndLanguage($contentType, $siteId, $language);
+        $recordsFiltered = $repository->countWithFilterAndContentTypeSiteAndLanguage($configuration, $contentType, $siteId, $language);
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
