@@ -20,6 +20,8 @@ open_orchestra_workflow_admin:
         title_edit: Edit workflow profile
     parameters:
         title: Parameters
+    transition:
+        title: Transitions
     table:
         statuses:
             label        : Label

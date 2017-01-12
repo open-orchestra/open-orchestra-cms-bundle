@@ -1,6 +1,7 @@
 import StatusRouter          from './Router/Status/StatusRouter'
 import ParameterRouter       from './Router/Parameter/ParameterRouter'
 import WorkflowProfileRouter from './Router/WorkflowProfile/WorkflowProfileRouter'
+import TransitionRouter      from './Router/Transition/TransitionRouter'
 import FormBehaviorManager   from '../Service/Form/Behavior/Manager'
 import StatusParameter       from '../Service/Form/Behavior/StatusParameter'
 
@@ -25,6 +26,7 @@ class WorkflowSubApplication
         new StatusRouter();
         new ParameterRouter();
         new WorkflowProfileRouter();
+        new TransitionRouter();
     }
 
     /**

@@ -28,6 +28,10 @@ class AbstractWorkflowRouter extends OrchestraRouter
                 {
                     label: Translator.trans('open_orchestra_workflow_admin.workflow_profile.title'),
                     link: '#'+Backbone.history.generateUrl('listWorkflowProfile')
+                },
+                {
+                    label: Translator.trans('open_orchestra_workflow_admin.transition.title'),
+                    link: '#'+Backbone.history.generateUrl('editTransitions')
                 }
             ]
         ]

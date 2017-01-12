@@ -140,3 +140,50 @@
         {% endfor %}
     {% endspaceless %}
 {% endblock oo_workflow_status_parameters_widget %}
+
+{% block oo_workflow_transitions_widget %}
+    {% spaceless %}
+        {{ block('global_form_errors') }}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Rôles</th>
+                    {% for label in form.vars.value.labels %}
+                        <th class="workflow-cell-parameter">De {{ label }} vers ...</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+        {% for profile in form.profiles %}
+            <tr>
+               {{ form_widget(profile) }}
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+{% endblock oo_workflow_transitions_widget %}
+
+{% block oo_workflow_profile_transitions_widget %}
+    {% spaceless %}
+        {% set profile = form.vars.value %}
+        <td>{{ profile.getLabel(context.currentLocale) }}</td>
+            {% for transitions in form %}
+                {% for fromStatus, transitionsFamilly in transitions.vars.value %}
+                    <td class="workflow-cell-parameter">
+                        {% for toStatus, value in transitionsFamilly %}
+                            <input type="checkbox"
+                                id="{{ profile.id }}_{{ fromStatus }}_{{ toStatus }}"
+                                name="oo_workflow_transitions[profiles][{{ profile.id }}][transitions][{{ fromStatus }}][{{ toStatus }}]"
+                                {% if (value.exists) %} checked="checked"{% endif %}
+                            >
+                            <label for="{{ profile.id }}_{{ fromStatus }}_{{ toStatus }}">
+                                {{ value.statusTo.getLabel(context.currentLocale) }}
+                            </label><br />
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            {% endfor %}
+        </td>
+    {% endspaceless %}
+{% endblock oo_workflow_profile_transitions_widget %}
