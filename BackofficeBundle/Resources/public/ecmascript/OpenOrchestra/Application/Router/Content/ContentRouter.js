@@ -1,5 +1,5 @@
 import OrchestraRouter    from '../OrchestraRouter'
-import app                from '../../Application'
+import Application        from '../../Application'
 import ContentSummaryView from '../../View/Content/ContentSummaryView'
 import ContentTypes       from '../../Collection/ContentType/ContentTypes'
 
@@ -36,7 +36,7 @@ class ContentRouter extends OrchestraRouter
      * show content summary
      */
     showContentSummary() {
-        this._displayLoader(app.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let contentTypes = new ContentTypes();
 
         contentTypes.fetch({
@@ -46,7 +46,7 @@ class ContentRouter extends OrchestraRouter
                     contentTypes: contentTypes
                 });
                 let el = contentSummaryView.render().$el;
-                app.getRegion('content').html(el);
+                Application.getRegion('content').html(el);
             }
         });
     }
