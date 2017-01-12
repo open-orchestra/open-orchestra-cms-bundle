@@ -30,6 +30,7 @@ open_orchestra_backoffice:
         platform:
           title: Platform
           tag: Tag
+          content: Contents
         developer:
           title:  Developer
         configuration:
