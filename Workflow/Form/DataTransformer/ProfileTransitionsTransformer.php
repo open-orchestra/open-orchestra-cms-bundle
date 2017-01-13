@@ -4,7 +4,7 @@ namespace OpenOrchestra\Workflow\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
-use OpenOrchestra\ModelBundle\Document\WorkflowTransition;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class ProfileTransitionsTransformer
@@ -12,35 +12,17 @@ use OpenOrchestra\ModelBundle\Document\WorkflowTransition;
 class ProfileTransitionsTransformer implements DataTransformerInterface
 {
     protected $statusRepository;
+    protected $transitionClass;
+    protected $cachedStatuses = array();
 
     /**
      * @param StatusRepositoryInterface $statusRepository
+     * @param string                    $transitionClass
      */
-    public function __construct(StatusRepositoryInterface $statusRepository)
+    public function __construct(StatusRepositoryInterface $statusRepository, $transitionClass)
     {
         $this->statusRepository = $statusRepository;
-    }
-
-    /**
-     * Generate all possible combinations between statuses
-     *
-     * @return array
-     */
-    protected function generateTransitionGrid()
-    {
-        $transitions = array();
-
-        foreach ($this->statusRepository->findNotOutOfWorkflow() as $statusFrom) {
-            foreach ($this->statusRepository->findNotOutOfWorkflow() as $statusTo) {
-                $transitions[$statusFrom->getId()][$statusTo->getId()] = array(
-                    'exists' => false,
-                    'statusFrom' => $statusFrom,
-                    'statusTo' => $statusTo
-                );
-            }
-        }
-
-        return $transitions;
+        $this->transitionClass = $transitionClass;
     }
 
     /**
@@ -50,14 +32,10 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        $transitions = $this->generateTransitionGrid();
+        $transitions = array();
 
         foreach ($value as $transition) {
-            if (!isset($transitions[$transition->getStatusFrom()->getId()])) {
-                $transitions[$transition->getStatusFrom()->getId()] = array();
-            }
-
-            $transitions[$transition->getStatusFrom()->getId()][$transition->getStatusTo()->getId()]['exists'] = true;
+            $transitions[] = $transition->getStatusFrom()->getId() . '-' . $transition->getStatusTo()->getId();
         }
 
         return $transitions;
@@ -72,19 +50,33 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
     {
         $transitions = array();
 
-        foreach ($value as $statusFromFamilly) {
-            if (is_array($statusFromFamilly)) {
-                foreach ($statusFromFamilly as $transitionSet) {
-                    if ($transitionSet['exists']) {
-                        $transition = new WorkflowTransition();
-                        $transition->setStatusFrom($transitionSet['statusFrom']);
-                        $transition->setStatusTo($transitionSet['statusTo']);
-                        $transitions[] = $transition;
-                    }
-                }
+        foreach ($value as $flatedTransition) {
+            $statuses = explode('-', $flatedTransition);
+            $statusFrom = $this->getStatus($statuses[0]);
+            $statusTo = $this->getStatus($statuses[1]);
+            if ($statusFrom instanceof StatusInterface && $statusTo instanceof StatusInterface) {
+                $transition = new $this->transitionClass();
+                $transition->setStatusFrom($statusFrom);
+                $transition->setStatusTo($statusTo);
+                $transitions[] = $transition;
             }
         }
-// var_dump($transitions);
+
         return $transitions;
+    }
+
+    /**
+     * Retrieve a status from the cache or DB
+     *
+     * @param string $statusId
+     *
+     * @return mixed
+     */
+    protected function getStatus($statusId) {
+        if (!isset($this->cachedStatuses[$statusId])) {
+            $this->cachedStatuses[$statusId] = $this->statusRepository->findOneById($statusId);
+        }
+
+        return $this->cachedStatuses[$statusId];
     }
 }

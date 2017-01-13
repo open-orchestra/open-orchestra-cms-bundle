@@ -11,6 +11,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class WorkflowProfileTransitionsType extends AbstractType
 {
+    protected $dataClass;
+
+    /**
+     * @param string $dataClass
+     */
+    public function __construct($dataClass)
+    {
+        $this->dataClass = $dataClass;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -19,6 +29,9 @@ class WorkflowProfileTransitionsType extends AbstractType
     {
          $builder
             ->add('transitions', 'oo_workflow_transitions_collection', array(
+                'required' => false,
+                'choices'  => $this->getChoices($options['statuses']),
+                'statuses' => $options['statuses']
          ));
     }
 
@@ -27,7 +40,30 @@ class WorkflowProfileTransitionsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('data_class', 'OpenOrchestra\ModelBundle\Document\WorkflowProfile');
+        $resolver->setDefaults(array(
+            'data_class' => $this->dataClass,
+            'statuses'   => array()
+        ));
+    }
+
+    /**
+     * Generate all possible transitions between statuses
+     *
+     * @aprameter array $statuses
+     *
+     * @return array
+     */
+    protected function getChoices(array $statuses)
+    {
+        $transitions = array();
+
+        foreach ($statuses as $statusFrom) {
+            foreach ($statuses as $statusTo) {
+                $transitions[$statusFrom->getId() . '-' . $statusTo->getId()] = $statusFrom->getId() . '-' . $statusTo->getId();
+            }
+        }
+
+        return $transitions;
     }
 
     /**

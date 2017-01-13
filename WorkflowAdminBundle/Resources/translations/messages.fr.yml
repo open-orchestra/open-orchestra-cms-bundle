@@ -38,5 +38,9 @@ open_orchestra_workflow_admin:
         backoffice: Back Office
         parameters:
             success: Les paramètres ont été modifiés
+        transitions:
+            success : Les transitions ont été modifiées
+            roles   : Rôles
+            from_to : 'De %status% vers ...'
     profile:
         page: Page

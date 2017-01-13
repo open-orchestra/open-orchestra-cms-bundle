@@ -147,18 +147,20 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Rôles</th>
-                    {% for label in form.vars.value.labels %}
-                        <th class="workflow-cell-parameter">De {{ label }} vers ...</th>
+                    <th>{{ 'open_orchestra_workflow_admin.form.transitions.roles'|trans() }}</th>
+                    {% for label in form.vars.statuses %}
+                        <th class="workflow-cell-parameter">
+                            {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label[context.currentLocale]}) }}
+                        </th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
-        {% for profile in form.profiles %}
-            <tr>
-               {{ form_widget(profile) }}
-            </tr>
-        {% endfor %}
+            {% for profile in form.children %}
+                <tr>
+                    {{ form_widget(profile) }}
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     {% endspaceless %}
@@ -167,23 +169,31 @@
 {% block oo_workflow_profile_transitions_widget %}
     {% spaceless %}
         {% set profile = form.vars.value %}
-        <td>{{ profile.getLabel(context.currentLocale) }}</td>
-            {% for transitions in form %}
-                {% for fromStatus, transitionsFamilly in transitions.vars.value %}
-                    <td class="workflow-cell-parameter">
-                        {% for toStatus, value in transitionsFamilly %}
-                            <input type="checkbox"
-                                id="{{ profile.id }}_{{ fromStatus }}_{{ toStatus }}"
-                                name="oo_workflow_transitions[profiles][{{ profile.id }}][transitions][{{ fromStatus }}][{{ toStatus }}]"
-                                {% if (value.exists) %} checked="checked"{% endif %}
-                            >
-                            <label for="{{ profile.id }}_{{ fromStatus }}_{{ toStatus }}">
-                                {{ value.statusTo.getLabel(context.currentLocale) }}
-                            </label><br />
-                        {% endfor %}
-                    </td>
-                {% endfor %}
-            {% endfor %}
+        <td>
+            {{ profile.getLabel(context.currentLocale) }}
+            {{ form_widget(form.children.transitions) }}
         </td>
     {% endspaceless %}
 {% endblock oo_workflow_profile_transitions_widget %}
+
+{% block oo_workflow_transitions_collection_widget %}
+    {% set fromStatusId = '' %}
+    {% for transition in form.children %}
+        {% set currentTransition = transition.vars.value|split('-') %}
+        {% if (currentTransition[0] != fromStatusId) %}
+            {% set fromStatusId = currentTransition[0] %}
+            </td>
+            <td class="workflow-cell-parameter">
+        {% endif %}
+        <input type="checkbox"
+            id="{{ transition.vars.id }}"
+            name="{{ transition.vars.full_name }}"
+            value="{{ transition.vars.value }}"
+            {% if (transition.vars.checked) %} checked="checked"{% endif %}
+            {% if (currentTransition[0] == currentTransition[1]) %} disabled="disabled"{% endif %}
+        >
+        <label for="{{ transition.vars.id }}">
+            {{ form.vars.statuses[currentTransition[1]][context.currentLocale] }}
+        </label><br />
+    {% endfor %}
+{% endblock oo_workflow_transitions_collection_widget %}

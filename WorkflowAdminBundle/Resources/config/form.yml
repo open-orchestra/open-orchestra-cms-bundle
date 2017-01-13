@@ -46,11 +46,16 @@ services:
 
     open_orchestra_workflow_admin.type.workflow_transitions:
         class: '%open_orchestra_workflow_admin.type.workflow_transitions.class%'
+        arguments:
+            - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: form.type, alias: oo_workflow_transitions}
 
     open_orchestra_workflow_admin.type.workflow_profile_transitions:
         class: '%open_orchestra_workflow_admin.type.workflow_profile_transitions.class%'
+        arguments:
+            - '%open_orchestra_model.document.workflow_profile.class%'
         tags:
             - { name: form.type, alias: oo_workflow_profile_transitions}
 

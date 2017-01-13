@@ -3,8 +3,11 @@
 namespace OpenOrchestra\Workflow\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
+use OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer;
 
 /**
  * Class WorkflowTransitionsCollectionType
@@ -13,7 +16,10 @@ class WorkflowTransitionsCollectionType extends AbstractType
 {
     protected $transitionsTransformer;
 
-    public function __construct($transitionTransformer)
+    /**
+     * @param ProfileTransitionsTransformer $transitionTransformer
+     */
+    public function __construct(ProfileTransitionsTransformer $transitionTransformer)
     {
         $this->transitionsTransformer = $transitionTransformer;
     }
@@ -24,7 +30,7 @@ class WorkflowTransitionsCollectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-         $builder->addModelTransformer($this->transitionsTransformer);
+        $builder->addModelTransformer($this->transitionsTransformer);
     }
 
     /**
@@ -36,17 +42,32 @@ class WorkflowTransitionsCollectionType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'type' => 'checkbox',
+                'expanded' => 'true',
+                'multiple' => 'true',
+                'required' => false,
+                'statuses' => array()
             )
         );
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        foreach ($options['statuses'] as $status) {
+            $view->vars['statuses'][$status->getId()] = $status->getLabels();
+        }
+    }
+
+    /**
+     * return string
      */
     public function getParent()
     {
-        return 'collection';
+        return 'choice';
     }
 
     /**

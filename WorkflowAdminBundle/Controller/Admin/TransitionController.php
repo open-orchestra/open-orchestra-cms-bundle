@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
 use OpenOrchestra\ModelBundle\Document\WorkflowProfile;
+use OpenOrchestra\ModelInterface\WorkflowProfileEvents;
+use OpenOrchestra\ModelInterface\Event\WorkflowProfileEvent;
 
 /**
  * Class TransitionController
@@ -25,19 +27,19 @@ class TransitionController extends AbstractAdminController
     public function formAction(Request $request)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, WorkflowProfile::ENTITY_TYPE);
-        $data = array(
-            'profiles' => $this->get('open_orchestra_model.repository.workflow_profile')->findAll(),
-            'labels'   => array('draft', 'published', 'to translate', 'pending')
-        );
-
-        $form = $this->createForm('oo_workflow_transitions', $data, array(
+        $currentLocale = $this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale();
+        $profiles = $this->get('open_orchestra_model.repository.workflow_profile')
+            ->findBy(array(), array('labels.' . $currentLocale => 'asc'));
+        $form = $this->createForm('oo_workflow_transitions', $profiles, array(
            'action' => $this->generateUrl('open_orchestra_workflow_admin_transitions_form')
         ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.transitions.success');
         if ($this->handleForm($form, $message)) {
-            $this->dispatchEvent(StatusEvents::STATUS_UPDATE, new StatusEvent($status));
+            foreach ($profiles as $profile) {
+                $this->dispatchEvent(WorkflowProfileEvents::WORKFLOW_PROFILE_UPDATE, new WorkflowProfileEvent($profile));
+            }
         }
 
         return $this->renderAdminForm($form);
