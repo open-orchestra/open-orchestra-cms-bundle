@@ -67,13 +67,28 @@ class ContentTypeRouter extends OrchestraRouter
             page = 1
         }
         this._displayLoader(Application.getRegion('content'));
-        let collection = new ContentTypes();
-        let contentTypesView = new ContentTypesView({
-            collection: collection,
-            settings: {page: Number(page) - 1}
+        let pageLength = 10;
+        page = Number(page) - 1;
+        new ContentTypes().fetch({
+            context: 'list',
+            data : {
+                start: page * pageLength,
+                length: pageLength
+            },
+            success: (contentTypes) => {
+                let contentTypesView = new ContentTypesView({
+                    collection: contentTypes,
+                    settings: {
+                        page: page,
+                        deferLoading: [contentTypes.recordsTotal, contentTypes.recordsFiltered],
+                        data: contentTypes.models,
+                        pageLength: pageLength
+                    }
+                });
+                let el = contentTypesView.render().$el;
+                Application.getRegion('content').html(el);
+            }
         });
-        let el = contentTypesView.render().$el;
-        Application.getRegion('content').html(el);
     }
 }
 

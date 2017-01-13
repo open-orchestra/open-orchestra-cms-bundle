@@ -5,7 +5,7 @@ import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/Delete
 /**
  * @class ContentTypesListView
  */
-class ContentTypesListView extends mix(AbstractDataTableView).with(DeleteCheckboxListViewMixin, UrlPaginateViewMixin)
+class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
     /**
      * @inheritDoc
@@ -79,20 +79,6 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(DeleteCheckbo
         });
 
         $(td).html(cellData)
-    }
-
-    /**
-     *
-     * @param {Object} td
-     * @param {Object} cellData
-     * @param {Object} rowData
-     *
-     * @private
-     */
-    _createCheckbox(td, cellData, rowData) {
-        if (rowData.get('rights').can_delete) {
-            super._createCheckbox(td, cellData, rowData)
-        }
     }
 
     /**
