@@ -16,6 +16,7 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
         return {
                 name: "delete",
                 orderable: false,
+                visibile: true,
                 width: '20px',
                 createdCell: this._createCheckbox,
                 render: () => { return ''}

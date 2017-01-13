@@ -4,12 +4,17 @@ import DashboardRouter       from './Router/Dashboard/DashboardRouter'
 import SiteRouter            from './Router/Site/SiteRouter'
 import ContentTypeRouter     from './Router/ContentType/ContentTypeRouter'
 import ContentRouter         from './Router/Content/ContentRouter'
-import ErrorView             from './View/Error/ErrorView'
+
 import ApplicationError      from '../Service/Error/ApplicationError'
 import AjaxError             from '../Service/Error/AjaxError'
+
 import HeaderView            from './View/Header/HeaderView'
-import SitesAvailable        from './Collection/Site/SitesAvailable'
+import ErrorView             from './View/Error/ErrorView'
 import NavigationView        from './View/Navigation/NavigationView'
+import BreadcrumbView        from './View/Breadcrumb/BreadcrumbView'
+
+import SitesAvailable        from './Collection/Site/SitesAvailable'
+
 import FormBehaviorManager   from '../Service/Form/Behavior/Manager'
 import ScrollTable           from '../Service/Form/Behavior/ScrollTable'
 import Tooltip               from '../Service/Form/Behavior/Tooltip'
@@ -20,7 +25,6 @@ import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelectio
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
 import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
 import Accordion             from '../Service/Form/Behavior/Accordion'
-import BreadcrumbView        from './View/Breadcrumb/BreadcrumbView'
 
 /**
  * @class Application

@@ -2,6 +2,9 @@ import OrchestraRouter    from '../OrchestraRouter'
 import Application        from '../../Application'
 import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
 import ContentTypeFormView from '../../View/ContentType/ContentTypeFormView'
+import ContentTypes     from '../../Collection/ContentType/ContentTypes'
+import ContentTypesView from '../../View/ContentType/ContentTypesView'
+
 
 /**
  * @class ContentTypeRouter
@@ -13,21 +16,23 @@ class ContentTypeRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'contentType/edit/:contentTypeId/:name': 'editContentType'
+            'contentType/edit/:contentTypeId/:name': 'editContentType',
+            'content-type/list(/:page)': 'listContentType'
         };
     }
 
     /**
+
      * @inheritdoc
      */
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.navigation.developer.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.content_type'),
-                link: '#'
+                label: Translator.trans('open_orchestra_backoffice.navigation.developer.content_type'),
+                link: '#' + Backbone.history.generateUrl('listContentType')
             }
         ]
     }
@@ -36,11 +41,12 @@ class ContentTypeRouter extends OrchestraRouter
      * Edit contentType
      *
      * @param {string} contentTypeId
+     * @param {string} name
      */
     editContentType(contentTypeId, name) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_content_type_form', {
-            contentTypeId : contentTypeId
+            contentTypeId: contentTypeId
         });
         FormBuilder.createFormFromUrl(url, (form) => {
             let contentTypeFormView = new ContentTypeFormView({
@@ -48,6 +54,40 @@ class ContentTypeRouter extends OrchestraRouter
                 name: name
             });
             Application.getRegion('content').html(contentTypeFormView.render().$el);
+        });
+    }
+
+    /**
+     * List content type
+     *
+     * @param {int} page
+     */
+    listContentType(page) {
+        if (null === page) {
+            page = 1
+        }
+        this._displayLoader(Application.getRegion('content'));
+        let pageLength = 10;
+        page = Number(page) - 1;
+        new ContentTypes().fetch({
+            context: 'list',
+            data : {
+                start: page * pageLength,
+                length: pageLength
+            },
+            success: (contentTypes) => {
+                let contentTypesView = new ContentTypesView({
+                    collection: contentTypes,
+                    settings: {
+                        page: page,
+                        deferLoading: [contentTypes.recordsTotal, contentTypes.recordsFiltered],
+                        data: contentTypes.models,
+                        pageLength: pageLength
+                    }
+                });
+                let el = contentTypesView.render().$el;
+                Application.getRegion('content').html(el);
+            }
         });
     }
 }

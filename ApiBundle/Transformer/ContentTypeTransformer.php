@@ -4,37 +4,39 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTypeTransformer
  */
-class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
+class ContentTypeTransformer extends AbstractTransformer
 {
     protected $multiLanguagesChoiceManager;
     protected $contentRepository;
+    protected $contentTypeRepository;
 
     /**
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
-     * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param ContentRepositoryInterface           $contentRepository
+     * @param ContentTypeRepositoryInterface       $contentTypeRepository
      */
     public function __construct(
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        AuthorizationCheckerInterface $authorizationChecker,
-        ContentRepositoryInterface $contentRepository
+        ContentRepositoryInterface $contentRepository,
+        ContentTypeRepositoryInterface $contentTypeRepository
     ) {
-        parent::__construct($facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->contentRepository = $contentRepository;
+        $this->contentTypeRepository = $contentTypeRepository;
+
     }
 
     /**
@@ -58,29 +60,32 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $contentType->getVersion();
         $facade->linkedToSite = $contentType->isLinkedToSite();
 
+        if ($this->hasGroup(CMSGroupContext::CONTENT_TYPE_RIGHTS)) {
+            $facade->addRight('can_delete', 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
+        }
+
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {
             foreach ($contentType->getFields() as $field) {
                 $facade->addField($this->getTransformer('field_type')->transform($field));
             }
         }
 
-        if (0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()) 
-            && $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType)
-        ) {
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_content_type_delete',
-                array('contentTypeId' => $contentType->getContentTypeId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $contentType)) {
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_backoffice_content_type_form',
-                array('contentTypeId' => $contentType->getContentTypeId())
-            ));
-        }
-
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return ContentTypeInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if (null !== $facade->contentTypeId) {
+            return $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($facade->contentTypeId);
+        }
+
+        return null;
     }
 
     /**

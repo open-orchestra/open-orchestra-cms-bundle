@@ -36,6 +36,7 @@ open_orchestra_backoffice:
           content: Contenus
         developer:
           title: Développeur
+          content_type: Type de contenu
         configuration:
           title: Configuration
           site: Sites
@@ -52,6 +53,13 @@ open_orchestra_backoffice:
         sites:
             site_id: Id
             name: Nom
+        content_types:
+            name: Nom
+            content_type_id: Id
+            linked_to_site:
+                label: Partagé sur les autres sites
+                'true': Oui
+                'false': Non
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -94,6 +102,12 @@ open_orchestra_backoffice:
         title_list: Sites
         search_engine:
             name: Nom
+    content_type:
+        title_list: Types de contenu
+        search_engine:
+            name: Nom
+            id: Id
+            linked_to_site: Partagé sur les autres sites
     block:
       add_block: Ajouter un bloc
       confirm_remove:

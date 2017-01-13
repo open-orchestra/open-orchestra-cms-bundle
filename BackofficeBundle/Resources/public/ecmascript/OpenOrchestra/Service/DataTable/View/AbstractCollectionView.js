@@ -26,7 +26,7 @@ class AbstractCollectionView extends OrchestraView
             'click .search-engine button.submit': '_search'
         };
         if (true === this._removeMultiple) {
-            this.events['click .btn-delete'] =  '_confirmDelete';
+            this.events['click .btn-delete:not(.disabled)'] =  '_confirmDelete';
         }
     }
 
