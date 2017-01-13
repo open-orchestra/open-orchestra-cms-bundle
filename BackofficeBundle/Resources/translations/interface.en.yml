@@ -12,6 +12,9 @@ open_orchestra_backoffice:
     confirm_modal:
         yes: Yes
         no: No
+    confirm_remove:
+        title: Remove the selected elements ?
+        message: The removal will be final
     no_item: There are no item for this view
     add: Add
     back_to_list: Back to list
