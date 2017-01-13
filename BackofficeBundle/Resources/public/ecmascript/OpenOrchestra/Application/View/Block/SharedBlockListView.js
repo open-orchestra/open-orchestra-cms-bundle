@@ -59,9 +59,11 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
     /**
      * @inheritDoc
      */
-    _getSyncUrlParameter() {
+    _getSyncOptions() {
         return {
-            language: this._language
+            urlParameter: {
+                language: this._language
+            }
         };
     }
 

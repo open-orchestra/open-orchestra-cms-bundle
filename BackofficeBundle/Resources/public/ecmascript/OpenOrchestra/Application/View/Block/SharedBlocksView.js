@@ -1,33 +1,30 @@
-import OrchestraView       from '../OrchestraView'
-import SharedBlockListView from './SharedBlockListView'
+import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
+import SharedBlockListView    from './SharedBlockListView'
 
 /**
  * @class SharedBlocksView
  */
-class SharedBlocksView extends OrchestraView
+class SharedBlocksView extends AbstractCollectionView
 {
     /**
      * @inheritdoc
      */
     preinitialize() {
-        this.events = {
-            'click .search-engine button.submit': '_search'
-        }
+        super.preinitialize({ removeMultiple: false });
     }
 
     /**
      * @inheritdoc
      */
     initialize({collection, blockComponents, language, siteLanguages, settings}) {
-        this._collection = collection;
+        super.initialize({collection: collection, settings: settings});
         this._blockComponents = blockComponents;
         this._language = language;
         this._siteLanguages = siteLanguages;
-        this._settings = settings;
     }
 
     /**
-     * Render sites view
+     * Render shared blocks view
      */
     render() {
         if (0 === this._collection.recordsTotal) {
@@ -53,26 +50,6 @@ class SharedBlocksView extends OrchestraView
         }
 
         return this;
-    }
-
-    /**
-     * Search shared block in list
-     * @param {Object} event
-     *
-     * @returns {boolean}
-     * @private
-     */
-    _search(event) {
-        event.stopPropagation();
-
-        let formData = $('form.search-engine', this.$el).serializeArray();
-        let filters = {};
-        for (let data of formData) {
-            filters[data.name] = data.value;
-        }
-        this._listView.filter(filters);
-
-        return false;
     }
 }
 
