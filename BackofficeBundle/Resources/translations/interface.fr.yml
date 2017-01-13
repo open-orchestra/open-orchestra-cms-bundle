@@ -40,7 +40,7 @@ open_orchestra_backoffice:
         configuration:
           title: Configuration
           site: Sites
-          shared_block: Blocs partagès
+          shared_block: Blocs partagés
     table:
         delete_button: Supprimer les éléments sélectionnés
         keywords:
@@ -115,7 +115,7 @@ open_orchestra_backoffice:
     shared_block:
         title_list: Blocs partagés
         title_list_new: Sélectionner un bloc à paramètrer
-        title_new: Paramètrer le bloc
+        title_new: Paramétrer le bloc
         search_engine:
             label: Libellé
             type: Type

@@ -113,7 +113,7 @@ open_orchestra_backoffice:
             id: Id
             linked_to_site: Shared on other sites
     shared_block:
-        title_list: Blocs partagés
+        title_list: shared blocks
         title_list_new: Select a block to parameterize
         title_new: Parameterize the block
         search_engine:

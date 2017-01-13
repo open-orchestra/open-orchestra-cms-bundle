@@ -38,8 +38,6 @@ class SharedBlocksView extends OrchestraView
             this.$el.html(template);
         } else {
             let categories = _.uniq(this._blockComponents.pluck('category'), false, (blockCategory) => {return blockCategory.get('key')});
-            console.log(categories);
-            console.log(this._blockComponents);
             let template = this._renderTemplate('Block/sharedBlocksView', {
                 language: this._language,
                 siteLanguages: this._siteLanguages,

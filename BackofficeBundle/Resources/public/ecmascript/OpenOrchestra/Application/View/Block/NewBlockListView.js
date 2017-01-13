@@ -56,7 +56,6 @@ class NewBlockListView extends OrchestraView
     _orderBlockComponentByCategory(blockComponents) {
         let orderedList = {};
         for (let blockComponent of blockComponents) {
-            console.log(blockComponent);
             let blockCategory = blockComponent.get('category').get('label');
             if (!orderedList.hasOwnProperty(blockCategory)) {
                 orderedList[blockCategory] = [];
