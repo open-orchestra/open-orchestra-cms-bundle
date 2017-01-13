@@ -36,10 +36,10 @@ open_orchestra_backoffice:
           content: Contents
         developer:
           title:  Developer
+          content_type: Content Type
         configuration:
           title:  Configuration
           site: Sites
-          content_type: Content Types
     table:
         delete_button: Remove selected items
         keywords:

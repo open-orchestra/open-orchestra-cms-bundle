@@ -1,11 +1,11 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class ContentTypesListView
  */
-class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
+class ContentTypesListView extends mix(AbstractDataTableView).with(DeleteCheckboxListViewMixin, UrlPaginateViewMixin)
 {
     /**
      * @inheritDoc
@@ -42,6 +42,16 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
                 render: this._translateLinkedToSite
             }
         ];
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    _getSyncOptions() {
+        return {
+            'context': 'list'
+        };
     }
 
     /**
@@ -59,7 +69,10 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = '';
+        let link = Backbone.history.generateUrl('editContentType', {
+            'contentTypeId': rowData.get('content_type_id'),
+            'name': rowData.get('name')
+        });
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link

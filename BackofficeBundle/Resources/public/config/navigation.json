@@ -28,5 +28,11 @@
       "template": "Navigation/Configuration/site",
       "rank": 20
     }
+  },
+  "developer": {
+    "contentType": {
+      "template": "Navigation/Developer/contentType",
+      "rank": 0
+    }
   }
 }

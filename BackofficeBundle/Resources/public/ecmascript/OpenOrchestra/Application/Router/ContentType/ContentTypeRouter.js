@@ -28,11 +28,11 @@ class ContentTypeRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.navigation.developer.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.content_type'),
-                link: '#'
+                label: Translator.trans('open_orchestra_backoffice.navigation.developer.content_type'),
+                link: '#' + Backbone.history.generateUrl('listContentType')
             }
         ]
     }

@@ -149,6 +149,7 @@ class AbstractDataTableView extends OrchestraView
         let columns = [];
         let columnDefs = [];
         let columnsParameters = this.getColumnsDefinition();
+        console.log(columnsParameters);
         for (let element of columnsParameters) {
             columns.push({'data' : 'attributes.' + element.name.replace('\.', '.attributes.'), 'defaultContent': ''});
             columnDefs.push(_.extend(element, {targets: columnDefs.length}));

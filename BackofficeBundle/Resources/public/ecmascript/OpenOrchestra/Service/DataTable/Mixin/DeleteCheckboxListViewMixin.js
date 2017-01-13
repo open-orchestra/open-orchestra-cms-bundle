@@ -16,6 +16,7 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
         return {
                 name: "delete",
                 orderable: false,
+                visibile: true,
                 width: '20px',
                 createdCell: this._createCheckbox,
                 render: () => { return ''}
@@ -30,6 +31,7 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
      * @private
      */
     _createCheckbox(td, cellData, rowData) {
+        console.log(td);
         let id = 'checkbox' + rowData.cid;
         let attributes = {type: 'checkbox', id: id, class:'delete-checkbox'};
         if (rowData.get('rights').hasOwnProperty('can_delete') &&
