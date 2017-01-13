@@ -64,6 +64,8 @@ open_orchestra_backoffice:
             label: Libellé
             updated_at: Date de modification
             type: Type
+            number_use: Utilisation
+            version: Version
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -116,6 +118,7 @@ open_orchestra_backoffice:
         title_list: Blocs partagés
         title_list_new: Sélectionner un bloc à paramètrer
         title_new: Paramétrer le bloc
+        tab_usage_block: Utilisation du bloc
         search_engine:
             label: Libellé
             type: Type

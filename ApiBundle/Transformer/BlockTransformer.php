@@ -2,12 +2,14 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\Manager\BlockConfigurationManager;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -18,23 +20,27 @@ class BlockTransformer extends AbstractTransformer
     protected $displayBlockManager;
     protected $blockConfigurationManager;
     protected $translator;
+    protected $nodeRepository;
 
     /**
      * @param string                    $facadeClass
      * @param DisplayBlockManager       $displayBlockManager
      * @param BlockConfigurationManager $blockConfigurationManager
      * @param TranslatorInterface       $translator
+     * @param NodeRepositoryInterface   $nodeRepository
      */
     public function __construct(
         $facadeClass,
         DisplayBlockManager      $displayBlockManager,
         BlockConfigurationManager $blockConfigurationManager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        NodeRepositoryInterface $nodeRepository
     ) {
         parent::__construct($facadeClass);
         $this->displayBlockManager = $displayBlockManager;
         $this->blockConfigurationManager = $blockConfigurationManager;
         $this->translator = $translator;
+        $this->nodeRepository = $nodeRepository;
     }
 
     /**
@@ -72,6 +78,10 @@ class BlockTransformer extends AbstractTransformer
         }
 
         $facade->previewContent = $this->displayBlockManager->show($block);
+
+        if ($this->hasGroup(CMSGroupContext::BLOCKS_NUMBER_USER)) {
+            $facade->numberUse = $this->nodeRepository->countBlockUsed($block->getId());
+        }
 
         return $facade;
     }

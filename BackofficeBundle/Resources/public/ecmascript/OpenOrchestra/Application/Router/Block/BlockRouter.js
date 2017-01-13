@@ -21,7 +21,7 @@ class BlockRouter extends OrchestraRouter
             'shared-block/list(/:language)(/:page)': 'listSharedBlock',
             'block/new/list/:language': 'newBlockList',
             'block/new/:component/:language/:name': 'newBlock',
-            'block/edit/:blockId/:blockLabel': 'editBlock'
+            'block/edit/:blockId/:blockLabel(/:activateUsageTab)': 'editBlock'
         };
     }
 
@@ -125,8 +125,14 @@ class BlockRouter extends OrchestraRouter
      *
      * @param {string} blockId
      * @param {string} blockLabel
+     * @param {boolean} activateUsageTab
      */
-    editBlock(blockId, blockLabel) {
+    editBlock(blockId, blockLabel, activateUsageTab) {
+        console.log(activateUsageTab);
+        if (null === activateUsageTab) {
+            activateUsageTab = false;
+        }
+        activateUsageTab = (activateUsageTab === 'true');
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_block_form', {
             blockId : blockId
@@ -135,7 +141,8 @@ class BlockRouter extends OrchestraRouter
             let blockFormView = new BlockFormView({
                 form : form,
                 blockLabel: blockLabel,
-                blockId: blockId
+                blockId: blockId,
+                activateUsageTab: activateUsageTab
             });
             Application.getRegion('content').html(blockFormView.render().$el);
         });

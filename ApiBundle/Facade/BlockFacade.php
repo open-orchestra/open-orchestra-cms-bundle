@@ -49,6 +49,11 @@ class BlockFacade extends AbstractFacade
     public $previewContent;
 
     /**
+     * @Serializer\Type("integer")
+     */
+    public $numberUse;
+
+    /**
      * @Serializer\Type("array<string,string>")
      */
     protected $attributes = array();

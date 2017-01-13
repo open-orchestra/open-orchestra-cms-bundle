@@ -45,6 +45,13 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
                 orderable: true,
                 orderDirection: 'desc',
                 visibile: true
+            },
+            {
+                name: "number_use",
+                title: Translator.trans('open_orchestra_backoffice.table.shared_block.number_use'),
+                orderable: false,
+                visibile: true,
+                createdCell: this._createUsageBlockLink
             }
         ];
     }
@@ -65,6 +72,22 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
                 language: this._language
             }
         };
+    }
+
+    /**
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
+     * @private
+     */
+    _createUsageBlockLink(td, cellData, rowData) {
+        let link = Backbone.history.generateUrl('editBlock', {blockId: rowData.get('id'), blockLabel: rowData.get('label'), activateUsageTab: true});
+        cellData = $('<a>',{
+            text: cellData,
+            href: '#'+link
+        });
+
+        $(td).html(cellData)
     }
 
     /**

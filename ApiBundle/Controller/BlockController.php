@@ -31,6 +31,9 @@ class BlockController extends BaseController
      *
      * @Config\Route("/list/shared/{language}", name="open_orchestra_api_block_list_shared_table")
      * @Config\Method({"GET"})
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::BLOCKS_NUMBER_USER
+     * })
      */
     public function listSharedBlockTableAction(Request $request, $language)
     {

@@ -85,6 +85,7 @@ services:
             - '@open_orchestra_backoffice.display_block_manager'
             - '@open_orchestra_backoffice.manager.block_configuration'
             - '@translator'
+            - '@open_orchestra_model.repository.node'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block_collection:

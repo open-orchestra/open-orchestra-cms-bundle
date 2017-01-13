@@ -108,6 +108,10 @@ class BlockType extends AbstractType
                         'rank' => 2,
                         'label' => 'open_orchestra_backoffice.form.block.group.technical',
                     ),
+                    'use' => array(
+                        'rank' => 3,
+                        'label' => 'use',
+                    ),
                 ),
                 'sub_group_render' => array(
                     'property' => array(
