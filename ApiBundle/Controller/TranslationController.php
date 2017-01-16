@@ -21,7 +21,7 @@ class TranslationController extends BaseController
      * @Config\Method({"GET"})
      *
      * @param string $domain
-     * 
+     *
      * @return Response
      */
     public function getTranslationAction($domain)
