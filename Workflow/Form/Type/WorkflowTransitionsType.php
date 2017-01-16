@@ -39,7 +39,10 @@ class WorkflowTransitionsType extends AbstractType
                 'type'         => 'oo_workflow_profile_transitions',
                 'allow_add'    => false,
                 'allow_delete' => false,
-                'options'      => array('statuses' => $this->statuses)
+                'options'      => array(
+                    'statuses' => $this->statuses,
+                    'locale'       => $this->locale
+                )
             )
         );
     }

@@ -193,7 +193,7 @@
             {% if (currentTransition[0] == currentTransition[1]) %} disabled="disabled"{% endif %}
         >
         <label for="{{ transition.vars.id }}">
-            {{ form.vars.statuses[currentTransition[1]][context.currentLocale] }}
+            {{ form.vars.statuses[currentTransition[1]] }}
         </label><br />
     {% endfor %}
 {% endblock oo_workflow_transitions_collection_widget %}

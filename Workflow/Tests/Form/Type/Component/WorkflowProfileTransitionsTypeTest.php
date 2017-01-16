@@ -41,7 +41,10 @@ class WorkflowProfileTransitionsTypeTest extends AbstractBaseTestCase
     public function testBuildForm()
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
-        $options = array('statuses' => array($this->generateStatus('1'), $this->generateStatus('2')));
+        $options = array(
+            'statuses' => array($this->generateStatus('1'), $this->generateStatus('2')),
+            'locale'   => 'fakeLocale'
+        );
         $expectedChoices = array(
             '1-1' => '1-1',
             '1-2' => '1-2',
@@ -54,7 +57,8 @@ class WorkflowProfileTransitionsTypeTest extends AbstractBaseTestCase
         Phake::verify($builder)->add('transitions', 'oo_workflow_transitions_collection', array(
             'required' => false,
             'choices'  => $expectedChoices,
-            'statuses' => $options['statuses']
+            'statuses' => $options['statuses'],
+            'locale'   => $options['locale']
         ));
     }
 
@@ -69,7 +73,8 @@ class WorkflowProfileTransitionsTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolver)->setDefaults(array(
             'data_class' => $this->dataClass,
-            'statuses'   => array()
+            'statuses'   => array(),
+            'locale'     => 'en'
         ));
     }
 

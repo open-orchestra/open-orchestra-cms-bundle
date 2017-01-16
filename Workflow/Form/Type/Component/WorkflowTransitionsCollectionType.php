@@ -45,7 +45,8 @@ class WorkflowTransitionsCollectionType extends AbstractType
                 'expanded' => 'true',
                 'multiple' => 'true',
                 'required' => false,
-                'statuses' => array()
+                'statuses' => array(),
+                'locale'   => 'en'
             )
         );
     }
@@ -58,7 +59,7 @@ class WorkflowTransitionsCollectionType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         foreach ($options['statuses'] as $status) {
-            $view->vars['statuses'][$status->getId()] = $status->getLabels();
+            $view->vars['statuses'][$status->getId()] = $status->getLabel($options['locale']);
         }
     }
 

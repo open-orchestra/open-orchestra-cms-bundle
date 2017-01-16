@@ -1,33 +1,26 @@
 <?php
 
-namespace OpenOrchestra\Workflow\Tests\Form\Type;
+namespace OpenOrchestra\Workflow\Tests\Form\Type\Component;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Workflow\Form\Type\WorkflowTransitionsType;
+use OpenOrchestra\Workflow\Form\Type\Component\WorkflowTransitionsCollectionType;
 
 /**
- * Class WorkflowTransitionsTypeTest
+ * Class WorkflowTransitionsCollectionTypeTest
  */
-class WorkflowTransitionsTypeTest extends AbstractBaseTestCase
+class WorkflowTransitionsCollectionTypeTest extends AbstractBaseTestCase
 {
     protected $form;
-    protected $statusRepository;
-    protected $statuses;
-    protected $locale = 'fakeLocale';
+    protected $transitionTransformer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
-        $this->statuses = array($this->generateStatus('1'), $this->generateStatus('2'), $this->generateStatus('3'));
-        Phake::when($this->statusRepository)->findNotOutOfWorkflow(Phake::anyParameters())->thenReturn($this->statuses);
-
-        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($contextManager)->getCurrentLocale()->thenReturn($this->locale);
-        $this->form = new WorkflowTransitionsType($this->statusRepository, $contextManager);
+        $this->transitionTransformer = Phake::mock('OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer');
+        $this->form = new WorkflowTransitionsCollectionType($this->transitionTransformer);
     }
 
     /**
@@ -39,19 +32,28 @@ class WorkflowTransitionsTypeTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test getName
-     */
-    public function testGetName()
-    {
-        $this->assertSame('oo_workflow_transitions', $this->form->getName());
-    }
-
-    /**
      * Test getParent
      */
     public function testGetParent()
     {
-        $this->assertSame('collection', $this->form->getParent());
+        $this->assertSame('choice', $this->form->getParent());
+    }
+
+    /**
+     * Test getName
+     */
+    public function testGetName()
+    {
+        $this->assertSame('oo_workflow_transitions_collection', $this->form->getName());
+    }
+
+    public function testBuildForm()
+    {
+        $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
+
+        $this->form->buildForm($builder, array());
+
+        Phake::verify($builder)->addModelTransformer($this->transitionTransformer);
     }
 
     /**
@@ -64,13 +66,11 @@ class WorkflowTransitionsTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'type'         => 'oo_workflow_profile_transitions',
-            'allow_add'    => false,
-            'allow_delete' => false,
-            'options'      => array(
-                'statuses' => $this->statuses,
-                'locale'   => $this->locale
-            )
+            'expanded' => 'true',
+            'multiple' => 'true',
+            'required' => false,
+            'statuses' => array(),
+            'locale'   => 'en'
         ));
     }
 
@@ -82,7 +82,18 @@ class WorkflowTransitionsTypeTest extends AbstractBaseTestCase
         $view = Phake::mock('Symfony\Component\Form\FormView');
         $form = Phake::mock('Symfony\Component\Form\FormInterface');
 
-        $this->form->buildView($view, $form, array());
+        $this->form->buildView(
+            $view,
+            $form,
+            array(
+                'statuses' => array(
+                    $this->generateStatus('1'),
+                    $this->generateStatus('2'),
+                    $this->generateStatus('3'),
+                ),
+                'locale' => 'fakeLocale'
+            )
+        );
 
         $expected = array(
             '1' => 'label-1',

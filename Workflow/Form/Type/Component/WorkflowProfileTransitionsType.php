@@ -31,7 +31,8 @@ class WorkflowProfileTransitionsType extends AbstractType
             ->add('transitions', 'oo_workflow_transitions_collection', array(
                 'required' => false,
                 'choices'  => $this->getChoices($options['statuses']),
-                'statuses' => $options['statuses']
+                'statuses' => $options['statuses'],
+                'locale'   => $options['locale']
          ));
     }
 
@@ -42,7 +43,8 @@ class WorkflowProfileTransitionsType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->dataClass,
-            'statuses'   => array()
+            'statuses'   => array(),
+            'locale'     => 'en'
         ));
     }
 
