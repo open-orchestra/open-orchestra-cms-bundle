@@ -2,7 +2,7 @@
     <div class="block">
         <span><%= name %></span>
         <ul class="action-links">
-            <li><a href="#<%= Backbone.history.generateUrl('listContent', {contentType: contentType, language: language, contentTypeName: name}) %>">Lister</a></li>
+            <li><a href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language, contentTypeName: name}) %>">Lister</a></li>
             <li><a href="#">Ajouter</a></li>
         </ul>
     </div>

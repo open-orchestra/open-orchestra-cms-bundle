@@ -30,7 +30,7 @@ class ContentSummaryView extends OrchestraView
             let template = this._renderTemplate('Content/summaryElementView',
                     {
                         name: contentType.get('name'),
-                        contentType: contentType.get('content_type_id'),
+                        contentTypeId: contentType.get('content_type_id'),
                         language: Application.getContext().user.language.contribution
                     }
                 );

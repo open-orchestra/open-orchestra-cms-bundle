@@ -10,10 +10,18 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
     /**
      * @inheritdoc
      */
+    preinitialize(options) {
+        super.preinitialize(options);
+        this.events['click .clone-icon'] = '_clickDuplicateIcon';
+    }
+
+    /**
+     * @inheritdoc
+     */
     initialize({collection, settings, urlParameter, contentType}) {
-        super.initialize({collection, settings});
         this._urlParameter = urlParameter;
         this._contentType = contentType;
+        super.initialize({collection, settings});
     }
 
     /**
@@ -34,31 +42,42 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
                 title: Translator.trans('open_orchestra_backoffice.table.contents.name'),
                 orderable: true,
                 orderDirection: 'desc',
-                visibile: true,
                 createdCell: this._createEditLink
             },
             {
                 name: "updated_at",
                 title: Translator.trans('open_orchestra_backoffice.table.contents.updated_at'),
                 orderable: true,
-                orderDirection: 'desc',
-                visibile: true,
+                activateColvis: true
             },
             {
                 name: "created_by",
                 title: Translator.trans('open_orchestra_backoffice.table.contents.created_by'),
                 orderable: true,
-                orderDirection: 'desc',
-                visibile: true,
+                activateColvis: true
             },
         ];
 
+        let fields = this._contentType.get('fields');
+        
+        for (let field of fields) {
+            if (field.listable) {
+                columnsDefinition.push({
+                    name: "fields." + field.field_id + ".string_value",
+                    title: field.label,
+                    orderable: true,
+                    activateColvis: true,
+                    visible: false
+                });
+            }
+        }
+        
         columnsDefinition.push({
             name: "duplicate",
             title: Translator.trans('open_orchestra_backoffice.table.contents.duplicate'),
             orderable: false,
             width: '20px',
-            createdCell: this._createDuplicateIcon
+            createdCell: $.proxy(this._createDuplicateIcon, this.api, this._contentType),
         });
         
         return columnsDefinition;
@@ -68,7 +87,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
      * @inheritDoc
      */
     generateUrlUpdatePage(page) {
-        return Backbone.history.generateUrl('listContent', {contentType: this._urlParameter.contentType, language: this._urlParameter.language, contentTypeName: this._urlParameter.contentTypeName, page : page});
+        return Backbone.history.generateUrl('listContent', {contentTypeId: this._urlParameter.contentTypeId, language: this._urlParameter.language, contentTypeName: this._urlParameter.contentTypeName, page : page});
     }
 
     /**
@@ -95,11 +114,12 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
     * @param {Object} td
     * @param {Object} cellData
     * @param {Object} rowData
+    * @param {Object} contentType
     *
     * @private
     */
-   _createDuplicateIcon(td, cellData, rowData) {
-       if (rowData.get('rights').can_create && rowData.get('content_type').defining_versionable) {
+   _createDuplicateIcon(contentType, td, cellData, rowData) {
+       if (rowData.get('rights').can_create && contentType.get('defining_versionable')) {
            let $icon = $('<i>', {'aria-hidden': 'true', class:'clone-icon fa fa-clone'});
            $icon.data(rowData);
            $(td).append($icon);
@@ -123,13 +143,30 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         $(td).html(cellData)
     }
 
+
+    /**
+     * @param {Object} event
+     *
+     * @private
+     */
+    _clickDuplicateIcon(event) {
+        let content = $(event.currentTarget).data();
+        content = this._collection.findWhere({'id': content.get('id')});
+        
+        content.sync('create', content, {
+            success: () => {
+                this.api.draw(false);
+            }
+        });
+    }
+
     /**
      * @inheritDoc
      */
     _getSyncOptions() {
         return {
             'urlParameter': {
-                'contentType': this._urlParameter.contentType,
+                'contentTypeId': this._urlParameter.contentTypeId,
                 'siteId': this._urlParameter.siteId,
                 'language': this._urlParameter.language
             }

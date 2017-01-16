@@ -37,7 +37,7 @@ class ContentTypeController extends BaseController
      */
     public function showAction($contentTypeId)
     {
-        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeId($contentTypeId);
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_type')->transform($contentType);
     }

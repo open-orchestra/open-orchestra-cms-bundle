@@ -101,7 +101,7 @@ class ContentController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/list/{contentType}/{siteId}/{language}", name="open_orchestra_api_content_list")
+     * @Config\Route("/list/{contentTypeId}/{siteId}/{language}", name="open_orchestra_api_content_list")
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
@@ -110,16 +110,25 @@ class ContentController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction(Request $request, $contentType, $siteId, $language)
+    public function listAction(Request $request, $contentTypeId, $siteId, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
-        $mapping = array();
-        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
-        $repository =  $this->get('open_orchestra_model.repository.content');
 
-        $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentType, $siteId, $language);
-        $recordsTotal = $repository->countFilterByContentTypeSiteAndLanguage($contentType, $siteId, $language);
-        $recordsFiltered = $repository->countWithFilterAndContentTypeSiteAndLanguage($configuration, $contentType, $siteId, $language);
+        $mapping = array(
+            'name'      => 'name',
+            'updated_at' => 'updatedAt',
+            'created_by'=> 'createdBy',
+        );
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
+        foreach ($contentType->getFields() as $field) {
+            $mapping['fields.' . $field->getFieldId() . '.string_value'] = 'attributes.' .     $field->getFieldId() . '.stringValue';
+        }
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+
+        $repository =  $this->get('open_orchestra_model.repository.content');
+        $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language);
+        $recordsTotal = $repository->countFilterByContentTypeSiteAndLanguage($contentTypeId, $siteId, $language);
+        $recordsFiltered = $repository->countWithFilterAndContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language);
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
@@ -194,6 +203,37 @@ class ContentController extends BaseController
                 $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
             }
         }
+
+        return array();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_content_delete_multiple")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteGroupsAction(Request $request)
+    {
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_group.facade.content_collection.class'),
+            $format
+        );
+        $repository = $this->get('open_orchestra_model.repository.content');
+        $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
+        $contentIds = array();
+        foreach ($contents as $content) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $content)) {
+                $contentIds[] = $content->getId();
+                $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
+            }
+        }
+
+        $repository->removeContents($contentIds);
 
         return array();
     }

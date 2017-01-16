@@ -17,7 +17,7 @@ class ContentRouter extends OrchestraRouter
     preinitialize() {
         this.routes = {
             'content/summary': 'showContentSummary',
-            'content/list/:contentType/:language/:contentTypeName(/:page)': 'listContent'
+            'content/list/:contentTypeId/:language/:contentTypeName(/:page)': 'listContent'
         };
     }
 
@@ -58,7 +58,7 @@ class ContentRouter extends OrchestraRouter
     /**
      * list content by content type
      */
-    listContent(contentType, language, contentTypeName, page) {
+    listContent(contentTypeId, language, contentTypeName, page) {
         
         if (null === page) {
             page = 1
@@ -67,7 +67,7 @@ class ContentRouter extends OrchestraRouter
         this._displayLoader(Application.getRegion('content'));
         new ContentType().fetch({
             urlParameter: {
-                contentTypeId: contentType
+                contentTypeId: contentTypeId
             },
             success: (contentType) => {
                 let collection = new Contents();
@@ -77,7 +77,7 @@ class ContentRouter extends OrchestraRouter
                         page: Number(page) - 1,
                     },
                     urlParameter: {
-                        contentType: contentType,
+                        contentTypeId: contentTypeId,
                         siteId: Application.getContext().siteId,
                         language: language,
                         contentTypeName: contentTypeName,

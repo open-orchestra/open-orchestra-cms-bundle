@@ -10,6 +10,15 @@ class ContentsView extends OrchestraView
     /**
      * @inheritdoc
      */
+    preinitialize() {
+        this.events = {
+            'click .btn-delete': '_remove'
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     initialize({collection, settings, urlParameter, contentType}) {
         this._collection = collection;
         this._settings = settings;
@@ -23,7 +32,7 @@ class ContentsView extends OrchestraView
     render() {
         let template = this._renderTemplate('Content/contentsView', {
             contentTypeName: this._urlParameter.contentTypeName,
-            contentType: this._urlParameter.contentType,
+            contentTypeId: this._urlParameter.contentTypeId,
             language: this._urlParameter.language,
             siteLanguages: Application.getContext().siteLanguages
         });
@@ -38,6 +47,19 @@ class ContentsView extends OrchestraView
         $('.contents-list', this.$el).html(this._listView.render().$el);
 
         return this;
+    }
+    /**
+     * Remove
+     *
+     * @private
+     */
+    _remove() {
+        let contents = this._collection.where({'delete': true});
+        this._collection.destroyModels(contents, {
+            success: () => {
+                this._listView.api.draw(false);
+            }
+        });
     }
 }
 

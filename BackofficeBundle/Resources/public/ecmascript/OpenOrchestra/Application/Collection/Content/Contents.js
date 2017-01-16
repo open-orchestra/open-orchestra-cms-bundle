@@ -30,6 +30,8 @@ class Contents extends DataTableCollection
         switch (method) {
             case "read":
                 return Routing.generate('open_orchestra_api_content_list', urlParameter);
+            case "delete":
+                return Routing.generate('open_orchestra_api_content_delete_multiple');
         }
     }
 }

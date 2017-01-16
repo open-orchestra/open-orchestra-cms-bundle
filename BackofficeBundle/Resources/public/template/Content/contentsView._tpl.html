@@ -10,7 +10,7 @@
                 </li>
                 <% } else { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('listContent', {contentType: contentType, language: siteLanguage, contentTypeName: contentTypeName}) %>">
+                    <a href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: siteLanguage, contentTypeName: contentTypeName}) %>">
                         <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
                     </a>
                 </li>
@@ -20,4 +20,7 @@
 </div>
 <h1> <%= contentTypeName %></h1>
 <div class="contents-list">
+</div>
+<div class="bottom-action-buttons">
+    <button class="btn btn-danger btn-delete"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
 </div>
