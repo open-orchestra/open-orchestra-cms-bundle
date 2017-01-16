@@ -101,7 +101,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let id = 'checkbox' + rowData.cid;
         let attributes = {type: 'checkbox', id: id, class:'delete-checkbox'};
         let $checkbox = $('<input>', attributes);
-        if (rowData.get('rights').can_delete && !rowData.get('used')) {
+        if (!rowData.get('rights').can_delete || rowData.get('used')) {
             $checkbox.prop("disabled", true);
         }
         $checkbox.data(rowData);

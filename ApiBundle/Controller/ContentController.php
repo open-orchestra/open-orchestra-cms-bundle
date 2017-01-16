@@ -2,11 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotDeletableException;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\SourceLanguageNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
@@ -17,7 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
@@ -31,72 +26,6 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 class ContentController extends BaseController
 {
     use ListStatus;
-    use HandleRequestDataTable;
-
-    /**
-     * @param Request $request
-     * @param string  $contentId
-     *
-     * @Config\Route("/{contentId}", name="open_orchestra_api_content_show")
-     * @Config\Method({"GET"})
-     *
-     * @return FacadeInterface
-     * @throws ContentNotFoundHttpException
-     */
-    public function showAction(Request $request, $contentId)
-    {
-        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
-
-        if (!$content) {
-            throw new ContentNotFoundHttpException();
-        }
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
-    }
-
-    /**
-     * @param Request $request
-     * @param string  $contentId
-     *
-     * @Config\Route("/{contentId}/show-or-create", name="open_orchestra_api_content_show_or_create")
-     * @Config\Method({"GET"})
-     *
-     * @return FacadeInterface
-     * @throws SourceLanguageNotFoundHttpException
-     */
-    public function showOrCreateAction(Request $request, $contentId)
-    {
-        $content = $this->showOrCreate($request, $contentId);
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
-    }
-
-    /**
-     * @param Request $request
-     * @param string  $contentId
-     *
-     * @return ContentInterface
-     * @throws SourceLanguageNotFoundHttpException
-     */
-    protected function showOrCreate(Request $request, $contentId)
-    {
-        $language = $request->get('language');
-        $content = $this->findOneContent($contentId, $language, $request->get('version'));
-
-        if (!$content) {
-            $sourceLanguage = $request->get('source_language');
-            if (!$sourceLanguage) {
-                throw new SourceLanguageNotFoundHttpException();
-            }
-            $oldContent = $this->findOneContent($contentId, $sourceLanguage);
-            $content = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($oldContent, $language);
-            $dm = $this->get('object_manager');
-            $dm->persist($content);
-            $dm->flush($content);
-        }
-
-        return $content;
-    }
 
     /**
      * @param Request $request
@@ -137,32 +66,6 @@ class ContentController extends BaseController
     }
 
     /**
-     * @param string $contentId
-     *
-     * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
-     * @Config\Method({"DELETE"})
-     *
-     * @return Response
-     * @throws ContentNotDeletableException
-     */
-    public function deleteAction($contentId)
-    {
-        $content = $this->get('open_orchestra_model.repository.content')->find($contentId);
-
-        if ($content instanceof ContentInterface) {
-            if ($content->isUsed()) {
-                throw new ContentNotDeletableException();
-            }
-
-            $content->setDeleted(true);
-            $this->get('object_manager')->flush();
-            $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
-        }
-
-        return array();
-    }
-
-    /**
      * @param Request $request
      * @param string  $contentId
      *
@@ -184,16 +87,25 @@ class ContentController extends BaseController
     }
 
     /**
-     * @param string  $contentId
+     * @param Request $request
      *
-     * @Config\Route("/{contentId}/duplicate", name="open_orchestra_api_content_duplicate")
+     * @Config\Route("/duplicate", name="open_orchestra_api_content_duplicate")
      * @Config\Method({"POST"})
      *
      * @return Response
      */
-    public function duplicateAction($contentId)
+    public function duplicateAction(Request $request)
     {
         $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
+
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.content.class'),
+            $format
+        );
+        $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
+        $contentId = $content->getContentId();
         $newContentId = null;
         foreach (array_keys($frontLanguages) as $language) {
             $content = $this->findOneContent($contentId, $language);
@@ -215,25 +127,26 @@ class ContentController extends BaseController
      *
      * @return Response
      */
-    public function deleteGroupsAction(Request $request)
+    public function deleteContentsAction(Request $request)
     {
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
-            $this->getParameter('open_orchestra_group.facade.content_collection.class'),
+            $this->getParameter('open_orchestra_api.facade.content_collection.class'),
             $format
         );
         $repository = $this->get('open_orchestra_model.repository.content');
         $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
         $contentIds = array();
         foreach ($contents as $content) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, $content)) {
-                $contentIds[] = $content->getId();
+            if ($this->isGranted(ContributionActionInterface::DELETE, ContentInterface::ENTITY_TYPE) &&
+                !$content->isUsed()) {
+                $contentIds[] = $content->getContentId();
                 $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
             }
         }
 
-        $repository->removeContents($contentIds);
+        $repository->removeContentIds($contentIds);
 
         return array();
     }

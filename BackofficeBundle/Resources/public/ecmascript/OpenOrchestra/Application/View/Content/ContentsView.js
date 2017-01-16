@@ -1,21 +1,12 @@
-import OrchestraView   from '../OrchestraView'
-import Application     from '../../Application'
-import ContentListView from '../../View/Content/ContentListView'
+import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
+import Application            from '../../Application'
+import ContentListView        from '../../View/Content/ContentListView'
 
 /**
  * @class ContentsView
  */
-class ContentsView extends OrchestraView
+class ContentsView extends AbstractCollectionView
 {
-    /**
-     * @inheritdoc
-     */
-    preinitialize() {
-        this.events = {
-            'click .btn-delete': '_remove'
-        }
-    }
-
     /**
      * @inheritdoc
      */

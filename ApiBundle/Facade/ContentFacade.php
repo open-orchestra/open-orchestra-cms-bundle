@@ -14,6 +14,11 @@ class ContentFacade extends DeletedFacade
     use BlameableFacade;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $id;
+
+    /**
      * @Serializer\Type("integer")
      */
     public $version;

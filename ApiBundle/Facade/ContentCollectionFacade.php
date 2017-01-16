@@ -27,4 +27,12 @@ class ContentCollectionFacade extends PaginateCollectionFacade
     {
         $this->contents[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getContents()
+    {
+        return $this->contents;
+    }
 }

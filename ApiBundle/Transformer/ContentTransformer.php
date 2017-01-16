@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
@@ -11,10 +13,9 @@ use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
  * Class ContentTransformer
@@ -29,6 +30,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param string                         $facadeClass
      * @param StatusRepositoryInterface      $statusRepository
      * @param ContentTypeRepositoryInterface $contentTypeRepository,
+     * @param ContentRepositoryInterface     $contentRepository,
      * @param EventDispatcherInterface       $eventDispatcher
      * @param AuthorizationCheckerInterface  $authorizationChecker
      */
@@ -36,12 +38,14 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facadeClass,
         StatusRepositoryInterface $statusRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
+        ContentRepositoryInterface $contentRepository,
         EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->statusRepository = $statusRepository;
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->contentRepository = $contentRepository;
         $this->eventDispatcher = $eventDispatcher;
         parent::__construct($facadeClass, $authorizationChecker);
     }
@@ -61,7 +65,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
 
-        $facade->id = $content->getContentId();
+        $facade->id = $content->getId();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
         $facade->contentTypeVersion = $content->getContentTypeVersion();
@@ -108,6 +112,13 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                     }
                 }
             }
+        } else {
+            if (null !== $facade->id) {
+                return $this->contentRepository->find($facade->id);
+            }
+
+            return null;
+
         }
 
         return $source;
