@@ -5,6 +5,7 @@ namespace OpenOrchestra\Workflow\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\Workflow\Factory\TransitionFactory;
 
 /**
  * Class ProfileTransitionsTransformer
@@ -12,17 +13,17 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 class ProfileTransitionsTransformer implements DataTransformerInterface
 {
     protected $statusRepository;
-    protected $transitionClass;
+    protected $transitionFactory;
     protected $cachedStatuses = array();
 
     /**
      * @param StatusRepositoryInterface $statusRepository
      * @param string                    $transitionClass
      */
-    public function __construct(StatusRepositoryInterface $statusRepository, $transitionClass)
+    public function __construct(StatusRepositoryInterface $statusRepository, TransitionFactory $transitionFactory)
     {
         $this->statusRepository = $statusRepository;
-        $this->transitionClass = $transitionClass;
+        $this->transitionFactory = $transitionFactory;
     }
 
     /**
@@ -55,10 +56,7 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
             $statusFrom = $this->getStatus($statuses[0]);
             $statusTo = $this->getStatus($statuses[1]);
             if ($statusFrom instanceof StatusInterface && $statusTo instanceof StatusInterface) {
-                $transition = new $this->transitionClass();
-                $transition->setStatusFrom($statusFrom);
-                $transition->setStatusTo($statusTo);
-                $transitions[] = $transition;
+                $transitions[] = $this->transitionFactory->create($statusFrom, $statusTo);
             }
         }
 
