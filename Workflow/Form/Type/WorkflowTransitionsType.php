@@ -15,6 +15,7 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 class WorkflowTransitionsType extends AbstractType
 {
     protected $statuses;
+    protected $locale;
 
     /**
      * @param StatusRepositoryInterface $statusRepository
@@ -22,8 +23,8 @@ class WorkflowTransitionsType extends AbstractType
      */
     public function __construct(StatusRepositoryInterface $statusRepository, ContextManager $contextManager)
     {
-        $locale = $contextManager->getCurrentLocale();
-        $this->statuses = $statusRepository->findNotOutOfWorkflow(array('labels.' . $locale => 1));
+        $this->locale = $contextManager->getCurrentLocale();
+        $this->statuses = $statusRepository->findNotOutOfWorkflow(array('labels.' . $this->locale => 1));
     }
 
     /**
@@ -51,7 +52,7 @@ class WorkflowTransitionsType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         foreach ($this->statuses as $status) {
-            $view->vars['statuses'][$status->getId()] = $status->getLabels();
+            $view->vars['statuses'][$status->getId()] = $status->getLabel($this->locale);
         }
     }
 

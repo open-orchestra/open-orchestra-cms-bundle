@@ -150,7 +150,7 @@
                     <th>{{ 'open_orchestra_workflow_admin.form.transitions.roles'|trans() }}</th>
                     {% for label in form.vars.statuses %}
                         <th class="workflow-cell-parameter">
-                            {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label[context.currentLocale]}) }}
+                            {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label}) }}
                         </th>
                     {% endfor %}
                 </tr>
