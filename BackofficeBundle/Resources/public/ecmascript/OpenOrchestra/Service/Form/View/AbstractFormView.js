@@ -70,7 +70,7 @@ class AbstractFormView extends OrchestraView
 
     /**
      * @param  {Object} event
-     * 
+     *
      * @return {Object}
      */
     getStatusCodeForm(event) {}

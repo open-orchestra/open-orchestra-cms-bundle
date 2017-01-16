@@ -42,7 +42,6 @@ class ContentsView extends OrchestraView
             settings: this._settings,
             urlParameter: this._urlParameter,
             contentType: this._contentType
-            
         });
         $('.contents-list', this.$el).html(this._listView.render().$el);
 

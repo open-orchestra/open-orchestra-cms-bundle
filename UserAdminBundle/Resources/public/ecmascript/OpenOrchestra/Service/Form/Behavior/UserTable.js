@@ -7,7 +7,7 @@ class UserTable extends AbstractBehavior
 {
      /**
      * get extra events
-     * 
+     *
      * @return {Object}
      */
     getExtraEvents() {
@@ -16,10 +16,10 @@ class UserTable extends AbstractBehavior
             'click a.member-link': '_redirectToUser'
         }
     }
-    
+
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

@@ -8,7 +8,7 @@ class TreeCheck extends AbstractBehavior
 {
     /**
      * get extra events
-     * 
+     *
      * @return {Object}
      */
     getExtraEvents() {
@@ -17,10 +17,10 @@ class TreeCheck extends AbstractBehavior
             'click .toggle-tree' : '_toggleChildrenTree'
         }
     }
-    
+
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

@@ -39,7 +39,6 @@ class ContentTypeFormView extends AbstractFormView
         return this;
     }
 
-    
     /**
      * @return {Object}
      */

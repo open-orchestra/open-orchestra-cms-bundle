@@ -10,7 +10,7 @@ class GroupTable extends AbstractBehavior
 {
      /**
      * get extra events
-     * 
+     *
      * @return {Object}
      */
     getExtraEvents() {
@@ -19,20 +19,20 @@ class GroupTable extends AbstractBehavior
             'click .open-groups-list': '_openGroupList'
         }
     }
-    
+
     /**
      * bind extra events
-     * 
+     *
      * @param {Object} view - instance of AbstractFormView
      */
     bindExtraEvents(view) {
         Backbone.Events.on('group:select', _.bind(this._addGroups, view), this);
         super.bindExtraEvents(view);
     }
-    
+
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

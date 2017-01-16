@@ -59,11 +59,11 @@ class ContentRouter extends OrchestraRouter
      * list content by content type
      */
     listContent(contentTypeId, language, contentTypeName, page) {
-        
+
         if (null === page) {
             page = 1
         }
-        
+
         this._displayLoader(Application.getRegion('content'));
         new ContentType().fetch({
             urlParameter: {

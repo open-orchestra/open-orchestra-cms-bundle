@@ -22,9 +22,9 @@ class BBcodeToHtmlTransformer implements DataTransformerInterface
 
     /**
      * Take a BBcode string to turn it into html
-     * 
+     *
      * @param string $bbCode
-     * 
+     *
      * @return string
      */
     public function transform($bbCode)
@@ -36,7 +36,7 @@ class BBcodeToHtmlTransformer implements DataTransformerInterface
 
     /**
      * @param string $html
-     * 
+     *
      * @return string
      */
     public function reverseTransform($html)

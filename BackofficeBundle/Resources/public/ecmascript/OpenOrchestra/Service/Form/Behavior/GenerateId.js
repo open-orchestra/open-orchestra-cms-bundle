@@ -39,7 +39,7 @@ class GenerateId extends AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

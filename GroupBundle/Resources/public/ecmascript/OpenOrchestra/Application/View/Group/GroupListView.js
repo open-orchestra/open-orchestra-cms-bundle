@@ -107,7 +107,7 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
     _clickDuplicateIcon(event) {
         let group = $(event.currentTarget).data();
         group = this._collection.findWhere({'id': group.get('id')});
-        
+
         group.sync('create', group, {
             success: () => {
                 this.api.draw(false);

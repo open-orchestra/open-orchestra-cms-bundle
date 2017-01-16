@@ -34,7 +34,7 @@ open_orchestra_workflow_admin:
             descriptions: Descriptions
             group:
                 properties: Properties
-        profile   : Workflow profiles 
+        profile   : Workflow profiles
         backoffice: Back Office
         parameters:
             success: The parameters has been modified

@@ -84,19 +84,19 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
         let attributes = [];
 
         if (full.get('initial_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.initial_state')); 
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.initial_state'));
         }
         if (full.get('translation_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.translation_state')); 
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.translation_state'));
         }
         if (full.get('published_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.published_state')); 
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.published_state'));
         }
         if (full.get('auto_publish_from_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_publish_from_state')); 
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_publish_from_state'));
         }
         if (full.get('auto_unpublish_to_state')) {
-            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_unpublish_to_state')); 
+            attributes.push(Translator.trans('open_orchestra_workflow_admin.status.auto_unpublish_to_state'));
         }
 
         return attributes.join(', ');

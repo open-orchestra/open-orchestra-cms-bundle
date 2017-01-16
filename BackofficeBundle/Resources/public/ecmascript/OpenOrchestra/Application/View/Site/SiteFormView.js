@@ -40,7 +40,6 @@ class SiteFormView extends AbstractFormView
         return this;
     }
 
-    
     /**
      * @return {Object}
      */

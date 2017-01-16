@@ -8,7 +8,7 @@ class HierarchicalCheck extends AbstractBehavior
 {
     /**
      * get extra events
-     * 
+     *
      * @return {Object}
      */
     getExtraEvents() {
@@ -16,10 +16,10 @@ class HierarchicalCheck extends AbstractBehavior
             'click input[type="checkbox"]': '_changeCheckbox'
         }
     }
-    
+
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

@@ -59,7 +59,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         ];
 
         let fields = this._contentType.get('fields');
-        
+
         for (let field of fields) {
             if (field.listable) {
                 columnsDefinition.push({
@@ -71,7 +71,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
                 });
             }
         }
-        
+
         columnsDefinition.push({
             name: "duplicate",
             title: Translator.trans('open_orchestra_backoffice.table.contents.duplicate'),
@@ -79,7 +79,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
             width: '20px',
             createdCell: $.proxy(this._createDuplicateIcon, this.api, this._contentType),
         });
-        
+
         return columnsDefinition;
     }
 
@@ -152,7 +152,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
     _clickDuplicateIcon(event) {
         let content = $(event.currentTarget).data();
         content = this._collection.findWhere({'id': content.get('id')});
-        
+
         content.sync('create', content, {
             success: () => {
                 this.api.draw(false);

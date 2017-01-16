@@ -23,7 +23,7 @@ class Accordion extends AbstractBehavior
             'click .remove-form': '_removeForm'
         }
     }
-    
+
     /**
      * toggle form
      *
@@ -95,7 +95,7 @@ class Accordion extends AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

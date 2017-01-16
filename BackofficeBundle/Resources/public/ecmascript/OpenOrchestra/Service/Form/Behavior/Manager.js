@@ -21,7 +21,7 @@ class Manager
 
     /**
      * activate behavior
-     * 
+     *
      * @param {Object} view - instance of AbstractFormView
      */
     _activate(view) {
@@ -32,7 +32,7 @@ class Manager
 
     /**
      * deactivate behavior
-     * 
+     *
      * @param {Object} view - instance of AbstractFormView
      */
     _deactivate(view) {

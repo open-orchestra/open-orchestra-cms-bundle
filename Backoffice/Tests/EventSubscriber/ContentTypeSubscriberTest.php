@@ -47,7 +47,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->fieldTypesConfiguration = array(
-            'text' => 
+            'text' =>
                 array(
                     'type' => 'text',
                     'options' => array(

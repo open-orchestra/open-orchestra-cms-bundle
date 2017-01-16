@@ -5,7 +5,7 @@ class AbstractBehavior
 {
     /**
      * get extra events
-     * 
+     *
      * @return {Object}
      */
     getExtraEvents() {
@@ -14,7 +14,7 @@ class AbstractBehavior
 
     /**
      * bind extra events
-     * 
+     *
      * @param {Object} view - instance of AbstractFormView
      */
     bindExtraEvents(view) {
@@ -31,7 +31,7 @@ class AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {
@@ -40,7 +40,7 @@ class AbstractBehavior
 
     /**
      * activate global behavior
-     * 
+     *
      * @param {Object} view - instance of AbstractFormView
      */
     activateBehavior(view) {
@@ -53,7 +53,7 @@ class AbstractBehavior
 
     /**
      * activate behavior on each instance
-     * 
+     *
      * @param {Object} element - JQuery object
      */
     activate(element) {
@@ -61,7 +61,7 @@ class AbstractBehavior
 
     /**
      * deactivate global behavior
-     * 
+     *
      * @param {Object} view - instance of AbstractFormView
      */
     deactivateBehavior(view) {
@@ -75,7 +75,7 @@ class AbstractBehavior
 
     /**
      * deactivate behavior on each instance
-     * 
+     *
      * @param {Object} element - JQuery object
      */
     deactivate(element) {

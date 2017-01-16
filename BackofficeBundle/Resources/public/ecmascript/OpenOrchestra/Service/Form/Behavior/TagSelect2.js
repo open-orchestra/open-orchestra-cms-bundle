@@ -7,7 +7,7 @@ class TagSelect2 extends AbstractBehavior
 {
     /**
      * activate behavior
-     * 
+     *
      * @param {Object} $element - jQuery object
      */
     activate($element) {
@@ -41,7 +41,7 @@ class TagSelect2 extends AbstractBehavior
 
     /**
      * deactivate behavior
-     * 
+     *
      * @param {Object} $element - jQuery object
      */
     deactivate($element) {
@@ -50,7 +50,7 @@ class TagSelect2 extends AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {
