@@ -82,60 +82,75 @@ class ParametersController extends AbstractAdminController
      */
     protected function getStatusIndexesToUpdate(array $statusCollection, array $formData)
     {
-        $statusMap = array();
         $updatedStatusIndexes = array();
         $formStatuses = $formData['statuses'];
+        $originalStatusesMap = $this->generateStatusesPropertiesMap($statusCollection);
+
+        $newPropertiesIndexes = $this->getStatusIndexesWithNewProperty($originalStatusesMap, $formStatuses);
+        $lostPropertiesIndexes = $this->getStatusIndexesWithLostProperty($originalStatusesMap, $formStatuses);
+
+        return array_unique(array_merge($newPropertiesIndexes, $lostPropertiesIndexes));
+    }
+
+    /**
+     * Generate a properties map of available properties by status
+     *
+     * @param array $statusCollection
+     *
+     * @return string
+     */
+    protected function generateStatusesPropertiesMap(array $statusCollection)
+    {
+        $statusMap = array();
 
         foreach ($statusCollection as $index => $status) {
-            $statusMap[$index] = array(
-                'initialState'         => $status->isInitialState(),
-                'translationState'     => $status->isTranslationState(),
-                'publishedState'       => $status->isPublishedState(),
-                'autoPublishFromState' => $status->isAutoPublishFromState(),
-                'autoUnpublishToState' => $status->isAutoUnpublishToState(),
-            );
-        }
-
-        foreach ($statusMap as $statusIndex => $oldParameters) {
-            foreach ($oldParameters as $parameter => $oldValue) {
-                if ($this->isParameterTurnedOn($parameter, $oldValue, $formStatuses, $statusIndex)
-                    || $this->isParameterTurnedOff($parameter, $oldValue, $formStatuses, $statusIndex)
-                ) {
-                    $updatedStatusIndexes[] = $statusIndex;
-                }
+            if ($status->isInitialState()) {
+                $statusMap[$index]['initialState'] = '1';
+            }
+            if ($status->isTranslationState()) {
+                $statusMap[$index]['translationState'] = '1';
+            }
+            if ($status->isPublishedState()) {
+                $statusMap[$index]['publishedState'] = '1';
+            }
+            if ($status->isAutoPublishFromState()) {
+                $statusMap[$index]['autoPublishFromState'] = '1';
+            }
+            if ($status->isAutoUnpublishToState()) {
+                $statusMap[$index]['autoUnpublishToState'] = '1';
             }
         }
 
-        return $updatedStatusIndexes;
+        return $statusMap;
     }
 
     /**
-     * Check if $parameter is requested to be turned on
+     * Get indexes of status with properties activated
      *
-     * @param string  $parameter
-     * @param boolean $oldValue
-     * @param array   $formStatuses
-     * @param string  $statusIndex
+     * @param array $originalStatusesMap
+     * @param array $formStatuses
      *
-     * @return boolean
+     * @return array
      */
-    protected function isParameterTurnedOn($parameter, $oldValue, array $formStatuses, $statusIndex)
+    protected function getStatusIndexesWithNewProperty(array $originalStatusesMap, array $formStatuses)
     {
-        return (!$oldValue && isset($formStatuses[$statusIndex]) && isset($formStatuses[$statusIndex][$parameter]));
+        $diff = array_udiff_assoc($formStatuses, $originalStatusesMap, 'array_diff_assoc');
+
+        return array_keys($diff);
     }
 
     /**
-     * Check if $parameter is requested to be turned off
+     * Get indexes of status with properties removed
      *
-     * @param string  $parameter
-     * @param boolean $oldValue
-     * @param array   $formStatuses
-     * @param string  $statusIndex
+     * @param array $originalStatusesMap
+     * @param array $formStatuses
      *
-     * @return boolean
+     * @return array
      */
-    protected function isParameterTurnedOff($parameter, $oldValue, array $formStatuses, $statusIndex)
+    protected function getStatusIndexesWithLostProperty(array $originalStatusesMap, array $formStatuses)
     {
-        return ($oldValue && (!isset($formStatuses[$statusIndex]) || !isset($formStatuses[$statusIndex][$parameter])));
+        $diff = array_udiff_assoc($originalStatusesMap, $formStatuses, 'array_diff_assoc');
+
+        return array_keys($diff);
     }
 }

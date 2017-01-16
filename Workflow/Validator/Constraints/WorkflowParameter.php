@@ -5,7 +5,7 @@ namespace OpenOrchestra\Workflow\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class CheckMainAliasPresence
+ * Class WorkflowParameter
  */
 class WorkflowParameter extends Constraint
 {

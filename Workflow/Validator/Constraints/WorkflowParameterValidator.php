@@ -56,7 +56,7 @@ class WorkflowParameterValidator extends ConstraintValidator
         }
 
         foreach ($parameters as $parameter => $setCount) {
-            if (0 == $setCount) {
+            if (0 === $setCount) {
                 $label = $this->translator
                     ->trans('open_orchestra_workflow_admin.status.' . $parameter, array(), 'interface');
                 $this->context
