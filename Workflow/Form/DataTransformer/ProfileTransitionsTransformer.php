@@ -12,6 +12,8 @@ use OpenOrchestra\Workflow\Factory\TransitionFactory;
  */
 class ProfileTransitionsTransformer implements DataTransformerInterface
 {
+    const STATUS_SEPARATOR = '-';
+
     protected $statusRepository;
     protected $transitionFactory;
     protected $cachedStatuses = array();
@@ -36,7 +38,7 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
         $transitions = array();
 
         foreach ($value as $transition) {
-            $transitions[] = $transition->getStatusFrom()->getId() . '-' . $transition->getStatusTo()->getId();
+            $transitions[] = $this->generateTransitionName($transition->getStatusFrom(), $transition->getStatusTo());
         }
 
         return $transitions;
@@ -51,16 +53,46 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
     {
         $transitions = array();
 
-        foreach ($value as $flatedTransition) {
-            $statuses = explode('-', $flatedTransition);
-            $statusFrom = $this->getStatus($statuses[0]);
-            $statusTo = $this->getStatus($statuses[1]);
+        foreach ($value as $flattened) {
+            $statuses = $this->getTransitionStatusIds($flattened);
+            $statusFrom = $this->getStatus($statuses['from']);
+            $statusTo = $this->getStatus($statuses['to']);
             if ($statusFrom instanceof StatusInterface && $statusTo instanceof StatusInterface) {
                 $transitions[] = $this->transitionFactory->create($statusFrom, $statusTo);
             }
         }
 
         return $transitions;
+    }
+
+    /**
+     * Generate a transition name from $statusFrom and $statusTo
+     *
+     * @param StatusInterface $statusFrom
+     * @param StatusInterface $statusTo
+     *
+     * @return string
+     */
+    static function generateTransitionName(StatusInterface $statusFrom, StatusInterface $statusTo)
+    {
+        return $statusFrom()->getId() . self::STATUS_SEPARATOR . $statusTo()->getId();
+    }
+
+    /**
+     * Get the status ids from $transitionName
+     *
+     * @param string $transitionName
+     *
+     * @return mixed
+     */
+    static function getTransitionStatusIds($transitionName)
+    {
+        $temp = explode(self::STATUS_SEPARATOR, $flattened);
+
+        $statuses['from'] = $temp[0];
+        $statuses['to'] = $temp[1];
+
+        return $statuses;
     }
 
     /**

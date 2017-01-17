@@ -5,6 +5,7 @@ namespace OpenOrchestra\Workflow\Form\Type\Component;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer;
 
 /**
  * Class WorkflowProfileTransitionsType
@@ -61,7 +62,8 @@ class WorkflowProfileTransitionsType extends AbstractType
 
         foreach ($statuses as $statusFrom) {
             foreach ($statuses as $statusTo) {
-                $transitions[$statusFrom->getId() . '-' . $statusTo->getId()] = $statusFrom->getId() . '-' . $statusTo->getId();
+                $transitionName = ProfileTransitionsTransformer::generateTransitionName($statusFrom, $statusTo);
+                $transitions[$transitionName] = $transitionName;
             }
         }
 

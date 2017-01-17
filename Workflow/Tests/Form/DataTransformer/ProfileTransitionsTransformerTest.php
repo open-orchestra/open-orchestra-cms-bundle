@@ -34,19 +34,19 @@ class ProfileTransitionsTransformerTest extends AbstractBaseTestCase
      */
     public function testTransform(array $transitions, array $expectedTransitions)
     {
-        $flattenTransitions = $this->transformer->transform($transitions);
-        $this->assertSame($expectedTransitions, $flattenTransitions);
+        $flattenedTransitions = $this->transformer->transform($transitions);
+        $this->assertSame($expectedTransitions, $flattenedTransitions);
     }
 
     /**
      * Test transform
      *
      * @param array $expectedTransitions
-     * @param array $flattenTransitions
+     * @param array $flattenedTransitions
      *
      * @dataProvider provideTransitions
      */
-    public function testReverseTransform($expectedTransitions, $flattenTransitions)
+    public function testReverseTransform($expectedTransitions, $flattenedTransitions)
     {
         foreach ($expectedTransitions as $transition) {
             Phake::when($this->statusRepository)->findOneById($transition->getStatusFrom()->getId())
@@ -55,8 +55,8 @@ class ProfileTransitionsTransformerTest extends AbstractBaseTestCase
                 ->thenReturn($transition->getStatusTo());
         }
 
-        $transitions = $this->transformer->reverseTransform($flattenTransitions);
-        $this->assertSameTransitions($expectedTransitions, $flattenTransitions);
+        $transitions = $this->transformer->reverseTransform($flattenedTransitions);
+        $this->assertSameTransitions($expectedTransitions, $flattenedTransitions);
     }
 
     /**
@@ -78,20 +78,20 @@ class ProfileTransitionsTransformerTest extends AbstractBaseTestCase
     }
 
     /**
-     * Assert that $expectedTransitions is the correct Transitions representation of $flattenTransitions
+     * Assert that $expectedTransitions is the correct Transitions representation of $flattenedTransitions
      *
      * @param array $expectedTransitions
-     * @param array $flattenTransitions
+     * @param array $flattenedTransitions
      */
-    protected function assertSameTransitions(array $expectedTransitions, array $flattenTransitions)
+    protected function assertSameTransitions(array $expectedTransitions, array $flattenedTransitions)
     {
         foreach ($expectedTransitions as $transition) {
-            $flattenTransition = $transition->getStatusFrom()->getId() . '-' . $transition->getStatusTo()->getId();
-            $this->assertContains($flattenTransition, $flattenTransitions);
+            $flattenedTransition = $transition->getStatusFrom()->getId() . '-' . $transition->getStatusTo()->getId();
+            $this->assertContains($flattenedTransition, $flattenedTransitions);
         }
 
-        foreach ($flattenTransitions as $flattenTransition) {
-            $idsStatus = explode('-', $flattenTransition);
+        foreach ($flattenedTransitions as $flattenedTransition) {
+            $idsStatus = explode('-', $flattenedTransition);
             $transitionOk = false;
 
             foreach ($expectedTransitions as $transition) {
