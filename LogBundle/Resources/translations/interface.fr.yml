@@ -1,0 +1,4 @@
+open_orchestra_log:
+    navigation:
+        configuration:
+          logs: Logs

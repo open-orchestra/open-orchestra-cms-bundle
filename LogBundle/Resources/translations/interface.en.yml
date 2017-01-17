@@ -1,0 +1,8 @@
+open_orchestra_log:
+    navigation:
+        configuration:
+          logs: Logs
+    title_list: log
+    search_engine:
+        name: xxx
+        filter: yyy

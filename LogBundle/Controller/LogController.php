@@ -31,8 +31,8 @@ class LogController extends Controller
     public function listAction(Request $request)
     {
         $mapping = $this
-        ->get('open_orchestra.annotation_search_reader')
-        ->extractMapping($this->container->getParameter('open_orchestra_log.document.log.class'));
+            ->get('open_orchestra.annotation_search_reader')
+            ->extractMapping($this->getParameter('open_orchestra_log.document.log.class'));
 
         $repository =  $this->get('open_orchestra_log.repository.log');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('log_collection');

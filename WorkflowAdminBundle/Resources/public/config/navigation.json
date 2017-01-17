@@ -1,6 +1,6 @@
 {
   "developer": {
-    "tag": {
+    "workflow": {
       "template": "Navigation/Developer/workflow",
       "rank": 10
     }
