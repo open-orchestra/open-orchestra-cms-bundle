@@ -204,7 +204,6 @@ class Application
         FormBehaviorManager.add(CollectionSortable);
         FormBehaviorManager.add(Accordion);
     }
-
 }
 
 // unique instance of Application

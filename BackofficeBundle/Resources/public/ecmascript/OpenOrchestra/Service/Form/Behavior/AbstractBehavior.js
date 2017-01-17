@@ -11,7 +11,7 @@ class AbstractBehavior
     getExtraEvents() {
         return {};
     }
-    
+
     /**
      * bind extra events
      * 

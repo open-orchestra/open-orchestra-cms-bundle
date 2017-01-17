@@ -1,5 +1,8 @@
-import StatusRouter           from './Router/Status/StatusRouter'
-import WorkflowProfileRouter  from './Router/WorkflowProfile/WorkflowProfileRouter'
+import StatusRouter          from './Router/Status/StatusRouter'
+import ParameterRouter       from './Router/Parameter/ParameterRouter'
+import WorkflowProfileRouter from './Router/WorkflowProfile/WorkflowProfileRouter'
+import FormBehaviorManager   from '../Service/Form/Behavior/Manager'
+import StatusParameter       from '../Service/Form/Behavior/StatusParameter'
 
 /**
  * @class WorkflowSubApplication
@@ -11,6 +14,7 @@ class WorkflowSubApplication
      */
     run() {
         this._initRouter();
+        this._initFormBehaviorManager();
     }
 
     /**
@@ -19,7 +23,16 @@ class WorkflowSubApplication
      */
     _initRouter() {
         new StatusRouter();
+        new ParameterRouter();
         new WorkflowProfileRouter();
+    }
+
+    /**
+     * Initialize form behavior library
+     * @private
+     */
+    _initFormBehaviorManager() {
+        FormBehaviorManager.add(StatusParameter);
     }
 }
 

@@ -99,3 +99,44 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_status_submit_widget %}
+
+{% block oo_workflow_parameters_widget %}
+    {% spaceless %}
+        {{ block('global_form_errors') }}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    {% for label in form.vars.value.labels %}
+                        <th class="workflow-cell-parameter">{{ label }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+        {% for child in form.statuses %}
+            <tr>
+               {{ form_widget(child) }}
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+{% endblock oo_workflow_parameters_widget %}
+
+{% block oo_workflow_status_parameters_widget %}
+    {% spaceless %}
+        <td>{{ form.vars.value.getLabel(context.currentLocale) }}</td>
+        {% for child in form %}
+            <td class="workflow-cell-parameter">
+                <input type="radio"
+                    id="{{ child.vars.id }}"
+                    name="{{ child.vars.full_name }}"
+                    value="{{ child.vars.value }}"
+                    {% if (child.vars.checked) %} checked="checked"{% endif %}
+                    data-group="{{ child.vars.name }}"
+                >
+                <label for="{{ child.vars.id }}"></label>
+            </td>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock oo_workflow_status_parameters_widget %}

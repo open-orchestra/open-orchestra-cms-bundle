@@ -16,9 +16,9 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     preinitialize(options) {
         this.routes = {
-            'status/new'           : 'newStatus',
-            'status/edit/:statusId': 'editStatus',
-            'status/list(/:page)'  : 'listStatus'
+            'workflow/status/new'           : 'newStatus',
+            'workflow/status/edit/:statusId': 'editStatus',
+            'workflow/status/list(/:page)'  : 'listStatus'
         };
     }
 

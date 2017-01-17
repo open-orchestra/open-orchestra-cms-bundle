@@ -1,0 +1,4 @@
+open_orchestra_workflow_admin_validators:
+    workflow_parameters:
+        unique  : "%parameter%: l'attribut doit être unique parmis les statuts"
+        required: "%parameter%: l'attribut doit être posé sur un statut"

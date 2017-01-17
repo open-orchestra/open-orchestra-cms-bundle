@@ -36,5 +36,7 @@ open_orchestra_workflow_admin:
                 properties: Propriétés
         profile   : Profils de workflow
         backoffice: Back Office
+        parameters:
+            success: Les paramètres ont été modifiés
     profile:
         page: Page

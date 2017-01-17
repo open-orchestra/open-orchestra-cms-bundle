@@ -16,9 +16,9 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
      */
     preinitialize(options) {
         this.routes = {
-            'workflow-profile/list(/:page)': 'listWorkflowProfile',
-            'workflow-profile/new': 'newWorkflowProfile',
-            'workflow-profile/edit/:workflowProfileId': 'editWorkflowProfile'
+            'workflow/profile/list(/:page)': 'listWorkflowProfile',
+            'workflow/profile/new': 'newWorkflowProfile',
+            'workflow/profile/edit/:workflowProfileId': 'editWorkflowProfile'
         };
     }
 
