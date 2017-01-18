@@ -10,11 +10,14 @@ use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\ModelInterface\Event\BlockEvent;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface;
+use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Phake;
 use OpenOrchestra\ModelInterface\BlockEvents;
@@ -59,6 +62,8 @@ class UpdateReferenceSubscriberTest extends AbstractBaseTestCase
         $this->assertArrayHasKey(BlockEvents::POST_BLOCK_DELETE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_UPDATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_CREATION, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_CREATION, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_UPDATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_DUPLICATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentTypeEvents::CONTENT_TYPE_CREATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentTypeEvents::CONTENT_TYPE_UPDATE, $this->subscriber->getSubscribedEvents());
@@ -91,6 +96,20 @@ class UpdateReferenceSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->updateReferencesToContent($contentEvent);
 
         Phake::verify($this->referenceManager)->updateReferencesToEntity($content);
+    }
+
+    /**
+     * Test update reference to node
+     */
+    public function testUpdateReferencesToNode()
+    {
+        $node = Phake::mock(NodeInterface::class);
+        $nodeEvent = Phake::mock(NodeEvent::class);
+        Phake::when($nodeEvent)->getNode()->thenReturn($node);
+
+        $this->subscriber->updateReferencesToNode($nodeEvent);
+
+        Phake::verify($this->referenceManager)->updateReferencesToEntity($node);
     }
 
     /**
