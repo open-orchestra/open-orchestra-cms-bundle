@@ -73,6 +73,7 @@ class Log implements LogInterface
      * @ORCHESTRA\Search(field="extra.user_ip",key="user_ip")
      * @ORCHESTRA\Search(field="extra.user_name",key="user_name")
      * @ORCHESTRA\Search(field="extra.site_name",key="site_name")
+     * @ORCHESTRA\Search(field="extra.site_id",key="site_id")
      */
     protected $extra;
 
