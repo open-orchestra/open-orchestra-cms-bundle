@@ -4,9 +4,21 @@
 <h1> <%= Translator.trans('open_orchestra_log.title_list') %></h1>
 <form class="form-horizontal search-engine">
     <div class="form-group col-lg-6">
-        <label for="name" class="control-label col-md-4"><%= Translator.trans('open_orchestra_log.table.date')%></label>
+        <label for="date" class="control-label col-md-4"><%= Translator.trans('open_orchestra_log.table.date')%></label>
         <div class="col-md-8">
-            <input type="text" name='name' class="form-control" id="date">
+            <input type="text" name="date" class="form-control datepicker" id="date">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="user_ip" class="control-label col-md-4"><%= Translator.trans('open_orchestra_log.table.user_ip')%></label>
+        <div class="col-md-8">
+            <input type="text" name="user_ip" class="form-control" id="user_ip">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="user_name" class="control-label col-md-4"><%= Translator.trans('open_orchestra_log.table.user_name')%></label>
+        <div class="col-md-8">
+            <input type="text" name="user_name" class="form-control" id="user_name">
         </div>
     </div>
     <div class="form-group col-lg-6">

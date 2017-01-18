@@ -24,6 +24,7 @@ class LogsView extends AbstractCollectionView
             settings: this._settings
         });
         $('.logs-list', this.$el).html(this._listView.render().$el);
+        $('.datepicker', this.$el).datepicker();
 
         return this;
     }

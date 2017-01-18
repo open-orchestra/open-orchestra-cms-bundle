@@ -24,7 +24,6 @@ class LogRepository extends AbstractAggregateRepository implements LogRepository
         $this->filterSearch($configuration, $qa);
 
         $order = $configuration->getOrder();
-//         var_dump($configuration);exit();
         if (!empty($order)) {
             $qa->sort($order);
         }
@@ -66,13 +65,23 @@ class LogRepository extends AbstractAggregateRepository implements LogRepository
      */
     protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
     {
-//         $label = $configuration->getSearchIndex('label');
-//         $language = $configuration->getSearchIndex('language');
+         $userName = $configuration->getSearchIndex('user_name');
+         if (null !== $userName && '' !== $userName) {
+             $qa->match(array('extra.user_name' => new \MongoRegex('/.*' . $userName . '.*/i')));
+         }
 
-//         if (null !== $label && '' !== $label && null !== $language && '' !== $language) {
-//             $qa->match(array('labels.' . $language => new \MongoRegex('/.*'.$label.'.*/i')));
-//         }
+         $userIP = $configuration->getSearchIndex('user_ip');
+         if (null !== $userIP && '' !== $userIP) {
+             $qa->match(array('extra.user_ip' => new \MongoRegex('/.*' . $userIP . '.*/i')));
+         }
 
-        return $qa;
+         $date = $configuration->getSearchIndex('date');
+         if (null !== $date && '' !== $date) {
+             $date = explode('/', $date);
+             $date = $date[2] . '-' . $date[0] . '-' . $date[1];
+             $qa->match(array('datetime' => new \MongoRegex('/' . $date . '.*/i')));
+         }
+
+         return $qa;
     }
 }
