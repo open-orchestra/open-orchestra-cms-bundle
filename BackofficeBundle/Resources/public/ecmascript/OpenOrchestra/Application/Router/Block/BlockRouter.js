@@ -128,7 +128,6 @@ class BlockRouter extends OrchestraRouter
      * @param {boolean} activateUsageTab
      */
     editBlock(blockId, blockLabel, activateUsageTab) {
-        console.log(activateUsageTab);
         if (null === activateUsageTab) {
             activateUsageTab = false;
         }

@@ -76,7 +76,7 @@ open_orchestra_backoffice:
               no_entities: Aucun élément à afficher
     node:
         title: Pages
-        parameterize: Paramètrer
+        parameterize: Paramétrer
         move: Déplacement
         add: Ajouter une page
         new: Nouvelle page
@@ -116,7 +116,7 @@ open_orchestra_backoffice:
             linked_to_site: Partagé sur les autres sites
     shared_block:
         title_list: Blocs partagés
-        title_list_new: Sélectionner un bloc à paramètrer
+        title_list_new: Sélectionner un bloc à paramétrer
         title_new: Paramétrer le bloc
         tab_usage_block: Utilisation du bloc
         search_engine:

@@ -126,10 +126,7 @@ class BlockFormView extends AbstractFormView
             collection: collection,
             language: language,
             siteId: siteId,
-            blockId: this._blockId,
-            settings: {
-                pageLength: 2
-            }
+            blockId: this._blockId
         });
     }
 }

@@ -86,6 +86,7 @@ class BlockController extends AbstractAdminController
                 'blockId' => $blockId
             )),
             'method' => 'POST',
+            'delete_button' => (0 === $this->get('open_orchestra_model.repository.node')->countBlockUsed($block->getId()))
         ));
 
         $form->handleRequest($request);
