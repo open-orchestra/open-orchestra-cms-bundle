@@ -73,9 +73,9 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
      *
      * @return string
      */
-    static function generateTransitionName(StatusInterface $statusFrom, StatusInterface $statusTo)
+    public static function generateTransitionName(StatusInterface $statusFrom, StatusInterface $statusTo)
     {
-        return $statusFrom()->getId() . self::STATUS_SEPARATOR . $statusTo()->getId();
+        return $statusFrom->getId() . self::STATUS_SEPARATOR . $statusTo->getId();
     }
 
     /**
@@ -85,9 +85,9 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
      *
      * @return mixed
      */
-    static function getTransitionStatusIds($transitionName)
+    public static function getTransitionStatusIds($transitionName)
     {
-        $temp = explode(self::STATUS_SEPARATOR, $flattened);
+        $temp = explode(self::STATUS_SEPARATOR, $transitionName);
 
         $statuses['from'] = $temp[0];
         $statuses['to'] = $temp[1];

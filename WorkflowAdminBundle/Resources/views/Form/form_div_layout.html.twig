@@ -149,7 +149,7 @@
                 <tr>
                     <th>{{ 'open_orchestra_workflow_admin.form.transitions.roles'|trans() }}</th>
                     {% for label in form.vars.statuses %}
-                        <th class="workflow-cell-parameter">
+                        <th>
                             {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label}) }}
                         </th>
                     {% endfor %}
@@ -183,7 +183,7 @@
         {% if (currentTransition[0] != fromStatusId) %}
             {% set fromStatusId = currentTransition[0] %}
             </td>
-            <td class="workflow-cell-parameter">
+            <td>
         {% endif %}
         <input type="checkbox"
             id="{{ transition.vars.id }}"
