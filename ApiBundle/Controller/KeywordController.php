@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\KeywordNotDeletableException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\KeywordEvent;
 use OpenOrchestra\ModelInterface\KeywordEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +24,6 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
  */
 class KeywordController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param Request $request
      *
@@ -70,45 +68,55 @@ class KeywordController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_keyword_list")
      * @Config\Method({"GET"})
-     * @Config\Security("is_granted('ACCESS_KEYWORD')")
      *
      * @return FacadeInterface
      */
     public function listAction(Request $request)
     {
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->getParameter('open_orchestra_model.document.keyword.class'));
-
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, KeywordInterface::ENTITY_TYPE);
+        $mapping = array(
+            'label' => 'label'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.keyword');
+        $collection = $repository->findForPaginate($configuration);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countWithFilter($configuration);
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
-        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+        return $facade;
     }
 
     /**
-     * @param int $keywordId
+     * @param Request $request
      *
-     * @Config\Route("/{keywordId}/delete", name="open_orchestra_api_keyword_delete")
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_keyword_delete_multiple")
      * @Config\Method({"DELETE"})
      *
      * @return Response
-     * @throws KeywordNotDeletableException
      */
-    public function deleteAction($keywordId)
+    public function deleteKeywordsAction(Request $request)
     {
-        $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
-
-        if ($keyword instanceof KeywordInterface) {
-            $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $keyword);
-            if ($keyword->isUsed()) {
-                throw new KeywordNotDeletableException();
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.keyword_collection.class'),
+            $format
+        );
+        $keywords = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection')->reverseTransform($facade);
+        $keywordIds = array();
+        foreach ($keywords as $keyword) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $keyword)) {
+                $keywordIds[] = $keyword->getId();
+                $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
             }
-            $dm = $this->get('object_manager');
-            $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
-            $dm->remove($keyword);
-            $dm->flush();
         }
+
+        $keywordRepository = $this->get('open_orchestra_model.repository.keyword');
+        $keywordRepository->removeKeywords($keywordIds);
 
         return array();
     }

@@ -140,4 +140,8 @@ class FakeKeyword implements KeywordInterface
     public function isUsed()
     {
     }
+
+    public function countUse()
+    {
+    }
 }

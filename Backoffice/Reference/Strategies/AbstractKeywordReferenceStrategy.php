@@ -63,6 +63,8 @@ abstract class AbstractKeywordReferenceStrategy
 
     /**
      * @param array $attribute
+     *
+     * @return array
      */
     protected function extractKeywordIdsFromConditionAttribute(array $attribute)
     {
@@ -79,7 +81,7 @@ abstract class AbstractKeywordReferenceStrategy
     }
 
     /**
-     * @param ContentInterface $content
+     * @param KeywordableInterface $entity
      *
      * @return array
      */

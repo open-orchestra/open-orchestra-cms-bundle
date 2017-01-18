@@ -47,8 +47,9 @@ open_orchestra_backoffice:
         duplicate: Duplicate
         'true': Yes
         'false': No
-        keywords:
+        keyword:
             label: Label
+            number_use: Use
         node:
             title: Title
             author: Author
@@ -136,12 +137,16 @@ open_orchestra_backoffice:
             label: Label
             type: Type
             name: Name
+    keyword:
+        title_list: Tag
+        title_new : New tag
+        title_edit : Edit tag
     block:
-      add_block: Add a block
-      confirm_remove:
-          title: Remove this block ?
-          message: The removal will be final
-      edit_title: Edit block
+        add_block: Add a block
+        confirm_remove:
+            title: Remove this block ?
+            message: The removal will be final
+        edit_title: Edit block
     form:
         keyword:
             new: new

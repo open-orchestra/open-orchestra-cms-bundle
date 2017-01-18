@@ -207,13 +207,13 @@ services:
         arguments:
             - '%open_orchestra_api.facade.keyword.class%'
             - '@security.authorization_checker'
+            - '@open_orchestra_model.repository.keyword'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.keyword_collection:
         class: '%open_orchestra_api.transformer.keyword_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.keyword_collection.class%'
-            - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.link:

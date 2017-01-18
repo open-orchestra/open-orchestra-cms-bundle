@@ -15,6 +15,7 @@ let UrlPaginateViewMixin = (superclass) => class extends superclass {
      * @private
      */
     _updatePage(event) {
+        console.log('updatePage');
         let api = $(event.target).DataTable();
         let page = api.page.info().page + 1;
         let url = this.generateUrlUpdatePage(page);

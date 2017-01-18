@@ -16,10 +16,21 @@ class Keywords extends DataTableCollection
     /**
      * @inheritdoc
      */
+    toJSON(options) {
+        return {
+            'keywords': super.toJSON(options)
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     _getSyncUrl(method) {
         switch (method) {
             case "read":
                 return Routing.generate('open_orchestra_api_keyword_list');
+            case "delete":
+                return Routing.generate('open_orchestra_api_keyword_delete_multiple');
         }
     }
 }

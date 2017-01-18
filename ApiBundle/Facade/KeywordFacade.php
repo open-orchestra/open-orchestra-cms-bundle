@@ -14,4 +14,9 @@ class KeywordFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $label;
+
+    /**
+     * @Serializer\Type("integer")
+     */
+    public $numberUse;
 }

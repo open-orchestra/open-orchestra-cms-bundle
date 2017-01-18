@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\Backoffice\Reference\Strategies;
 
-use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
- * Class KeywordInContentReferenceStrategy
+ * Class KeywordInNodeReferenceStrategy
  */
-class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy implements ReferenceStrategyInterface
+class KeywordInNodeReferenceStrategy extends AbstractKeywordReferenceStrategy implements ReferenceStrategyInterface
 {
     /**
      * @param mixed $entity
@@ -16,7 +16,7 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
      */
     public function support($entity)
     {
-        return ($entity instanceof ContentInterface);
+        return ($entity instanceof NodeInterface);
     }
 
     /**
@@ -31,7 +31,7 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
                 /** @var \OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
                 $keyword = $this->keywordRepository->find($keywordId);
                 if ($keyword) {
-                    $keyword->addUseInEntity($entity->getId(), ContentInterface::ENTITY_TYPE);
+                    $keyword->addUseInEntity($entity->getId(), NodeInterface::ENTITY_TYPE);
                 }
             }
         }
@@ -46,10 +46,10 @@ class KeywordInContentReferenceStrategy extends AbstractKeywordReferenceStrategy
             $contentId = $entity->getId();
 
             $keywordsUsedInContent = $this->keywordRepository
-                ->findByUsedInEntity($contentId, ContentInterface::ENTITY_TYPE);
+                ->findByUsedInEntity($contentId, NodeInterface::ENTITY_TYPE);
 
             foreach ($keywordsUsedInContent as $keyword) {
-                $keyword->removeUseInEntity($contentId, ContentInterface::ENTITY_TYPE);
+                $keyword->removeUseInEntity($contentId, NodeInterface::ENTITY_TYPE);
             }
         }
     }

@@ -355,6 +355,8 @@ open_orchestra_backoffice:
             label: Libellé
             creation: Le mot-clé a été créé
             success: Le mot-clé a été mis à jour avec succès
+            sub_group:
+                property: Propriétés
         redirection:
             new:
                 success: La redirection a été créée

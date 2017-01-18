@@ -56,7 +56,7 @@ class KeywordController extends AbstractAdminController
         $keywordClass = $this->container->getParameter('open_orchestra_model.document.keyword.class');
         /** @var KeywordInterface $keyword */
         $keyword = new $keywordClass();
-        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $keyword);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, KeywordInterface::ENTITY_TYPE);
 
         $form = $this->createForm('oo_keyword', $keyword, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),
@@ -68,9 +68,13 @@ class KeywordController extends AbstractAdminController
 
         if ($this->handleForm($form, $message, $keyword)) {
             $this->dispatchEvent(KeywordEvents::KEYWORD_CREATE, new KeywordEvent($keyword));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+            $response = new Response(
+                '',
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/html; charset=utf-8', 'keywordId' => $keyword->getId())
+            );
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+            return $response;
         }
 
         return $this->renderAdminForm($form);

@@ -355,6 +355,8 @@ open_orchestra_backoffice:
             label: Label
             creation: Keyword has been created
             success: Keyword has been successfully updated
+            sub_group:
+                property: Property
         redirection:
             new:
                 success: The redirection has been successfully created

@@ -1,20 +1,12 @@
 import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class KeywordListView
  */
-class KeywordListView extends AbstractDataTableView
+class KeywordListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
-    /**
-     * @inheritDoc
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events = {
-            'draw.dt table': '_updatePage'
-        };
-    }
-
     /**
      * @inheritDoc
      */
@@ -27,43 +19,42 @@ class KeywordListView extends AbstractDataTableView
      */
     getColumnsDefinition() {
         return [
+            this._getColumnsDefinitionDeleteCheckbox(),
             {
                 name: "label",
-                title: Translator.trans('open_orchestra_backoffice.table.keywords.label'),
+                title: Translator.trans('open_orchestra_backoffice.table.keyword.label'),
                 orderable: true,
-                orderDirection: 'desc',
-                visibile: true
-            },
-            {
-                name: 'links',
-                orderable: false,
-                createdCell: this._addLinkCell
+                orderDirection: 'asc',
+                createdCell: this._createEditLink
+            },            {
+                name: "number_use",
+                title: Translator.trans('open_orchestra_backoffice.table.keyword.number_use'),
+                orderable: false
             }
         ];
     }
 
     /**
-     *
      * @param {Object} td
      * @param {Object} cellData
-     *
-     * Example of specif column
+     * @param {Object} rowData
      * @private
      */
-    _addLinkCell(td, cellData) {
-        $(td).html('<a href="' + cellData._self_form + '">Edit</a>');
+    _createEditLink(td, cellData, rowData) {
+        let link = Backbone.history.generateUrl('editKeyword', {keywordId: rowData.get('id')});
+        cellData = $('<a>',{
+            text: cellData,
+            href: '#'+link
+        });
+
+        $(td).html(cellData)
     }
 
     /**
-     * @param {Object} event
-     *
-     * @private
+     * @inheritDoc
      */
-    _updatePage(event) {
-        let api = $(event.target).DataTable();
-        let page = api.page.info().page + 1;
-        let url = Backbone.history.generateUrl('listKeyword', {page : page});
-        Backbone.history.navigate(url);
+    generateUrlUpdatePage(page) {
+        return Backbone.history.generateUrl('listKeyword', {page : page});
     }
 }
 

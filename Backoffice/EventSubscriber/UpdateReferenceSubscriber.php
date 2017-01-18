@@ -4,7 +4,9 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
+use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\ModelInterface\BlockEvents;
@@ -65,6 +67,15 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param NodeEvent $event
+     */
+    public function updateReferencesToNode(NodeEvent $event)
+    {
+        $node = $event->getNode();
+        $this->referenceManager->updateReferencesToEntity($node);
+    }
+
+    /**
      * @param TrashcanEvent $event
      */
     public function removeReferencesToEntity(TrashcanEvent $event)
@@ -85,6 +96,8 @@ class UpdateReferenceSubscriber implements EventSubscriberInterface
             ContentEvents::CONTENT_UPDATE => 'updateReferencesToContent',
             ContentEvents::CONTENT_CREATION => 'updateReferencesToContent',
             ContentEvents::CONTENT_DUPLICATE => 'updateReferencesToContent',
+            NodeEvents::NODE_UPDATE => 'updateReferencesToNode',
+            NodeEvents::NODE_CREATION => 'updateReferencesToNode',
             ContentTypeEvents::CONTENT_TYPE_CREATE => 'updateReferencesToContentType',
             ContentTypeEvents::CONTENT_TYPE_UPDATE => 'updateReferencesToContentType',
             TrashcanEvents::TRASHCAN_REMOVE_ENTITY => 'removeReferencesToEntity',

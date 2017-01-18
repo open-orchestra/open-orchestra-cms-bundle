@@ -53,7 +53,13 @@
         {% endfor %}
         {% set active = (active == -1) ? 0 : active %}
         {% if groups|length == 1 and (groups|first).group_name == constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_GROUP') %}
+<<<<<<< c34385fbaea48b610e709afc9fb9756c61b3375b
             {{ (groups|first).html }}
+=======
+            <div class="tab-content">
+                {{ (groups|first).html }}
+            </div>
+>>>>>>> add keyword list and form
         {%  else %}
             <ul role="tablist" class="nav nav-tabs">
                 {% for group in groups %}
@@ -79,6 +85,7 @@
 
 {% block collection_widget %}
     {% spaceless %}
+<<<<<<< c34385fbaea48b610e709afc9fb9756c61b3375b
         {% if prototype is defined and prototype.vars.columns is defined %}
             {% set prototype_html %}
                 {% spaceless %}
@@ -96,6 +103,35 @@
                             {% if form.vars.allow_delete %}
                                 <td>
                                     <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
+=======
+        {% set model = form|first %}
+        {% if model.vars.columns is defined %}
+            {% if prototype is defined %}
+                {% set prototype_html %}
+                    {% spaceless %}
+                        <tbody data-prototype-id="{{ prototype.vars.name }}">
+                            <tr>
+                                {% for column in model.vars.columns %}
+                            	<td>
+                                    {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
+                            	</td>
+                            	{% endfor %}
+                            	<td>
+                                    <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
+                                    <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
+                            	</td>
+        	                    {% if form.vars.allow_delete %}
+            	                	<td>
+                                        <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
+        							</td>
+        	                    {% endif %}
+                           	</tr>
+                           	<tr>
+                           		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                                    <div class="row">
+                                        {{ form_widget(prototype) }}
+                                    </div>
+>>>>>>> add keyword list and form
                                 </td>
                             {% endif %}
                         </tr>
