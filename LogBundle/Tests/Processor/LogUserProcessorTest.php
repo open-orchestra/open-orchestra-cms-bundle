@@ -17,6 +17,7 @@ class LogUserProcessorTest extends AbstractBaseTestCase
     protected $processor;
 
     protected $siteName = 'site test';
+    protected $siteId = 'site id';
     protected $userName = 'benjamin';
     protected $ip = '192.168.33.10';
     protected $requestStack;
@@ -41,6 +42,7 @@ class LogUserProcessorTest extends AbstractBaseTestCase
 
         $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->context)->getCurrentSiteName()->thenReturn($this->siteName);
+        Phake::when($this->context)->getCurrentSiteId()->thenReturn($this->siteId);
 
         $this->processor = new LogUserProcessor($this->security, $this->requestStack, $this->context);
     }
@@ -54,9 +56,10 @@ class LogUserProcessorTest extends AbstractBaseTestCase
         $result = $this->processor->processRecord(array());
 
         $this->assertSame($result, array('extra' => array(
-            'user_ip' => $this->ip,
+            'user_ip'   => $this->ip,
             'user_name' => $this->userName,
-            'site_name' => $this->siteName
+            'site_name' => $this->siteName,
+            'site_id'   => $this->siteId
         )));
     }
 
@@ -70,8 +73,9 @@ class LogUserProcessorTest extends AbstractBaseTestCase
         $result = $this->processor->processRecord(array());
 
         $this->assertSame($result, array('extra' => array(
-            'user_ip' => $this->ip,
-            'site_name' => $this->siteName
+            'user_ip'   => $this->ip,
+            'site_name' => $this->siteName,
+            'site_id'   => $this->siteId
         )));
     }
 }
