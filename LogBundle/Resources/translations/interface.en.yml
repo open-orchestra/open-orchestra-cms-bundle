@@ -2,7 +2,11 @@ open_orchestra_log:
     navigation:
         configuration:
           logs: Logs
-    title_list: log
+    title_list: Logs
     search_engine:
-        name: xxx
-        filter: yyy
+        filter: Filter
+    table:
+        date     : Date
+        user_ip  : User IP
+        user_name: User name
+        message  : Message

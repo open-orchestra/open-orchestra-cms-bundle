@@ -19,17 +19,28 @@ class LogListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
     getColumnsDefinition() {
         return [
             {
-                name: "name",
-                title: Translator.trans('open_orchestra_log.table.logs.name'),
+                name: "date_time",
+                title: Translator.trans('open_orchestra_log.table.date'),
                 orderable: true,
                 orderDirection: 'desc',
-                visibile: true,
-                createdCell: this._createEditLink
+                visibile: true
             },
             {
-                name: "log_id",
-                title: Translator.trans('open_orchestra_log.table.logs.log_id'),
-                orderable: false,
+                name: "user_ip",
+                title: Translator.trans('open_orchestra_log.table.user_ip'),
+                orderable: true,
+                visibile: true
+            },
+            {
+                name: "user_name",
+                title: Translator.trans('open_orchestra_log.table.user_name'),
+                orderable: true,
+                visibile: true
+            },
+            {
+                name: "message",
+                title: Translator.trans('open_orchestra_log.table.message'),
+                orderable: true,
                 visibile: true
             }
         ];

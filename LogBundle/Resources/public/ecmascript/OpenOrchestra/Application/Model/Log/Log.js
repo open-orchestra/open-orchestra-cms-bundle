@@ -9,7 +9,7 @@ class Log extends OrchestraModel
      * Pre initialize
      */
     preinitialize() {
-        this.idAttribute = 'log_id';
+        this.idAttribute = 'id';
     }
 
     /**
@@ -17,7 +17,7 @@ class Log extends OrchestraModel
      */
     _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
-        urlParameter.logId = this.get('log_id');
+        urlParameter.logId = this.get('id');
     }
 }
 
