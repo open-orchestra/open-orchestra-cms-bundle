@@ -38,6 +38,9 @@ class WorkflowProfileTransitionsTypeTest extends AbstractBaseTestCase
         $this->assertSame('oo_workflow_profile_transitions', $this->form->getName());
     }
 
+    /**
+     * test buildForm
+     */
     public function testBuildForm()
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');

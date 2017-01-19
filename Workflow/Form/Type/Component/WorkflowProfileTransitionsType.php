@@ -13,13 +13,16 @@ use OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer;
 class WorkflowProfileTransitionsType extends AbstractType
 {
     protected $dataClass;
+    protected $transitionTransformer;
 
     /**
-     * @param string $dataClass
+     * @param string                        $dataClass
+     * @apram ProfileTransitionsTransformer $transitionTransformer
      */
-    public function __construct($dataClass)
+    public function __construct($dataClass, ProfileTransitionsTransformer $transitionTransformer)
     {
         $this->dataClass = $dataClass;
+        $this->transitionTransformer = $transitionTransformer;
     }
 
     /**
@@ -62,7 +65,7 @@ class WorkflowProfileTransitionsType extends AbstractType
 
         foreach ($statuses as $statusFrom) {
             foreach ($statuses as $statusTo) {
-                $transitionName = ProfileTransitionsTransformer::generateTransitionName($statusFrom, $statusTo);
+                $transitionName = $this->transitionTransformer->generateTransitionName($statusFrom, $statusTo);
                 $transitions[$transitionName] = $transitionName;
             }
         }

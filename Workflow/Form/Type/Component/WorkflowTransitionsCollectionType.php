@@ -15,13 +15,16 @@ use OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer;
 class WorkflowTransitionsCollectionType extends AbstractType
 {
     protected $transitionsTransformer;
+    protected $defaultLocale;
 
     /**
      * @param ProfileTransitionsTransformer $transitionTransformer
+     * @param string                        $defaultLocale
      */
-    public function __construct(ProfileTransitionsTransformer $transitionTransformer)
+    public function __construct(ProfileTransitionsTransformer $transitionTransformer, $defaultLocale)
     {
         $this->transitionsTransformer = $transitionTransformer;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -46,7 +49,7 @@ class WorkflowTransitionsCollectionType extends AbstractType
                 'multiple' => 'true',
                 'required' => false,
                 'statuses' => array(),
-                'locale'   => 'en'
+                'locale'   => $this->defaultLocale
             )
         );
     }

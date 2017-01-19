@@ -20,7 +20,7 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
 
     /**
      * @param StatusRepositoryInterface $statusRepository
-     * @param string                    $transitionClass
+     * @param TransitionFactory         $transitionClass
      */
     public function __construct(StatusRepositoryInterface $statusRepository, TransitionFactory $transitionFactory)
     {
@@ -73,7 +73,7 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
      *
      * @return string
      */
-    public static function generateTransitionName(StatusInterface $statusFrom, StatusInterface $statusTo)
+    public function generateTransitionName(StatusInterface $statusFrom, StatusInterface $statusTo)
     {
         return $statusFrom->getId() . self::STATUS_SEPARATOR . $statusTo->getId();
     }
@@ -85,7 +85,7 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
      *
      * @return mixed
      */
-    public static function getTransitionStatusIds($transitionName)
+    public function getTransitionStatusIds($transitionName)
     {
         $temp = explode(self::STATUS_SEPARATOR, $transitionName);
 
@@ -102,7 +102,8 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
      *
      * @return mixed
      */
-    protected function getStatus($statusId) {
+    protected function getStatus($statusId)
+    {
         if (!isset($this->cachedStatuses[$statusId])) {
             $this->cachedStatuses[$statusId] = $this->statusRepository->findOneById($statusId);
         }

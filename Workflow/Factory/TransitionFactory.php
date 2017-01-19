@@ -4,7 +4,7 @@ namespace OpenOrchestra\Workflow\Factory;
 
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface;
-use OpenOrchestra\ModelBundle\Document\WorkflowTransition;
+use OpenOrchestra\Backoffice\Exception\WrongClassException;
 
 /**
  * Class TransitionFactory
@@ -18,8 +18,8 @@ class TransitionFactory
      */
     public function __construct($transitionClass)
     {
-        if (!($transitionClass instanceof WorkflowTransitionInterface)) {
-            $transitionClass = WorkflowTransition::class;
+        if (!(is_a($transitionClass, 'OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface', true))) {
+            throw new WrongClassException();
         }
 
         $this->transitionClass = $transitionClass;

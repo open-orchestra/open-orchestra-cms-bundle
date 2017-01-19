@@ -29,7 +29,7 @@ class TransitionController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, WorkflowProfile::ENTITY_TYPE);
         $currentLocale = $this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale();
         $profiles = $this->get('open_orchestra_model.repository.workflow_profile')
-            ->findBy(array(), array('labels.' . $currentLocale => 'asc'));
+            ->findAllOrderedByLocale($currentLocale);
 
         $form = $this->createForm('oo_workflow_transitions', $profiles, array(
            'action' => $this->generateUrl('open_orchestra_workflow_admin_transitions_form')
