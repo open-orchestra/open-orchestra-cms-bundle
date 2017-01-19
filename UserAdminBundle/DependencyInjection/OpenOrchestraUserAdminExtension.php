@@ -33,7 +33,6 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader->load('form.yml');
         $loader->load('oauth2.yml');
         $loader->load('subscriber.yml');
-        $loader->load('role_parameter.yml');
 
         $this->addOrchestraHierarchy($container, $loader);
         $this->updateBlockConfiguration($container);

@@ -53,10 +53,6 @@ class Configuration implements ConfigurationInterface
                     'style'
                 ))
             ->end()
-            ->arrayNode('front_roles')
-                ->info('Role than can be given to the user on the Front website')
-                ->prototype('scalar')->end()
-            ->end()
             ->append($this->addFieldTypesParameter())
             ->append($this->addFieldTypesSearchableView())
             ->arrayNode('options')

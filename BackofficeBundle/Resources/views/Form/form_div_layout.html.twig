@@ -650,33 +650,6 @@
     ></div>
 {% endblock %}
 
-{% block oo_role_choice_widget %}
-    <div class="container-fluid">
-        {% for category, parameters in form.vars.rolesOrdered %}
-            <h4>{{ category|trans }}</h4>
-            <div class="role-table">
-                {% for label, ranks in parameters %}
-                    <div class="role-row">
-                        <div class="role-cell">
-                            <div class="role-title">
-                                {{ label|trans({}, 'role') }}
-                            </div>
-                        </div>
-                        <div class="btn-group" data-toggle="buttons">
-                            {% for rank in ranks %}
-                                <div class="role-cell btn btn-default{% if form[rank].vars.checked %} active{% endif %}">
-                                    <input type="checkbox" name="{{ form[rank].vars.full_name }}" value="{{ form[rank].vars.value }}" {% if form[rank].vars.checked %} checked="checked"{% endif %} />
-                                    {{ form[rank].vars.label }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </div>
-{% endblock %}
-
 {% block oo_multi_languages_widget %}
     {% spaceless %}
         <div {{ block('widget_container_attributes') }}>
