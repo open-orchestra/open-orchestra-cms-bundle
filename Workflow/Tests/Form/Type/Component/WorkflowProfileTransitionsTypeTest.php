@@ -13,13 +13,25 @@ class WorkflowProfileTransitionsTypeTest extends AbstractBaseTestCase
 {
     protected $form;
     protected $dataClass = 'data-class';
+    protected $transformer;
+    protected $status1;
+    protected $status2;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new WorkflowProfileTransitionsType($this->dataClass);
+        $this->status1 = $this->generateStatus('1');
+        $this->status2 = $this->generateStatus('2');
+
+        $this->transformer = Phake::mock('OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer');
+        Phake::when($this->transformer)->generateTransitionName($this->status1, $this->status1)->thenReturn('1-1');
+        Phake::when($this->transformer)->generateTransitionName($this->status1, $this->status2)->thenReturn('1-2');
+        Phake::when($this->transformer)->generateTransitionName($this->status2, $this->status1)->thenReturn('2-1');
+        Phake::when($this->transformer)->generateTransitionName($this->status2, $this->status2)->thenReturn('2-2');
+
+        $this->form = new WorkflowProfileTransitionsType($this->dataClass, $this->transformer);
     }
 
     /**
@@ -45,7 +57,7 @@ class WorkflowProfileTransitionsTypeTest extends AbstractBaseTestCase
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
         $options = array(
-            'statuses' => array($this->generateStatus('1'), $this->generateStatus('2')),
+            'statuses' => array($this->status1, $this->status2),
             'locale'   => 'fakeLocale'
         );
         $expectedChoices = array(

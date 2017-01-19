@@ -20,7 +20,7 @@ class WorkflowTransitionsCollectionTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->transitionTransformer = Phake::mock('OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer');
-        $this->form = new WorkflowTransitionsCollectionType($this->transitionTransformer);
+        $this->form = new WorkflowTransitionsCollectionType($this->transitionTransformer, 'en');
     }
 
     /**

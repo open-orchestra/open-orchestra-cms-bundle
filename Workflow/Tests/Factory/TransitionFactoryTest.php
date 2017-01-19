@@ -12,7 +12,7 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 class TransitionFactoryTest extends AbstractBaseTestCase
 {
     protected $factory;
-    protected $transitionClassName = 'OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface';
+    protected $transitionClassName = 'OpenOrchestra\ModelBundle\Document\WorkflowTransition';
 
     /**
      * Set up the test
