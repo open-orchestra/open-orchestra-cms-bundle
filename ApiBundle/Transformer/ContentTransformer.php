@@ -16,6 +16,7 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class ContentTransformer
@@ -24,7 +25,9 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $statusRepository;
     protected $contentTypeRepository;
+    protected $contentRepository;
     protected $eventDispatcher;
+    protected $contextManager;
 
     /**
      * @param string                         $facadeClass
@@ -33,6 +36,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param ContentRepositoryInterface     $contentRepository,
      * @param EventDispatcherInterface       $eventDispatcher
      * @param AuthorizationCheckerInterface  $authorizationChecker
+     * @param CurrentSiteIdInterface         $contextManager
      */
     public function __construct(
         $facadeClass,
@@ -40,13 +44,15 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         ContentTypeRepositoryInterface $contentTypeRepository,
         ContentRepositoryInterface $contentRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        CurrentSiteIdInterface $contextManager
     )
     {
         $this->statusRepository = $statusRepository;
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
         $this->eventDispatcher = $eventDispatcher;
+        $this->contextManager = $contextManager;
         parent::__construct($facadeClass, $authorizationChecker);
     }
 
@@ -71,6 +77,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->contentTypeVersion = $content->getContentTypeVersion();
         $facade->language = $content->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($content->getStatus());
+        $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getCurrentLocale());
         $facade->createdAt = $content->getCreatedAt();
         $facade->updatedAt = $content->getUpdatedAt();
         $facade->createdBy = $content->getCreatedBy();

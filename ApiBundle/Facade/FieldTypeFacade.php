@@ -28,6 +28,11 @@ class FieldTypeFacade extends AbstractFacade
     public $searchable;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $search;
+
+    /**
      * @Serializer\Type("boolean")
      */
     public $listable;

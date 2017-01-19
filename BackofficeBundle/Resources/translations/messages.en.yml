@@ -196,7 +196,6 @@ open_orchestra_backoffice:
             default_listable_label:
               name: Name
               status_label: Workflow state
-              language: Language
               linked_to_site: Shared on other sites
               created_at: Created at
               created_by: Author

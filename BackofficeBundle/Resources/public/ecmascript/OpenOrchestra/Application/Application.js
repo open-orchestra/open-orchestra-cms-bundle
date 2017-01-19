@@ -1,34 +1,38 @@
-import NodeRouter            from './Router/Node/NodeRouter'
-import KeywordRouter         from './Router/Keyword/KeywordRouter'
-import DashboardRouter       from './Router/Dashboard/DashboardRouter'
-import SiteRouter            from './Router/Site/SiteRouter'
-import ContentTypeRouter     from './Router/ContentType/ContentTypeRouter'
-import ContentRouter         from './Router/Content/ContentRouter'
-import BlockRouter           from './Router/Block/BlockRouter'
+import NodeRouter             from './Router/Node/NodeRouter'
+import KeywordRouter          from './Router/Keyword/KeywordRouter'
+import DashboardRouter        from './Router/Dashboard/DashboardRouter'
+import SiteRouter             from './Router/Site/SiteRouter'
+import ContentTypeRouter      from './Router/ContentType/ContentTypeRouter'
+import ContentRouter          from './Router/Content/ContentRouter'
+import BlockRouter            from './Router/Block/BlockRouter'
 
-import ErrorView             from './View/Error/ErrorView'
-import HeaderView            from './View/Header/HeaderView'
-import NavigationView        from './View/Navigation/NavigationView'
-import BreadcrumbView        from './View/Breadcrumb/BreadcrumbView'
+import HeaderView             from './View/Header/HeaderView'
+import ErrorView              from './View/Error/ErrorView'
+import NavigationView         from './View/Navigation/NavigationView'
+import BreadcrumbView         from './View/Breadcrumb/BreadcrumbView'
 
-import SitesAvailable        from './Collection/Site/SitesAvailable'
+import SitesAvailable         from './Collection/Site/SitesAvailable'
 
-import FormBehaviorManager   from '../Service/Form/Behavior/Manager'
-import ScrollTable           from '../Service/Form/Behavior/ScrollTable'
-import Tooltip               from '../Service/Form/Behavior/Tooltip'
-import TagSelect2            from '../Service/Form/Behavior/TagSelect2'
-import DatePicker            from '../Service/Form/Behavior/DatePicker'
-import NodeChoice            from '../Service/Form/Behavior/NodeChoice'
-import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelection'
-import GenerateId            from '../Service/Form/Behavior/GenerateId'
-import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
-import Accordion             from '../Service/Form/Behavior/Accordion'
-import BlockVideoType        from '../Service/Form/Behavior/BlockVideoType'
-import ColorPicker           from '../Service/Form/Behavior/ColorPicker'
+import FormBehaviorManager    from '../Service/Form/Behavior/Manager'
+import ScrollTable            from '../Service/Form/Behavior/ScrollTable'
+import Tooltip                from '../Service/Form/Behavior/Tooltip'
+import TagSelect2             from '../Service/Form/Behavior/TagSelect2'
+import DatePicker             from '../Service/Form/Behavior/DatePicker'
+import NodeChoice             from '../Service/Form/Behavior/NodeChoice'
+import NodeTemplateSelection  from '../Service/Form/Behavior/NodeTemplateSelection'
+import GenerateId             from '../Service/Form/Behavior/GenerateId'
+import CollectionSortable     from '../Service/Form/Behavior/CollectionSortable'
+import Accordion              from '../Service/Form/Behavior/Accordion'
+import BlockVideoType         from '../Service/Form/Behavior/BlockVideoType'
+import ColorPicker            from '../Service/Form/Behavior/ColorPicker'
 
-import ApplicationError      from '../Service/Error/ApplicationError'
-import AjaxError             from '../Service/Error/AjaxError'
+import SearchFormGroupManager from '../Service/Content/SearchFormGroupManager'
+import DateSearchFormGroup    from '../Service/Content/DateSearchFormGroup'
+import TextSearchFormGroup    from '../Service/Content/TextSearchFormGroup'
+import NumberSearchFormGroup  from '../Service/Content/NumberSearchFormGroup'
 
+import ApplicationError       from '../Service/Error/ApplicationError'
+import AjaxError              from '../Service/Error/AjaxError'
 
 /**
  * @class Application
@@ -52,6 +56,7 @@ class Application
         this._initTranslator();
         this._initRouter();
         this._initFormBehaviorManager();
+        this._initSearchFormGroupManager();
 
         Backbone.Events.trigger('application:before:start');
 
@@ -210,6 +215,16 @@ class Application
         FormBehaviorManager.add(Accordion);
         FormBehaviorManager.add(BlockVideoType);
         FormBehaviorManager.add(ColorPicker);
+    }
+
+    /**
+     * Initialize field serach library
+     * @private
+     */
+    _initSearchFormGroupManager() {
+        SearchFormGroupManager.add(DateSearchFormGroup);
+        SearchFormGroupManager.add(TextSearchFormGroup);
+        SearchFormGroupManager.add(NumberSearchFormGroup);
     }
 }
 

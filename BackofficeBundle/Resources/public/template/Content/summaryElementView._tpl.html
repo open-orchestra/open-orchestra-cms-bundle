@@ -2,8 +2,8 @@
     <div class="block">
         <span><%= name %></span>
         <ul class="action-links">
-            <li><a href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language, contentTypeName: name}) %>">Lister</a></li>
-            <li><a href="#">Ajouter</a></li>
+            <li><a href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language, contentTypeName: name}) %>"><%= Translator.trans('open_orchestra_backoffice.table.contents.list') %></a></li>
+            <li><a href="#"><%= Translator.trans('open_orchestra_backoffice.table.contents.add') %></a></li>
         </ul>
     </div>
 </div>

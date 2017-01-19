@@ -132,6 +132,7 @@ services:
             - '@open_orchestra_model.repository.content'
             - '@event_dispatcher'
             - '@security.authorization_checker'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content_attribute:
@@ -198,6 +199,7 @@ services:
         arguments:
             - '%open_orchestra_api.facade.field_type.class%'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
+            - '%open_orchestra_backoffice.field_types%'
         tags:
             - { name: open_orchestra_api.transformer.strategy }
     open_orchestra_api.transformer.keyword:

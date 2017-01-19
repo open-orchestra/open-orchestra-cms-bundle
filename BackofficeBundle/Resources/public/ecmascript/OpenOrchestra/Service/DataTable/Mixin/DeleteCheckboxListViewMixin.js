@@ -18,11 +18,20 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
                 orderable: false,
                 visibile: true,
                 width: '20px',
-                createdCell: this._createCheckbox,
+                createdCell: this._createDeleteCheckbox,
                 render: () => { return ''}
             };
     }
 
+    /**
+     * @param {Object} rowData
+     *
+     * @private
+     */
+    _canDelete(rowData) {
+        return rowData.get('rights').hasOwnProperty('can_delete') && rowData.get('rights').can_delete;
+    }
+    
     /**
      * @param {Object} td
      * @param {Object} cellData
@@ -30,11 +39,10 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
      *
      * @private
      */
-    _createCheckbox(td, cellData, rowData) {
+    _createDeleteCheckbox(td, cellData, rowData) {
         let id = 'checkbox' + rowData.cid;
         let attributes = {type: 'checkbox', id: id, class:'delete-checkbox'};
-        if (rowData.get('rights').hasOwnProperty('can_delete') &&
-            !rowData.get('rights').can_delete) {
+        if (!this.data('context')._canDelete(rowData)) {
             attributes.disabled = 'disabled';
         }
 

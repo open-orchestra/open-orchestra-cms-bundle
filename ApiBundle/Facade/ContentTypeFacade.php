@@ -37,6 +37,11 @@ class ContentTypeFacade extends AbstractFacade
     public $definingVersionable;
 
     /**
+     * @Serializer\Type("array")
+     */
+    public $defaultListable;
+
+    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\FieldTypeFacade>")
      */
     protected $fields;

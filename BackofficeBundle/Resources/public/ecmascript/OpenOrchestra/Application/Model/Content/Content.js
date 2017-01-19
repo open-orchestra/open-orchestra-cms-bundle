@@ -1,5 +1,6 @@
 import OrchestraModel from '../OrchestraModel'
 import Fields         from './Fields'
+import Status         from '../Status/Status'
 
 /**
  * @class Content
@@ -15,6 +16,9 @@ class Content extends OrchestraModel
     parse(response) {
         if (response.hasOwnProperty('attributes')) {
             response.fields = new Fields(response.attributes);
+        }
+        if (response.hasOwnProperty('status')) {
+            response.status = new Status(response.status);
         }
 
         return response;

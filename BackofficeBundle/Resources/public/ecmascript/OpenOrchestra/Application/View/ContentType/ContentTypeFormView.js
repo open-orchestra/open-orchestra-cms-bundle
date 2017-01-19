@@ -12,6 +12,7 @@ class ContentTypeFormView extends AbstractFormView
     preinitialize() {
         super.preinitialize();
         this.events['click #oo_content_type_linkedToSite'] = '_toogleAlwaysShared';
+        this.events['change .content_type_change_type'] = '_contentTypeChangeType';
     }
 
     /**
@@ -60,6 +61,27 @@ class ContentTypeFormView extends AbstractFormView
         } else {
             $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').show();
         }
+    }
+
+    /**
+     * Content Type Change
+     * @param {event} event
+     */
+    _contentTypeChangeType(event) {
+        Backbone.Events.trigger('form:deactivate', this);                
+        let $tr = $(event.target).closest('tr');
+        let $table = $(event.target).closest('table');
+        let containerId = $table.parent().attr('id');
+        let index = $('tr', $table).index($tr)
+        
+        $('form', this.$el).ajaxSubmit({
+            type: 'PATCH',
+            context: this,
+            success: function(response) {
+                $tr.replaceWith($('#' + containerId + ' tr', response).eq(index).removeClass('hide'));
+                Backbone.Events.trigger('form:activate', this);                
+            }
+        });
     }
 }
 

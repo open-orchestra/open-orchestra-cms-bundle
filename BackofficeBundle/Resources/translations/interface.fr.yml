@@ -44,6 +44,9 @@ open_orchestra_backoffice:
           shared_block: Blocs partagés
     table:
         delete_button: Supprimer les éléments sélectionnés
+        duplicate: Dupliquer
+        'true': Oui
+        'false': Non
         keywords:
             label: Etiquette
         node:
@@ -57,10 +60,7 @@ open_orchestra_backoffice:
         content_types:
             name: Nom
             content_type_id: Id
-            linked_to_site:
-                label: Partagé sur les autres sites
-                'true': Oui
-                'false': Non
+            linked_to_site: Partagé sur les autres sites
         shared_block:
             label: Libellé
             updated_at: Date de modification
@@ -69,9 +69,14 @@ open_orchestra_backoffice:
             version: Version
         contents:
             name: Nom
-            updated_at: Mis à jour le
-            created_by: Créé par
-            duplicate: Dupliquer
+            status_label: Etat workflow
+            linked_to_site: Partagé
+            created_at: Date de création
+            created_by: Auteur
+            updated_at: Date de mise à jour
+            updated_by: Auteur de la mise à jour
+            list: Lister
+            add: Ajouter
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -144,3 +149,8 @@ open_orchestra_backoffice:
         swchoff:
             on: Oui
             off: Non
+    language:
+        en: English
+        fr: Français
+        es: Español
+        de: Deutsch

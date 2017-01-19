@@ -44,20 +44,36 @@ class ContentController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
 
         $mapping = array(
-            'name'      => 'name',
+            'name' => 'name',
+            'status_label' => 'status.labels.'.$language,
+            'linked_to_site' => 'linkedToSite',
+            'created_at' => 'createdAt',
+            'created_by' => 'createdBy',
             'updated_at' => 'updatedAt',
-            'created_by'=> 'createdBy',
+            'updated_by' => 'updatedBy',
         );
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
+        foreach ($contentType->getDefaultListable() as $column => $isListable) {
+            if (!$isListable) {
+                unset($mapping[$column]);
+            }
+        }
         foreach ($contentType->getFields() as $field) {
             $mapping['fields.' . $field->getFieldId() . '.string_value'] = 'attributes.' .     $field->getFieldId() . '.stringValue';
         }
+
+        $searchTypes = array();
+        foreach ($contentType->getFields() as $field) {
+            $searchTypes['attributes.' . $field->getFieldId()] = $field->getFieldTypeSearchable();
+        }
+
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
 
         $repository =  $this->get('open_orchestra_model.repository.content');
-        $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language);
+
+        $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language, $searchTypes);
         $recordsTotal = $repository->countFilterByContentTypeSiteAndLanguage($contentTypeId, $siteId, $language);
-        $recordsFiltered = $repository->countWithFilterAndContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language);
+        $recordsFiltered = $repository->countWithFilterAndContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language, $searchTypes);
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
