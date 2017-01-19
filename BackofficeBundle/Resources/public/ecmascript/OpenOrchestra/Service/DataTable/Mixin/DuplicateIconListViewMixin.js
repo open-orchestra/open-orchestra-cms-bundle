@@ -30,7 +30,7 @@ let DuplicateIconListViewMixin = (superclass) => class extends superclass {
      * @private
      */
     _canDuplicate(rowData) {
-        return rowData.get('rights').hasOwnProperty('can_create') && rowData.get('rights').can_create;
+        return rowData.get('rights').hasOwnProperty('can_duplicate') && rowData.get('rights').can_duplicate;
     }
     
     /**

@@ -2,6 +2,7 @@ import AbstractDataTableView       from '../../../Service/DataTable/View/Abstrac
 import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 import DuplicateIconListViewMixin  from '../../../Service/DataTable/Mixin/DuplicateIconListViewMixin'
+import CellFormatterManager        from '../../../Service/Content/CellFormatter/Manager'
 
 /**
  * @class ContentListView
@@ -46,7 +47,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let columnsDefinition = [];
         let defaultListable = this._contentType.get('default_listable');
         let createdCell = {
-            'linked_to_site': this._createBoolean,
+            'linked_to_site': 'bool',
         };
         for (let column in defaultListable) {
             if (defaultListable[column]) {
@@ -56,7 +57,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
                     orderable: true,
                     activateColvis: true,
                     visible: true,
-                    createdCell: createdCell.hasOwnProperty(column) ? createdCell[column].bind(this) : void(0)
+                    createdCell: createdCell.hasOwnProperty(column) ? CellFormatterManager.format({type: createdCell[column]}) : undefined
                 });
             }
         }
@@ -69,7 +70,6 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
     _generateFieldColumn() {
         let columnsDefinition = [];
         let fields = this._contentType.get('fields');
-        let createdCell = {};
         for (let field of fields) {
             if (field.listable) {
                 columnsDefinition.push({
@@ -78,7 +78,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
                     orderable: field.orderable,
                     activateColvis: true,
                     visible: true,
-                    createdCell: createdCell.hasOwnProperty(field.type) ? createdCell[field.type].bind(this) : void(0)
+                    createdCell: CellFormatterManager.format(field)
                 });
             }
         }
@@ -91,22 +91,6 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
      */
     generateUrlUpdatePage(page) {
         return Backbone.history.generateUrl('listContent', {contentTypeId: this._urlParameter.contentTypeId, language: this._urlParameter.language, contentTypeName: this._urlParameter.contentTypeName, page : page});
-    }
-
-    /**
-     * @inheritDoc
-     */
-    _canDelete(rowData) {
-        return rowData.get('rights').hasOwnProperty('can_delete') &&
-            rowData.get('rights').can_delete &&
-            !rowData.get('used');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    _canDuplicate(rowData) {
-        return rowData.get('rights').hasOwnProperty('can_create') && rowData.get('rights').can_create  && this._contentType.get('defining_versionable');      
     }
 
     /**

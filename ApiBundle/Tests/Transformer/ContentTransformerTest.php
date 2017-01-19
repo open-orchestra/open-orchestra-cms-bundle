@@ -141,6 +141,10 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::verify($content, Phake::times(2))->getStatus();
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
+
+        $this->assertArrayHasKey('can_edit', $facade->getRights());
+        $this->assertArrayHasKey('can_create', $facade->getRights());
+        $this->assertArrayHasKey('can_delete', $facade->getRights());
     }
 
     /**

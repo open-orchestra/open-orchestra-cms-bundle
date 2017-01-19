@@ -69,6 +69,8 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
+        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
+
         $facade = $this->newFacade();
 
         $facade->id = $content->getId();
@@ -91,8 +93,9 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
 
-        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, ContentInterface::ENTITY_TYPE));
+        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, ContentInterface::ENTITY_TYPE) && !$content->isUsed());
         $facade->addRight('can_create', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
+        $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE) && !is_null($contentType) && $contentType->isDefiningVersionable());
         $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, ContentInterface::ENTITY_TYPE));
 
         return $facade;

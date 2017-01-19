@@ -20,6 +20,7 @@
 </div>
 <h1> <%= contentType.name %></h1>
 <form class="form-horizontal search-engine">
+    <input type="hidden" name="date_format" id="date_format" value="<%= dateFormat%>">
     <% if (contentType.default_listable.name) { %>
         <div class="form-group col-lg-6">
             <label for="name" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.name') %></label>

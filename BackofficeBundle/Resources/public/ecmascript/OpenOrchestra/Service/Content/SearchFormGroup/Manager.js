@@ -1,7 +1,9 @@
+import AbstractSearchFormGroup from './AbstractSearchFormGroup'
+
 /**
- * @class SearchFormGroupManager
+ * @class Manager
  */
-class SearchFormGroupManager
+class Manager
 {
     /**
      * Constructor
@@ -14,6 +16,9 @@ class SearchFormGroupManager
      * @param {Object} fieldSearch
      */
     add(fieldSearch) {
+        if (!(fieldSearch instanceof AbstractSearchFormGroup)) {
+            throw TypeError("Manager accept only instance of AbstractSearchFormGroup");
+        }
         this._fieldSearchs.push(fieldSearch);
     }
 
@@ -33,5 +38,5 @@ class SearchFormGroupManager
     }
 }
 
-// unique instance of SearchFormGroupManager
-export default (new SearchFormGroupManager);
+// unique instance of Manager
+export default (new Manager);

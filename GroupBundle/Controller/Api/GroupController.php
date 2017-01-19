@@ -99,7 +99,7 @@ class GroupController extends BaseController
         foreach ($groups as $group) {
             if ($this->isGranted(ContributionActionInterface::DELETE, GroupInterface::ENTITY_TYPE) &&
                 array_key_exists($group->getId(), $nbrGroupsUsers) &&
-                $nbrGroupsUsers[$group->getId()] == 0) {
+                0 == $nbrGroupsUsers[$group->getId()]) {
                 $groupIds[] = $group->getId();
                 $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
             }

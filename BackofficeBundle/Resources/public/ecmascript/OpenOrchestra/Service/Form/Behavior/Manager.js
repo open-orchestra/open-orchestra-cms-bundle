@@ -1,3 +1,5 @@
+import AbstractBehavior from './AbstractBehavior'
+
 /**
  * @class Manager
  */
@@ -13,10 +15,13 @@ class Manager
     }
 
     /**
-     * @param {Object} $behavior
+     * @param {Object} behavior
      */
-    add($behavior) {
-        this._behaviors.push($behavior);
+    add(behavior) {
+        if (!(behavior instanceof AbstractBehavior)) {
+            throw TypeError("Manager accept only instance of AbstractBehavior");
+        }
+        this._behaviors.push(behavior);
     }
 
     /**

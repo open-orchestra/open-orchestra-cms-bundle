@@ -26,10 +26,15 @@ import Accordion              from '../Service/Form/Behavior/Accordion'
 import BlockVideoType         from '../Service/Form/Behavior/BlockVideoType'
 import ColorPicker            from '../Service/Form/Behavior/ColorPicker'
 
-import SearchFormGroupManager from '../Service/Content/SearchFormGroupManager'
-import DateSearchFormGroup    from '../Service/Content/DateSearchFormGroup'
-import TextSearchFormGroup    from '../Service/Content/TextSearchFormGroup'
-import NumberSearchFormGroup  from '../Service/Content/NumberSearchFormGroup'
+import SearchFormGroupManager from '../Service/Content/SearchFormGroup/Manager'
+import DateSearchFormGroup    from '../Service/Content/SearchFormGroup/DateForm'
+import TextSearchFormGroup    from '../Service/Content/SearchFormGroup/TextForm'
+import NumberSearchFormGroup  from '../Service/Content/SearchFormGroup/NumberForm'
+
+import CellFormatterManager   from '../Service/Content/CellFormatter/Manager'
+import TextCellFormatter      from '../Service/Content/CellFormatter/TextFormatter'
+import BooleanCellFormatter   from '../Service/Content/CellFormatter/BooleanFormatter'
+
 
 import ApplicationError       from '../Service/Error/ApplicationError'
 import AjaxError              from '../Service/Error/AjaxError'
@@ -57,6 +62,7 @@ class Application
         this._initRouter();
         this._initFormBehaviorManager();
         this._initSearchFormGroupManager();
+        this._initCellFormatterManager();
 
         Backbone.Events.trigger('application:before:start');
 
@@ -218,13 +224,22 @@ class Application
     }
 
     /**
-     * Initialize field serach library
+     * Initialize field search library
      * @private
      */
     _initSearchFormGroupManager() {
         SearchFormGroupManager.add(DateSearchFormGroup);
         SearchFormGroupManager.add(TextSearchFormGroup);
         SearchFormGroupManager.add(NumberSearchFormGroup);
+    }
+
+    /**
+     * Initialize cell formatter library
+     * @private
+     */
+    _initCellFormatterManager() {
+        CellFormatterManager.add(TextCellFormatter);
+        CellFormatterManager.add(BooleanCellFormatter);
     }
 }
 

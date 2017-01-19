@@ -72,43 +72,38 @@ class ContentRouter extends OrchestraRouter
             language: language,
             contentTypeName: contentTypeName,
         };
-        new ContentType().fetch({
-            urlParameter: {
-                contentTypeId: contentTypeId
-            },
-            success: (contentType) => {
-                new Statuses().fetch({
-                    context: 'contents',
-                    success: (statuses) => {
-                        let collection = new Contents();
-                        new Contents().fetch({
-                            context: 'list',
-                            urlParameter: urlParameter,
-                            data : {
-                                start: page * pageLength,
-                                length: pageLength
-                            },
-                            success: (contents) => {
-                                let contentsView = new ContentsView({
-                                    collection: contents,
-                                    settings: {
-                                        page: page,
-                                        deferLoading: [contents.recordsTotal, contents.recordsFiltered],
-                                        data: contents.models,
-                                        pageLength: pageLength
-                                    },
-                                    urlParameter: urlParameter,
-                                    contentType: contentType,
-                                    statuses: statuses
-                                });
-                                let el = contentsView.render().$el;
-                                Application.getRegion('content').html(el);
-                            }
-                        });
-                    }
-                })
-            }
-        });
+        
+        let contentType = new ContentType();
+        let statuses = new Statuses();
+        let contents = new Contents();
+        
+        $.when(
+            statuses.fetch({context: 'contents'}),
+            contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
+            contents.fetch({
+                context: 'list',
+                urlParameter: urlParameter,
+                data : {
+                    start: page * pageLength,
+                    length: pageLength
+                }
+            })
+        ).done( () => {
+            let contentsView = new ContentsView({
+                collection: contents,
+                settings: {
+                    page: page,
+                    deferLoading: [contents.recordsTotal, contents.recordsFiltered],
+                    data: contents.models,
+                    pageLength: pageLength
+                },
+                urlParameter: urlParameter,
+                contentType: contentType,
+                statuses: statuses
+            });
+            let el = contentsView.render().$el;
+            Application.getRegion('content').html(el);
+         });
     }
 }
 

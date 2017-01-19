@@ -18,6 +18,7 @@ class FieldTypeTransformer extends AbstractTransformer
     /**
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManagerInterface
+     * @param array                                $fieldsParameters
      */
     public function __construct(
         $facadeClass,

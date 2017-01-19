@@ -29,6 +29,9 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
+     * @param string  $contentTypeId
+     * @param string  $siteId
+     * @param string  $language
      *
      * @Config\Route("/list/{contentTypeId}/{siteId}/{language}", name="open_orchestra_api_content_list")
      * @Config\Method({"GET"})
