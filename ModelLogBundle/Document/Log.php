@@ -67,7 +67,7 @@ class Log implements LogInterface
     /**
      * @var array $extra
      *
-     * @ODM\Field(type="collection")
+     * @ODM\Field(type="hash")
      */
     protected $extra;
 
@@ -80,11 +80,29 @@ class Log implements LogInterface
     }
 
     /**
+     * @param string $message
+     */
+    public function setMessage($message)
+    {
+        if (is_string($message)) {
+            $this->message = $message;
+        }
+    }
+
+    /**
      * @return string
      */
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * @param array $context
+     */
+    public function setContext(array $context)
+    {
+        $this->context = $context;
     }
 
     /**
@@ -96,11 +114,31 @@ class Log implements LogInterface
     }
 
     /**
+     * @param int $level
+     */
+    public function setLevel($level)
+    {
+        if (is_integer($level)) {
+            $this->level = $level;
+        }
+    }
+
+    /**
      * @return int
      */
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * @param string $levelName
+     */
+    public function setLevelName($levelName)
+    {
+        if (is_string($levelName)) {
+            $this->levelName = $levelName;
+        }
     }
 
     /**
@@ -112,6 +150,16 @@ class Log implements LogInterface
     }
 
     /**
+     * @param string $channel
+     */
+    public function setChannel($channel)
+    {
+        if (is_string($channel)) {
+            $this->channel = $channel;
+        }
+    }
+
+    /**
      * @return string
      */
     public function getChannel()
@@ -120,11 +168,29 @@ class Log implements LogInterface
     }
 
     /**
+     * @param string $dateTime
+     */
+    public function SetDateTime($dateTime)
+    {
+        if (is_string($dateTime)) {
+            $this->datetime = $dateTime;
+        }
+    }
+
+    /**
      * @return string
      */
     public function getDateTime()
     {
         return $this->datetime;
+    }
+
+    /**
+     * @param array $extra
+     */
+    public function setExtra(array $extra)
+    {
+        $this->extra = $extra;
     }
 
     /**
