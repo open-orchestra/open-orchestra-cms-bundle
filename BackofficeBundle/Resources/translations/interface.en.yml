@@ -1,4 +1,5 @@
 open_orchestra_backoffice:
+    date_format: yy/mm/dd
     header:
         site: Site
         sign_out: Sign out

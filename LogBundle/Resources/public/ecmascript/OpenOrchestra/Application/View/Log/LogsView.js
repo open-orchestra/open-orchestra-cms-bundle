@@ -1,5 +1,7 @@
 import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
 import LogListView            from '../../View/Log/LogListView'
+import Application            from '../../Application'
+import DatePicker             from '../../../Service/Form/Behavior/DatePicker'
 
 /**
  * @class LogsView
@@ -24,7 +26,7 @@ class LogsView extends AbstractCollectionView
             settings: this._settings
         });
         $('.logs-list', this.$el).html(this._listView.render().$el);
-        $('.datepicker', this.$el).datepicker();
+        DatePicker.activate($('.datepicker', this.$el));
 
         return this;
     }

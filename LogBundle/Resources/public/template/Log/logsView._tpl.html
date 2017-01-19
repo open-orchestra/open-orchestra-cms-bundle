@@ -6,7 +6,11 @@
     <div class="form-group col-lg-6">
         <label for="date" class="control-label col-md-4"><%= Translator.trans('open_orchestra_log.table.date')%></label>
         <div class="col-md-8">
-            <input type="text" name="date" class="form-control datepicker" id="date">
+            <input type="text"
+                name="date" class="form-control datepicker" id="date"
+                data-dateformat="<%= Translator.trans('open_orchestra_backoffice.date_format')%>"
+            >
+            <input type="hidden" name="date-format" value="<%= Translator.trans('open_orchestra_backoffice.date_format')%>">
         </div>
     </div>
     <div class="form-group col-lg-6">

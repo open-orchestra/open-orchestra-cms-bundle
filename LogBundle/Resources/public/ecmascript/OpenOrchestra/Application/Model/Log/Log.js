@@ -11,14 +11,6 @@ class Log extends OrchestraModel
     preinitialize() {
         this.idAttribute = 'id';
     }
-
-    /**
-     * @inheritdoc
-     */
-    _getSyncUrl(method, options) {
-        let urlParameter = options.urlParameter || {};
-        urlParameter.logId = this.get('id');
-    }
 }
 
 export default Log

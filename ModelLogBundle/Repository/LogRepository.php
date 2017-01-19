@@ -79,9 +79,14 @@ class LogRepository extends AbstractAggregateRepository implements LogRepository
 
         $date = $configuration->getSearchIndex('date');
         if (null !== $date && '' !== $date) {
-            $date = explode('/', $date);
-            $date = $date[2] . '-' . $date[0] . '-' . $date[1];
-            $qa->match(array('datetime' => new \MongoRegex('/' . $date . '.*/i')));
+            $dateFormat = $configuration->getSearchIndex('date-format');
+            if (null !== $dateFormat && '' !== $dateFormat) {
+                $dateFormat = str_replace('yy', 'Y', $dateFormat);
+                $dateFormat = str_replace('mm', 'm', $dateFormat);
+                $dateFormat = str_replace('dd', 'd', $dateFormat);
+                $date = \DateTime::createFromFormat($dateFormat, $date)->format('Y-m-d');
+                $qa->match(array('datetime' => new \MongoRegex('/' . $date . '.*/i')));
+            }
         }
 
         return $qa;
