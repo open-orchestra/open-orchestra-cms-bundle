@@ -40,7 +40,7 @@ open_orchestra_backoffice:
         configuration:
           title: Configuration
           site: Sites
-          content_type: Types de contenu
+          shared_block: Blocs partagés
     table:
         delete_button: Supprimer les éléments sélectionnés
         keywords:
@@ -60,6 +60,12 @@ open_orchestra_backoffice:
                 label: Partagé sur les autres sites
                 'true': Oui
                 'false': Non
+        shared_block:
+            label: Libellé
+            updated_at: Date de modification
+            type: Type
+            number_use: Utilisation
+            version: Version
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -70,7 +76,7 @@ open_orchestra_backoffice:
               no_entities: Aucun élément à afficher
     node:
         title: Pages
-        parameterize: Paramètrer
+        parameterize: Paramétrer
         move: Déplacement
         add: Ajouter une page
         new: Nouvelle page
@@ -108,11 +114,21 @@ open_orchestra_backoffice:
             name: Nom
             id: Id
             linked_to_site: Partagé sur les autres sites
+    shared_block:
+        title_list: Blocs partagés
+        title_list_new: Sélectionner un bloc à paramétrer
+        title_new: Paramétrer le bloc
+        tab_usage_block: Utilisation du bloc
+        search_engine:
+            label: Libellé
+            type: Type
+            name: Nom
     block:
       add_block: Ajouter un bloc
       confirm_remove:
           title: Supprimer ce bloc ?
           message: La suppression sera définitive
+      edit_title: Edition du bloc
     form:
         keyword:
             new: nouveau

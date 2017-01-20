@@ -4,12 +4,10 @@ import DashboardRouter       from './Router/Dashboard/DashboardRouter'
 import SiteRouter            from './Router/Site/SiteRouter'
 import ContentTypeRouter     from './Router/ContentType/ContentTypeRouter'
 import ContentRouter         from './Router/Content/ContentRouter'
+import BlockRouter           from './Router/Block/BlockRouter'
 
-import ApplicationError      from '../Service/Error/ApplicationError'
-import AjaxError             from '../Service/Error/AjaxError'
-
-import HeaderView            from './View/Header/HeaderView'
 import ErrorView             from './View/Error/ErrorView'
+import HeaderView            from './View/Header/HeaderView'
 import NavigationView        from './View/Navigation/NavigationView'
 import BreadcrumbView        from './View/Breadcrumb/BreadcrumbView'
 
@@ -25,6 +23,12 @@ import NodeTemplateSelection from '../Service/Form/Behavior/NodeTemplateSelectio
 import GenerateId            from '../Service/Form/Behavior/GenerateId'
 import CollectionSortable    from '../Service/Form/Behavior/CollectionSortable'
 import Accordion             from '../Service/Form/Behavior/Accordion'
+import BlockVideoType        from '../Service/Form/Behavior/BlockVideoType'
+import ColorPicker           from '../Service/Form/Behavior/ColorPicker'
+
+import ApplicationError      from '../Service/Error/ApplicationError'
+import AjaxError             from '../Service/Error/AjaxError'
+
 
 /**
  * @class Application
@@ -145,6 +149,7 @@ class Application
         new SiteRouter();
         new ContentTypeRouter();
         new ContentRouter();
+        new BlockRouter();
     }
 
     /**
@@ -203,6 +208,8 @@ class Application
         FormBehaviorManager.add(GenerateId);
         FormBehaviorManager.add(CollectionSortable);
         FormBehaviorManager.add(Accordion);
+        FormBehaviorManager.add(BlockVideoType);
+        FormBehaviorManager.add(ColorPicker);
     }
 }
 

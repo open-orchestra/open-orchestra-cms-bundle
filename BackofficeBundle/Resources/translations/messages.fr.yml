@@ -298,6 +298,7 @@ open_orchestra_backoffice:
                 manually: Ou le spécifier manuellement
         block:
             success: Le bloc a été modifié
+            creation: Le bloc a été créé
             label: Nom du bloc
             max_age: Max age pour le cache de la réponse
             id: Id html du bloc
@@ -444,9 +445,6 @@ open_orchestra_backoffice:
         language_list:
             title: Séléction de langue
             description: Affiche la liste déroulante avec toutes les langues du site.
-        login:
-            title: Connexion
-            description: Affiche un formulaire pour ce logger.
         delete_question: Voulez vous supprimer ce bloc ?
         delete_explanation: La suppression sera définitive.
         video:
@@ -635,3 +633,10 @@ open_orchestra_backoffice:
         suppresor: Supprimer
         restorer: Restaurer
         administrator: Gérer
+    block_configuration:
+        category:
+            navigation: Navigation
+            widget: Widget
+            content: Texte et contenu
+            media: Média
+            default: Défaut
