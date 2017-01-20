@@ -81,6 +81,12 @@ class NodeType extends AbstractType
                     'class' => 'generate-id-source',
                 )
             ))
+            ->add('name', 'oo_tinymce', array(
+                'label' => 'open_orchestra_backoffice.form.node.title',
+                'group_id' => 'properties',
+                'sub_group_id' => 'properties',
+                'mapped' => false
+            ))
             ->add('routePattern', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.node.route_pattern.name',
                 'group_id' => 'properties',

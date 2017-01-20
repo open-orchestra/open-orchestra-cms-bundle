@@ -258,5 +258,19 @@ module.exports = {
     select2_spinner: {
         src: 'vendor/bower_components/select2/select2-spinner.gif',
         dest: 'web/css/select2-spinner.gif'
+    },
+
+    //-- [tinymce] --//
+    tynmce_themes: {
+        src: 'vendor/bower_components/tinymce/themes/',
+        dest: 'web/tinymce/themes/'
+    },
+    tynmce_skins: {
+        src: 'vendor/bower_components/tinymce/skins/',
+        dest: 'web/tinymce/skins/'
+    },
+    tynmce_plugins: {
+        src: 'vendor/bower_components/tinymce/plugins/',
+        dest: 'web/tinymce/plugins/'
     }
 };

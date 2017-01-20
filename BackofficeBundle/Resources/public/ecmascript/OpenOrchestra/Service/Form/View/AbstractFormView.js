@@ -62,7 +62,7 @@ class AbstractFormView extends OrchestraView
             this._$formRegion.append(message);
         }
         this._$formRegion.append(this._form.$form);
-
+        console.log(this);
         Backbone.Events.trigger('form:activate', this);
 
         return this;
