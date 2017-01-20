@@ -140,3 +140,60 @@
         {% endfor %}
     {% endspaceless %}
 {% endblock oo_workflow_status_parameters_widget %}
+
+{% block oo_workflow_transitions_widget %}
+    {% spaceless %}
+        {{ block('global_form_errors') }}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'open_orchestra_workflow_admin.form.transitions.roles'|trans() }}</th>
+                    {% for label in form.vars.statuses %}
+                        <th>
+                            {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label}) }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for profile in form.children %}
+                <tr>
+                    {{ form_widget(profile) }}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endspaceless %}
+{% endblock oo_workflow_transitions_widget %}
+
+{% block oo_workflow_profile_transitions_widget %}
+    {% spaceless %}
+        {% set profile = form.vars.value %}
+        <td>
+            {{ profile.getLabel(context.currentLocale) }}
+            {{ form_widget(form.children.transitions) }}
+        </td>
+    {% endspaceless %}
+{% endblock oo_workflow_profile_transitions_widget %}
+
+{% block oo_workflow_transitions_collection_widget %}
+    {% set fromStatusId = '' %}
+    {% for transition in form.children %}
+        {% set currentTransition = transition.vars.value|split('-') %}
+        {% if (currentTransition[0] != fromStatusId) %}
+            {% set fromStatusId = currentTransition[0] %}
+            </td>
+            <td>
+        {% endif %}
+        <input type="checkbox"
+            id="{{ transition.vars.id }}"
+            name="{{ transition.vars.full_name }}"
+            value="{{ transition.vars.value }}"
+            {% if (transition.vars.checked) %} checked="checked"{% endif %}
+            {% if (currentTransition[0] == currentTransition[1]) %} disabled="disabled"{% endif %}
+        >
+        <label for="{{ transition.vars.id }}">
+            {{ form.vars.statuses[currentTransition[1]] }}
+        </label><br />
+    {% endfor %}
+{% endblock oo_workflow_transitions_collection_widget %}

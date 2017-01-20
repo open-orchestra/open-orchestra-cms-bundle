@@ -1,9 +1,11 @@
 parameters:
-    open_orchestra_workflow_admin.type.status.class          : OpenOrchestra\Workflow\Form\Type\StatusType
-    open_orchestra_workflow_admin.type.workflow_profile.class: OpenOrchestra\Workflow\Form\Type\WorkflowProfileType
-    open_orchestra_workflow_admin.type.workflow_profile.class          : OpenOrchestra\Workflow\Form\Type\WorkflowProfileType
-    open_orchestra_workflow_admin.type.workflow_parameters.class       : OpenOrchestra\Workflow\Form\Type\WorkflowParametersType
-    open_orchestra_workflow_admin.type.workflow_status_parameters.class: OpenOrchestra\Workflow\Form\Type\Component\WorkflowStatusParametersType
+    open_orchestra_workflow_admin.type.workflow_parameters.class            : OpenOrchestra\Workflow\Form\Type\WorkflowParametersType
+    open_orchestra_workflow_admin.type.workflow_status_parameters.class     : OpenOrchestra\Workflow\Form\Type\Component\WorkflowStatusParametersType
+    open_orchestra_workflow_admin.type.status.class                         : OpenOrchestra\Workflow\Form\Type\StatusType
+    open_orchestra_workflow_admin.type.workflow_profile.class               : OpenOrchestra\Workflow\Form\Type\WorkflowProfileType
+    open_orchestra_workflow_admin.type.workflow_transitions.class           : OpenOrchestra\Workflow\Form\Type\WorkflowTransitionsType
+    open_orchestra_workflow_admin.type.workflow_profile_transitions.class   : OpenOrchestra\Workflow\Form\Type\Component\WorkflowProfileTransitionsType
+    open_orchestra_workflow_admin.type.workflow_transitions_collection.class: OpenOrchestra\Workflow\Form\Type\Component\WorkflowTransitionsCollectionType
 
 services:
     open_orchestra_workflow_admin.type.workflow_profile:
@@ -41,3 +43,27 @@ services:
             - '%open_orchestra_model.document.status.class%'
         tags:
             - { name: form.type, alias: oo_workflow_status_parameters }
+
+    open_orchestra_workflow_admin.type.workflow_transitions:
+        class: '%open_orchestra_workflow_admin.type.workflow_transitions.class%'
+        arguments:
+            - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_backoffice.context_manager'
+        tags:
+            - { name: form.type, alias: oo_workflow_transitions}
+
+    open_orchestra_workflow_admin.type.workflow_profile_transitions:
+        class: '%open_orchestra_workflow_admin.type.workflow_profile_transitions.class%'
+        arguments:
+            - '%open_orchestra_model.document.workflow_profile.class%'
+            - '@open_orchestra_workflow_admin.transformer.profile_transitions'
+        tags:
+            - { name: form.type, alias: oo_workflow_profile_transitions}
+
+    open_orchestra_workflow_admin.type.workflow_transitions_collection:
+        class: '%open_orchestra_workflow_admin.type.workflow_transitions_collection.class%'
+        arguments:
+            - '@open_orchestra_workflow_admin.transformer.profile_transitions'
+            - '%kernel.default_locale%'
+        tags:
+            - { name: form.type, alias: oo_workflow_transitions_collection}

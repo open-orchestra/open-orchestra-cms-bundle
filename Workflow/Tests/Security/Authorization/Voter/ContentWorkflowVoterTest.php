@@ -1,12 +1,13 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
+namespace OpenOrchestra\Workflow\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Phake;
 use OpenOrchestra\Workflow\Security\Authorization\Voter\ContentWorkflowVoter;
+use OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter\AbstractVoterTest;
 
 /**
  * Class ContentWorkflowVoterTest

@@ -5,6 +5,7 @@ parameters:
     open_orchestra_workflow_admin.transformer.workflow_profile.class:                  OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowProfileTransformer
     open_orchestra_workflow_admin.transformer.workflow_profile_collection.class:       OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowProfileCollectionTransformer
     open_orchestra_workflow_admin.transformer.group_workflow_profile_collection.class: OpenOrchestra\WorkflowAdminBundle\Form\DataTransformer\GroupWorkflowProfileCollectionTransformer
+    open_orchestra_workflow_admin.transformer.profile_transitions.class              : OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer
 
 services:
     open_orchestra_workflow_admin.transformer.status:
@@ -18,6 +19,7 @@ services:
             - '@open_orchestra_model.repository.status'
         tags:
             - { name: open_orchestra_api.transformer.strategy }
+
     open_orchestra_workflow_admin.transformer.status_collection:
         class: '%open_orchestra_workflow_admin.transformer.status_collection.class%'
         arguments:
@@ -25,12 +27,14 @@ services:
             - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
+
     open_orchestra_workflow_admin.transformer.status_node_tree:
         class: '%open_orchestra_workflow_admin.transformer.status_node_tree.class%'
         arguments:
             - '%open_orchestra_workflow_admin.facade.status.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
+
     open_orchestra_workflow_admin.transformer.workflow_profile:
         class: '%open_orchestra_workflow_admin.transformer.workflow_profile.class%'
         arguments:
@@ -39,15 +43,23 @@ services:
             - '@open_orchestra_model.repository.workflow_profile'
         tags:
             - { name: open_orchestra_api.transformer.strategy }
+
     open_orchestra_workflow_admin.transformer.workflow_profile_collection:
         class: '%open_orchestra_workflow_admin.transformer.workflow_profile_collection.class%'
         arguments:
             - '%open_orchestra_workflow_admin.facade.workflow_profile_collection.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
+
     open_orchestra_workflow_admin.transformer.group_workflow_profile_collection:
         class: '%open_orchestra_workflow_admin.transformer.group_workflow_profile_collection.class%'
         arguments:
             - '@open_orchestra_model.repository.workflow_profile'
             - '@open_orchestra_model.repository.content_type'
             - '@open_orchestra_backoffice.context_manager'
+
+    open_orchestra_workflow_admin.transformer.profile_transitions:
+        arguments:
+            - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_workflow_admin.factory.transition'
+        class: '%open_orchestra_workflow_admin.transformer.profile_transitions.class%'

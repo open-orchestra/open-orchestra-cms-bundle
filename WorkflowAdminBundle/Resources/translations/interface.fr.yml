@@ -20,6 +20,8 @@ open_orchestra_workflow_admin:
         title_edit: Modifier le profil de workflow
     parameters:
         title: Paramètres
+    transition:
+        title: Transitions
     table:
         statuses:
             label        : Libellé
