@@ -99,33 +99,12 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param FormEvent $event
-     */
-    public function postSubmit(FormEvent $event)
-    {
-        if (($group = $event->getData()) instanceof GroupInterface) {
-            $workflowProfileCollections = $group->getWorkflowProfileCollections();
-            $perimeter = new Perimeter();
-            $perimeter->setType(ContentTypeInterface::ENTITY_TYPE);
-
-            foreach ($workflowProfileCollections as $key => $workflowProfile) {
-                if ($key != NodeInterface::ENTITY_TYPE && count($workflowProfile->getProfiles()) > 0) {
-                    $perimeter->addItem($key);
-                }
-            }
-
-            $group->addPerimeter($perimeter);
-        }
-    }
-
-    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
     {
         return array(
             GroupFormEvents::GROUP_FORM_CREATION => 'addWorkflowProfile',
-            FormEvents::POST_SUBMIT => 'postSubmit',
         );
     }
 }
