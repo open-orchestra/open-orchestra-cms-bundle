@@ -1,10 +1,12 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import Application      from '../../Application'
+import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
+import Application          from '../../Application'
+import ContentType          from '../../Model/ContentType/ContentType'
+import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 
 /**
  * @class ContentTypeFormView
  */
-class ContentTypeFormView extends AbstractFormView
+class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixin) 
 {
     /**
      * @inheritdoc
@@ -23,6 +25,7 @@ class ContentTypeFormView extends AbstractFormView
     initialize({form, name, contentTypeId}) {
         super.initialize({form : form});
         this._name = name;
+        this._contentTypeId = contentTypeId;
     }
 
     /**
@@ -38,17 +41,6 @@ class ContentTypeFormView extends AbstractFormView
         this._toogleAlwaysShared();
 
         return this;
-    }
-
-    /**
-     * @return {Object}
-     */
-    getStatusCodeForm() {
-        return {
-            '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
-            '422': $.proxy(this.refreshRender, this)
-        }
     }
 
     /**
@@ -79,7 +71,45 @@ class ContentTypeFormView extends AbstractFormView
             context: this,
             success: function(response) {
                 $tr.replaceWith($('#' + containerId + ' tr', response).eq(index).removeClass('hide'));
-                Backbone.Events.trigger('form:activate', this);                
+                Backbone.Events.trigger('form:activate', this);
+            }
+        });
+    }
+
+    /**
+     * Redirect to edit user view
+     *
+     * @param {mixed}  data
+     * @param {string} textStatus
+     * @param {object} jqXHR
+     * @private
+     */
+    _redirectEditElement(data, textStatus, jqXHR) {
+        let contentTypeId = jqXHR.getResponseHeader('contentTypeId');
+        let name = jqXHR.getResponseHeader('name');
+        if (null === contentTypeId || null === name) {
+            throw new ApplicationError('Invalid contentTypeId or name');
+        }
+        let url = Backbone.history.generateUrl('editContentType', {
+            contentTypeId: contentTypeId,
+            name: name
+        });
+        let message = new FlashMessage(data, 'success');
+        FlashMessageBag.addMessageFlash(message);
+        Backbone.Events.trigger('form:deactivate', this);
+        Backbone.history.navigate(url, true);
+    }
+
+    /**
+     * Delete
+     * @param {event} event
+     */
+    _deleteElement(event) {
+        let contentType = new ContentType({'content_type_id': this._contentTypeId});
+        contentType.destroy({
+            success: () => {
+                let url = Backbone.history.generateUrl('listContentType');
+                Backbone.history.navigate(url, true);
             }
         });
     }

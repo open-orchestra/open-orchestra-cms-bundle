@@ -2,10 +2,12 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
+use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber;
 
 /**
  * Class ContentType
@@ -47,6 +49,18 @@ class ContentType extends AbstractType
     }
 
     /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
+        $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['new_button'] = $options['new_button'];
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -61,6 +75,8 @@ class ContentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->contentClass,
+            'delete_button' => false,
+            'new_button' => false,
         ));
     }
 }

@@ -42,7 +42,8 @@ class ContentController extends AbstractAdminController
                     'contentId' => $content->getContentId(),
                     'language' => $content->getLanguage(),
                     'version' => $content->getVersion(),
-                ))
+                )),
+                'delete_button' => (!$content->isUsed())
             ), ContributionActionInterface::EDIT);
 
             $form->handleRequest($request);
@@ -104,6 +105,7 @@ class ContentController extends AbstractAdminController
                 'contentType' => $contentType
             )),
             'method' => 'POST',
+            'new_button' => true
         ), ContributionActionInterface::CREATE);
 
         $form->handleRequest($request);

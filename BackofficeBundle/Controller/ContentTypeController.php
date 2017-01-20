@@ -31,7 +31,10 @@ class ContentTypeController extends AbstractAdminController
 
         $newContentType = $this->get('open_orchestra_backoffice.manager.content_type')->duplicate($contentType);
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_form', array('contentTypeId' => $contentTypeId));
-        $form = $this->createContentTypeForm($request, array('action' => $action), $newContentType);
+        $form = $this->createContentTypeForm($request, array(
+            'action' => $action,
+            'delete_button' => (0 == $this->get('open_orchestra_model.repository.content')->countByContentTypeAndSiteInLastVersion($contentTypeId))
+        ), $newContentType);
 
         $form->handleRequest($request);
         if ('PATCH' !== $request->getMethod()) {
@@ -60,17 +63,28 @@ class ContentTypeController extends AbstractAdminController
         $contentType = $this->get('open_orchestra_backoffice.manager.content_type')->initializeNewContentType();
 
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_new', array());
-        $form = $this->createContentTypeForm($request, array('action' => $action), $contentType);
+        $form = $this->createContentTypeForm($request, array(
+            'action' => $action,
+            'new_button' => true
+        ), $contentType);
 
         $form->handleRequest($request);
         if ('PATCH' !== $request->getMethod()) {
-            $handleForm = $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.creation'), $contentType);
+            if ($form->isValid()) {
+                $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale();
+                $documentManager = $this->get('object_manager');
+                $documentManager->persist($contentType);
+                $documentManager->flush();
+                $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.creation');
 
-            if ($handleForm && !is_null($contentType->getId())) {
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_CREATE, new ContentTypeEvent($contentType));
-                $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+                $response = new Response(
+                    $message,
+                    Response::HTTP_CREATED,
+                    array('Content-type' => 'text/plain; charset=utf-8', 'contentTypeId' => $contentType->getContentTypeId(), 'name' => $contentType->getName($language))
+                );
 
-                return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+                return $response;
             }
         }
 

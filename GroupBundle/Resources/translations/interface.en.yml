@@ -5,6 +5,7 @@ open_orchestra_group:
           groups: All groups
     table:
         groups:
+            new: New group
             label: Label
             site_name: Site name
             site: Site

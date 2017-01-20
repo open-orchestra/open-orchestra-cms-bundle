@@ -37,7 +37,8 @@ class SiteController extends AbstractAdminController
                 array(
                     'action' => $this->generateUrl('open_orchestra_backoffice_site_form', array(
                         'siteId' => $siteId,
-                    ))
+                    )),
+                    'delete_button' => true
                 )
             );
 
@@ -69,16 +70,25 @@ class SiteController extends AbstractAdminController
         $form = $this->createForm('oo_site', $site, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
             'method' => 'POST',
+            'new_button' => true
         ));
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation');
 
-        if ($this->handleForm($form, $message, $site)) {
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($site);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation');
+
             $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site, null));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+            $response = new Response(
+                $message,
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/plain; charset=utf-8', 'siteId' => $site->getSiteId(), 'name' => $site->getName())
+            );
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+            return $response;
         }
 
         return $this->renderAdminForm($form);

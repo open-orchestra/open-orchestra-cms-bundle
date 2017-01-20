@@ -1,15 +1,31 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
+import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
+import Application          from '../../Application'
+import Group                from '../../Model/Group/Group'
+import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 
 /**
  * @class GroupFormView
  */
-class GroupFormView extends AbstractFormView
+class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 {
+    /**
+     * Initialize
+     * @param {Form}   form
+     * @param {Array}  name
+     */
+    initialize({form, name, groupId}) {
+        super.initialize({form : form});
+        this._name = name;
+        this._groupId = groupId;
+    }
+
     /**
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Group/groupFormView');
+        let template = this._renderTemplate('Group/groupFormView', {
+            name: this._name
+        });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
@@ -18,14 +34,41 @@ class GroupFormView extends AbstractFormView
     }
 
     /**
-     * @return {Object}
+     * Redirect to edit user view
+     *
+     * @param {mixed}  data
+     * @param {string} textStatus
+     * @param {object} jqXHR
+     * @private
      */
-    getStatusCodeForm() {
-        return {
-            '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
-            '422': $.proxy(this.refreshRender, this)
+    _redirectEditElement(data, textStatus, jqXHR) {
+        let groupId = jqXHR.getResponseHeader('groupId');
+        let name = jqXHR.getResponseHeader('name');
+        if (null === groupId || null === name) {
+            throw new ApplicationError('Invalid groupId or name');
         }
+        let url = Backbone.history.generateUrl('editGroup', {
+            groupId: groupId,
+            name: name
+        });
+        let message = new FlashMessage(data, 'success');
+        FlashMessageBag.addMessageFlash(message);
+        Backbone.Events.trigger('form:deactivate', this);
+        Backbone.history.navigate(url, true);
+    }
+
+    /**
+     * Delete
+     * @param {event} event
+     */
+    _deleteElement(event) {
+        let group = new Group({'group_id': this._groupId});
+        group.destroy({
+            success: () => {
+                let url = Backbone.history.generateUrl('listGroup');
+                Backbone.history.navigate(url, true);
+            }
+        });
     }
 }
 

@@ -79,40 +79,37 @@
 
 {% block collection_widget %}
     {% spaceless %}
-        {% set model = form|first %}
-		{% if model.vars.columns is defined %}
-            {% if prototype is defined %}
-                {% set prototype_html %}
-                    {% spaceless %}
-                        <tbody data-prototype-id="{{ prototype.vars.name }}">
-                            <tr>
-                                {% for column in model.vars.columns %}
-                            	<td>
-                                    {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
-                            	</td>
-                            	{% endfor %}
-                            	<td>
-                                    <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
-                                    <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
-                            	</td>
-        	                    {% if form.vars.allow_delete %}
-            	                	<td>
-                                        <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
-        							</td>
-        	                    {% endif %}
-                           	</tr>
-                           	<tr>
-                           		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
-                                    <div class="row">
-                                        {{ form_widget(prototype) }}
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-				    {% endspaceless %}
-                {% endset %}
-                {% set attr = attr|merge({'data-prototype': prototype_html|e }) %}
-            {% endif %}
+		{% if prototype is defined and prototype.vars.columns is defined %}
+            {% set prototype_html %}
+                {% spaceless %}
+                    <tbody data-prototype-id="{{ prototype.vars.name }}">
+                        <tr>
+                            {% for column in prototype.vars.columns %}
+                        	<td>
+                                {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
+                        	</td>
+                        	{% endfor %}
+                        	<td>
+                                <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
+                                <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
+                        	</td>
+    	                    {% if form.vars.allow_delete %}
+        	                	<td>
+                                    <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
+    							</td>
+    	                    {% endif %}
+                       	</tr>
+                       	<tr>
+                       		<td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                                <div class="row">
+                                    {{ form_widget(prototype) }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+			    {% endspaceless %}
+            {% endset %}
+            {% set attr = attr|merge({'data-prototype': prototype_html|e }) %}
 			<div class="accordion" {{ block('widget_container_attributes') }}>
 				<div class="action">
                     <a href="#" class="btn btn-border close-forms">{{ 'open_orchestra_backoffice.form.collection.close_forms'|trans }}</a>
@@ -124,7 +121,7 @@
                 <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
                 	<thead>
                         <tr>
-                            {% for column in model.vars.columns %}
+                            {% for column in prototype.vars.columns %}
                         	<th>
                         		{{ column.label|trans }}
                         	</th>
@@ -154,7 +151,7 @@
         	                    {% endif %}
                            	</tr>
                            	<tr class="{% if field.vars.valid %}hide{% endif %}">
-                           		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                           		<td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
                                     <div class="row">
                                         {{ form_widget(field) }}
                                         {{ form_errors(field) }}
@@ -681,22 +678,10 @@
     {% endspaceless %}
 {% endblock oo_multi_languages_widget %}
 
-{% block oo_site_submit_widget %}
-    {% spaceless %}
-        {{ block('submit_widget') }}
-        {% if(form.vars.value.id is not null) %}
-            {% set label = 'open_orchestra_backoffice.form.delete' %}
-            {% set id = 'delete_' ~ form.vars.name %}
-            {% set button_class= 'danger' %}
-            {{ block('button_widget') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock oo_site_submit_widget %}
-
-{% block oo_block_submit_widget %}
+{% block generic_submit_buttons %}
     {% spaceless %}
         {{ block('form_submit_widget') }}
-        {% if(form.vars.value.id is null) %}
+        {% if(true == form.vars.new_button) %}
             {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
             {% set id = 'submit_' ~ form.vars.name %}
             {% set attr = {'class': 'submit-continue-form'} %}
@@ -709,4 +694,20 @@
             {{ block('button_widget') }}
         {% endif %}
     {% endspaceless %}
+{% endblock generic_submit_buttons %}
+
+{% block oo_site_submit_widget %}
+    {{ block('generic_submit_buttons') }}
+{% endblock oo_site_submit_widget %}
+
+{% block oo_block_submit_widget %}
+    {{ block('generic_submit_buttons') }}
 {% endblock oo_block_submit_widget %}
+
+{% block oo_content_submit_widget %}
+    {{ block('generic_submit_buttons') }}
+{% endblock oo_content_submit_widget %}
+
+{% block oo_content_type_submit_widget %}
+    {{ block('generic_submit_buttons') }}
+{% endblock oo_content_type_submit_widget %}

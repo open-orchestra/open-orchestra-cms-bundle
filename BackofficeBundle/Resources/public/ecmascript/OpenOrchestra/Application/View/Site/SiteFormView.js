@@ -1,20 +1,13 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import Application      from '../../Application'
-import Site             from '../../Model/Site/Site'
+import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
+import Application          from '../../Application'
+import Site                 from '../../Model/Site/Site'
+import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 
 /**
  * @class SiteFormView
  */
-class SiteFormView extends AbstractFormView
+class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 {
-    /**
-     * @inheritdoc
-     */
-    preinitialize() {
-        super.preinitialize();
-        this.events['click #delete_oo_site'] = '_deleteSite';
-    }
-
     /**
      * Initialize
      * @param {Form}   form
@@ -41,21 +34,34 @@ class SiteFormView extends AbstractFormView
     }
 
     /**
-     * @return {Object}
+     * Redirect to edit user view
+     *
+     * @param {mixed}  data
+     * @param {string} textStatus
+     * @param {object} jqXHR
+     * @private
      */
-    getStatusCodeForm() {
-        return {
-            '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
-            '422': $.proxy(this.refreshRender, this)
+    _redirectEditElement(data, textStatus, jqXHR) {
+        let siteId = jqXHR.getResponseHeader('siteId');
+        let name = jqXHR.getResponseHeader('name');
+        if (null === siteId || null === name) {
+            throw new ApplicationError('Invalid siteId or name');
         }
+        let url = Backbone.history.generateUrl('editSite', {
+            siteId: siteId,
+            name: name
+        });
+        let message = new FlashMessage(data, 'success');
+        FlashMessageBag.addMessageFlash(message);
+        Backbone.Events.trigger('form:deactivate', this);
+        Backbone.history.navigate(url, true);
     }
 
     /**
      * Delete
      * @param {event} event
      */
-    _deleteSite(event) {
+    _deleteElement(event) {
         let site = new Site({'site_id': this._siteId});
         site.destroy({
             success: () => {

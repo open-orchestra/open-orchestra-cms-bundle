@@ -97,6 +97,7 @@ class BlockType extends AbstractType
                 'blockPosition' => 0,
                 'data_class' => null,
                 'delete_button' => false,
+                'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(
@@ -138,7 +139,6 @@ class BlockType extends AbstractType
         );
     }
 
-
     /**
      * @param FormView      $view
      * @param FormInterface $form
@@ -148,6 +148,7 @@ class BlockType extends AbstractType
     {
         parent::buildView($view, $form, $options);
         $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['new_button'] = $options['new_button'];
     }
 
     /**
