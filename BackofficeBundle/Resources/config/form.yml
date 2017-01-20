@@ -25,7 +25,6 @@ parameters:
     open_orchestra_backoffice.type.redirection.class: OpenOrchestra\Backoffice\Form\Type\RedirectionType
     open_orchestra_backoffice.type.video.class: OpenOrchestra\Backoffice\Form\Type\VideoType
     open_orchestra_backoffice.type.color_picker.class: OpenOrchestra\Backoffice\Form\Type\Component\ColorPickerType
-    open_orchestra_backoffice.type.role_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\RoleChoiceType
     open_orchestra_backoffice.type.api_client.class: OpenOrchestra\Backoffice\Form\Type\ApiClientType
     open_orchestra_backoffice.type.operator_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\OperatorChoiceType
     open_orchestra_backoffice.type.content_search.class: OpenOrchestra\Backoffice\Form\Type\Component\ContentSearchType
@@ -266,22 +265,6 @@ services:
         class: '%open_orchestra_backoffice.type.color_picker.class%'
         tags:
             - { name: form.type, alias: oo_color_picker }
-    open_orchestra_backoffice.type.role_choice:
-        class: '%open_orchestra_backoffice.type.role_choice.class%'
-        arguments:
-            - ['@open_orchestra_backoffice.collector.backoffice_role', '@open_orchestra_backoffice.collector.front_role']
-            - 'oo_role_choice'
-            - '%open_orchestra_backoffice.role%'
-        tags:
-            - { name: form.type, alias: oo_role_choice }
-    open_orchestra_backoffice.type.front_role_choice:
-        class: '%open_orchestra_backoffice.type.role_choice.class%'
-        arguments:
-            - ['@open_orchestra_backoffice.collector.front_role']
-            - 'oo_front_role_choice'
-            - {}
-        tags:
-            - { name: form.type, alias: oo_front_role_choice }
     open_orchestra_backoffice.type.api_client:
         class: '%open_orchestra_backoffice.type.api_client.class%'
         arguments:

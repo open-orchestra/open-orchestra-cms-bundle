@@ -5,9 +5,6 @@ open_orchestra_backoffice:
         - fakeBlocks
     fixed_attributes:
         - fake_attribute
-    front_roles:
-        - role_foo
-        - role_bar
     field_types:
         fake_field:
             label: fake_label

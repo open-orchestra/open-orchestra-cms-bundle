@@ -49,7 +49,7 @@ class ApiClientTypeTest extends AbstractBaseTestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(4))->add(Phake::anyParameters());
     }
 
     /**

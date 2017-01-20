@@ -28,7 +28,6 @@ class OpenOrchestraWorkflowAdminExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('transformer.yml');
-        $loader->load('role_parameter.yml');
         $loader->load('voter.yml');
         $loader->load('form.yml');
         $loader->load('subscriber.yml');

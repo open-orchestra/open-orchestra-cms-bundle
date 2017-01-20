@@ -69,9 +69,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('validator.yml');
         $loader->load('restore_entity.yml');
         $loader->load('remove_trashcan_entity.yml');
-        $loader->load('collector.yml');
         $loader->load('usage_finder.yml');
-        $loader->load('role_parameter.yml');
         $loader->load('reference.yml');
         $loader->load('auto_publisher.yml');
 
@@ -85,10 +83,6 @@ class OpenOrchestraBackofficeExtension extends Extension
 
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('test_services.yml');
-        }
-
-        if (isset($config['front_roles'])) {
-            $this->addFrontRoles($config['front_roles'], $container);
         }
     }
 
@@ -151,18 +145,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         );
 
         $container->setParameter('open_orchestra_backoffice.options', $options);
-    }
-
-    /**
-     * @param array            $frontRoles
-     * @param ContainerBuilder $container
-     */
-    protected function addFrontRoles(array $frontRoles, ContainerBuilder $container)
-    {
-        $definition = $container->getDefinition('open_orchestra_backoffice.collector.front_role');
-        foreach ($frontRoles as $frontRole) {
-            $definition->addMethodCall('addRole', array($frontRole));
-        }
     }
 
     /**
