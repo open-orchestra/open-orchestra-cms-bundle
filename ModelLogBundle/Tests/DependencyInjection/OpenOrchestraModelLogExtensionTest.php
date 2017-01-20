@@ -23,7 +23,7 @@ class OpenOrchestraModelLogExtensionTest extends AbstractBaseTestCase
         $repository = 'OpenOrchestra\ModelLogBundle\Repository\LogRepository';
         $container = $this->loadContainerFromFile('empty');
         $this->assertEquals($class, $container->getParameter('open_orchestra_log.document.log.class'));
-        $this->assertDefinition($container->getDefinition('open_orchestra_log.repository.log'), $class, $repository, true);
+        $this->assertDefinition($container->getDefinition('open_orchestra_log.repository.log'), $class, $repository);
     }
 
     /**
@@ -42,16 +42,13 @@ class OpenOrchestraModelLogExtensionTest extends AbstractBaseTestCase
      * @param string     $repository
      * @param bool|false $filterType
      */
-    private function assertDefinition(Definition $definition, $class, $repository, $filterType = false)
+    private function assertDefinition(Definition $definition, $class, $repository)
     {
         $this->assertSame($definition->getClass(), $repository);
         $factory = $definition->getFactory();
         $this->assertSame($factory[1], "getRepository");
         $this->assertSame($definition->getArgument(0), $class);
         $this->assertTrue($definition->hasMethodCall('setAggregationQueryBuilder'));
-        if ($filterType) {
-            $this->assertTrue($definition->hasMethodCall('setFilterTypeManager'));
-        }
     }
 
     /**

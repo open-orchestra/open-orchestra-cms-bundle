@@ -1,0 +1,8 @@
+{
+  "configuration": {
+    "log": {
+      "template": "Navigation/Configuration/log",
+      "rank": 50
+    }
+  }
+}

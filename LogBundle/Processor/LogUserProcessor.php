@@ -43,6 +43,7 @@ class LogUserProcessor
         }
 
         $record['extra']['site_name'] = $this->context->getCurrentSiteName();
+        $record['extra']['site_id'] = $this->context->getCurrentSiteId();
 
         return $record;
     }

@@ -36,7 +36,8 @@ class LogTransformer extends AbstractTransformer
         $extra = array(
             'user_ip' => '0.0.0.0',
             'user_name' => 'Unknown',
-            'site_name' => ''
+            'site_name' => '',
+            'site_id' => ''
         );
         $extra = array_merge($extra, $mixed->getExtra());
 
@@ -53,6 +54,7 @@ class LogTransformer extends AbstractTransformer
         $facade->userIp = $extra['user_ip'];
         $facade->userName = $extra['user_name'];
         $facade->siteName = $extra['site_name'];
+        $facade->siteId = $extra['site_id'];
 
         return $facade;
     }
