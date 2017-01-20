@@ -124,6 +124,7 @@ class ContentController extends BaseController
             $format
         );
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
+
         $contentId = $content->getContentId();
         $newContentId = null;
         foreach (array_keys($frontLanguages) as $language) {
