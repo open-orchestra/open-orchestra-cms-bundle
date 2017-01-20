@@ -13,6 +13,13 @@
     {% spaceless %}
         <div class="group-users-list">
             <table class="table table-striped">
+            	<thead>
+                    <tr>
+                        <th>{{ 'open_orchestra_group.form.group.user_name'|trans }}</th>
+                        <th>{{ 'open_orchestra_group.form.group.user_email'|trans }}</th>
+                        <th>{{ 'open_orchestra_group.form.group.user_delete'|trans }}</th>
+                    </tr>
+                </thead>
                 <tbody>
             {% for child in collection %}
                 {{ form_widget(child) }}
