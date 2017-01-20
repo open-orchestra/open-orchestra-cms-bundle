@@ -40,6 +40,7 @@ open_orchestra_backoffice:
         configuration:
           title:  Configuration
           site: Sites
+          shared_block: Shared blocks
     table:
         delete_button: Remove selected items
         keywords:
@@ -49,6 +50,7 @@ open_orchestra_backoffice:
             author: Author
             updated_at: Updated date
             current_status: Current status
+            version: Version
         sites:
             site_id: Site id
             name: Name
@@ -59,6 +61,11 @@ open_orchestra_backoffice:
                 label: Shared on other sites
                 'true': 'True'
                 'false': 'False'
+        shared_block:
+            label: Label
+            updated_at: Updated date
+            type: Type
+            number_use: Use
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -107,11 +114,21 @@ open_orchestra_backoffice:
             name: Name
             id: Id
             linked_to_site: Shared on other sites
+    shared_block:
+        title_list: shared blocks
+        title_list_new: Select a block to parameterize
+        title_new: Parameterize the block
+        tab_usage_block: Usage of block
+        search_engine:
+            label: Label
+            type: Type
+            name: Name
     block:
       add_block: Add a block
       confirm_remove:
           title: Remove this block ?
           message: The removal will be final
+      edit_title: Edit block
     form:
         keyword:
             new: new

@@ -145,7 +145,6 @@ class NodeController extends BaseController
         return array();
     }
 
-
     /**
      * @param string  $nodeId
      * @param string  $siteId
@@ -468,6 +467,46 @@ class NodeController extends BaseController
         $collection = $repository->findForPaginate($configuration, $siteId, $language);
         $recordsTotal = $repository->count($siteId, $language);
         $recordsFiltered = $repository->countWithFilter($configuration, $siteId, $language);
+
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('node_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
+    }
+
+    /**
+     * @param Request $request
+     * @param String  $siteId
+     * @param String  $language
+     * @param String  $blockId
+     *
+     * @Config\Route("/list-usage-block/{siteId}/{language}/{blockId}", name="open_orchestra_api_node_list_usage_block")
+     * @Config\Method({"GET"})
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     *  @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
+     * })
+     *
+     * @return FacadeInterface
+     */
+    public function listUsageBlockAction(Request $request, $siteId, $language, $blockId)
+    {
+        $mapping = array(
+            'updated_at' => 'updatedAt',
+            'name'      => 'name',
+            'created_by'=> 'createdBy',
+            'status.label' => 'status.labels',
+            'version'   => 'version'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+
+        $repository = $this->get('open_orchestra_model.repository.node');
+        $collection = $repository->findWithBlockUsedForPaginate($configuration, $siteId, $language, $blockId);
+        $recordsTotal = $repository->countWithBlockUsed($siteId, $language, $blockId);
+        $recordsFiltered = $recordsTotal;
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('node_collection');
         $facade = $collectionTransformer->transform($collection);

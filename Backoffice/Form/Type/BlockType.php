@@ -5,6 +5,8 @@ namespace OpenOrchestra\Backoffice\Form\Type;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
@@ -18,15 +20,14 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
  */
 class BlockType extends AbstractType
 {
-    protected $blockClass;
     protected $templateManager;
     protected $contextManager;
     protected $generateFormManager;
+    protected $siteRepository;
     protected $blockToArrayTransformer;
     protected $blockFormTypeSubscriber;
 
     /**
-     * @param string                   $blockClass
      * @param TemplateManager          $templateManager
      * @param CurrentSiteIdInterface   $contextManager
      * @param GenerateFormManager      $generateFormManager
@@ -35,7 +36,6 @@ class BlockType extends AbstractType
      * @param EventSubscriberInterface $blockFormTypeSubscriber
      */
     public function __construct(
-        $blockClass,
         TemplateManager $templateManager,
         CurrentSiteIdInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
@@ -43,7 +43,6 @@ class BlockType extends AbstractType
         BlockToArrayTransformer $blockToArrayTransformer,
         EventSubscriberInterface $blockFormTypeSubscriber
     ) {
-        $this->blockClass = $blockClass;
         $this->templateManager = $templateManager;
         $this->contextManager = $contextManager;
         $this->siteRepository = $siteRepository;
@@ -97,6 +96,7 @@ class BlockType extends AbstractType
             array(
                 'blockPosition' => 0,
                 'data_class' => null,
+                'delete_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(
@@ -110,7 +110,7 @@ class BlockType extends AbstractType
                     'technical' => array(
                         'rank' => 2,
                         'label' => 'open_orchestra_backoffice.form.block.group.technical',
-                    ),
+                    )
                 ),
                 'sub_group_render' => array(
                     'property' => array(
@@ -136,6 +136,18 @@ class BlockType extends AbstractType
                 ),
             )
         );
+    }
+
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
+        $view->vars['delete_button'] = $options['delete_button'];
     }
 
     /**

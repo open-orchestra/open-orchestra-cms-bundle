@@ -9,7 +9,9 @@ parameters:
     open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\Backoffice\Manager\RouteDocumentManager
     open_orchestra_backoffice.manager.keyword_to_document.class: OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager
     open_orchestra_backoffice.manager.template.class: OpenOrchestra\Backoffice\Manager\TemplateManager
-    
+    open_orchestra_backoffice.manager.block_configuration.class: OpenOrchestra\Backoffice\Manager\BlockConfigurationManager
+    open_orchestra_backoffice.manager.block.class: OpenOrchestra\Backoffice\Manager\BlockManager
+
 services:
     open_orchestra_backoffice.context_manager:
         class: '%open_orchestra_backoffice.manager.context.class%'
@@ -78,3 +80,16 @@ services:
             - '@security.authorization_checker'
     open_orchestra_backoffice.manager.template:
         class: '%open_orchestra_backoffice.manager.template.class%'
+    open_orchestra_backoffice.manager.block_configuration:
+        class: '%open_orchestra_backoffice.manager.block_configuration.class%'
+        arguments:
+            - '%open_orchestra_backoffice.block_configuration%'
+            - '@translator'
+    open_orchestra_backoffice.manager.block:
+        class: '%open_orchestra_backoffice.manager.block.class%'
+        arguments:
+            - '%open_orchestra_model.document.block.class%'
+            - '@open_orchestra_display.display_block_manager'
+            - '@open_orchestra_backoffice.block_parameter_manager'
+            - '@open_orchestra_backoffice.generate_form_manager'
+            - '%open_orchestra_backoffice.block.fixed_attributes%'

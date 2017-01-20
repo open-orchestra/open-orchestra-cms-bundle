@@ -549,12 +549,14 @@
         {% spaceless %}
             <div class="form-group">
                 <div class="col-lg-12 bottom-action-buttons">
-                    {% set blockSubmitWidget = block(name ~ '_submit_widget') %}
-                    {% if blockSubmitWidget is not empty %}
-                        {{ blockSubmitWidget|raw }}
-                    {% else %}
-                        {{ block('submit_widget') }}
-                    {% endif %}
+                    {% set break = 0 %}
+                    {% for block_prefixes in form.vars.block_prefixes|reverse if break == 0 %}
+                        {% set blockSubmitWidget = block(block_prefixes ~ '_submit_widget') %}
+                        {% if blockSubmitWidget is not empty %}
+                            {{ blockSubmitWidget|raw }}
+                            {% set break = 1 %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             {{ parent() }}
@@ -562,7 +564,7 @@
     {% endif %}
 {% endblock form_end %}
 
-{% block submit_widget %}
+{% block form_submit_widget %}
     {% spaceless %}
         {% set label = 'open_orchestra_backoffice.form.submit' %}
         {% set id = 'submit_' ~ form.vars.name %}
@@ -570,7 +572,7 @@
         {% set button_class= 'primary' %}
         {{ block('button_widget') }}
     {% endspaceless %}
-{% endblock submit_widget %}
+{% endblock form_submit_widget %}
 
 {% block form_start %}
     {% spaceless %}
@@ -717,3 +719,21 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_site_submit_widget %}
+
+{% block oo_block_submit_widget %}
+    {% spaceless %}
+        {{ block('form_submit_widget') }}
+        {% if(form.vars.value.id is null) %}
+            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
+            {% set id = 'submit_' ~ form.vars.name %}
+            {% set attr = {'class': 'submit-continue-form'} %}
+            {% set button_class= 'primary' %}
+            {{ block('button_widget') }}
+        {% elseif(true == form.vars.delete_button) %}
+            {% set label = 'open_orchestra_backoffice.form.delete' %}
+            {% set attr = {'class': 'delete-button'} %}
+            {% set button_class= 'danger' %}
+            {{ block('button_widget') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock oo_block_submit_widget %}

@@ -37,12 +37,12 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('parameters.yml');
 
         $this->updateBlockParameter($container, $config);
+        $this->updateBlockConfiguration($container, $config);
 
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
         $container->setParameter('open_orchestra_user.base_layout', 'OpenOrchestraBackofficeBundle::layout.html.twig');
         $container->setParameter('open_orchestra_user.form_template', 'OpenOrchestraBackofficeBundle::form.html.twig');
-        $fixedAttributes = array_merge($config['fixed_attributes'], $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
-        $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
+        $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $config['fixed_attributes']);
         $container->setParameter('open_orchestra_backoffice.block_default_configuration', $config['block_default_configuration']);
         $container->setParameter('open_orchestra_backoffice.template_set', $config['template_set']);
         $container->setParameter('open_orchestra_backoffice.special_page_name', $config['special_page_name']);
@@ -53,7 +53,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         }
         $container->setParameter('open_orchestra_backoffice.configuration.roles', $configurationRoles);
 
-        $loader->load('services.yml');
+        $loader->load('manager.yml');
         $loader->load('form.yml');
         $loader->load('generator.yml');
         $loader->load('display.yml');
@@ -163,5 +163,77 @@ class OpenOrchestraBackofficeExtension extends Extension
         foreach ($frontRoles as $frontRole) {
             $definition->addMethodCall('addRole', array($frontRole));
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array            $config
+     */
+    protected function updateBlockConfiguration(ContainerBuilder $container, array $config)
+    {
+        $backOfficeBlockConfiguration = array(
+            FooterStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.navigation',
+                'name'     => 'open_orchestra_backoffice.block.footer.title',
+                'description'     => 'open_orchestra_backoffice.block.footer.description',
+            ),
+            MenuStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.navigation',
+                'name'     => 'open_orchestra_backoffice.block.menu.title',
+                'description'     => 'open_orchestra_backoffice.block.menu.description',
+            ),
+            SubMenuStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.navigation',
+                'name'     => 'open_orchestra_backoffice.block.sub_menu.title',
+                'description'     => 'open_orchestra_backoffice.block.sub_menu.description',
+            ),
+            LanguageListStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.widget',
+                'name'     => 'open_orchestra_backoffice.block.language_list.title',
+                'description'     => 'open_orchestra_backoffice.block.language_list.description',
+            ),
+            AudienceAnalysisStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.widget',
+                'name'     => 'open_orchestra_backoffice.block.audience_analysis.title',
+                'description'     => 'open_orchestra_backoffice.block.audience_analysis.description',
+            ),
+            ContentListStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.content',
+                'name'     => 'open_orchestra_backoffice.block.content_list.title',
+                'description'     => 'open_orchestra_backoffice.block.content_list.description',
+            ),
+            ContentStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.content',
+                'name'     => 'open_orchestra_backoffice.block.content.title',
+                'description'     => 'open_orchestra_backoffice.block.content.description',
+            ),
+            ConfigurableContentStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.content',
+                'name'     => 'open_orchestra_backoffice.block.configurable_content.title',
+                'description'     => 'open_orchestra_backoffice.block.configurable_content.description',
+            ),
+            TinyMCEWysiwygStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.content',
+                'name'     => 'open_orchestra_backoffice.block.tiny_mce_wysiwyg.title',
+                'description'     => 'open_orchestra_backoffice.block.tiny_mce_wysiwyg.description',
+            ),
+            ContactStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.contact',
+                'name'     => 'open_orchestra_backoffice.block.contact.title',
+                'description'     => 'open_orchestra_backoffice.block.contact.description',
+            ),
+            VideoStrategy::NAME => array(
+                'category' => 'open_orchestra_backoffice.block_configuration.category.media',
+                'name'     => 'open_orchestra_backoffice.block.video.title',
+                'description'     => 'open_orchestra_backoffice.block.video.description',
+            ),
+        );
+
+        $blockConfiguration = array();
+        if ($container->hasParameter('open_orchestra_backoffice.block_configuration')) {
+            $blockConfiguration = $container->getParameter('open_orchestra_backoffice.block_configuration');
+        }
+        $blockConfiguration = array_merge($config['block_configuration'], $blockConfiguration, $backOfficeBlockConfiguration);
+        $container->setParameter('open_orchestra_backoffice.block_configuration', $blockConfiguration);
     }
 }

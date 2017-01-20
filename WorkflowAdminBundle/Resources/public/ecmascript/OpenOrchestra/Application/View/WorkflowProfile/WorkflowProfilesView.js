@@ -14,7 +14,7 @@ class WorkflowProfilesView extends AbstractCollectionView
         if (0 === this._collection.recordsTotal) {
             let template = this._renderTemplate('List/emptyListView' , {
                 title: Translator.trans('open_orchestra_workflow_admin.workflow_profile.title_list'),
-                urlAdd: ''
+                urlAdd: '#'+Backbone.history.generateUrl('newWorkflowProfile')
             });
             this.$el.html(template);
         } else {

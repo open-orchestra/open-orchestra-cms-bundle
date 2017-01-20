@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
@@ -32,7 +33,8 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
                     'OpenOrchestra\ModelInterface\Model\RedirectionInterface',
                     'OpenOrchestra\LogBundle\Model\LogInterface',
                     'OpenOrchestra\UserBundle\Model\UserInterface',
-                    'OpenOrchestra\Backoffice\Model\GroupInterface'
+                    'OpenOrchestra\Backoffice\Model\GroupInterface',
+                    'OpenOrchestra\ModelInterface\Model\BlockInterface',
                 )
             );
         }
@@ -45,6 +47,7 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
                 LogInterface::ENTITY_TYPE,
                 UserInterface::ENTITY_TYPE,
                 GroupInterface::ENTITY_TYPE,
+                BlockInterface::ENTITY_TYPE,
             )
         );
     }
@@ -61,7 +64,6 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-
         if ($this->isSuperAdmin($token)) {
             return true;
         }

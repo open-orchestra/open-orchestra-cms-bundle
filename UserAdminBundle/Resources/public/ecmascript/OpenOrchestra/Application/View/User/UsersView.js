@@ -7,13 +7,31 @@ import UserListView           from '../../View/User/UserListView'
 class UsersView extends AbstractCollectionView
 {
     /**
+     * @inheritdoc
+     */
+    preinitialize() {
+        this.events = {
+            'click .search-engine button.submit': '_search',
+            'click .btn-delete': '_remove'
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    initialize({collection, settings}) {
+        this._collection = collection;
+        this._settings = settings;
+    }
+
+    /**
      * Render users view
      */
     render() {
         if (0 === this._collection.recordsTotal) {
             let template = this._renderTemplate('List/emptyListView' , {
                 title: Translator.trans('open_orchestra_user_admin.user.title_list'),
-                urlAdd: ''
+                urlAdd: '#'+Backbone.history.generateUrl('newUser')
             });
             this.$el.html(template);
         } else {

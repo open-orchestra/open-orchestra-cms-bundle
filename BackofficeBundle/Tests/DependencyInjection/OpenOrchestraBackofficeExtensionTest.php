@@ -55,21 +55,13 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
         $this->assertEquals('OpenOrchestraBackofficeBundle::form.html.twig', $container->getParameter('open_orchestra_user.form_template'));
 
         $fixedAttributes = array(
-            'component',
-            'submit',
-            'label',
-            'style',
             'maxAge',
+            'label',
+            'style'
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
 
         $this->assertEquals($this->defaultBlocks, $container->getParameter('open_orchestra.blocks'));
-
-        $direction = array(
-            "h" => "Horizontal",
-            "v" => "Vertical"
-        );
-        $this->assertEquals($direction, $container->getParameter('open_orchestra_backoffice.orchestra_choice.direction'));
 
         $choice_frequence = array(
             "always"  => "open_orchestra_backoffice.form.changefreq.always",
@@ -136,11 +128,6 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
 
         $fixedAttributes = array(
             "fake_attribute",
-            'component',
-            'submit',
-            'label',
-            'style',
-            'maxAge',
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
 

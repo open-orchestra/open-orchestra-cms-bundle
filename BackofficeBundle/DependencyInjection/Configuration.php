@@ -47,6 +47,11 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('fixed_attributes')
                 ->info('Add the global block attributes')
                 ->prototype('scalar')->end()
+                ->defaultValue(array(
+                    'maxAge',
+                    'label',
+                    'style'
+                ))
             ->end()
             ->arrayNode('front_roles')
                 ->info('Role than can be given to the user on the Front website')
@@ -68,7 +73,8 @@ class Configuration implements ConfigurationInterface
             ->append($this->addTemplateSetConfiguration())
             ->append($this->addSpecialPageConfiguration())
             ->append($this->addConfigurationRoleConfiguration())
-            ->end();
+            ->append($this->addBlockConfiguration())
+        ->end();
 
         return $treeBuilder;
     }
@@ -222,9 +228,9 @@ class Configuration implements ConfigurationInterface
         $configurationRole
             ->info('Array configuration roles')
             ->prototype('array')
-                ->useAttributeAsKey('name')
-                ->prototype('array')
-                ->end()
+            ->useAttributeAsKey('name')
+            ->prototype('array')
+            ->end()
             ->end();
 
         $configurationRole->defaultValue(array(
@@ -254,5 +260,33 @@ class Configuration implements ConfigurationInterface
         ));
 
         return $configurationRole;
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public function addBlockConfiguration()
+    {
+        $builder = new TreeBuilder();
+        $blockConfiguration = $builder->root('block_configuration');
+
+        $blockConfiguration
+            ->info('Configure block description (category)')
+            ->useAttributeAsKey('block_name')
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('category')
+                        ->info('Translation key of block category (navigation, search, ...)')
+                    ->end()
+                    ->scalarNode('name')
+                        ->info('Translation key of block component')
+                    ->end()
+                    ->scalarNode('description')
+                        ->info('Translation key of description of block component')
+                    ->end()
+                ->end()
+            ->end();
+
+        return $blockConfiguration;
     }
 }

@@ -9,6 +9,7 @@ class CMSGroupContext
 {
     const AREAS = 'areas';
     const BLOCKS = 'blocks';
+    const BLOCKS_NUMBER_USER = 'blocks_number_user';
     const FIELD_TYPES = 'field_types';
     const GROUP_ROLES = 'group_roles';
     const PREVIEW = 'preview';

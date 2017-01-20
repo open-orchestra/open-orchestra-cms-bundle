@@ -1,0 +1,47 @@
+<div class="pull-right languages">
+    <ul>
+        <% _.each(siteLanguages, function(siteLanguage, key) { %>
+            <% if (siteLanguage === language) { %>
+            <li class="active">
+                <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+            </li>
+            <% } else { %>
+            <li>
+                <a href="#<%= Backbone.history.generateUrl('listSharedBlock', {language: siteLanguage}) %>">
+                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                </a>
+            </li>
+            <% }; %>
+        <% }); %>
+    </ul>
+</div>
+<div class="top-action-buttons">
+    <a class="btn btn-info" href="#<%= Backbone.history.generateUrl('newBlockList', {language: language}) %>" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+</div>
+<h1> <%= Translator.trans('open_orchestra_backoffice.shared_block.title_list') %></h1>
+<form class="form-horizontal search-engine">
+    <div class="form-group col-lg-6">
+        <label for="title" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.shared_block.search_engine.label')%></label>
+        <div class="col-md-8">
+            <input type="text" name='label' class="form-control" id="title" placeholder="">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="select-state" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.shared_block.search_engine.type')%></label>
+        <div class="col-md-8">
+            <div class="styled-select">
+                <select class="form-control" name='category'>
+                    <option></option>
+                    <% _.each(categories, function(category, key) { %>
+                        <option value="<%= category.get('key') %>"><%= category.get('label') %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+    </div>
+</form>
+<div class="block-list">
+</div>
