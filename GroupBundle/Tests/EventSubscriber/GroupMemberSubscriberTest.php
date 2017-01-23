@@ -69,6 +69,7 @@ class GroupMemberSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->preSetData($this->event);
 
         Phake::verify($form)->add('members', 'oo_member_list', array(
+                'label' => false,
                 'data' => array(
                     'fakeUser0Id' => array('member' => true),
                     'fakeUser1Id' => array('member' => true)

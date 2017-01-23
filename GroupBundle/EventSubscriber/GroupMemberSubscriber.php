@@ -38,6 +38,7 @@ class GroupMemberSubscriber implements EventSubscriberInterface
                 $members[$user->getId()] = array('member' => true);
             }
             $form->add('members', 'oo_member_list', array(
+                'label' => false,
                 'data' => $members,
                 'mapped' => false,
                 'group_id' => 'member',
