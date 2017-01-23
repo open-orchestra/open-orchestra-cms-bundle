@@ -40,8 +40,9 @@ open_orchestra_backoffice:
           title:  Developer
           content_type: Content Type
         configuration:
-          title:  Configuration
-          site: Sites
+          title       : Configuration
+          site        : Sites
+          redirections: Redirections
           shared_block: Shared blocks
     table:
         delete_button: Remove selected items
@@ -81,6 +82,12 @@ open_orchestra_backoffice:
             updated_by: Author of the update
             list: List
             add: Add
+        redirections:
+            site_name    : Site name
+            route_pattern: Route pattern
+            locale       : Locale
+            redirection  : Redirection
+            permanent    : Permanent
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -170,6 +177,10 @@ open_orchestra_backoffice:
                     Caution the following blocks : %blocks% can't be copied.
                     This is a non editable block.
                     Please add the corresponding block in the language.
+    redirection:
+      title_list: Redirections
+      search_engine:
+        name: XXX
     form:
         keyword:
             new: new

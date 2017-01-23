@@ -6,6 +6,7 @@ import ContentTypeRouter      from './Router/ContentType/ContentTypeRouter'
 import ContentRouter          from './Router/Content/ContentRouter'
 import BlockRouter            from './Router/Block/BlockRouter'
 import SharedBlockRouter      from './Router/Block/SharedBlockRouter'
+import RedirectionRouter      from './Router/Redirection/RedirectionRouter'
 
 import HeaderView             from './View/Header/HeaderView'
 import ErrorView              from './View/Error/ErrorView'
@@ -164,6 +165,7 @@ class Application
         new ContentRouter();
         new BlockRouter();
         new SharedBlockRouter();
+        new RedirectionRouter();
     }
 
     /**

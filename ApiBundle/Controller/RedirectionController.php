@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 
 /**
  * Class RedirectionController
@@ -51,13 +53,26 @@ class RedirectionController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $mapping = $this
-            ->get('open_orchestra.annotation_search_reader')
-            ->extractMapping($this->container->getParameter('open_orchestra_model.document.redirection.class'));
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, RedirectionInterface::ENTITY_TYPE);
+        $mapping = array(
+            'site_name'     => 'siteName',
+            'route_pattern' => 'routePattern',
+            'locale'        => 'locale',
+            'redirection'   => 'redirection',
+            'permanent'     => 'permanent',
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.redirection');
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
+        $collection = $repository->findForPaginate($configuration);
 
-        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countWithFilter($configuration);
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
     }
 
    /**
