@@ -3,6 +3,7 @@ import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPag
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 import DuplicateIconListViewMixin  from '../../../Service/DataTable/Mixin/DuplicateIconListViewMixin'
 import CellFormatterManager        from '../../../Service/Content/CellFormatter/Manager'
+import BooleanFormatter            from '../../../Service/Content/CellFormatter/BooleanFormatter'
 
 /**
  * @class ContentListView
@@ -47,7 +48,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let columnsDefinition = [];
         let defaultListable = this._contentType.get('default_listable');
         let createdCell = {
-            'linked_to_site': 'bool',
+            'linked_to_site': BooleanFormatter.getType(),
         };
         for (let column in defaultListable) {
             if (defaultListable[column]) {

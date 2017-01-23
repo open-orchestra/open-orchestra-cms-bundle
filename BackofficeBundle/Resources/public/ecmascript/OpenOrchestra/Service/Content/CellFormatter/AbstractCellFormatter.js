@@ -4,12 +4,21 @@
 class AbstractCellFormatter
 {
     /**
+     * return supported type
+     *
+     * @return string
+     */
+    getType() {
+        throw new Error('Missing getType method');
+    }
+
+    /**
      * test if field is supported
      *
      * @param {Object} field
      */
     support(field) {
-        throw new Error('Missing support method');
+        return field.type == this.getType();
     }
 
     /**

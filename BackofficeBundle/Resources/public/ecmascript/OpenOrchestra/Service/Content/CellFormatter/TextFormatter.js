@@ -6,12 +6,12 @@ import AbstractCellFormatter from './AbstractCellFormatter'
 class TextFormatter extends AbstractCellFormatter
 {
     /**
-     * test if field is supported
+     * return supported type
      *
-     * @param {Object} field
+     * @return string
      */
-    support(field) {
-        return field.type == 'text';
+    getType() {
+        return 'text';
     }
 
     /**
