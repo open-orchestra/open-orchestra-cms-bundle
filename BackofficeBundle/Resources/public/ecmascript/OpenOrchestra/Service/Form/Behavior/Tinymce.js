@@ -1,4 +1,5 @@
 import AbstractBehavior from './AbstractBehavior'
+import TinymceManager   from '../../Tinymce/TinymceManager'
 
 /**
  * @class Tinymce
@@ -9,25 +10,17 @@ class Tinymce extends AbstractBehavior
      * activate behavior
      * 
      * @param {Object} $element - jQuery object
+     * @param {AbstractFormView} view
      */
-    activate($element) {
-        console.log($element);
+    activate($element, view) {
         let id = $element.attr('id');
-        console.log(id);
-        let settings = {
-            selector: id
-        };
-        console.log(settings);
-        console.log($element);
-        console.log(this);
-        console.log($('textarea.tinymce'));
-        tinymce.baseUrl = '/tinymce';
-        let $div = $('<div/>');
-        var el = document.createElement('textarea');
-        tinymce.init({target: el});
-        /*console.log($div);
-        console.log($($element, $div));
-        console.log($div);*/
+        $('textarea#'+id).initialize(() => {
+            let editor = TinymceManager.createEditor($element);
+            view.getForm().bind('form:pre_submit', () => {
+                editor.fire('submit', editor);
+                console.log('pre submit');
+            });
+        })
 
     }
 
@@ -37,7 +30,7 @@ class Tinymce extends AbstractBehavior
      * @param {Object} $element - jQuery object
      */
     deactivate($element) {
-        //$element.tooltip('destroy');
+        TinymceManager.removeEditor($element);
     }
 
     /**

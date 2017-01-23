@@ -1795,10 +1795,13 @@ fieldset {
 .modal-content {
   box-shadow: none;
   border-radius: 0;
-  text-align: center;
+  .spinner {
+    left: 50%
+  }
   .modal-header {
     background: #e6e6e6;
     color: #737687;
+    text-align: center;
     .site-name { color: @darkBlue;}
     &.warning {
       background: @brand-warning;

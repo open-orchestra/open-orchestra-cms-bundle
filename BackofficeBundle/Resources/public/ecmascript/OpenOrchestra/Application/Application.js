@@ -36,6 +36,10 @@ import CellFormatterManager   from '../Service/Content/CellFormatter/Manager'
 import TextCellFormatter      from '../Service/Content/CellFormatter/TextFormatter'
 import BooleanCellFormatter   from '../Service/Content/CellFormatter/BooleanFormatter'
 
+import ApplicationError      from '../Service/Error/ApplicationError'
+import AjaxError             from '../Service/Error/AjaxError'
+import TinymceManager        from '../Service/Tinymce/TinymceManager'
+
 /**
  * @class Application
  */
@@ -218,6 +222,8 @@ class Application
         FormBehaviorManager.add(Accordion);
         FormBehaviorManager.add(BlockVideoType);
         FormBehaviorManager.add(ColorPicker);
+
+        TinymceManager.setSetting('language', this.getContext().language);
         FormBehaviorManager.add(Tinymce);
     }
 

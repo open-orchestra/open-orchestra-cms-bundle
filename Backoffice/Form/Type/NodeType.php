@@ -81,7 +81,7 @@ class NodeType extends AbstractType
                     'class' => 'generate-id-source',
                 )
             ))
-            ->add('name', 'oo_tinymce', array(
+            ->add('text2', 'oo_tinymce', array(
                 'label' => 'open_orchestra_backoffice.form.node.title',
                 'group_id' => 'properties',
                 'sub_group_id' => 'properties',

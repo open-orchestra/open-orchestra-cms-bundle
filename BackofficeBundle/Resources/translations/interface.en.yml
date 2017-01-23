@@ -156,3 +156,5 @@ open_orchestra_backoffice:
         fr: Français
         es: Español
         de: Deutsch
+    internal_link:
+        title: Internal link

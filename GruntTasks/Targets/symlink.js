@@ -272,5 +272,9 @@ module.exports = {
     tynmce_plugins: {
         src: 'vendor/bower_components/tinymce/plugins/',
         dest: 'web/tinymce/plugins/'
+    },
+    tynmce_languages: {
+        src: 'web/bundles/openorchestrabackoffice/ecmascript/OpenOrchestra/Service/Tinymce/Langs/',
+        dest: 'web/tinymce/langs/'
     }
 };

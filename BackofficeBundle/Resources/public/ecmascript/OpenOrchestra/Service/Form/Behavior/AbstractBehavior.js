@@ -47,7 +47,7 @@ class AbstractBehavior
         let behavior = this;
         this.bindExtraEvents(view);
         $(this.getSelector(), view.$el).each(function(){
-            behavior.activate($(this));
+            behavior.activate($(this), view);
         });
     }
 
@@ -55,8 +55,9 @@ class AbstractBehavior
      * activate behavior on each instance
      *
      * @param {Object} element - JQuery object
+     * @param {AbstractFormView} view
      */
-    activate(element) {
+    activate(element, view) {
     }
 
     /**
@@ -77,8 +78,9 @@ class AbstractBehavior
      * deactivate behavior on each instance
      *
      * @param {Object} element - JQuery object
+     * @param {AbstractFormView} view
      */
-    deactivate(element) {
+    deactivate(element, view) {
     }
 }
 

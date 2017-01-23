@@ -651,14 +651,6 @@
     </div>
 {% endblock form_legend %}
 
-{% block oo_tinymce_widget %}
-    {{ block('textarea_widget') }}
-    <div
-            id="modal_internal_link_{{ id }}"
-            data-url="{{ path('open_orchestra_backoffice_internal_link_form') }}"
-    ></div>
-{% endblock %}
-
 {% block oo_multi_languages_widget %}
     {% spaceless %}
         <div {{ block('widget_container_attributes') }}>
