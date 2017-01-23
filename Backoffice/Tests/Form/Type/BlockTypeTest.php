@@ -77,9 +77,11 @@ class BlockTypeTest extends AbstractBaseTestCase
         $form = Phake::mock('Symfony\Component\Form\Form');
         $options = array(
             'delete_button' => true,
+            'new_button' => true,
         );
         $this->blockType->buildView($view, $form, $options);
         $this->assertTrue($view->vars['delete_button']);
+        $this->assertTrue($view->vars['new_button']);
     }
 
     /**
@@ -96,6 +98,7 @@ class BlockTypeTest extends AbstractBaseTestCase
             'data_class' => null,
             'group_enabled' => true,
             'delete_button' => false,
+            'new_button' => false,
             'group_render' => array(
                 'property' => array(
                     'rank' => 0,

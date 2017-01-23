@@ -79,6 +79,8 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         Phake::verify($resolverMock)->setDefaults(
             array(
                 'data_class' => $this->class,
+                'delete_button' => false,
+                'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(

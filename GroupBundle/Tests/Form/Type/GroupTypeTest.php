@@ -85,6 +85,8 @@ class GroupTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolver)->setDefaults(array(
                 'data_class' => $this->groupClass,
+                'delete_button' => false,
+                'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(
