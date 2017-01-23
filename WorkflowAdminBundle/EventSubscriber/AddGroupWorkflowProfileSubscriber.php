@@ -5,17 +5,12 @@ namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 use OpenOrchestra\GroupBundle\GroupFormEvents;
 use OpenOrchestra\GroupBundle\Event\GroupFormEvent;
 use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\GroupBundle\Document\Perimeter;
-use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
  * Class AddGroupWorkflowProfileSubscriber
