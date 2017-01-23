@@ -67,7 +67,6 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(GroupFormEvents::GROUP_FORM_CREATION, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(FormEvents::POST_SUBMIT, $this->subscriber->getSubscribedEvents());
     }
 
     /**
