@@ -17,7 +17,7 @@ open_orchestra_group:
             add_user: Add an user in the group
             user_name: Member's name
             user_email: Member's email
-            user_delete: Pop this member
+            user_delete: Remove this member
             node_role_edition: Node role list
             node_role_no_site: The group must be linked to a site to manage roles page by page
             page_list: Page list
