@@ -113,7 +113,6 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
             'virtual' => true,
             'label' => false,
             'mapped' => false,
-            'required' => false,
             'group_id' => 'properties',
             'sub_group_id' => 'style'
         ));
