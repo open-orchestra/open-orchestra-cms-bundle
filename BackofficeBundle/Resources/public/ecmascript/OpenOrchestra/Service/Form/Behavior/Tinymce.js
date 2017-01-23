@@ -18,7 +18,6 @@ class Tinymce extends AbstractBehavior
             let editor = TinymceManager.createEditor($element);
             view.getForm().bind('form:pre_submit', () => {
                 editor.fire('submit', editor);
-                console.log('pre submit');
             });
         })
 

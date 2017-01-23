@@ -39,6 +39,7 @@ class NodeController extends AbstractAdminController
             throw new \UnexpectedValueException();
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
+
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array(
             'siteId' => $siteId,
             'nodeId' => $nodeId,
@@ -50,6 +51,7 @@ class NodeController extends AbstractAdminController
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
         $options = array('action' => $url);
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
+
         $form->handleRequest($request);
 
         if ($this->handleForm($form, $message)) {
