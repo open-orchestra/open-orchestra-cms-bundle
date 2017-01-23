@@ -44,7 +44,7 @@ class ContentController extends AbstractAdminController
                     'version' => $content->getVersion(),
                 )),
                 'delete_button' => (!$content->isUsed())
-            ), ContributionActionInterface::EDIT);
+            ));
 
             $form->handleRequest($request);
             $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');

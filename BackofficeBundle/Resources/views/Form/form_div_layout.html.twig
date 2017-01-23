@@ -568,6 +568,18 @@
         {% set attr = {'class': 'submit-form'} %}
         {% set button_class= 'primary' %}
         {{ block('button_widget') }}
+        {% if(true == form.vars.new_button) %}
+            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
+            {% set id = 'submit_' ~ form.vars.name %}
+            {% set attr = {'class': 'submit-continue-form'} %}
+            {% set button_class= 'primary' %}
+            {{ block('button_widget') }}
+        {% elseif(true == form.vars.delete_button) %}
+            {% set label = 'open_orchestra_backoffice.form.delete' %}
+            {% set attr = {'class': 'delete-button'} %}
+            {% set button_class= 'danger' %}
+            {{ block('button_widget') }}
+        {% endif %}
     {% endspaceless %}
 {% endblock form_submit_widget %}
 
@@ -678,36 +690,18 @@
     {% endspaceless %}
 {% endblock oo_multi_languages_widget %}
 
-{% block generic_submit_buttons %}
-    {% spaceless %}
-        {{ block('form_submit_widget') }}
-        {% if(true == form.vars.new_button) %}
-            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
-            {% set id = 'submit_' ~ form.vars.name %}
-            {% set attr = {'class': 'submit-continue-form'} %}
-            {% set button_class= 'primary' %}
-            {{ block('button_widget') }}
-        {% elseif(true == form.vars.delete_button) %}
-            {% set label = 'open_orchestra_backoffice.form.delete' %}
-            {% set attr = {'class': 'delete-button'} %}
-            {% set button_class= 'danger' %}
-            {{ block('button_widget') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock generic_submit_buttons %}
-
 {% block oo_site_submit_widget %}
-    {{ block('generic_submit_buttons') }}
+    {{ block('form_submit_widget') }}
 {% endblock oo_site_submit_widget %}
 
 {% block oo_block_submit_widget %}
-    {{ block('generic_submit_buttons') }}
+    {{ block('form_submit_widget') }}
 {% endblock oo_block_submit_widget %}
 
 {% block oo_content_submit_widget %}
-    {{ block('generic_submit_buttons') }}
+    {{ block('form_submit_widget') }}
 {% endblock oo_content_submit_widget %}
 
 {% block oo_content_type_submit_widget %}
-    {{ block('generic_submit_buttons') }}
+    {{ block('form_submit_widget') }}
 {% endblock oo_content_type_submit_widget %}
