@@ -117,16 +117,16 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
             'sub_group_id' => 'style'
         ));
 
+        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('template', 'choice', array(
+            'choices' => $choices,
+            'required' => true,
+            'label' => 'open_orchestra_backoffice.form.node.template'
+        ));
+
         Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('nodeSource', 'oo_node_choice', array(
             'required' => false,
             'mapped' => false,
             'label' => 'open_orchestra_backoffice.form.node.node_source'
-        ));
-
-        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('template', 'choice', array(
-            'choices' => $choices,
-            'required' => false,
-            'label' => 'open_orchestra_backoffice.form.node.template'
         ));
     }
 
