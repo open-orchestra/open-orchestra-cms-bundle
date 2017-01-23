@@ -70,27 +70,6 @@ class StatusController extends BaseController
     }
 
     /**
-     * @param int $statusId
-     *
-     * @return Response
-     * @throws DeleteStatusNotGrantedHttpException
-     *
-     * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
-     * @Config\Method({"DELETE"})
-     */
-    public function deleteAction($statusId)
-    {
-        $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
-
-        $this->denyDeleteUnlessGranted($status);
-        $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));
-        $this->get('object_manager')->remove($status);
-        $this->get('object_manager')->flush();
-
-        return array();
-    }
-
-    /**
      * @param Request $request
      *
      * @Config\Route("/delete-multiple", name="open_orchestra_api_status_delete_multiple")
@@ -118,6 +97,29 @@ class StatusController extends BaseController
             }
         }
         $statusRepository->removeStatuses($statusIds);
+
+        return array();
+    }
+
+    /**
+     * @param string $statusId
+     *
+     * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAction($statusId)
+    {
+        $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $status);
+
+        if ($status instanceof StatusInterface && $this->isDeleteGranted($status)) {
+            $objectManager = $this->get('object_manager');
+            $objectManager->remove($status);
+            $objectManager->flush();
+            $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
+        }
 
         return array();
     }

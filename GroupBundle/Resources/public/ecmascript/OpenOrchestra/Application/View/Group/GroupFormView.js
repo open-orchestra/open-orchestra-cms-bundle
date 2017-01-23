@@ -11,6 +11,7 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}   form
+     * @param {String} statusId
      * @param {Array}  name
      */
     initialize({form, groupId, name}) {

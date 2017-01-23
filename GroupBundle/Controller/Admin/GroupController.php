@@ -78,7 +78,7 @@ class GroupController extends AbstractAdminController
             'action' => $this->generateUrl('open_orchestra_group_form', array(
                 'groupId' => $groupId,
             )),
-            'delete_button' => (0 === $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($groupId)))
+            'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $group) && 0 === $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($groupId)))
         ));
 
         $form->handleRequest($request);

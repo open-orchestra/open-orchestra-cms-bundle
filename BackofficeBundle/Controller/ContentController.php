@@ -43,7 +43,7 @@ class ContentController extends AbstractAdminController
                     'language' => $content->getLanguage(),
                     'version' => $content->getVersion(),
                 )),
-                'delete_button' => (!$content->isUsed())
+                'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$content->isUsed())
             ));
 
             $form->handleRequest($request);

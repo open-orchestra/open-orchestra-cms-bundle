@@ -30,11 +30,20 @@ class StatusController extends AbstractAdminController
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $status);
 
+        $isDeletable = $this->isGranted(ContributionActionInterface::DELETE, $status)
+            && !$this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
+            && !$status->isInitialState()
+            && !$status->isPublishedState()
+            && !$status->isTranslationState()
+            && !$status->isAutoPublishFromState()
+            && !$status->isAutoUnpublishToState();
+
         $form = $this->createForm('oo_status', $status, array(
             'action' => $this->generateUrl('open_orchestra_workflow_admin_status_form', array(
                 'statusId' => $statusId,
-            )))
-        );
+            )),
+            'delete_button' => $isDeletable
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.status.success');
@@ -63,17 +72,22 @@ class StatusController extends AbstractAdminController
         $form = $this->createForm('oo_status', $status, array(
             'action' => $this->generateUrl('open_orchestra_workflow_admin_status_new'),
             'method' => 'POST',
+            'new_button' => true
         ));
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.status.creation');
 
-        if ($this->handleForm($form, $message, $status)) {
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($status);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.status.creation');
+
             $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
             $response = new Response(
-                '',
+                $message,
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId())
+                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId(), 'name' => $status->getLabels($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
             );
 
             return $response;

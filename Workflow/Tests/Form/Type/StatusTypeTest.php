@@ -82,8 +82,13 @@ class StatusTypeTest extends AbstractBaseTestCase
 
         $view = Phake::mock('Symfony\Component\Form\FormView');
 
-        $this->form->buildView($view, $form, array());
-
+        $options = array(
+            'delete_button' => true,
+            'new_button' => true,
+        );
+        $this->form->buildView($view, $form, $options);
+        $this->assertTrue($view->vars['delete_button']);
+        $this->assertTrue($view->vars['new_button']);
         $this->assertSame(true, isset($view->vars['properties']));
         $this->assertSame($expectedProperties, $view->vars['properties']);
     }
@@ -125,6 +130,8 @@ class StatusTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolver)->setDefaults(array(
             'data_class'    => $this->statusClass,
+            'delete_button' => false,
+            'new_button' => false,
             'group_enabled' => true,
             'group_render'  => array(
                 'properties' => array(

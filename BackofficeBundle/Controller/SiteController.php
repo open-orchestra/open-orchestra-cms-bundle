@@ -38,7 +38,7 @@ class SiteController extends AbstractAdminController
                     'action' => $this->generateUrl('open_orchestra_backoffice_site_form', array(
                         'siteId' => $siteId,
                     )),
-                    'delete_button' => true
+                    'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $site)
                 )
             );
 

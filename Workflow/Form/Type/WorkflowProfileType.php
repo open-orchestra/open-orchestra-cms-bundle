@@ -5,6 +5,8 @@ namespace OpenOrchestra\Workflow\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class WorkflowProfileType
@@ -44,13 +46,14 @@ class WorkflowProfileType extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
      */
-    public function getName()
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        return 'oo_workflow_profile';
+        $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['new_button'] = $options['new_button'];
     }
 
     /**
@@ -60,6 +63,8 @@ class WorkflowProfileType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'    => $this->workflowProfileClass,
+            'delete_button' => false,
+            'new_button' => false,
             'group_enabled' => true,
             'group_render'  => array(
                 'properties' => array(
@@ -68,5 +73,15 @@ class WorkflowProfileType extends AbstractType
                 ),
             ),
         ));
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
+    public function getName()
+    {
+        return 'oo_workflow_profile';
     }
 }

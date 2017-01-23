@@ -1,6 +1,5 @@
 import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
 import Application            from '../../Application'
-import NewStatusView          from '../../View/Status/NewStatusView'
 import StatusFormView         from '../../View/Status/StatusFormView'
 import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
 import Statuses               from '../../Collection/Status/Statuses'
@@ -16,9 +15,9 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     preinitialize(options) {
         this.routes = {
-            'workflow/status/new'           : 'newStatus',
-            'workflow/status/edit/:statusId': 'editStatus',
-            'workflow/status/list(/:page)'  : 'listStatus'
+            'workflow/status/new'                 : 'newStatus',
+            'workflow/status/edit/:statusId/:name': 'editStatus',
+            'workflow/status/list(/:page)'        : 'listStatus'
         };
     }
 
@@ -27,10 +26,14 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     newStatus() {
         let url = Routing.generate('open_orchestra_workflow_admin_status_new');
+
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let newStatusView = new NewStatusView({form: form});
-            Application.getRegion('content').html(newStatusView.render().$el);
+            let statusFormView = new StatusFormView({
+                form: form,
+                name: Translator.trans('open_orchestra_workflow_admin.status.title_new')
+             });
+            Application.getRegion('content').html(statusFormView.render().$el);
         });
     }
 
@@ -39,11 +42,15 @@ class StatusRouter extends AbstractWorkflowRouter
      *
      * @param  {String} statusId
      */
-    editStatus(statusId) {
+    editStatus(statusId, name) {
         let url = Routing.generate('open_orchestra_workflow_admin_status_form', {statusId: statusId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let statusFormView = new StatusFormView({form: form, statusId: statusId});
+            let statusFormView = new StatusFormView({
+                form: form,
+                statusId: statusId,
+                name: name
+            });
             Application.getRegion('content').html(statusFormView.render().$el);
         });
     }

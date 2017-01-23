@@ -34,16 +34,22 @@ class WorkflowProfileController extends AbstractAdminController
         $form = $this->createForm('oo_workflow_profile', $workflowProfile, array(
             'action' => $this->generateUrl('open_orchestra_workflow_admin_workflow_profile_new'),
             'method' => 'POST',
+            'new_button' => true
         ));
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.workflow_profile.creation');
-        if ($this->handleForm($form, $message, $workflowProfile)) {
+
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($workflowProfile);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_workflow_admin_workflow_profile_new');
+
             $this->dispatchEvent(WorkflowProfileEvents::WORKFLOW_PROFILE_CREATE, new WorkflowProfileEvent($workflowProfile));
             $response = new Response(
-                '',
+                $message,
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/html; charset=utf-8', 'workflowProfileId' => $workflowProfile->getId())
-            );
+                array('Content-type' => 'text/html; charset=utf-8', 'workflowProfileId' => $workflowProfile->getId(), 'name' => $workflowProfile->getLabels($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
+                );
 
             return $response;
         }
@@ -66,10 +72,11 @@ class WorkflowProfileController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $workflowProfile);
 
         $form = $this->createForm('oo_workflow_profile', $workflowProfile, array(
-                'action' => $this->generateUrl('open_orchestra_workflow_admin_workflow_profile_form', array(
-                    'workflowProfileId' => $workflowProfileId,
-                )))
-        );
+            'action' => $this->generateUrl('open_orchestra_workflow_admin_workflow_profile_form', array(
+                'workflowProfileId' => $workflowProfileId,
+            )),
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, WorkflowProfileInterface::ENTITY_TYPE),
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.workflow_profile.success');
