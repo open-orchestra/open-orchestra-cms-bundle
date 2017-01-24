@@ -73,8 +73,9 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
      * Edit WorkflowProfile
      *
      * @param  {String} workflowProfileId
+     * @param  {String} name
      */
-    editWorkflowProfile(workflowProfileId) {
+    editWorkflowProfile(workflowProfileId, name) {
         let url = Routing.generate('open_orchestra_workflow_admin_workflow_profile_form', {workflowProfileId: workflowProfileId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {

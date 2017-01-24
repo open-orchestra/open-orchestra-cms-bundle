@@ -12,7 +12,7 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * Initialize
      * @param {Form}   form
      * @param {String} statusId
-     * @param {Array}  name
+     * @param {String}  name
      */
     initialize({form, statusId, name}) {
         super.initialize({form : form});

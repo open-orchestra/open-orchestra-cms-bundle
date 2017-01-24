@@ -6,7 +6,6 @@ open_orchestra_workflow_admin:
     status:
         title                  : Statuses
         title_list             : Statuses list
-        title_edit             : Edit a status
         title_new              : Create a status
         initial_state          : Initial state
         translation_state      : Translation state
@@ -17,7 +16,6 @@ open_orchestra_workflow_admin:
         title     : Profiles
         title_list: Workflow profile list
         title_new : New workflow profile
-        title_edit: Edit workflow profile
     parameters:
         title: Parameters
     transition:

@@ -41,6 +41,7 @@ class StatusRouter extends AbstractWorkflowRouter
      * Edit Status
      *
      * @param  {String} statusId
+     * @param  {String} name
      */
     editStatus(statusId, name) {
         let url = Routing.generate('open_orchestra_workflow_admin_status_form', {statusId: statusId});

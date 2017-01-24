@@ -12,7 +12,7 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
      * Initialize
      * @param {Form}   form
      * @param {String} workflowProfileId
-     * @param {Array}  name
+     * @param {String}  name
      */
     initialize({form, workflowProfileId, name}) {
         super.initialize({form : form});
