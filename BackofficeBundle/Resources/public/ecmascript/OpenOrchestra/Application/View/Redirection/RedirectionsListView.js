@@ -24,7 +24,6 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
                 orderable: true,
                 orderDirection: 'asc',
                 visibile: true,
-                createdCell: this._createEditLink
             },
             {
                 name: "id",
@@ -35,6 +34,7 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.route_pattern'),
                 orderable: true,
                 visibile: true,
+                createdCell: this._createEditLink,
             },
             {
                 name: "locale",

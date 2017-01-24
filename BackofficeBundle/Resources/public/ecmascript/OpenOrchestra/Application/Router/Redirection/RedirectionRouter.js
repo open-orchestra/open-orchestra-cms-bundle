@@ -1,9 +1,9 @@
-import OrchestraRouter  from '../OrchestraRouter'
-import Application      from '../../Application'
-import FormBuilder      from '../../../Service/Form/Model/FormBuilder'
-import Redirections     from '../../Collection/Redirection/Redirections'
-import RedirectionsView from '../../View/Redirection/RedirectionsView'
-//import SiteFormView    from '../../View/Site/SiteFormView'
+import OrchestraRouter     from '../OrchestraRouter'
+import Application         from '../../Application'
+import FormBuilder         from '../../../Service/Form/Model/FormBuilder'
+import Redirections        from '../../Collection/Redirection/Redirections'
+import RedirectionsView    from '../../View/Redirection/RedirectionsView'
+import RedirectionFormView from '../../View/Redirection/RedirectionFormView'
 
 /**
  * @class RedirectionRouter
@@ -64,23 +64,22 @@ class RedirectionRouter extends OrchestraRouter
     }
 
     /**
-     * Edit site
+     * Edit redirection
      *
-     * @param {string} siteId
+     * @param {string} redirectionId
      */
-    editRedirection(siteId, name) {
-//        this._displayLoader(Application.getRegion('content'));
-//        let url = Routing.generate('open_orchestra_backoffice_site_form', {
-//            siteId : siteId
-//        });
-//        FormBuilder.createFormFromUrl(url, (form) => {
-//            let siteFormView = new SiteFormView({
-//                form: form,
-//                name: name,
-//                siteId: siteId
-//            });
-//            Application.getRegion('content').html(siteFormView.render().$el);
-//        });
+    editRedirection(redirectionId) {
+        this._displayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_backoffice_redirection_form', {
+            redirectionId : redirectionId
+        });
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let redirectionFormView = new RedirectionFormView({
+                form: form,
+                redirectionId: redirectionId
+            });
+            Application.getRegion('content').html(redirectionFormView.render().$el);
+        });
     }
 }
 
