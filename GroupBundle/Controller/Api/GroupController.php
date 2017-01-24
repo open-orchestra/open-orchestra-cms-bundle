@@ -90,9 +90,16 @@ class GroupController extends BaseController
         );
         $groupRepository = $this->get('open_orchestra_user.repository.group');
         $groups = $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->reverseTransform($facade);
+
+        $filter = $groups;
+        array_walk($filter, function(&$item) {$item = $item->getId();});
+        $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups($filter);
+
         $groupIds = array();
         foreach ($groups as $group) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, GroupInterface::ENTITY_TYPE) &&
+                array_key_exists($group->getId(), $nbrGroupsUsers) &&
+                0 == $nbrGroupsUsers[$group->getId()]) {
                 $groupIds[] = $group->getId();
                 $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
             }

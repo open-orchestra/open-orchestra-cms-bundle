@@ -13,7 +13,7 @@ class TranslationTransformer extends AbstractTransformer
     /**
      * @param array $catalog
      * @param string $locale
-     * 
+     *
      * @return FacadeInterface
      */
     public function transform($catalog, $locale = null)

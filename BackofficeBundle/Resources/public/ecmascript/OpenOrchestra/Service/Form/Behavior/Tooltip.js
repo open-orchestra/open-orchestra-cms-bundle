@@ -7,7 +7,7 @@ class Tooltip extends AbstractBehavior
 {
     /**
      * activate behavior
-     * 
+     *
      * @param {Object} $element - jQuery object
      */
     activate($element) {
@@ -16,7 +16,7 @@ class Tooltip extends AbstractBehavior
 
     /**
      * deactivate behavior
-     * 
+     *
      * @param {Object} $element - jQuery object
      */
     deactivate($element) {
@@ -25,7 +25,7 @@ class Tooltip extends AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

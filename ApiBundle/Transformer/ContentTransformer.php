@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
@@ -11,10 +13,10 @@ use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class ContentTransformer
@@ -23,26 +25,34 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $statusRepository;
     protected $contentTypeRepository;
+    protected $contentRepository;
     protected $eventDispatcher;
+    protected $contextManager;
 
     /**
      * @param string                         $facadeClass
      * @param StatusRepositoryInterface      $statusRepository
      * @param ContentTypeRepositoryInterface $contentTypeRepository,
+     * @param ContentRepositoryInterface     $contentRepository,
      * @param EventDispatcherInterface       $eventDispatcher
      * @param AuthorizationCheckerInterface  $authorizationChecker
+     * @param CurrentSiteIdInterface         $contextManager
      */
     public function __construct(
         $facadeClass,
         StatusRepositoryInterface $statusRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
+        ContentRepositoryInterface $contentRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        CurrentSiteIdInterface $contextManager
     )
     {
         $this->statusRepository = $statusRepository;
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->contentRepository = $contentRepository;
         $this->eventDispatcher = $eventDispatcher;
+        $this->contextManager = $contextManager;
         parent::__construct($facadeClass, $authorizationChecker);
     }
 
@@ -63,79 +73,30 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
 
-        $facade->id = $content->getContentId();
-        $facade->contentType = $content->getContentType();
+        $facade->id = $content->getId();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
         $facade->contentTypeVersion = $content->getContentTypeVersion();
         $facade->language = $content->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($content->getStatus());
-        $facade->statusLabel = $facade->status->label;
+        $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getCurrentLocale());
         $facade->createdAt = $content->getCreatedAt();
         $facade->updatedAt = $content->getUpdatedAt();
         $facade->createdBy = $content->getCreatedBy();
         $facade->updatedBy = $content->getUpdatedBy();
         $facade->deleted = $content->isDeleted();
         $facade->linkedToSite = $content->isLinkedToSite();
+        $facade->used = $content->isUsed();
 
         foreach ($content->getAttributes() as $attribute) {
             $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
             $facade->addAttribute($contentAttribute);
         }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::READ, $content->getId())) {
-            if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $content->getId())
-                && !$content->getStatus()->isBlockedEdition()
-            ) {
-                $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
-                    'contentId' => $content->getContentId(),
-                    'language' => $content->getLanguage(),
-                    'version' => $content->getVersion(),
-                )));
-            }
-
-            if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, $content->getId())
-                && $contentType->isDefiningVersionable()
-            ) {
-                $facade->addLink('_self_new_version', $this->generateRoute('open_orchestra_api_content_new_version', array(
-                    'contentId' => $content->getContentId(),
-                    'language' => $content->getLanguage(),
-                    'version' => $content->getVersion(),
-                )));
-                $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
-                    'contentId' => $content->getContentId(),
-                )));
-            }
-
-            if (
-                $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content->getId()) &&
-                !$content->isUsed()
-            ) {
-                $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
-                    'contentId' => $content->getId()
-                )));
-            }
-        }
-        if ($contentType->isDefiningVersionable()) {
-            $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
-                'contentId' => $content->getContentId(),
-                'language' => $content->getLanguage(),
-            )));
-        }
-
-        $facade->addLink('_self_without_parameters', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
-            'contentId' => $content->getContentId(),
-        )));
-
-        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_parameter_languages_show'));
-
-        $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_content_list_status', array(
-            'contentMongoId' => $content->getId()
-        )));
-
-        $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_content_update', array(
-            'contentMongoId' => $content->getId()
-        )));
+        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, ContentInterface::ENTITY_TYPE) && !$content->isUsed());
+        $facade->addRight('can_create', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
+        $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE) && !is_null($contentType) && $contentType->isDefiningVersionable());
+        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, ContentInterface::ENTITY_TYPE));
 
         return $facade;
     }
@@ -161,6 +122,13 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                     }
                 }
             }
+        } else {
+            if (null !== $facade->id) {
+                return $this->contentRepository->find($facade->id);
+            }
+
+            return null;
+
         }
 
         return $source;

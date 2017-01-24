@@ -38,7 +38,7 @@ class KeywordRouter extends OrchestraRouter
      * @param {int} page
      */
     listKeyword(page = 1) {
-        this._diplayLoader(Application.getRegion('content'));
+        this._displayLoader(Application.getRegion('content'));
         let collection = new Keywords();
         let keywordView = new KeywordListView({
             collection: collection,

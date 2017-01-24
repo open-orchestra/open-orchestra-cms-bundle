@@ -59,6 +59,8 @@ class ContentTypeTransformer extends AbstractTransformer
         $facade->name = $this->multiLanguagesChoiceManager->choose($contentType->getNames());
         $facade->version = $contentType->getVersion();
         $facade->linkedToSite = $contentType->isLinkedToSite();
+        $facade->definingVersionable = $contentType->isDefiningVersionable();
+        $facade->defaultListable = $contentType->getDefaultListable();
 
         if ($this->hasGroup(CMSGroupContext::CONTENT_TYPE_RIGHTS)) {
             $facade->addRight('can_delete', 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));

@@ -7,7 +7,7 @@ class ScrollTable extends AbstractBehavior
 {
     /**
      * activate behavior
-     * 
+     *
      * @param {Object} $element - jQuery object
      */
     activate($element) {
@@ -22,7 +22,7 @@ class ScrollTable extends AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

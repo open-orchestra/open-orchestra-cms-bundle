@@ -10,7 +10,7 @@ class CollectionSortable extends AbstractBehavior
 {
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

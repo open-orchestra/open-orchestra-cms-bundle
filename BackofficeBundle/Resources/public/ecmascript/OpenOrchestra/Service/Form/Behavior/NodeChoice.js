@@ -7,7 +7,7 @@ class NodeChoice extends AbstractBehavior
 {
     /**
      * activate behavior
-     * 
+     *
      * @param {Object} $element - jQuery object
      */
     activate($element) {
@@ -29,7 +29,7 @@ class NodeChoice extends AbstractBehavior
 
     /**
      * deactivate behavior
-     * 
+     *
      * @param {Object} $element - jQuery object
      */
     deactivate($element) {
@@ -38,7 +38,7 @@ class NodeChoice extends AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

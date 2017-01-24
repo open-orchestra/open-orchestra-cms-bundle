@@ -20,7 +20,7 @@ class NodeTemplateSelection extends AbstractBehavior
 
     /**
      * activate behavior
-     * 
+     *
      * @param {Object} $element - jQuery elements matching selector
      */
     activate($element) {
@@ -47,7 +47,7 @@ class NodeTemplateSelection extends AbstractBehavior
 
     /**
      * return selector
-     * 
+     *
      * @return {String}
      */
     getSelector() {

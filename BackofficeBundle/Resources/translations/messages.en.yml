@@ -196,7 +196,6 @@ open_orchestra_backoffice:
             default_listable_label:
               name: Name
               status_label: Workflow state
-              language: Language
               linked_to_site: Shared on other sites
               created_at: Created at
               created_by: Author
@@ -207,7 +206,7 @@ open_orchestra_backoffice:
             template:
                 label: Edit form custom template
                 helper: Advanced usage only.\nAlternate template to render the current content form.\nUse the Symfony2 format:\nMyBundle::myTemplate.html.twig
-            defining_versionable: 
+            defining_versionable:
                 label: Defines versionable contents
                 helper: If set to "Yes", The contents with this content type for model will be versionable.
             defining_statusable:
@@ -576,16 +575,6 @@ open_orchestra_backoffice:
             no: No
     table:
         search : Search
-        content_type:
-            name: Name
-            status_label: Status label
-            version: Version
-            language: Language
-            linked_to_site: Site linked
-            created_at: Creation date
-            created_by: Author
-            updated_at: Modification date
-            updated_by: Latest contributor
         content_types:
             content_type_id: Id
             name: Name

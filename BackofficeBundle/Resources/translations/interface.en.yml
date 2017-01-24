@@ -44,6 +44,9 @@ open_orchestra_backoffice:
           shared_block: Shared blocks
     table:
         delete_button: Remove selected items
+        duplicate: Duplicate
+        'true': Yes
+        'false': No
         keywords:
             label: Label
         node:
@@ -58,15 +61,22 @@ open_orchestra_backoffice:
         content_types:
             name: Name
             content_type_id: Id
-            linked_to_site:
-                label: Shared on other sites
-                'true': 'True'
-                'false': 'False'
+            linked_to_site: Shared on other sites
         shared_block:
             label: Label
             updated_at: Updated date
             type: Type
             number_use: Use
+        contents:
+            name: Name
+            status_label: Workflow state
+            linked_to_site: Shared
+            created_at: Created at
+            created_by: Author
+            updated_at: Updated at
+            updated_by: Author of the update
+            list: List
+            add: Add
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -139,3 +149,8 @@ open_orchestra_backoffice:
         swchoff:
             on: Yes
             off: No
+    language:
+        en: English
+        fr: Français
+        es: Español
+        de: Deutsch

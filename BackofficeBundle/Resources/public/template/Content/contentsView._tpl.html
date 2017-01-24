@@ -1,0 +1,107 @@
+<div class="top-action-buttons">
+    <a class="btn btn-info" href="" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+</div>
+<div class="pull-right languages">
+    <ul>
+        <% _.each(siteLanguages, function(siteLanguage, key) { %>
+            <% if (siteLanguage === language) { %>
+                <li class="active">
+                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                </li>
+                <% } else { %>
+                <li>
+                    <a href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentType.content_type_id, language: siteLanguage, contentTypeName: contentType.name}) %>">
+                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    </a>
+                </li>
+            <% }; %>
+        <% }); %>
+    </ul>
+</div>
+<h1> <%= contentType.name %></h1>
+<form class="form-horizontal search-engine">
+    <input type="hidden" name="date_format" id="date_format" value="<%= dateFormat%>">
+    <% if (contentType.default_listable.name) { %>
+        <div class="form-group col-lg-6">
+            <label for="name" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.name') %></label>
+            <div class="col-md-8">
+                <input type="text" name="name" class="form-control" id="name">
+            </div>
+        </div>
+    <% }; %>
+    <% if (contentType.default_listable.status_label) { %>
+        <div class="form-group col-lg-6">
+            <label for="status" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.status_label') %></label>
+            <div class="col-md-8 styled-select">
+                <select name="status" class="form-control" id="status">
+                    <option value=''></option>
+                    <% _.each(statuses, function(status) { %>
+                    <option value='<%= status.id %>'><%= status.label %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+    <% }; %>
+    <% if (contentType.default_listable.linked_to_site) { %>
+        <div class="form-group col-lg-6">
+            <label for="linked_to_site" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.linked_to_site') %></label>
+            <div class="col-md-8 styled-select">
+                <select name="linked_to_site" class="form-control" id="linked_to_site">
+                    <option value=''></option>
+                    <option value='true'><%= Translator.trans('open_orchestra_backoffice.table.true') %></option>
+                    <option value='false'><%= Translator.trans('open_orchestra_backoffice.table.false') %></option>
+                </select>
+            </div>
+        </div>
+    <% }; %>
+    <% if (contentType.default_listable.created_at) { %>
+        <div class="form-group col-lg-6">
+            <label for="created_at" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.created_at') %></label>
+            <div class="col-md-8">
+                <input type="text" name="created_at" class="form-control datepicker" id="created_at">
+            </div>
+        </div>
+    <% }; %>
+    <% if (contentType.default_listable.created_by) { %>
+        <div class="form-group col-lg-6">
+            <label for="created_by" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.created_by') %></label>
+            <div class="col-md-8">
+                <input type="text" name="created_by" class="form-control" id="created_by">
+            </div>
+        </div>
+    <% }; %>
+    <% if (contentType.default_listable.updated_at) { %>
+        <div class="form-group col-lg-6">
+            <label for="updated_at" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.updated_at') %></label>
+            <div class="col-md-8">
+                <input type="text" name="updated_at" class="form-control datepicker" id="updated_at">
+            </div>
+        </div>
+    <% }; %>
+    <% if (contentType.default_listable.updated_by) { %>
+        <div class="form-group col-lg-6">
+            <label for="updated_by" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.contents.updated_by') %></label>
+            <div class="col-md-8">
+                <input type="text" name="updated_by" class="form-control" id="updated_by">
+            </div>
+        </div>
+    <% }; %>
+    <% _.each(contentType.fields, function(field) { %>
+        <% if (field.listable) { %>
+            <div class="form-group col-lg-6">
+               <%= SearchFormGroupManager.render(field) %>
+            </div>
+        <% }; %>
+    <% }); %>
+    <div class="form-group col-lg-12">
+        <div class="col-lg-6">
+            <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter') %></button>
+            <button class="btn btn-border btn-large hidden reset"><%= Translator.trans('open_orchestra_backoffice.node.search_engine.reset') %></button>
+        </div>
+    </div>
+</form>
+<div class="contents-list">
+</div>
+<div class="bottom-action-buttons">
+    <button class="btn btn-danger btn-delete"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
+</div>

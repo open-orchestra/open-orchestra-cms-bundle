@@ -73,7 +73,7 @@ class GroupRouter extends OrchestraRouter
             }
         });
     }
-    
+
     /**
      * Edit Group
      *

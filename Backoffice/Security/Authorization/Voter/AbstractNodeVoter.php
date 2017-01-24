@@ -38,7 +38,7 @@ abstract class AbstractNodeVoter extends AbstractEditorialVoter
 
     /**
      * Vote for $action on $node owned by $user
-     * A user can act on his own nodes if he has the NODE_CONTRIBUTOR role and the node is in his perimeter 
+     * A user can act on his own nodes if he has the NODE_CONTRIBUTOR role and the node is in his perimeter
      *
      * @param string         $action
      * @param NodeInterface  $node

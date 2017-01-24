@@ -66,10 +66,10 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         $this->checkFieldType($data, $type, $form);
         $this->addDefaultValueField($data, $type, $form);
 
-        foreach ($this->fieldTypeParameters as $fieldTypeParameters) {
+        foreach ($this->fieldTypeParameters as $fieldType =>  $fieldTypeParameters) {
             if (array_key_exists('type', $this->options[$type]) &&
                 array_key_exists('search', $this->options[$type]) &&
-                $fieldTypeParameters['type'] == $data->getType()) {
+                $fieldType == $data->getType()) {
                 $data->setFieldTypeSearchable($fieldTypeParameters['search']);
                 break;
             }

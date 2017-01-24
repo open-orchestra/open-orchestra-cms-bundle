@@ -29,6 +29,26 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
     }
 
     /**
+     * @param FacadeInterface $facade
+     * @param null            $source
+     *
+     * @return array
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        $contents = array();
+        $contentsFacade = $facade->getContents();
+        foreach ($contentsFacade as $contentFacade) {
+            $content = $this->getTransformer('content')->reverseTransform($contentFacade);
+            if (null !== $content) {
+                $contents[] = $content;
+            }
+        }
+
+        return $contents;
+    }
+
+    /**
      * @return string
      */
     public function getName()

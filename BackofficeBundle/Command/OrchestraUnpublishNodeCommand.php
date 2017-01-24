@@ -27,7 +27,7 @@ class OrchestraUnpublishNodeCommand extends ContainerAwareCommand
 
     /**
      * Execute command
-     * 
+     *
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
@@ -60,7 +60,7 @@ class OrchestraUnpublishNodeCommand extends ContainerAwareCommand
 
     /**
      * Call nodes unpublication for $site
-     * 
+     *
      * @param ReadSiteInterface $site
      * @param OutputInterface   $output
      */

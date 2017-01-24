@@ -75,7 +75,6 @@ class ContentTypeManager
         return array(
             'name'           => true,
             'status_label'   => false,
-            'language'       => false,
             'linked_to_site' => true,
             'created_at'     => true,
             'created_by'     => true,

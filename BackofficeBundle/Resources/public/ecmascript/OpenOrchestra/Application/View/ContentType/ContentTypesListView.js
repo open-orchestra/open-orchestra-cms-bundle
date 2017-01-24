@@ -36,7 +36,7 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
             },
             {
                 name: "linked_to_site",
-                title: Translator.trans('open_orchestra_backoffice.table.content_types.linked_to_site.label'),
+                title: Translator.trans('open_orchestra_backoffice.table.content_types.linked_to_site'),
                 orderable: true,
                 visibile: true,
                 render: this._translateLinkedToSite
@@ -83,13 +83,10 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
 
     /**
      * @param {Object|string} data
-     * @param {string}        type
-     * @param {Object}        full
-     * @param {Object}        meta
      * @private
      */
-    _translateLinkedToSite(data,type,full,meta) {
-        return Translator.trans('open_orchestra_backoffice.table.content_types.linked_to_site.'+data);
+    _translateLinkedToSite(data) {
+        return Translator.trans('open_orchestra_backoffice.table.' + data);
     }
 }
 

@@ -1,4 +1,5 @@
 import AbstractBehavior from './AbstractBehavior'
+import Application      from '../../../Application/Application'
 
 /**
  * @class DatePicker
@@ -38,6 +39,7 @@ class DatePicker extends AbstractBehavior
             dataDateFormat = this._convertFormat(this._convertFormatYear, dataDateFormat);
             dataDateFormat = this._convertFormat(this._convertFormatMonth, dataDateFormat);
             dataDateFormat = this._convertFormat(this._convertFormatDay, dataDateFormat);
+            $.datepicker.setDefaults($.datepicker.regional[Application.getContext().language]);
             $element.datepicker({
                 dateFormat: dataDateFormat,
                 prevText: '<i class="fa fa-chevron-left"></i>',

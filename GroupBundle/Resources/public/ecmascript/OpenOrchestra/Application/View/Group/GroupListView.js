@@ -1,20 +1,13 @@
 import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
 import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
+import DuplicateIconListViewMixin  from '../../../Service/DataTable/Mixin/DuplicateIconListViewMixin'
 
 /**
  * @class GroupListView
  */
-class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
+class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin, DuplicateIconListViewMixin)
 {
-    /**
-     * @inheritdoc
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['click .clone-icon'] = '_clickDuplicateIcon';
-    }
-
     /**
      * @inheritDoc
      */
@@ -50,12 +43,7 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
                 orderDirection: 'desc',
                 visibile: true
             },
-            {
-                name: "duplicate",
-                orderable: false,
-                width: '20px',
-                createdCell: this._createDuplicateIcon
-            }
+            this._getColumnsDefinitionDuplicateIcon()
         ];
     }
 
@@ -83,36 +71,6 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
         });
 
         $(td).html(cellData)
-    }
-
-    /**
-    *
-    * @param {Object} td
-    * @param {Object} cellData
-    * @param {Object} rowData
-    *
-    * @private
-    */
-   _createDuplicateIcon(td, cellData, rowData) {
-       let $icon = $('<i>', {'aria-hidden': 'true', class:'clone-icon fa fa-clone'});
-       $icon.data(rowData);
-       $(td).append($icon);
-   }
-
-    /**
-     * @param {Object} event
-     *
-     * @private
-     */
-    _clickDuplicateIcon(event) {
-        let group = $(event.currentTarget).data();
-        group = this._collection.findWhere({'id': group.get('id')});
-        
-        group.sync('create', group, {
-            success: () => {
-                this.api.draw(false);
-            }
-        });
     }
 }
 

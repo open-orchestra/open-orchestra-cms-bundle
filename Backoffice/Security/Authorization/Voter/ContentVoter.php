@@ -52,7 +52,7 @@ class ContentVoter extends AbstractEditorialVoter
 
     /**
      * Vote for $action on $content owned by $user
-     * A user can act on his own contents if he has the CONTENT_CONTRIBUTOR role and the content is in his perimeter 
+     * A user can act on his own contents if he has the CONTENT_CONTRIBUTOR role and the content is in his perimeter
      *
      * @param string           $action
      * @param ContentInterface $content
