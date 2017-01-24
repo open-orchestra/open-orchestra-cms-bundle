@@ -73,6 +73,7 @@ class RedirectionFormView extends AbstractFormView
         $('#oo_redirection_nodeId', this.$el).closest('div.form-group').hide();
         $('#oo_redirection_url', this.$el).closest('div.form-group').show();
         $('#oo_redirection_nodeId', this.$el).val('');
+        $('#select2-chosen-1', this.$el).html('');
     }
 }
 
