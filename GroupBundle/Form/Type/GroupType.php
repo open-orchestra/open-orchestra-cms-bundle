@@ -20,12 +20,14 @@ use Symfony\Component\Form\FormInterface;
 class GroupType extends AbstractType
 {
     protected $groupMemberSubscriber;
+    protected $groupPerimeterSubscriber;
     protected $groupRoleTransformer;
     protected $groupClass;
     protected $backOfficeLanguages;
 
     /**
      * @param EventSubscriberInterface $groupMemberSubscriber
+     * @param EventSubscriberInterface $groupPerimeterSubscriber
      * @param EventDispatcherInterface $eventDispatcher
      * @param DataTransformerInterface $groupRoleTransformer
      * @param DataTransformerInterface $groupPerimeterTransformer
@@ -35,6 +37,7 @@ class GroupType extends AbstractType
      */
     public function __construct(
         EventSubscriberInterface $groupMemberSubscriber,
+        EventSubscriberInterface $groupPerimeterSubscriber,
         EventDispatcherInterface $eventDispatcher,
         DataTransformerInterface $groupRoleTransformer,
         DataTransformerInterface $groupPerimeterTransformer,
@@ -43,6 +46,7 @@ class GroupType extends AbstractType
         array $backOfficeLanguages
     ) {
         $this->groupMemberSubscriber = $groupMemberSubscriber;
+        $this->groupPerimeterSubscriber = $groupPerimeterSubscriber;
         $this->eventDispatcher = $eventDispatcher;
         $this->groupRoleTransformer = $groupRoleTransformer;
         $this->groupPerimeterTransformer = $groupPerimeterTransformer;
@@ -93,6 +97,7 @@ class GroupType extends AbstractType
         $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
         $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);
         $builder->addEventSubscriber($this->groupMemberSubscriber);
+        $builder->addEventSubscriber($this->groupPerimeterSubscriber);
         $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder, $this));
     }
 

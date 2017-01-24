@@ -23,6 +23,7 @@ services:
         class: '%open_orchestra_group.type.group.class%'
         arguments:
             - '@open_orchestra_group.subscriber.group_member'
+            - '@open_orchestra_group.subscriber.group_perimeter'
             - '@event_dispatcher'
             - '@open_orchestra_group.transformer.group_role'
             - '@open_orchestra_group.transformer.group_perimeter'

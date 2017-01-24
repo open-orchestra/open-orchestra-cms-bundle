@@ -6,6 +6,7 @@ use OpenOrchestra\WorkflowAdminBundle\EventSubscriber\AddGroupWorkflowProfileSub
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\GroupBundle\GroupFormEvents;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class BlockTypeSubscriberTest
