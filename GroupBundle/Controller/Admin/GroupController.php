@@ -36,16 +36,25 @@ class GroupController extends AbstractAdminController
         $form = $this->createForm('oo_group', $group, array(
             'action' => $this->generateUrl('open_orchestra_group_new'),
             'method' => 'POST',
+            'new_button' => true
         ));
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_group.form.group.new.success');
 
-        if ($this->handleForm($form, $message, $group)) {
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($group);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_group.form.group.new.success');
+
             $this->dispatchEvent(GroupEvents::GROUP_CREATE, new GroupEvent($group));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+            $response = new Response(
+                $message,
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/plain; charset=utf-8', 'groupId' => $group->getId(), 'name' => $group->getName())
+            );
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+            return $response;
         }
 
         return $this->renderAdminForm($form);
@@ -68,8 +77,9 @@ class GroupController extends AbstractAdminController
         $form = $this->createForm('oo_group', $group, array(
             'action' => $this->generateUrl('open_orchestra_group_form', array(
                 'groupId' => $groupId,
-            )))
-        );
+            )),
+            'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $group) && 0 === $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($groupId)))
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_group.form.group.edit.success');

@@ -24,9 +24,13 @@ class Group extends OrchestraModel
      * @inheritdoc
      */
     _getSyncUrl(method) {
+        let urlParameter = options.urlParameter || {};
         switch (method) {
             case "create":
                 return Routing.generate('open_orchestra_api_group_duplicate');
+            case "delete":
+                urlParameter.groupId = this.get('group_id');
+                return Routing.generate('open_orchestra_api_group_delete', urlParameter);
         }
     }
 }

@@ -40,6 +40,7 @@ class BlockController extends AbstractAdminController
                 'language' => $language,
             )),
             'method' => 'POST',
+            'new_button' => true
         ));
         $form->handleRequest($request);
 

@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class ContentTypeType
@@ -121,7 +123,7 @@ class ContentTypeType extends AbstractType
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_type.delete'),
                 ),
                 'options' => array( 'label' => false ),
-                'group_id' => 'field'
+                'group_id' => 'field',
             ));
 
         $builder->addEventSubscriber($this->contentTypeTypeSubscriber);
@@ -139,6 +141,8 @@ class ContentTypeType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => $this->contentTypeClass,
+                'delete_button' => false,
+                'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(
@@ -174,6 +178,18 @@ class ContentTypeType extends AbstractType
                 ),
             )
         );
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
+        $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['new_button'] = $options['new_button'];
     }
 
     /**

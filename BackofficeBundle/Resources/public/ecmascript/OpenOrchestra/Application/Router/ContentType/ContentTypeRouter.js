@@ -16,8 +16,9 @@ class ContentTypeRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
+            'content-type/list(/:page)': 'listContentType',
             'contentType/edit/:contentTypeId/:name': 'editContentType',
-            'content-type/list(/:page)': 'listContentType'
+            'content-type/new': 'newContentType'
         };
     }
 
@@ -52,6 +53,21 @@ class ContentTypeRouter extends OrchestraRouter
             let contentTypeFormView = new ContentTypeFormView({
                 form: form,
                 name: name
+            });
+            Application.getRegion('content').html(contentTypeFormView.render().$el);
+        });
+    }
+
+    /**
+     * Create contentType
+     */
+    newContentType() {
+        this._displayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_backoffice_content_type_new');
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let contentTypeFormView = new ContentTypeFormView({
+                form: form,
+                name: Translator.trans('open_orchestra_backoffice.table.content_types.new')
             });
             Application.getRegion('content').html(contentTypeFormView.render().$el);
         });

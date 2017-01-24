@@ -53,7 +53,7 @@
         {% endfor %}
         {% set active = (active == -1) ? 0 : active %}
         {% if groups|length == 1 and (groups|first).group_name == constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_GROUP') %}
-        	{{ (groups|first).html }}
+            {{ (groups|first).html }}
         {%  else %}
             <ul role="tablist" class="nav nav-tabs">
                 {% for group in groups %}
@@ -79,42 +79,39 @@
 
 {% block collection_widget %}
     {% spaceless %}
-        {% set model = form|first %}
-		{% if model.vars.columns is defined %}
-            {% if prototype is defined %}
-                {% set prototype_html %}
-                    {% spaceless %}
-                        <tbody data-prototype-id="{{ prototype.vars.name }}">
-                            <tr>
-                                {% for column in model.vars.columns %}
-                            	<td>
-                                    {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
-                            	</td>
-                            	{% endfor %}
-                            	<td>
-                                    <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
-                                    <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
-                            	</td>
-        	                    {% if form.vars.allow_delete %}
-            	                	<td>
-                                        <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
-        							</td>
-        	                    {% endif %}
-                           	</tr>
-                           	<tr>
-                           		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
-                                    <div class="row">
-                                        {{ form_widget(prototype) }}
-                                    </div>
+        {% if prototype is defined and prototype.vars.columns is defined %}
+            {% set prototype_html %}
+                {% spaceless %}
+                    <tbody data-prototype-id="{{ prototype.vars.name }}">
+                        <tr>
+                            {% for column in prototype.vars.columns %}
+                            <td>
+                                {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
+                            </td>
+                            {% endfor %}
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
+                                <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
+                            </td>
+                            {% if form.vars.allow_delete %}
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
                                 </td>
-                            </tr>
-                        </tbody>
-				    {% endspaceless %}
-                {% endset %}
-                {% set attr = attr|merge({'data-prototype': prototype_html|e }) %}
-            {% endif %}
-			<div class="accordion" {{ block('widget_container_attributes') }}>
-				<div class="action">
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                                <div class="row">
+                                    {{ form_widget(prototype) }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endspaceless %}
+            {% endset %}
+            {% set attr = attr|merge({'data-prototype': prototype_html|e }) %}
+            <div class="accordion" {{ block('widget_container_attributes') }}>
+                <div class="action">
                     <a href="#" class="btn btn-border close-forms">{{ 'open_orchestra_backoffice.form.collection.close_forms'|trans }}</a>
                     <a href="#" class="btn btn-border open-forms">{{ 'open_orchestra_backoffice.form.collection.open_forms'|trans }}</a>
                     {% if form.vars.allow_add %}
@@ -122,52 +119,52 @@
                     {% endif %}
                 </div>
                 <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
-                	<thead>
+                    <thead>
                         <tr>
-                            {% for column in model.vars.columns %}
-                        	<th>
-                        		{{ column.label|trans }}
-                        	</th>
-                        	{% endfor %}
-                        	<th>&nbsp;</th>
+                            {% for column in prototype.vars.columns %}
+                            <th>
+                                {{ column.label|trans }}
+                            </th>
+                            {% endfor %}
+                            <th>&nbsp;</th>
                             {% if form.vars.allow_delete %}
-        	                	<th>&nbsp;</th>
+                                <th>&nbsp;</th>
                             {% endif %}
-                       	</tr>
+                           </tr>
                     </thead>
                     {% for field in form %}
                         <tbody data-prototype-id="{{ field.vars.name }}">
                             <tr>
                                 {% for column in field.vars.columns %}
-                            	<td>
+                                <td>
                                     {{ column.data|trans }}
-                            	</td>
-                            	{% endfor %}
-                            	<td>
+                                </td>
+                                {% endfor %}
+                                <td>
                                     <button type="button" class="btn btn-primary btn-sm not open-form{% if not field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
                                     <button type="button" class="btn btn-primary btn-sm close-form{% if field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
-                            	</td>
-        	                    {% if form.vars.allow_delete %}
-            	                	<td>
+                                </td>
+                                {% if form.vars.allow_delete %}
+                                    <td>
                                         <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
-        							</td>
-        	                    {% endif %}
-                           	</tr>
-                           	<tr class="{% if field.vars.valid %}hide{% endif %}">
-                           		<td colspan="{{ model.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                                    </td>
+                                {% endif %}
+                            </tr>
+                            <tr class="{% if field.vars.valid %}hide{% endif %}">
+                                <td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
                                     <div class="row">
                                         {{ form_widget(field) }}
                                         {{ form_errors(field) }}
                                     </div>
                                 </td>
                             </tr>
-	                    </tbody>
+                        </tbody>
                     {% endfor %}
                 </table>
             </div>
-		{% else %}
-			{{ parent() }}
-		{% endif %}
+        {% else %}
+            {{ parent() }}
+        {% endif %}
     {% endspaceless %}
 {% endblock %}
 
@@ -472,7 +469,7 @@
                 {{ form_label(form) }}
                 {{ refreshIcon }}
                 <div class="col-{{ col_size }}-{{ widget_col }}">
-                	{% if form.vars.original_type is defined and form.vars.original_type == 'collection' %}
+                    {% if form.vars.original_type is defined and form.vars.original_type == 'collection' %}
                         {{ form_errors(form) }}
                         {{ block('form_input_group') }}
                     {% else %}
@@ -571,6 +568,18 @@
         {% set attr = {'class': 'submit-form'} %}
         {% set button_class= 'primary' %}
         {{ block('button_widget') }}
+        {% if(true == form.vars.new_button) %}
+            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
+            {% set id = 'submit_' ~ form.vars.name %}
+            {% set attr = {'class': 'submit-continue-form'} %}
+            {% set button_class= 'primary' %}
+            {{ block('button_widget') }}
+        {% elseif(true == form.vars.delete_button) %}
+            {% set label = 'open_orchestra_backoffice.form.delete' %}
+            {% set attr = {'class': 'delete-button'} %}
+            {% set button_class= 'danger' %}
+            {{ block('button_widget') }}
+        {% endif %}
     {% endspaceless %}
 {% endblock form_submit_widget %}
 
@@ -680,33 +689,3 @@
         </div>
     {% endspaceless %}
 {% endblock oo_multi_languages_widget %}
-
-{% block oo_site_submit_widget %}
-    {% spaceless %}
-        {{ block('submit_widget') }}
-        {% if(form.vars.value.id is not null) %}
-            {% set label = 'open_orchestra_backoffice.form.delete' %}
-            {% set id = 'delete_' ~ form.vars.name %}
-            {% set button_class= 'danger' %}
-            {{ block('button_widget') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock oo_site_submit_widget %}
-
-{% block oo_block_submit_widget %}
-    {% spaceless %}
-        {{ block('form_submit_widget') }}
-        {% if(form.vars.value.id is null) %}
-            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
-            {% set id = 'submit_' ~ form.vars.name %}
-            {% set attr = {'class': 'submit-continue-form'} %}
-            {% set button_class= 'primary' %}
-            {{ block('button_widget') }}
-        {% elseif(true == form.vars.delete_button) %}
-            {% set label = 'open_orchestra_backoffice.form.delete' %}
-            {% set attr = {'class': 'delete-button'} %}
-            {% set button_class= 'danger' %}
-            {{ block('button_widget') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock oo_block_submit_widget %}

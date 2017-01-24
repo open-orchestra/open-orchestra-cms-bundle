@@ -97,11 +97,12 @@ class GroupController extends BaseController
 
         $groupIds = array();
         foreach ($groups as $group) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, GroupInterface::ENTITY_TYPE) &&
-                array_key_exists($group->getId(), $nbrGroupsUsers) &&
-                0 == $nbrGroupsUsers[$group->getId()]) {
-                $groupIds[] = $group->getId();
-                $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
+            if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
+                $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($group->getId()));
+                if ($nbrGroupsUsers == 0) {
+                    $groupIds[] = $group->getId();
+                    $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
+                }
             }
         }
 
@@ -147,6 +148,32 @@ class GroupController extends BaseController
         $objectManager = $this->get('object_manager');
         $objectManager->persist($newGroup);
         $objectManager->flush();
+
+        return array();
+    }
+
+    /**
+     * @param string $groupId
+     *
+     * @Config\Route("/{groupId}/delete", name="open_orchestra_api_group_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAction($groupId)
+    {
+        $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $group);
+
+        if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
+            $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($group->getId()));
+            if ($nbrGroupsUsers == 0 && $group instanceof GroupInterface) {
+                $objectManager = $this->get('object_manager');
+                $objectManager->remove($group);
+                $objectManager->flush();
+                $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
+            }
+        }
 
         return array();
     }

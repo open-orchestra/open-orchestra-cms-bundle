@@ -11,6 +11,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFormEvent;
 use OpenOrchestra\GroupBundle\GroupFormEvents;
 use OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class GroupType
@@ -102,6 +104,8 @@ class GroupType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => $this->groupClass,
+                'delete_button' => false,
+                'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(
@@ -137,6 +141,18 @@ class GroupType extends AbstractType
                 ),
             )
         );
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
+        $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['new_button'] = $options['new_button'];
     }
 
     /**

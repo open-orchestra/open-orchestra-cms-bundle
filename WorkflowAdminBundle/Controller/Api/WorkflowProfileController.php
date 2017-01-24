@@ -81,4 +81,26 @@ class WorkflowProfileController extends BaseController
         return array();
     }
 
+    /**
+     * @param string $workflowProfileId
+     *
+     * @Config\Route("/{workflowProfileId}/delete", name="open_orchestra_api_workflow_profile_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAction($workflowProfileId)
+    {
+        $workflowProfile = $this->get('open_orchestra_model.repository.workflow_profile')->find($workflowProfileId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $workflowProfile);
+
+        if ($workflowProfile instanceof WorkflowProfileInterface) {
+            $objectManager = $this->get('object_manager');
+            $objectManager->remove($workflowProfile);
+            $objectManager->flush();
+            $this->dispatchEvent(WorkflowProfileEvents::WORKFLOW_PROFILE_DELETE, new WorkflowProfileEvent($workflowProfile));
+        }
+
+        return array();
+    }
 }

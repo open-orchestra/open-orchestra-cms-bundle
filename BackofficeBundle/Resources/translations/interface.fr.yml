@@ -55,9 +55,11 @@ open_orchestra_backoffice:
             updated_at: Date de modification
             current_status: Etat courant
         sites:
+            new: Nouveau site
             site_id: Id
             name: Nom
         content_types:
+            new: Nouveau type de contenu
             name: Nom
             content_type_id: Id
             linked_to_site: Partagé sur les autres sites

@@ -56,6 +56,8 @@ class WorkflowProfileTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
         Phake::verify($resolver)->setDefaults(array(
             'data_class'    => $this->workflowProfileClass,
+            'delete_button' => false,
+            'new_button' => false,
             'group_enabled' => true,
             'group_render'  => array(
                 'properties' => array(
@@ -64,5 +66,21 @@ class WorkflowProfileTypeTest extends AbstractBaseTestCase
                 ),
             ),
         ));
+    }
+
+    /**
+     * Test build view
+     */
+    public function testBuildView()
+    {
+        $view = Phake::mock('Symfony\Component\Form\FormView');
+        $form = Phake::mock('Symfony\Component\Form\Form');
+        $options = array(
+            'delete_button' => true,
+            'new_button' => true,
+        );
+        $this->form->buildView($view, $form, $options);
+        $this->assertTrue($view->vars['delete_button']);
+        $this->assertTrue($view->vars['new_button']);
     }
 }

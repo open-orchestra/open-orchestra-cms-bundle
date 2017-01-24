@@ -106,8 +106,10 @@ class StatusType extends AbstractType
         if ($status->isAutoUnpublishToState()) {
             $properties[] = 'open_orchestra_workflow_admin.form.status.properties.auto_unpublish_to_state';
         }
-
         $view->vars['properties'] = $properties;
+
+        $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['new_button'] = $options['new_button'];
     }
 
     /**
@@ -117,6 +119,8 @@ class StatusType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'    => $this->statusClass,
+            'delete_button' => false,
+            'new_button' => false,
             'group_enabled' => true,
             'group_render'  => array(
                 'properties' => array(
