@@ -568,13 +568,13 @@
         {% set attr = {'class': 'submit-form'} %}
         {% set button_class= 'primary' %}
         {{ block('button_widget') }}
-        {% if(true == form.vars.new_button) %}
+        {% if(form.vars.new_button is defined and true == form.vars.new_button) %}
             {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
             {% set id = 'submit_' ~ form.vars.name %}
             {% set attr = {'class': 'submit-continue-form'} %}
             {% set button_class= 'primary' %}
             {{ block('button_widget') }}
-        {% elseif(true == form.vars.delete_button) %}
+        {% elseif(form.vars.delete_button is defined and true == form.vars.delete_button) %}
             {% set label = 'open_orchestra_backoffice.form.delete' %}
             {% set attr = {'class': 'delete-button'} %}
             {% set button_class= 'danger' %}
