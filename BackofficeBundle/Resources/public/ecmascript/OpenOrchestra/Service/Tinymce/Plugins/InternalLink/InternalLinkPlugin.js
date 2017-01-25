@@ -29,7 +29,6 @@ class InternalLinkPlugin
                             name = name.concat(']');
                         }
                         data[name] = value;
-                        console.log(name);
                     });
                 }
 

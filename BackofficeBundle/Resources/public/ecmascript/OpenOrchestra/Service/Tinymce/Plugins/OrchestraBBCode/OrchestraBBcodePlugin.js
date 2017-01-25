@@ -35,7 +35,6 @@ class OrchestraBBcodePlugin
      * @param {String} string
      */
     html2bbcode(string){
-        console.log('html2bbcode');
         let transformerList = BBcodeTransformerManager.getHtmlToBbcodeTransformer();
         string = tinymce.trim(string);
         $.each(transformerList, (regex, stringReplace) => {
