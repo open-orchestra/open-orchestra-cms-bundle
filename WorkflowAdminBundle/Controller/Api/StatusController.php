@@ -32,7 +32,7 @@ class StatusController extends BaseController
      * @Config\Route("", name="open_orchestra_api_status_list_table")
      * @Config\Method({"GET"})
      *
-     * @Api\Groups({OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS_LINKS})
+     * @Api\Groups({OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS})
      */
     public function listTableAction(Request $request)
     {
