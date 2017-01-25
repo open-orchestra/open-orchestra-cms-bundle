@@ -74,6 +74,7 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
             blockLabel: blockLabel,
             language: this._language
         });
+
         let message = new FlashMessage(data, 'success');
         FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);

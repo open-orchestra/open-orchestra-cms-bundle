@@ -23,10 +23,10 @@ class SharedBlockFormView extends AbstractFormView
 
     /**
      * Initialize
-     * @param {Form} form
-     * @param {string} blockLabel
-     * @param {string} blockId
-     * @param {string} language
+     * @param {Form}    form
+     * @param {string}  blockLabel
+     * @param {string}  blockId
+     * @param {string}  language
      * @param {boolean} activateUsageTab
      */
     initialize({form, blockLabel, blockId, language, activateUsageTab}) {

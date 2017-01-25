@@ -88,6 +88,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
             language: rowData.get('language'),
             activateUsageTab: true
         });
+
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link
@@ -108,6 +109,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
             blockLabel: rowData.get('label'),
             language: rowData.get('language')
         });
+
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link

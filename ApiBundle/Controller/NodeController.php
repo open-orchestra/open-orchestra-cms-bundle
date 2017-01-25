@@ -147,8 +147,8 @@ class NodeController extends BaseController
      * @Config\Route(
      *     "/add-block-in-area/{nodeId}/{language}/{version}/{blockId}/{areaId}/{position}",
      *     requirements={"position": "\d+"},
-     *     name="open_orchestra_node_add_block")
-
+     *     name="open_orchestra_node_add_block"
+     * )
      * @Config\Method({"PUT"})
      *
      * @return FacadeInterface
