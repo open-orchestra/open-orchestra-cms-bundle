@@ -53,7 +53,9 @@
         {% endfor %}
         {% set active = (active == -1) ? 0 : active %}
         {% if groups|length == 1 and (groups|first).group_name == constant('OpenOrchestra\\Backoffice\\Form\\Type\\Extension\\FormTypeGroupExtension::DEFAULT_GROUP') %}
-            {{ (groups|first).html }}
+            <div class="tab-content">
+                {{ (groups|first).html }}
+            </div>
         {%  else %}
             <ul role="tablist" class="nav nav-tabs">
                 {% for group in groups %}
@@ -515,7 +517,6 @@
     {% endif %}
 {% endblock choice_widget_options %}
 
-
 {% block form_help %}
     {% spaceless %}
         {% if attr.help_text is defined and attr.help_text is not empty %}
@@ -524,7 +525,6 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_help %}
-
 
 {% block widget_attributes %}
     {% spaceless %}

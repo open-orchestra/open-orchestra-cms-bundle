@@ -28,7 +28,7 @@ class KeywordInBlockReferenceStrategy extends AbstractKeywordReferenceStrategy i
         if ($this->support($entity)) {
             $keywordIds = $this->extractKeywordsFromElement($entity->getAttributes());
             foreach ($keywordIds as $keywordId) {
-                /** @var OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
+                /** @var \OpenOrchestra\ModelInterface\Model\KeywordInterface $keyword */
                 $keyword = $this->keywordRepository->find($keywordId);
                 if ($keyword) {
                     $keyword->addUseInEntity($entity->getId(), BlockInterface::ENTITY_TYPE);

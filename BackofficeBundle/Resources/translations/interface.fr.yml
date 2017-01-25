@@ -47,8 +47,9 @@ open_orchestra_backoffice:
         duplicate: Dupliquer
         'true': Oui
         'false': Non
-        keywords:
-            label: Etiquette
+        keyword:
+            label: Libellé
+            number_use: Utilisation
         node:
             title: Titre
             author: Auteur
@@ -136,12 +137,15 @@ open_orchestra_backoffice:
             label: Libellé
             type: Type
             name: Nom
+    keyword:
+        title_list: Tag
+        title_new : Nouveau Tag
     block:
-      add_block: Ajouter un bloc
-      confirm_remove:
-          title: Supprimer ce bloc ?
-          message: La suppression sera définitive
-      edit_title: Edition du bloc
+        add_block: Ajouter un bloc
+        confirm_remove:
+            title: Supprimer ce bloc ?
+            message: La suppression sera définitive
+        edit_title: Edition du bloc
     form:
         keyword:
             new: nouveau

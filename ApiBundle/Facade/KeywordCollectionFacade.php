@@ -27,4 +27,12 @@ class KeywordCollectionFacade extends PaginateCollectionFacade
     {
         $this->keywords[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
 }

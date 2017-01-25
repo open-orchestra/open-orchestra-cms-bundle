@@ -42,7 +42,7 @@ class KeywordInBlockStrategyTest extends AbstractReferenceStrategyTest
 
     /**
      * @param mixed  $entity
-     * @param string entityId
+     * @param string $entityId
      * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
@@ -56,7 +56,7 @@ class KeywordInBlockStrategyTest extends AbstractReferenceStrategyTest
 
     /**
      * @param mixed  $entity
-     * @param string entityId
+     * @param string $entityId
      * @param array  $keywords
      *
      * @dataProvider provideEntityAndKeywords
