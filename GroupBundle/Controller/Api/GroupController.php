@@ -32,7 +32,8 @@ class GroupController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::SITE,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
      * })
      * @return FacadeInterface
      */
@@ -94,12 +95,10 @@ class GroupController extends BaseController
         $filter = $groups;
         array_walk($filter, function(&$item) {$item = $item->getId();});
         $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups($filter);
-
         $groupIds = array();
         foreach ($groups as $group) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
-                $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($group->getId()));
-                if ($nbrGroupsUsers == 0) {
+                if ($nbrGroupsUsers[$group->getId()] == 0) {
                     $groupIds[] = $group->getId();
                     $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
                 }
@@ -123,6 +122,8 @@ class GroupController extends BaseController
      */
     public function duplicateAction(Request $request)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE);
+
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
@@ -142,8 +143,6 @@ class GroupController extends BaseController
             $newGroup->setPerimeters($group->getPerimeters());
         }
         $newGroup->setSite($currentSite);
-
-        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE);
 
         $objectManager = $this->get('object_manager');
         $objectManager->persist($newGroup);
@@ -167,7 +166,7 @@ class GroupController extends BaseController
 
         if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
             $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($group->getId()));
-            if ($nbrGroupsUsers == 0 && $group instanceof GroupInterface) {
+            if ($nbrGroupsUsers[$groupId] == 0 && $group instanceof GroupInterface) {
                 $objectManager = $this->get('object_manager');
                 $objectManager->remove($group);
                 $objectManager->flush();

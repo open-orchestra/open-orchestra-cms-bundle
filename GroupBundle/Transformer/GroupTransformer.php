@@ -105,10 +105,10 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     protected function addRights(FacadeInterface $facade, GroupInterface $group, $nbrUsers = 0)
     {
-
-        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, GroupInterface::ENTITY_TYPE));
-        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, GroupInterface::ENTITY_TYPE) && $nbrUsers == 0);
-        $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE));
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group) && $nbrUsers == 0);
+            $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE));
+        }
 
         return $facade;
     }

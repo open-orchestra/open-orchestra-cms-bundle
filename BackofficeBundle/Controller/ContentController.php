@@ -65,6 +65,53 @@ class ContentController extends AbstractAdminController
     }
 
     /**
+     * @param Request $request
+     * @param string  $contentTypeId
+     *
+     * @Config\Route("/content/new/{contentTypeId}/{language}", name="open_orchestra_backoffice_content_new")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function newAction(Request $request, $contentTypeId, $language)
+    {
+        $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentTypeId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
+
+        $form = $this->createForm('oo_content', $content, array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(
+                'contentTypeId' => $contentTypeId,
+                'language' => $language,
+            )),
+            'method' => 'POST',
+            'new_button' => true
+        ), ContributionActionInterface::CREATE);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($content);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
+            $this->get('session')->getFlashBag()->add('success', $message);
+
+            $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content, null));
+            $response = new Response(
+                '',
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/plain; charset=utf-8', 'contentId' => $content->getContentId(), 'name' => $content->getName())
+                );
+
+            return $response;
+        }
+
+        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
      * Get Form Template related to content of $contentTypeId
      *
      * @param string $contentTypeId
@@ -86,51 +133,5 @@ class ContentController extends AbstractAdminController
         }
 
         return $template;
-    }
-
-    /**
-     * @param Request $request
-     * @param string  $contentTypeId
-     *
-     * @Config\Route("/content/new/{contentTypeId}/{language}", name="open_orchestra_backoffice_content_new")
-     * @Config\Method({"GET", "POST"})
-     *
-     * @return Response
-     */
-    public function newAction(Request $request, $contentTypeId, $language)
-    {
-        $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentTypeId);
-        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
-
-        $form = $this->createForm('oo_content', $content, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(
-                'contentTypeId' => $contentTypeId
-            )),
-            'method' => 'POST',
-            'new_button' => true
-        ), ContributionActionInterface::CREATE);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $documentManager = $this->get('object_manager');
-            $documentManager->persist($content);
-            $documentManager->flush();
-            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
-            $this->get('session')->getFlashBag()->add('success', $message);
-
-            $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content, null));
-            $response = new Response(
-                '',
-                Response::HTTP_CREATED,
-                array('Content-type' => 'text/plain; charset=utf-8', 'contentId' => $content->getContentId(), 'name' => $content->getName())
-            );
-
-            return $response;
-        }
-
-        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
-            'form' => $form->createView()
-        ));
     }
 }

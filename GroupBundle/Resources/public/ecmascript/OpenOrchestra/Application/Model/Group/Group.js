@@ -23,7 +23,7 @@ class Group extends OrchestraModel
     /**
      * @inheritdoc
      */
-    _getSyncUrl(method) {
+    _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
         switch (method) {
             case "create":

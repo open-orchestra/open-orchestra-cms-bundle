@@ -107,7 +107,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
             language: rowData.get('language'),
             contentId: rowData.get('content_id')
         });
-        if (rowData.get('rights').can_edit && !rowData.get('status').blocked_edition) {
+        if (!rowData.get('status').blocked_edition) {
             cellData = $('<a>',{
                 text: cellData,
                 href: '#'+link

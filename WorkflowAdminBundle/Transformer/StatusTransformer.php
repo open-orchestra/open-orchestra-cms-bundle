@@ -84,11 +84,6 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
                 && !$status->isAutoUnpublishToState();
 
             $facade->addRight('can_delete', $canDelete);
-
-            $facade->addRight(
-                'can_edit',
-                $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $status)
-            );
         }
 
         return $facade;

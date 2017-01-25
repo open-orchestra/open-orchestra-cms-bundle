@@ -10,6 +10,7 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ContentTypeTransformer
@@ -62,8 +63,8 @@ class ContentTypeTransformer extends AbstractTransformer
         $facade->definingVersionable = $contentType->isDefiningVersionable();
         $facade->defaultListable = $contentType->getDefaultListable();
 
-        if ($this->hasGroup(CMSGroupContext::CONTENT_TYPE_RIGHTS)) {
-            $facade->addRight('can_delete', 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType) && 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
         }
 
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {

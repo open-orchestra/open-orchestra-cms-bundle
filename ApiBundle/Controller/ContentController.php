@@ -37,7 +37,7 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::CONTENT_RIGHTS
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
      * })
      *
      * @return FacadeInterface
@@ -86,27 +86,6 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $contentId
-     *
-     * @Config\Route("/{contentId}/new-version", name="open_orchestra_api_content_new_version")
-     * @Config\Method({"POST"})
-     *
-     * @return Response
-     */
-    public function newVersionAction(Request $request, $contentId)
-    {
-        /** @var ContentInterface $content */
-        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
-        $lastContent = $this->findOneContent($contentId, $request->get('language'));
-        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content, $lastContent);
-
-        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
-
-        return array();
-    }
-
-    /**
-     * @param Request $request
      *
      * @Config\Route("/duplicate", name="open_orchestra_api_content_duplicate")
      * @Config\Method({"POST"})
@@ -115,7 +94,7 @@ class ContentController extends BaseController
      */
     public function duplicateAction(Request $request)
     {
-        $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE);
 
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
@@ -124,15 +103,20 @@ class ContentController extends BaseController
             $format
         );
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
+        $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
 
-        $contentId = $content->getContentId();
-        $newContentId = null;
-        foreach (array_keys($frontLanguages) as $language) {
-            $content = $this->findOneContent($contentId, $language);
-            if ($content instanceof ContentInterface) {
-                $duplicateContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $newContentId);
-                $newContentId = $duplicateContent->getContentId();
-                $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($content->getContentType());
+
+        if (!is_null($contentType) && $contentType->isDefiningVersionable()) {
+            $contentId = $content->getContentId();
+            $newContentId = null;
+            foreach (array_keys($frontLanguages) as $language) {
+                $content = $this->findOneContent($contentId, $language);
+                if ($content instanceof ContentInterface) {
+                    $duplicateContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $newContentId);
+                    $newContentId = $duplicateContent->getContentId();
+                    $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
+                }
             }
         }
 
@@ -191,6 +175,53 @@ class ContentController extends BaseController
     }
 
     /**
+     * @param boolean|null $published
+     *
+     * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_content_list_author_and_site_not_published", defaults={"published": false})
+     * @Config\Route("/list/by-author", name="open_orchestra_api_content_list_author_and_site", defaults={"published": null})
+     * @Config\Method({"GET"})
+     *
+     * @return FacadeInterface
+     */
+    public function listContentByAuthorAndSiteIdAction($published)
+    {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $content = $this->get('open_orchestra_model.repository.content')->findByHistoryAndSiteId(
+            $user->getId(),
+            $siteId,
+            array(ContentEvents::CONTENT_CREATION, ContentEvents::CONTENT_UPDATE),
+            $published,
+            10,
+            array('histories.updatedAt' => -1)
+        );
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $contentId
+     *
+     * @Config\Route("/{contentId}/new-version", name="open_orchestra_api_content_new_version")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     */
+    public function newVersionAction(Request $request, $contentId)
+    {
+        /** @var ContentInterface $content */
+        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
+        $lastContent = $this->findOneContent($contentId, $request->get('language'));
+        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content, $lastContent);
+
+        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
+
+        return array();
+    }
+
+    /**
      * @param Request $request
      * @param string  $contentId
      *
@@ -239,32 +270,6 @@ class ContentController extends BaseController
         $content = $this->get('open_orchestra_model.repository.content')->find($contentMongoId);
 
         return $this->listStatuses($content);
-    }
-
-    /**
-     * @param boolean|null $published
-     *
-     * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_content_list_author_and_site_not_published", defaults={"published": false})
-     * @Config\Route("/list/by-author", name="open_orchestra_api_content_list_author_and_site", defaults={"published": null})
-     * @Config\Method({"GET"})
-     *
-     * @return FacadeInterface
-     */
-    public function listContentByAuthorAndSiteIdAction($published)
-    {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $content = $this->get('open_orchestra_model.repository.content')->findByHistoryAndSiteId(
-            $user->getId(),
-            $siteId,
-            array(ContentEvents::CONTENT_CREATION, ContentEvents::CONTENT_UPDATE),
-            $published,
-            10,
-            array('histories.updatedAt' => -1)
-        );
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
     }
 
     /**

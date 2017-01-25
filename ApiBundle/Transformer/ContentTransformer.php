@@ -93,9 +93,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
             $facade->addAttribute($contentAttribute);
         }
-        if ($this->hasGroup(CMSGroupContext::CONTENT_RIGHTS)) {
-            $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, ContentInterface::ENTITY_TYPE) && !$content->isUsed());
-            $facade->addRight('can_create', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE) && !is_null($contentType) && $contentType->isDefiningVersionable());
             $currentlyPublishedContents = $this->contentRepository->findAllCurrentlyPublishedByContentId($content->getContentId());
             $isUsed = false;
