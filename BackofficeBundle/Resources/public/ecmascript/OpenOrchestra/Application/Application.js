@@ -25,6 +25,7 @@ import CollectionSortable     from '../Service/Form/Behavior/CollectionSortable'
 import Accordion              from '../Service/Form/Behavior/Accordion'
 import BlockVideoType         from '../Service/Form/Behavior/BlockVideoType'
 import ColorPicker            from '../Service/Form/Behavior/ColorPicker'
+import Tinymce                from '../Service/Form/Behavior/Tinymce'
 
 import SearchFormGroupManager from '../Service/Content/SearchFormGroup/Manager'
 import DateSearchFormGroup    from '../Service/Content/SearchFormGroup/DateForm'
@@ -35,9 +36,9 @@ import CellFormatterManager   from '../Service/Content/CellFormatter/Manager'
 import TextCellFormatter      from '../Service/Content/CellFormatter/TextFormatter'
 import BooleanCellFormatter   from '../Service/Content/CellFormatter/BooleanFormatter'
 
-
-import ApplicationError       from '../Service/Error/ApplicationError'
-import AjaxError              from '../Service/Error/AjaxError'
+import ApplicationError      from '../Service/Error/ApplicationError'
+import AjaxError             from '../Service/Error/AjaxError'
+import TinymceManager        from '../Service/Tinymce/TinymceManager'
 
 /**
  * @class Application
@@ -221,6 +222,9 @@ class Application
         FormBehaviorManager.add(Accordion);
         FormBehaviorManager.add(BlockVideoType);
         FormBehaviorManager.add(ColorPicker);
+
+        TinymceManager.setSetting('language', this.getContext().language);
+        FormBehaviorManager.add(Tinymce);
     }
 
     /**

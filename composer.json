@@ -15,7 +15,6 @@
     "doctrine/data-fixtures": "~1.2.0",
     "alav/composer-assets": "~1.0.0",
     "sensio/generator-bundle": "~3.0.0",
-    "stfalcon/tinymce-bundle": "~1.1.0",
     "symfony/assetic-bundle": "~2.8.0",
     "symfony/monolog-bundle": "~2.11.0",
     "open-orchestra/open-orchestra-base-api-bundle": "self.version",
@@ -98,7 +97,8 @@
       "backbone": "~1.2.3",
       "jquery-minicolors": "~2.2.3",
       "backbone.wreqr": "~1.3.5",
-      "jquery.nicescroll": "^3.6.8"
+      "jquery.nicescroll": "^3.6.8",
+      "tinymce": "~4.5.2"
     }
   }
 }

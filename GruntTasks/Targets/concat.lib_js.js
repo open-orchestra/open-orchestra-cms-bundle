@@ -20,6 +20,9 @@ module.exports = {
     'vendor/bower_components/jquery-tokeninput/build/jquery.tokeninput.min.js',
     'vendor/bower_components/Nestable/dist/js/jquery.nestable.js',
     'vendor/bower_components/jquery.nicescroll/dist/jquery.nicescroll.min.js',
+    'vendor/bower_components/tinymce/tinymce.js',
+    'vendor/bower_components/tinymce/jquery.tinymce.js',
+    'vendor/bower_components/tinymce/themes/modern/theme.js',
     'vendor/braincrafted/bootstrap-bundle/Braincrafted/Bundle/BootstrapBundle/Resources/js/bc-bootstrap-collection.js',
     'web/bundles/fosjsrouting/js/router.js',
     'web/bundles/bazingajstranslation/js/translator.min.js'

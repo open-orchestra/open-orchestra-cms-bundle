@@ -42,31 +42,6 @@ parameters:
     open_orchestra_backoffice.type_extension.collection.class: OpenOrchestra\Backoffice\Form\Type\Extension\CollectionExtension
     open_orchestra_backoffice.type_extension.accordion.class: OpenOrchestra\Backoffice\Form\Type\Extension\AccordionExtension
 
-    open_orchestra_backoffice.tinymce:
-        tinymce_jquery: false
-        include_jquery: false
-        selector: .tinymce
-        tinymce_buttons:
-            linkmanager:
-                title: open_orchestra_backoffice.internal_link
-                image: false
-                icon: internallink
-                stateSelector: a[href][data-options]
-        theme:
-            simple:
-                theme: modern
-                content_css: /built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css
-                plugins:
-                    - advlist autolink lists image charmap print preview hr anchor pagebreak
-                    - searchreplace wordcount visualblocks visualchars code fullscreen
-                    - insertdatetime media nonbreaking save table contextmenu directionality
-                    - emoticons template paste textcolor orchestra_bbcode orchestra_link
-                toolbar1: undo redo | styleselect bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link linkmanager
-                menubar: false
-                height: 200
-                contextmenu: link inserttable | cell row column deletetable
-        use_callback_tinymce_init: true
-
 services:
     # Node form type
     open_orchestra_backoffice.type.node:
