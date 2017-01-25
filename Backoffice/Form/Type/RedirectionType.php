@@ -60,7 +60,6 @@ class RedirectionType extends AbstractType
             'label'        => 'open_orchestra_backoffice.form.redirection.route_pattern',
             'group_id'     => 'redirection',
             'sub_group_id' => 'redirection',
-            'constraints'  => array(new UniqueRedirection()),
         ));
         $builder->add('nodeId', 'oo_node_choice', array(
             'label'        => 'open_orchestra_backoffice.form.redirection.node_id',
@@ -94,6 +93,7 @@ class RedirectionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->redirectionClass,
+            'constraints'  => array(new UniqueRedirection()),
             'group_enabled' => true,
             'group_render' => array(
                 'redirection' => array(

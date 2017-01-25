@@ -29,11 +29,13 @@ class UniqueRedirectionValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if ('' !== $value && $this->repository->countByPattern($value) > 0) {
+        if ('' !== $value->getRoutePattern()
+            && $this->repository->countByPattern($value->getRoutePattern(), $value->getId()) > 0
+        ) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->atPath('route_pattern')
                 ->addViolation();
-            }
+        }
     }
 }
