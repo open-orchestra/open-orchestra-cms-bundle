@@ -6,7 +6,6 @@ import SiteAlias      from './SiteAlias'
  */
 class Site extends OrchestraModel
 {
-
     /**
      * Pre initialize
      */

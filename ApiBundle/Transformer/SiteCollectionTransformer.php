@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteCollectionTransformer

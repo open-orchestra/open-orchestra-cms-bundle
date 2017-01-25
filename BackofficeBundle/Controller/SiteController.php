@@ -80,10 +80,11 @@ class SiteController extends AbstractAdminController
             $documentManager->persist($site);
             $documentManager->flush();
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation');
+            $this->get('session')->getFlashBag()->add('success', $message);
 
             $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site, null));
             $response = new Response(
-                $message,
+                '',
                 Response::HTTP_CREATED,
                 array('Content-type' => 'text/plain; charset=utf-8', 'siteId' => $site->getSiteId(), 'name' => $site->getName())
             );

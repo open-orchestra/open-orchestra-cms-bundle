@@ -29,6 +29,8 @@ class ContentTypes extends DataTableCollection
         switch (method) {
             case "read":
                 return this._getSyncReadUrl(options);
+            case "delete":
+                return Routing.generate('open_orchestra_api_content_type_delete_multiple');
         }
     }
 
@@ -45,8 +47,6 @@ class ContentTypes extends DataTableCollection
                 return Routing.generate('open_orchestra_api_content_type_list_for_content');
             case "list":
                 return Routing.generate('open_orchestra_api_content_type_list');
-            case "delete":
-                return Routing.generate('open_orchestra_api_content_type_delete_multiple');
         }
     }
 }

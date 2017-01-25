@@ -49,8 +49,8 @@ class StatusRouter extends AbstractWorkflowRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let statusFormView = new StatusFormView({
                 form: form,
-                statusId: statusId,
-                name: name
+                name: name,
+                statusId: statusId
             });
             Application.getRegion('content').html(statusFormView.render().$el);
         });

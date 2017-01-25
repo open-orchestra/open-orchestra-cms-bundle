@@ -7,24 +7,6 @@ import UserListView           from '../../View/User/UserListView'
 class UsersView extends AbstractCollectionView
 {
     /**
-     * @inheritdoc
-     */
-    preinitialize() {
-        this.events = {
-            'click .search-engine button.submit': '_search',
-            'click .btn-delete': '_remove'
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    initialize({collection, settings}) {
-        this._collection = collection;
-        this._settings = settings;
-    }
-
-    /**
      * Render users view
      */
     render() {

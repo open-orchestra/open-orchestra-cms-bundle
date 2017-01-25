@@ -82,12 +82,13 @@ class StatusController extends AbstractAdminController
             $documentManager->persist($status);
             $documentManager->flush();
             $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.status.creation');
+            $this->get('session')->getFlashBag()->add('success', $message);
 
             $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
             $response = new Response(
-                $message,
+                '',
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId(), 'name' => $status->getLabels($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
+                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId(), 'name' => $status->getLabel($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
             );
 
             return $response;

@@ -50,7 +50,6 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param StatusInterface          $status
-     * @param StatusableInterface|null $document
      *
      * @return FacadeInterface
      *

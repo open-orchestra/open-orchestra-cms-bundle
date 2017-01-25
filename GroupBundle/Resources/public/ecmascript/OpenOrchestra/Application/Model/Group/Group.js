@@ -29,7 +29,7 @@ class Group extends OrchestraModel
             case "create":
                 return Routing.generate('open_orchestra_api_group_duplicate');
             case "delete":
-                urlParameter.groupId = this.get('group_id');
+                urlParameter.groupId = this.get('id');
                 return Routing.generate('open_orchestra_api_group_delete', urlParameter);
         }
     }

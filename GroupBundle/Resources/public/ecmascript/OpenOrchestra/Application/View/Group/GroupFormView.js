@@ -2,6 +2,7 @@ import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import Application          from '../../Application'
 import Group                from '../../Model/Group/Group'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import ApplicationError     from '../../../Service/Error/ApplicationError'
 
 /**
  * @class GroupFormView
@@ -11,10 +12,10 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}   form
-     * @param {String} groupId
      * @param {Array}  name
+     * @param {String} groupId
      */
-    initialize({form, groupId, name}) {
+    initialize({form, name, groupId = null}) {
         super.initialize({form : form});
         this._groupId = groupId;
         this._name = name;
@@ -35,7 +36,7 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     }
 
     /**
-     * Redirect to edit user view
+     * Redirect to edit group view
      *
      * @param {mixed}  data
      * @param {string} textStatus
@@ -52,18 +53,18 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             groupId: groupId,
             name: name
         });
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
 
     /**
      * Delete
-     * @param {event} event
      */
-    _deleteElement(event) {
-        let group = new Group({'group_id': this._groupId});
+    _deleteElement() {
+        if (null === this._groupId) {
+            throw new ApplicationError('Invalid groupId');
+        }
+        let group = new Group({'id': this._groupId});
         group.destroy({
             success: () => {
                 let url = Backbone.history.generateUrl('listGroup');

@@ -2,6 +2,7 @@ import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import Application          from '../../Application'
 import ContentType          from '../../Model/ContentType/ContentType'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import ApplicationError     from '../../../Service/Error/ApplicationError'
 
 /**
  * @class ContentTypeFormView
@@ -13,7 +14,7 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      */
     preinitialize() {
         super.preinitialize();
-        this.events['click #oo_content_type_linkedToSite'] = '_toogleAlwaysShared';
+        this.events['click #oo_content_type_linkedToSite'] = '_toggleAlwaysShared';
         this.events['change .content_type_change_type'] = '_contentTypeChangeType';
     }
 
@@ -21,8 +22,9 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      * Initialize
      * @param {Form}   form
      * @param {Array}  name
+     * @param {string} contentTypeId
      */
-    initialize({form, name, contentTypeId}) {
+    initialize({form, name, contentTypeId = null}) {
         super.initialize({form : form});
         this._name = name;
         this._contentTypeId = contentTypeId;
@@ -38,16 +40,15 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
-        this._toogleAlwaysShared();
+        this._toggleAlwaysShared();
 
         return this;
     }
 
     /**
-     * Delete
-     * @param {event} event
+     * toggle input always shared
      */
-    _toogleAlwaysShared(event) {
+    _toggleAlwaysShared() {
         if ($('#oo_content_type_linkedToSite:checked', this._$formRegion).length == 0) {
             $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').hide();
         } else {
@@ -64,7 +65,7 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
         let $tr = $(event.target).closest('tr');
         let $table = $(event.target).closest('table');
         let containerId = $table.parent().attr('id');
-        let index = $('tr', $table).index($tr)
+        let index = $('tr', $table).index($tr);
         
         $('form', this.$el).ajaxSubmit({
             type: 'PATCH',
@@ -77,7 +78,7 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
     }
 
     /**
-     * Redirect to edit user view
+     * Redirect to edit content type view
      *
      * @param {mixed}  data
      * @param {string} textStatus
@@ -94,18 +95,18 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
             contentTypeId: contentTypeId,
             name: name
         });
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
 
     /**
-     * Delete
-     * @param {event} event
+     * Delete content type
      */
-    _deleteElement(event) {
-        let contentType = new ContentType({'content_type_id': this._contentTypeId});
+    _deleteElement() {
+        if (null === this._contentTypeId) {
+            throw new ApplicationError('Invalid contentTypeId');
+        }
+        let contentType = new ContentType({'id': this._contentTypeId});
         contentType.destroy({
             success: () => {
                 let url = Backbone.history.generateUrl('listContentType');

@@ -2,32 +2,37 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface;
 use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class WorkflowProfileTransformer
  */
-class WorkflowProfileTransformer extends AbstractTransformer
+class WorkflowProfileTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $multiLanguagesChoiceManager;
     protected $workflowProfileRepository;
 
     /**
      * @param string                               $facadeClass
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param WorkflowProfileRepositoryInterface   $workflowProfileRepository
      */
     public function __construct(
         $facadeClass,
+        AuthorizationCheckerInterface $authorizationChecker,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         WorkflowProfileRepositoryInterface   $workflowProfileRepository
     ) {
-        parent::__construct($facadeClass);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->workflowProfileRepository = $workflowProfileRepository;
     }
@@ -50,7 +55,10 @@ class WorkflowProfileTransformer extends AbstractTransformer
         $facade->id = $workflowProfile->getId();
         $facade->label = $this->multiLanguagesChoiceManager->choose($workflowProfile->getLabels());
         $facade->description = $this->multiLanguagesChoiceManager->choose($workflowProfile->getDescriptions());
-
+        if ($this->hasGroup(CMSGroupContext::WORKFLOW_PROFILE_LINKS)) {
+            $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $workflowProfile);
+            $facade->addRight('can_delete', $canDelete);
+        }
 
         return $facade;
     }

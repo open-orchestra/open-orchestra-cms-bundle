@@ -15,7 +15,7 @@ class ContentType extends OrchestraModel
             case "read":
                 return Routing.generate('open_orchestra_api_content_type_show', urlParameter);
             case "delete":
-                urlParameter.contentTypeId = this.get('content_type_id');
+                urlParameter.contentTypeId = this.get('id');
                 return Routing.generate('open_orchestra_api_content_type_delete', urlParameter);
         }
     }
