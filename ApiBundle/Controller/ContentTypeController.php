@@ -138,12 +138,14 @@ class ContentTypeController extends BaseController
     {
         if (0 == $this->get('open_orchestra_model.repository.content')->countByContentType($contentTypeId)) {
             $contentTypes = $this->get('open_orchestra_model.repository.content_type')->findBy(array('contentTypeId' => $contentTypeId));
-            foreach ($contentTypes as $contentType) {
-                $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $contentType);
+            if (count($contentTypes) > 0) {
+                foreach ($contentTypes as $contentType) {
+                    $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $contentType);
+                }
+                $this->get('open_orchestra_backoffice.manager.content_type')->delete($contentTypes);
+                $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentTypes[0]));
+                $this->get('object_manager')->flush();
             }
-            $this->get('open_orchestra_backoffice.manager.content_type')->delete($contentTypes);
-            $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent(current($contentTypes)));
-            $this->get('object_manager')->flush();
         }
 
         return array();

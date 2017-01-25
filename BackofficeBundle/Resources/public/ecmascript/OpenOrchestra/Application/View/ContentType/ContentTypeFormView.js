@@ -106,7 +106,7 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
         if (null === this._contentTypeId) {
             throw new ApplicationError('Invalid contentTypeId');
         }
-        let contentType = new ContentType({'id': this._contentTypeId});
+        let contentType = new ContentType({'content_type_id': this._contentTypeId});
         contentType.destroy({
             success: () => {
                 let url = Backbone.history.generateUrl('listContentType');
