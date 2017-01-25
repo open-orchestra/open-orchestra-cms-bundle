@@ -20,30 +20,32 @@ class ContentController extends AbstractAdminController
      * @param Request $request
      * @param string  $contentId
      *
-     * @Config\Route("/content/form/{contentId}", name="open_orchestra_backoffice_content_form")
+     * @Config\Route("/content/form/{contentId}/{language}", name="open_orchestra_backoffice_content_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function formAction(Request $request, $contentId)
+    public function formAction(Request $request, $contentId, $language)
     {
-        $language = $request->get(
-            'language',
-            $this->get('open_orchestra_backoffice.context_manager')->getDefaultLocale()
-        );
+        $repository = $this->get('open_orchestra_model.repository.content');
         $version = $request->get('version');
 
-        $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
+        $content = $repository->findOneByLanguageAndVersion($contentId, $language, $version);
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
         if ($content instanceof ContentInterface) {
+            $currentlyPublishedContents = $repository->findAllCurrentlyPublishedByContentId($contentId);
+            $isUsed = false;
+            foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
+                $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+            }
             $form = $this->createForm('oo_content', $content, array(
                 'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
                     'contentId' => $content->getContentId(),
                     'language' => $content->getLanguage(),
                     'version' => $content->getVersion(),
                 )),
-                'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$content->isUsed())
+                'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed)
             ));
 
             $form->handleRequest($request);
@@ -88,39 +90,47 @@ class ContentController extends AbstractAdminController
 
     /**
      * @param Request $request
-     * @param string  $contentType
+     * @param string  $contentTypeId
      *
-     * @Config\Route("/content/new/{contentType}", name="open_orchestra_backoffice_content_new")
+     * @Config\Route("/content/new/{contentTypeId}/{language}", name="open_orchestra_backoffice_content_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function newAction(Request $request, $contentType)
+    public function newAction(Request $request, $contentTypeId, $language)
     {
-        $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentType);
+        $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentTypeId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
 
         $form = $this->createForm('oo_content', $content, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(
-                'contentType' => $contentType
+                'contentTypeId' => $contentTypeId
             )),
             'method' => 'POST',
             'new_button' => true
         ), ContributionActionInterface::CREATE);
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
 
-        if ($this->handleForm($form, $message, $content)) {
-            $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($content);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
+            $this->get('session')->getFlashBag()->add('success', $message);
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+            $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content, null));
+            $response = new Response(
+                '',
+                Response::HTTP_CREATED,
+                array('Content-type' => 'text/plain; charset=utf-8', 'contentId' => $content->getContentId(), 'name' => $content->getName())
+            );
+
+            return $response;
         }
 
-        return $this->render(
-            $this->getFormTemplate($contentType),
-            array('form' => $form->createView())
-        );
+        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 }

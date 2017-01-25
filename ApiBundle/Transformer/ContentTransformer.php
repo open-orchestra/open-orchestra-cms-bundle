@@ -17,6 +17,7 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class ContentTransformer
@@ -73,7 +74,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
 
-        $facade->id = $content->getId();
+        $facade->contentId = $content->getContentId();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
         $facade->contentTypeVersion = $content->getContentTypeVersion();
@@ -92,11 +93,17 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
             $facade->addAttribute($contentAttribute);
         }
-
-        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, ContentInterface::ENTITY_TYPE) && !$content->isUsed());
-        $facade->addRight('can_create', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
-        $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE) && !is_null($contentType) && $contentType->isDefiningVersionable());
-        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, ContentInterface::ENTITY_TYPE));
+        if ($this->hasGroup(CMSGroupContext::CONTENT_RIGHTS)) {
+            $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, ContentInterface::ENTITY_TYPE) && !$content->isUsed());
+            $facade->addRight('can_create', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
+            $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE) && !is_null($contentType) && $contentType->isDefiningVersionable());
+            $currentlyPublishedContents = $this->contentRepository->findAllCurrentlyPublishedByContentId($content->getContentId());
+            $isUsed = false;
+            foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
+                $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+            }
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed);
+        }
 
         return $facade;
     }

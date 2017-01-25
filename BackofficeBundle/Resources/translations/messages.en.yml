@@ -183,6 +183,13 @@ open_orchestra_backoffice:
             linked_to_site: Shared on other sites
             keywords: Keywords
             content_id: Content id
+            group:
+                property: Properties
+                data: Data
+            sub_group:
+                information: Informations
+                publication: Publication
+                data: Data
         content_type:
             success: The content type has been modified
             creation: The content type has been created

@@ -37,7 +37,7 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::FIELD_TYPES
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::CONTENT_RIGHTS
      * })
      *
      * @return FacadeInterface
@@ -155,18 +155,37 @@ class ContentController extends BaseController
             $this->getParameter('open_orchestra_api.facade.content_collection.class'),
             $format
         );
-        $repository = $this->get('open_orchestra_model.repository.content');
         $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
         $contentIds = array();
         foreach ($contents as $content) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, ContentInterface::ENTITY_TYPE) &&
-                !$content->isUsed()) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$this->isContentIdUsed($content->getContentId())) {
                 $contentIds[] = $content->getContentId();
                 $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
             }
         }
 
-        $repository->removeContentIds($contentIds);
+        $this->get('open_orchestra_model.repository.content')->removeContentIds($contentIds);
+
+        return array();
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @Config\Route("/{contentTypeId}/delete", name="open_orchestra_api_content_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAction($contentId)
+    {
+        $repository = $this->get('open_orchestra_model.repository.content');
+        $content = $repository->findOneByContentId($contentId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
+
+        if (!$this->isContentIdUsed($contentId)) {
+            $repository->removeContentIds(array($contentId));
+        }
 
         return array();
     }
@@ -223,21 +242,6 @@ class ContentController extends BaseController
     }
 
     /**
-     * @param string   $contentId
-     * @param string   $language
-     * @param int|null $version
-     *
-     * @return null|ContentInterface
-     */
-    protected function findOneContent($contentId, $language, $version = null)
-    {
-        $contentRepository = $this->get('open_orchestra_model.repository.content');
-        $content = $contentRepository->findOneByLanguageAndVersion($contentId, $language, $version);
-
-        return $content;
-    }
-
-    /**
      * @param boolean|null $published
      *
      * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_content_list_author_and_site_not_published", defaults={"published": false})
@@ -261,5 +265,36 @@ class ContentController extends BaseController
         );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
+    }
+
+    /**
+     * @param string   $contentId
+     * @param string   $language
+     * @param int|null $version
+     *
+     * @return null|ContentInterface
+     */
+    protected function findOneContent($contentId, $language, $version = null)
+    {
+        $contentRepository = $this->get('open_orchestra_model.repository.content');
+        $content = $contentRepository->findOneByLanguageAndVersion($contentId, $language, $version);
+
+        return $content;
+    }
+
+    /**
+     * @param string   $contentId
+     *
+     * @return boolean
+     */
+    protected function isContentIdUsed($contentId)
+    {
+        $currentlyPublishedContents = $this->get('open_orchestra_model.repository.content')->findAllCurrentlyPublishedByContentId($contentId);
+        $isUsed = false;
+        foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
+            $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+        }
+
+        return $isUsed;
     }
 }

@@ -35,11 +35,15 @@ class ContentType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.content.name'
+                'label' => 'open_orchestra_backoffice.form.content.name',
+                'group_id' => 'property',
+                'sub_group_id' => 'information',
             ))
             ->add('keywords', 'oo_keywords_choice', array(
                 'label' => 'open_orchestra_backoffice.form.content.keywords',
-                'required' => false
+                'required' => false,
+                'group_id' => 'property',
+                'sub_group_id' => 'information',
             ));
 
         $builder->addEventSubscriber($this->contentTypeSubscriber);
@@ -77,6 +81,31 @@ class ContentType extends AbstractType
             'data_class' => $this->contentClass,
             'delete_button' => false,
             'new_button' => false,
+                'group_enabled' => true,
+                'group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content.group.property',
+                    ),
+                    'data' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.content.group.data',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content.sub_group.information',
+                    ),
+                    'publication' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.content.sub_group.publication',
+                    ),
+                    'data' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content.sub_group.data',
+                    ),
+                ),
         ));
     }
 }

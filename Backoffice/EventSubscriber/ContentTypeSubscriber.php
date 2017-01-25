@@ -82,6 +82,8 @@ class ContentTypeSubscriber implements EventSubscriberInterface
                 $form->add('linkedToSite', 'checkbox', array(
                     'label' => 'open_orchestra_backoffice.form.content.linked_to_site',
                     'required' => false,
+                    'group_id' => 'property',
+                    'sub_group_id' => 'information',
                 ));
             }
 
@@ -174,6 +176,8 @@ class ContentTypeSubscriber implements EventSubscriberInterface
             array(
                 'label' => $this->multiLanguagesChoiceManager->choose($contentTypeField->getLabels()),
                 'mapped' => false,
+                'group_id' => 'data',
+                'sub_group_id' => 'data',
             ),
             $this->getFieldOptions($contentTypeField)
         );

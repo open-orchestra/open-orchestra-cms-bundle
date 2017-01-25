@@ -183,6 +183,13 @@ open_orchestra_backoffice:
             linked_to_site: Partagé sur les autres sites
             keywords: Mots-clé
             content_id: Id du contenu
+            group:
+                property: Propriétés
+                data: Données
+            sub_group:
+                information: Informations
+                publication: Publication
+                data: Données
         content_type:
             success: Le type de contenu a été modifié
             creation: Le type de contenu a été créé

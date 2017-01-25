@@ -7,6 +7,14 @@ import Status         from '../Status/Status'
  */
 class Content extends OrchestraModel
 {
+
+    /**
+     * Pre initialize
+     */
+    preinitialize() {
+        this.idAttribute = 'content_id';
+    }
+
     /**
      * Parse server response to create nested object
      * @param response
@@ -31,6 +39,9 @@ class Content extends OrchestraModel
         switch (method) {
             case "create":
                 return Routing.generate('open_orchestra_api_content_duplicate');
+            case "delete":
+                urlParameter.contentId = this.get('content_id');
+                return Routing.generate('open_orchestra_api_content_delete', urlParameter);
         }
     }
 }

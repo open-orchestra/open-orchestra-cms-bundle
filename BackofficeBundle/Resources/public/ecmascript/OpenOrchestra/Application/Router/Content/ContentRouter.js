@@ -1,7 +1,9 @@
 import OrchestraRouter    from '../OrchestraRouter'
 import Application        from '../../Application'
+import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
 import ContentSummaryView from '../../View/Content/ContentSummaryView'
 import ContentsView       from '../../View/Content/ContentsView'
+import ContentFormView    from '../../View/Content/ContentFormView'
 import ContentTypes       from '../../Collection/ContentType/ContentTypes'
 import Contents           from '../../Collection/Content/Contents'
 import ContentType        from '../../Model/ContentType/ContentType'
@@ -17,8 +19,10 @@ class ContentRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'content/summary': 'showContentSummary',
-            'content/list/:contentTypeId/:language/:contentTypeName(/:page)': 'listContent'
+            'content/summary'                                       : 'showContentSummary',
+            'content/list/:contentTypeId/:language(/:page)'         : 'listContent',
+            'content/edit/:contentTypeId/:language/:contentId'      : 'editContent',
+            'content/new/:contentTypeId/:language'                  : 'newContent',
         };
     }
 
@@ -56,10 +60,72 @@ class ContentRouter extends OrchestraRouter
         });
     }
 
+
+    /**
+     * Edit content
+     *
+     * @param {string} contentTypeId
+     * @param {string} language
+     * @param {string} contentId
+     */
+    editContent(contentTypeId, language, contentId) {
+        this._displayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_backoffice_content_form', {
+            contentId: contentId,
+            language: language,
+        });
+        
+        let siteLanguageUrl = [];
+        for (let siteLanguage of Application.getContext().siteLanguages) {
+            siteLanguageUrl[siteLanguage] = Backbone.history.generateUrl('editContent', {contentTypeId: contentTypeId, language: siteLanguage, contentId: contentId});
+        }
+
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let contentFormView = new ContentFormView({
+                form: form,
+                name: contentId,
+                contentTypeId: contentTypeId,
+                language: language,
+                siteLanguageUrl: siteLanguageUrl,
+                contentId: contentId,
+            });
+            Application.getRegion('content').html(contentFormView.render().$el);
+        });
+    }
+
+    /**
+     * Create contentType
+     *
+     * @param {string} contentTypeId
+     * @param {string} language
+     */
+    newContent(contentTypeId, language) {
+        this._displayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_backoffice_content_new', {
+            contentTypeId: contentTypeId,
+            language: language,
+        });
+        let siteLanguageUrl = [];
+        for (let siteLanguage of Application.getContext().siteLanguages) {
+            siteLanguageUrl[siteLanguage] = Backbone.history.generateUrl('newContent', {contentTypeId: contentTypeId, language: siteLanguage});
+        }
+        
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let contentFormView = new ContentFormView({
+                form: form,
+                name: Translator.trans('open_orchestra_backoffice.table.contents.new'),
+                contentTypeId: contentTypeId,
+                language: language,
+                siteLanguageUrl: siteLanguageUrl,
+            });
+            Application.getRegion('content').html(contentFormView.render().$el);
+        });
+    }
+
     /**
      * list content by content type
      */
-    listContent(contentTypeId, language, contentTypeName, page) {
+    listContent(contentTypeId, language, page) {
         if (null === page) {
             page = 1
         }
@@ -70,7 +136,6 @@ class ContentRouter extends OrchestraRouter
             contentTypeId: contentTypeId,
             siteId: Application.getContext().siteId,
             language: language,
-            contentTypeName: contentTypeName,
         };
         
         let contentType = new ContentType();
