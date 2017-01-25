@@ -261,19 +261,19 @@ module.exports = {
     },
 
     //-- [tinymce] --//
-    tynmce_themes: {
+    tinymce_themes: {
         src: 'vendor/bower_components/tinymce/themes/',
         dest: 'web/tinymce/themes/'
     },
-    tynmce_skins: {
+    tinymce_skins: {
         src: 'vendor/bower_components/tinymce/skins/',
         dest: 'web/tinymce/skins/'
     },
-    tynmce_plugins: {
+    tinymce_plugins: {
         src: 'vendor/bower_components/tinymce/plugins/',
         dest: 'web/tinymce/plugins/'
     },
-    tynmce_languages: {
+    tinymce_languages: {
         src: 'web/bundles/openorchestrabackoffice/ecmascript/OpenOrchestra/Service/Tinymce/Langs/',
         dest: 'web/tinymce/langs/'
     }
