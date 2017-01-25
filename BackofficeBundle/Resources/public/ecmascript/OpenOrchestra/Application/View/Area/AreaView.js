@@ -20,7 +20,11 @@ class AreaView extends OrchestraView
      * Render area
      */
     render() {
-        let templateAddBlockLink = this._renderTemplate('Block/addBlockLink');
+        let templateAddBlockLink = this._renderTemplate('Block/addBlockLink', {
+            node: this._node,
+            areaName: this._area.get('name'),
+            position: '0'
+        });
         this.$el.append(templateAddBlockLink);
 
         this._renderBlocks(this.$el);

@@ -19,6 +19,7 @@ open_orchestra_backoffice:
     no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
     back_to_list: Retour à la liste
+    back: Retour
     navigation:
         hide_menu: Réduire le menu
         dashboard:
@@ -131,7 +132,6 @@ open_orchestra_backoffice:
     shared_block:
         title_list: Blocs partagés
         title_list_new: Sélectionner un bloc à paramétrer
-        title_new: Paramétrer le bloc
         tab_usage_block: Utilisation du bloc
         search_engine:
             label: Libellé
@@ -142,10 +142,15 @@ open_orchestra_backoffice:
         title_new : Nouveau Tag
     block:
         add_block: Ajouter un bloc
+        back_to_node: Retour à la page
+        new_block: Nouveau
+        title_new: Paramétrer le bloc
+        display_new_block: Affiche un block de type %blockComponent%
         confirm_remove:
             title: Supprimer ce bloc ?
             message: La suppression sera définitive
         edit_title: Edition du bloc
+        creation: Le bloc a été créé
     form:
         keyword:
             new: nouveau

@@ -6,7 +6,6 @@ import BlockCategory  from './BlockCategory'
  */
 class Block extends OrchestraModel
 {
-
     /**
      * Parse server response to create nested object
      * @param response

@@ -86,6 +86,8 @@ class Node extends OrchestraModel
                 return Routing.generate('open_orchestra_api_node_update_status');
             case "update_position_block":
                 return Routing.generate('open_orchestra_node_update_block_position', urlParameter);
+            case 'add_block':
+                return Routing.generate('open_orchestra_node_add_block', urlParameter);
         }
     }
 }

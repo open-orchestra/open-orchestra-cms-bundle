@@ -4,10 +4,13 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\BlockNodeEvents;
+use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -189,6 +192,50 @@ class NodeController extends BaseController
         return array();
     }
 
+    /**
+     * @param string  $nodeId
+     * @param string  $language
+     * @param string  $version
+     * @param string  $blockId
+     * @param string  $areaId
+     * @param string  $position
+     *
+     * @Config\Route(
+     *     "/add-block-in-area/{nodeId}/{language}/{version}/{blockId}/{areaId}/{position}",
+     *     requirements={"position": "\d+"},
+     *     name="open_orchestra_node_add_block")
+
+     * @Config\Method({"PUT", "GET"})
+     *
+     * @return FacadeInterface
+     *
+     * @throws NodeNotFoundHttpException
+     * @throws BlockNotFoundHttpException
+     */
+    public function addBlockInAreaAction($nodeId, $language, $version, $blockId, $areaId, $position)
+    {
+        $position = (int) $position;
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $node = $this->findOneNode($nodeId, $language, $siteId, $version);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+
+        $area = $node->getArea($areaId);
+        $block = $this->get('open_orchestra_model.repository.block')->findById($blockId);
+        if (!$block instanceof BlockInterface) {
+            throw new BlockNotFoundHttpException();
+        }
+        $area->addBlock($block, $position);
+
+        $objectManager = $this->get('object_manager');
+        $objectManager->persist($node);
+        $objectManager->flush();
+        $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $block));
+
+        return array();
+    }
 
     /**
      * @param Request $request

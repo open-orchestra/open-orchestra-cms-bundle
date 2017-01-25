@@ -81,7 +81,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
      * @private
      */
     _createUsageBlockLink(td, cellData, rowData) {
-        let link = Backbone.history.generateUrl('editBlock', {blockId: rowData.get('id'), blockLabel: rowData.get('label'), activateUsageTab: true});
+        let link = Backbone.history.generateUrl('editSharedBlock', {blockId: rowData.get('id'), blockLabel: rowData.get('label'), activateUsageTab: true});
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link
@@ -97,7 +97,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = Backbone.history.generateUrl('editBlock', {blockId: rowData.get('id'), blockLabel: rowData.get('label')});
+        let link = Backbone.history.generateUrl('editSharedBlock', {blockId: rowData.get('id'), blockLabel: rowData.get('label')});
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link

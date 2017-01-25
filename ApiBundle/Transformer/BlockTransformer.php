@@ -79,7 +79,7 @@ class BlockTransformer extends AbstractTransformer
 
         $facade->previewContent = $this->displayBlockManager->show($block);
 
-        if ($this->hasGroup(CMSGroupContext::BLOCKS_NUMBER_USER)) {
+        if ($this->hasGroup(CMSGroupContext::BLOCKS_NUMBER_USE)) {
             $facade->numberUse = $this->nodeRepository->countBlockUsed($block->getId());
         }
 

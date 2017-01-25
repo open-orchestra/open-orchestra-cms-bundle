@@ -2,9 +2,9 @@ import OrchestraView from '../OrchestraView'
 import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
 
 /**
- * @class NewBlockListView
+ * @class AbstractNewBlockComponentListView
  */
-class NewBlockListView extends OrchestraView
+class AbstractNewBlockComponentListView extends OrchestraView
 {
     /**
      * @inheritdoc
@@ -33,18 +33,48 @@ class NewBlockListView extends OrchestraView
      */
     render() {
         let orderedBlockComponents = this._orderBlockComponentByCategory(this._listBlockComponents);
-        let template = this._renderTemplate('Block/newBlockListView',
+        let template = this._renderTemplate('Block/newBlockListComponentView',
             {
                 numberResult: this._listBlockComponents.length,
                 orderedBlockComponents: orderedBlockComponents,
                 categories: this._categories,
-                language: this._language,
-                messages: FlashMessageBag.getMessages()
+                messages: FlashMessageBag.getMessages(),
+                labelButtonBack: this._getLabelButtonBack(),
+                urlButtonBack: this._getUrlButtonBack(),
+                addBlockUrl: $.proxy(this._getAddBlockUrl, this)
             }
         );
         this.$el.html(template);
 
         return this;
+    }
+
+    /**
+     * @private
+     *
+     * @return string
+     */
+    _getLabelButtonBack() {
+        throw new TypeError("Please implement abstract method _getLabelButtonBack.");
+    }
+
+    /**
+     * @private
+     *
+     * @return string
+     */
+    _getUrlButtonBack() {
+        throw new TypeError("Please implement abstract method _getUrlButtonBack.");
+    }
+
+    /**
+     * @private
+     * @param {BlockComponent} blockComponent
+     *
+     * @return string
+     */
+    _getAddBlockUrl(blockComponent) {
+        throw new TypeError("Please implement abstract method _getAddBlockUrl.");
     }
 
     /**
@@ -96,4 +126,4 @@ class NewBlockListView extends OrchestraView
     }
 }
 
-export default NewBlockListView;
+export default AbstractNewBlockComponentListView;

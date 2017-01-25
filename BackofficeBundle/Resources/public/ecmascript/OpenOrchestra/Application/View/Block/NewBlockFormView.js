@@ -1,93 +1,84 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import ApplicationError from '../../../Service/Error/ApplicationError'
-import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage     from '../../../Service/FlashMessage/FlashMessage'
+import AbstractNewBlockFormView from './AbstractNewBlockFormView'
+import FlashMessageBag          from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage             from '../../../Service/FlashMessage/FlashMessage'
 
 /**
  * @class NewBlockFormView
  */
-class NewBlockFormView extends AbstractFormView
+class NewBlockFormView extends AbstractNewBlockFormView
 {
-    /**
-     * Pre initialize
-     * @param {Object} options
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['click button.submit-continue-form'] = '_submit';
-    }
-
     /**
      * Initialize
      * @param {Form}   form
-     * @param {string} language
      * @param {string} name
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
+     * @param {string} component
+     * @param {string} areaName
+     * @param {string} position
      */
-    initialize({form, language, name}) {
-        super.initialize({form : form});
-        this._language = language;
-        this._name = name;
+    initialize({form, name, nodeId, nodeLanguage, nodeVersion, component, areaName, position}) {
+        super.initialize({form, name});
+        this._nodeId = nodeId;
+        this._nodeLanguage = nodeLanguage;
+        this._nodeVersion = nodeVersion;
+        this._component = component;
+        this._areaName = areaName;
+        this._position = position;
     }
 
     /**
-     * @inheritdoc
+     * @private
+     *
+     * @return string
      */
-    render() {
-        let template = this._renderTemplate('Block/newBlockView', {name: this._name});
-        this.$el.html(template);
-        this._$formRegion = $('.form-new', this.$el);
-        super.render();
+    _getLabelButtonBack() {
+        return Translator.trans('open_orchestra_backoffice.back');
+    }
 
-        return this;
+    /**
+     * @private
+     *
+     * @return string
+     */
+    _getUrlButtonBack() {
+        return Backbone.history.generateUrl('newBlockListAvailable',{
+            nodeId: this._nodeId,
+            nodeLanguage: this._nodeLanguage,
+            nodeVersion: this._nodeVersion,
+            component: this._component,
+            componentName: this._name,
+            areaName: this._areaName,
+            position: this._position
+        });
     }
 
     /**
      * @inheritdoc
      */
     getStatusCodeForm(event) {
-        let statusCodeForm = {
+        return {
             '422': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this._redirectEditBlock, this)
+            '201': $.proxy(this._redirectShowNode, this)
         };
-
-        if ($(event.currentTarget).hasClass('submit-continue-form')) {
-            statusCodeForm['201'] = $.proxy(this._redirectNewBlock, this);
-        }
-
-        return statusCodeForm;
     }
 
     /**
-     * Redirect to edit block view
+     * Redirect to node view
      *
-     * @param {mixed}  data
-     * @param {string} textStatus
-     * @param {object} jqXHR
      * @private
      */
-    _redirectEditBlock(data, textStatus, jqXHR) {
-        let blockId = jqXHR.getResponseHeader('blockId');
-        let blockLabel = jqXHR.getResponseHeader('blockLabel');
-        if (null === blockId || null === blockLabel) {
-            throw new ApplicationError('Invalid blockId or blockLabel');
-        }
-        let url = Backbone.history.generateUrl('editBlock', {blockId: blockId, blockLabel: blockLabel});
-        let message = new FlashMessage(data, 'success');
+    _redirectShowNode() {
+        let url = Backbone.history.generateUrl('showNode', {
+            nodeId: this._nodeId,
+            language: this._nodeLanguage,
+            version: this._nodeVersion
+        });
+        let message = new FlashMessage(Translator.trans('open_orchestra_backoffice.block.creation'), 'success');
         FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
-    }
-
-    /**
-     * Redirect to new workflow profile view
-     *
-     * @private
-     */
-    _redirectNewBlock(data) {
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
-        Backbone.Events.trigger('form:deactivate', this);
-        Backbone.history.loadUrl(Backbone.history.generateUrl('newBlockList', {language: this._language}));
     }
 }
 

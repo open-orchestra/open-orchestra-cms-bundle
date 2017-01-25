@@ -1,8 +1,5 @@
 import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
-import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
 import Block                  from '../../Model/Block/Block'
-import Nodes                  from '../../Collection/Node/Nodes'
-import NodeUsageBlockListView from '../Node/NodeUsageBlockListView'
 import Application            from '../../Application'
 
 /**
@@ -11,26 +8,21 @@ import Application            from '../../Application'
 class BlockFormView extends AbstractFormView
 {
     /**
-     * Pre initialize
-     * @param {Object} options
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['click button.delete-button'] = '_deleteBlock';
-    }
-
-    /**
      * Initialize
      * @param {Form} form
      * @param {string} blockLabel
      * @param {string} blockId
-     * @param {boolean} activateUsageTab
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
      */
-    initialize({form, blockLabel, blockId, activateUsageTab}) {
+    initialize({form, blockLabel, blockId, nodeId, nodeLanguage, nodeVersion}) {
         super.initialize({form: form});
         this._blockLabel = blockLabel;
         this._blockId = blockId;
-        this._activateUsageTab = activateUsageTab;
+        this._nodeId = nodeId;
+        this._nodeLanguage = nodeLanguage;
+        this._nodeVersion = nodeVersion;
     }
 
     /**
@@ -39,7 +31,9 @@ class BlockFormView extends AbstractFormView
     render() {
         let template = this._renderTemplate('Block/blockEditView', {
             blockLabel : this._blockLabel,
-            messages: FlashMessageBag.getMessages()
+            nodeId: this._nodeId,
+            nodeLanguage: this._nodeLanguage,
+            nodeVersion: this._nodeVersion
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -49,85 +43,13 @@ class BlockFormView extends AbstractFormView
     }
 
     /**
-     * @inheritdoc
-     */
-    _renderForm() {
-        super._renderForm();
-        this._addTabUsageBlock();
-    }
-
-    /**
      * @inheritDoc
      */
     getStatusCodeForm(event) {
         return {
             '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
             '422': $.proxy(this.refreshRender, this)
         }
-    }
-
-    /**
-     * Delete
-     */
-    _deleteBlock() {
-        let block = new Block({'id': this._blockId});
-        block.destroy({
-            context: 'shared-block',
-            success: () => {
-                let url = Backbone.history.generateUrl('listSharedBlock');
-                Backbone.history.navigate(url, true);
-            }
-        });
-    }
-
-    /**
-     * Add tab pane usage block
-     * @private
-     */
-    _addTabUsageBlock() {
-        let tabId = 'tab-usage-block';
-        let $navTab = $('<li/>').append(
-            $('<a/>', {
-                text: Translator.trans('open_orchestra_backoffice.shared_block.tab_usage_block'),
-                'data-toggle': 'tab',
-                role: 'tab',
-                href: '#'+tabId
-        }));
-        let $tabContent = $('<div/>', {
-            class: 'tab-pane',
-            id: tabId,
-            role: 'tabpanel'
-        });
-
-        $('.nav-tabs', this._$formRegion).append($navTab);
-        $('.tab-content', this._$formRegion).append($tabContent);
-
-        let listView = this._createListNodeUsageBlockView();
-        $tabContent.html(listView.render().$el);
-        if (true === this._activateUsageTab) {
-            $('.nav-tabs a[href="#'+tabId+'"]', this._$formRegion).tab('show');
-            $('.tab-content .tab-pane', this._$formRegion).removeClass('active');
-            $tabContent.addClass('active');
-        }
-    }
-
-    /**
-     * @returns {NodeUsageBlockListView}
-     *
-     * @private
-     */
-    _createListNodeUsageBlockView() {
-        let collection = new Nodes();
-        let language = Application.getContext().user.language.contribution;
-        let siteId = Application.getContext().siteId;
-
-        return new NodeUsageBlockListView({
-            collection: collection,
-            language: language,
-            siteId: siteId,
-            blockId: this._blockId
-        });
     }
 }
 

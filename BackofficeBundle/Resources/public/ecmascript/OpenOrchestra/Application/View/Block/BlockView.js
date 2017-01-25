@@ -1,6 +1,7 @@
 import OrchestraView    from '../OrchestraView'
 import Application      from '../../Application'
 import ConfirmModalView from '../../../Service/ConfirmModal/View/ConfirmModalView'
+import ApplicationError from '../../../Service/Error/ApplicationError'
 
 /**
  * @class BlockView
@@ -13,7 +14,8 @@ class BlockView extends OrchestraView
     preinitialize() {
         this.className = 'block-item';
         this.events = {
-            'click .delete-block': '_confirmDeleteBlock'
+            'click .delete-block': '_confirmDeleteBlock',
+            'click .edit-block': '_editBlock'
         }
     }
 
@@ -33,9 +35,13 @@ class BlockView extends OrchestraView
      * Render block
      */
     render() {
+        let position = this._area.get('blocks').indexOf(this._block) + 1;
         let template = this._renderTemplate('Block/blockView',
             {
-                block: this._block
+                block: this._block,
+                node: this._node,
+                area: this._area,
+                position: position
             }
         );
         this.$el.html(template);
@@ -43,6 +49,31 @@ class BlockView extends OrchestraView
         this.$el.data('area', this._area);
 
         return this;
+    }
+
+    /**
+     * show form edit block
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _editBlock(event) {
+        event.stopPropagation();
+        if (true === this._block.get('transverse')) {
+            throw new ApplicationError('Blocks transverse is not editable in this context');
+        }
+        let url = Backbone.history.generateUrl('editBlock', {
+            blockId: this._block.get('id'),
+            blockLabel: this._block.get('label'),
+            nodeId: this._node.get('node_id'),
+            nodeLanguage: this._node.get('language'),
+            nodeVersion: this._node.get('version')
+        });
+        Backbone.history.navigate(url, true);
+
+        return false;
     }
 
     /**
