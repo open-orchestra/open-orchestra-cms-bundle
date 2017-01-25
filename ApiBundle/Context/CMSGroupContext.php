@@ -15,9 +15,7 @@ class CMSGroupContext
     const PREVIEW = 'preview';
     const SITE = 'site';
     const STATUS = 'status';
-    const STATUS_LINKS = 'status_links';
-    const USER_LINKS = 'user_links';
-    const WORKFLOW_PROFILE_LINKS = 'workflow_profile_links';
+    const AUTHORIZATIONS = 'user_links';
     const THEME = 'theme';
     const THEME_LINKS = 'theme_links';
     const SITE_MAIN_ALIAS = 'site_main_alias';

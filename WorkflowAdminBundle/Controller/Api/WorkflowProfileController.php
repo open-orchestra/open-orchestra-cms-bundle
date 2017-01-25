@@ -30,7 +30,7 @@ class WorkflowProfileController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_workflow_profile_list")
      * @Config\Method({"GET"})
-     * @Api\Groups({OpenOrchestra\ApiBundle\Context\CMSGroupContext::WORKFLOW_PROFILE_LINKS})
+     * @Api\Groups({OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS})
      */
     public function listAction(Request $request)
     {

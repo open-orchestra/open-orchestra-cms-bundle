@@ -75,7 +75,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->codeColor = $status->getDisplayColor();
         $facade->id = $status->getId();
 
-        if ($this->hasGroup(CMSGroupContext::STATUS_LINKS)) {
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
                 && !$this->usageFinder->hasUsage($status)
                 && !$status->isInitialState()

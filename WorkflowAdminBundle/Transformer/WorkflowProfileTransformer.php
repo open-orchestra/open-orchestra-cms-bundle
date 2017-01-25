@@ -55,7 +55,7 @@ class WorkflowProfileTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->id = $workflowProfile->getId();
         $facade->label = $this->multiLanguagesChoiceManager->choose($workflowProfile->getLabels());
         $facade->description = $this->multiLanguagesChoiceManager->choose($workflowProfile->getDescriptions());
-        if ($this->hasGroup(CMSGroupContext::WORKFLOW_PROFILE_LINKS)) {
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $workflowProfile);
             $facade->addRight('can_delete', $canDelete);
         }

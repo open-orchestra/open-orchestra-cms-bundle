@@ -70,7 +70,7 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->groups = implode(',', $labels);
 
-        if ($this->hasGroup(CMSGroupContext::USER_LINKS)) {
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $user);
             $facade->addRight('can_delete', $canDelete);
         }
