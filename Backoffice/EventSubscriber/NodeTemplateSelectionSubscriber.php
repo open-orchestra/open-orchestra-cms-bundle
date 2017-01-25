@@ -72,19 +72,18 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
                 'virtual' => true,
                 'label' => false,
                 'mapped' => false,
-                'required' => false,
                 'group_id' => 'properties',
                 'sub_group_id' => 'style'
+            ));
+            $form->get('nodeTemplateSelection')->add('template', 'choice', array(
+                'choices' => $this->getTemplateChoices(),
+                'required' => true,
+                'label' => 'open_orchestra_backoffice.form.node.template'
             ));
             $form->get('nodeTemplateSelection')->add('nodeSource', 'oo_node_choice', array(
                 'required' => false,
                 'mapped' => false,
                 'label' => 'open_orchestra_backoffice.form.node.node_source',
-            ));
-            $form->get('nodeTemplateSelection')->add('template', 'choice', array(
-                'choices' => $this->getTemplateChoices(),
-                'required' => false,
-                'label' => 'open_orchestra_backoffice.form.node.template'
             ));
         }
     }

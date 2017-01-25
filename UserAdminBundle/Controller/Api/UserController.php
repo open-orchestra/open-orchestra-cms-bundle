@@ -48,7 +48,7 @@ class UserController extends BaseController
      *
      * @Config\Route("", name="open_orchestra_api_user_list")
      * @Config\Method({"GET"})
-     * @Api\Groups({OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS})
+     * @Api\Groups({\OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS})
      * @return FacadeInterface
      */
     public function listAction(Request $request)
