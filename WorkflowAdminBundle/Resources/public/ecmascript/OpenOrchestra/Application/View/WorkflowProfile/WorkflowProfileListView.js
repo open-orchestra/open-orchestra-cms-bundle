@@ -51,7 +51,10 @@ class WorkflowProfileListView extends mix(AbstractDataTableView).with(UrlPaginat
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = Backbone.history.generateUrl('editWorkflowProfile', {workflowProfileId: rowData.get('id')});
+        let link = Backbone.history.generateUrl('editWorkflowProfile', {
+            workflowProfileId: rowData.get('id'),
+            name: rowData.get('label')
+        });
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link

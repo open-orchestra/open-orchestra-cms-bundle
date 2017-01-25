@@ -1,16 +1,3 @@
-{% block oo_workflow_profile_submit_widget %}
-    {% spaceless %}
-        {{ block('form_submit_widget') }}
-        {% if(form.vars.value.id is null) %}
-            {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
-            {% set id = 'submit_' ~ form.vars.name %}
-            {% set attr = {'class': 'submit-continue-form'} %}
-            {% set button_class= 'primary' %}
-            {{ block('button_widget') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock oo_workflow_profile_submit_widget %}
-
 {% block oo_workflow_right_widget %}
     {% spaceless %}
         <div class="table-responsive">

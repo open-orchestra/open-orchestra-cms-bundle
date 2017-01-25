@@ -82,7 +82,6 @@ class ParametersController extends AbstractAdminController
      */
     protected function getStatusIndexesToUpdate(array $statusCollection, array $formData)
     {
-        $updatedStatusIndexes = array();
         $formStatuses = $formData['statuses'];
         $originalStatusesMap = $this->generateStatusesPropertiesMap($statusCollection);
 

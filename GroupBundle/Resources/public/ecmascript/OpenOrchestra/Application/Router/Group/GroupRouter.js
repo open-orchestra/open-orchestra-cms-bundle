@@ -87,9 +87,9 @@ class GroupRouter extends OrchestraRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let groupFormView = new GroupFormView({
                 form: form,
-                groupId: groupId,
-                name: name
-             });
+                name: name,
+                groupId: groupId
+            });
             Application.getRegion('content').html(groupFormView.render().$el);
         });
     }

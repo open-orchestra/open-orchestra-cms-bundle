@@ -42,13 +42,14 @@ class WorkflowProfileController extends AbstractAdminController
             $documentManager = $this->get('object_manager');
             $documentManager->persist($workflowProfile);
             $documentManager->flush();
-            $message = $this->get('translator')->trans('open_orchestra_workflow_admin_workflow_profile_new');
+            $message = $this->get('translator')->trans('open_orchestra_workflow_admin.form.workflow_profile.creation');
+            $this->get('session')->getFlashBag()->add('success', $message);
 
             $this->dispatchEvent(WorkflowProfileEvents::WORKFLOW_PROFILE_CREATE, new WorkflowProfileEvent($workflowProfile));
             $response = new Response(
-                $message,
+                '',
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/html; charset=utf-8', 'workflowProfileId' => $workflowProfile->getId(), 'name' => $workflowProfile->getLabels($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
+                array('Content-type' => 'text/html; charset=utf-8', 'workflowProfileId' => $workflowProfile->getId(), 'name' => $workflowProfile->getLabel($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
                 );
 
             return $response;

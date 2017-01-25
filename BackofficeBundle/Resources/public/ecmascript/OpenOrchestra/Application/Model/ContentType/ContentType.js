@@ -6,10 +6,16 @@ import OrchestraModel from '../OrchestraModel'
 class ContentType extends OrchestraModel
 {
     /**
+     * Pre initialize
+     */
+    preinitialize() {
+        this.idAttribute = 'content_type_id';
+    }
+
+    /**
      * @inheritdoc
      */
     _getSyncUrl(method, options) {
-        let context = options.context || null;
         let urlParameter = options.urlParameter || {};
         switch (method) {
             case "read":

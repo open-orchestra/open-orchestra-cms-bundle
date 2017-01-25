@@ -2,6 +2,7 @@ import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import Application          from '../../Application'
 import WorkflowProfile      from '../../Model/WorkflowProfile/WorkflowProfile'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import ApplicationError     from '../../../Service/Error/ApplicationError'
 
 /**
  * @class WorkflowProfileFormView
@@ -11,13 +12,13 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
     /**
      * Initialize
      * @param {Form}   form
+     * @param {String} name
      * @param {String} workflowProfileId
-     * @param {String}  name
      */
-    initialize({form, workflowProfileId, name}) {
+    initialize({form, name, workflowProfileId = null}) {
         super.initialize({form : form});
-        this._workflowProfileId = workflowProfileId;
         this._name = name;
+        this._workflowProfileId = workflowProfileId;
     }
 
     /**
@@ -25,7 +26,7 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
      */
     render() {
         let template = this._renderTemplate('WorkflowProfile/workflowProfileFormView', {
-                name: this._name
+            name: this._name
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -35,7 +36,7 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
     }
 
     /**
-     * Redirect to edit user view
+     * Redirect to edit workflow profile view
      *
      * @param {mixed}  data
      * @param {string} textStatus
@@ -52,18 +53,18 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
             workflowProfileId: workflowProfileId,
             name: name
         });
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
     
     /**
-     * Delete
-     * @param {event} event
+     * Delete workflow profile
      */
-    _deleteElement(event) {
-        let workflowProfile = new WorkflowProfile({'workflow_profile_id': this._workflowProfileId});
+    _deleteElement() {
+        if (null === this._workflowProfileId) {
+            throw new ApplicationError('Invalid workflowProfileId');
+        }
+        let workflowProfile = new WorkflowProfile({'id': this._workflowProfileId});
         workflowProfile.destroy({
             success: () => {
                 let url = Backbone.history.generateUrl('listWorkflowProfile');

@@ -34,9 +34,15 @@ class WorkflowProfileTransformerTest extends AbstractBaseTestCase
 
         Phake::when($this->workflowProfile)->getId()->thenReturn($this->workflowProfileId);
         Phake::when($this->workflowProfileRepository)->find(Phake::anyParameters())->thenReturn($this->workflowProfile);
+        $authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        Phake::when($authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
+        $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
+        Phake::when($transformerManager)->getGroupContext()->thenReturn($groupContext);
+        Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
 
         $this->transformer = new WorkflowProfileTransformer(
             $this->facadeClass,
+            $authorizationChecker,
             $this->multiLanguagesChoiceManager,
             $this->workflowProfileRepository
         );

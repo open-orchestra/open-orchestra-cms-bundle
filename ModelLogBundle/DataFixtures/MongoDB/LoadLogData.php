@@ -52,7 +52,7 @@ class LoadLogData extends AbstractFixture implements OrderedFixtureInterface, Or
     {
         $log = new Log();
         $log->setMessage('Imported log from fixtures');
-        $log->SetDateTime($dateTime);
+        $log->setDateTime($dateTime);
         $log->setExtra(array('user_ip' => $ip, 'user_name' => $name, 'site_id' => $siteId));
 
         return $log;

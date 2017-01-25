@@ -52,7 +52,8 @@ class ContentTypeRouter extends OrchestraRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let contentTypeFormView = new ContentTypeFormView({
                 form: form,
-                name: name
+                name: name,
+                contentTypeId: contentTypeId
             });
             Application.getRegion('content').html(contentTypeFormView.render().$el);
         });

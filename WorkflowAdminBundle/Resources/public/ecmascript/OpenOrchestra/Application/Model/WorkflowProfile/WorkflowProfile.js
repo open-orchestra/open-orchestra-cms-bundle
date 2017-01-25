@@ -10,7 +10,7 @@ class WorkflowProfile extends OrchestraModel
      */
     _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
-        urlParameter.workflowProfileId = this.get('workflow_profile_id');
+        urlParameter.workflowProfileId = this.get('id');
         switch (method) {
             case "delete":
                 return Routing.generate('open_orchestra_api_workflow_profile_delete', urlParameter);

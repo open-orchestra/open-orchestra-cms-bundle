@@ -67,7 +67,7 @@ interface LogInterface
     /**
      * @param string $dateTime
      */
-    public function SetDateTime($dateTime);
+    public function setDateTime($dateTime);
 
     /**
      * @return string

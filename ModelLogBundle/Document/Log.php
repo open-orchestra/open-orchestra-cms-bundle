@@ -170,7 +170,7 @@ class Log implements LogInterface
     /**
      * @param string $dateTime
      */
-    public function SetDateTime($dateTime)
+    public function setDateTime($dateTime)
     {
         if (is_string($dateTime)) {
             $this->datetime = $dateTime;

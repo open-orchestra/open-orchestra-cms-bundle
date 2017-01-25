@@ -2,6 +2,7 @@ import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import Application          from '../../Application'
 import Status               from '../../Model/Status/Status'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import ApplicationError     from '../../../Service/Error/ApplicationError'
 
 /**
  * @class StatusFormView
@@ -11,10 +12,11 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}   form
+     * @param {String} name
      * @param {String} statusId
-     * @param {String}  name
+
      */
-    initialize({form, statusId, name}) {
+    initialize({form, name, statusId = null}) {
         super.initialize({form : form});
         this._statusId = statusId;
         this._name = name;
@@ -35,7 +37,7 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     }
     
     /**
-     * Redirect to edit user view
+     * Redirect to edit status view
      *
      * @param {mixed}  data
      * @param {string} textStatus
@@ -52,18 +54,18 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             statusId: statusId,
             name: name
         });
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
     
     /**
-     * Delete
-     * @param {event} event
+     * Delete a status
      */
-    _deleteElement(event) {
-        let status = new Status({'status_id': this._statusId});
+    _deleteElement() {
+        if (null === this._statusId) {
+            throw new ApplicationError('Invalid statusId');
+        }
+        let status = new Status({'id': this._statusId});
         status.destroy({
             success: () => {
                 let url = Backbone.history.generateUrl('listStatus');

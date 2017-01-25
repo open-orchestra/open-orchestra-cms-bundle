@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Controller\Api;
 
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\DeleteStatusNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
@@ -122,20 +121,6 @@ class StatusController extends BaseController
         }
 
         return array();
-    }
-
-    /**
-     * Deny delete unless granted
-     *
-     * @param StatusInterface $status
-     *
-     * @throws AccessDeniedException
-     */
-    protected function denyDeleteUnlessGranted(StatusInterface $status)
-    {
-        if ($this->isDeleteGranted($status)) {
-            throw $this->DeleteStatusNotGrantedHttpException($message);
-        }
     }
 
     /**

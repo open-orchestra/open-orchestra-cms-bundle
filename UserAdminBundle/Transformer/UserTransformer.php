@@ -2,18 +2,21 @@
 
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\UserBundle\Document\User;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class UserTransformer
  */
-class UserTransformer extends AbstractTransformer
+class UserTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $eventDispatcher;
     protected $multiLanguagesChoiceManager;
@@ -21,45 +24,55 @@ class UserTransformer extends AbstractTransformer
 
     /**
      * @param string                               $facadeClass
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param EventDispatcherInterface             $eventDispatcher
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param UserRepositoryInterface              $userRepository
      */
     public function __construct(
         $facadeClass,
+        AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         UserRepositoryInterface $userRepository
     ) {
-        parent::__construct($facadeClass);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->eventDispatcher = $eventDispatcher;
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->userRepository = $userRepository;
     }
 
     /**
-     * @param User $mixed
+     * @param UserInterface $user
      *
      * @return FacadeInterface
+     * @throws TransformerParameterTypeException
      */
-    public function transform($mixed)
+    public function transform($user)
     {
+        if (!$user instanceof UserInterface) {
+            throw new TransformerParameterTypeException();
+        }
+
         $facade = $this->newFacade();
 
-        if (!is_null($mixed)) {
-            $facade->id = $mixed->getId();
-            $facade->username = $mixed->getUsername();
-            $facade->roles = implode(',', $mixed->getRoles());
+        $facade->id = $user->getId();
+        $facade->username = $user->getUsername();
+        $facade->roles = implode(',', $user->getRoles());
 
-            $groups = $mixed->getGroups();
-            $labels = array();
-            foreach($groups as $group){
-                if (!$group->isDeleted()) {
-                    $labels[] = $this->multiLanguagesChoiceManager->choose($group->getLabels());
-                }
+        $groups = $user->getGroups();
+        $labels = array();
+        foreach($groups as $group){
+            if (!$group->isDeleted()) {
+                $labels[] = $this->multiLanguagesChoiceManager->choose($group->getLabels());
             }
+        }
 
-            $facade->groups = implode(',', $labels);
+        $facade->groups = implode(',', $labels);
+
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
+            $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $user);
+            $facade->addRight('can_delete', $canDelete);
         }
 
         return $facade;

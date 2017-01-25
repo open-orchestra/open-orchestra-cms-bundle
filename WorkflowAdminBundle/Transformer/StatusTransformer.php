@@ -9,7 +9,6 @@ use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
@@ -50,7 +49,6 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param StatusInterface          $status
-     * @param StatusableInterface|null $document
      *
      * @return FacadeInterface
      *
@@ -76,7 +74,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->codeColor = $status->getDisplayColor();
         $facade->id = $status->getId();
 
-        if ($this->hasGroup(CMSGroupContext::STATUS_LINKS)) {
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $canDelete = $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $status)
                 && !$this->usageFinder->hasUsage($status)
                 && !$status->isInitialState()

@@ -1,7 +1,9 @@
 let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
 
     /**
-     * @inheritDoc
+     * pre initialize
+     *
+     * @param {Object} options
      */
     preinitialize(options) {
         super.preinitialize(options);
@@ -10,7 +12,7 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
     }
 
     /**
-     * @inheritDoc
+     * Description of column checkbox
      */
     _getColumnsDefinitionDeleteCheckbox() {
         return {

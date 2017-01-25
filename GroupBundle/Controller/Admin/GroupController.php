@@ -46,10 +46,11 @@ class GroupController extends AbstractAdminController
             $documentManager->persist($group);
             $documentManager->flush();
             $message = $this->get('translator')->trans('open_orchestra_group.form.group.new.success');
+            $this->get('session')->getFlashBag()->add('success', $message);
 
             $this->dispatchEvent(GroupEvents::GROUP_CREATE, new GroupEvent($group));
             $response = new Response(
-                $message,
+                '',
                 Response::HTTP_CREATED,
                 array('Content-type' => 'text/plain; charset=utf-8', 'groupId' => $group->getId(), 'name' => $group->getName())
             );
