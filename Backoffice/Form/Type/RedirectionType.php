@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use OpenOrchestra\Backoffice\Validator\Constraints\UniqueRedirection;
 
 /**
  * Class RedirectionType
@@ -59,6 +60,7 @@ class RedirectionType extends AbstractType
             'label'        => 'open_orchestra_backoffice.form.redirection.route_pattern',
             'group_id'     => 'redirection',
             'sub_group_id' => 'redirection',
+            'constraints'  => array(new UniqueRedirection()),
         ));
         $builder->add('nodeId', 'oo_node_choice', array(
             'label'        => 'open_orchestra_backoffice.form.redirection.node_id',
