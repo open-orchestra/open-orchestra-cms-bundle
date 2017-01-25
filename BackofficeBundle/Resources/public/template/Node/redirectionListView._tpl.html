@@ -6,7 +6,7 @@
         <% _.each(redirections, function(redirection, key) { %>
         <li class="list-group-item">
             <% if (true === redirection.get('rights').can_edit) { %>
-                <a><%= redirection.get('route_pattern') %></a>
+                <a href="#redirection/edit/<%= redirection.get('id') %>"><%= redirection.get('route_pattern') %></a>
             <% } else { %>
                 <%= redirection.get('route_pattern') %>
             <% }; %>
