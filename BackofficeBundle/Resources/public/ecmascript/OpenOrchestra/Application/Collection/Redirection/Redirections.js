@@ -16,11 +16,22 @@ class Redirections extends DataTableCollection
     /**
      * @inheritdoc
      */
+    toJSON(options) {
+        return {
+            'redirections': super.toJSON(options)
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
         switch (method) {
             case "read":
                 return this._getSyncReadUrl(options, urlParameter);
+            case "delete":
+                return Routing.generate('open_orchestra_api_redirection_delete_multiple');
         }
     }
 

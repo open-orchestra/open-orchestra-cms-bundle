@@ -7,12 +7,30 @@ use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
+use OpenOrchestra\ModelInterface\Repository\RedirectionRepositoryInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class RedirectionTransformer
  */
 class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
+    protected $redirectionRepository;
+
+    /**
+     * @param string                        $facadeClass
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param RedirectionRepositoryInterface $redirectionRepository
+     */
+    public function __construct(
+        $facadeClass,
+        AuthorizationCheckerInterface $authorizationChecker,
+        RedirectionRepositoryInterface $redirectionRepository
+    ) {
+        parent::__construct($facadeClass, $authorizationChecker);
+        $this->redirectionRepository = $redirectionRepository;
+    }
+
     /**
      * @param RedirectionInterface $redirection
      *
@@ -38,8 +56,25 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
         }
         $facade->permanent = $redirection->isPermanent();
         $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $redirection));
+        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $redirection));
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface           $facade
+     * @param RedirectionInterface|null $source
+     *
+     * @return mixed
+     * @throws StatusChangeNotGrantedHttpException
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if (null !== $facade->id) {
+            return $this->redirectionRepository->find($facade->id);
+        }
+
+        return null;
     }
 
     /**

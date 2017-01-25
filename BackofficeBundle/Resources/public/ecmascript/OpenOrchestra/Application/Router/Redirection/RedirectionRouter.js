@@ -15,7 +15,8 @@ class RedirectionRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'redirection/list(/:page)': 'listRedirections',
+            'redirection/list(/:page)'       : 'listRedirections',
+            'redirection/new'                : 'newRedirection',
             'redirection/edit/:redirectionId': 'editRedirection'
         };
     }
@@ -60,6 +61,22 @@ class RedirectionRouter extends OrchestraRouter
             });
             let el = redirectionsView.render().$el;
             Application.getRegion('content').html(el);
+        });
+    }
+
+    /**
+     * New redirection
+     */
+    newRedirection() {
+        let url = Routing.generate('open_orchestra_backoffice_redirection_new');
+
+        this._displayLoader(Application.getRegion('content'));
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let redirectionFormView = new RedirectionFormView({
+                form: form,
+                name: Translator.trans('open_orchestra_backoffice.redirection.title_new')
+             });
+            Application.getRegion('content').html(redirectionFormView.render().$el);
         });
     }
 

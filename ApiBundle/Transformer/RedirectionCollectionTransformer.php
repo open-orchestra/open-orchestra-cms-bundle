@@ -37,6 +37,26 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
     }
 
     /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return UserInterface|null
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        $redirections = array();
+        $redirectionsFacade = $facade->getRedirections();
+        foreach ($redirectionsFacade as $redirectionFacade) {
+            $redirection = $this->getTransformer('redirection')->reverseTransform($redirectionFacade);
+            if (null !== $redirection) {
+                $redirections[] = $redirection;
+            }
+        }
+
+        return $redirections;
+    }
+
+    /**
      * @return string
      */
     public function getName()

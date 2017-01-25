@@ -7,13 +7,6 @@ import RedirectionsListView   from '../../View/Redirection/RedirectionsListView'
 class RedirectionsView extends AbstractCollectionView
 {
     /**
-     * @inheritdoc
-     */
-    preinitialize() {
-        super.preinitialize({ removeMultiple: false });
-    }
-
-    /**
      * Render redirections view
      */
     render() {

@@ -1,10 +1,11 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class RedirectionsListView
  */
-class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
+class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
     /**
      * @inheritDoc
@@ -18,6 +19,7 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
      */
     getColumnsDefinition() {
         return [
+            this._getColumnsDefinitionDeleteCheckbox(),
             {
                 name: "site_name",
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.site_name'),

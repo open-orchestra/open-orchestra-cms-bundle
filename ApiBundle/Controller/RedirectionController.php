@@ -100,6 +100,39 @@ class RedirectionController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_redirection_delete_multiple")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteRedirectionsAction(Request $request)
+    {
+        $format = $request->get('_format', 'json');
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.redirection_collection.class'),
+            $format
+        );
+        $redirections = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection')->reverseTransform($facade);
+
+        $redirectionRepository = $this->get('open_orchestra_model.repository.redirection');
+        $redirectionIds = array();
+        foreach ($redirections as $redirection) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $redirection)) {
+                $redirectionIds[] = $redirection->getId();
+                $this->dispatchEvent(RedirectionEvents::REDIRECTION_DELETE, new RedirectionEvent($redirection));
+            }
+        }
+
+        $redirectionRepository->removeRedirections($redirectionIds);
+
+        return array();
+    }
+
+    /**
      * @param int $redirectionId
      *
      * @Config\Route("/{redirectionId}/delete", name="open_orchestra_api_redirection_delete")

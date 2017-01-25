@@ -3,6 +3,8 @@ import Application          from '../../Application'
 import Status               from '../../Model/Status/Status'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 import ApplicationError     from '../../../Service/Error/ApplicationError'
+import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage         from '../../../Service/FlashMessage/FlashMessage'
 
 /**
  * @class StatusFormView
@@ -57,7 +59,7 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
-    
+
     /**
      * Delete a status
      */
