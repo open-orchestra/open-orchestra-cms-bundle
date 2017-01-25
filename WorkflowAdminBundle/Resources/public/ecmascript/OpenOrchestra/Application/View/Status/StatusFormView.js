@@ -35,7 +35,7 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 
         return this;
     }
-    
+
     /**
      * Redirect to edit status view
      *

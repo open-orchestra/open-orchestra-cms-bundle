@@ -41,7 +41,10 @@ class KeywordListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = Backbone.history.generateUrl('editKeyword', {keywordId: rowData.get('id')});
+        let link = Backbone.history.generateUrl('editKeyword', {
+            keywordId: rowData.get('id'),
+            name: rowData.get('label')
+        });
         cellData = $('<a>',{
             text: cellData,
             href: '#'+link

@@ -140,7 +140,6 @@ open_orchestra_backoffice:
     keyword:
         title_list: Tag
         title_new : New tag
-        title_edit : Edit tag
     block:
         add_block: Add a block
         confirm_remove:

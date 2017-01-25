@@ -61,6 +61,7 @@ class KeywordController extends AbstractAdminController
         $form = $this->createForm('oo_keyword', $keyword, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),
             'method' => 'POST',
+            'new_button' => true
         ));
 
         $form->handleRequest($request);
@@ -71,7 +72,7 @@ class KeywordController extends AbstractAdminController
             $response = new Response(
                 '',
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/html; charset=utf-8', 'keywordId' => $keyword->getId())
+                array('Content-type' => 'text/html; charset=utf-8', 'keywordId' => $keyword->getId(),  'name' => $keyword->getLabel())
             );
 
             return $response;

@@ -3,7 +3,6 @@ import Application        from '../../Application'
 import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
 
 import KeywordsView       from '../../View/Keyword/KeywordsView'
-import NewKeywordFormView from '../../View/Keyword/NewKeywordFormView'
 import KeywordFormView    from '../../View/Keyword/KeywordFormView'
 
 import Keywords           from '../../Collection/Keyword/Keywords'
@@ -19,7 +18,7 @@ class KeywordRouter extends OrchestraRouter
     preinitialize() {
         this.routes = {
             'keyword/new': 'newKeyword',
-            'keyword/edit/:keywordId': 'editKeyword',
+            'keyword/edit/:keywordId/:name': 'editKeyword',
             'keyword/list(/:page)': 'listKeyword'
         };
     }
@@ -46,8 +45,11 @@ class KeywordRouter extends OrchestraRouter
         let url = Routing.generate('open_orchestra_backoffice_keyword_new');
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let newKeywordFormView = new NewKeywordFormView({form: form});
-            Application.getRegion('content').html(newKeywordFormView.render().$el);
+            let keywordFormView = new KeywordFormView({
+                form: form,
+                name: Translator.trans('open_orchestra_backoffice.keyword.title_new')
+            });
+            Application.getRegion('content').html(keywordFormView.render().$el);
         });
     }
 
@@ -56,11 +58,14 @@ class KeywordRouter extends OrchestraRouter
      *
      * @param {String} keywordId
      */
-    editKeyword(keywordId) {
+    editKeyword(keywordId, name) {
         let url = Routing.generate('open_orchestra_backoffice_keyword_form', {keywordId: keywordId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let keywordFormView = new KeywordFormView({form: form});
+            let keywordFormView = new KeywordFormView({
+                form: form,
+                name: name
+            });
             Application.getRegion('content').html(keywordFormView.render().$el);
         });
     }
