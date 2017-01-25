@@ -20,7 +20,9 @@ class NewSharedBlockComponentListView extends AbstractNewBlockComponentListView
      * @return string
      */
     _getUrlButtonBack() {
-        return Backbone.history.generateUrl('listSharedBlock');
+        return Backbone.history.generateUrl('listSharedBlock',{
+            language: this._language
+        });
     }
 
     /**

@@ -24,12 +24,14 @@ class SharedBlockFormView extends AbstractFormView
      * @param {Form} form
      * @param {string} blockLabel
      * @param {string} blockId
+     * @param {string} language
      * @param {boolean} activateUsageTab
      */
-    initialize({form, blockLabel, blockId, activateUsageTab}) {
+    initialize({form, blockLabel, blockId, language, activateUsageTab}) {
         super.initialize({form: form});
         this._blockLabel = blockLabel;
         this._blockId = blockId;
+        this._language = language;
         this._activateUsageTab = activateUsageTab;
     }
 
@@ -39,6 +41,7 @@ class SharedBlockFormView extends AbstractFormView
     render() {
         let template = this._renderTemplate('Block/sharedBlockEditView', {
             blockLabel : this._blockLabel,
+            language: this._language,
             messages: FlashMessageBag.getMessages()
         });
         this.$el.html(template);
@@ -74,7 +77,9 @@ class SharedBlockFormView extends AbstractFormView
         block.destroy({
             context: 'shared-block',
             success: () => {
-                let url = Backbone.history.generateUrl('listSharedBlock');
+                let url = Backbone.history.generateUrl('listSharedBlock',{
+                    language: this._language
+                });
                 Backbone.history.navigate(url, true);
             }
         });
@@ -118,7 +123,7 @@ class SharedBlockFormView extends AbstractFormView
      */
     _createListNodeUsageBlockView() {
         let collection = new Nodes();
-        let language = Application.getContext().user.language.contribution;
+        let language = this._language;
         let siteId = Application.getContext().siteId;
 
         return new NodeUsageBlockListView({

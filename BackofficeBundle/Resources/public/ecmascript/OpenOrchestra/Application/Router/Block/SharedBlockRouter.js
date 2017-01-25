@@ -21,7 +21,7 @@ class SharedBlockRouter extends AbstractBlockRouter
     preinitialize(options) {
         this.routes = {
             'shared-block/list(/:language)(/:page)': 'listSharedBlock',
-            'shared-block/edit/:blockId/:blockLabel(/:activateUsageTab)': 'editSharedBlock',
+            'shared-block/edit/:blockId/:blockLabel/:language(/:activateUsageTab)': 'editSharedBlock',
             'shared-block/new/list/:language': 'newSharedBlockListComponent',
             'shared-block/new/:component/:language/:name': 'newSharedBlock'
         };
@@ -63,7 +63,11 @@ class SharedBlockRouter extends AbstractBlockRouter
         $.when(
             blocks.fetch({
                 urlParameter: { language: language },
-                context: 'list-table-shared-block'
+                context: 'list-table-shared-block',
+                data : {
+                    start: page * pageLength,
+                    length: pageLength
+                }
             }),
             blockComponents.fetch()
         ).done(() => {
@@ -121,9 +125,10 @@ class SharedBlockRouter extends AbstractBlockRouter
      *
      * @param {string} blockId
      * @param {string} blockLabel
+     * @param {string} language
      * @param {boolean} activateUsageTab
      */
-    editSharedBlock(blockId, blockLabel, activateUsageTab) {
+    editSharedBlock(blockId, blockLabel, language, activateUsageTab) {
         if (null === activateUsageTab) {
             activateUsageTab = false;
         }
@@ -137,6 +142,7 @@ class SharedBlockRouter extends AbstractBlockRouter
                 form : form,
                 blockLabel: blockLabel,
                 blockId: blockId,
+                language: language,
                 activateUsageTab: activateUsageTab
             });
             Application.getRegion('content').html(sharedblockFormView.render().$el);

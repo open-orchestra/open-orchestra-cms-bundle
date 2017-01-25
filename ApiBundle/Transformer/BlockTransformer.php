@@ -62,6 +62,7 @@ class BlockTransformer extends AbstractTransformer
         $facade->label = $block->getLabel();
         $facade->style = $block->getStyle();
         $facade->id = $block->getId();
+        $facade->language = $block->getLanguage();
         $facade->transverse = $block->isTransverse();
         $facade->updatedAt = $block->getUpdatedAt();
         $categoryKey = $this->blockConfigurationManager->getBlockCategory($block->getComponent());

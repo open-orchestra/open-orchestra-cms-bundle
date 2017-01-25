@@ -34,7 +34,9 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
      * @return string
      */
     _getUrlButtonBack() {
-        return Backbone.history.generateUrl('listSharedBlock');
+        return Backbone.history.generateUrl('listSharedBlock',{
+            language: this._language
+        });
     }
 
     /**
@@ -67,7 +69,11 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
         if (null === blockId || null === blockLabel) {
             throw new ApplicationError('Invalid blockId or blockLabel');
         }
-        let url = Backbone.history.generateUrl('editSharedBlock', {blockId: blockId, blockLabel: blockLabel});
+        let url = Backbone.history.generateUrl('editSharedBlock', {
+            blockId: blockId,
+            blockLabel: blockLabel,
+            language: this._language
+        });
         let message = new FlashMessage(data, 'success');
         FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
@@ -83,7 +89,7 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
         let message = new FlashMessage(data, 'success');
         FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
-        Backbone.history.loadUrl(Backbone.history.generateUrl('newSharedBlockListComponent', {language: this._language}));
+        Backbone.history.navigate(Backbone.history.generateUrl('newSharedBlockListComponent', {language: this._language}), true);
     }
 }
 
