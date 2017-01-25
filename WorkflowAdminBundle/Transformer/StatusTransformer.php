@@ -9,7 +9,6 @@ use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
