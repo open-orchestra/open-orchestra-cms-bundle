@@ -47,6 +47,7 @@ class RedirectionRouter extends OrchestraRouter
         }
         this._displayLoader(Application.getRegion('content'));
         let redirections = new Redirections();
+        page = Number(page) - 1;
         $.when(
             redirections.fetch({context: 'list'})
         ).done(() => {

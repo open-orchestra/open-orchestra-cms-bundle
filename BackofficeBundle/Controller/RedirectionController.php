@@ -27,25 +27,36 @@ class RedirectionController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
-        $redirectionClass = $this->container->getParameter('open_orchestra_model.document.redirection.class');
+        $redirectionClass = $this->getParameter('open_orchestra_model.document.redirection.class');
         /** @var RedirectionInterface $redirection */
         $redirection = new $redirectionClass();
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $redirection);
 
         $form = $this->createForm('oo_redirection', $redirection, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
-            'method' => 'POST',
-            'csrf_protection'   => false,
+            'action'          => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
+            'method'          => 'POST',
+            'csrf_protection' => false,
         ));
 
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.new.success');
 
-        if ($this->handleForm($form, $message, $redirection)) {
+        if ($form->isValid()) {
+            $documentManager = $this->get('object_manager');
+            $documentManager->persist($redirection);
+            $documentManager->flush();
+            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.new.success');
+
             $this->dispatchEvent(RedirectionEvents::REDIRECTION_CREATE, new RedirectionEvent($redirection));
-            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+            $response = new Response(
+                $message,
+                Response::HTTP_CREATED,
+                array(
+                    'Content-type' => 'text/html; charset=utf-8',
+                    'redirectionId' => $redirection->getId(),
+                )
+            );
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
+            return $response;
         }
 
         return $this->renderAdminForm($form);

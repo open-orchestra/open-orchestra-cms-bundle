@@ -1,5 +1,7 @@
 import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage         from '../../../Service/FlashMessage/FlashMessage'
 
 /**
  * @class RedirectionFormView
@@ -18,12 +20,13 @@ class RedirectionFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
     /**
      * Initialize
      * @param {Form}   form
-     * @param {String} statusId
-     * @param {String}  name
+     * @param {String} redirectionId
+     * @param {String} name
      */
-    initialize({form, statusId, name}) {
+    initialize({form, redirectionId, name}) {
         super.initialize({form : form});
         this._redirectionId = redirectionId;
+        this._name = name;
     }
 
     /**
@@ -46,13 +49,13 @@ class RedirectionFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
     getStatusCodeForm() {
         return {
             '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
+            '201': $.proxy(this._redirectEditElement, this),
             '422': $.proxy(this.refreshRender, this)
         }
     }
 
     /**
-     * Redirect to edit status view
+     * Redirect to edit redirection view
      *
      * @param {mixed}  data
      * @param {string} textStatus
@@ -60,15 +63,17 @@ class RedirectionFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      * @private
      */
     _redirectEditElement(data, textStatus, jqXHR) {
-        let statusId = jqXHR.getResponseHeader('redirectionId');
+        let redirectionId = jqXHR.getResponseHeader('redirectionId');
         if (null === redirectionId) {
             throw new ApplicationError('Invalid redirectionId');
         }
         let url = Backbone.history.generateUrl('editRedirection', {
-            redirectionId: RedirectionId
+            redirectionId: redirectionId
         });
-
-        super._redirectEditElement(data);
+        let message = new FlashMessage(data, 'success');
+        FlashMessageBag.addMessageFlash(message);
+        Backbone.Events.trigger('form:deactivate', this);
+        Backbone.history.navigate(url, true);
     }
 
     /**
