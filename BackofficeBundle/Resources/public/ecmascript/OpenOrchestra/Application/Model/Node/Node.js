@@ -1,6 +1,7 @@
-import OrchestraModel from '../OrchestraModel'
-import Status         from '../Status/Status'
-import Area           from '../Area/Area'
+import OrchestraModel   from '../OrchestraModel'
+import Status           from '../Status/Status'
+import Area             from '../Area/Area'
+import ApplicationError from '../../../Service/Error/ApplicationError'
 
 /**
  * @class Node
@@ -39,7 +40,7 @@ class Node extends OrchestraModel
             return areas[areaId];
         }
 
-        return new Area();
+        throw new ApplicationError('Area '+areaId+' not found');
     }
 
     /**
