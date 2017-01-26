@@ -5,6 +5,7 @@ namespace OpenOrchestra\UserBundle\Tests\Form\Type;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\Type\RedirectionType;
+use OpenOrchestra\Backoffice\Validator\Constraints\UniqueRedirection;
 
 /**
  * Class RedirectionTypeTest
@@ -53,7 +54,7 @@ class RedirectionTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(6))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
     }
 
@@ -67,7 +68,71 @@ class RedirectionTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->redirectionClass
+            'data_class' => $this->redirectionClass,
+            'constraints'  => array(new UniqueRedirection()),
+            'group_enabled' => true,
+            'group_render' => array(
+                'redirection' => array(
+                    'rank'  => 0,
+                    'label' => 'open_orchestra_backoffice.form.redirection.edit.title',
+                ),
+            ),
+            'sub_group_render' => array(
+                'properties' => array(
+                    'rank'  => 0,
+                    'label' => 'open_orchestra_backoffice.form.redirection.group.properties',
+                ),
+                'redirection' => array(
+                    'rank'  => 10,
+                    'label' => 'open_orchestra_backoffice.form.redirection.group.redirection',
+                ),
+            ),
         ));
+    }
+
+    /**
+     * test buildView
+     *
+     * @param string|null $data
+     * @param string      $url
+     * @param boolean     $mustSet
+     * @param string      $type
+     *
+     * @dataProvider provideData
+     */
+    public function testBuildView($data, $url, $mustSet, $type = null)
+    {
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+
+        $formType = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($formType)->getData()->thenReturn($data);
+
+        $formUrl = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($formUrl)->getData()->thenReturn($url);
+
+        $form = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($form)->get('type')->thenReturn($formType);
+        Phake::when($form)->get('url')->thenReturn($formUrl);
+
+        $this->form->buildView($formView, $form, array());
+        if ($mustSet) {
+            Phake::verify($formType)->setData($type);
+        } else {
+            Phake::verify($formType, Phake::never())->setData(Phake::anyParameters());
+        }
+    }
+
+    /**
+     * provide data
+     *
+     * @return array
+     */
+    function provideData()
+    {
+        return array(
+            'No data, no url' => array(null  , ''  , true, RedirectionType::TYPE_INTERNAL),
+            'No data, url'  => array(null  , 'ok'  , true, RedirectionType::TYPE_EXTERNAL),
+            'Ok' => array('data', 'ok', false),
+        );
     }
 }
