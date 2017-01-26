@@ -205,7 +205,7 @@ class NodeController extends BaseController
      *     requirements={"position": "\d+"},
      *     name="open_orchestra_node_add_block")
 
-     * @Config\Method({"PUT", "GET"})
+     * @Config\Method({"PUT"})
      *
      * @return FacadeInterface
      *
@@ -227,6 +227,7 @@ class NodeController extends BaseController
         if (!$block instanceof BlockInterface) {
             throw new BlockNotFoundHttpException();
         }
+
         $area->addBlock($block, $position);
 
         $objectManager = $this->get('object_manager');
