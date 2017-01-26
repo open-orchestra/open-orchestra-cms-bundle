@@ -61,6 +61,27 @@ class TemplateManager
     }
 
     /**
+     * @param string $name
+     * @param string $templateSetName
+     *
+     * @return array
+     *
+     * @throws NonExistingTemplateException
+     */
+    public function getTemplateAreas($name, $templateSetName)
+    {
+        if (
+            isset($this->templateSet[$templateSetName]) &&
+            isset($this->templateSet[$templateSetName]['templates']) &&
+            isset($this->templateSet[$templateSetName]['templates'][$name])
+        ) {
+            return $this->templateSet[$templateSetName]['templates'][$name]['areas'];
+        }
+
+        throw new NonExistingTemplateException();
+    }
+
+    /**
      * @param array $templateSet
      */
     public function setTemplateSet(array $templateSet)

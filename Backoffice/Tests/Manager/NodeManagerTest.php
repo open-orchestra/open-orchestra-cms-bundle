@@ -33,6 +33,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     protected $nodeClass;
     protected $areaClass;
     protected $contextManager;
+    protected $templateManager;
     protected $nodeRepository;
     protected $siteRepository;
     protected $eventDispatcher;
@@ -62,6 +63,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface');
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         $this->documentManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
+        $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
         $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
         $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
 
@@ -87,7 +89,9 @@ class NodeManagerTest extends AbstractBaseTestCase
             $this->statusRepository,
             $this->blockRepository,
             $this->contextManager,
+            $this->templateManager,
             $this->nodeClass,
+            $this->areaClass,
             $this->eventDispatcher
         );
     }
@@ -250,8 +254,25 @@ class NodeManagerTest extends AbstractBaseTestCase
         }
     }
 
+    public function testInitializeAreasNode()
+    {
+        $areaName = array('main', 'footer');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site)->getTemplateSet()->thenReturn('fake_template_set');
+        Phake::when($node)->getTemplate()->thenReturn('fake_template');
+        Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
+        Phake::when($this->templateManager)->getTemplateAreas(Phake::anyParameters())->thenReturn($areaName);
+
+        $node = $this-$this->manager->initializeAreasNode($node);
+
+        $this->assertCount(2, $node->getAreas());
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $node->getArea('main'));
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $node->getArea('footer'));
+    }
+
     /**
-     * Test initializeNode
+     * Test create root node
      *
      * @param string               $language
      * @param string               $siteId
