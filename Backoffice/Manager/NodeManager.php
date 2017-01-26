@@ -284,8 +284,10 @@ class NodeManager
         $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
         $templateSet = $site->getTemplateSet();
         $areasName = $this->templateManager->getTemplateAreas($node->getTemplate(), $templateSet);
+        var_dump($areasName);
         foreach($areasName as $areaName) {
             $node->setArea($areaName, new $this->areaClass());
+            var_dump($node->getAreas());
         }
 
         return $node;

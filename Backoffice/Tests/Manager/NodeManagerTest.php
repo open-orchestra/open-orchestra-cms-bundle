@@ -264,11 +264,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         Phake::when($this->templateManager)->getTemplateAreas(Phake::anyParameters())->thenReturn($areaName);
 
-        $node = $this-$this->manager->initializeAreasNode($node);
-
-        $this->assertCount(2, $node->getAreas());
-        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $node->getArea('main'));
-        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\AreaInterface', $node->getArea('footer'));
+        $node = $this->manager->initializeAreasNode($node);
+        Phake::verify($node, Phake::times(2))->setArea(Phake::anyParameters());
     }
 
     /**
