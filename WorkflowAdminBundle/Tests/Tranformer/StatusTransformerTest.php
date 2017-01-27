@@ -97,7 +97,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
 
         if (!$hasGroup && $isGranted) {
             $this->assertArrayHasKey('can_delete', $facade->getRights());
-            $this->assertArrayHasKey('can_edit', $facade->getRights());
         } else {
             $this->isEmpty($facade->getRights());
         }

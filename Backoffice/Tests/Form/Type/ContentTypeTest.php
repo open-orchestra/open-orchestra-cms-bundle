@@ -17,6 +17,7 @@ class ContentTypeTest extends AbstractBaseTestCase
     protected $form;
 
     protected $contentTypeSubscriber;
+    protected $eventDispatcher;
     protected $contentClass = 'content';
 
     /**
@@ -25,8 +26,9 @@ class ContentTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->contentTypeSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->form = new ContentType($this->contentTypeSubscriber, $this->contentClass);
+        $this->form = new ContentType($this->contentTypeSubscriber, $this->eventDispatcher, $this->contentClass);
     }
 
     /**
@@ -54,10 +56,14 @@ class ContentTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array());
+        $this->form->buildForm($builder, array(
+            'is_blocked_edition' => true,
+            'need_link_to_site_defintion' => true,
+        ));
 
-        Phake::verify($builder, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
     /**
@@ -71,8 +77,35 @@ class ContentTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->contentClass,
+            'is_blocked_edition' => false,
+            'need_link_to_site_defintion' => false,
             'delete_button' => false,
             'new_button' => false,
+                'group_enabled' => true,
+                'group_render' => array(
+                    'property' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content.group.property',
+                    ),
+                    'data' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.content.group.data',
+                    ),
+                ),
+                'sub_group_render' => array(
+                    'information' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content.sub_group.information',
+                    ),
+                    'publication' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.content.sub_group.publication',
+                    ),
+                    'data' => array(
+                        'rank' => 0,
+                        'label' => 'open_orchestra_backoffice.form.content.sub_group.data',
+                    ),
+                ),
         ));
     }
 

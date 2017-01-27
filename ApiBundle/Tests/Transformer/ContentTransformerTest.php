@@ -58,12 +58,17 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($router);
+        $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
+        Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->transformerManager)->getGroupContext()->thenReturn($groupContext);
 
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\ContentRepository');
         Phake::when($this->contentRepository)->find(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
+        Phake::when($this->contentRepository)->findAllCurrentlyPublishedByContentId(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->contentRepository)->findOneByContentId(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('en');
@@ -108,7 +113,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
-        Phake::when($content)->getId()->thenReturn($id);
+        Phake::when($content)->getContentId()->thenReturn($id);
         Phake::when($content)->getContentType()->thenReturn($contentType);
         Phake::when($content)->getName()->thenReturn($name);
         Phake::when($content)->getVersion()->thenReturn($version);
@@ -138,8 +143,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
 
-        $this->assertArrayHasKey('can_edit', $facade->getRights());
-        $this->assertArrayHasKey('can_create', $facade->getRights());
+        $this->assertArrayHasKey('can_duplicate', $facade->getRights());
         $this->assertArrayHasKey('can_delete', $facade->getRights());
     }
 
@@ -210,7 +214,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $result = $this->contentTransformer->reverseTransform($facade);
 
-        Phake::verify($this->contentRepository)->find('fakeId');
+        Phake::verify($this->contentRepository)->findOneByContentId('fakeId');
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $result);
     }
 
