@@ -1,9 +1,11 @@
 import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
 import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage           from '../../../Service/FlashMessage/FlashMessage'
 import Block                  from '../../Model/Block/Block'
 import Nodes                  from '../../Collection/Node/Nodes'
 import NodeUsageBlockListView from '../Node/NodeUsageBlockListView'
 import Application            from '../../Application'
+import ConfirmModalView       from '../../../Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class SharedBlockFormView
@@ -16,7 +18,7 @@ class SharedBlockFormView extends AbstractFormView
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events['click button.delete-button'] = '_deleteBlock';
+        this.events['click button.delete-button'] = '_confirmDeleteBlock';
     }
 
     /**
@@ -70,6 +72,29 @@ class SharedBlockFormView extends AbstractFormView
     }
 
     /**
+     * Show modal confirm to delete a block
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _confirmDeleteBlock(event) {
+        event.stopPropagation();
+        let confirmModalView = new ConfirmModalView({
+            confirmTitle: Translator.trans('open_orchestra_backoffice.shared_block.confirm_remove.title'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.shared_block.confirm_remove.message'),
+            yesCallback: this._deleteBlock,
+            context: this
+        });
+
+        Application.getRegion('modal').html(confirmModalView.render().$el);
+        confirmModalView.show();
+
+        return false;
+    }
+
+    /**
      * Delete
      */
     _deleteBlock() {
@@ -77,6 +102,8 @@ class SharedBlockFormView extends AbstractFormView
         block.destroy({
             context: 'shared-block',
             success: () => {
+                let message = new FlashMessage(Translator.trans('open_orchestra_backoffice.shared_block.success_remove'), 'success');
+                FlashMessageBag.addMessageFlash(message);
                 let url = Backbone.history.generateUrl('listSharedBlock',{
                     language: this._language
                 });

@@ -1,5 +1,5 @@
 import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
+import UrlPaginateViewMixin  from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 
 /**
  * @class SharedBlockListView
