@@ -45,7 +45,7 @@ class ContentRouter extends OrchestraRouter
         let contentTypes = new ContentTypes();
 
         contentTypes.fetch({
-            context: 'list_content_type_for_content',
+            apiContext: 'list_content_type_for_content',
             success: () => {
                 let contentSummaryView = new ContentSummaryView({
                     contentTypes: contentTypes
@@ -78,10 +78,10 @@ class ContentRouter extends OrchestraRouter
         let contents = new Contents();
         
         $.when(
-            statuses.fetch({context: 'contents'}),
+            statuses.fetch({apiContext: 'contents'}),
             contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
             contents.fetch({
-                context: 'list',
+                apiContext: 'list',
                 urlParameter: urlParameter,
                 data : {
                     start: page * pageLength,

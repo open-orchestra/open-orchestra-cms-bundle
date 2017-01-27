@@ -87,7 +87,7 @@ class NodeListView extends AbstractDataTableView
      */
     _getSyncOptions() {
         return {
-            'context': 'list',
+            'apiContext': 'list',
             'urlParameter': {
                 'language': this._language,
                 'siteId': this._siteId

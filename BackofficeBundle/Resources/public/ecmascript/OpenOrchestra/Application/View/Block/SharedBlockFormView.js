@@ -100,7 +100,7 @@ class SharedBlockFormView extends AbstractFormView
     _deleteBlock() {
         let block = new Block({'id': this._blockId});
         block.destroy({
-            context: 'shared-block',
+            apiContext: 'shared-block',
             success: () => {
                 let message = new FlashMessage(Translator.trans('open_orchestra_backoffice.shared_block.success_remove'), 'success');
                 FlashMessageBag.addMessageFlash(message);

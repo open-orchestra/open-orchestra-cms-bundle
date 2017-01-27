@@ -146,6 +146,7 @@ open_orchestra_backoffice:
         title_new : New tag
     block:
         add_block: Add a block
+        copy_block: Copy blocks
         new_block: New
         title_new: Parameterize the block
         display_new_block: Display a block of type %blockComponent%
@@ -155,6 +156,11 @@ open_orchestra_backoffice:
             message: The removal will be final
         edit_title: Edit block
         creation: The block has been created
+    area:
+        copy_blocks:
+            title: Copy blocks
+            message: From which language do you want to copy the blocks ?
+            no_available: No available language for copying
     form:
         keyword:
             new: new

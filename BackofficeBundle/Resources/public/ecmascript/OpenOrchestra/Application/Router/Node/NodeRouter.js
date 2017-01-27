@@ -56,7 +56,7 @@ class NodeRouter extends OrchestraRouter
 
         this._displayLoader(Application.getRegion('content'));
         new Statuses().fetch({
-            context: 'nodes',
+            apiContext: 'nodes',
             success: (statuses) => {
                 let nodesView = new NodesView({
                     statuses: statuses,

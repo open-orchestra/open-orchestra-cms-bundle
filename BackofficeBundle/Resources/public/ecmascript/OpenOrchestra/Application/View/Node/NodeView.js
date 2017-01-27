@@ -61,7 +61,7 @@ class NodeView extends OrchestraView
         let statuses = new Statuses();
         $.when(
             statuses.fetch({
-                context: 'node',
+                apiContext: 'node',
                 urlParameter: {
                     nodeId: this._node.get('node_id'),
                     siteId: this._node.get('site_id'),
@@ -189,7 +189,7 @@ class NodeView extends OrchestraView
                 let changedAreas = this._node.getChangedArea();
                 let areas = this._node.get('areas');
                 this._node.save({'areas': changedAreas}, {
-                    context: 'update_position_block',
+                    apiContext: 'update_position_block',
                     urlParameter: {
                         'nodeId': this._node.get('node_id'),
                         'siteId': this._node.get('site_id'),
@@ -213,7 +213,7 @@ class NodeView extends OrchestraView
         let statusId = $(event.currentTarget).attr('data-id');
         let status = new Status({id: statusId});
         this._node.save({'status': status}, {
-            context: 'update_status',
+            apiContext: 'update_status',
             success: () => {
                 Backbone.history.loadUrl(Backbone.history.fragment);
             }

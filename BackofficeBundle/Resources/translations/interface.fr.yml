@@ -146,6 +146,7 @@ open_orchestra_backoffice:
         title_new : Nouveau Tag
     block:
         add_block: Ajouter un bloc
+        copy_block: Copier les blocs
         back_to_node: Retour à la page
         new_block: Nouveau
         title_new: Paramétrer le bloc
@@ -155,6 +156,11 @@ open_orchestra_backoffice:
             message: La suppression sera définitive
         edit_title: Edition du bloc
         creation: Le bloc a été créé
+    area:
+        copy_blocks:
+            title: Copier les blocs
+            message: Depuis quelle langue souhaitez vous copier les blocs ?
+            no_available: Aucune langue est disponible pour la copie
     form:
         keyword:
             new: nouveau

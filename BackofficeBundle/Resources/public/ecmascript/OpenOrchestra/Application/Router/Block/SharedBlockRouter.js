@@ -63,7 +63,7 @@ class SharedBlockRouter extends AbstractBlockRouter
         $.when(
             blocks.fetch({
                 urlParameter: { language: language },
-                context: 'list-table-shared-block',
+                apiContext: 'list-table-shared-block',
                 data : {
                     start: page * pageLength,
                     length: pageLength

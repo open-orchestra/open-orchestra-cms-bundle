@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
@@ -187,6 +188,69 @@ class NodeController extends BaseController
      * @param string  $nodeId
      * @param string  $language
      * @param string  $version
+     * @param string  $areaId
+     *
+     * @Config\Route(
+     *     "/copy-translated-blocks-in-area/{nodeId}/{language}/{version}/{areaId}",
+     *     name="open_orchestra_node_copy_blocks_in_area")
+
+     * @Config\Method({"PATCH"})
+     *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS
+     * })
+     *
+     * @return FacadeInterface
+     *
+     * @throws NodeNotFoundHttpException
+     * @throws AreaNotFoundHttpException
+     */
+    public function copyTranslatedBlocksInAreaAction(Request $request, $nodeId, $language, $version, $areaId)
+    {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $node = $this->findOneNode($nodeId, $language, $siteId, $version);
+        if (!$node instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
+            $request->get('_format', 'json')
+        );
+
+        if (!array_key_exists($areaId, $facade->getAreas()) || null === $node->getArea($areaId)) {
+            throw new AreaNotFoundHttpException();
+        }
+
+        $areaFacade = $facade->getAreas()[$areaId];
+        $area = $this->get('open_orchestra_api.transformer_manager')->get('area')->reverseTransform($areaFacade);
+        $blocks = $area->getBlocks();
+        $objectManager = $this->get('object_manager');
+        /** @var BlockInterface $block */
+        foreach ($blocks as $block) {
+            dump($block);
+            if (false === $block->isTransverse()) {
+                $blockToTranslate = $this->get('open_orchestra_backoffice.manager.block')->createToTranslateBlock($block, $language);
+                dump($blockToTranslate);
+                $node->getArea($areaId)->addBlock($blockToTranslate);
+                $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockToTranslate));
+                $objectManager->persist($blockToTranslate);
+            }
+        }
+
+        $objectManager->persist($node);
+        $objectManager->flush();
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     * @param string  $language
+     * @param string  $version
      * @param string  $siteId
      *
      * @Config\Route("/update-block-position/{siteId}/{nodeId}/{version}/{language}", name="open_orchestra_node_update_block_position")
@@ -289,6 +353,28 @@ class NodeController extends BaseController
             10,
             array('histories.updatedAt' => -1)
         );
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $areaId
+     * @Config\Route("/list/with-block-in-area/{nodeId}/{siteId}/{areaId}", name="open_orchestra_api_node_list_with_block_in_area")
+     *
+     * @Config\Method({"GET"})
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
+     * })
+     * @return FacadeInterface
+     */
+    public function listNodeWithBlockInArea($nodeId, $siteId, $areaId)
+    {
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+        $nodes = $nodeRepository->findByNodeIdAndSiteIdWithBlocksInArea($nodeId, $siteId, $areaId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
     }

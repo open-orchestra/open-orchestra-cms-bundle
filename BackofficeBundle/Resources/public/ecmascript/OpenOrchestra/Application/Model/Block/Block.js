@@ -37,10 +37,10 @@ class Block extends OrchestraModel
      * @private
      */
     _getSyncDeleteUrl(options) {
-        let context = options.context || null;
+        let apiContext = options.apiContext || null;
         let urlParameter = options.urlParameter || {};
         urlParameter.blockId = this.get('id');
-        switch (context) {
+        switch (apiContext) {
             case "node":
                 return Routing.generate('open_orchestra_api_node_delete_block', urlParameter);
             case "shared-block":

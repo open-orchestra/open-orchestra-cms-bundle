@@ -1,0 +1,27 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><%= Translator.trans('open_orchestra_backoffice.area.copy_blocks.title') %></h4>
+        </div>
+        <div class="modal-body text-center">
+            <p><%= Translator.trans('open_orchestra_backoffice.area.copy_blocks.message') %></p>
+
+            <div class="languages">
+                <% if (0 === nodes.length) { %>
+                    <p><%= Translator.trans('open_orchestra_backoffice.area.copy_blocks.no_available') %></p>
+                <% } else { %>
+                    <ul>
+                        <% _.each(nodes.models, function(node, key) { %>
+                            <li class="active">
+                                <a class="copy-language" data-language="<%= node.get('language') %>">
+                                    <img src="/images/languages/<%= node.get('language') %>.png" alt="<%= node.get('language') %>" /><%= node.get('language').toUpperCase() %>
+                                </a>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% }; %>
+            </div>
+        </div>
+    </div>
+</div>

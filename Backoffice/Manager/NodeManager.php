@@ -2,7 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
+use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\ModelInterface\BlockNodeEvents;
+use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -290,6 +294,31 @@ class NodeManager
         $areasName = $this->templateManager->getTemplateAreas($node->getTemplate(), $templateSet);
         foreach($areasName as $areaName) {
             $node->setArea($areaName, new $this->areaClass());
+        }
+
+        return $node;
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param Collection    $blocks
+     * @param string        $areaId
+     *
+     * @return NodeInterface
+     */
+    public function copyBlocksToTranslateInArea(NodeInterface $node, Collection $blocks, $areaId)
+    {
+        $area = $node->getArea($areaId);
+        $language = $node->getLanguage();
+        /** @var BlockInterface $block */
+        foreach ($blocks as $block) {
+            if (false === $block->isTransverse()) {
+                $block = clone $block;
+                $block->setLanguage($node->getLanguage());
+                $block->setLabel($block->getLabel()."[".$language."]");
+                $area->addBlock($block);
+                $this->eventDispatcher->dispatch(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $block));
+            }
         }
 
         return $node;

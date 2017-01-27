@@ -68,7 +68,7 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
      */
     _getSyncOptions() {
         return {
-            context: 'list-table-shared-block',
+            apiContext: 'list-table-shared-block',
             urlParameter: {
                 language: this._language
             }

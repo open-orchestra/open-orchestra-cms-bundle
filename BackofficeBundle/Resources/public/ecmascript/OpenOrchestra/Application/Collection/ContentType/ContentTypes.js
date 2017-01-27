@@ -41,8 +41,8 @@ class ContentTypes extends DataTableCollection
      * @private
      */
     _getSyncReadUrl(options) {
-        let context = options.context || null;
-        switch (context) {
+        let apiContext = options.apiContext || null;
+        switch (apiContext) {
             case "list_content_type_for_content":
                 return Routing.generate('open_orchestra_api_content_type_list_for_content');
             case "list":

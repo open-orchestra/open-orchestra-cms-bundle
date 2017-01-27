@@ -105,7 +105,7 @@ class BlockView extends OrchestraView
      */
     _deleteBlock() {
         this._block.destroy({
-            context: 'node',
+            apiContext: 'node',
             urlParameter: {
                 nodeId: this._node.get('node_id'),
                 siteId: this._node.get('site_id'),
