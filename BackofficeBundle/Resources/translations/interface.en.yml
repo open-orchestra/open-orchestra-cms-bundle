@@ -161,6 +161,15 @@ open_orchestra_backoffice:
             title: Copy blocks
             message: From which language do you want to copy the blocks ?
             no_available: No available language for copying
+            shared_blocks:
+                title: Copying shared blocks
+                message: |
+                    Caution the following block : %blocks% can't be copied.
+                    This is a not editable block.
+                    Please add the corresponding block in the language. |
+                    Caution the following blocks : %blocks% can't be copied.
+                    This is a not editable block.
+                    Please add the corresponding block in the language.
     form:
         keyword:
             new: new

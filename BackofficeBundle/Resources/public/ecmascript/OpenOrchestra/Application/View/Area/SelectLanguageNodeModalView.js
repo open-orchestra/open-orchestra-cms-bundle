@@ -1,5 +1,4 @@
 import ModalView          from '../../../Service/Modal/View/ModalView'
-import OrchestraModalView from '../Block/BlockView'
 import ApplicationError   from '../../../Service/Error/ApplicationError'
 
 /**

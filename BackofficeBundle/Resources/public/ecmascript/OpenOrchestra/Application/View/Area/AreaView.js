@@ -1,18 +1,18 @@
-import OrchestraView               from '../OrchestraView'
-import BlockView                   from '../Block/BlockView'
-import SelectLanguageNodeModalView from './SelectLanguageNodeModalView'
+import OrchestraView                    from '../OrchestraView'
+import BlockView                        from '../Block/BlockView'
+import SelectLanguageNodeModalView      from './SelectLanguageNodeModalView'
+import MessageCopySharedBlocksModalView from './MessageCopySharedBlocksModalView'
 
-import Nodes                       from '../../Collection/Node/Nodes'
-import Node                        from '../../Model/Node/Node'
+import Nodes                            from '../../Collection/Node/Nodes'
+import Node                             from '../../Model/Node/Node'
 
-import Application                 from '../../Application'
+import Application                      from '../../Application'
 
 /**
  * @class AreaView
  */
 class AreaView extends OrchestraView
 {
-
     /**
      * Pre initialize
      */
@@ -97,12 +97,13 @@ class AreaView extends OrchestraView
      * @param {Node} node
      */
     _copyBlockFromNode(node) {
-        let area = node.getArea(this._area.get('name'));
+        let areaId = this._area.get('name');
+        let area = node.getArea(areaId);
         let blocks = area.get('blocks');
         let attributes = {
             'areas' : {}
         };
-        attributes.areas[this._area.get('name')] = area;
+        attributes.areas[areaId] = area;
         this._node.save(attributes, {
             patch: true,
             urlParameter: {
@@ -113,9 +114,17 @@ class AreaView extends OrchestraView
             },
             apiContext: 'copy_translated_blocs',
             success: (node, response) => {
-                this._node = new Node(response);
-                this._area = this._node.getArea(this._area.get('name'));
+                node = new Node(response);
+                this._area = node.getArea(areaId);
                 this.render();
+                let sharedBlocks = blocks.where({'transverse': true});
+                if (sharedBlocks.length > 0) {
+                    let messageCopySharedBlocksView = new MessageCopySharedBlocksModalView({
+                        sharedBlocks: sharedBlocks
+                    });
+                    Application.getRegion('modal').html(messageCopySharedBlocksView.render().$el);
+                    messageCopySharedBlocksView.show();
+                }
             }
         });
     }
