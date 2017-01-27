@@ -29,7 +29,7 @@ class BlockController extends AbstractAdminController
      *
      * @return Response
      */
-    public function newSharedAction(Request $request, $component, $language)
+    public function newSharedBlockAction(Request $request, $component, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();

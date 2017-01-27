@@ -62,7 +62,7 @@ class BlockView extends OrchestraView
     _editBlock(event) {
         event.stopPropagation();
         if (true === this._block.get('transverse')) {
-            throw new ApplicationError('Blocks transverse is not editable in this context');
+            throw new ApplicationError('Block transverse is not editable in this context');
         }
         let url = Backbone.history.generateUrl('editBlock', {
             blockId: this._block.get('id'),
