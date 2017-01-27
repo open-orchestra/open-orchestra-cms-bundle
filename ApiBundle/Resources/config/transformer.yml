@@ -127,6 +127,7 @@ services:
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@open_orchestra_model.repository.content'
             - '@open_orchestra_model.repository.content_type'
+            - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 

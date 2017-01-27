@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_workflow_admin.subscriber.group_profile.class: OpenOrchestra\WorkflowAdminBundle\EventSubscriber\AddGroupWorkflowProfileSubscriber
+    open_orchestra_workflow_admin.subscriber.content_status.class: OpenOrchestra\WorkflowAdminBundle\EventSubscriber\AddContentWorkflowStatusSubscriber
 
 services:
     open_orchestra_workflow_admin.subscriber.group_profile:
@@ -10,5 +11,9 @@ services:
             - '@open_orchestra_workflow_admin.transformer.group_workflow_profile_collection'
             - '@open_orchestra_backoffice.context_manager'
             - '@translator'
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_workflow_admin.subscriber.content_status:
+        class: '%open_orchestra_workflow_admin.subscriber.content_status.class%'
         tags:
             - { name: kernel.event_subscriber }

@@ -105,7 +105,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let link = Backbone.history.generateUrl('editContent', {
             contentTypeId: context._contentType.get('content_type_id'),
             language: rowData.get('language'),
-            contentId: rowData.get('content_id')
+            contentId: rowData.get('id')
         });
         if (!rowData.get('status').blocked_edition) {
             cellData = $('<a>',{

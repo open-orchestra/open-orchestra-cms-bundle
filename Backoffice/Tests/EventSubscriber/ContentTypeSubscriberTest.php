@@ -33,7 +33,6 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
     protected $fieldCollection;
     protected $contentAttribute;
     protected $contentAttributClass;
-    protected $contentTypeVersion = 1;
     protected $multiLanguagesChoiceManager;
     protected $fieldTypesConfiguration;
     protected $constraintsNotBlank;
@@ -69,6 +68,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->form)->getConfig()->thenReturn($this->formConfig);
 
         $this->contentTypeId = 'contentTypeId';
+
         $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         Phake::when($this->contentAttribute)->getType()->thenReturn("bar");
         $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
@@ -88,7 +88,6 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         $this->fieldCollection = new ArrayCollection();
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->contentType)->getFields()->thenReturn($this->fieldCollection);
-        Phake::when($this->contentType)->getVersion()->thenReturn($this->contentTypeVersion);
 
         $this->repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
@@ -127,107 +126,8 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
      */
     public function testEventSubscribed()
     {
-        $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(FormEvents::POST_SET_DATA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(FormEvents::POST_SUBMIT, $this->subscriber->getSubscribedEvents());
-    }
-
-    /**
-     * Test preSetData
-     */
-    public function testPreSetDataWithNoDatas()
-    {
-        $this->fieldCollection->add($this->fieldType1);
-        $this->fieldCollection->add($this->fieldType1);
-
-        $fieldId = 'title';
-        $label = 'Title';
-        $type = 'text';
-        $options = array(
-            'max_length' => 25,
-            'required' => true,
-            'oldOption' => 'oldValue'
-        );
-        $expectedOptions = array(
-            'label' => $label,
-            'mapped' => false,
-            'max_length' => 25,
-            'required' => true,
-            'phake_option' => 'phake_value',
-            'constraints' => $this->constraintsNotBlank
-        );
-
-        Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
-        Phake::when($this->fieldType1)->getType()->thenReturn($type);
-        Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
-        Phake::when($this->fieldType1)->getId()->thenReturn(null);
-
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
-        Phake::verify($this->content)->setContentTypeVersion($this->contentTypeVersion);
-        Phake::verify($this->form)->add('linkedToSite', 'checkbox', array(
-            'label' => 'open_orchestra_backoffice.form.content.linked_to_site',
-            'required' => false,
-        ));
-        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, $expectedOptions);
-    }
-
-    /**
-     * Test with no content type
-     */
-    public function testPreSetDataWithNoContentTypeFound()
-    {
-        Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn(null);
-
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
-        Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
-    }
-
-    /**
-     * Test with existing data
-     */
-    public function testPreSetDataWithExistingDatas()
-    {
-        $this->fieldCollection->add($this->fieldType1);
-        $this->fieldCollection->add($this->fieldType1);
-
-        $fieldId = 'title';
-        $label = 'Title';
-        $realValue = 'realValue';
-        $type = 'text';
-        $options = array(
-            'max_length' => 25,
-            'required' => true,
-            'oldOption' => 'oldValue'
-        );
-        $expectedOptions = array(
-            'label' => $label,
-            'mapped' => false,
-            'max_length' => 25,
-            'required' => true,
-            'phake_option' => 'phake_value',
-            'constraints' => $this->constraintsNotBlank
-        );
-
-        Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
-        Phake::when($this->fieldType1)->getType()->thenReturn($type);
-        Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
-        Phake::when($this->fieldType1)->getId()->thenReturn('fake-id');
-
-        Phake::when($this->contentAttribute)->getValue()->thenReturn($realValue);
-        Phake::when($this->content)->getAttributeByName($fieldId)->thenReturn($this->contentAttribute);
-
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
-        Phake::verify($this->content)->setContentTypeVersion($this->contentTypeVersion);
-        Phake::when($this->content)->getAttributeByName($fieldId);
-        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, $expectedOptions);
     }
 
     /**

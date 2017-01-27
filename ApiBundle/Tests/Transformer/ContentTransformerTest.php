@@ -85,7 +85,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
      * @param string   $contentType
      * @param string   $name
      * @param int      $version
-     * @param int      $contentTypeVersion
      * @param string   $language
      * @param DateTime $creationDate
      * @param DateTime $updateDate
@@ -100,7 +99,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $contentType,
         $name,
         $version,
-        $contentTypeVersion,
         $language,
         $creationDate,
         $updateDate,
@@ -114,7 +112,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::when($content)->getContentType()->thenReturn($contentType);
         Phake::when($content)->getName()->thenReturn($name);
         Phake::when($content)->getVersion()->thenReturn($version);
-        Phake::when($content)->getContentTypeVersion()->thenReturn($contentTypeVersion);
         Phake::when($content)->getLanguage()->thenReturn($language);
         Phake::when($content)->getCreatedAt()->thenReturn($creationDate);
         Phake::when($content)->getUpdatedAt()->thenReturn($updateDate);
@@ -130,7 +127,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertSame($id, $facade->id);
         $this->assertSame($name, $facade->name);
         $this->assertSame($version, $facade->version);
-        $this->assertSame($contentTypeVersion, $facade->contentTypeVersion);
         $this->assertSame($language, $facade->language);
         $this->assertSame($creationDate, $facade->createdAt);
         $this->assertSame($updateDate, $facade->updatedAt);
@@ -156,8 +152,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $date2 = new DateTime();
 
         return array(
-            array('foo', 'bar', 'baz', 1, 2, 'fr', $date1, $date2, true, false),
-            array('bar', 'baz', 'foo', 2, 1, 'en', $date2, $date1, false, true),
+            array('foo', 'bar', 'baz', 1, 'fr', $date1, $date2, true, false),
+            array('bar', 'baz', 'foo', 2, 'en', $date2, $date1, false, true),
         );
     }
 

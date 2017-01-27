@@ -46,7 +46,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Triggered when a node status changes
+     * add workflowProfile choice to group form
      *
      * @param NodeEvent $event
      */

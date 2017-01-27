@@ -57,8 +57,6 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             language: this._language,
             contentId: contentId
         });
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
@@ -71,10 +69,16 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         if (null === this._contentId) {
             throw new ApplicationError('Invalid contentId');
         }
-        let content = new Content({'content_id': this._contentId});
+        let content = new Content({'id': this._contentId});
+        let contentTypeId = this._contentTypeId;
+        let language = this._language;
+
         content.destroy({
             success: () => {
-                let url = Backbone.history.generateUrl('listContent');
+                let url = Backbone.history.generateUrl('listContent', {
+                    contentTypeId: contentTypeId,
+                    language: language
+                });
                 Backbone.history.navigate(url, true);
             }
         });

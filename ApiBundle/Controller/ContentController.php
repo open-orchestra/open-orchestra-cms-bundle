@@ -156,7 +156,7 @@ class ContentController extends BaseController
     /**
      * @param string $contentId
      *
-     * @Config\Route("/{contentTypeId}/delete", name="open_orchestra_api_content_delete")
+     * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response

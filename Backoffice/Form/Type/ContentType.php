@@ -7,7 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\Backoffice\Event\ContentFormEvent;
+use OpenOrchestra\Backoffice\ContentFormEvents;
 
 /**
  * Class ContentType
@@ -18,12 +21,17 @@ class ContentType extends AbstractType
     protected $contentClass;
 
     /**
-     * @param ContentTypeSubscriber $contentTypeSubscriber
-     * @param string                $contentClass
+     * @param EventSubscriberInterface $contentTypeSubscriber
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param string                   $contentClass
      */
-    public function __construct(ContentTypeSubscriber $contentTypeSubscriber, $contentClass)
-    {
+    public function __construct(
+        EventSubscriberInterface $contentTypeSubscriber,
+        EventDispatcherInterface $eventDispatcher,
+        $contentClass
+    ) {
         $this->contentTypeSubscriber = $contentTypeSubscriber;
+        $this->eventDispatcher = $eventDispatcher;
         $this->contentClass = $contentClass;
     }
 
@@ -36,6 +44,7 @@ class ContentType extends AbstractType
         $builder
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.content.name',
+                'disabled' => $options['is_blocked_edition'],
                 'group_id' => 'property',
                 'sub_group_id' => 'information',
             ))
@@ -45,11 +54,20 @@ class ContentType extends AbstractType
                 'group_id' => 'property',
                 'sub_group_id' => 'information',
             ));
+        if ($options['need_link_to_site_defintion']) {
+            $builder->add('linkedToSite', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content.linked_to_site',
+                'required' => false,
+                'group_id' => 'property',
+                'sub_group_id' => 'information',
+            ));
+        }
 
         $builder->addEventSubscriber($this->contentTypeSubscriber);
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
+        $this->eventDispatcher->dispatch(ContentFormEvents::CONTENT_FORM_CREATION, new ContentFormEvent($builder));
     }
 
     /**
@@ -79,6 +97,8 @@ class ContentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->contentClass,
+            'is_blocked_edition' => false,
+            'need_link_to_site_defintion' => false,
             'delete_button' => false,
             'new_button' => false,
                 'group_enabled' => true,

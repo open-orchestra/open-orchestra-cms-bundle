@@ -74,10 +74,9 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
 
-        $facade->contentId = $content->getContentId();
+        $facade->id = $content->getContentId();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
-        $facade->contentTypeVersion = $content->getContentTypeVersion();
         $facade->language = $content->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($content->getStatus());
         $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getCurrentLocale());
@@ -129,7 +128,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             }
         } else {
             if (null !== $facade->id) {
-                return $this->contentRepository->find($facade->id);
+                return $this->contentRepository->findOneByContentId($facade->id);
             }
 
             return null;

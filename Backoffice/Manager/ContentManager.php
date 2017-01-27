@@ -6,7 +6,7 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class ContentManager
@@ -14,48 +14,51 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 class ContentManager
 {
     protected $contentTypeRepository;
+    protected $statusRepository;
     protected $contextManager;
-    protected $contentClass;
     protected $versionableSaver;
+    protected $contentClass;
 
     /**
-     * @param ContextManager                 $contextManager
-     * @param string                         $contentClass
      * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param StatusRepositoryInterface      $statusRepository
+     * @param ContextManager                 $contextManager
      * @param VersionableSaverInterface      $versionableSaver
+     * @param string                         $contentClass
      */
     public function __construct(
-        ContextManager $contextManager,
-        $contentClass,
         ContentTypeRepositoryInterface $contentTypeRepository,
-        VersionableSaverInterface $versionableSaver
+        StatusRepositoryInterface $statusRepository,
+        ContextManager $contextManager,
+        VersionableSaverInterface $versionableSaver,
+        $contentClass
     )
     {
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->statusRepository = $statusRepository;
         $this->contextManager = $contextManager;
-        $this->contentClass = $contentClass;
         $this->versionableSaver = $versionableSaver;
+        $this->contentClass = $contentClass;
     }
 
     /**
      * @param string $contentType
+     * @param string $language
      *
      * @return ContentInterface
      */
-    public function initializeNewContent($contentType)
+    public function initializeNewContent($contentType, $language, $isLinkedToSite)
     {
+        $initialStatus = $this->statusRepository->findOneByInitial();
+
         $contentClass = $this->contentClass;
         /** @var ContentInterface $content */
         $content = new $contentClass();
-        $content->setLanguage($this->contextManager->getDefaultLocale());
+        $content->setLanguage($language);
         $content->setSiteId($this->contextManager->getCurrentSiteId());
         $content->setContentType($contentType);
-
-        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($contentType);
-
-        if ($contentType instanceof ContentTypeInterface) {
-            $content->setLinkedToSite($contentType->isLinkedToSite());
-        }
+        $content->setLinkedToSite($isLinkedToSite);
+        $content->setStatus($initialStatus);
 
         return $content;
     }
@@ -68,8 +71,11 @@ class ContentManager
      */
     public function createNewLanguageContent($contentSource, $language)
     {
+        $translationStatus = $this->statusRepository->findOneByTranslationState();
+
         $content = $this->newVersionContent($contentSource);
         $content->setLanguage($language);
+        $content->setStatus($translationStatus);
 
         return $content;
     }

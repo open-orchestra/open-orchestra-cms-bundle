@@ -72,22 +72,10 @@ class ContentTypeSubscriber implements EventSubscriberInterface
     public function preSetData(FormEvent $event)
     {
         $form = $event->getForm();
-        $data = $event->getData();
-        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($data->getContentType());
-
+        $content = $event->getData();
+        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
         if ($contentType instanceof ContentTypeInterface) {
-            $data->setContentTypeVersion($contentType->getVersion());
-
-            if (null === $data->getId()) {
-                $form->add('linkedToSite', 'checkbox', array(
-                    'label' => 'open_orchestra_backoffice.form.content.linked_to_site',
-                    'required' => false,
-                    'group_id' => 'property',
-                    'sub_group_id' => 'information',
-                ));
-            }
-
-            $this->addContentTypeFieldsToForm($contentType->getFields(), $form);
+            $this->addContentTypeFieldsToForm($contentType->getFields(), $form, $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false);
         }
     }
 
@@ -126,7 +114,6 @@ class ContentTypeSubscriber implements EventSubscriberInterface
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
 
         if ($contentType instanceof ContentTypeInterface) {
-            $content->setContentTypeVersion($contentType->getVersion());
             foreach ($contentType->getFields() as $contentTypeField) {
                 $contentTypeFieldId = $contentTypeField->getFieldId();
                 $value = $form->get($contentTypeFieldId)->getData();
@@ -150,14 +137,15 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      *
      * @param array<FieldTypeInterface> $contentTypeFields
      * @param FormInterface             $form
+     * @param boolean                   $blockedEdition
      */
-    protected function addContentTypeFieldsToForm($contentTypeFields, FormInterface $form)
+    protected function addContentTypeFieldsToForm($contentTypeFields, FormInterface $form, $blockedEdition)
     {
         /** @var FieldTypeInterface $contentTypeField */
         foreach ($contentTypeFields as $contentTypeField) {
 
             if (isset($this->fieldTypesConfiguration[$contentTypeField->getType()])) {
-                $this->addFieldToForm($contentTypeField, $form);
+                $this->addFieldToForm($contentTypeField, $form, $blockedEdition);
             }
         }
     }
@@ -167,8 +155,9 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      *
      * @param FieldTypeInterface $contentTypeField
      * @param FormInterface      $form
+     * @param boolean            $blockedEdition
      */
-    protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form)
+    protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form, $blockedEdition)
     {
         $fieldTypeConfiguration = $this->fieldTypesConfiguration[$contentTypeField->getType()];
 
@@ -176,6 +165,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
             array(
                 'label' => $this->multiLanguagesChoiceManager->choose($contentTypeField->getLabels()),
                 'mapped' => false,
+                'disabled' => $blockedEdition,
                 'group_id' => 'data',
                 'sub_group_id' => 'data',
             ),

@@ -98,7 +98,7 @@ class GroupType extends AbstractType
         $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);
         $builder->addEventSubscriber($this->groupMemberSubscriber);
         $builder->addEventSubscriber($this->groupPerimeterSubscriber);
-        $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder, $this));
+        $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder));
     }
 
     /**

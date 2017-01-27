@@ -2,14 +2,15 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\ModelInterface\ContentEvents;
-use OpenOrchestra\ModelInterface\Event\ContentEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use OpenOrchestra\ModelInterface\ContentEvents;
+use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Exception\UneditableException;
 
 /**
  * Class ContentController
@@ -27,41 +28,46 @@ class ContentController extends AbstractAdminController
      */
     public function formAction(Request $request, $contentId, $language)
     {
-        $repository = $this->get('open_orchestra_model.repository.content');
         $version = $request->get('version');
-
-        $content = $repository->findOneByLanguageAndVersion($contentId, $language, $version);
+        $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
+        if (!$content instanceof ContentInterface) {
+            throw new \UnexpectedValueException();
+        }
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($content->getContentType());
+        if (!$contentType instanceof ContentTypeInterface) {
+            throw new \UnexpectedValueException();
+        }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
-        if ($content instanceof ContentInterface) {
-            $currentlyPublishedContents = $repository->findAllCurrentlyPublishedByContentId($contentId);
-            $isUsed = false;
-            foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
-                $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
-            }
-            $form = $this->createForm('oo_content', $content, array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
-                    'contentId' => $content->getContentId(),
-                    'language' => $content->getLanguage(),
-                    'version' => $content->getVersion(),
-                )),
-                'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed)
-            ));
-
-            $form->handleRequest($request);
-            $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
-
-            if ($this->handleForm($form, $message)) {
-                $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
-            }
-
-            return $this->renderAdminForm(
-                $form,
-                array(),
-                null,
-                $this->getFormTemplate($content->getContentType()
-            ));
+        $currentlyPublishedContents = $this->get('open_orchestra_model.repository.content')->findAllCurrentlyPublishedByContentId($contentId);
+        $isUsed = false;
+        foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
+            $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
         }
+        $form = $this->createForm('oo_content', $content, array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
+                'contentId' => $content->getContentId(),
+                'language' => $content->getLanguage(),
+                'version' => $content->getVersion(),
+            )),
+            'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed),
+            'need_link_to_site_defintion' => false,
+            'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
+        ));
+
+        $form->handleRequest($request);
+        $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
+
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+        }
+
+        return $this->renderAdminForm(
+            $form,
+            array(),
+            null,
+            $this->getFormTemplate($content->getContentType()
+        ));
     }
 
     /**
@@ -75,7 +81,15 @@ class ContentController extends AbstractAdminController
      */
     public function newAction(Request $request, $contentTypeId, $language)
     {
-        $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentTypeId);
+        $contentManager = $this->get('open_orchestra_backoffice.manager.content');
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
+        if (!$contentType instanceof ContentTypeInterface) {
+            throw new \UnexpectedValueException();
+        }
+        $content = $contentManager->initializeNewContent($contentTypeId, $language, $contentType->isLinkedToSite() && $contentType->isAlwaysShared());
+        if (!$content instanceof ContentInterface) {
+            throw new \UnexpectedValueException();
+        }
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
 
         $form = $this->createForm('oo_content', $content, array(
@@ -84,24 +98,39 @@ class ContentController extends AbstractAdminController
                 'language' => $language,
             )),
             'method' => 'POST',
-            'new_button' => true
-        ), ContributionActionInterface::CREATE);
+            'new_button' => true,
+            'need_link_to_site_defintion' => $contentType->isLinkedToSite() && !$contentType->isAlwaysShared(),
+            'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
+        ));
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $contentsEvent = array();
             $documentManager = $this->get('object_manager');
             $documentManager->persist($content);
+            $contentsEvent[] = new ContentEvent($content);
+
+            $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
+            foreach ($languages as $siteLanguage) {
+                if ($language !== $siteLanguage) {
+                    $translatedContent = $contentManager->createNewLanguageContent($content, $siteLanguage);
+                    $documentManager->persist($translatedContent);
+                    $contentsEvent[] = new ContentEvent($translatedContent);
+                }
+            }
             $documentManager->flush();
+
+            foreach ($contentsEvent as $contentEvent) {
+                $this->dispatchEvent(ContentEvents::CONTENT_CREATION, $contentEvent);
+            }
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
             $this->get('session')->getFlashBag()->add('success', $message);
-
-            $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content, null));
             $response = new Response(
                 '',
                 Response::HTTP_CREATED,
                 array('Content-type' => 'text/plain; charset=utf-8', 'contentId' => $content->getContentId(), 'name' => $content->getName())
-                );
+            );
 
             return $response;
         }
