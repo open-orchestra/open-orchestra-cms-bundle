@@ -62,7 +62,7 @@ class ContentTypeTest extends AbstractBaseTestCase
             'need_link_to_site_defintion' => true,
         ));
 
-        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }

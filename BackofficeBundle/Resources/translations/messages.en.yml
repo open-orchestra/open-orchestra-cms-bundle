@@ -183,6 +183,8 @@ open_orchestra_backoffice:
             linked_to_site: Shared on other sites
             keywords: Keywords
             content_id: Content id
+            publish_date: Automatic publish date
+            unpublish_date: Automatic unpublish date
             group:
                 property: Properties
                 data: Data

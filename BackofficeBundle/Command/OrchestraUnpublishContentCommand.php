@@ -3,16 +3,16 @@
 namespace OpenOrchestra\BackofficeBundle\Command;
 
 /**
- * Class OrchestraPublishNodeCommand
+ * Class OrchestraUnpublishContentCommand
  */
-class OrchestraPublishNodeCommand extends OrchestraPublishElementCommand
+class OrchestraUnpublishContentCommand extends OrchestraUnpublishElementCommand
 {
     /**
      * @return string
      */
     public function getElementType()
     {
-        return 'node';
+        return 'content';
     }
 
     /**
@@ -20,6 +20,6 @@ class OrchestraPublishNodeCommand extends OrchestraPublishElementCommand
      */
     public function getManagerName()
     {
-        return 'open_orchestra_cms.manager.node_publisher';
+        return 'open_orchestra_cms.manager.content_publisher';
     }
 }

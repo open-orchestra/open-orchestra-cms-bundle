@@ -238,21 +238,6 @@ class ContentController extends BaseController
     }
 
     /**
-     * @param string $contentMongoId
-     *
-     * @Config\Route("/{contentMongoId}/list-statuses", name="open_orchestra_api_content_list_status")
-     * @Config\Method({"GET"})
-     *
-     * @return Response
-     */
-    public function listStatusesForContentAction($contentMongoId)
-    {
-        $content = $this->get('open_orchestra_model.repository.content')->find($contentMongoId);
-
-        return $this->listStatuses($content);
-    }
-
-    /**
      * @param string   $contentId
      * @param string   $language
      * @param int|null $version

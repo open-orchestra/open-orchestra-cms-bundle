@@ -67,6 +67,19 @@ class ContentType extends AbstractType
                 'sub_group_id' => 'information',
             ));
         }
+        $builder
+            ->add('publishDate', 'oo_date_picker', array(
+                'widget' => 'single_text',
+                'label' => 'open_orchestra_backoffice.form.content.publish_date',
+                'group_id' => 'property',
+                'required' => false
+            ))
+            ->add('unpublishDate', 'oo_date_picker', array(
+                'widget' => 'single_text',
+                'label' => 'open_orchestra_backoffice.form.content.unpublish_date',
+                'group_id' => 'property',
+                'required' => false
+            ));
 
         $builder->addEventSubscriber($this->statusableChoiceStatusSubscriber);
         $builder->addEventSubscriber($this->contentTypeSubscriber);

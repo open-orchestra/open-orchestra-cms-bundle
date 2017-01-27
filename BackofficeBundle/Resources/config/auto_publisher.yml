@@ -1,10 +1,16 @@
 parameters:
-    open_orchestra_backoffice.node_publisher.class: OpenOrchestra\Backoffice\Manager\NodePublisher
+    open_orchestra_backoffice.auto_publish_manager.class: OpenOrchestra\Backoffice\Manager\AutoPublishManager
 
 services:
     open_orchestra_cms.manager.node_publisher:
-        class: '%open_orchestra_backoffice.node_publisher.class%'
+        class: '%open_orchestra_backoffice.auto_publish_manager.class%'
         arguments:
             - '@open_orchestra_model.repository.status'
             - '@open_orchestra_model.repository.node'
+            - '@object_manager'
+    open_orchestra_cms.manager.content_publisher:
+        class: '%open_orchestra_backoffice.auto_publish_manager.class%'
+        arguments:
+            - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_model.repository.content'
             - '@object_manager'
