@@ -62,6 +62,7 @@ class BlockTransformer extends AbstractTransformer
         $facade->label = $block->getLabel();
         $facade->style = $block->getStyle();
         $facade->id = $block->getId();
+        $facade->language = $block->getLanguage();
         $facade->transverse = $block->isTransverse();
         $facade->updatedAt = $block->getUpdatedAt();
         $categoryKey = $this->blockConfigurationManager->getBlockCategory($block->getComponent());
@@ -79,7 +80,7 @@ class BlockTransformer extends AbstractTransformer
 
         $facade->previewContent = $this->displayBlockManager->show($block);
 
-        if ($this->hasGroup(CMSGroupContext::BLOCKS_NUMBER_USER)) {
+        if ($this->hasGroup(CMSGroupContext::BLOCKS_NUMBER_USE)) {
             $facade->numberUse = $this->nodeRepository->countBlockUsed($block->getId());
         }
 

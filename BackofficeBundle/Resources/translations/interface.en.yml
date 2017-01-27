@@ -19,6 +19,7 @@ open_orchestra_backoffice:
     no_item: There are no item for this view
     add: Add
     back_to_list: Back to list
+    back: Back
     navigation:
         hide_menu: Hide menu
         dashboard:
@@ -131,7 +132,6 @@ open_orchestra_backoffice:
     shared_block:
         title_list: shared blocks
         title_list_new: Select a block to parameterize
-        title_new: Parameterize the block
         tab_usage_block: Usage of block
         search_engine:
             label: Label
@@ -142,10 +142,15 @@ open_orchestra_backoffice:
         title_new : New tag
     block:
         add_block: Add a block
+        new_block: New
+        title_new: Parameterize the block
+        display_new_block: Display a block of type %blockComponent%
+        back_to_node: Back to node
         confirm_remove:
             title: Remove this block ?
             message: The removal will be final
         edit_title: Edit block
+        creation: The block has been created
     form:
         keyword:
             new: new

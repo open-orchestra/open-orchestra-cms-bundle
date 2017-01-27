@@ -1,27 +1,29 @@
-import OrchestraRouter  from '../OrchestraRouter'
-import Application      from '../../Application'
-import Blocks           from '../../Collection/Block/Blocks'
-import SharedBlocksView from '../../View/Block/SharedBlocksView'
-import FormBuilder      from '../../../Service/Form/Model/FormBuilder'
-import BlockFormView    from '../../View/Block/BlockFormView'
-import NewBlockFormView from '../../View/Block/NewBlockFormView'
-import NewBlockListView from '../../View/Block/NewBlockListView'
-import BlockComponents  from '../../Collection/Block/BlockComponents'
+import AbstractBlockRouter       from './AbstractBlockRouter'
+import Application               from '../../Application'
+import FormBuilder               from '../../../Service/Form/Model/FormBuilder'
+import BlockComponents           from '../../Collection/Block/BlockComponents'
+import Blocks                    from '../../Collection/Block/Blocks'
+
+import NewBlockComponentListView from '../../View/Block/NewBlockComponentListView'
+import BlockFormView             from '../../View/Block/BlockFormView'
+import NewBlockListAvailableView from '../../View/Block/NewBlockListAvailableView'
+import NewBlockFormView          from '../../View/Block/NewBlockFormView'
 
 /**
  * @class BlockRouter
  */
-class BlockRouter extends OrchestraRouter
+class BlockRouter extends AbstractBlockRouter
 {
     /**
      * @inheritdoc
      */
     preinitialize(options) {
+        super.preinitialize(options);
         this.routes = {
-            'shared-block/list(/:language)(/:page)': 'listSharedBlock',
-            'block/new/list/:language': 'newBlockList',
-            'block/new/:component/:language/:name': 'newBlock',
-            'block/edit/:blockId/:blockLabel(/:activateUsageTab)': 'editBlock'
+            'block/new/list/:nodeId/:nodeLanguage/:nodeVersion/:areaName/:position': 'newBlockListComponent',
+            'block/new/list/available-component/:nodeId/:nodeLanguage/:nodeVersion/:component/:componentName/:areaName/:position': 'newBlockListAvailable',
+            'block/edit/:blockId/:blockLabel/:nodeId/:nodeLanguage/:nodeVersion': 'editBlock',
+            'block/new/form/:nodeId/:nodeLanguage/:nodeVersion/:component/:componentName/:areaName/:position': 'newBlockForm'
         };
     }
 
@@ -31,90 +33,95 @@ class BlockRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.shared_block'),
-                link: '#'+Backbone.history.generateUrl('listSharedBlock')
+                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.nodes'),
+                link: '#'+Backbone.history.generateUrl('showNodes')
             }
         ]
     }
 
     /**
-     * List shared block
+     * New block list component
      *
-     * @param {string} language
-     * @param {int}    page
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
+     * @param {string} areaName
+     * @param {string} position
      */
-    listSharedBlock(language, page) {
-        if (null === language) {
-            language = Application.getContext().user.language.contribution
-        }
-        if (null === page) {
-            page = 1
-        }
-        this._displayLoader(Application.getRegion('content'));
-        let pageLength = 10;
-        page = Number(page) - 1;
-        let blocks = new Blocks();
-        let blockComponents = new BlockComponents();
-        $.when(
-            blocks.fetch({urlParameter: { language: language }}),
-            blockComponents.fetch()
-        ).done(() => {
-            let sharedBlocksView = new SharedBlocksView({
-                collection: blocks,
-                blockComponents: blockComponents,
-                language: language,
-                siteLanguages: Application.getContext().siteLanguages,
-                settings: {
-                    page: page,
-                    deferLoading: [blocks.recordsTotal, blocks.recordsFiltered],
-                    data: blocks.models,
-                    pageLength: pageLength
-                }
-            });
-            let el = sharedBlocksView.render().$el;
-            Application.getRegion('content').html(el);
+    newBlockListComponent(nodeId, nodeLanguage, nodeVersion, areaName, position) {
+        this._newBlockListComponent(NewBlockComponentListView, nodeLanguage, {
+            nodeId: nodeId,
+            nodeVersion: nodeVersion,
+            areaName: areaName,
+            position: position
         });
     }
 
     /**
-     * New block list component
-     *
-     * @param {string} language
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
+     * @param {string} component
+     * @param {string} componentName
+     * @param {string} areaName
+     * @param {string} position
      */
-    newBlockList(language) {
+    newBlockListAvailable(nodeId, nodeLanguage, nodeVersion, component, componentName, areaName, position) {
         this._displayLoader(Application.getRegion('content'));
-        new BlockComponents().fetch({
-            success: (blockComponents) => {
-                let newBlockListView = new NewBlockListView({
-                    blockComponents : blockComponents,
-                    language: language
+        new Blocks().fetch({
+            urlParameter: {
+                language: nodeLanguage,
+                component: component
+            },
+            context: 'list-by-component-shared-block',
+            success: (blocks) => {
+                let blockFormView = new NewBlockListAvailableView({
+                    blocks: blocks,
+                    nodeId: nodeId,
+                    nodeLanguage: nodeLanguage,
+                    nodeVersion: nodeVersion,
+                    component: component,
+                    componentName: componentName,
+                    areaName: areaName,
+                    position: position
                 });
-                Application.getRegion('content').html(newBlockListView.render().$el);
+                Application.getRegion('content').html(blockFormView.render().$el);
             }
-        })
+        });
     }
 
     /**
-     * New block
-     *
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
      * @param {string} component
-     * @param {string} language
-     * @param {string} name
+     * @param {string} componentName
+     * @param {string} areaName
+     * @param {string} position
      */
-    newBlock(component, language, name) {
+    newBlockForm(nodeId, nodeLanguage, nodeVersion, component, componentName, areaName, position) {
         this._displayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_backoffice_shared_block_new', {
-            component : component,
-            language : language
+        let url = Routing.generate('open_orchestra_backoffice_block_new_in_node', {
+            nodeId: nodeId,
+            language: nodeLanguage,
+            version: nodeVersion,
+            component: component,
+            areaId: areaName,
+            position: position
         });
         FormBuilder.createFormFromUrl(url, (form) => {
             let newBlockFormView = new NewBlockFormView({
                 form : form,
-                language : language,
-                name: name
+                name: componentName,
+                nodeId: nodeId,
+                nodeLanguage: nodeLanguage,
+                nodeVersion: nodeVersion,
+                component: component,
+                areaName: areaName,
+                position: position
             });
             Application.getRegion('content').html(newBlockFormView.render().$el);
         });
@@ -125,13 +132,11 @@ class BlockRouter extends OrchestraRouter
      *
      * @param {string} blockId
      * @param {string} blockLabel
-     * @param {boolean} activateUsageTab
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
      */
-    editBlock(blockId, blockLabel, activateUsageTab) {
-        if (null === activateUsageTab) {
-            activateUsageTab = false;
-        }
-        activateUsageTab = (activateUsageTab === 'true');
+    editBlock(blockId, blockLabel, nodeId, nodeLanguage, nodeVersion) {
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_block_form', {
             blockId : blockId
@@ -141,7 +146,9 @@ class BlockRouter extends OrchestraRouter
                 form : form,
                 blockLabel: blockLabel,
                 blockId: blockId,
-                activateUsageTab: activateUsageTab
+                nodeId: nodeId,
+                nodeLanguage: nodeLanguage,
+                nodeVersion: nodeVersion
             });
             Application.getRegion('content').html(blockFormView.render().$el);
         });

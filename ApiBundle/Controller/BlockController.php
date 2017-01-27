@@ -32,7 +32,7 @@ class BlockController extends BaseController
      * @Config\Route("/list/shared/{language}", name="open_orchestra_api_block_list_shared_table")
      * @Config\Method({"GET"})
      * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::BLOCKS_NUMBER_USER
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::BLOCKS_NUMBER_USE
      * })
      */
     public function listSharedBlockTableAction(Request $request, $language)
@@ -109,63 +109,22 @@ class BlockController extends BaseController
 
     /**
      * @param string $language
+     * @param string $component
      *
-     * @Config\Route("/list/with-transverse/{language}", name="open_orchestra_api_block_list_with_transverse")
+     * @Config\Route("/shared/list-by-component/{language}/{component}", name="open_orchestra_api_block_list_shared")
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
      */
-    public function listBlockWithTransverseAction($language)
+    public function listSharedBlockByComponentAction($language, $component)
     {
-        return $this->listBlock($language, true);
-    }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, BlockInterface::ENTITY_TYPE);
+        $repository = $this->get('open_orchestra_model.repository.block');
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $collection = $repository->findTransverseBlock($component, $siteId, $language);
 
-    /**
-     * @param string $language
-     *
-     * @Config\Route("/list/without-transverse/{language}", name="open_orchestra_api_block_list_without_transverse")
-     * @Config\Method({"GET"})
-     *
-     * @return FacadeInterface
-     */
-    public function listBlockWithoutTransverseAction($language)
-    {
-        return $this->listBlock($language, false);
-    }
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('block_collection');
 
-    /**
-     * @param string $language
-     * @param bool   $withTransverseBlocks
-     *
-     * @return FacadeInterface
-     */
-    protected function listBlock($language, $withTransverseBlocks)
-    {
-        $currentSiteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
-
-        $blocks = array();
-        if ($currentSite) {
-            $blocks = $currentSite->getBlocks();
-            if (count($blocks) == 0) {
-                $blocks = $this->getParameter('open_orchestra.blocks');
-            }
-        }
-        foreach ($blocks as $key => $block) {
-            $blockClass = $this->container->getParameter('open_orchestra_model.document.block.class');
-            $blocks[$key] = new $blockClass();
-            $blocks[$key]->setComponent($block);
-        }
-
-
-        $transverseBlocks = array();
-        if ($withTransverseBlocks) {
-            $transverseBlocks = $this->get('open_orchestra_model.repository.block')->findTransverse();
-        }
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform(
-            $transverseBlocks,
-            $blocks
-        );
+        return $collectionTransformer->transform($collection);
     }
 }

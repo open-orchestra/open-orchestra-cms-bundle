@@ -46,6 +46,11 @@ class BlockFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
+    public $language;
+
+    /**
+     * @Serializer\Type("string")
+     */
     public $previewContent;
 
     /**

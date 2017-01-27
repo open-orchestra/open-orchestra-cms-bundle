@@ -20,7 +20,11 @@ class AreaView extends OrchestraView
      * Render area
      */
     render() {
-        let templateAddBlockLink = this._renderTemplate('Block/addBlockLink');
+        let templateAddBlockLink = this._renderTemplate('Block/addBlockLink', {
+            node: this._node,
+            areaName: this._area.get('name'),
+            position: '0'
+        });
         this.$el.append(templateAddBlockLink);
 
         this._renderBlocks(this.$el);
@@ -34,11 +38,9 @@ class AreaView extends OrchestraView
      * @private
      */
     _renderBlocks($selector) {
-        if (typeof this._area.get('blocks') !== 'undefined') {
-            for (let block of this._area.get('blocks').models) {
-                let blockView = new BlockView({block: block, area: this._area, node: this._node});
-                $selector.append(blockView.render().$el);
-            }
+        for (let block of this._area.get('blocks').models) {
+            let blockView = new BlockView({block: block, area: this._area, node: this._node});
+            $selector.append(blockView.render().$el);
         }
     }
 }

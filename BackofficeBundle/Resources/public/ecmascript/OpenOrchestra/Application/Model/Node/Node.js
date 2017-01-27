@@ -1,6 +1,7 @@
-import OrchestraModel from '../OrchestraModel'
-import Status         from '../Status/Status'
-import Area           from '../Area/Area'
+import OrchestraModel   from '../OrchestraModel'
+import Status           from '../Status/Status'
+import Area             from '../Area/Area'
+import ApplicationError from '../../../Service/Error/ApplicationError'
 
 /**
  * @class Node
@@ -39,7 +40,7 @@ class Node extends OrchestraModel
             return areas[areaId];
         }
 
-        return new Area();
+        throw new ApplicationError('Area '+areaId+' not found');
     }
 
     /**
@@ -86,6 +87,8 @@ class Node extends OrchestraModel
                 return Routing.generate('open_orchestra_api_node_update_status');
             case "update_position_block":
                 return Routing.generate('open_orchestra_node_update_block_position', urlParameter);
+            case 'add_block':
+                return Routing.generate('open_orchestra_node_add_block', urlParameter);
         }
     }
 }

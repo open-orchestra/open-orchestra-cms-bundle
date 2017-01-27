@@ -2,7 +2,9 @@
     <div class="panel-heading">
         <strong><%= block.get('name') %></strong>
         <ul class="toolbar pull-right">
-            <li><a href="#"><i class="fa fa-pencil"></i></a></li>
+            <% if (false === block.get('transverse')) { %>
+                <li class="edit-block" ><a href="#"><i class="fa fa-pencil"></i></a></li>
+            <% } %>
             <li class="delete-block" ><a href="#"><i class="fa fa-trash"></i></a></li>
             <li class="move-block" ><a href="#"><i class="fa fa-arrows"></i></a></li>
         </ul>
@@ -12,5 +14,5 @@
     </div>
 </div>
 
-<%= renderTemplate('Block/addBlockLink') %>
+<%= renderTemplate('Block/addBlockLink', {node: node, areaName: area.get('name'), position: position}) %>
 

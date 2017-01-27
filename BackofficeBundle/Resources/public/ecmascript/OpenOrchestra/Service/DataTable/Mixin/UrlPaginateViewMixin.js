@@ -16,7 +16,11 @@ let UrlPaginateViewMixin = (superclass) => class extends superclass {
      */
     _updatePage(event) {
         let api = $(event.target).DataTable();
-        let page = api.page.info().page + 1;
+        let pageInfo = api.page.info();
+        let page = pageInfo.page + 1;
+        if (page > pageInfo.pages) {
+            api.page('last').draw('page');
+        }
         let url = this.generateUrlUpdatePage(page);
         Backbone.history.navigate(url);
     }

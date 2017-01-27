@@ -26,7 +26,9 @@ class NodeManager
     protected $nodeRepository;
     protected $siteRepository;
     protected $contextManager;
+    protected $templateManager;
     protected $nodeClass;
+    protected $areaClass;
 
     /**
      * Constructor
@@ -38,7 +40,9 @@ class NodeManager
      * @param BlockRepositoryInterface   $blockRepository
      * @param ContextManager             $contextManager
      * @param string                     $nodeClass
+     * @param string                     $areaClass
      * @param EventDispatcherInterface   $eventDispatcher
+     * @param TemplateManager            $templateManager
      */
     public function __construct(
         VersionableSaverInterface  $versionableSaver,
@@ -47,7 +51,9 @@ class NodeManager
         StatusRepositoryInterface $statusRepository,
         BlockRepositoryInterface  $blockRepository,
         ContextManager $contextManager,
+        TemplateManager $templateManager,
         $nodeClass,
+        $areaClass,
         $eventDispatcher
     ){
         $this->versionableSaver =  $versionableSaver;
@@ -57,7 +63,9 @@ class NodeManager
         $this->blockRepository = $blockRepository;
         $this->contextManager = $contextManager;
         $this->nodeClass = $nodeClass;
+        $this->areaClass = $areaClass;
         $this->eventDispatcher = $eventDispatcher;
+        $this->templateManager = $templateManager;
     }
 
     /**
@@ -262,6 +270,23 @@ class NodeManager
             $node->setNodeId(NodeInterface::ROOT_NODE_ID);
         }
         $node->setNodeType($nodeType);
+
+        return $node;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return NodeInterface
+     */
+    public function initializeAreasNode(NodeInterface $node)
+    {
+        $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
+        $templateSet = $site->getTemplateSet();
+        $areasName = $this->templateManager->getTemplateAreas($node->getTemplate(), $templateSet);
+        foreach($areasName as $areaName) {
+            $node->setArea($areaName, new $this->areaClass());
+        }
 
         return $node;
     }

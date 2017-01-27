@@ -159,6 +159,10 @@ class Configuration implements ConfigurationInterface
                         ->useAttributeAsKey('name')
                         ->prototype('array')
                             ->children()
+                                ->arrayNode('areas')
+                                    ->info('list of editable areas in template')
+                                    ->isRequired()
+                                ->end()
                                 ->scalarNode('label')->end()
                                 ->scalarNode('path')->end()
                             ->end()
@@ -177,6 +181,7 @@ class Configuration implements ConfigurationInterface
                 'label' => 'open_orchestra_backoffice.template_set.default.label',
                 'templates' => array(
                     'default' => array(
+                        'areas' => array('header', 'main', 'footer'),
                         'label' => 'open_orchestra_backoffice.template_set.default.template_name.default',
                         'path' => '/bundles/openorchestrabackoffice/templateSet/default/default.html'
                     )
