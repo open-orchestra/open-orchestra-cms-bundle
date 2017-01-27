@@ -26,6 +26,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
         $this->blockConfigurationManager = Phake::mock('OpenOrchestra\Backoffice\Manager\BlockConfigurationManager');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $blockRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\BlockRepositoryInterface');
         $context = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
         Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(false);
@@ -36,7 +37,8 @@ class BlockTransformerTest extends AbstractBaseTestCase
             $this->displayBlockManager,
             $this->blockConfigurationManager,
             $this->translator,
-            $nodeRepository
+            $nodeRepository,
+            $blockRepository
         );
         $this->blockTransformer->setContext($context);
     }

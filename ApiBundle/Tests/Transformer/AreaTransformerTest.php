@@ -18,6 +18,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
     protected $areaTransformer;
 
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\AreaFacade';
+    protected $areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
     protected $transformerManager;
     protected $transformer;
     protected $block;
@@ -43,7 +44,8 @@ class AreaTransformerTest extends AbstractBaseTestCase
 
         $this->areaTransformer = new AreaTransformer(
             $this->facadeClass,
-            $this->authorizationChecker
+            $this->authorizationChecker,
+            $this->areaClass
         );
 
         $this->areaTransformer->setContext($this->transformerManager);

@@ -83,4 +83,22 @@ class BlockManagerTest extends AbstractBaseTestCase
             array('video', '2', 'fr', false, true, array('compo' => 'fakeCompo')),
         );
     }
+
+    /**
+     * Test create to translate block
+     */
+    public function testCreateToTranslateBlock()
+    {
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $label = 'fake_label';
+        $language = 'fake_language';
+        $newLanguage = 'fr';
+        Phake::when($block)->getLabel()->thenReturn($label);
+        Phake::when($block)->getLanguage()->thenReturn($language);
+
+        $newBlock = $this->manager->createToTranslateBlock($block, $newLanguage);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\BlockInterface', $newBlock);
+        Phake::verify($newBlock)->setLanguage($newLanguage);
+        Phake::verify($newBlock)->setLabel($label."[".$language."]");
+    }
 }

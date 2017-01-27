@@ -299,31 +299,6 @@ class NodeManager
         return $node;
     }
 
-    /**
-     * @param NodeInterface $node
-     * @param Collection    $blocks
-     * @param string        $areaId
-     *
-     * @return NodeInterface
-     */
-    public function copyBlocksToTranslateInArea(NodeInterface $node, Collection $blocks, $areaId)
-    {
-        $area = $node->getArea($areaId);
-        $language = $node->getLanguage();
-        /** @var BlockInterface $block */
-        foreach ($blocks as $block) {
-            if (false === $block->isTransverse()) {
-                $block = clone $block;
-                $block->setLanguage($node->getLanguage());
-                $block->setLabel($block->getLabel()."[".$language."]");
-                $area->addBlock($block);
-                $this->eventDispatcher->dispatch(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $block));
-            }
-        }
-
-        return $node;
-    }
-
    /**
      * @param array         $orderedNode
      * @param NodeInterface $node
