@@ -2,19 +2,18 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
-use OpenOrchestra\Backoffice\EventSubscriber\NodeChoiceStatusSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\StatusableChoiceStatusSubscriber;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Phake;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
 
 /**
- * Class NodeChoiceStatusSubscriberTest
+ * Class StatusableChoiceStatusSubscriberTest
  */
-class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
+class StatusableChoiceStatusSubscriberTest extends AbstractBaseTestCase
 {
     /**
-     * @var NodeThemeSelectionSubscriber
+     * @var StatusableThemeSelectionSubscriber
      */
     protected $subscriber;
 
@@ -39,7 +38,11 @@ class NodeChoiceStatusSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->event)->getData()->thenReturn($this->object);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new NodeChoiceStatusSubscriber($this->statusRepository, $this->authorizationChecker);
+        $this->subscriber = new StatusableChoiceStatusSubscriber($this->statusRepository, $this->authorizationChecker, array(
+            'label' => 'open_orchestra_backoffice.form.node.status',
+            'group_id' => 'properties',
+            'sub_group_id' => 'publication',
+        ));
     }
 
     /**

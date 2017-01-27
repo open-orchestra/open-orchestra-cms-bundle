@@ -26,9 +26,10 @@ class ContentTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->contentTypeSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        $this->statusableChoiceStatusSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->form = new ContentType($this->contentTypeSubscriber, $this->eventDispatcher, $this->contentClass);
+        $this->form = new ContentType($this->contentTypeSubscriber, $this->statusableChoiceStatusSubscriber, $this->eventDispatcher, $this->contentClass);
     }
 
     /**
@@ -62,7 +63,7 @@ class ContentTypeTest extends AbstractBaseTestCase
         ));
 
         Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
-        Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 

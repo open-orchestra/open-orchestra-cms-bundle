@@ -2,15 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
-use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
@@ -27,7 +23,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $statusRepository;
     protected $contentTypeRepository;
     protected $contentRepository;
-    protected $eventDispatcher;
     protected $contextManager;
 
     /**
@@ -35,7 +30,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusRepositoryInterface      $statusRepository
      * @param ContentTypeRepositoryInterface $contentTypeRepository,
      * @param ContentRepositoryInterface     $contentRepository,
-     * @param EventDispatcherInterface       $eventDispatcher
      * @param AuthorizationCheckerInterface  $authorizationChecker
      * @param CurrentSiteIdInterface         $contextManager
      */
@@ -44,7 +38,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         StatusRepositoryInterface $statusRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
         ContentRepositoryInterface $contentRepository,
-        EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         CurrentSiteIdInterface $contextManager
     )
@@ -52,7 +45,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $this->statusRepository = $statusRepository;
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
-        $this->eventDispatcher = $eventDispatcher;
         $this->contextManager = $contextManager;
         parent::__construct($facadeClass, $authorizationChecker);
     }
@@ -114,28 +106,11 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
-        if ($source) {
-            if ($facade->statusId) {
-                $toStatus = $this->statusRepository->find($facade->statusId);
-                if ($toStatus) {
-                    $event = new StatusableEvent($source, $toStatus);
-                    try {
-                        $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
-                    } catch (StatusChangeNotGrantedException $e) {
-                        throw new StatusChangeNotGrantedHttpException();
-                    }
-                }
-            }
-        } else {
-            if (null !== $facade->id) {
-                return $this->contentRepository->findOneByContentId($facade->id);
-            }
-
-            return null;
-
+        if (null !== $facade->id) {
+            return $this->contentRepository->findOneByContentId($facade->id);
         }
 
-        return $source;
+        return null;
     }
 
     /**

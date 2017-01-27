@@ -18,19 +18,24 @@ use OpenOrchestra\Backoffice\ContentFormEvents;
 class ContentType extends AbstractType
 {
     protected $contentTypeSubscriber;
+    protected $statusableChoiceStatusSubscriber;
+    protected $eventDispatcher;
     protected $contentClass;
 
     /**
      * @param EventSubscriberInterface $contentTypeSubscriber
+     * @param EventSubscriberInterface $statusableChoiceStatusSubscriber
      * @param EventDispatcherInterface $eventDispatcher
      * @param string                   $contentClass
      */
     public function __construct(
         EventSubscriberInterface $contentTypeSubscriber,
+        EventSubscriberInterface $statusableChoiceStatusSubscriber,
         EventDispatcherInterface $eventDispatcher,
         $contentClass
     ) {
         $this->contentTypeSubscriber = $contentTypeSubscriber;
+        $this->statusableChoiceStatusSubscriber = $statusableChoiceStatusSubscriber;
         $this->eventDispatcher = $eventDispatcher;
         $this->contentClass = $contentClass;
     }
@@ -63,6 +68,7 @@ class ContentType extends AbstractType
             ));
         }
 
+        $builder->addEventSubscriber($this->statusableChoiceStatusSubscriber);
         $builder->addEventSubscriber($this->contentTypeSubscriber);
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);

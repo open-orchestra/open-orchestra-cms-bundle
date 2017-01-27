@@ -238,26 +238,6 @@ class ContentController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param string $contentMongoId
-     *
-     * @Config\Route("/{contentMongoId}/update", name="open_orchestra_api_content_update")
-     * @Config\Method({"POST"})
-     *
-     * @return Response
-     */
-    public function updateAction(Request $request, $contentMongoId)
-    {
-        return $this->reverseTransform(
-            $request,
-            $contentMongoId,
-            'content',
-            ContentEvents::CONTENT_CHANGE_STATUS,
-            'OpenOrchestra\ModelInterface\Event\ContentEvent'
-        );
-    }
-
-    /**
      * @param string $contentMongoId
      *
      * @Config\Route("/{contentMongoId}/list-statuses", name="open_orchestra_api_content_list_status")

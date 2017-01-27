@@ -144,6 +144,7 @@ services:
         arguments:
             - '@open_orchestra_backoffice.subscriber.content_type'
             - '@event_dispatcher'
+            - '@open_orchestra_backoffice.subscriber.content_choice_status'
             - '%open_orchestra_model.document.content.class%'
         tags:
             - {name: form.type, alias: oo_content}

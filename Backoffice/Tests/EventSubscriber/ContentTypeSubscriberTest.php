@@ -93,6 +93,8 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+
         $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         $this->constraintsNotBlank =  new NotBlank();
 
@@ -102,13 +104,18 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->valueTransformerManager)->transform(Phake::anyParameters())->thenReturn('foo');
 
         $translator = Phake::mock('Symfony\Component\Translation\Translator');
+
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,
+            $this->statusRepository,
             $this->contentAttributClass,
             $this->multiLanguagesChoiceManager,
             $this->fieldTypesConfiguration,
             $this->valueTransformerManager,
-            $translator
+            $translator,
+            $this->eventDispatcher
         );
 
     }

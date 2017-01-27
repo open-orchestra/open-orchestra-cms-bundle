@@ -2,12 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
-use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
-use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
-use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormError;
@@ -16,6 +10,18 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
+use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
+use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\StatusEvents;
 
 /**
  * Class ContentTypeSubscriber
@@ -31,6 +37,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
 
     /**
      * @param ContentTypeRepositoryInterface       $contentTypeRepository
+     * @param StatusRepositoryInterface            $statusRepository
      * @param string                               $contentAttributeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param array                                $fieldTypesConfiguration
@@ -39,19 +46,22 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
+        StatusRepositoryInterface $statusRepository,
         $contentAttributeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         $fieldTypesConfiguration,
         ValueTransformerManager $valueTransformerManager,
-        TranslatorInterface $translator
-    )
-    {
+        TranslatorInterface $translator,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->statusRepository = $statusRepository;
         $this->contentAttributeClass = $contentAttributeClass;
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->fieldTypesConfiguration = $fieldTypesConfiguration;
         $this->valueTransformerManager = $valueTransformerManager;
         $this->translator = $translator;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -62,6 +72,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
             FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::PRE_SUBMIT => 'preSubmit',
             FormEvents::POST_SUBMIT => 'postSubmit',
         );
     }
@@ -100,6 +111,26 @@ class ContentTypeSubscriber implements EventSubscriberInterface
                     $error = new FormError($message);
                     $form->get($contentTypeFieldId)->addError($error);
                 }
+            }
+        }
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function preSubmit(FormEvent $event)
+    {
+        $content = $event->getForm()->getData();
+        $data = $event->getData();
+        $statusId = !array_key_exists('status', $data) ? false : $data['status'];
+
+        if ($content instanceof ContentInterface && $data['status'] && $content->getStatus()->getId() != $statusId) {
+            $toStatus = $this->statusRepository->find($statusId);
+            $event = new StatusableEvent($content, $toStatus);
+            try {
+                $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
+            } catch (StatusChangeNotGrantedException $e) {
+                throw new StatusChangeNotGrantedException();
             }
         }
     }

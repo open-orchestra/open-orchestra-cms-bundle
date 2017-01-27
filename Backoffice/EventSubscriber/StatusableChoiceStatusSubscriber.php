@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -10,23 +10,27 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class NodeChoiceStatusSubscriber
+ * Class StatusableChoiceStatusSubscriber
  */
-class NodeChoiceStatusSubscriber implements EventSubscriberInterface
+class StatusableChoiceStatusSubscriber implements EventSubscriberInterface
 {
     protected $statusRepository;
     protected $authorizationChecker;
+    protected $options;
 
     /**
      * @param StatusRepositoryInterface     $statusRepository
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param array                         $options
      */
      public function __construct(
-        StatusRepositoryInterface $statusRepository,
-        AuthorizationCheckerInterface $authorizationChecker
+         StatusRepositoryInterface $statusRepository,
+         AuthorizationCheckerInterface $authorizationChecker,
+         array $options
     ) {
         $this->statusRepository = $statusRepository;
         $this->authorizationChecker = $authorizationChecker;
+        $this->options = $options;
     }
 
     /**
@@ -38,13 +42,10 @@ class NodeChoiceStatusSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         if (null !== $data->getId()) {
-            $form->add('status', 'oo_status_choice', array(
+            $form->add('status', 'oo_status_choice', array_merge(array(
                 'embedded' => true,
-                'label' => 'open_orchestra_backoffice.form.node.status',
-                'group_id' => 'properties',
-                'sub_group_id' => 'publication',
-                'choices' => $this->getStatusChoices($data)
-            ));
+                'choices' => $this->getStatusChoices($data)), $this->options)
+            );
         }
     }
 
@@ -59,18 +60,18 @@ class NodeChoiceStatusSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NodeInterface $node
+     * @param StatusableInterface $statusable
      *
      * @return array
      */
-    protected function getStatusChoices(NodeInterface $node)
+    protected function getStatusChoices(StatusableInterface $statusable)
     {
-        $choices = array($node->getStatus());
+        $choices = array($statusable->getStatus());
         $availableStatus = $this->statusRepository->findAll();
 
         foreach ($availableStatus as $status) {
-            if ($status->getId() != $node->getStatus()->getId()
-                && $this->authorizationChecker->isGranted($status, $node)
+            if ($status->getId() != $statusable->getStatus()->getId()
+                && $this->authorizationChecker->isGranted($status, $statusable)
             ) {
                 $choices[] = $status;
             }

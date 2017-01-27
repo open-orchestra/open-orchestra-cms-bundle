@@ -145,7 +145,6 @@ services:
             - '@open_orchestra_model.repository.status'
             - '@open_orchestra_model.repository.content_type'
             - '@open_orchestra_model.repository.content'
-            - '@event_dispatcher'
             - '@security.authorization_checker'
             - '@open_orchestra_backoffice.context_manager'
         tags:
