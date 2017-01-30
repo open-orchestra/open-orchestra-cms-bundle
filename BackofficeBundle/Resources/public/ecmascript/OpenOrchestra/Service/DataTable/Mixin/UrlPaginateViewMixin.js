@@ -18,7 +18,7 @@ let UrlPaginateViewMixin = (superclass) => class extends superclass {
         let api = $(event.target).DataTable();
         let pageInfo = api.page.info();
         let page = pageInfo.page + 1;
-        if (page > pageInfo.pages) {
+        if (page > pageInfo.pages && 0 !== pageInfo.pages) {
             api.page('last').draw('page');
         }
         let url = this.generateUrlUpdatePage(page);
