@@ -68,7 +68,7 @@ abstract class OrchestraUnpublishElementCommand extends ContainerAwareCommand
     {
         $elementPublisherManager = $this->getContainer()->get($this->getManagerName());
 
-        $output->writeln("\n<info>Unpublishing '.$this->getElementType().'s for siteId " . $site->getSiteId() . "</info>");
+        $output->writeln("\n<info>Unpublishing ".$this->getElementType()."s for siteId " . $site->getSiteId() . "</info>");
 
         $unpublishResult = $elementPublisherManager->unpublishElements($site);
 
@@ -76,7 +76,7 @@ abstract class OrchestraUnpublishElementCommand extends ContainerAwareCommand
             $output->writeln("<error>There is no published status defined.</error>");
 
         } elseif (AutoPublishManagerInterface::ERROR_NO_UNPUBLISHED_STATUS == $unpublishResult) {
-            $output->writeln("<error>There is no status defined to unpublish '.$this->getElementType().'s.</error>");
+            $output->writeln("<error>There is no status defined to unpublish ".$this->getElementType()."s.</error>");
 
         } elseif (is_array($unpublishResult)) {
             foreach ($unpublishResult as $element) {

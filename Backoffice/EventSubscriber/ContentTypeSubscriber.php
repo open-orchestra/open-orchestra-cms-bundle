@@ -124,7 +124,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $statusId = !array_key_exists('status', $data) ? false : $data['status'];
 
-        if ($content instanceof ContentInterface && $data['status'] && $content->getStatus()->getId() != $statusId) {
+        if ($content instanceof ContentInterface && $statusId && $content->getStatus()->getId() != $statusId) {
             $toStatus = $this->statusRepository->find($statusId);
             $event = new StatusableEvent($content, $toStatus);
             try {
