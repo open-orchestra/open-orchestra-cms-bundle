@@ -525,7 +525,6 @@ open_orchestra_backoffice:
             at: Dernière mise à jour
             by: par
     node:
-        root_name: Page d'accueil
         version:
             create: Nouvelle version
             display: version

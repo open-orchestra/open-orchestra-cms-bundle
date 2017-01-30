@@ -10,7 +10,7 @@ parameters:
     open_orchestra_backoffice.subscriber.delete_node.class                       : OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
     open_orchestra_backoffice.subscriber.delete_content.class                    : OpenOrchestra\Backoffice\EventSubscriber\DeleteContentSubscriber
     open_orchestra_backoffice.subscriber.update_route_document.class             : OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
-    open_orchestra_backoffice.subscriber.create_root_node.class                  : OpenOrchestra\Backoffice\EventSubscriber\CreateRootNodeSubscriber
+    open_orchestra_backoffice.subscriber.create_root_node.class                  : OpenOrchestra\Backoffice\EventSubscriber\CreateMandatoryNodesSubscriber
     open_orchestra_backoffice.subscriber.update_site_alias_redirection_site.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateSiteAliasRedirectionSiteSubscriber
     open_orchestra_backoffice.subscriber.block_form_type.class                   : OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber
     open_orchestra_backoffice.subscriber.update_reference.class                  : OpenOrchestra\Backoffice\EventSubscriber\UpdateReferenceSubscriber
@@ -115,6 +115,7 @@ services:
         class: '%open_orchestra_backoffice.subscriber.create_root_node.class%'
         arguments:
             - '@open_orchestra_backoffice.manager.node'
+            - '@open_orchestra_model.repository.status'
             - '@object_manager'
             - '@translator'
         tags:
