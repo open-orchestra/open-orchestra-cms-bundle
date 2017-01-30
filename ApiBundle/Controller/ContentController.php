@@ -105,18 +105,14 @@ class ContentController extends BaseController
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
         $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
 
-        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($content->getContentType());
-
-        if (!is_null($contentType) && $contentType->isDefiningVersionable()) {
-            $contentId = $content->getContentId();
-            $newContentId = null;
-            foreach (array_keys($frontLanguages) as $language) {
-                $content = $this->findOneContent($contentId, $language);
-                if ($content instanceof ContentInterface) {
-                    $duplicateContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $newContentId);
-                    $newContentId = $duplicateContent->getContentId();
-                    $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
-                }
+        $contentId = $content->getContentId();
+        $newContentId = null;
+        foreach (array_keys($frontLanguages) as $language) {
+            $content = $this->findOneContent($contentId, $language);
+            if ($content instanceof ContentInterface) {
+                $duplicateContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $newContentId);
+                $newContentId = $duplicateContent->getContentId();
+                $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
             }
         }
 

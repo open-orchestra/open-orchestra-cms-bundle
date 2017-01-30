@@ -22,7 +22,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\ContentFacade';
     protected $transformerManager;
     protected $statusRepository;
-    protected $contentTypeRepository;
     protected $contentRepository;
     protected $authorizationChecker;
     protected $contextManager;
@@ -36,10 +35,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::when($contentType0)->isDefiningVersionable()->thenReturn(true);
         $contentType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($contentType1)->isDefiningVersionable()->thenReturn(false);
-
-        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion('bar')->thenReturn($contentType0);
-        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion('baz')->thenReturn($contentType1);
 
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
@@ -73,7 +68,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->contentTransformer = new ContentTransformer(
             $this->facadeClass,
             $this->statusRepository,
-            $this->contentTypeRepository,
             $this->contentRepository,
             $this->authorizationChecker,
             $this->contextManager

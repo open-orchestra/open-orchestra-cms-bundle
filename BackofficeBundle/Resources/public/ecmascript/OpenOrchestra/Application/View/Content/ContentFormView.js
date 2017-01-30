@@ -11,7 +11,11 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}   form
-     * @param {Array}  name
+     * @param {String} name
+     * @param {String} contentTypeId
+     * @param {String} language
+     * @param {Array}  siteLanguageUrl
+     * @param {String} contentId
      */
     initialize({form, name, contentTypeId, language, siteLanguageUrl, contentId = null}) {
         super.initialize({form : form});
@@ -40,7 +44,7 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     }
 
     /**
-     * Redirect to edit user view
+     * Redirect to edit content view
      *
      * @param {mixed}  data
      * @param {string} textStatus

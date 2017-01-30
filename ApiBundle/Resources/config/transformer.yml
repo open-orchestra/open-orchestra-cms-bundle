@@ -143,7 +143,6 @@ services:
         arguments:
             - '%open_orchestra_api.facade.content.class%'
             - '@open_orchestra_model.repository.status'
-            - '@open_orchestra_model.repository.content_type'
             - '@open_orchestra_model.repository.content'
             - '@security.authorization_checker'
             - '@open_orchestra_backoffice.context_manager'

@@ -21,14 +21,12 @@ use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $statusRepository;
-    protected $contentTypeRepository;
     protected $contentRepository;
     protected $contextManager;
 
     /**
      * @param string                         $facadeClass
      * @param StatusRepositoryInterface      $statusRepository
-     * @param ContentTypeRepositoryInterface $contentTypeRepository,
      * @param ContentRepositoryInterface     $contentRepository,
      * @param AuthorizationCheckerInterface  $authorizationChecker
      * @param CurrentSiteIdInterface         $contextManager
@@ -36,14 +34,12 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     public function __construct(
         $facadeClass,
         StatusRepositoryInterface $statusRepository,
-        ContentTypeRepositoryInterface $contentTypeRepository,
         ContentRepositoryInterface $contentRepository,
         AuthorizationCheckerInterface $authorizationChecker,
         CurrentSiteIdInterface $contextManager
     )
     {
         $this->statusRepository = $statusRepository;
-        $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
         parent::__construct($facadeClass, $authorizationChecker);
@@ -62,10 +58,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
-
         $facade = $this->newFacade();
-
         $facade->id = $content->getContentId();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
@@ -85,7 +78,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
-            $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE) && !is_null($contentType) && $contentType->isDefiningVersionable());
             $currentlyPublishedContents = $this->contentRepository->findAllCurrentlyPublishedByContentId($content->getContentId());
             $isUsed = false;
             foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
