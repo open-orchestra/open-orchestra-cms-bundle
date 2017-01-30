@@ -72,62 +72,6 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param string  $nodeId
-     * @param bool    $errorNode
-     *
-     * @return FacadeInterface
-     * @throws AccessLanguageForNodeNotGrantedHttpException
-     *
-     * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create", defaults={"errorNode" = false})
-     * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
-     * @Config\Method({"GET"})
-     *
-     *  @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
-     * })
-     */
-    public function showOrCreateAction(Request $request, $nodeId, $errorNode)
-    {
-        $currentSiteManager = $this->get('open_orchestra_backoffice.context_manager');
-        $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
-        $language = $request->get('language', $currentSiteDefaultLanguage);
-        $siteId = $currentSiteManager->getCurrentSiteId();
-        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-
-        if (!is_null($site)) {
-            if (!in_array($language, $site->getLanguages())) {
-                throw new AccessLanguageForNodeNotGrantedHttpException();
-            }
-        }
-
-        $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
-        if ($node) {
-            $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
-        }
-        if (!$node) {
-            $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
-
-            if ($oldNode) {
-                $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $oldNode);
-                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
-            } elseif ($errorNode) {
-                $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $errorNode);
-                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
-            }
-
-            $dm = $this->get('object_manager');
-            $dm->persist($node);
-
-            $dm->flush();
-        }
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
-    }
-
-    /**
      * @param string $nodeId
      *
      * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")

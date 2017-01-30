@@ -125,24 +125,27 @@ class NodeManagerTest extends AbstractBaseTestCase
 
     /**
      * @param string $nodeId
+     * @param string $parentId
      * @param string $siteId
      * @param string $language
+     * @param string $template
      *
      * @dataProvider provideNodeAndSiteAndLanguage
      */
-    public function testCreateNewErrorNode($nodeId, $siteId, $language)
+    public function testCreateNewErrorNode($nodeId, $parentId, $siteId, $language, $template)
     {
-        $newNode = $this->manager->createNewErrorNode($nodeId, $siteId, $language);
+        $newNode = $this->manager->createNewErrorNode($nodeId, $parentId, $siteId, $language, $template);
 
         $this->assertEquals($nodeId, $newNode->getNodeId());
         $this->assertEquals(ReadNodeInterface::TYPE_ERROR, $newNode->getNodeType());
         $this->assertEquals($siteId, $newNode->getSiteId());
-        $this->assertEquals($nodeId, $newNode->getRoutePattern());
         $this->assertEquals($nodeId, $newNode->getName());
         $this->assertEquals($language, $newNode->getLanguage());
         $this->assertEquals(false, $newNode->isInFooter());
         $this->assertEquals(false, $newNode->isInMenu());
         $this->assertEquals(1, $newNode->getVersion());
+        $this->assertEquals($template, $newNode->getTemplate());
+        $this->assertEquals($parentId, $newNode->getParentId());
 
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
@@ -153,8 +156,8 @@ class NodeManagerTest extends AbstractBaseTestCase
     public function provideNodeAndSiteAndLanguage()
     {
         return array(
-            array('errorPage404', '2', 'fr'),
-            array('errorPage503', '1', 'en')
+            array('errorPage404', 'root', '2', 'fr', 'template'),
+            array('errorPage503', 'test', '1', 'en', 'template2'),
         );
     }
 
@@ -254,6 +257,9 @@ class NodeManagerTest extends AbstractBaseTestCase
         }
     }
 
+    /**
+     * Tets initialize areas node
+     */
     public function testInitializeAreasNode()
     {
         $areaName = array('main', 'footer');
