@@ -93,10 +93,10 @@ class RedirectionTypeTest extends AbstractBaseTestCase
     /**
      * test buildView
      *
-     * @param string|null $data
+     * @param string      $data
      * @param string      $url
      * @param boolean     $mustSet
-     * @param string      $type
+     * @param string|null $type
      *
      * @dataProvider provideData
      */
