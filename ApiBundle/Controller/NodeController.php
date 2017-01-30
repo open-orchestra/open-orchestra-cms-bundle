@@ -230,10 +230,8 @@ class NodeController extends BaseController
         $objectManager = $this->get('object_manager');
         /** @var BlockInterface $block */
         foreach ($blocks as $block) {
-            dump($block);
             if (false === $block->isTransverse()) {
                 $blockToTranslate = $this->get('open_orchestra_backoffice.manager.block')->createToTranslateBlock($block, $language);
-                dump($blockToTranslate);
                 $node->getArea($areaId)->addBlock($blockToTranslate);
                 $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockToTranslate));
                 $objectManager->persist($blockToTranslate);
