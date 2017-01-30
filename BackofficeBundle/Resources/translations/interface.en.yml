@@ -133,6 +133,10 @@ open_orchestra_backoffice:
         title_list: shared blocks
         title_list_new: Select a block to parameterize
         tab_usage_block: Usage of block
+        confirm_remove:
+            title: Remove this shared block ?
+            message: The removal will be final
+        success_remove: The shared block has been successfully removed
         search_engine:
             label: Label
             type: Type

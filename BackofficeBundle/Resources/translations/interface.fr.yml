@@ -133,6 +133,10 @@ open_orchestra_backoffice:
         title_list: Blocs partagés
         title_list_new: Sélectionner un bloc à paramétrer
         tab_usage_block: Utilisation du bloc
+        confirm_remove:
+            title: Supprimer ce bloc partagé ?
+            message: La suppression sera définitive
+        success_remove: Le bloc partagé a été correctement supprimé
         search_engine:
             label: Libellé
             type: Type

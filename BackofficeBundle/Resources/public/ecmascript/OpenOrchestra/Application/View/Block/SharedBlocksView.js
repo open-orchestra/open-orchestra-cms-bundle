@@ -1,5 +1,6 @@
 import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
 import SharedBlockListView    from './SharedBlockListView'
+import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class SharedBlocksView
@@ -38,7 +39,8 @@ class SharedBlocksView extends AbstractCollectionView
             let template = this._renderTemplate('Block/sharedBlocksView', {
                 language: this._language,
                 siteLanguages: this._siteLanguages,
-                categories: categories
+                categories: categories,
+                messages: FlashMessageBag.getMessages()
             });
             this.$el.html(template);
             this._listView = new SharedBlockListView({
