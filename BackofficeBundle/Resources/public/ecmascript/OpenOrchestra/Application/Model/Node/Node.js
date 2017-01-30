@@ -70,6 +70,8 @@ class Node extends OrchestraModel
                 return Routing.generate('open_orchestra_api_node_show', urlParameter);
             case "update":
                 return this._getSyncUpdateUrl(options);
+            case "patch":
+                return Routing.generate('open_orchestra_node_copy_blocks_in_area', urlParameter);
         }
     }
 
@@ -80,9 +82,9 @@ class Node extends OrchestraModel
      * @private
      */
     _getSyncUpdateUrl(options) {
-        let context = options.context || null;
+        let apiContext = options.apiContext || null;
         let urlParameter = options.urlParameter || {};
-        switch (context) {
+        switch (apiContext) {
             case "update_status":
                 return Routing.generate('open_orchestra_api_node_update_status');
             case "update_position_block":

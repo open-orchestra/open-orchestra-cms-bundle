@@ -42,7 +42,7 @@ class NodeUsageBlockListView extends NodeListView
      */
     _getSyncOptions() {
         return {
-            'context': 'usage-block',
+            'apiContext': 'usage-block',
             'urlParameter': {
                 'language': this._language,
                 'siteId': this._siteId,

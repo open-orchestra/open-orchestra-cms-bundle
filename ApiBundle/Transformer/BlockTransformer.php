@@ -9,6 +9,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Repository\BlockRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -21,6 +22,7 @@ class BlockTransformer extends AbstractTransformer
     protected $blockConfigurationManager;
     protected $translator;
     protected $nodeRepository;
+    protected $blockRepository;
 
     /**
      * @param string                    $facadeClass
@@ -28,19 +30,22 @@ class BlockTransformer extends AbstractTransformer
      * @param BlockConfigurationManager $blockConfigurationManager
      * @param TranslatorInterface       $translator
      * @param NodeRepositoryInterface   $nodeRepository
+     * @param BlockRepositoryInterface  $blockRepository
      */
     public function __construct(
         $facadeClass,
         DisplayBlockManager      $displayBlockManager,
         BlockConfigurationManager $blockConfigurationManager,
         TranslatorInterface $translator,
-        NodeRepositoryInterface $nodeRepository
+        NodeRepositoryInterface $nodeRepository,
+        BlockRepositoryInterface $blockRepository
     ) {
         parent::__construct($facadeClass);
         $this->displayBlockManager = $displayBlockManager;
         $this->blockConfigurationManager = $blockConfigurationManager;
         $this->translator = $translator;
         $this->nodeRepository = $nodeRepository;
+        $this->blockRepository = $blockRepository;
     }
 
     /**
@@ -85,6 +90,17 @@ class BlockTransformer extends AbstractTransformer
         }
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param null $source
+     *
+     * @return BlockInterface
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        return $this->blockRepository->findById($facade->id);
     }
 
     /**

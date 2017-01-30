@@ -73,7 +73,7 @@ class NewBlockListAvailableView extends OrchestraView
             throw new ApplicationError('Block not found');
         }
         new Node({id: this._nodeId}).save({}, {
-            context: 'add_block',
+            apiContext: 'add_block',
             urlParameter: {
                 nodeId: this._nodeId,
                 language: this._nodeLanguage,

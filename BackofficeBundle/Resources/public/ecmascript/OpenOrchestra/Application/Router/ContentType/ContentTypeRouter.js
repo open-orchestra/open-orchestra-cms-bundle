@@ -87,7 +87,7 @@ class ContentTypeRouter extends OrchestraRouter
         let pageLength = 10;
         page = Number(page) - 1;
         new ContentTypes().fetch({
-            context: 'list',
+            apiContext: 'list',
             data : {
                 start: page * pageLength,
                 length: pageLength

@@ -67,6 +67,22 @@ class BlockManager
 
     /**
      * @param BlockInterface $block
+     * @param string         $language
+     *
+     * @return BlockInterface
+     */
+    public function createToTranslateBlock(BlockInterface $block, $language)
+    {
+        $block = clone $block;
+        $oldLanguage = $block->getLanguage();
+        $block->setLanguage($language);
+        $block->setLabel($block->getLabel()."[".$oldLanguage."]");
+
+        return $block;
+    }
+
+    /**
+     * @param BlockInterface $block
      */
     protected function setDefaultAttributes(BlockInterface $block)
     {

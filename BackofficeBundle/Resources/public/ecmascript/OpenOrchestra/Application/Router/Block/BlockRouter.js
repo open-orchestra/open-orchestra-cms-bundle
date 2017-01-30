@@ -76,7 +76,7 @@ class BlockRouter extends AbstractBlockRouter
                 language: nodeLanguage,
                 component: component
             },
-            context: 'list-by-component-shared-block',
+            apiContext: 'list-by-component-shared-block',
             success: (blocks) => {
                 let blockFormView = new NewBlockListAvailableView({
                     blocks: blocks,

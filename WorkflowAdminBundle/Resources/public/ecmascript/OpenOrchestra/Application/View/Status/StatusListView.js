@@ -123,7 +123,7 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
      * @private
      */
     _getSyncOptions() {
-        return {context: 'table'};
+        return {apiContext: 'table'};
     }
 }
 

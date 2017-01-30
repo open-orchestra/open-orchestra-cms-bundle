@@ -41,9 +41,9 @@ class Statuses extends DataTableCollection
      * @private
      */
     _getSyncReadUrl(options) {
-        let context = options.context || null;
+        let apiContext = options.apiContext || null;
         let urlParameter = options.urlParameter || {};
-        switch (context) {
+        switch (apiContext) {
             case "table":
                 return Routing.generate('open_orchestra_api_status_list_table');
             case "nodes":

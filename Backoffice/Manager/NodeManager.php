@@ -2,7 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
+use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\ModelInterface\BlockNodeEvents;
+use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

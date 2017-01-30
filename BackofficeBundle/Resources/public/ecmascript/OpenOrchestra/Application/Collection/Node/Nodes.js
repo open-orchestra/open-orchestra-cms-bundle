@@ -43,10 +43,12 @@ class Nodes extends DataTableCollection
      * @private
      */
     _getSyncReadUrl(options, urlParameter) {
-        let context = options.context || null;
-        switch (context) {
+        let apiContext = options.apiContext || null;
+        switch (apiContext) {
             case "list":
                 return Routing.generate('open_orchestra_api_node_list', urlParameter);
+            case "list-with-block-in-area":
+                return Routing.generate('open_orchestra_api_node_list_with_block_in_area', urlParameter);
             case "usage-block":
                 return Routing.generate('open_orchestra_api_node_list_usage_block', urlParameter);
         }

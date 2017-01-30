@@ -50,7 +50,7 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
      */
     _getSyncOptions() {
         return {
-            'context': 'list'
+            'apiContext': 'list'
         };
     }
 
