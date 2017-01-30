@@ -58,12 +58,6 @@ class StatusType extends AbstractType
                 'required' => false,
                 'attr'     => array('help_text' => 'open_orchestra_workflow_admin.form.status.blocked_edition.helper'),
                 'group_id' => 'properties',
-            ))
-            ->add('outOfWorkflow', 'checkbox', array(
-                'label'    => 'open_orchestra_workflow_admin.form.status.out_of_workflow.label',
-                'required' => false,
-                'attr'     => array('help_text' => 'open_orchestra_workflow_admin.form.status.out_of_workflow.helper'),
-                'group_id' => 'properties',
             ));
 
         if (array_key_exists('disabled', $options)) {
