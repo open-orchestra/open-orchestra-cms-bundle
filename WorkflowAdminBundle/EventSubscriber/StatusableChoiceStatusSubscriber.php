@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\EventSubscriber;
+namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

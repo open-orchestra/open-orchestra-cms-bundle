@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
-use OpenOrchestra\Backoffice\EventSubscriber\StatusableChoiceStatusSubscriber;
+use OpenOrchestra\WorkflowAdminBundle\EventSubscriber\StatusableChoiceStatusSubscriber;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Phake;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
