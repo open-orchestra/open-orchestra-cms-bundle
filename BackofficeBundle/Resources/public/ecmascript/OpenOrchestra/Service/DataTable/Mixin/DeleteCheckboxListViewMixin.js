@@ -33,7 +33,7 @@ let DeleteCheckboxListViewMixin = (superclass) => class extends superclass {
     _canDelete(rowData) {
         return rowData.get('rights').hasOwnProperty('can_delete') && rowData.get('rights').can_delete;
     }
-    
+
     /**
      * @param {Object} td
      * @param {Object} cellData

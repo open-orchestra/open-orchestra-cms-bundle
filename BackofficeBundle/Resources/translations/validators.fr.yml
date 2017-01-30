@@ -19,3 +19,5 @@ open_orchestra_backoffice_validators:
         remove_node_date: Vous devez attendre 7 jours pour pouvoir supprimer définitivement une page
     boolean_condition:
         pattern: La condition booléenne n'est pas correctement formatée
+    redirection:
+        unique_pattern: Une redirection avec ce pattern existe déjà

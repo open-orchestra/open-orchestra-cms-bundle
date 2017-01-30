@@ -27,4 +27,12 @@ class RedirectionCollectionFacade extends PaginateCollectionFacade
     {
         $this->redirections[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getRedirections()
+    {
+        return $this->redirections;
+    }
 }

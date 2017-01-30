@@ -18,9 +18,13 @@
       "template": "Navigation/Configuration/site",
       "rank": 0
     },
+    "redirection": {
+      "template": "Navigation/Configuration/redirection",
+      "rank": 10
+    },
     "shared_block": {
       "template": "Navigation/Configuration/shared_block",
-      "rank": 0
+      "rank": 40
     }
   },
   "platform": {

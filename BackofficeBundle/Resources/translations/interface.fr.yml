@@ -40,8 +40,9 @@ open_orchestra_backoffice:
           title: Développeur
           content_type: Type de contenu
         configuration:
-          title: Configuration
-          site: Sites
+          title       : Configuration
+          site        : Sites
+          redirections: Redirections
           shared_block: Blocs partagés
     table:
         delete_button: Supprimer les éléments sélectionnés
@@ -81,6 +82,12 @@ open_orchestra_backoffice:
             updated_by: Auteur de la mise à jour
             list: Lister
             add: Ajouter
+        redirections:
+            site_name    : Nom du site
+            route_pattern: Pattern de route
+            locale       : Locale
+            redirection  : Redirection
+            permanent    : Permanent
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes derniers contenus
@@ -170,7 +177,9 @@ open_orchestra_backoffice:
                     Attention Les blocs suivant: %blocks% ne peuvent être copié.
                     Il s'agit de bloc non éditable.
                     Veuillez ajouter manuellement le bloc correspondant dans la langue.
-
+    redirection:
+      title_edit: Redirections
+      title_list: Redirections
     form:
         keyword:
             new: nouveau

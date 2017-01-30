@@ -1,0 +1,55 @@
+<div class="top-action-buttons">
+    <a class="btn btn-info" href="#redirection/new" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+</div>
+<h1> <%= Translator.trans('open_orchestra_backoffice.redirection.title_list') %></h1>
+<form class="form-horizontal search-engine">
+    <div class="form-group col-lg-6">
+        <label for="site_name" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.redirections.site_name')%></label>
+        <div class="col-md-8">
+            <input type="text" name='site_name' class="form-control" id="site_name">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="route_pattern" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.redirections.route_pattern')%></label>
+        <div class="col-md-8">
+            <input type="text" name='route_pattern' class="form-control" id="route_pattern">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="locale" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.redirections.locale')%></label>
+        <div class="col-md-8">
+            <input type="text" name='locale' class="form-control" id="locale">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="redirection" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.redirections.redirection')%></label>
+        <div class="col-md-8">
+            <input type="text" name='redirection' class="form-control" id="redirection">
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <label for="permanent" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.table.redirections.permanent')%></label>
+        <div class="col-md-8">
+            <div class="radio radio-inline">
+                <input id="permanentYes" value="true" name="permanent" type="radio">
+                <label for="permanentYes"><%= Translator.trans('open_orchestra_backoffice.search_engine.yes')%></label>
+            </div>
+            <div class="radio radio-inline">
+                <input id="permanentNo" value="false" name="permanent" type="radio">
+                <label for="permanentNo"><%= Translator.trans('open_orchestra_backoffice.search_engine.no')%></label>
+            </div>
+            <div class="radio radio-inline">
+                <input id="permanentNA" value="" name="permanent" checked="checked" type="radio">
+                <label for="permanentNA"><%= Translator.trans('open_orchestra_backoffice.node.search_engine.na')%></label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-lg-6">
+        <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+    </div>
+</form>
+<div class="redirections-list">
+</div>
+<div class="bottom-action-buttons">
+    <button class="btn btn-danger btn-delete disabled"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
+</div>

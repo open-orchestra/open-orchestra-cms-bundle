@@ -361,13 +361,21 @@ open_orchestra_backoffice:
             new:
                 success: La redirection a été créée
             edit:
+                title  : Redirection
                 success: La redirection a été mis à jour
-            site_name: Nom du site
-            locale: Langue du site
-            route_pattern: Pattern à rediriger
-            node_id: Node sur lequel faire la redirection
-            url: Rediriger sur l'url
-            permanent: Redirection permanente
+            group:
+                properties : Propriétés
+                redirection: Redirection
+            site_name    : Nom du site
+            locale       : Langue du site
+            route_pattern: Url déclenchant la redirection
+            node_id      : Node vers lequel rediriger
+            url          : Url vers laquelle rediriger
+            permanent    : Redirection permanente
+            type         :
+                label   : Type de redirection
+                internal: Interne
+                external: Externe
         api_client:
             name: Nom
             trusted: Faire confiance
