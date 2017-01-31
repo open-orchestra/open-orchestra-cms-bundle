@@ -76,6 +76,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
         Phake::verify($this->resolver)->setDefaults(
             array(
                 'data_class' => $this->fieldTypeClass,
+                'attr' => array('class' => 'form-to-patch'),
                 'group_enabled' => true,
                 'sub_group_render' => array(
                     'property' => array(

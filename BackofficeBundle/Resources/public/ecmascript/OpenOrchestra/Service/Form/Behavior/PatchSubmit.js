@@ -13,8 +13,8 @@ class PatchSubmit extends AbstractBehavior
      * */
     getExtraEvents() {
         return {
-            'change .patch-submit': '_submitPatch',
-            'click .patch-submit' : '_submitPatch'
+            'change .patch-submit-change': '_submitPatch',
+            'click .patch-submit-click' : '_submitPatch'
         }
     }
 
@@ -25,18 +25,20 @@ class PatchSubmit extends AbstractBehavior
      * @private
      */
     _submitPatch(event) {
-        let $form = $(event.target).parents('form').eq(0);
+        let $formToPatch = $(event.target).parents('.form-to-patch').eq(0);
+        let $subform = $('.subform-to-refresh', $formToPatch);
+        let $form = $('form', this.$el);
+        let index = $('.subform-to-refresh', $form).index($subform);
 
-        Backbone.Events.trigger('form:deactivate', $form);
-        this._displayLoader($form);
+        Backbone.Events.trigger('form:deactivate', this);
+        this._displayLoader($subform);
 
         $form.ajaxSubmit({
-            method: 'PATCH',
+            type: 'PATCH',
             context: this,
             success: function(response) {
-                let $newForm = $(response);
-                $form.replaceWith($newForm);
-                Backbone.Events.trigger('form:deactivate', $newForm);;
+                $subform.html($('.subform-to-refresh', response).eq(index).html());
+                Backbone.Events.trigger('form:activate', this);
             }
         });
     }
@@ -47,7 +49,7 @@ class PatchSubmit extends AbstractBehavior
      * @return {String}
      */
     getSelector() {
-        return 'form';
+        return '.form-to-patch';
     }
 }
 

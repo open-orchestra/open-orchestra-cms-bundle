@@ -151,7 +151,7 @@
                                     </td>
                                 {% endif %}
                             </tr>
-                            <tr class="{% if field.vars.valid %}hide{% endif %}">
+                            <tr class="{% if field.vars.valid %}hide{% endif %}{% if field.vars.attr.class is defined %} {{ field.vars.attr.class }}{% endif %}">
                                 <td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
                                     <div class="row">
                                         {{ form_widget(field) }}

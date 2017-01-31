@@ -28,6 +28,7 @@ import Accordion              from '../Service/Form/Behavior/Accordion'
 import BlockVideoType         from '../Service/Form/Behavior/BlockVideoType'
 import ColorPicker            from '../Service/Form/Behavior/ColorPicker'
 import Tinymce                from '../Service/Form/Behavior/Tinymce'
+import PatchSubmit            from '../Service/Form/Behavior/PatchSubmit'
 
 import SearchFormGroupManager from '../Service/Content/SearchFormGroup/Manager'
 import DateSearchFormGroup    from '../Service/Content/SearchFormGroup/DateForm'
@@ -226,6 +227,7 @@ class Application
         FormBehaviorManager.add(Accordion);
         FormBehaviorManager.add(BlockVideoType);
         FormBehaviorManager.add(ColorPicker);
+        FormBehaviorManager.add(PatchSubmit);
 
         TinymceManager.setSetting('language', this.getContext().language);
         FormBehaviorManager.add(Tinymce);

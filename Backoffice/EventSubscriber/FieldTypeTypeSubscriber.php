@@ -146,6 +146,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
 
         $form->add('options', 'collection', array(
             'type' => 'oo_field_option',
+            'attr' => array('class' => 'subform-to-refresh'),
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,

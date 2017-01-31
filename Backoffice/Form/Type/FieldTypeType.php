@@ -72,7 +72,7 @@ class FieldTypeType extends AbstractType
                 'choices' => $this->getChoicesType(),
                 'label' => 'open_orchestra_backoffice.form.field_type.type',
                 'attr' => array(
-                    'class' => 'content_type_change_type'
+                    'class' => 'patch-submit-change'
                 ),
                 'sub_group_id' => 'property',
             ))
@@ -111,6 +111,7 @@ class FieldTypeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
+            'attr' => array('class' => 'form-to-patch'),
             'group_enabled' => true,
             'sub_group_render' => array(
                 'property' => array(

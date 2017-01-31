@@ -114,6 +114,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
         Phake::verify($this->fieldType, Phake::times($timesCalled))->addOption(Phake::anyParameters());
         Phake::verify($this->form)->add('options', 'collection', array(
             'type' => 'oo_field_option',
+            'attr' => array('class' => 'subform-to-refresh'),
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,
@@ -153,6 +154,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
         Phake::verify($this->fieldType, Phake::times($timesCalled))->addOption(Phake::anyParameters());
         Phake::verify($this->form)->add('options', 'collection', array(
             'type' => 'oo_field_option',
+            'attr' => array('class' => 'subform-to-refresh'),
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,
@@ -225,6 +227,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
 
         Phake::verify($this->form)->add('options', 'collection', array(
             'type' => 'oo_field_option',
+            'attr' => array('class' => 'subform-to-refresh'),
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,

@@ -15,7 +15,6 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
     preinitialize() {
         super.preinitialize();
         this.events['click #oo_content_type_linkedToSite'] = '_toggleAlwaysShared';
-        this.events['change .content_type_change_type'] = '_contentTypeChangeType';
     }
 
     /**
@@ -55,50 +54,6 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
             $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').show();
         }
     }
-
-    /**
-     * Content Type Change
-     * @param {event} event
-     */
-    _contentTypeChangeType(event) {
-        Backbone.Events.trigger('form:deactivate', this);                
-        let $tr = $(event.target).closest('tr');
-        let $table = $(event.target).closest('table');
-        let containerId = $table.parent().attr('id');
-        let index = $('tr', $table).index($tr);
-        
-        $('form', this.$el).ajaxSubmit({
-            type: 'PATCH',
-            context: this,
-            success: function(response) {
-                $tr.replaceWith($('#' + containerId + ' tr', response).eq(index).removeClass('hide'));
-                Backbone.Events.trigger('form:activate', this);
-            }
-        });
-    }
-
-    /**
-     * Redirect to edit content type view
-     *
-     * @param {mixed}  data
-     * @param {string} textStatus
-     * @param {object} jqXHR
-     * @private
-     */
-    _redirectEditElement(data, textStatus, jqXHR) {
-        let contentTypeId = jqXHR.getResponseHeader('contentTypeId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === contentTypeId || null === name) {
-            throw new ApplicationError('Invalid contentTypeId or name');
-        }
-        let url = Backbone.history.generateUrl('editContentType', {
-            contentTypeId: contentTypeId,
-            name: name
-        });
-        Backbone.Events.trigger('form:deactivate', this);
-        Backbone.history.navigate(url, true);
-    }
-
     /**
      * Delete content type
      */

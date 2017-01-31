@@ -99,7 +99,7 @@ open_orchestra_backoffice:
               desc: Descending
             type_searchable: Multilingual field
             translatable: Translatable
-            listable: Return to the back office table
+            listable: Display in the back office table
             type: Type
             options: Existing field
             field_searchable_view:
