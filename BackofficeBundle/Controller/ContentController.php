@@ -39,10 +39,10 @@ class ContentController extends AbstractAdminController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
-        $currentlyPublishedContents = $this->get('open_orchestra_model.repository.content')->findAllCurrentlyPublishedByContentId($contentId);
+        $publishedContents = $this->get('open_orchestra_model.repository.content')->findAllPublishedByContentId($contentId);
         $isUsed = false;
-        foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
-            $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+        foreach ($publishedContents as $publishedContent) {
+            $isUsed = $isUsed || $publishedContent->isUsed();
         }
         $form = $this->createForm('oo_content', $content, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(

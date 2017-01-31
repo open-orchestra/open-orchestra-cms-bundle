@@ -78,10 +78,10 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
-            $currentlyPublishedContents = $this->contentRepository->findAllCurrentlyPublishedByContentId($content->getContentId());
+            $publishedContents = $this->contentRepository->findAllPublishedByContentId($content->getContentId());
             $isUsed = false;
-            foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
-                $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+            foreach ($publishedContents as $publishedContent) {
+                $isUsed = $isUsed || $publishedContent->isUsed();
             }
             $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed);
         }

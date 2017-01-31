@@ -120,7 +120,7 @@ class RedirectionManager
             return $suffix;
         }
         $siteId = $this->contextManager->getCurrentSiteId();
-        $parent = $this->nodeRepository->findOneCurrentlyPublished($parentId, $language, $siteId);
+        $parent = $this->nodeRepository->findOnePublished($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {
             return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));

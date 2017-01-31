@@ -255,10 +255,10 @@ class ContentController extends BaseController
      */
     protected function isContentIdUsed($contentId)
     {
-        $currentlyPublishedContents = $this->get('open_orchestra_model.repository.content')->findAllCurrentlyPublishedByContentId($contentId);
+        $publishedContents = $this->get('open_orchestra_model.repository.content')->findAllPublishedByContentId($contentId);
         $isUsed = false;
-        foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
-            $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+        foreach ($publishedContents as $publishedContent) {
+            $isUsed = $isUsed || $publishedContent->isUsed();
         }
 
         return $isUsed;

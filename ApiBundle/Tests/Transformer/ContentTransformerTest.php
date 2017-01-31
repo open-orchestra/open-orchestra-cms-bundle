@@ -59,7 +59,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\ContentRepository');
         Phake::when($this->contentRepository)->find(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
-        Phake::when($this->contentRepository)->findAllCurrentlyPublishedByContentId(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->contentRepository)->findAllPublishedByContentId(Phake::anyParameters())->thenReturn(array());
         Phake::when($this->contentRepository)->findOneByContentId(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');

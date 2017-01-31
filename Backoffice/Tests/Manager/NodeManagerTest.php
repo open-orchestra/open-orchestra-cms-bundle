@@ -114,7 +114,6 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         $newNode = $this->manager->duplicateNode($nodeId, $siteId, $language, $version);
 
-        Phake::verify($newNode)->setCurrentlyPublished($this->status->isPublishedState());
         Phake::verify($newNode)->setVersion($version + 1);
 
         Phake::verify($this->blockRepository)->getDocumentManager();

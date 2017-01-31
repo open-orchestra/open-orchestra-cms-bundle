@@ -30,6 +30,8 @@ class ContentManagerTest extends AbstractBaseTestCase
     protected $content;
     protected $statusInitialLabel = 'statusInitialLabel';
     protected $statusTranslationStateLabel = 'statusTranslationStateLabel';
+    protected $statusInitial = 'statusTranslationStateLabel';
+    protected $statusTranslationState = 'statusTranslationStateLabel';
 
     /**
      * Set up the test
@@ -108,9 +110,8 @@ class ContentManagerTest extends AbstractBaseTestCase
         $newContent = $manager->newVersionContent($this->content, $lastContent);
 
         Phake::verify($newContent)->setVersion($expectedVersion);
-        Phake::verify($newContent)->setStatus(null);
+        Phake::verify($newContent)->setStatus($this->statusInitial);
         Phake::verify($newContent)->addKeyword($this->keyword);
-        Phake::verify($newContent)->setCurrentlyPublished(false);
         Phake::verify($newContent)->addAttribute($this->contentAttribute);
     }
 
@@ -137,9 +138,8 @@ class ContentManagerTest extends AbstractBaseTestCase
         $newContent = $this->manager->duplicateContent($this->content, $contentId);
 
         Phake::verify($newContent)->setVersion(1);
-        Phake::verify($newContent)->setStatus(null);
+        Phake::verify($newContent)->setStatus($this->statusInitial);
         Phake::verify($newContent)->addKeyword($this->keyword);
-        Phake::verify($newContent)->setCurrentlyPublished(false);
         Phake::verify($newContent)->addAttribute($this->contentAttribute);
         Phake::verify($newContent)->setContentId($contentId);
     }

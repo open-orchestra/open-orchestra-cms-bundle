@@ -37,7 +37,7 @@ class LoadNodeRouteDocumentData extends AbstractFixture implements OrderedFixtur
     public function load(ObjectManager $manager)
     {
         $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
-        $nodes = $nodeRepository->findBy(array('nodeId' => NodeInterface::ROOT_NODE_ID, 'currentlyPublished' => true));
+        $nodes = $nodeRepository->findBy(array('nodeId' => NodeInterface::ROOT_NODE_ID, 'status.publishedState' => true));
         $updateRoute = $this->container->get('open_orchestra_backoffice.manager.route_document');
 
         foreach ($nodes as $node) {

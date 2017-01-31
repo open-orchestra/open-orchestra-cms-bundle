@@ -126,9 +126,10 @@ class ContentManager
      */
     protected function cloneContent(ContentInterface $content)
     {
+        $status = $this->statusRepository->findOneByInitial();
+
         $newContent = clone $content;
-        $newContent->setCurrentlyPublished(false);
-        $newContent->setStatus(null);
+        $newContent->setStatus($status);
         foreach ($content->getKeywords() as $keyword) {
             $newContent->addKeyword($keyword);
         }

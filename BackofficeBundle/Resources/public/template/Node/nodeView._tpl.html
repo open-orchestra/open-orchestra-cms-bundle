@@ -29,7 +29,7 @@
 <div class="node-template movement <%= (node.get('rights').can_edit) ? '' : 'node-disabled' %>">
     <form class="form-inline search-engine node-action-toolbar">
     </form>
-    <% if (true === node.get('currently_published')) {%>
+    <% if (true === node.get('status').get('published_state')) {%>
         <div class="alert alert-success" role="alert">
             <div class="heading"><%= Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
             <p>
