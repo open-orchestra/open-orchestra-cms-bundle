@@ -39,10 +39,6 @@
             var config = {
                 debug: '{{ app.debug }}',
                 environment: '{{ app.environment }}',
-                template: {
-                    baseUrlTemplate: '/bundles/',
-                    templateVersion: '{{ asset_version('/') }}'
-                },
                 routing: {
                     baseUrl: '{{ app.request.baseUrl }}',
                     scheme: '{{ app.request.scheme }}',
