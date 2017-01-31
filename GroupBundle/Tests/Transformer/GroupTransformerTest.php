@@ -90,7 +90,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\GroupBundle\Facade\GroupFacade', $facade);
         if ($right) {
-            $this->assertArrayHasKey('can_edit', $facade->getRights());
+            $this->assertArrayHasKey('can_duplicate', $facade->getRights());
             $this->assertArrayHasKey('can_delete', $facade->getRights());
         }
     }

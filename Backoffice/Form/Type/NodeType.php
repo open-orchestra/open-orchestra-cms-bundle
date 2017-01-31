@@ -26,7 +26,7 @@ class NodeType extends AbstractType
     protected $nodeClass;
     protected $specialPageList;
     protected $schemeChoices;
-    protected $nodeChoiceStatusSubscriber;
+    protected $statusableChoiceStatusSubscriber;
 
     /**
      * @param NodeManager              $nodeManager
@@ -35,7 +35,7 @@ class NodeType extends AbstractType
      * @param TemplateManager          $templateManager
      * @param string                   $nodeClass
      * @param array                    $specialPageList
-     * @param EventSubscriberInterface $nodeChoiceStatusSubscriber
+     * @param EventSubscriberInterface $statusableChoiceStatusSubscriber
      */
     public function __construct(
         NodeManager $nodeManager,
@@ -44,7 +44,7 @@ class NodeType extends AbstractType
         TemplateManager $templateManager,
         $nodeClass,
         array $specialPageList,
-        EventSubscriberInterface $nodeChoiceStatusSubscriber
+        EventSubscriberInterface $statusableChoiceStatusSubscriber
     ) {
         $this->nodeManager = $nodeManager;
         $this->contextManager = $contextManager;
@@ -57,7 +57,7 @@ class NodeType extends AbstractType
             SchemeableInterface::SCHEME_HTTPS => SchemeableInterface::SCHEME_HTTPS
         );
         $this->specialPageList = $specialPageList;
-        $this->nodeChoiceStatusSubscriber = $nodeChoiceStatusSubscriber;
+        $this->statusableChoiceStatusSubscriber = $statusableChoiceStatusSubscriber;
    }
 
     /**
@@ -193,7 +193,7 @@ class NodeType extends AbstractType
                 'required' => false,
             ));
 
-        $builder->addEventSubscriber($this->nodeChoiceStatusSubscriber);
+        $builder->addEventSubscriber($this->statusableChoiceStatusSubscriber);
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
             $builder->addEventSubscriber(new NodeThemeSelectionSubscriber($this->siteRepository));
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber(

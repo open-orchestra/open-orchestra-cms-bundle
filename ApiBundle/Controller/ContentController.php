@@ -37,7 +37,7 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::FIELD_TYPES
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
      * })
      *
      * @return FacadeInterface
@@ -86,27 +86,6 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $contentId
-     *
-     * @Config\Route("/{contentId}/new-version", name="open_orchestra_api_content_new_version")
-     * @Config\Method({"POST"})
-     *
-     * @return Response
-     */
-    public function newVersionAction(Request $request, $contentId)
-    {
-        /** @var ContentInterface $content */
-        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
-        $lastContent = $this->findOneContent($contentId, $request->get('language'));
-        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content, $lastContent);
-
-        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
-
-        return array();
-    }
-
-    /**
-     * @param Request $request
      *
      * @Config\Route("/duplicate", name="open_orchestra_api_content_duplicate")
      * @Config\Method({"POST"})
@@ -115,7 +94,7 @@ class ContentController extends BaseController
      */
     public function duplicateAction(Request $request)
     {
-        $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE);
 
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
@@ -124,6 +103,7 @@ class ContentController extends BaseController
             $format
         );
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
+        $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
 
         $contentId = $content->getContentId();
         $newContentId = null;
@@ -155,86 +135,39 @@ class ContentController extends BaseController
             $this->getParameter('open_orchestra_api.facade.content_collection.class'),
             $format
         );
-        $repository = $this->get('open_orchestra_model.repository.content');
         $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
         $contentIds = array();
         foreach ($contents as $content) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, ContentInterface::ENTITY_TYPE) &&
-                !$content->isUsed()) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$this->isContentIdUsed($content->getContentId())) {
                 $contentIds[] = $content->getContentId();
                 $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
             }
         }
 
-        $repository->removeContentIds($contentIds);
+        $this->get('open_orchestra_model.repository.content')->removeContentIds($contentIds);
 
         return array();
     }
 
     /**
-     * @param Request $request
-     * @param string  $contentId
+     * @param string $contentId
      *
-     * @Config\Route("/{contentId}/list-version", name="open_orchestra_api_content_list_version")
-     * @Config\Method({"GET"})
-     *
-     * @return Response
-     */
-    public function listVersionAction(Request $request, $contentId)
-    {
-        $contents = $this->get('open_orchestra_model.repository.content')->findByLanguage($contentId, $request->get('language'));
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
-    }
-
-    /**
-     * @param Request $request
-     * @param string $contentMongoId
-     *
-     * @Config\Route("/{contentMongoId}/update", name="open_orchestra_api_content_update")
-     * @Config\Method({"POST"})
+     * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
+     * @Config\Method({"DELETE"})
      *
      * @return Response
      */
-    public function updateAction(Request $request, $contentMongoId)
+    public function deleteAction($contentId)
     {
-        return $this->reverseTransform(
-            $request,
-            $contentMongoId,
-            'content',
-            ContentEvents::CONTENT_CHANGE_STATUS,
-            'OpenOrchestra\ModelInterface\Event\ContentEvent'
-        );
-    }
+        $repository = $this->get('open_orchestra_model.repository.content');
+        $content = $repository->findOneByContentId($contentId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
 
-    /**
-     * @param string $contentMongoId
-     *
-     * @Config\Route("/{contentMongoId}/list-statuses", name="open_orchestra_api_content_list_status")
-     * @Config\Method({"GET"})
-     *
-     * @return Response
-     */
-    public function listStatusesForContentAction($contentMongoId)
-    {
-        $content = $this->get('open_orchestra_model.repository.content')->find($contentMongoId);
+        if (!$this->isContentIdUsed($contentId)) {
+            $repository->removeContentIds(array($contentId));
+        }
 
-        return $this->listStatuses($content);
-    }
-
-    /**
-     * @param string   $contentId
-     * @param string   $language
-     * @param int|null $version
-     *
-     * @return null|ContentInterface
-     */
-    protected function findOneContent($contentId, $language, $version = null)
-    {
-        $contentRepository = $this->get('open_orchestra_model.repository.content');
-        $content = $contentRepository->findOneByLanguageAndVersion($contentId, $language, $version);
-
-        return $content;
+        return array();
     }
 
     /**
@@ -261,5 +194,73 @@ class ContentController extends BaseController
         );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $contentId
+     *
+     * @Config\Route("/{contentId}/new-version", name="open_orchestra_api_content_new_version")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     */
+    public function newVersionAction(Request $request, $contentId)
+    {
+        /** @var ContentInterface $content */
+        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
+        $lastContent = $this->findOneContent($contentId, $request->get('language'));
+        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content, $lastContent);
+
+        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
+
+        return array();
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $contentId
+     *
+     * @Config\Route("/{contentId}/list-version", name="open_orchestra_api_content_list_version")
+     * @Config\Method({"GET"})
+     *
+     * @return Response
+     */
+    public function listVersionAction(Request $request, $contentId)
+    {
+        $contents = $this->get('open_orchestra_model.repository.content')->findByLanguage($contentId, $request->get('language'));
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
+    }
+
+    /**
+     * @param string   $contentId
+     * @param string   $language
+     * @param int|null $version
+     *
+     * @return null|ContentInterface
+     */
+    protected function findOneContent($contentId, $language, $version = null)
+    {
+        $contentRepository = $this->get('open_orchestra_model.repository.content');
+        $content = $contentRepository->findOneByLanguageAndVersion($contentId, $language, $version);
+
+        return $content;
+    }
+
+    /**
+     * @param string   $contentId
+     *
+     * @return boolean
+     */
+    protected function isContentIdUsed($contentId)
+    {
+        $currentlyPublishedContents = $this->get('open_orchestra_model.repository.content')->findAllCurrentlyPublishedByContentId($contentId);
+        $isUsed = false;
+        foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
+            $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+        }
+
+        return $isUsed;
     }
 }

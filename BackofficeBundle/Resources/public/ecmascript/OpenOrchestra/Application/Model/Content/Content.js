@@ -27,10 +27,14 @@ class Content extends OrchestraModel
     /**
      * @inheritdoc
      */
-    _getSyncUrl(method) {
+    _getSyncUrl(method, options) {
+        let urlParameter = options.urlParameter || {};
         switch (method) {
             case "create":
                 return Routing.generate('open_orchestra_api_content_duplicate');
+            case "delete":
+                urlParameter.contentId = this.get('id');
+                return Routing.generate('open_orchestra_api_content_delete', urlParameter);
         }
     }
 }

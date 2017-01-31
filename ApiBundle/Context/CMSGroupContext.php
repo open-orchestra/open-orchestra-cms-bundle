@@ -19,5 +19,4 @@ class CMSGroupContext
     const THEME = 'theme';
     const THEME_LINKS = 'theme_links';
     const SITE_MAIN_ALIAS = 'site_main_alias';
-    const CONTENT_TYPE_RIGHTS = 'content_type_rights';
 }

@@ -53,7 +53,7 @@ services:
             - '@open_orchestra_backoffice.manager.template'
             - '%open_orchestra_model.document.node.class%'
             - '%open_orchestra_backoffice.special_page_name%'
-            - '@open_orchestra_backoffice.subscriber.node_choice_status'
+            - '@open_orchestra_workflow_admin.subscriber.node_choice_status'
         tags:
             - { name: form.type, alias: oo_node }
     # Block form type
@@ -143,6 +143,8 @@ services:
         class: '%open_orchestra_backoffice.type.orchestra_content.class%'
         arguments:
             - '@open_orchestra_backoffice.subscriber.content_type'
+            - '@open_orchestra_workflow_admin.subscriber.content_choice_status'
+            - '@event_dispatcher'
             - '%open_orchestra_model.document.content.class%'
         tags:
             - {name: form.type, alias: oo_content}

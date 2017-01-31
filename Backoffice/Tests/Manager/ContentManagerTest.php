@@ -20,6 +20,7 @@ class ContentManagerTest extends AbstractBaseTestCase
     /** @var  VersionableSaverInterface */
     protected $versionableSaver;
     protected $contentTypeRepository;
+    protected $statusRepository;
     protected $contentRepository;
     protected $contentAttribute;
     protected $contextManager;
@@ -27,16 +28,29 @@ class ContentManagerTest extends AbstractBaseTestCase
     protected $contentType;
     protected $keyword;
     protected $content;
+    protected $statusInitialLabel = 'statusInitialLabel';
+    protected $statusTranslationStateLabel = 'statusTranslationStateLabel';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->statusInitial = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($this->statusInitial)->getLabels()->thenReturn(array());
+        Phake::when($this->statusInitial)->getName()->thenReturn($this->statusInitialLabel);
+        $this->statusTranslationState = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($this->statusTranslationState)->getLabels()->thenReturn(array());
+        Phake::when($this->statusTranslationState)->getName()->thenReturn($this->statusTranslationStateLabel);
+
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
 
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
+
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($this->statusInitial);
+        Phake::when($this->statusRepository)->findOneByTranslationState()->thenReturn($this->statusTranslationState);
 
         $this->keyword = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
         $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
@@ -52,7 +66,7 @@ class ContentManagerTest extends AbstractBaseTestCase
 
         $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Saver\VersionableSaver');
 
-        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository, $this->versionableSaver);
+        $this->manager = new ContentManager($this->contentTypeRepository, $this->statusRepository, $this->contextManager, $this->versionableSaver, $this->contentClass);
     }
 
     /**
@@ -64,8 +78,8 @@ class ContentManagerTest extends AbstractBaseTestCase
         $newContent = $this->manager->createNewLanguageContent($this->content, $language);
 
         Phake::verify($newContent, Phake::times(1))->setVersion(1);
-        Phake::verify($newContent)->setStatus(null);
         Phake::verify($newContent)->setLanguage($language);
+        Phake::verify($newContent)->setStatus($this->statusTranslationState);
     }
 
     /**
@@ -85,7 +99,7 @@ class ContentManagerTest extends AbstractBaseTestCase
         $contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($contentType);
 
-        $manager = new ContentManager($this->contextManager, $this->contentClass, $contentTypeRepository, $this->versionableSaver);
+        $manager = new ContentManager($contentTypeRepository, $this->statusRepository, $this->contextManager, $this->versionableSaver, $this->contentClass);
 
         Phake::when($content)->getVersion()->thenReturn($version);
         $lastContent = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
@@ -151,17 +165,16 @@ class ContentManagerTest extends AbstractBaseTestCase
      */
     public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId)
     {
-        Phake::when($this->contentType)->isLinkedToSite()->thenReturn($linkedToSite);
-        Phake::when($this->contextManager)->getDefaultLocale()->thenReturn($language);
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
 
-        $content = $this->manager->initializeNewContent($contentType, $language);
+        $content = $this->manager->initializeNewContent($contentType, $language, $linkedToSite);
 
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
         $this->assertSame($language, $content->getLanguage());
         $this->assertSame($contentType, $content->getContentType());
         $this->assertSame($linkedToSite, $content->isLinkedToSite());
         $this->assertSame($siteId, $content->getSiteId());
+        $this->assertEquals($this->statusInitialLabel, $content->getStatus()->getName());
     }
 
     /**

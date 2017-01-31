@@ -33,7 +33,8 @@ class ContentTypeController extends AbstractAdminController
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_form', array('contentTypeId' => $contentTypeId));
         $form = $this->createContentTypeForm($request, array(
             'action' => $action,
-            'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $newContentType) && 0 == $this->get('open_orchestra_model.repository.content')->countByContentType($contentTypeId))
+            'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $newContentType) && 0 == $this->get('open_orchestra_model.repository.content')->countByContentType($contentTypeId)),
+            'need_link_to_site_defintion' => false,
         ), $newContentType);
 
         $form->handleRequest($request);
@@ -65,7 +66,8 @@ class ContentTypeController extends AbstractAdminController
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_new', array());
         $form = $this->createContentTypeForm($request, array(
             'action' => $action,
-            'new_button' => true
+            'new_button' => true,
+            'need_link_to_site_defintion' => true,
         ), $contentType);
 
         $form->handleRequest($request);

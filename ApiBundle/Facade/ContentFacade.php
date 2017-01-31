@@ -24,11 +24,6 @@ class ContentFacade extends DeletedFacade
     public $version;
 
     /**
-     * @Serializer\Type("integer")
-     */
-    public $contentTypeVersion;
-
-    /**
      * @Serializer\Type("string")
      */
     public $language;

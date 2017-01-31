@@ -3,19 +3,21 @@
 namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\Backoffice\Manager\NodePublisher;
+use OpenOrchestra\Backoffice\Manager\AutoPublishManager;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\Manager\NodePublisherInterface;
+use OpenOrchestra\Backoffice\Manager\AutoPublishManagerInterface;
 use Phake;
 
 /**
- * Class NodePublisherTest
+ * Class AutoPublishManagerTest
  */
-class NodePublisherTest extends AbstractBaseTestCase
+class AutoPublishManagerTest extends AbstractBaseTestCase
 {
-    protected $manager;
+    protected $managerNode;
+    protected $managerContent;
     protected $statusRepository;
     protected $nodeRepository;
+    protected $contentRepository;
     protected $objectManager;
 
     protected $node1;
@@ -26,6 +28,18 @@ class NodePublisherTest extends AbstractBaseTestCase
     );
     protected $node2;
     protected $node2Attributes = array(
+        'name' => 'name-2',
+        'version' => 'version-2',
+        'language' => 'language-2'
+    );
+    protected $content1;
+    protected $content1Attributes = array(
+        'name' => 'name-1',
+        'version' => 'version-1',
+        'language' => 'language-1'
+    );
+    protected $content2;
+    protected $content2Attributes = array(
         'name' => 'name-2',
         'version' => 'version-2',
         'language' => 'language-2'
@@ -65,16 +79,33 @@ class NodePublisherTest extends AbstractBaseTestCase
         Phake::when($this->node2)->getVersion()->thenReturn($this->node2Attributes['version']);
         Phake::when($this->node2)->getLanguage()->thenReturn($this->node2Attributes['language']);
 
+        $this->content1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($this->content1)->getName()->thenReturn($this->content1Attributes['name']);
+        Phake::when($this->content1)->getVersion()->thenReturn($this->content1Attributes['version']);
+        Phake::when($this->content1)->getLanguage()->thenReturn($this->content1Attributes['language']);
+
+        $this->content2 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($this->content2)->getName()->thenReturn($this->content2Attributes['name']);
+        Phake::when($this->content2)->getVersion()->thenReturn($this->content2Attributes['version']);
+        Phake::when($this->content2)->getLanguage()->thenReturn($this->content2Attributes['language']);
+
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        Phake::when($this->nodeRepository)->findNodeToAutoPublish(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findElementToAutoPublish(Phake::anyParameters())
             ->thenReturn(array($this->node1, $this->node2));
-        Phake::when($this->nodeRepository)->findNodeToAutoUnpublish(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findElementToAutoUnpublish(Phake::anyParameters())
             ->thenReturn(array($this->node1, $this->node2));
+
+        $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
+        Phake::when($this->contentRepository)->findElementToAutoPublish(Phake::anyParameters())
+            ->thenReturn(array($this->content1, $this->content2));
+        Phake::when($this->contentRepository)->findElementToAutoUnpublish(Phake::anyParameters())
+            ->thenReturn(array($this->content1, $this->content2));
 
         $this->objectManager = Phake::mock(ObjectManager::CLASS);
 
-        $this->manager = new NodePublisher($this->statusRepository, $this->nodeRepository, $this->objectManager);
+        $this->managerNode = new AutoPublishManager($this->statusRepository, $this->nodeRepository, $this->objectManager);
+        $this->managerContent = new AutoPublishManager($this->statusRepository, $this->contentRepository, $this->objectManager);
     }
 
     /**
@@ -92,9 +123,11 @@ class NodePublisherTest extends AbstractBaseTestCase
         Phake::when($this->statusRepository)->findByAutoPublishFrom()->thenReturn($fromStatus);
         Phake::when($this->statusRepository)->findOneByPublished()->thenReturn($publishedStatus);
 
-        $return = $this->manager->publishNodes($this->site);
-        Phake::verify($this->objectManager, Phake::times($mustFlush))->flush();
-        $this->assertSame($return, $expectedReturn);
+        $returnNode = $this->managerNode->publishElements($this->site);
+        $returnContent = $this->managerContent->publishElements($this->site);
+        Phake::verify($this->objectManager, Phake::times(2 * $mustFlush))->flush();
+        $this->assertSame($returnNode, $expectedReturn);
+        $this->assertSame($returnContent, $expectedReturn);
     }
 
     /**
@@ -108,10 +141,10 @@ class NodePublisherTest extends AbstractBaseTestCase
 
         return array(
             'NO_PUBLISH_FROM' => array(
-                array(), $this->publishedStatus, NodePublisherInterface::ERROR_NO_PUBLISH_FROM_STATUS, 0
+                array(), $this->publishedStatus, AutoPublishManagerInterface::ERROR_NO_PUBLISH_FROM_STATUS, 0
             ),
             'NO_PUBLISHED_STATUS' => array(
-                $fromStatus, null, NodePublisherInterface::ERROR_NO_PUBLISHED_STATUS, 0
+                $fromStatus, null, AutoPublishManagerInterface::ERROR_NO_PUBLISHED_STATUS, 0
             ),
             'OK' => array(
                 $fromStatus, $this->publishedStatus, $fullPublishReturn, 1
@@ -134,9 +167,12 @@ class NodePublisherTest extends AbstractBaseTestCase
         Phake::when($this->statusRepository)->findOneByPublished()->thenReturn($publishedStatus);
         Phake::when($this->statusRepository)->findOneByAutoUnpublishTo()->thenReturn($unpublishedStatus);
 
-        $return = $this->manager->unpublishNodes($this->site);
-        Phake::verify($this->objectManager, Phake::times($mustFlush))->flush();
-        $this->assertSame($return, $expectedReturn);
+        $returnNode = $this->managerNode->unpublishElements($this->site);
+        $returnContent = $this->managerContent->unpublishElements($this->site);
+
+        Phake::verify($this->objectManager, Phake::times(2 * $mustFlush))->flush();
+        $this->assertSame($returnNode, $expectedReturn);
+        $this->assertSame($returnContent, $expectedReturn);
     }
 
     /**
@@ -148,10 +184,10 @@ class NodePublisherTest extends AbstractBaseTestCase
 
         return array(
             'NO_PUBLISHED_STATUS' => array(
-                null, $this->unpublishedStatus, NodePublisherInterface::ERROR_NO_PUBLISHED_STATUS, 0
+                null, $this->unpublishedStatus, AutoPublishManagerInterface::ERROR_NO_PUBLISHED_STATUS, 0
             ),
             'NO_UNPUBLISHED_STATUS' => array(
-                $this->publishedStatus, null, NodePublisherInterface::ERROR_NO_UNPUBLISHED_STATUS, 0
+                $this->publishedStatus, null, AutoPublishManagerInterface::ERROR_NO_UNPUBLISHED_STATUS, 0
             ),
             'OK' => array(
                 $this->publishedStatus, $this->publishedStatus, $fullUnpublishReturn, 1

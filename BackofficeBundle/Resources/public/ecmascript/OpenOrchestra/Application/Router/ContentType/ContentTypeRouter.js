@@ -1,9 +1,9 @@
-import OrchestraRouter    from '../OrchestraRouter'
-import Application        from '../../Application'
-import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
+import OrchestraRouter     from '../OrchestraRouter'
+import Application         from '../../Application'
+import FormBuilder         from '../../../Service/Form/Model/FormBuilder'
 import ContentTypeFormView from '../../View/ContentType/ContentTypeFormView'
-import ContentTypes     from '../../Collection/ContentType/ContentTypes'
-import ContentTypesView from '../../View/ContentType/ContentTypesView'
+import ContentTypes        from '../../Collection/ContentType/ContentTypes'
+import ContentTypesView    from '../../View/ContentType/ContentTypesView'
 
 
 /**
@@ -16,9 +16,9 @@ class ContentTypeRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'content-type/list(/:page)': 'listContentType',
-            'contentType/edit/:contentTypeId/:name': 'editContentType',
-            'content-type/new': 'newContentType'
+            'content-type/list(/:page)'             : 'listContentType',
+            'content-type/edit/:contentTypeId/:name': 'editContentType',
+            'content-type/new'                      : 'newContentType'
         };
     }
 

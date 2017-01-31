@@ -2,19 +2,21 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
 /**
  * Class ContentTypeTransformer
  */
-class ContentTypeTransformer extends AbstractTransformer
+class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $multiLanguagesChoiceManager;
     protected $contentRepository;
@@ -30,9 +32,10 @@ class ContentTypeTransformer extends AbstractTransformer
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         ContentRepositoryInterface $contentRepository,
-        ContentTypeRepositoryInterface $contentTypeRepository
+        ContentTypeRepositoryInterface $contentTypeRepository,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
-        parent::__construct($facadeClass);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->contentRepository = $contentRepository;
         $this->contentTypeRepository = $contentTypeRepository;
@@ -62,8 +65,8 @@ class ContentTypeTransformer extends AbstractTransformer
         $facade->definingVersionable = $contentType->isDefiningVersionable();
         $facade->defaultListable = $contentType->getDefaultListable();
 
-        if ($this->hasGroup(CMSGroupContext::CONTENT_TYPE_RIGHTS)) {
-            $facade->addRight('can_delete', 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType) && 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
         }
 
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {

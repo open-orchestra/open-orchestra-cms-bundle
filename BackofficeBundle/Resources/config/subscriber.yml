@@ -17,7 +17,6 @@ parameters:
     open_orchestra_backoffice.subscriber.update_history_list.class               : OpenOrchestra\Backoffice\EventSubscriber\UpdateHistoryListSubscriber
     open_orchestra_backoffice.subscriber.content_type_type.class                 : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeTypeSubscriber
     open_orchestra_backoffice.subscriber.content_type_statusable.class           : OpenOrchestra\Backoffice\EventSubscriber\ContentTypeStatusableSubscriber
-    open_orchestra_backoffice.subscriber.node_choice_status.class                : OpenOrchestra\Backoffice\EventSubscriber\NodeChoiceStatusSubscriber
     open_orchestra_backoffice.subscriber.sortable_collection.class               : OpenOrchestra\Backoffice\EventSubscriber\SortableCollectionSubscriber
 
 services:
@@ -73,11 +72,13 @@ services:
         class: '%open_orchestra_backoffice.subscriber.content_type.class%'
         arguments:
             - '@open_orchestra_model.repository.content_type'
+            - '@open_orchestra_model.repository.status'
             - '%open_orchestra_model.document.content_attribute.class%'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '%open_orchestra_backoffice.field_types%'
             - '@open_orchestra_backoffice.value_transformer.manager'
             - '@translator'
+            - '@event_dispatcher'
 
     open_orchestra_backoffice.subscriber.update_nodes_theme:
         class: '%open_orchestra_backoffice.subscriber.update_nodes_theme.class%'
@@ -165,12 +166,6 @@ services:
             - '@open_orchestra_model.repository.status'
         tags:
             - { name: kernel.event_subscriber }
-
-    open_orchestra_backoffice.subscriber.node_choice_status:
-        class: '%open_orchestra_backoffice.subscriber.node_choice_status.class%'
-        arguments:
-            - '@open_orchestra_model.repository.status'
-            - '@security.authorization_checker'
 
     open_orchestra_backoffice.subscriber.sortable_collection:
         class: '%open_orchestra_backoffice.subscriber.sortable_collection.class%'

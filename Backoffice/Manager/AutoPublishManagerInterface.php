@@ -5,9 +5,9 @@ namespace OpenOrchestra\Backoffice\Manager;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 
 /**
- * Interface NodePublisher
+ * Interface AutoPublishManager
  */
-Interface NodePublisherInterface
+Interface AutoPublishManagerInterface
 {
     const ERROR_NO_PUBLISH_FROM_STATUS = 1;
     const ERROR_NO_PUBLISHED_STATUS = 2;
@@ -16,14 +16,14 @@ Interface NodePublisherInterface
     /**
      * @param ReadSiteInterface $site
      *
-     * @return array|int   A published node list or an error code
+     * @return array|int   A published element list or an error code
      */
-    public function publishNodes(ReadSiteInterface $site);
+    public function publishElements(ReadSiteInterface $site);
 
     /**
      * @param ReadSiteInterface $site
      *
-     * @return array|int   An unpublished node list or an error code
+     * @return array|int   An unpublished element list or an error code
      */
-    public function unpublishNodes(ReadSiteInterface $site);
+    public function unpublishElements(ReadSiteInterface $site);
 }

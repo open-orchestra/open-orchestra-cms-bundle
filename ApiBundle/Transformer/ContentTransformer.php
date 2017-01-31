@@ -2,21 +2,18 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
-use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
  * Class ContentTransformer
@@ -24,34 +21,26 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $statusRepository;
-    protected $contentTypeRepository;
     protected $contentRepository;
-    protected $eventDispatcher;
     protected $contextManager;
 
     /**
      * @param string                         $facadeClass
      * @param StatusRepositoryInterface      $statusRepository
-     * @param ContentTypeRepositoryInterface $contentTypeRepository,
      * @param ContentRepositoryInterface     $contentRepository,
-     * @param EventDispatcherInterface       $eventDispatcher
      * @param AuthorizationCheckerInterface  $authorizationChecker
      * @param CurrentSiteIdInterface         $contextManager
      */
     public function __construct(
         $facadeClass,
         StatusRepositoryInterface $statusRepository,
-        ContentTypeRepositoryInterface $contentTypeRepository,
         ContentRepositoryInterface $contentRepository,
-        EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         CurrentSiteIdInterface $contextManager
     )
     {
         $this->statusRepository = $statusRepository;
-        $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
-        $this->eventDispatcher = $eventDispatcher;
         $this->contextManager = $contextManager;
         parent::__construct($facadeClass, $authorizationChecker);
     }
@@ -69,14 +58,10 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
-
         $facade = $this->newFacade();
-
-        $facade->id = $content->getId();
+        $facade->id = $content->getContentId();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
-        $facade->contentTypeVersion = $content->getContentTypeVersion();
         $facade->language = $content->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($content->getStatus());
         $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getCurrentLocale());
@@ -92,11 +77,14 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
             $facade->addAttribute($contentAttribute);
         }
-
-        $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, ContentInterface::ENTITY_TYPE) && !$content->isUsed());
-        $facade->addRight('can_create', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
-        $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE) && !is_null($contentType) && $contentType->isDefiningVersionable());
-        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, ContentInterface::ENTITY_TYPE));
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
+            $currentlyPublishedContents = $this->contentRepository->findAllCurrentlyPublishedByContentId($content->getContentId());
+            $isUsed = false;
+            foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
+                $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+            }
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed);
+        }
 
         return $facade;
     }
@@ -110,28 +98,11 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
-        if ($source) {
-            if ($facade->statusId) {
-                $toStatus = $this->statusRepository->find($facade->statusId);
-                if ($toStatus) {
-                    $event = new StatusableEvent($source, $toStatus);
-                    try {
-                        $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
-                    } catch (StatusChangeNotGrantedException $e) {
-                        throw new StatusChangeNotGrantedHttpException();
-                    }
-                }
-            }
-        } else {
-            if (null !== $facade->id) {
-                return $this->contentRepository->find($facade->id);
-            }
-
-            return null;
-
+        if (null !== $facade->id) {
+            return $this->contentRepository->findOneByContentId($facade->id);
         }
 
-        return $source;
+        return null;
     }
 
     /**

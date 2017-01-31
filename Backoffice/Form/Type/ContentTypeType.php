@@ -85,18 +85,6 @@ class ContentTypeType extends AbstractType
                 'group_id' => 'property',
                 'sub_group_id' => 'customization',
             ))
-            ->add('linkedToSite', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.linked_to_site',
-                'required' => false,
-                'group_id' => 'property',
-                'sub_group_id' => 'share',
-            ))
-            ->add('alwaysShared', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.always_shared',
-                'required' => false,
-                'group_id' => 'property',
-                'sub_group_id' => 'share',
-            ))
             ->add('defaultListable', 'collection', array(
                 'required' => false,
                 'type' => 'oo_default_listable_checkbox',
@@ -126,6 +114,22 @@ class ContentTypeType extends AbstractType
                 'group_id' => 'field',
             ));
 
+        if ($options['need_link_to_site_defintion']) {
+            $builder
+                ->add('linkedToSite', 'checkbox', array(
+                    'label' => 'open_orchestra_backoffice.form.content_type.linked_to_site',
+                    'required' => false,
+                    'group_id' => 'property',
+                    'sub_group_id' => 'share',
+                ))
+                ->add('alwaysShared', 'checkbox', array(
+                    'label' => 'open_orchestra_backoffice.form.content_type.always_shared',
+                    'required' => false,
+                    'group_id' => 'property',
+                    'sub_group_id' => 'share',
+                ));
+        }
+
         $builder->addEventSubscriber($this->contentTypeTypeSubscriber);
         $builder->addEventSubscriber($this->contentTypeStatusableSubscriber);
         if (array_key_exists('disabled', $options)) {
@@ -141,6 +145,7 @@ class ContentTypeType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => $this->contentTypeClass,
+                'need_link_to_site_defintion' => false,
                 'delete_button' => false,
                 'new_button' => false,
                 'group_enabled' => true,

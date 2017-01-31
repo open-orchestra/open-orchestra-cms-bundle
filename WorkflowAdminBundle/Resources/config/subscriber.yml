@@ -1,5 +1,6 @@
 parameters:
-    open_orchestra_workflow_admin.subscriber.group_profile.class: OpenOrchestra\WorkflowAdminBundle\EventSubscriber\AddGroupWorkflowProfileSubscriber
+    open_orchestra_workflow_admin.subscriber.group_profile.class            : OpenOrchestra\WorkflowAdminBundle\EventSubscriber\AddGroupWorkflowProfileSubscriber
+    open_orchestra_workflow_admin.subscriber.statusable_choice_status.class : OpenOrchestra\WorkflowAdminBundle\EventSubscriber\StatusableChoiceStatusSubscriber
 
 services:
     open_orchestra_workflow_admin.subscriber.group_profile:
@@ -12,3 +13,21 @@ services:
             - '@translator'
         tags:
             - { name: kernel.event_subscriber }
+    open_orchestra_workflow_admin.subscriber.node_choice_status:
+        class: '%open_orchestra_workflow_admin.subscriber.statusable_choice_status.class%'
+        arguments:
+            - '@open_orchestra_model.repository.status'
+            - '@security.authorization_checker'
+            -
+                label: 'open_orchestra_backoffice.form.node.status'
+                group_id: 'properties'
+                sub_group_id: 'publication'
+    open_orchestra_workflow_admin.subscriber.content_choice_status:
+        class: '%open_orchestra_workflow_admin.subscriber.statusable_choice_status.class%'
+        arguments:
+            - '@open_orchestra_model.repository.status'
+            - '@security.authorization_checker'
+            -
+                label: 'open_orchestra_backoffice.form.content.status'
+                group_id: 'property'
+                sub_group_id: 'publication'

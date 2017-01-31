@@ -56,7 +56,9 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->addModelTransformer(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array());
+        $this->form->buildForm($builder, array(
+            'need_link_to_site_defintion' => true,
+        ));
 
         Phake::verify($builder, Phake::times(10))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber($this->contentTypeTypeSubscriber);
@@ -79,6 +81,7 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         Phake::verify($resolverMock)->setDefaults(
             array(
                 'data_class' => $this->class,
+                'need_link_to_site_defintion' => false,
                 'delete_button' => false,
                 'new_button' => false,
                 'group_enabled' => true,

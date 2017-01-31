@@ -51,10 +51,11 @@ services:
     open_orchestra_backoffice.manager.content:
         class: '%open_orchestra_backoffice.manager.content.class%'
         arguments:
-            - '@open_orchestra_backoffice.context_manager'
-            - '%open_orchestra_model.document.content.class%'
             - '@open_orchestra_model.repository.content_type'
+            - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_backoffice.context_manager'
             - '@open_orchestra_model.saver.versionnable_saver'
+            - '%open_orchestra_model.document.content.class%'
     open_orchestra_backoffice.manager.redirection:
         class: '%open_orchestra_backoffice.manager.redirection.class%'
         arguments:

@@ -18,9 +18,9 @@ class Site extends OrchestraModel
      */
     _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
-        urlParameter.siteId = this.get('site_id');
         switch (method) {
             case "delete":
+                urlParameter.siteId = this.get('site_id');
                 return Routing.generate('open_orchestra_api_site_delete', urlParameter);
         }
     }

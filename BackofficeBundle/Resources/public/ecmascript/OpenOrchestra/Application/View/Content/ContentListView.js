@@ -101,30 +101,19 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        if (rowData.get('rights').can_edit && !rowData.get('status').blocked_edition) {
+        let context = this.data('context');
+        let link = Backbone.history.generateUrl('editContent', {
+            contentTypeId: context._contentType.get('content_type_id'),
+            language: rowData.get('language'),
+            contentId: rowData.get('id')
+        });
+        if (!rowData.get('status').blocked_edition) {
             cellData = $('<a>',{
                 text: cellData,
-                href: '#'
+                href: '#'+link
             });
         }
         $(td).html(cellData)
-    }
-
-    /**
-     * @param {Object} td
-     * @param {Object} cellData
-     * @param {Object} rowData
-     * @private
-     */
-    _createBoolean(td, cellData, rowData) {
-        let $icon = $('<i>', {'aria-hidden': 'true'});
-        if(cellData) {
-            $icon.addClass('fa fa-check text-success');
-        } else {
-            $icon.addClass('fa fa-close text-danger');
-        } 
-        
-        $(td).html($icon)
     }
 
     /**

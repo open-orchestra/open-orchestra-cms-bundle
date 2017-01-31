@@ -22,9 +22,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\ContentFacade';
     protected $transformerManager;
     protected $statusRepository;
-    protected $contentTypeRepository;
     protected $contentRepository;
-    protected $eventDispatcher;
     protected $authorizationChecker;
     protected $contextManager;
 
@@ -33,16 +31,10 @@ class ContentTransformerTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-
         $contentType0 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($contentType0)->isDefiningVersionable()->thenReturn(true);
         $contentType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($contentType1)->isDefiningVersionable()->thenReturn(false);
-
-        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion('bar')->thenReturn($contentType0);
-        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion('baz')->thenReturn($contentType1);
 
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
@@ -58,12 +50,17 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($router);
+        $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
+        Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->transformerManager)->getGroupContext()->thenReturn($groupContext);
 
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\ContentRepository');
         Phake::when($this->contentRepository)->find(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
+        Phake::when($this->contentRepository)->findAllCurrentlyPublishedByContentId(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->contentRepository)->findOneByContentId(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('en');
@@ -71,9 +68,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->contentTransformer = new ContentTransformer(
             $this->facadeClass,
             $this->statusRepository,
-            $this->contentTypeRepository,
             $this->contentRepository,
-            $this->eventDispatcher,
             $this->authorizationChecker,
             $this->contextManager
         );
@@ -85,7 +80,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
      * @param string   $contentType
      * @param string   $name
      * @param int      $version
-     * @param int      $contentTypeVersion
      * @param string   $language
      * @param DateTime $creationDate
      * @param DateTime $updateDate
@@ -100,7 +94,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $contentType,
         $name,
         $version,
-        $contentTypeVersion,
         $language,
         $creationDate,
         $updateDate,
@@ -110,11 +103,10 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
-        Phake::when($content)->getId()->thenReturn($id);
+        Phake::when($content)->getContentId()->thenReturn($id);
         Phake::when($content)->getContentType()->thenReturn($contentType);
         Phake::when($content)->getName()->thenReturn($name);
         Phake::when($content)->getVersion()->thenReturn($version);
-        Phake::when($content)->getContentTypeVersion()->thenReturn($contentTypeVersion);
         Phake::when($content)->getLanguage()->thenReturn($language);
         Phake::when($content)->getCreatedAt()->thenReturn($creationDate);
         Phake::when($content)->getUpdatedAt()->thenReturn($updateDate);
@@ -130,7 +122,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertSame($id, $facade->id);
         $this->assertSame($name, $facade->name);
         $this->assertSame($version, $facade->version);
-        $this->assertSame($contentTypeVersion, $facade->contentTypeVersion);
         $this->assertSame($language, $facade->language);
         $this->assertSame($creationDate, $facade->createdAt);
         $this->assertSame($updateDate, $facade->updatedAt);
@@ -142,8 +133,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
 
-        $this->assertArrayHasKey('can_edit', $facade->getRights());
-        $this->assertArrayHasKey('can_create', $facade->getRights());
         $this->assertArrayHasKey('can_delete', $facade->getRights());
     }
 
@@ -156,8 +145,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $date2 = new DateTime();
 
         return array(
-            array('foo', 'bar', 'baz', 1, 2, 'fr', $date1, $date2, true, false),
-            array('bar', 'baz', 'foo', 2, 1, 'en', $date2, $date1, false, true),
+            array('foo', 'bar', 'baz', 1, 'fr', $date1, $date2, true, false),
+            array('bar', 'baz', 'foo', 2, 'en', $date2, $date1, false, true),
         );
     }
 
@@ -172,73 +161,16 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
     /**
      * test reverseTransform
-     *
-     * @param FacadeInterface  $facade
-     * @param ContentInterface $source
-     * @param int              $searchCount
-     * @param int              $setCount
-     *
-     * @dataProvider changeStatusProvider
      */
-    public function testReverseTransform($facade, $source, $searchCount, $setCount)
-    {
-        $this->contentTransformer->reverseTransform($facade, $source);
-
-        Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
-        Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
-    }
-
-    /**
-     * Test Exception reverse transform with wrong object a parameters
-     */
-    public function testExceptionReverseTransform()
-    {
-        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
-        $source = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-
-        $facade->statusId = 'statusId';
-
-        Phake::when($this->eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
-
-        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException');
-        $this->contentTransformer->reverseTransform($facade, $source);
-    }
-
-    /**
-     * test reverseTransform
-     */
-    public function testReverseTransformWithId()
+    public function testReverseTransform()
     {
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
         $facade->id = 'fakeId';
 
         $result = $this->contentTransformer->reverseTransform($facade);
 
-        Phake::verify($this->contentRepository)->find('fakeId');
+        Phake::verify($this->contentRepository)->findOneByContentId('fakeId');
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $result);
-    }
-
-    /**
-     * @return array
-     */
-    public function changeStatusProvider()
-    {
-        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-
-        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
-        Phake::when($content)->getStatus()->thenReturn($fromStatus);
-
-        $facade1 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
-
-        $facade2 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
-        $facade2->statusId = 'statusId';
-
-        return array(
-            array($facade1, null, 0, 0),
-            array($facade1, $content, 0, 0),
-            array($facade2, $content, 1, 1)
-        );
     }
 
     /**
