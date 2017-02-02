@@ -101,6 +101,12 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: Aucun élément à afficher
+    versionable:
+        version: Version
+        new_version: Nouvelle version
+        manage_version: Gérer les versions
+        version_name: Nom de la version
+        validate_new_version: Valider
     node:
         title: Pages
         parameterize: Paramétrer
@@ -110,11 +116,6 @@ open_orchestra_backoffice:
         edit: Modifier
         redirections: Redirections
         preview: Prévisualiser
-        version: Version
-        new_version: Nouvelle version
-        manage_version: Gérer les versions
-        version_name: Nom de la version
-        validate_new_version: Valider
         publish_modal:
             title: Publier cette version
             message: Voulez vous publier cette version, elle sera visible en front ?

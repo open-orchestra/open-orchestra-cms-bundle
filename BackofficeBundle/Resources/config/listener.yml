@@ -13,7 +13,7 @@ services:
     open_orchestra_backoffice.listener.update_content_published:
         class: '%open_orchestra_backoffice.subscriber.update_statusable_element_published.class%'
         arguments:
-            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_model.repository.content'
             - '@open_orchestra_model.repository.status'
             - '@object_manager'
         tags:

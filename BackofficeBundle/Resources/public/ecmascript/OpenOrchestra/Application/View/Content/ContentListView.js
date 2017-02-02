@@ -32,8 +32,8 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
     getColumnsDefinition() {
         let columnsDefinition = [];
         columnsDefinition.push(this._getColumnsDefinitionDeleteCheckbox());
-        columnsDefinition = columnsDefinition.concat(this._generateListableColumn())
-        columnsDefinition = columnsDefinition.concat(this._generateFieldColumn())
+        columnsDefinition = columnsDefinition.concat(this._generateListableColumn());
+        columnsDefinition = columnsDefinition.concat(this._generateFieldColumn());
         columnsDefinition.push(this._getColumnsDefinitionDuplicateIcon());
         columnsDefinition[1].orderDirection = 'desc';
         columnsDefinition[1].createdCell = this._createEditLink;
@@ -48,7 +48,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let columnsDefinition = [];
         let defaultListable = this._contentType.get('default_listable');
         let createdCell = {
-            'linked_to_site': BooleanFormatter.getType(),
+            'linked_to_site': BooleanFormatter.getType()
         };
         for (let column in defaultListable) {
             if (defaultListable[column]) {
@@ -105,7 +105,8 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let link = Backbone.history.generateUrl('editContent', {
             contentTypeId: context._contentType.get('content_type_id'),
             language: rowData.get('language'),
-            contentId: rowData.get('id')
+            contentId: rowData.get('content_id'),
+            version: rowData.get('version')
         });
         if (!rowData.get('status').blocked_edition) {
             cellData = $('<a>',{
@@ -121,6 +122,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
      */
     _getSyncOptions() {
         return {
+            'apiContext': 'list',
             'urlParameter': this._urlParameter
         };
     }

@@ -87,8 +87,6 @@ class NodeManager
         $newNode->setVersion($lastNodeVersion + 1);
         $this->duplicateBlockAndArea($originalNode, $newNode);
         $newNode->setVersionName($versionName);
-        dump($versionName);
-        dump(empty($versionName));
         if (empty($versionName)) {
             $newNode = $this->setVersionName($newNode);
         }

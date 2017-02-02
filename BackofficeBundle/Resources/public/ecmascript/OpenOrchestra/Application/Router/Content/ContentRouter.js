@@ -4,10 +4,12 @@ import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
 import ContentSummaryView from '../../View/Content/ContentSummaryView'
 import ContentsView       from '../../View/Content/ContentsView'
 import ContentFormView    from '../../View/Content/ContentFormView'
+import NewContentFormView from '../../View/Content/NewContentFormView'
 import ContentTypes       from '../../Collection/ContentType/ContentTypes'
 import Contents           from '../../Collection/Content/Contents'
 import ContentType        from '../../Model/ContentType/ContentType'
 import Statuses           from '../../Collection/Status/Statuses'
+import ApplicationError   from '../../../Service/Error/ApplicationError'
 
 /**
  * @class ContentRouter
@@ -19,10 +21,10 @@ class ContentRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'content/summary'                                       : 'showContentSummary',
-            'content/list/:contentTypeId/:language(/:page)'         : 'listContent',
-            'content/edit/:contentTypeId/:language/:contentId'      : 'editContent',
-            'content/new/:contentTypeId/:language'                  : 'newContent',
+            'content/summary'                                             : 'showContentSummary',
+            'content/list/:contentTypeId/:language(/:page)'               : 'listContent',
+            'content/edit/:contentTypeId/:language/:contentId(/:version)' : 'editContent',
+            'content/new/:contentTypeId/:language'                        : 'newContent'
         };
     }
 
@@ -64,23 +66,33 @@ class ContentRouter extends OrchestraRouter
     /**
      * Edit content
      *
-     * @param {string} contentTypeId
-     * @param {string} language
-     * @param {string} contentId
+     * @param {string}   contentTypeId
+     * @param {string}   language
+     * @param {string}   contentId
+     * @param {int|null} version
      */
-    editContent(contentTypeId, language, contentId) {
+    editContent(contentTypeId, language, contentId, version = null) {
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_content_form', {
             contentId: contentId,
             language: language,
+            version: version
         });
         
         let siteLanguageUrl = [];
         for (let siteLanguage of Application.getContext().siteLanguages) {
-            siteLanguageUrl[siteLanguage] = Backbone.history.generateUrl('editContent', {contentTypeId: contentTypeId, language: siteLanguage, contentId: contentId});
+            siteLanguageUrl[siteLanguage] = Backbone.history.generateUrl('editContent', {
+                contentTypeId: contentTypeId,
+                language: siteLanguage,
+                contentId: contentId
+            });
         }
 
-        FormBuilder.createFormFromUrl(url, (form) => {
+        FormBuilder.createFormFromUrl(url, (form, jqXHR) => {
+            let version = jqXHR.getResponseHeader('version');
+            if (null === version) {
+                throw new ApplicationError('Invalid version');
+            }
             let contentFormView = new ContentFormView({
                 form: form,
                 name: contentId,
@@ -88,6 +100,7 @@ class ContentRouter extends OrchestraRouter
                 language: language,
                 siteLanguageUrl: siteLanguageUrl,
                 contentId: contentId,
+                version: version
             });
             Application.getRegion('content').html(contentFormView.render().$el);
         });
@@ -103,7 +116,7 @@ class ContentRouter extends OrchestraRouter
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_content_new', {
             contentTypeId: contentTypeId,
-            language: language,
+            language: language
         });
         let siteLanguageUrl = [];
         for (let siteLanguage of Application.getContext().siteLanguages) {
@@ -111,14 +124,14 @@ class ContentRouter extends OrchestraRouter
         }
         
         FormBuilder.createFormFromUrl(url, (form) => {
-            let contentFormView = new ContentFormView({
+            let newContentFormView = new NewContentFormView({
                 form: form,
                 name: Translator.trans('open_orchestra_backoffice.table.contents.new'),
                 contentTypeId: contentTypeId,
                 language: language,
-                siteLanguageUrl: siteLanguageUrl,
+                siteLanguageUrl: siteLanguageUrl
             });
-            Application.getRegion('content').html(contentFormView.render().$el);
+            Application.getRegion('content').html(newContentFormView.render().$el);
         });
     }
 
@@ -135,7 +148,7 @@ class ContentRouter extends OrchestraRouter
         let urlParameter = {
             contentTypeId: contentTypeId,
             siteId: Application.getContext().siteId,
-            language: language,
+            language: language
         };
         
         let contentType = new ContentType();

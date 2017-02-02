@@ -84,6 +84,7 @@ open_orchestra_backoffice:
             created_by: Author
             updated_at: Updated at
             updated_by: Author of the update
+            version_name: Version name
             list: List
             add: Add
         redirections:
@@ -100,6 +101,12 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: No element to display
+    versionable:
+        version: Version
+        new_version: New version
+        manage_version: Manage versions
+        version_name: Version name
+        validate_new_version: Validate
     node:
         title: Pages
         parameterize: Parameterize
@@ -109,11 +116,6 @@ open_orchestra_backoffice:
         edit: Edit
         redirections: Redirections
         preview: Preview
-        version: Version
-        new_version: New version
-        manage_version: Manage versions
-        version_name: Version name
-        validate_new_version: Validate
         publish_modal:
             title: Published this version
             message: Do you want publish cette version, it will be visible in front ?

@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -18,14 +17,11 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
-use OpenOrchestra\ModelInterface\RedirectionEvents;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\AccessLanguageForNodeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
@@ -316,20 +312,20 @@ class NodeController extends BaseController
      */
     public function newVersionAction(Request $request, $nodeId, $language, $originalVersion)
     {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $originalNodeVersion = $this->findOneNode($nodeId, $language, $siteId, $originalVersion);
+        if (!$originalNodeVersion instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $originalNodeVersion);
+
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\NodeFacade',
             $request->get('_format', 'json')
         );
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $originalVersion = $this->findOneNode($nodeId, $language, $siteId, $originalVersion);
-        if (!$originalVersion instanceof NodeInterface) {
-            throw new NodeNotFoundHttpException();
-        }
-        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $originalVersion);
-
         $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
-        $newNode = $nodeManager->createNewVersionNode($originalVersion, $facade->versionName);
+        $newNode = $nodeManager->createNewVersionNode($originalNodeVersion, $facade->versionName);
 
         $this->get('open_orchestra_model.saver.versionnable_saver')->saveDuplicated($newNode);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
@@ -421,7 +417,7 @@ class NodeController extends BaseController
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_NODE_VERSION
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION
      * })
      * @return Response
      */
@@ -586,7 +582,6 @@ class NodeController extends BaseController
 
         return $facade;
     }
-
 
     /**
      * @param Request $request

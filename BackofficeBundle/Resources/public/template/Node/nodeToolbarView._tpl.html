@@ -1,7 +1,7 @@
 <div class="form-inline row">
     <div class="pull-left">
         <div class="form-group">
-            <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.node.version') %></label>
+            <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
             <div class="styled-select">
                 <select class="form-control" id="select-version">
                     <% _.each(nodeVersions, function(nodeVersion, key) { %>
@@ -55,10 +55,10 @@
 </div>
 <div class="form-inline row">
     <div class="form-group">
-        <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.node.new_version') %></button>
+        <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
     </div>
     <div class="form-group">
-        <button type="button" class="btn btn-info btn-manage-version"><%= Translator.trans('open_orchestra_backoffice.node.manage_version') %></button>
+        <button type="button" class="btn btn-info btn-manage-version"><%= Translator.trans('open_orchestra_backoffice.versionable.manage_version') %></button>
     </div>
 </div>
 <div class="new-version-form-region"></div>

@@ -1,13 +1,26 @@
 import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import Application          from '../../Application'
+import ApplicationError     from '../../../Service/Error/ApplicationError'
 import Content              from '../../Model/Content/Content'
+import Contents             from '../../Collection/Content/Contents'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import ContentToolbarView   from './ContentToolbarView'
+import ContentVersionsView  from './ContentVersionsView'
 
 /**
  * @class ContentFormView
  */
 class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin) 
 {
+    /**
+     * Pre initialize
+     * @param {Object} options
+     */
+    preinitialize(options) {
+        super.preinitialize(options);
+        this.events['change #oo_content_status'] = this._toggleCheckboxSaveOldPublishedVersion;
+    }
+
     /**
      * Initialize
      * @param {Form}   form
@@ -16,14 +29,16 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @param {String} language
      * @param {Array}  siteLanguageUrl
      * @param {String} contentId
+     * @param {String} version
      */
-    initialize({form, name, contentTypeId, language, siteLanguageUrl, contentId = null}) {
+    initialize({form, name, contentTypeId, language, siteLanguageUrl, contentId, version}) {
         super.initialize({form : form});
         this._name = name;
         this._contentTypeId = contentTypeId;
         this._language = language;
         this._siteLanguageUrl = siteLanguageUrl;
         this._contentId = contentId;
+        this._version = version;
     }
 
     /**
@@ -34,7 +49,7 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             contentTypeId: this._contentTypeId,
             language: this._language,
             name: this._name,
-            siteLanguageUrl: this._siteLanguageUrl,
+            siteLanguageUrl: this._siteLanguageUrl
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -44,25 +59,65 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     }
 
     /**
-     * Redirect to edit content view
-     *
-     * @param {mixed}  data
-     * @param {string} textStatus
-     * @param {object} jqXHR
+     * @inheritDoc
+     */
+    _renderForm() {
+        this._renderContentActionToolbar($('.content-action-toolbar', this.$el));
+        super._renderForm();
+        // hide checkbox oo_content_saveOldPublishedVersion by default
+        $('#oo_content_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
+    }
+
+    /**
+     * @param {Object} $selector
      * @private
      */
-    _redirectEditElement(data, textStatus, jqXHR) {
-        let contentId = jqXHR.getResponseHeader('contentId');
-        if (null === contentId) {
-            throw new ApplicationError('Invalid contentId or name');
-        }
-        let url = Backbone.history.generateUrl('editContent', {
-            contentTypeId: this._contentTypeId,
-            language: this._language,
-            contentId: contentId
+    _renderContentActionToolbar($selector) {
+        this._displayLoader($selector);
+        new Contents().fetch({
+            apiContext: 'list-version',
+            urlParameter: {
+                language: this._language,
+                contentId: this._contentId
+            },
+            success: (contentVersions) => {
+                let contentToolbarView = new ContentToolbarView({
+                        contentVersions: contentVersions,
+                        name: this._name,
+                        version: this._version,
+                        contentTypeId: this._contentTypeId,
+                        language: this._language,
+                        contentId: this._contentId,
+                        contentFormView: this
+                });
+                contentToolbarView.listenTo(this, 'show.new_version.form', contentToolbarView.newVersionForm);
+                $selector.html(contentToolbarView.render().$el);
+            }
+        })
+    }
+
+    /**
+     * Manage Version
+     * @param {Contents} contentVersions
+     */
+    manageVersion(contentVersions) {
+        let contentVersionsView = new ContentVersionsView({
+            collection: contentVersions,
+            contentId: this._contentId,
+            language: this._language
         });
-        Backbone.Events.trigger('form:deactivate', this);
-        Backbone.history.navigate(url, true);
+        this._$formRegion.html(contentVersionsView.render().$el);
+    }
+
+    /**
+     * @private
+     */
+    _toggleCheckboxSaveOldPublishedVersion(event) {
+        let formGroupCheckbox = $('#oo_content_saveOldPublishedVersion', this.$el).closest('.form-group');
+        formGroupCheckbox.hide();
+        if ($('option:selected', $(event.currentTarget)).attr('data-published-state')) {
+            formGroupCheckbox.show();
+        }
     }
 
     /**
@@ -70,14 +125,12 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @param {event} event
      */
     _deleteElement(event) {
-        if (null === this._contentId) {
-            throw new ApplicationError('Invalid contentId');
-        }
         let content = new Content({'id': this._contentId});
         let contentTypeId = this._contentTypeId;
         let language = this._language;
 
         content.destroy({
+            apiContext: 'delete-multiple',
             success: () => {
                 let url = Backbone.history.generateUrl('listContent', {
                     contentTypeId: contentTypeId,

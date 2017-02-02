@@ -38,6 +38,18 @@ class NodeUsageBlockListView extends NodeListView
     }
 
     /**
+     *
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
+     *
+     * @private
+     */
+    _createEditLink(td, cellData, rowData) {
+        return cellData;
+    }
+
+    /**
      * @inheritDoc
      */
     _getSyncOptions() {

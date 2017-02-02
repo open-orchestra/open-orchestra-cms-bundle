@@ -31,10 +31,27 @@ class Content extends OrchestraModel
         let urlParameter = options.urlParameter || {};
         switch (method) {
             case "create":
-                return Routing.generate('open_orchestra_api_content_duplicate');
+                return this._getSyncCreateUrl(options, urlParameter);
             case "delete":
                 urlParameter.contentId = this.get('id');
                 return Routing.generate('open_orchestra_api_content_delete', urlParameter);
+        }
+    }
+
+    /**
+     * @param {Object} options
+     * @param {Object} urlParameter
+     *
+     * @returns {string}
+     * @private
+     */
+    _getSyncCreateUrl(options, urlParameter) {
+        let apiContext = options.apiContext || null;
+        switch (apiContext) {
+            case "new-version":
+                return Routing.generate('open_orchestra_api_content_new_version', urlParameter);
+            default:
+                return Routing.generate('open_orchestra_api_content_duplicate', urlParameter);
         }
     }
 }

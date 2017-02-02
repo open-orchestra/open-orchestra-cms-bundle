@@ -9,7 +9,6 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
@@ -59,9 +58,11 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         $facade = $this->newFacade();
-        $facade->id = $content->getContentId();
+        $facade->id = $content->getId();
+        $facade->contentId = $content->getContentId();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
+        $facade->versionName = $content->getVersionName();
         $facade->language = $content->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($content->getStatus());
         $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getCurrentLocale());
@@ -86,6 +87,10 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed);
         }
 
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION)) {
+            $facade->addRight('can_delete_version', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$content->getStatus()->isPublishedState());
+        }
+
         return $facade;
     }
 
@@ -99,7 +104,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
         if (null !== $facade->id) {
-            return $this->contentRepository->findOneByContentId($facade->id);
+            return $this->contentRepository->findById($facade->id);
         }
 
         return null;

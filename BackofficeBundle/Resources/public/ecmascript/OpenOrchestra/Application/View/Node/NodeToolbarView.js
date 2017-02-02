@@ -77,7 +77,7 @@ class NodeToolbarView extends OrchestraView
      * @private
      */
     _newVersion() {
-        let versionName = $('#node_version_name', this.$el).val();
+        let versionName = $('#version_name', this.$el).val();
         new Node().save({version_name: versionName}, {
             urlParameter: {
                 nodeId: this._node.get('node_id'),

@@ -56,8 +56,8 @@ class StatusableChoiceStatusSubscriber implements EventSubscriberInterface
             $form->add('saveOldPublishedVersion', 'checkbox', array(
                 'mapped' => false,
                 'required' => false,
-                'group_id' => 'properties',
-                'sub_group_id' => 'publication',
+                'group_id' => isset($this->options['group_id']) ? $this->options['group_id'] : '',
+                'sub_group_id' => isset($this->options['sub_group_id']) ? $this->options['sub_group_id'] : '',
                 'label' => 'open_orchestra_backoffice.form.node.save_old_published_version',
             ));
         }

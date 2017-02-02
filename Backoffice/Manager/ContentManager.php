@@ -5,7 +5,7 @@ namespace OpenOrchestra\Backoffice\Manager;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
@@ -13,28 +13,28 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
  */
 class ContentManager
 {
-    protected $contentTypeRepository;
+    protected $contentRepository;
     protected $statusRepository;
     protected $contextManager;
     protected $versionableSaver;
     protected $contentClass;
 
     /**
-     * @param ContentTypeRepositoryInterface $contentTypeRepository
-     * @param StatusRepositoryInterface      $statusRepository
-     * @param ContextManager                 $contextManager
-     * @param VersionableSaverInterface      $versionableSaver
-     * @param string                         $contentClass
+     * @param ContentRepositoryInterface $contentRepository
+     * @param StatusRepositoryInterface  $statusRepository
+     * @param ContextManager             $contextManager
+     * @param VersionableSaverInterface  $versionableSaver
+     * @param string                     $contentClass
      */
     public function __construct(
-        ContentTypeRepositoryInterface $contentTypeRepository,
+        ContentRepositoryInterface $contentRepository,
         StatusRepositoryInterface $statusRepository,
         ContextManager $contextManager,
         VersionableSaverInterface $versionableSaver,
         $contentClass
     )
     {
-        $this->contentTypeRepository = $contentTypeRepository;
+        $this->contentRepository = $contentRepository;
         $this->statusRepository = $statusRepository;
         $this->contextManager = $contextManager;
         $this->versionableSaver = $versionableSaver;
@@ -42,8 +42,9 @@ class ContentManager
     }
 
     /**
-     * @param string $contentType
-     * @param string $language
+     * @param string  $contentType
+     * @param string  $language
+     * @param boolean $isLinkedToSite
      *
      * @return ContentInterface
      */
@@ -93,6 +94,7 @@ class ContentManager
         $newContent->setVersion(1);
         $newContent->setContentId($contentId);
         $newContent->setName($this->duplicateLabel($content->getName()));
+        $newContent = $this->setVersionName($newContent);
 
         $this->versionableSaver->saveDuplicated($newContent);
 
@@ -102,22 +104,40 @@ class ContentManager
     /**
      * Duplicate a content
      *
-     * @param ContentInterface $content
-     * @param ContentInterface $lastContent
+     * @param ContentInterface $originalContent
+     * @param string           $versionName
      *
      * @return ContentInterface
      */
-    public function newVersionContent(ContentInterface $content, ContentInterface $lastContent = null)
+    public function newVersionContent(ContentInterface $originalContent, $versionName = '')
     {
-        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
+        $lastContent = $this->contentRepository->findOneByLanguage($originalContent->getContentId(), $originalContent->getLanguage());
 
-        $lastVersion = ($contentType->isDefiningVersionable() && $lastContent !== null) ? $lastContent->getVersion() : 0;
-        $newContent = $this->cloneContent($content);
+        $lastVersion = $lastContent->getVersion();
+        $newContent = $this->cloneContent($originalContent);
         $newContent->setVersion($lastVersion + 1);
-        $this->versionableSaver->saveDuplicated($newContent);
+        $newContent->setVersionName($versionName);
+        if (empty($versionName)) {
+            $newContent = $this->setVersionName($newContent);
+        }
 
         return $newContent;
     }
+
+    /**
+     * @param ContentInterface $node
+     *
+     * @return ContentInterface
+     */
+    public function setVersionName(ContentInterface $node)
+    {
+        $date = new \DateTime("now");
+        $versionName = $node->getName().'_'. $node->getVersion(). '_'. $date->format("Y-m-d_H:i:s");
+        $node->setVersionName($versionName);
+
+        return $node;
+    }
+
 
     /**
      * @param ContentInterface $content
