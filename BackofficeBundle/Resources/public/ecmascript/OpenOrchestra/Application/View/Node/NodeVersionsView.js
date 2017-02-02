@@ -1,5 +1,7 @@
 import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
 import NodeVersionsListView   from './NodeVersionsListView'
+import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage           from '../../../Service/FlashMessage/FlashMessage'
 
 /**
  * @class NodeVersionsView
@@ -64,9 +66,18 @@ class NodeVersionsView extends AbstractCollectionView
                 language: this._node.get('language')
             },
             success: () => {
-                this._listView.api.rows().clear();
-                this._listView.api.rows.add(this._collection.models).draw();
-                this._toggleButtonDelete();
+                let message = new FlashMessage(Translator.trans('open_orchestra_backoffice.versionable.success_remove'), 'success');
+                FlashMessageBag.addMessageFlash(message);
+
+                let url = Backbone.history.generateUrl('showNode', {
+                    nodeId: this._node.get('node_id'),
+                    language: this._node.get('language')
+                });
+                if (url === Backbone.history.fragment) {
+                    Backbone.history.loadUrl(url);
+                } else {
+                    Backbone.history.navigate(url, true);
+                }
             }
         });
     }

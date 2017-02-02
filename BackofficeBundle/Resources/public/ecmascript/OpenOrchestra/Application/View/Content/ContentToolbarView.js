@@ -91,7 +91,11 @@ class ContentToolbarView extends OrchestraView
                     language: this._language,
                     contentId: this._contentId
                 });
-                Backbone.history.navigate(url, true);
+                if (url === Backbone.history.fragment) {
+                    Backbone.history.loadUrl(url);
+                } else {
+                    Backbone.history.navigate(url, true);
+                }
             }
         })
     }

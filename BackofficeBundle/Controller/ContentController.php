@@ -10,7 +10,6 @@ use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\Backoffice\Exception\UneditableException;
 
 /**
  * Class ContentController
@@ -34,8 +33,6 @@ class ContentController extends AbstractAdminController
      */
     public function formAction(Request $request, $contentId, $language, $version)
     {
-        var_dump($contentId);
-        var_dump($language);
         $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
         if (!$content instanceof ContentInterface) {
             throw new \UnexpectedValueException();

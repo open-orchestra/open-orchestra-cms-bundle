@@ -73,7 +73,7 @@ class ContentManager
     public function createNewLanguageContent($contentSource, $language)
     {
         $translationStatus = $this->statusRepository->findOneByTranslationState();
-        $content = $this->newVersionContent($contentSource);
+        $content = $this->cloneContent($contentSource);
         $content->setLanguage($language);
         $content->setStatus($translationStatus);
 

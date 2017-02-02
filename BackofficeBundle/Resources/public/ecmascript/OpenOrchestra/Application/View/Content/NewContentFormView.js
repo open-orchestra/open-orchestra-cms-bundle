@@ -5,6 +5,7 @@ import Content              from '../../Model/Content/Content'
 import Contents             from '../../Collection/Content/Contents'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 import ContentToolbarView   from './ContentToolbarView'
+import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class NewContentFormView
@@ -35,7 +36,8 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
             contentTypeId: this._contentTypeId,
             language: this._language,
             name: this._name,
-            siteLanguageUrl: this._siteLanguageUrl
+            siteLanguageUrl: this._siteLanguageUrl,
+            messages: FlashMessageBag.getMessages()
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);

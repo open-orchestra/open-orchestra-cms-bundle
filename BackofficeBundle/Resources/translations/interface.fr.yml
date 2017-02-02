@@ -57,10 +57,8 @@ open_orchestra_backoffice:
             title: Titre
             author: Auteur
             updated_at: Date de modification
-            created_at: Date de création
             current_status: Etat courant
             version: Version
-            version_name: Nom de la version
         sites:
             new: Nouveau site
             site_id: Id
@@ -87,6 +85,10 @@ open_orchestra_backoffice:
             updated_by: Auteur de la mise à jour
             list: Lister
             add: Ajouter
+        versionable:
+            version_name: Nom de la version
+            status_label: Etat workflow
+            created_at: Date de création
         redirections:
             site_name    : Nom du site
             route_pattern: Pattern de route
@@ -107,6 +109,7 @@ open_orchestra_backoffice:
         manage_version: Gérer les versions
         version_name: Nom de la version
         validate_new_version: Valider
+        success_remove: Versions supprimées avec succès
     node:
         title: Pages
         parameterize: Paramétrer

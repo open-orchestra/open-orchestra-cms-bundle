@@ -6,6 +6,7 @@ import Contents             from '../../Collection/Content/Contents'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 import ContentToolbarView   from './ContentToolbarView'
 import ContentVersionsView  from './ContentVersionsView'
+import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class ContentFormView
@@ -23,18 +24,18 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 
     /**
      * Initialize
-     * @param {Form}   form
-     * @param {String} name
-     * @param {String} contentTypeId
-     * @param {String} language
-     * @param {Array}  siteLanguageUrl
-     * @param {String} contentId
-     * @param {String} version
+     * @param {Form}        form
+     * @param {String}      name
+     * @param {ContentType} contentType
+     * @param {String}      language
+     * @param {Array}       siteLanguageUrl
+     * @param {String}      contentId
+     * @param {String}      version
      */
-    initialize({form, name, contentTypeId, language, siteLanguageUrl, contentId, version}) {
+    initialize({form, name, contentType, language, siteLanguageUrl, contentId, version}) {
         super.initialize({form : form});
         this._name = name;
-        this._contentTypeId = contentTypeId;
+        this._contentType = contentType;
         this._language = language;
         this._siteLanguageUrl = siteLanguageUrl;
         this._contentId = contentId;
@@ -46,10 +47,11 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     render() {
         let template = this._renderTemplate('Content/contentEditView', {
-            contentTypeId: this._contentTypeId,
+            contentTypeId: this._contentType.get('content_type_id'),
             language: this._language,
             name: this._name,
-            siteLanguageUrl: this._siteLanguageUrl
+            siteLanguageUrl: this._siteLanguageUrl,
+            messages: FlashMessageBag.getMessages()
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -62,7 +64,9 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @inheritDoc
      */
     _renderForm() {
-        this._renderContentActionToolbar($('.content-action-toolbar', this.$el));
+        if (true === this._contentType.get('defining_versionable')) {
+            this._renderContentActionToolbar($('.content-action-toolbar', this.$el));
+        }
         super._renderForm();
         // hide checkbox oo_content_saveOldPublishedVersion by default
         $('#oo_content_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
@@ -85,12 +89,11 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
                         contentVersions: contentVersions,
                         name: this._name,
                         version: this._version,
-                        contentTypeId: this._contentTypeId,
+                        contentTypeId: this._contentType.get('content_type_id'),
                         language: this._language,
                         contentId: this._contentId,
                         contentFormView: this
                 });
-                contentToolbarView.listenTo(this, 'show.new_version.form', contentToolbarView.newVersionForm);
                 $selector.html(contentToolbarView.render().$el);
             }
         })
@@ -104,7 +107,8 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         let contentVersionsView = new ContentVersionsView({
             collection: contentVersions,
             contentId: this._contentId,
-            language: this._language
+            language: this._language,
+            contentTypeId: this._contentType.get('content_type_id')
         });
         this._$formRegion.html(contentVersionsView.render().$el);
     }
@@ -126,7 +130,7 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _deleteElement(event) {
         let content = new Content({'id': this._contentId});
-        let contentTypeId = this._contentTypeId;
+        let contentTypeId = this._contentType.get('content_type_id');
         let language = this._language;
 
         content.destroy({

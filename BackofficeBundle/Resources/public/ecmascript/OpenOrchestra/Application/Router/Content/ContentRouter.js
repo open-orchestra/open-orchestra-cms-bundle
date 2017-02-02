@@ -88,21 +88,26 @@ class ContentRouter extends OrchestraRouter
             });
         }
 
-        FormBuilder.createFormFromUrl(url, (form, jqXHR) => {
-            let version = jqXHR.getResponseHeader('version');
-            if (null === version) {
-                throw new ApplicationError('Invalid version');
+        new ContentType().fetch({
+            urlParameter: {contentTypeId: contentTypeId},
+            success: (contentType) => {
+                FormBuilder.createFormFromUrl(url, (form, jqXHR) => {
+                    let version = jqXHR.getResponseHeader('version');
+                    if (null === version) {
+                        throw new ApplicationError('Invalid version');
+                    }
+                    let contentFormView = new ContentFormView({
+                        form: form,
+                        name: contentId,
+                        contentType: contentType,
+                        language: language,
+                        siteLanguageUrl: siteLanguageUrl,
+                        contentId: contentId,
+                        version: version
+                    });
+                    Application.getRegion('content').html(contentFormView.render().$el);
+                });
             }
-            let contentFormView = new ContentFormView({
-                form: form,
-                name: contentId,
-                contentTypeId: contentTypeId,
-                language: language,
-                siteLanguageUrl: siteLanguageUrl,
-                contentId: contentId,
-                version: version
-            });
-            Application.getRegion('content').html(contentFormView.render().$el);
         });
     }
 
@@ -122,7 +127,7 @@ class ContentRouter extends OrchestraRouter
         for (let siteLanguage of Application.getContext().siteLanguages) {
             siteLanguageUrl[siteLanguage] = Backbone.history.generateUrl('newContent', {contentTypeId: contentTypeId, language: siteLanguage});
         }
-        
+
         FormBuilder.createFormFromUrl(url, (form) => {
             let newContentFormView = new NewContentFormView({
                 form: form,

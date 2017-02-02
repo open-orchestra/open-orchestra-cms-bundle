@@ -89,7 +89,11 @@ class NodeToolbarView extends OrchestraView
                     nodeId: this._node.get('node_id'),
                     language: this._node.get('language')
                 });
-                Backbone.history.loadUrl(url);
+                if (url === Backbone.history.fragment) {
+                    Backbone.history.loadUrl(url);
+                } else {
+                    Backbone.history.navigate(url, true);
+                }
             }
         })
     }

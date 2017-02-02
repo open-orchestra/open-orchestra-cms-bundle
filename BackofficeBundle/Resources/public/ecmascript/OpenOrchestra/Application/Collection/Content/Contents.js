@@ -64,7 +64,7 @@ class Contents extends DataTableCollection
         switch (apiContext) {
             case "delete-multiple-version":
                 return Routing.generate('open_orchestra_api_content_delete_multiple_versions', urlParameter);
-            case "delete-multiple":
+            default:
                 return Routing.generate('open_orchestra_api_content_delete_multiple');
         }
     }

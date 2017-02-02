@@ -1,5 +1,7 @@
 import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
 import ContentVersionsListView from './ContentVersionsListView'
+import FlashMessageBag         from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage            from '../../../Service/FlashMessage/FlashMessage'
 
 /**
  * @class ContentVersionsView
@@ -10,10 +12,12 @@ class ContentVersionsView extends AbstractCollectionView
      * @param {OrchestraCollection} collection
      * @param {string}              contentId
      * @param {string}              language
+     * @param {string}              contentTypeId
      */
-    initialize({collection, contentId, language}) {
+    initialize({collection, contentId, language, contentTypeId}) {
         super.initialize({collection: collection});
         this._contentId = contentId;
+        this._contentTypeId = contentTypeId;
         this._language = language
     }
 
@@ -67,9 +71,19 @@ class ContentVersionsView extends AbstractCollectionView
                 language: this._language
             },
             success: () => {
-                this._listView.api.rows().clear();
-                this._listView.api.rows.add(this._collection.models).draw();
-                this._toggleButtonDelete();
+                let message = new FlashMessage(Translator.trans('open_orchestra_backoffice.versionable.success_remove'), 'success');
+                FlashMessageBag.addMessageFlash(message);
+
+                let url = Backbone.history.generateUrl('editContent', {
+                    contentTypeId: this._contentTypeId,
+                    language: this._language,
+                    contentId: this._contentId
+                });
+                if (url === Backbone.history.fragment) {
+                    Backbone.history.loadUrl(url);
+                } else {
+                    Backbone.history.navigate(url, true);
+                }
             }
         });
     }
