@@ -114,7 +114,10 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $node) && !$node->getStatus()->isPublishedState());
+
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS_DELETE_NODE_VERSION)) {
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $node));
+        }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
             $facade->addRight('can_edit', !$node->getStatus()->isBlockedEdition() && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));

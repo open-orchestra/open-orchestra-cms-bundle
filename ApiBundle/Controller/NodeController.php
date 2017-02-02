@@ -421,8 +421,8 @@ class NodeController extends BaseController
      *
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_NODE_VERSION
      * })
-     *
      * @return Response
      */
     public function listVersionAction($nodeId, $language)
@@ -590,6 +590,8 @@ class NodeController extends BaseController
 
     /**
      * @param Request $request
+     * @param string  $nodeId
+     * @param string  $language
      *
      * @Config\Route("/delete-multiple-version/{nodeId}/{language}", name="open_orchestra_api_node_delete_multiple_versions")
      * @Config\Method({"DELETE"})
