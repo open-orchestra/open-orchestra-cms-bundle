@@ -7,6 +7,9 @@ import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
 import Statuses         from '../../Collection/Status/Statuses'
 import Status           from '../../Model/Status/Status'
 import Node             from '../../Model/Node/Node'
+import NodeToolbarView  from './NodeToolbarView'
+import Nodes            from '../../Collection/Node/Nodes'
+import NodeVersionsView from './NodeVersionsView'
 
 /**
  * @class NodeView
@@ -19,7 +22,7 @@ class NodeView extends OrchestraView
     preinitialize() {
         this.events = {
             'click .area:not(.disabled)': '_activeArea',
-            'click .dropdown-workflow li a': '_changeStatus'
+            'click .btn-new-version': '_showNewVersionForm'
         }
     }
 
@@ -46,7 +49,6 @@ class NodeView extends OrchestraView
         );
         this.$el.html(template);
         this._displayLoader($('.well', this.$el));
-        this._displayLoader($('.node-action-toolbar', this.$el));
         this._renderNodeActionToolbar($('.node-action-toolbar', this.$el));
         this._renderNodeTemplate($('.node-template .well', this.$el));
 
@@ -58,7 +60,9 @@ class NodeView extends OrchestraView
      * @private
      */
     _renderNodeActionToolbar($selector) {
+        this._displayLoader($selector);
         let statuses = new Statuses();
+        let nodeVersions = new Nodes();
         $.when(
             statuses.fetch({
                 apiContext: 'node',
@@ -68,16 +72,48 @@ class NodeView extends OrchestraView
                     language: this._node.get('language'),
                     version: this._node.get('version')
                 }
+            }),
+            nodeVersions.fetch({
+                apiContext: 'list-version',
+                urlParameter: {
+                    nodeId: this._node.get('node_id'),
+                    language: this._node.get('language')
+                }
             })
         ).done( () => {
-            let template = this._renderTemplate('Node/nodeToolbarView',
+            let nodeToolbarView = new NodeToolbarView(
                 {
                     node: this._node,
-                    statuses: statuses.models
+                    statuses: statuses,
+                    nodeVersions: nodeVersions,
+                    nodeView: this
                 }
             );
-            $selector.html(template);
+            nodeToolbarView.listenTo(this, 'show.new_version.form', nodeToolbarView.newVersionForm);
+            $selector.html(nodeToolbarView.render().$el);
         });
+    }
+
+    /**
+     * Manage Version
+     * @param {Nodes} nodeVersions
+     */
+    manageVersion(nodeVersions) {
+        let nodeVersionsView = new NodeVersionsView({
+            node: this._node,
+            collection: nodeVersions
+        });
+        $('.well', this.$el).html(nodeVersionsView.render().$el);
+    }
+
+    /**
+     * Show new version form
+     *
+     * @private
+     */
+    _showNewVersionForm() {
+        this.trigger('show.new_version.form');
+        $('.alert-published-state').hide();
     }
 
     /**
@@ -201,21 +237,6 @@ class NodeView extends OrchestraView
                     changedAreas[index].set('hasChanged', false);
                 }
                 this._node.set('areas', areas);
-            }
-        });
-    }
-
-    /**
-     * @param {Object} event
-     * @private
-     */
-    _changeStatus(event) {
-        let statusId = $(event.currentTarget).attr('data-id');
-        let status = new Status({id: statusId});
-        this._node.save({'status': status}, {
-            apiContext: 'update_status',
-            success: () => {
-                Backbone.history.loadUrl(Backbone.history.fragment);
             }
         });
     }

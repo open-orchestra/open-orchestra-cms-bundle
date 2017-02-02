@@ -94,6 +94,11 @@ class NodeFacade extends DeletedFacade
     public $version;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $versionName;
+
+    /**
      * @Serializer\Type("integer")
      */
     public $order;

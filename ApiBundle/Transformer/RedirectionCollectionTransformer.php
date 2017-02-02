@@ -40,7 +40,7 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
      * @param FacadeInterface $facade
      * @param null $source
      *
-     * @return UserInterface|null
+     * @return RedirectionInterface|null
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\DisplayBundle\Exception\NodeNotFoundException;
@@ -26,8 +25,6 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
  */
 class RedirectionController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param int $redirectionId
      *

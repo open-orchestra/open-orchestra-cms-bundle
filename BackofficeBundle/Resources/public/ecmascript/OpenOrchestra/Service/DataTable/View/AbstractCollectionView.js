@@ -115,6 +115,7 @@ class AbstractCollectionView extends OrchestraView
         let models = this._collection.where({'delete': true});
         this._collection.destroyModels(models, {
             success: () => {
+                this._toggleButtonDelete();
                 this._listView.api.draw(false);
             }
         });

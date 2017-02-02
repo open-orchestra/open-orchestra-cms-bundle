@@ -1,0 +1,11 @@
+<div class="row form-inline">
+    <div class="form-group">
+        <label class="control-label" for="node_version_name">
+            <%= Translator.trans('open_orchestra_backoffice.node.version_name') %>
+        </label>
+        <input type="text" id="node_version_name" name="node_version_name" class="form-control node_version_name" value="<%= versionName %>">
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-info btn-validate-new-version"><%= Translator.trans('open_orchestra_backoffice.node.validate_new_version') %></button>
+    </div>
+</div>

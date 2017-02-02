@@ -12,7 +12,7 @@ open_orchestra_workflow_admin:
                 translation_state      : Etat de traduction
                 published_state        : Etat de publication
                 auto_publish_from_state: Etat de publication automatique
-                auto_unpublish_to_state: Etat de dépublication automatique
+                auto_unpublish_to_state: Etat de dépublication
             blocked_edition:
                 label : Bloquer l'édition
                 helper: Si réglé à "Oui", les contenus ayant ce statut ne peuvent être modifiés.

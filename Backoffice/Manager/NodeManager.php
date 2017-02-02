@@ -2,12 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
-use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ModelInterface\BlockNodeEvents;
-use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
@@ -23,7 +18,6 @@ use OpenOrchestra\ModelInterface\Repository\BlockRepositoryInterface;
  */
 class NodeManager
 {
-    protected $versionableSaver;
     protected $statusRepository;
     protected $blockRepository;
     protected $eventDispatcher;
@@ -37,7 +31,6 @@ class NodeManager
     /**
      * Constructor
      *
-     * @param VersionableSaverInterface  $versionableSaver
      * @param NodeRepositoryInterface    $nodeRepository
      * @param SiteRepositoryInterface    $siteRepository
      * @param StatusRepositoryInterface  $statusRepository
@@ -49,7 +42,6 @@ class NodeManager
      * @param TemplateManager            $templateManager
      */
     public function __construct(
-        VersionableSaverInterface  $versionableSaver,
         NodeRepositoryInterface $nodeRepository,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
@@ -60,7 +52,6 @@ class NodeManager
         $areaClass,
         $eventDispatcher
     ){
-        $this->versionableSaver =  $versionableSaver;
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
         $this->statusRepository = $statusRepository;
@@ -75,40 +66,35 @@ class NodeManager
     /**
      * Duplicate a node
      *
-     * @param string    $nodeId
-     * @param string    $siteId
-     * @param string    $language
-     * @param int|null  $version
-     * @param bool|true $save
+     * @param NodeInterface $originalNode
+     * @param string        $versionName
      *
      * @return NodeInterface
      */
-    public function duplicateNode($nodeId, $siteId, $language, $version = null, $save = true)
+    public function createNewVersionNode(NodeInterface $originalNode, $versionName = '')
     {
-        $node = $this->nodeRepository->findVersion($nodeId, $language, $siteId, $version);
-        $lastNode = $this->nodeRepository->findInLastVersion($nodeId, $language, $siteId);
+        $lastNode = $this->nodeRepository->findInLastVersion(
+            $originalNode->getNodeId(),
+            $originalNode->getLanguage(),
+            $originalNode->getSiteId()
+        );
         $lastNodeVersion = $lastNode->getVersion();
         $status = $this->statusRepository->findOneByInitial();
 
         /** @var NodeInterface $newNode */
-        $newNode = clone $node;
+        $newNode = clone $originalNode;
         $newNode->setStatus($status);
         $newNode->setVersion($lastNodeVersion + 1);
-        $this->duplicateBlockAndArea($node, $newNode);
-
-        if (true === $save) {
-            $this->saveDuplicatedNode($newNode);
+        $this->duplicateBlockAndArea($originalNode, $newNode);
+        $newNode->setVersionName($versionName);
+        dump($versionName);
+        dump(empty($versionName));
+        if (empty($versionName)) {
+            $newNode = $this->setVersionName($newNode);
         }
 
-        return $newNode;
-    }
 
-    /**
-     * @param NodeInterface $newNode
-     */
-    public function saveDuplicatedNode(NodeInterface $newNode)
-    {
-        $this->versionableSaver->saveDuplicated($newNode);
+        return $newNode;
     }
 
     /**
@@ -132,6 +118,7 @@ class NodeManager
         $node->setVersion(1);
         $node->setTemplate($template);
         $node->setOrder(-1);
+        $node = $this->setVersionName($node);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
@@ -219,6 +206,7 @@ class NodeManager
                     $this->blockRepository->getDocumentManager()->persist($newBlock);
                     $newArea->addBlock($newBlock);
                 }
+                $newArea->addBlock($block);
             }
         }
 
@@ -236,13 +224,14 @@ class NodeManager
      */
     public function createRootNode($siteId, $language, $name, $routePattern, $template)
     {
-        $node = $this->initializeNode(NodeInterface::ROOT_PARENT_ID, $language, $siteId);
+        $node = $this->initializeNode(NodeInterface::ROOT_PARENT_ID, $language, $siteId, $name);
         $node->setTemplate($template);
         $node->setRoutePattern($routePattern);
         $node->setName($name);
         $node->setVersion(1);
         $node->setInMenu(true);
         $node->setInFooter(true);
+        $node = $this->setVersionName($node);
 
         return $node;
     }
@@ -267,7 +256,7 @@ class NodeManager
         $node->setTheme(NodeInterface::THEME_DEFAULT);
         $node->setDefaultSiteTheme(true);
 
-        $parentNode = $this->nodeRepository->findVersion($parentId, $language, $siteId);
+        $parentNode = $this->nodeRepository->findInLastVersion($parentId, $language, $siteId);
         $status = $this->statusRepository->findOneByInitial();
         $node->setStatus($status);
         $nodeType = NodeInterface::TYPE_DEFAULT;
@@ -294,6 +283,20 @@ class NodeManager
         foreach($areasName as $areaName) {
             $node->setArea($areaName, new $this->areaClass());
         }
+
+        return $node;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return NodeInterface
+     */
+    public function setVersionName(NodeInterface $node)
+    {
+        $date = new \DateTime("now");
+        $versionName = $node->getName().'_'. $node->getVersion(). '_'. $date->format("Y-m-d_H:i:s");
+        $node->setVersionName($versionName);
 
         return $node;
     }

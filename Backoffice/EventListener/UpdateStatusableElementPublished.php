@@ -46,7 +46,9 @@ class UpdateStatusableElementPublished
                 $statusUnPublish = $this->statusRepository->findOneByAutoUnpublishTo();
                 /** @var StatusableInterface $elementPublished */
                 foreach ($elementsPublished as $elementPublished) {
-                    $elementPublished->setStatus($statusUnPublish);
+                    if ($elementPublished !== $statusableElement) {
+                        $elementPublished->setStatus($statusUnPublish);
+                    }
                 }
 
                 $this->objectManager->flush();

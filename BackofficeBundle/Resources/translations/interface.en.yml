@@ -13,6 +13,7 @@ open_orchestra_backoffice:
     confirm_modal:
         yes: Yes
         no: No
+        cancel: Cancel
     confirm_remove:
         title: Remove the selected elements ?
         message: The removal will be final
@@ -56,8 +57,10 @@ open_orchestra_backoffice:
             title: Title
             author: Author
             updated_at: Updated date
+            created_at: Created date
             current_status: Current status
             version: Version
+            version_name: Version name
         sites:
             new: New site
             site_id: Site id
@@ -108,6 +111,13 @@ open_orchestra_backoffice:
         preview: Preview
         version: Version
         new_version: New version
+        manage_version: Manage versions
+        version_name: Version name
+        validate_new_version: Validate
+        publish_modal:
+            title: Published this version
+            message: Do you want publish cette version, it will be visible in front ?
+            save_old_published_version: Save a copy of old published version
         message_online:
             title: The node is actually online.
             message: |

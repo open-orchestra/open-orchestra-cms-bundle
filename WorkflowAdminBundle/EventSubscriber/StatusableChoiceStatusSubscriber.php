@@ -44,8 +44,22 @@ class StatusableChoiceStatusSubscriber implements EventSubscriberInterface
         if (null !== $data->getId()) {
             $form->add('status', 'oo_status_choice', array_merge(array(
                 'embedded' => true,
-                'choices' => $this->getStatusChoices($data)), $this->options)
+                'choices' => $this->getStatusChoices($data),
+                'choice_attr' => function($val, $key, $index) {
+                    if ($val->isPublishedState()) {
+                        return array('data-published-state' => true);
+                    }
+
+                    return array();
+                }), $this->options)
             );
+            $form->add('saveOldPublishedVersion', 'checkbox', array(
+                'mapped' => false,
+                'required' => false,
+                'group_id' => 'properties',
+                'sub_group_id' => 'publication',
+                'label' => 'open_orchestra_backoffice.form.node.save_old_published_version',
+            ));
         }
     }
 

@@ -34,7 +34,8 @@ class NodeController extends AbstractAdminController
      */
     public function formAction(Request $request, $siteId, $nodeId, $language, $version)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+        $node = $nodeRepository->findVersion($nodeId, $language, $siteId, $version);
         if (!$node instanceof NodeInterface) {
             throw new \UnexpectedValueException();
         }
@@ -48,18 +49,34 @@ class NodeController extends AbstractAdminController
         ));
 
         $status = $node->getStatus();
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
         $options = array('action' => $url);
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
 
         $form->handleRequest($request);
 
-        if ($this->handleForm($form, $message)) {
+        if ($form->isValid()) {
+            $saveOldPublishedVersion = $form->has('saveOldPublishedVersion') ? $form->get('saveOldPublishedVersion')->getData() : false;
+            if (true === $node->getStatus()->isPublishedState() && false === $saveOldPublishedVersion) {
+                $oldPublishedVersion = $nodeRepository->findOnePublished(
+                    $node->getNodeId(),
+                    $node->getLanguage(),
+                    $node->getSiteId()
+                );
+                if ($oldPublishedVersion instanceof NodeInterface) {
+                    $this->get('object_manager')->remove($oldPublishedVersion);
+                }
+            }
+
+            $this->get('object_manager')->flush();
             $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
+
             if ($status->getId() !== $node->getStatus()->getId()) {
                 $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, new NodeEvent($node, $status));
                 $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
             }
+
+            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
+            $this->get('session')->getFlashBag()->add('success', $message);
         }
 
         return $this->renderAdminForm($form);
@@ -112,6 +129,7 @@ class NodeController extends AbstractAdminController
 
         if ($form->isValid()) {
             $node = $nodeManager->initializeAreasNode($node);
+            $node = $nodeManager->setVersionName($node);
 
             $nodesEvent = array();
             $documentManager = $this->get('object_manager');

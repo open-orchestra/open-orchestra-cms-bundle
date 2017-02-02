@@ -13,6 +13,7 @@ open_orchestra_backoffice:
     confirm_modal:
         yes: Oui
         no: Non
+        cancel: Annuler
     confirm_remove:
         title: Supprimer les élements selectionner ?
         message: La suppression sera définitif
@@ -56,7 +57,10 @@ open_orchestra_backoffice:
             title: Titre
             author: Auteur
             updated_at: Date de modification
+            created_at: Date de création
             current_status: Etat courant
+            version: Version
+            version_name: Nom de la version
         sites:
             new: Nouveau site
             site_id: Id
@@ -108,6 +112,13 @@ open_orchestra_backoffice:
         preview: Prévisualiser
         version: Version
         new_version: Nouvelle version
+        manage_version: Gérer les versions
+        version_name: Nom de la version
+        validate_new_version: Valider
+        publish_modal:
+            title: Publier cette version
+            message: Voulez vous publier cette version, elle sera visible en front ?
+            save_old_published_version: Enregistrer une copie de l'ancienne version publiée
         message_online:
             title: La page est actuellement en ligne sur votre site.
             message: |

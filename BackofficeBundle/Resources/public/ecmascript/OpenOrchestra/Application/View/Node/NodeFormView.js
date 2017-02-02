@@ -7,6 +7,15 @@ import Redirections     from '../../Collection/Redirection/Redirections'
 class NodeFormView extends AbstractFormView
 {
     /**
+     * Pre initialize
+     * @param {Object} options
+     */
+    preinitialize(options) {
+        super.preinitialize(options);
+        this.events['change #oo_node_status'] = this._toggleCheckboxSaveOldPublishedVersion;
+    }
+
+    /**
      * Initialize
      * @param {Form}   form
      * @param {Array}  siteLanguages
@@ -39,9 +48,19 @@ class NodeFormView extends AbstractFormView
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
+
         this._renderRedirections();
 
         return this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    _renderForm() {
+        super._renderForm();
+        // hide checkbox oo_node_save_old_published_version by default
+        $('#oo_node_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
     }
 
     /**
@@ -55,6 +74,20 @@ class NodeFormView extends AbstractFormView
         }
     }
 
+    /**
+     * @private
+     */
+    _toggleCheckboxSaveOldPublishedVersion(event) {
+        let formGroupCheckbox = $('#oo_node_saveOldPublishedVersion', this.$el).closest('.form-group');
+        formGroupCheckbox.hide();
+        if ($('option:selected', $(event.currentTarget)).attr('data-published-state')) {
+            formGroupCheckbox.show();
+        }
+    }
+
+    /**
+     * @private
+     */
     _renderRedirections() {
         new Redirections().fetch({
             urlParameter: {

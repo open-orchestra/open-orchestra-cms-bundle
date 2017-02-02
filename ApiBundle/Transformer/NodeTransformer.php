@@ -11,6 +11,7 @@ use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\BaseBundle\Manager\EncryptionManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -28,6 +29,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $siteRepository;
     protected $statusRepository;
     protected $eventDispatcher;
+    protected $nodeRepository;
 
     /**
      * @param string                        $facadeClass
@@ -36,6 +38,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param NodeRepositoryInterface       $nodeRepository
      */
     public function __construct(
         $facadeClass,
@@ -43,13 +46,15 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        NodeRepositoryInterface $nodeRepository
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->statusRepository = $statusRepository;
         $this->eventDispatcher = $eventDispatcher;
+        $this->nodeRepository = $nodeRepository;
     }
 
     /**
@@ -104,14 +109,16 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->theme = $node->getTheme();
         $facade->themeSiteDefault = $node->hasDefaultSiteTheme();
         $facade->version = $node->getVersion();
+        $facade->versionName = $node->getVersionName();
         $facade->createdBy = $node->getCreatedBy();
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-
-        $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
-        $facade->addRight('can_edit', !$node->getStatus()->isBlockedEdition() && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
-
+        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $node) && !$node->getStatus()->isPublishedState());
+        if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
+            $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
+            $facade->addRight('can_edit', !$node->getStatus()->isBlockedEdition() && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
+        }
         return $facade;
     }
 
@@ -204,28 +211,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param NodeInterface $node
-     *
-     * @return FacadeInterface
-     */
-    public function transformVersion($node)
-    {
-        $facade = $this->newFacade();
-
-        $facade->id = $node->getId();
-        $facade->nodeId = $node->getNodeId();
-        $facade->name = $node->getName();
-        $facade->version = $node->getVersion();
-        $facade->createdBy = $node->getCreatedBy();
-        $facade->updatedBy = $node->getUpdatedBy();
-        $facade->createdAt = $node->getCreatedAt();
-        $facade->updatedAt = $node->getUpdatedAt();
-        $facade->status = $this->getTransformer('status')->transform($node->getStatus());
-
-        return $facade;
-    }
-
-    /**
      * @param FacadeInterface    $facade
      * @param NodeInterface|null $source
      *
@@ -245,6 +230,9 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             }
         }
 
+        if (null !== $facade->id) {
+            return $this->nodeRepository->find($facade->id);
+        }
 
         return $source;
     }

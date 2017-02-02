@@ -1662,7 +1662,7 @@ fieldset {
     line-height: 1em;
   }
   .radio-inline, .checkbox-inline { padding-left: 0; }
-  &.form-inline {
+  &.form-inline, & > .form-inline {
     .styled-select, .styled-select > select { width: auto; }
     .styled-select { display: inline-block; }
     .control-label { padding: 0 10px 0 0; }
@@ -1870,6 +1870,12 @@ fieldset {
     }
   }
 }
+/* ===================================================================
+ * Node version
+ * =================================================================*/
+.search-engine .node_version_name {
+  min-width: 500px;
+}
 
 /* ===================================================================
  * LOADER
@@ -2066,3 +2072,4 @@ fieldset {
 .multi-languages.nav-tabs > li > a img {
     float: left;
 }
+
