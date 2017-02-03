@@ -193,7 +193,7 @@ class Application
      * @private
      */
     _initRouting() {
-        let routingConfiguration = this._configuration.getParameter('routing');
+        let routingConfiguration = this.getContext().routing;
         fos.Router.setData({
             'base_url' : routingConfiguration.baseUrl,
             'scheme' : routingConfiguration.scheme,

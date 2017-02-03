@@ -29,11 +29,10 @@ class AdminController extends Controller
             $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
             $contextManager->setCurrentsite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage(), $site->getLanguages());
         }
-
-        $templateSetConfig = $this->getParameter('open_orchestra_backoffice.template_set');
+        $clientConfiguration = $this->get('open_orchestra_backoffice.manager.client_configuration');
 
         return $this->render('OpenOrchestraBackofficeBundle::layout.html.twig' , array(
-            'templateSetConfig' => $templateSetConfig
+            'clientConfiguration' => $clientConfiguration->getClientConfiguration()
         ));
     }
 }

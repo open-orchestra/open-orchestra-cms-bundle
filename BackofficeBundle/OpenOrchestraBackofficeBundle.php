@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle;
 
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ClientConfigurationCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RemoveTrashcanEntityCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\FieldToElasticaTypeCompilerPass;
@@ -37,5 +38,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new RemoveTrashcanEntityCompilerPass());
         $container->addCompilerPass(new FieldToElasticaTypeCompilerPass());
         $container->addCompilerPass(new TemplateCompilerPass());
+        $container->addCompilerPass(new ClientConfigurationCompilerPass());
     }
 }
