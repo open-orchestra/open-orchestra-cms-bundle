@@ -278,6 +278,7 @@ class ContentController extends BaseController
      */
     public function listVersionAction($contentId, $language)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         $contents = $this->get('open_orchestra_model.repository.content')->findNotDeletedSortByUpdatedAt($contentId, $language);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
