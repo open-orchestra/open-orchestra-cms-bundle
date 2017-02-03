@@ -675,7 +675,7 @@ class NodeController extends BaseController
     protected function findOneNode($nodeId, $language, $siteId, $version = null)
     {
         if (null !== $version) {
-            return $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
+            return $this->get('open_orchestra_model.repository.node')->findVersionNotDeleted($nodeId, $language, $siteId, $version);
         }
 
         return $this->get('open_orchestra_model.repository.node')->findInLastVersion($nodeId, $language, $siteId);

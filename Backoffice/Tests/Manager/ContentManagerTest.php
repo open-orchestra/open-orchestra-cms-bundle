@@ -123,6 +123,17 @@ class ContentManagerTest extends AbstractBaseTestCase
     }
 
     /**
+     * Test new version content with exception
+     */
+    public function testNewVersionContentWithException()
+    {
+        Phake::when($this->contentRepository)->findOneByLanguage(Phake::anyParameters())->thenReturn(null);
+        $this->expectException('\UnexpectedValueException');
+
+        $this->manager->newVersionContent($this->content, '');
+    }
+
+    /**
      * @param string $contentId
      *
      * @dataProvider provideContentId

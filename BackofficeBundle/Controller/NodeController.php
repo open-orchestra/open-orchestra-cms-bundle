@@ -35,7 +35,11 @@ class NodeController extends AbstractAdminController
     public function formAction(Request $request, $siteId, $nodeId, $language, $version)
     {
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->findVersion($nodeId, $language, $siteId, $version);
+        if (null === $version) {
+            $node = $nodeRepository->findInLastVersion($nodeId, $language, $siteId);
+        } else {
+            $node = $nodeRepository->findVersionNotDeleted($nodeId, $language, $siteId, $version);
+        }
         if (!$node instanceof NodeInterface) {
             throw new \UnexpectedValueException();
         }
@@ -62,7 +66,7 @@ class NodeController extends AbstractAdminController
                     $node->getLanguage(),
                     $node->getSiteId()
                 );
-                if ($oldPublishedVersion instanceof NodeInterface) {
+                if ($oldPublishedVersion instanceof NodeInterface && $oldPublishedVersion !== $node) {
                     $this->get('object_manager')->remove($oldPublishedVersion);
                 }
             }

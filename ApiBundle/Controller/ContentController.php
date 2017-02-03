@@ -169,16 +169,16 @@ class ContentController extends BaseController
             $format
         );
         $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
-        $nbrVersions = $this->get('open_orchestra_model.repository.content')->countNotDeletedByLanguage($contentId, $language);
-        if ($nbrVersions > count($contents)) {
-            $ids = array();
+        $versionsCount = $this->get('open_orchestra_model.repository.content')->countNotDeletedByLanguage($contentId, $language);
+        if ($versionsCount > count($contents)) {
+            $storageIds = array();
             foreach ($contents as $content) {
                 if ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$content->getStatus()->isPublishedState()) {
-                    $ids[] = $content->getId();
+                    $storageIds[] = $content->getId();
                     $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
                 }
             }
-            $this->get('open_orchestra_model.repository.content')->removeContentVersion($ids);
+            $this->get('open_orchestra_model.repository.content')->removeContentVersion($storageIds);
         }
 
         return array();

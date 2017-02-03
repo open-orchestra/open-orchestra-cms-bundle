@@ -112,7 +112,9 @@ class ContentManager
     public function newVersionContent(ContentInterface $originalContent, $versionName = '')
     {
         $lastContent = $this->contentRepository->findOneByLanguage($originalContent->getContentId(), $originalContent->getLanguage());
-
+        if (!$lastContent instanceof ContentInterface) {
+            throw new \UnexpectedValueException();
+        }
         $lastVersion = $lastContent->getVersion();
         $newContent = $this->cloneContent($originalContent);
         $newContent->setVersion($lastVersion + 1);

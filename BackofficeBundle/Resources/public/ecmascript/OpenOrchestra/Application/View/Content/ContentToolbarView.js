@@ -59,8 +59,7 @@ class ContentToolbarView extends OrchestraView
      */
     newVersionForm() {
         let versionName = this._name + '_' + (parseInt(this._version) + 1) + '_' + new Date().toLocaleString();
-        let template = this._renderTemplate('Content/newVersionForm', { versionName: versionName }
-        );
+        let template = this._renderTemplate('Content/newVersionForm', { versionName: versionName });
         $('.new-version-form-region', this.$el).html(template);
     }
 

@@ -70,7 +70,7 @@ class ContentController extends AbstractAdminController
                     $content->getLanguage(),
                     $content->getSiteId()
                 );
-                if ($oldPublishedVersion instanceof ContentInterface) {
+                if ($oldPublishedVersion instanceof ContentInterface && $oldPublishedVersion !== $content) {
                     $this->get('object_manager')->remove($oldPublishedVersion);
                 }
             }

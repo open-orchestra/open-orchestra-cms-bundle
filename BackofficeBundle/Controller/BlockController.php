@@ -107,7 +107,7 @@ class BlockController extends AbstractAdminController
 
         if ($form->isValid()) {
             $documentManager = $this->get('object_manager');
-            $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
+            $node = $this->get('open_orchestra_model.repository.node')->findVersionNotDeleted($nodeId, $language, $siteId, $version);
             if (!$node instanceof NodeInterface) {
                 throw new NodeNotFoundHttpException();
             }

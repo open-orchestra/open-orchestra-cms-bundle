@@ -227,7 +227,7 @@ class NodeManagerTest extends AbstractBaseTestCase
      */
     public function testInitializeNode($language, $siteId, NodeInterface $parentNode = null)
     {
-        Phake::when($this->nodeRepository)->findVersion(Phake::anyParameters())->thenReturn($parentNode);
+        Phake::when($this->nodeRepository)->findVersionNotDeleted(Phake::anyParameters())->thenReturn($parentNode);
         $node = $this->manager->initializeNode('fakeParentId', $language, $siteId);
 
         $this->assertInstanceOf($this->nodeClass, $node);
@@ -270,7 +270,7 @@ class NodeManagerTest extends AbstractBaseTestCase
      */
     public function testCreateRootNode($language, $siteId, NodeInterface $parentNode = null)
     {
-        Phake::when($this->nodeRepository)->findVersion(Phake::anyParameters())->thenReturn($parentNode);
+        Phake::when($this->nodeRepository)->findVersionNotDeleted(Phake::anyParameters())->thenReturn($parentNode);
         $node = $this->manager->createRootNode($siteId, $language, 'fakeName', 'fakePattern', 'fakeTemplate');
 
         $this->assertInstanceOf($this->nodeClass, $node);

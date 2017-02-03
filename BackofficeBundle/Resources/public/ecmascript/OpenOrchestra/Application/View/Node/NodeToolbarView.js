@@ -59,8 +59,7 @@ class NodeToolbarView extends OrchestraView
      */
     newVersionForm() {
         let versionName = this._node.get('name') + '_' + (parseInt(this._node.get('version')) + 1) + '_' + new Date().toLocaleString();
-        let template = this._renderTemplate('Node/newVersionForm', { versionName: versionName }
-        );
+        let template = this._renderTemplate('Node/newVersionForm', { versionName: versionName });
         $('.new-version-form-region', this.$el).html(template);
     }
 
