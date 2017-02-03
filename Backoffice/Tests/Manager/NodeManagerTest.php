@@ -20,11 +20,6 @@ class NodeManagerTest extends AbstractBaseTestCase
      */
     protected $manager;
 
-    /**
-     * @var VersionableSaverInterface
-     */
-    protected $versionableSaver;
-
     protected $node;
     protected $area;
     protected $block;
@@ -60,7 +55,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         $this->blockRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\BlockRepository');
-        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface');
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         $this->documentManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
@@ -83,7 +77,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
         $this->manager = new NodeManager(
-            $this->versionableSaver,
             $this->nodeRepository,
             $this->siteRepository,
             $this->statusRepository,
@@ -97,29 +90,22 @@ class NodeManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * test duplicateNode
+     * test create New Version Node
      */
-    public function testDuplicateNode()
+    public function testCreateNewVersionNode()
     {
-        $nodeId = 'fakeNodeId';
-        $siteId = 'fakeSiteId';
-        $language = 'fakeLanguage';
+        $versionName = 'fakeName';
         $version = 1;
 
         $lastNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($lastNode)->getVersion()->thenReturn($version);
-
-        Phake::when($this->nodeRepository)->findVersion(Phake::anyParameters())->thenReturn($this->node);
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($lastNode);
 
-        $newNode = $this->manager->duplicateNode($nodeId, $siteId, $language, $version);
+        $newNode = $this->manager->createNewVersionNode($this->node, $versionName);
 
         Phake::verify($newNode)->setVersion($version + 1);
-
-        Phake::verify($this->blockRepository)->getDocumentManager();
-        Phake::verify($this->versionableSaver)->saveDuplicated($newNode);
-        Phake::verify($this->nodeRepository)->findVersion($nodeId, $language, $siteId, $version);
-        Phake::verify($this->nodeRepository)->findInLastVersion($nodeId, $language, $siteId);
+        Phake::verify($newNode)->setStatus($this->status);
+        Phake::verify($newNode)->setVersionName($versionName);
     }
 
     /**

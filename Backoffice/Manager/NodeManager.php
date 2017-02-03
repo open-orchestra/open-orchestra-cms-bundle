@@ -222,7 +222,7 @@ class NodeManager
      */
     public function createRootNode($siteId, $language, $name, $routePattern, $template)
     {
-        $node = $this->initializeNode(NodeInterface::ROOT_PARENT_ID, $language, $siteId, $name);
+        $node = $this->initializeNode(NodeInterface::ROOT_PARENT_ID, $language, $siteId);
         $node->setTemplate($template);
         $node->setRoutePattern($routePattern);
         $node->setName($name);

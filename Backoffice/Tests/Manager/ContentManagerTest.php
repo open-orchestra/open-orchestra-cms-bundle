@@ -47,8 +47,7 @@ class ContentManagerTest extends AbstractBaseTestCase
 
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
 
-        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
+        $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
 
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($this->statusInitial);
@@ -68,7 +67,13 @@ class ContentManagerTest extends AbstractBaseTestCase
 
         $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Saver\VersionableSaver');
 
-        $this->manager = new ContentManager($this->contentTypeRepository, $this->statusRepository, $this->contextManager, $this->versionableSaver, $this->contentClass);
+        $this->manager = new ContentManager(
+            $this->contentRepository,
+            $this->statusRepository,
+            $this->contextManager,
+            $this->versionableSaver,
+            $this->contentClass
+        );
     }
 
     /**
@@ -79,35 +84,25 @@ class ContentManagerTest extends AbstractBaseTestCase
         $language = 'fr';
         $newContent = $this->manager->createNewLanguageContent($this->content, $language);
 
-        Phake::verify($newContent, Phake::times(1))->setVersion(1);
         Phake::verify($newContent)->setLanguage($language);
         Phake::verify($newContent)->setStatus($this->statusTranslationState);
     }
 
     /**
-     * @param int  $version
-     * @param int  $version
-     * @param bool $getVersion
+     * @param int  $versionName
+     * @param int  $lastVersion
+     * @param bool $expectedVersion
      *
      * @dataProvider provideVersionsAndExpected
      */
-    public function testNewVersionContent($version, $getVersion, $lastVersion, $expectedVersion)
+    public function testNewVersionContent($versionName, $lastVersion, $expectedVersion)
     {
-        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-
-        $contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($contentType)->isDefiningVersionable()->thenReturn($getVersion);
-
-        $contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        Phake::when($contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($contentType);
-
-        $manager = new ContentManager($contentTypeRepository, $this->statusRepository, $this->contextManager, $this->versionableSaver, $this->contentClass);
-
-        Phake::when($content)->getVersion()->thenReturn($version);
         $lastContent = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($lastContent)->getVersion()->thenReturn($lastVersion);
 
-        $newContent = $manager->newVersionContent($this->content, $lastContent);
+        Phake::when($this->contentRepository)->findOneByLanguage(Phake::anyParameters())->thenReturn($lastContent);
+
+        $newContent = $this->manager->newVersionContent($this->content, $versionName);
 
         Phake::verify($newContent)->setVersion($expectedVersion);
         Phake::verify($newContent)->setStatus($this->statusInitial);
@@ -121,10 +116,9 @@ class ContentManagerTest extends AbstractBaseTestCase
     public function provideVersionsAndExpected()
     {
         return array(
-            array(1, true, 1, 2),
-            array(5, true, 6, 7),
-            array(1, false, 1, 1),
-            array(5, false, 6, 1),
+            array('fake_version_name', 1, 2),
+            array('foo', 6, 7),
+            array('bar', 5, 6),
         );
     }
 

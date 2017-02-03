@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\NodeTransformer;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class NodeTransformerTest
@@ -22,6 +21,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
+    protected $nodeRepository;
     protected $eventDispatcher;
     protected $siteRepository;
     protected $transformer;
@@ -59,6 +59,8 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+
         $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\BlockTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
@@ -81,7 +83,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
             $this->statusRepository,
             $this->eventDispatcher,
             $this->authorizationChecker,
-            array()
+            $this->nodeRepository
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);
