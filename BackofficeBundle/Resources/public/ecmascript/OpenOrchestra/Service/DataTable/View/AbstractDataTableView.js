@@ -171,6 +171,8 @@ class AbstractDataTableView extends OrchestraView
     }
 
     /**
+     * @param {Object} settings
+     *
      * @private
      */
     _drawCallback(settings) {
