@@ -42,7 +42,7 @@ class StatusController extends BaseController
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.status');
         $collection = $repository->findForPaginate($configuration);
-        $recordsTotal = $repository->count();
+        $recordsTotal = $repository->countNotOutOfWorkflow();
         $recordsFiltered = $repository->countWithFilter($configuration);
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
         $facade = $collectionTransformer->transform($collection);
