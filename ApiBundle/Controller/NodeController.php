@@ -374,7 +374,7 @@ class NodeController extends BaseController
      * })
      * @return FacadeInterface
      */
-    public function listNodeWithBlockInArea($nodeId, $siteId, $areaId)
+    public function listNodeWithBlockInAreaAction($nodeId, $siteId, $areaId)
     {
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $nodes = $nodeRepository->findByNodeIdAndSiteIdWithBlocksInArea($nodeId, $siteId, $areaId);

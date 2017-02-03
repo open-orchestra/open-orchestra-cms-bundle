@@ -3,6 +3,7 @@
 namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -45,7 +46,7 @@ class StatusableChoiceStatusSubscriber implements EventSubscriberInterface
             $form->add('status', 'oo_status_choice', array_merge(array(
                 'embedded' => true,
                 'choices' => $this->getStatusChoices($data),
-                'choice_attr' => function($val, $key, $index) {
+                'choice_attr' => function(StatusInterface $val, $key, $index) {
                     if ($val->isPublishedState()) {
                         return array('data-published-state' => true);
                     }
