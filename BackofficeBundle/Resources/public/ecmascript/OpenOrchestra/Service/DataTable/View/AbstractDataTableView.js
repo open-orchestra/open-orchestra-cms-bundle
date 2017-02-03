@@ -137,6 +137,7 @@ class AbstractDataTableView extends OrchestraView
         }
         settings.language = this._getLanguage();
         settings.preDrawCallback = settings.preDrawCallback || this._preDrawCallback;
+        settings.drawCallback = $.proxy(settings.drawCallback, this) || $.proxy(this._drawCallback, this);
 
         return settings
     }
@@ -167,6 +168,14 @@ class AbstractDataTableView extends OrchestraView
         if (api.page.info().recordsDisplay <= api.page.info().length) {
             $('.content-pager', $(api.table().container())).hide();
         }
+    }
+
+    /**
+     * @param {Object} settings
+     *
+     * @private
+     */
+    _drawCallback(settings) {
     }
 
     /**
