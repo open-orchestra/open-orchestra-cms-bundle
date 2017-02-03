@@ -10,7 +10,6 @@ use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\Backoffice\Exception\UneditableException;
 
 /**
  * Class ContentController
@@ -20,15 +19,20 @@ class ContentController extends AbstractAdminController
     /**
      * @param Request $request
      * @param string  $contentId
+     * @param string  $language
+     * @param string  $version
      *
-     * @Config\Route("/content/form/{contentId}/{language}", name="open_orchestra_backoffice_content_form")
+     * @Config\Route(
+     *     "/content/form/{contentId}/{language}/{version}",
+     *      name="open_orchestra_backoffice_content_form",
+     *      defaults={"version": null},
+     * )
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function formAction(Request $request, $contentId, $language)
+    public function formAction(Request $request, $contentId, $language, $version)
     {
-        $version = $request->get('version');
         $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
         if (!$content instanceof ContentInterface) {
             throw new \UnexpectedValueException();
@@ -39,10 +43,10 @@ class ContentController extends AbstractAdminController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
-        $currentlyPublishedContents = $this->get('open_orchestra_model.repository.content')->findAllCurrentlyPublishedByContentId($contentId);
+        $publishedContents = $this->get('open_orchestra_model.repository.content')->findAllPublishedByContentId($contentId);
         $isUsed = false;
-        foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
-            $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+        foreach ($publishedContents as $publishedContent) {
+            $isUsed = $isUsed || $publishedContent->isUsed();
         }
         $form = $this->createForm('oo_content', $content, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
@@ -55,17 +59,43 @@ class ContentController extends AbstractAdminController
             'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
         ));
 
+        $status = $content->getStatus();
         $form->handleRequest($request);
-        $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
 
-        if ($this->handleForm($form, $message)) {
+        if ($form->isValid()) {
+            $saveOldPublishedVersion = $form->has('saveOldPublishedVersion') ? $form->get('saveOldPublishedVersion')->getData() : false;
+            if (true === $content->getStatus()->isPublishedState() && false === $saveOldPublishedVersion) {
+                $oldPublishedVersion = $this->get('open_orchestra_model.repository.content')->findOnePublished(
+                    $content->getContentId(),
+                    $content->getLanguage(),
+                    $content->getSiteId()
+                );
+                if ($oldPublishedVersion instanceof ContentInterface && $oldPublishedVersion !== $content) {
+                    $this->get('object_manager')->remove($oldPublishedVersion);
+                }
+            }
+            $this->get('object_manager')->flush();
             $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+
+            if ($status->getId() !== $content->getStatus()->getId()) {
+                $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, new ContentEvent($content, $status));
+            }
+
+            $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
+            $this->get('session')->getFlashBag()->add('success', $message);
+
         }
+
+        $code = Response::HTTP_OK;
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $code = Response::HTTP_UNPROCESSABLE_ENTITY;
+        }
+        $response = new Response('', $code, array('Content-type' => 'text/html; charset=utf-8', 'version' => $content->getVersion()));
 
         return $this->renderAdminForm(
             $form,
             array(),
-            null,
+            $response,
             $this->getFormTemplate($content->getContentType()
         ));
     }
@@ -106,6 +136,7 @@ class ContentController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $content = $contentManager->setVersionName($content);
             $contentsEvent = array();
             $documentManager = $this->get('object_manager');
             $documentManager->persist($content);
@@ -129,7 +160,7 @@ class ContentController extends AbstractAdminController
             $response = new Response(
                 '',
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/plain; charset=utf-8', 'contentId' => $content->getContentId(), 'name' => $content->getName())
+                array('Content-type' => 'text/plain; charset=utf-8', 'contentId' => $content->getContentId(), 'version' => $content->getVersion())
             );
 
             return $response;

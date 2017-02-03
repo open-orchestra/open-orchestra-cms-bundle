@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\NewVersionNodeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -23,8 +22,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\AccessLanguageForNodeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
@@ -56,7 +53,8 @@ class NodeController extends BaseController
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
      * })
      *
      * @throws NodeNotFoundHttpException
@@ -300,29 +298,36 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param Request      $request
-     * @param string       $nodeId
-     * @param string|null  $version
+     * @param Request $request
+     * @param string  $nodeId
+     * @param string  $language
+     * @param string  $originalVersion
      *
-     * @Config\Route("/{nodeId}/new-version/{version}", name="open_orchestra_api_node_new_version", defaults={"version": null})
+     * @Config\Route("/new-version/{nodeId}/{language}/{originalVersion}", name="open_orchestra_api_node_new_version")
      * @Config\Method({"POST"})
      *
      * @return Response
      *
-     * @throws NewVersionNodeNotGrantedHttpException
+     * @throws NodeNotFoundHttpException
      */
-    public function newVersionAction(Request $request, $nodeId, $version = null)
+    public function newVersionAction(Request $request, $nodeId, $language, $originalVersion)
     {
-        $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
-        $newNode = $nodeManager->duplicateNode($nodeId, $siteId, $language, $version, false);
-        try{
-            $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $newNode);
-        } catch(AccessDeniedException $exception) {
-            throw new NewVersionNodeNotGrantedHttpException();
+        $originalNodeVersion = $this->findOneNode($nodeId, $language, $siteId, $originalVersion);
+        if (!$originalNodeVersion instanceof NodeInterface) {
+            throw new NodeNotFoundHttpException();
         }
-        $nodeManager->saveDuplicatedNode($newNode);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $originalNodeVersion);
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\NodeFacade',
+            $request->get('_format', 'json')
+        );
+        $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
+        $newNode = $nodeManager->createNewVersionNode($originalNodeVersion, $facade->versionName);
+
+        $this->get('open_orchestra_model.saver.versionnable_saver')->saveDuplicated($newNode);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return array();
@@ -369,7 +374,7 @@ class NodeController extends BaseController
      * })
      * @return FacadeInterface
      */
-    public function listNodeWithBlockInArea($nodeId, $siteId, $areaId)
+    public function listNodeWithBlockInAreaAction($nodeId, $siteId, $areaId)
     {
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $nodes = $nodeRepository->findByNodeIdAndSiteIdWithBlocksInArea($nodeId, $siteId, $areaId);
@@ -403,36 +408,48 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param Request $request
      * @param string  $nodeId
+     * @param string  $language
      *
-     * @Config\Route("/{nodeId}/list-version", name="open_orchestra_api_node_list_version")
+     * @Config\Route("/list-version/{nodeId}/{language}", name="open_orchestra_api_node_list_version")
      * @Config\Method({"GET"})
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION
+     * })
      * @return Response
      */
-    public function listVersionAction(Request $request, $nodeId)
+    public function listVersionAction($nodeId, $language)
     {
-        $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
-        $node = !empty($nodes) ? $nodes[0] : null;
-        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findNotDeletedSortByUpdatedAt($nodeId, $language, $siteId);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($nodes);
+        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
     }
 
     /**
      * @param Request $request
+     * @param boolean $saveOldPublishedVersion
      *
-     * @Config\Route("/update-status", name="open_orchestra_api_node_update_status")
+     * @Config\Route(
+     *     "/update-status",
+     *     name="open_orchestra_api_node_update_status",
+     *     defaults={"saveOldPublishedVersion": false},
+     * )
+     * @Config\Route(
+     *     "/update-status-with-save-published-version",
+     *     name="open_orchestra_api_node_update_status_with_save_published",
+     *     defaults={"saveOldPublishedVersion": true},
+     * )
      * @Config\Method({"PUT"})
      *
      * @return Response
      * @throws NodeNotFoundHttpException
      * @throws StatusChangeNotGrantedHttpException
      */
-    public function changeStatusAction(Request $request)
+    public function changeStatusAction(Request $request, $saveOldPublishedVersion)
     {
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
@@ -440,7 +457,8 @@ class NodeController extends BaseController
             $request->get('_format', 'json')
         );
 
-        $node = $this->get('open_orchestra_model.repository.node')->find($facade->id);
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+        $node = $nodeRepository->find($facade->id);
         if (!$node instanceof NodeInterface) {
             throw new NodeNotFoundHttpException();
         }
@@ -453,9 +471,21 @@ class NodeController extends BaseController
             if (!$this->isGranted($status, $nodeSource)) {
                 throw new StatusChangeNotGrantedHttpException();
             }
+
+            if (true === $status->isPublishedState() && false === $saveOldPublishedVersion) {
+                $oldPublishedVersion = $nodeRepository->findOnePublished(
+                    $node->getNodeId(),
+                    $node->getLanguage(),
+                    $node->getSiteId()
+                );
+                if ($oldPublishedVersion instanceof NodeInterface) {
+                    $this->get('object_manager')->remove($oldPublishedVersion);
+                }
+            }
+
+            $this->get('object_manager')->flush();
             $event = new NodeEvent($node, $nodeSource->getStatus());
             $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, $event);
-            $this->get('object_manager')->flush();
         }
 
         return array();
@@ -523,8 +553,9 @@ class NodeController extends BaseController
      * @Config\Method({"GET"})
      * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
-     *  @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
      * })
      *
      * @return FacadeInterface
@@ -550,6 +581,46 @@ class NodeController extends BaseController
         $facade->recordsFiltered = $recordsFiltered;
 
         return $facade;
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     * @param string  $language
+     *
+     * @Config\Route("/delete-multiple-version/{nodeId}/{language}", name="open_orchestra_api_node_delete_multiple_versions")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteNodeVersionsAction(Request $request, $nodeId, $language)
+    {
+        $format = $request->get('_format', 'json');
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.node_collection.class'),
+            $format
+        );
+        $nodes = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->reverseTransform($facade);
+
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $versionsCount = $nodeRepository->countNotDeletedVersions($nodeId, $language, $siteId);
+            if ($versionsCount > count($nodes)) {
+            $nodeIds = array();
+            foreach ($nodes as $node) {
+                if ($this->isGranted(ContributionActionInterface::DELETE, $node) &&
+                    !$node->getStatus()->isPublishedState()
+                ) {
+                    $nodeIds[] = $node->getId();
+                    $this->dispatchEvent(NodeEvents::NODE_DELETE_VERSION, new NodeEvent($node));
+                }
+            }
+            $nodeRepository->removeNodeVersions($nodeIds);
+        }
+
+        return array();
     }
 
     /**
@@ -602,8 +673,10 @@ class NodeController extends BaseController
      */
     protected function findOneNode($nodeId, $language, $siteId, $version = null)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
+        if (null !== $version) {
+            return $this->get('open_orchestra_model.repository.node')->findVersionNotDeleted($nodeId, $language, $siteId, $version);
+        }
 
-        return $node;
+        return $this->get('open_orchestra_model.repository.node')->findInLastVersion($nodeId, $language, $siteId);
     }
 }

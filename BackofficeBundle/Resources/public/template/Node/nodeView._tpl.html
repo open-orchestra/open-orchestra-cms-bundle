@@ -27,15 +27,15 @@
 <h1> <%= Translator.trans('open_orchestra_backoffice.node.move') %></h1>
 <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
 <div class="node-template movement <%= (node.get('rights').can_edit) ? '' : 'node-disabled' %>">
-    <form class="form-inline search-engine node-action-toolbar">
-    </form>
-    <% if (true === node.get('currently_published')) {%>
-        <div class="alert alert-success" role="alert">
+    <div class="node-action-toolbar">
+    </div>
+    <% if (true === node.get('status').get('published_state')) {%>
+        <div class="alert alert-success alert-published-state" role="alert">
             <div class="heading"><%= Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
             <p>
                 <%= (Translator.trans('open_orchestra_backoffice.node.message_online.message').replace(/\\n/g, '<br>')) %>
             </p>
-            <a href="" class="btn btn-info"><%= Translator.trans('open_orchestra_backoffice.node.new_version') %></a>
+            <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
         </div>
     <% }; %>
     <div class="well">

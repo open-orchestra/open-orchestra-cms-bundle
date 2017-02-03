@@ -68,6 +68,8 @@ class Node extends OrchestraModel
         switch (method) {
             case "read":
                 return Routing.generate('open_orchestra_api_node_show', urlParameter);
+            case "create":
+                return Routing.generate('open_orchestra_api_node_new_version', urlParameter);
             case "update":
                 return this._getSyncUpdateUrl(options);
             case "patch":
@@ -85,6 +87,8 @@ class Node extends OrchestraModel
         let apiContext = options.apiContext || null;
         let urlParameter = options.urlParameter || {};
         switch (apiContext) {
+            case "update_status_with_save_published":
+                return Routing.generate('open_orchestra_api_node_update_status_with_save_published');
             case "update_status":
                 return Routing.generate('open_orchestra_api_node_update_status');
             case "update_position_block":

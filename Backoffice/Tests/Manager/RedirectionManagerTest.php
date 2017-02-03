@@ -87,7 +87,7 @@ class RedirectionManagerTest extends AbstractBaseTestCase
             $this->nodeSource,
             $nodeCopy
         ));
-        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->nodeRepository)->findOnePublished(Phake::anyParameters())->thenReturn(null);
 
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');

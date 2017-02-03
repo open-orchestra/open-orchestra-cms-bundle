@@ -29,8 +29,42 @@ class Contents extends DataTableCollection
         let urlParameter = options.urlParameter || {};
         switch (method) {
             case "read":
-                return Routing.generate('open_orchestra_api_content_list', urlParameter);
+                return this._getSyncReadUrl(options, urlParameter);
             case "delete":
+                return this._getSyncDeleteUrl(options, urlParameter);
+        }
+    }
+
+    /**
+     * @param {Object} options
+     * @param {Object} urlParameter
+     *
+     * @returns {string}
+     * @private
+     */
+    _getSyncReadUrl(options, urlParameter) {
+        let apiContext = options.apiContext || null;
+        switch (apiContext) {
+            case "list":
+                return Routing.generate('open_orchestra_api_content_list', urlParameter);
+            case "list-version":
+                return Routing.generate('open_orchestra_api_content_list_version', urlParameter);
+        }
+    }
+
+    /**
+     * @param {Object} options
+     * @param {Object} urlParameter
+     *
+     * @returns {string}
+     * @private
+     */
+    _getSyncDeleteUrl(options, urlParameter) {
+        let apiContext = options.apiContext || null;
+        switch (apiContext) {
+            case "delete-multiple-version":
+                return Routing.generate('open_orchestra_api_content_delete_multiple_versions', urlParameter);
+            default:
                 return Routing.generate('open_orchestra_api_content_delete_multiple');
         }
     }

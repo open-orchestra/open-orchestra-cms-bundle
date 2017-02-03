@@ -94,14 +94,14 @@ class NodeFacade extends DeletedFacade
     public $version;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $versionName;
+
+    /**
      * @Serializer\Type("integer")
      */
     public $order;
-
-    /**
-     * @Serializer\Type("boolean")
-     */
-    public $currentlyPublished;
 
     /**
      * @Serializer\Type("array<string,OpenOrchestra\ApiBundle\Facade\AreaFacade>")

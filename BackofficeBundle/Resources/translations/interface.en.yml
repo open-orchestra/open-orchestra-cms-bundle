@@ -13,6 +13,7 @@ open_orchestra_backoffice:
     confirm_modal:
         yes: Yes
         no: No
+        cancel: Cancel
     confirm_remove:
         title: Remove the selected elements ?
         message: The removal will be final
@@ -83,6 +84,10 @@ open_orchestra_backoffice:
             updated_by: Author of the update
             list: List
             add: Add
+        versionable:
+            version_name: Version name
+            status_label: Workflow state
+            created_at: Created at
         redirections:
             site_name    : Site name
             route_pattern: Route pattern
@@ -97,6 +102,13 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: No element to display
+    versionable:
+        version: Version
+        new_version: New version
+        manage_version: Manage versions
+        version_name: Version name
+        validate_new_version: Validate
+        success_remove: Versions removed with success
     node:
         title: Pages
         parameterize: Parameterize
@@ -106,8 +118,10 @@ open_orchestra_backoffice:
         edit: Edit
         redirections: Redirections
         preview: Preview
-        version: Version
-        new_version: New version
+        publish_modal:
+            title: Published this version
+            message: Do you want publish cette version, it will be visible in front ?
+            save_old_published_version: Save a copy of old published version
         message_online:
             title: The node is actually online.
             message: |

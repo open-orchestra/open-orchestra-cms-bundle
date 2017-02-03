@@ -45,7 +45,7 @@ services:
             - '@open_orchestra_model.repository.status'
             - '@event_dispatcher'
             - '@security.authorization_checker'
-            - '%open_orchestra_backoffice.template_set%'
+            - '@open_orchestra_model.repository.node'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 

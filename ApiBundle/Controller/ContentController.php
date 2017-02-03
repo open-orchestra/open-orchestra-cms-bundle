@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
@@ -150,6 +151,40 @@ class ContentController extends BaseController
     }
 
     /**
+     * @param Request $request
+     * @param string  $contentId
+     * @param string  $language
+     *
+     * @Config\Route("/delete-multiple-version/{contentId}/{language}", name="open_orchestra_api_content_delete_multiple_versions")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteContentVersionsAction(Request $request, $contentId, $language)
+    {
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.content_collection.class'),
+            $format
+        );
+        $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
+        $versionsCount = $this->get('open_orchestra_model.repository.content')->countNotDeletedByLanguage($contentId, $language);
+        if ($versionsCount > count($contents)) {
+            $storageIds = array();
+            foreach ($contents as $content) {
+                if ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$content->getStatus()->isPublishedState()) {
+                    $storageIds[] = $content->getId();
+                    $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
+                }
+            }
+            $this->get('open_orchestra_model.repository.content')->removeContentVersion($storageIds);
+        }
+
+        return array();
+    }
+
+    /**
      * @param string $contentId
      *
      * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
@@ -199,36 +234,52 @@ class ContentController extends BaseController
     /**
      * @param Request $request
      * @param string  $contentId
+     * @param string  $language
+     * @param string  $originalVersion
      *
-     * @Config\Route("/{contentId}/new-version", name="open_orchestra_api_content_new_version")
+     * @Config\Route("/new-version/{contentId}/{language}/{originalVersion}", name="open_orchestra_api_content_new_version")
      * @Config\Method({"POST"})
      *
      * @return Response
+     * @throws ContentNotFoundHttpException
      */
-    public function newVersionAction(Request $request, $contentId)
+    public function newVersionAction(Request $request, $contentId, $language, $originalVersion)
     {
         /** @var ContentInterface $content */
-        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
-        $lastContent = $this->findOneContent($contentId, $request->get('language'));
-        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content, $lastContent);
+        $content = $this->findOneContent($contentId, $language, $originalVersion);
+        if (!$content instanceof ContentInterface) {
+            throw new ContentNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\ContentFacade',
+            $request->get('_format', 'json')
+        );
+        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content, $facade->versionName);
+
+        $this->get('open_orchestra_model.saver.versionnable_saver')->saveDuplicated($newContent);
         $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
 
         return array();
     }
 
     /**
-     * @param Request $request
      * @param string  $contentId
+     * @param string  $language
      *
-     * @Config\Route("/{contentId}/list-version", name="open_orchestra_api_content_list_version")
+     * @Config\Route("/list-version/{contentId}/{language}", name="open_orchestra_api_content_list_version")
      * @Config\Method({"GET"})
-     *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION
+     * })
      * @return Response
      */
-    public function listVersionAction(Request $request, $contentId)
+    public function listVersionAction($contentId, $language)
     {
-        $contents = $this->get('open_orchestra_model.repository.content')->findByLanguage($contentId, $request->get('language'));
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
+        $contents = $this->get('open_orchestra_model.repository.content')->findNotDeletedSortByUpdatedAt($contentId, $language);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
     }
@@ -255,10 +306,10 @@ class ContentController extends BaseController
      */
     protected function isContentIdUsed($contentId)
     {
-        $currentlyPublishedContents = $this->get('open_orchestra_model.repository.content')->findAllCurrentlyPublishedByContentId($contentId);
+        $publishedContents = $this->get('open_orchestra_model.repository.content')->findAllPublishedByContentId($contentId);
         $isUsed = false;
-        foreach ($currentlyPublishedContents as $currentlyPublishedContent) {
-            $isUsed = $isUsed || $currentlyPublishedContent->isUsed();
+        foreach ($publishedContents as $publishedContent) {
+            $isUsed = $isUsed || $publishedContent->isUsed();
         }
 
         return $isUsed;

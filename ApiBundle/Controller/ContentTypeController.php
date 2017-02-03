@@ -37,6 +37,7 @@ class ContentTypeController extends BaseController
      */
     public function showAction($contentTypeId)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, ContentTypeInterface::ENTITY_TYPE);
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_type')->transform($contentType);
@@ -108,13 +109,11 @@ class ContentTypeController extends BaseController
     }
 
     /**
-     * @param Request $request
-     *
      * @Config\Route("/content/content-type-list", name="open_orchestra_api_content_type_list_for_content")
      * @Config\Method({"GET"})
      * @return FacadeInterface
      */
-    public function listForContentAction(Request $request)
+    public function listForContentAction()
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, ContentTypeInterface::ENTITY_TYPE);
         $repository = $this->get('open_orchestra_model.repository.content_type');

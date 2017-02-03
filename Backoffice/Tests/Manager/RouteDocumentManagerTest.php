@@ -89,7 +89,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         $node = $this->generateNode($language, $id, $pattern, $parentId, $nodeId);
         $children = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($children)->getNodeId()->thenReturn($childrenId);
-        Phake::when($this->nodeRepository)->findByPathCurrentlyPublishedAndLanguage($node->getPath(), $this->siteId, $language)->thenReturn(array($node, $children));
+        Phake::when($this->nodeRepository)->findPublishedByPathAndLanguage($node->getPath(), $this->siteId, $language)->thenReturn(array($node, $children));
 
         $routeDocuments = $this->manager->createForNode($node);
 
@@ -110,7 +110,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
     {
         $nodeId = 'nodeId';
         $node = $this->generateNode($language, $id, $pattern, $parentId, $nodeId);
-        Phake::when($this->nodeRepository)->findLastVersionByTypeCurrentlyPublished(Phake::anyParameters())->thenReturn(array($node));
+        Phake::when($this->nodeRepository)->findPublishedByType(Phake::anyParameters())->thenReturn(array($node));
         Phake::when($this->redirectionRepository)->findBySiteId(Phake::anyParameters())->thenReturn(array());
 
         $routeDocuments = $this->manager->createForSite($this->site);
@@ -170,14 +170,14 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         Phake::when($redirection)->getRoutePattern()->thenReturn($pattern);
         Phake::when($redirection)->getLocale()->thenReturn($locale);
 
-        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn($node);
-        Phake::when($this->nodeRepository)->findLastVersionByTypeCurrentlyPublished(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->nodeRepository)->findOnePublished(Phake::anyParameters())->thenReturn($node);
+        Phake::when($this->nodeRepository)->findPublishedByType(Phake::anyParameters())->thenReturn(array());
         Phake::when($this->redirectionRepository)->findBySiteId(Phake::anyParameters())->thenReturn(array($redirection));
 
         $routeDocuments = $this->manager->createForSite($this->site);
 
         $this->verifyRedirectionRoutes($routeDocuments, $locale, $id, $aliasIds, $mongoNodeId, $permanent);
-        Phake::verify($this->nodeRepository)->findOneCurrentlyPublished($nodeId, $locale, $siteId);
+        Phake::verify($this->nodeRepository)->findOnePublished($nodeId, $locale, $siteId);
     }
 
 
@@ -188,7 +188,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
-        Phake::when($this->nodeRepository)->findByPathCurrentlyPublishedAndLanguage(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->nodeRepository)->findPublishedByPathAndLanguage(Phake::anyParameters())->thenReturn(array());
 
         $routes = $this->manager->createForNode($node);
 
@@ -250,13 +250,13 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         Phake::when($redirection)->getRoutePattern()->thenReturn($pattern);
         Phake::when($redirection)->getLocale()->thenReturn($locale);
 
-        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn($node);
+        Phake::when($this->nodeRepository)->findOnePublished(Phake::anyParameters())->thenReturn($node);
 
         $routeDocuments = $this->manager->createOrUpdateForRedirection($redirection);
 
         $this->verifyRedirectionRoutes($routeDocuments, $locale, $id, $aliasIds, $mongoNodeId, $permanent);
         Phake::verify($this->siteRepository)->findOneBySiteId($siteId);
-        Phake::verify($this->nodeRepository)->findOneCurrentlyPublished($nodeId, $locale, $siteId);
+        Phake::verify($this->nodeRepository)->findOnePublished($nodeId, $locale, $siteId);
     }
 
     /**
@@ -303,7 +303,7 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
             ), $route->getDefaults());
         }
         Phake::verify($this->siteRepository)->findOneBySiteId($this->siteId);
-        Phake::verify($this->nodeRepository, Phake::never())->findOneCurrentlyPublished(Phake::anyParameters());
+        Phake::verify($this->nodeRepository, Phake::never())->findOnePublished(Phake::anyParameters());
 
     }
 
@@ -365,13 +365,13 @@ class RouteDocumentManagerTest extends AbstractBaseTestCase
         Phake::when($node)->getParentId()->thenReturn($parentId);
 
         Phake::when($this->nodeRepository)
-            ->findOneCurrentlyPublished($nodeId, $language, $this->siteId)
+            ->findOnePublished($nodeId, $language, $this->siteId)
             ->thenReturn($node);
 
         $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getRoutePattern()->thenReturn('/bar');
         Phake::when($this->nodeRepository)
-            ->findOneCurrentlyPublished($parentId, $language, $this->siteId)
+            ->findOnePublished($parentId, $language, $this->siteId)
             ->thenReturn($parent);
 
         return $node;

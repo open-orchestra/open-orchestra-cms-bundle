@@ -31,7 +31,7 @@ class AreaController extends BaseController
      */
     public function showAreaNodeAction($areaId, $nodeId, $language, $version, $siteId)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
+        $node = $this->get('open_orchestra_model.repository.node')->findVersionNotDeleted($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         $area = $this->get('open_orchestra_model.repository.node')->findAreaInNodeByAreaId($node, $areaId);

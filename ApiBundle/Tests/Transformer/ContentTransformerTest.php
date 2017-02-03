@@ -59,7 +59,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\ContentRepository');
         Phake::when($this->contentRepository)->find(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
-        Phake::when($this->contentRepository)->findAllCurrentlyPublishedByContentId(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->contentRepository)->findAllPublishedByContentId(Phake::anyParameters())->thenReturn(array());
         Phake::when($this->contentRepository)->findOneByContentId(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
@@ -76,6 +76,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
     }
 
     /**
+     * @param string   $id
      * @param string   $contentId
      * @param string   $contentType
      * @param string   $name
@@ -85,12 +86,12 @@ class ContentTransformerTest extends AbstractBaseTestCase
      * @param DateTime $updateDate
      * @param bool     $deleted
      * @param bool     $linkedToSite
-     * @param bool     $getVersion
      *
      * @dataProvider provideContentData
      */
     public function testTransform(
         $id,
+        $contentId,
         $contentType,
         $name,
         $version,
@@ -103,7 +104,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
-        Phake::when($content)->getContentId()->thenReturn($id);
+        Phake::when($content)->getId()->thenReturn($id);
+        Phake::when($content)->getContentId()->thenReturn($contentId);
         Phake::when($content)->getContentType()->thenReturn($contentType);
         Phake::when($content)->getName()->thenReturn($name);
         Phake::when($content)->getVersion()->thenReturn($version);
@@ -120,6 +122,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $facade = $this->contentTransformer->transform($content);
 
         $this->assertSame($id, $facade->id);
+        $this->assertSame($contentId, $facade->contentId);
         $this->assertSame($name, $facade->name);
         $this->assertSame($version, $facade->version);
         $this->assertSame($language, $facade->language);
@@ -129,7 +132,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertSame($linkedToSite, $facade->linkedToSite);
         $this->assertSame($facade->status->label, $facade->statusLabel);
 
-        Phake::verify($content, Phake::times(2))->getStatus();
+        Phake::verify($content, Phake::times(3))->getStatus();
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
 
@@ -145,8 +148,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $date2 = new DateTime();
 
         return array(
-            array('foo', 'bar', 'baz', 1, 'fr', $date1, $date2, true, false),
-            array('bar', 'baz', 'foo', 2, 'en', $date2, $date1, false, true),
+            array('foo', 'content_id', 'bar', 'baz', 1, 'fr', $date1, $date2, true, false),
+            array('bar', 'content_id2', 'baz', 'foo', 2, 'en', $date2, $date1, false, true),
         );
     }
 
@@ -155,7 +158,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
      */
     public function testExceptionTransform()
     {
-        $this->setExpectedException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
+        $this->expectException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->contentTransformer->transform(Phake::mock('stdClass'));
     }
 
@@ -169,8 +172,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $result = $this->contentTransformer->reverseTransform($facade);
 
-        Phake::verify($this->contentRepository)->findOneByContentId('fakeId');
-        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $result);
+        Phake::verify($this->contentRepository)->findById('fakeId');
+        $this->assertNull($result);
     }
 
     /**

@@ -32,6 +32,8 @@ class Nodes extends DataTableCollection
                 return this._getSyncReadUrl(options, urlParameter);
             case "update":
                 return Routing.generate('open_orchestra_api_node_update_children_order', urlParameter);
+            case "delete":
+                return Routing.generate('open_orchestra_api_node_delete_multiple_versions', urlParameter);
         }
     }
 
@@ -47,6 +49,8 @@ class Nodes extends DataTableCollection
         switch (apiContext) {
             case "list":
                 return Routing.generate('open_orchestra_api_node_list', urlParameter);
+            case "list-version":
+                return Routing.generate('open_orchestra_api_node_list_version', urlParameter);
             case "list-with-block-in-area":
                 return Routing.generate('open_orchestra_api_node_list_with_block_in_area', urlParameter);
             case "usage-block":

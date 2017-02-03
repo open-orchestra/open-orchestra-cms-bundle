@@ -25,6 +25,7 @@ class GroupController extends BaseController
 {
     /**
      * @param Request $request
+     * @param boolean $withCount
      *
      * @Config\Route("/list", name="open_orchestra_api_group_list", defaults={"withCount" = true})
      * @Config\Route("/user/list", name="open_orchestra_api_group_user_list", defaults={"withCount" = false})
@@ -117,8 +118,6 @@ class GroupController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
-     *
-     * @throws AccessDeniedException
      */
     public function duplicateAction(Request $request)
     {

@@ -13,6 +13,7 @@ open_orchestra_backoffice:
     confirm_modal:
         yes: Oui
         no: Non
+        cancel: Annuler
     confirm_remove:
         title: Supprimer les élements selectionner ?
         message: La suppression sera définitif
@@ -57,6 +58,7 @@ open_orchestra_backoffice:
             author: Auteur
             updated_at: Date de modification
             current_status: Etat courant
+            version: Version
         sites:
             new: Nouveau site
             site_id: Id
@@ -83,6 +85,10 @@ open_orchestra_backoffice:
             updated_by: Auteur de la mise à jour
             list: Lister
             add: Ajouter
+        versionable:
+            version_name: Nom de la version
+            status_label: Etat workflow
+            created_at: Date de création
         redirections:
             site_name    : Nom du site
             route_pattern: Pattern de route
@@ -97,6 +103,13 @@ open_orchestra_backoffice:
         widget:
             list:
               no_entities: Aucun élément à afficher
+    versionable:
+        version: Version
+        new_version: Nouvelle version
+        manage_version: Gérer les versions
+        version_name: Nom de la version
+        validate_new_version: Valider
+        success_remove: Versions supprimées avec succès
     node:
         title: Pages
         parameterize: Paramétrer
@@ -106,8 +119,10 @@ open_orchestra_backoffice:
         edit: Modifier
         redirections: Redirections
         preview: Prévisualiser
-        version: Version
-        new_version: Nouvelle version
+        publish_modal:
+            title: Publier cette version
+            message: Voulez vous publier cette version, elle sera visible en front ?
+            save_old_published_version: Enregistrer une copie de l'ancienne version publiée
         message_online:
             title: La page est actuellement en ligne sur votre site.
             message: |

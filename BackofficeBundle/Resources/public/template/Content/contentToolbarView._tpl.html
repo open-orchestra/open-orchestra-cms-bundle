@@ -1,0 +1,21 @@
+<div class="form-inline">
+    <div class="form-group">
+        <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
+        <div class="styled-select">
+            <select class="form-control" id="select-version">
+                <% _.each(contentVersions, function(contentVersion, key) { %>
+                <option value="<%= contentVersion.get('version') %>" <% if(contentVersion.get('version') == version) {%> selected <% } %> >
+                    <%= contentVersion.get('version_name') %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-info btn-manage-version"><%= Translator.trans('open_orchestra_backoffice.versionable.manage_version') %></button>
+    </div>
+</div>
+<div class="new-version-form-region"></div>

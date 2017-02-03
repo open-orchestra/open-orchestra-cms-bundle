@@ -13,7 +13,7 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 class StatusableChoiceStatusSubscriberTest extends AbstractBaseTestCase
 {
     /**
-     * @var StatusableThemeSelectionSubscriber
+     * @var StatusableChoiceStatusSubscriber
      */
     protected $subscriber;
 
@@ -83,13 +83,7 @@ class StatusableChoiceStatusSubscriberTest extends AbstractBaseTestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->form)->add('status', 'oo_status_choice', array(
-                'embedded' => true,
-                'label' => 'open_orchestra_backoffice.form.node.status',
-                'group_id' => 'properties',
-                'sub_group_id' => 'publication',
-                'choices' => $expectedStatus
-        ));
+        Phake::verify($this->form, Phake::times(2))->add(Phake::anyParameters());
     }
 
     /**

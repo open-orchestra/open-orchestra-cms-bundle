@@ -66,7 +66,6 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param RedirectionInterface|null $source
      *
      * @return mixed
-     * @throws StatusChangeNotGrantedHttpException
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {

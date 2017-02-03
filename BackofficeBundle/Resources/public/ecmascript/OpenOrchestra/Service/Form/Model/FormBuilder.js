@@ -28,7 +28,7 @@ class FormBuilder
         done = done || FormBuilder._successGetForm;
         let promise = Backbone.ajax({method: 'GET', url: url, data: data});
             promise.fail(error);
-            promise.done((data) => done(data, callbackCreate));
+            promise.done((data, textStatus, jqXHR)  => done(data, textStatus, jqXHR, callbackCreate));
     }
 
     /**
@@ -42,13 +42,15 @@ class FormBuilder
 
     /**
      * @param {string}   data
+     * @param {string}   textStatus
+     * @param {Object}   jqXHR
      * @param {Function} callbackCreate
      * @private
      */
-    static _successGetForm(data, callbackCreate) {
+    static _successGetForm(data, textStatus, jqXHR, callbackCreate) {
         let form = FormBuilder.createForm(data);
 
-        callbackCreate(form);
+        callbackCreate(form, jqXHR);
     }
 }
 

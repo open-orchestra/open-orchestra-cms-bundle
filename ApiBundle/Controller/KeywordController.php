@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\KeywordNotDeletableException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\KeywordEvent;
 use OpenOrchestra\ModelInterface\KeywordEvents;

@@ -55,7 +55,7 @@ class RouteDocumentManager
      */
     public function createForSite(SiteInterface $site)
     {
-        $nodes = $this->nodeRepository->findLastVersionByTypeCurrentlyPublished($site->getSiteId());
+        $nodes = $this->nodeRepository->findPublishedByType($site->getSiteId());
         $listRedirection = $this->redirectionRepository->findBySiteId($site->getSiteId());
 
         $routes = array();
@@ -135,7 +135,7 @@ class RouteDocumentManager
             return $suffix;
         }
 
-        $parent = $this->nodeRepository->findOneCurrentlyPublished($parentId, $language, $siteId);
+        $parent = $this->nodeRepository->findOnePublished($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {
             return $this->suppressDoubleSlashes($this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language, $siteId));
@@ -175,7 +175,7 @@ class RouteDocumentManager
             $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
         }
 
-        return $all ? $this->nodeRepository->findByIncludedPathSiteIdAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage()) : $this->nodeRepository->findByPathCurrentlyPublishedAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage());
+        return $all ? $this->nodeRepository->findByIncludedPathSiteIdAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage()) : $this->nodeRepository->findPublishedByPathAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage());
 
     }
 
@@ -191,7 +191,7 @@ class RouteDocumentManager
             return null;
         }
 
-        $node = $this->nodeRepository->findOneCurrentlyPublished(
+        $node = $this->nodeRepository->findOnePublished(
             $redirection->getNodeId(),
             $redirection->getLocale(),
             $redirection->getSiteId()

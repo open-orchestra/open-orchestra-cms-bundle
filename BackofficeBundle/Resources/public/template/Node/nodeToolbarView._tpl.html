@@ -1,47 +1,64 @@
-<div class="form-group">
-    <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.node.version') %></label>
-    <div class="styled-select">
-        <select class="form-control" id="select-version">
-            <option><%= node.get('status').get('label') %> - <%= node.get('name') %> - <%= node.get('version') %></option>
-        </select>
-    </div>
-</div>
-<div class="form-group">
-    <button type="submit" class="btn btn-info"><%= Translator.trans('open_orchestra_backoffice.node.new_version') %></button>
-</div>
-<% if ( 0 !== node.get('preview_links').length) { %>
-    <div class="form-group">
-        <div class="dropdown dropdown-preview">
-            <button class="dropdown-toggle btn btn-border btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <%= Translator.trans('open_orchestra_backoffice.node.preview') %>
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <% _.each(node.get('preview_links'), function(previewLink, key) { %>
-                <li>
-                    <a href="<%= previewLink.link %>"><%= previewLink.name %></a>
-                </li>
-                <% }); %>
-            </ul>
+<div class="form-inline row">
+    <div class="pull-left">
+        <div class="form-group">
+            <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
+            <div class="styled-select">
+                <select class="form-control" id="select-version">
+                    <% _.each(nodeVersions, function(nodeVersion, key) { %>
+                    <option value="<%= nodeVersion.get('version') %>" <% if(nodeVersion.get('version') == node.get('version')) {%> selected <% } %> >
+                        <%= nodeVersion.get('version_name') %>
+                    </option>
+                    <% }); %>
+                </select>
+            </div>
         </div>
     </div>
-<% }; %>
-<div class="form-group">
-    <label for="select-workflow" class="control-label">Workflow</label>
-    <div class="styled-select dropdown dropdown-workflow">
-        <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span style="color: <%= node.get('status').get('code_color') %>"> <%= node.get('status').get('label') %></span>
-        </button>
-        <ul class="dropdown-menu">
-            <% _.each(statuses, function(status, key) { %>
-                <% if (node.get('status').get('id') !== status.get('id')) { %>
-                    <li>
-                        <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
-                            <%= status.get('label') %>
-                        </a>
-                    </li>
-                <% } %>
-            <% }); %>
-        </ul>
+
+    <div class="pull-right">
+        <% if ( 0 !== node.get('preview_links').length) { %>
+            <div class="form-group">
+                <div class="dropdown dropdown-preview">
+                    <button class="dropdown-toggle btn btn-border btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <%= Translator.trans('open_orchestra_backoffice.node.preview') %>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <% _.each(node.get('preview_links'), function(previewLink, key) { %>
+                        <li>
+                            <a href="<%= previewLink.link %>"><%= previewLink.name %></a>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+        <% }; %>
+        <div class="form-group">
+            <label for="select-workflow" class="control-label">Workflow</label>
+            <div class="styled-select dropdown dropdown-workflow">
+                <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span style="color: <%= node.get('status').get('code_color') %>"> <%= node.get('status').get('label') %></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <% _.each(statuses, function(status, key) { %>
+                        <% if (node.get('status').get('id') !== status.get('id')) { %>
+                            <li>
+                                <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
+                                    <%= status.get('label') %>
+                                </a>
+                            </li>
+                        <% } %>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+<div class="form-inline row">
+    <div class="form-group">
+        <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-info btn-manage-version"><%= Translator.trans('open_orchestra_backoffice.versionable.manage_version') %></button>
+    </div>
+</div>
+<div class="new-version-form-region"></div>

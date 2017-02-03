@@ -11,7 +11,7 @@ open_orchestra_workflow_admin:
         translation_state      : Etat de traduction
         published_state        : Etat de publication
         auto_publish_from_state: Etat de publication automatique
-        auto_unpublish_to_state: Etat de dépublication automatique
+        auto_unpublish_to_state: Etat de dépublication
     workflow_profile:
         title     : Profils
         title_list: Liste des profiles

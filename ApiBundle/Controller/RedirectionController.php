@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\DisplayBundle\Exception\NodeNotFoundException;
@@ -26,8 +25,6 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
  */
 class RedirectionController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param int $redirectionId
      *
@@ -38,6 +35,7 @@ class RedirectionController extends BaseController
      */
     public function showAction($redirectionId)
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, RedirectionInterface::ENTITY_TYPE);
         $redirection = $this->get('open_orchestra_model.repository.redirection')->find($redirectionId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('redirection')->transform($redirection);

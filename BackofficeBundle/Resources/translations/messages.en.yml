@@ -254,6 +254,7 @@ open_orchestra_backoffice:
                     Pattern types: simple (pattern), absolute (/pattern), with variable (/{contentId})
             language: Language
             status: Status
+            save_old_published_version: Enregistrer une copie de l'ancienne version publiée
             in_menu: Shown in menus
             in_footer: Shown in footer
             keywords: Keywords

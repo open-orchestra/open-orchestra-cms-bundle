@@ -40,6 +40,7 @@ class SiteController extends BaseController
     public function showAction($siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $this->denyAccessUnlessGranted($site, SiteInterface::ENTITY_TYPE);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('site')->transform($site);
     }
@@ -91,6 +92,7 @@ class SiteController extends BaseController
      */
     public function listAvailableSiteAction()
     {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         $availableSite = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
 
         return $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($availableSite);
@@ -119,6 +121,8 @@ class SiteController extends BaseController
     }
 
     /**
+     * @param {string} $siteId
+     *
      * @Config\Route("/{siteId}/languages", name="open_orchestra_api_site_languages_show")
      * @Config\Method({"GET"})
      *
@@ -127,6 +131,7 @@ class SiteController extends BaseController
     public function getAllLanguagesAction($siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $this->denyAccessUnlessGranted($site, SiteInterface::ENTITY_TYPE);
 
         return array('languages' => $site->getLanguages());
     }
