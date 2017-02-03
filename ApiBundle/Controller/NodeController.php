@@ -606,9 +606,8 @@ class NodeController extends BaseController
 
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $nbrVersions = $nodeRepository->countNotDeletedVersions($nodeId, $language, $siteId);
-            if ($nbrVersions > count($nodes)) {
-
+        $versionsCount = $nodeRepository->countNotDeletedVersions($nodeId, $language, $siteId);
+            if ($versionsCount > count($nodes)) {
             $nodeIds = array();
             foreach ($nodes as $node) {
                 if ($this->isGranted(ContributionActionInterface::DELETE, $node) &&
