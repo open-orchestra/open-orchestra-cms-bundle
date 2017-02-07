@@ -120,7 +120,6 @@ class FieldTypeType extends AbstractType
             'data_class' => $this->fieldTypeClass,
             'attr' => array('class' => 'form-to-patch'),
             'group_enabled' => true,
-            'allow_extra_fields' => true,
             'sub_group_render' => array(
                 'property' => array(
                     'rank' => 0,

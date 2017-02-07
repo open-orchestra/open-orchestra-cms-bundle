@@ -59,7 +59,6 @@ class FieldOptionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'label' => 'open_orchestra_backoffice.form.field_option.label',
-            'allow_extra_fields' => true,
         ));
     }
 }

@@ -83,7 +83,8 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $data = $event->getData();
-        $type = $form->getData()->getType();
+        $fieldType = $form->getData();
+        $type = $fieldType->getType();
         $container = $form->get('container');
 
         if ($container->has('default_value')) {
@@ -107,6 +108,10 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             $defaultOption = (isset($defaultValueField['options'])) ? $defaultValueField['options'] : array();
             $defaultOption['data'] = $defaultValue;
             $container->add('default_value', $defaultValueField['type'], $defaultOption);
+            if (array_key_exists('search', $this->fieldTypeParameters[$type])) {
+                $fieldType->setFieldTypeSearchable($this->fieldTypeParameters[$type]['search']);
+                //$form->setData($fieldType);
+            }
         }
     }
 
@@ -126,7 +131,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
 
         if (is_array($data)) {
             $fieldType = array_key_exists('type', $data) ? $data['type'] : '';
-            if (is_null($fieldType) || !array_key_exists($fieldType, $this->fieldTypeParameters)) {
+            if (is_null($fieldType) || !array_key_exists($fieldType, $this->fieldTypeParameters) || !array_key_exists('options', $this->fieldTypeParameters[$fieldType])) {
                 return;
             }
             foreach ($this->fieldTypeParameters[$fieldType]['options'] as $child => $option) {
