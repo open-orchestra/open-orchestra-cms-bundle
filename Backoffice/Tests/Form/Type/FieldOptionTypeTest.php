@@ -49,7 +49,6 @@ class FieldOptionTypeTest extends AbstractBaseTestCase
 
         Phake::verify($this->resolver)->setDefaults(array(
             'label' => 'open_orchestra_backoffice.form.field_option.label',
-            'allow_extra_fields' => true,
         ));
     }
 
