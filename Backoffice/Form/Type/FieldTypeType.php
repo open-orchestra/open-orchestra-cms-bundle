@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use OpenOrchestra\Backoffice\EventSubscriber\FieldTypeTypeSubscriber;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
@@ -15,35 +15,32 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
  */
 class FieldTypeType extends AbstractType
 {
-    protected $fieldOptionClass;
-    protected $fieldTypeClass;
-    protected $fieldOptions;
-    protected $fieldTypeParameters;
+    protected $contextManager;
+    protected $fieldTypeTypeSubscriber;
     protected $backOfficeLanguages;
+    protected $fieldTypeParameters;
+    protected $fieldTypeClass;
 
     /**
-     * @param CurrentSiteIdInterface $contextManager
-     * @param array                  $fieldOptions
-     * @param string                 $fieldOptionClass
-     * @param string                 $fieldTypeClass
-     * @param array                  $fieldTypeParameters
-     * @param array                  $backOfficeLanguages
+     * @param CurrentSiteIdInterface   $contextManager
+     * @param EventSubscriberInterface $fieldTypeTypeSubscriber
+     * @param array                    $backOfficeLanguages
+     * @param array                    $fieldTypeParameters
+     * @param string                   $fieldTypeClass
      */
     public function __construct(
         CurrentSiteIdInterface $contextManager,
-        array $fieldOptions,
-        $fieldOptionClass,
-        $fieldTypeClass,
+        EventSubscriberInterface $fieldTypeTypeSubscriber,
+        array $backOfficeLanguages,
         array $fieldTypeParameters,
-        array  $backOfficeLanguages
+        $fieldTypeClass
     )
     {
         $this->contextManager = $contextManager;
-        $this->fieldOptions = $fieldOptions;
-        $this->fieldOptionClass = $fieldOptionClass;
-        $this->fieldTypeClass = $fieldTypeClass;
-        $this->fieldTypeParameters = $fieldTypeParameters;
+        $this->fieldTypeTypeSubscriber = $fieldTypeTypeSubscriber;
         $this->backOfficeLanguages = $backOfficeLanguages;
+        $this->fieldTypeParameters = $fieldTypeParameters;
+        $this->fieldTypeClass = $fieldTypeClass;
     }
 
     /**
@@ -91,9 +88,19 @@ class FieldTypeType extends AbstractType
             ->add('orderable', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.orderable',
                 'required' => false,
+            ))
+            ->add('options', 'oo_field_option', array(
+                'sub_group_id' => 'parameter',
+                'attr' => array('class' => 'subform-to-refresh'),
+                'label' => false,
+            ))
+            ->add('container', 'form', array(
+                'inherit_data' => true,
+                'label' => false,
+                'sub_group_id' => 'parameter',
+                'attr' => array('class' => 'subform-to-refresh'),
             ));
-
-        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeClass, $this->fieldTypeParameters));
+        $builder->addEventSubscriber($this->fieldTypeTypeSubscriber);
     }
 
     /**
@@ -113,6 +120,7 @@ class FieldTypeType extends AbstractType
             'data_class' => $this->fieldTypeClass,
             'attr' => array('class' => 'form-to-patch'),
             'group_enabled' => true,
+            'allow_extra_fields' => true,
             'sub_group_render' => array(
                 'property' => array(
                     'rank' => 0,
@@ -126,7 +134,7 @@ class FieldTypeType extends AbstractType
             'columns' => array('labels', 'fieldId', 'type', 'options'),
             'label' => 'open_orchestra_backoffice.form.field_type.label',
             'prototype_data' => function(){
-                $default = each($this->fieldOptions);
+                $default = each($this->fieldTypeParameters);
                 $fieldType = new $this->fieldTypeClass();
                 $fieldType->setType($default['key']);
 
@@ -144,18 +152,22 @@ class FieldTypeType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $data = $view->vars['columns']['labels']['data'];
+
         $language = $this->contextManager->getCurrentLocale();
-        $view->vars['columns']['labels']['data'] = (array_key_exists($language, $data)) ? $data[$language] : '';
+        $view->vars['columns']['labels']['data'] = (is_array($data) && array_key_exists($language, $data)) ? $data[$language] : '';
 
         $data = $view->vars['columns']['type']['data'];
         $types = $this->getChoicesType();
         $view->vars['columns']['type']['data'] = (array_key_exists($data, $types)) ? $types[$data] : '';
 
         $value = 'open_orchestra_backoffice.form.swchoff.off';
-        foreach ($view->vars['columns']['options']['data'] as $data) {
-            if ($data->getKey() == 'required') {
-                $value = $data->getValue() ? 'open_orchestra_backoffice.form.swchoff.on' : 'open_orchestra_backoffice.form.swchoff.off';
-           }
+
+        if (array_key_exists('options', $view->vars['columns'])) {
+            foreach ($view->vars['columns']['options']['data'] as $data) {
+                if ($data->getKey() == 'required') {
+                    $value = $data->getValue() ? 'open_orchestra_backoffice.form.swchoff.on' : 'open_orchestra_backoffice.form.swchoff.off';
+               }
+            }
         }
         $view->vars['columns']['options'] = array(
             'label' => 'open_orchestra_backoffice.form.orchestra_fields.required_field',
@@ -169,7 +181,7 @@ class FieldTypeType extends AbstractType
     protected function getChoicesType()
     {
         $choices = array();
-        foreach ($this->fieldOptions as $key => $option) {
+        foreach ($this->fieldTypeParameters as $key => $option) {
             $choices[$key] = $option['label'];
         }
         asort($choices);

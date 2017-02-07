@@ -16,24 +16,20 @@ class ContentSearchSubscriber implements EventSubscriberInterface
 {
     protected $contentRepository;
     protected $contextManager;
-    protected $attributes;
     protected $required;
 
     /**
      * @param ContentRepositoryInterface                    $contentRepository
      * @param CurrentSiteIdInterface                        $contextManager
-     * @param array                                         $attributes
      * @param boolean                                       $required
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
         CurrentSiteIdInterface $contextManager,
-        array $attributes,
         $required
     ) {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
-        $this->attributes = $attributes;
         $this->required = $required;
     }
 
@@ -43,7 +39,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     public function postSetData(FormEvent $event)
     {
         $form = $event->getForm();
-        if ('PATCH' !== $form->getParent()->getConfig()->getMethod()) {
+        if ('PATCH' !== $form->getRoot()->getConfig()->getMethod()) {
             $this->addFormType($event);
         }
     }
@@ -57,6 +53,17 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @return array The event names to listen to
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::PRE_SUBMIT => 'preSubmit',
+        );
+    }
+
+    /**
      * @param FormEvent $event
      */
     protected function addFormType(FormEvent $event)
@@ -64,12 +71,6 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
         $event->setData($data);
-        if ($form->has('contentId')) {
-            $form->remove('contentId');
-        }
-        if ($form->has('help-text')) {
-            $form->remove('help-text');
-        }
         $choices = array();
         if (!is_null($data)) {
             if (array_key_exists('contentType', $data) && $data['contentType'] != '') {
@@ -81,35 +82,17 @@ class ContentSearchSubscriber implements EventSubscriberInterface
                 $choices = array_merge($choices, $this->getChoice($data['contentId']));
             }
         }
-        if (count($choices) > 0) {
-            $form->add('contentId', 'choice', array(
-                'label' => false,
-                'empty_value' => ' ',
-                'required' => $this->required,
-                'choices' => $choices,
-                'attr' => $this->attributes,
-            ));
-        } else {
-            $form->add('contentId', 'hidden', array(
-                'required' => $this->required,
-                'error_mapping' => 'help-text',
-            ));
-            $form->add('help-text', 'button', array(
-                'disabled' => true,
-                'label' => 'open_orchestra_backoffice.form.content_search.use'
-            ));
-        }
-    }
-
-    /**
-     * @return array The event names to listen to
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            FormEvents::POST_SET_DATA => 'postSetData',
-            FormEvents::PRE_SUBMIT => 'preSubmit',
-        );
+        $form->add('refresh', 'button', array(
+            'label' => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
+            'attr' => array('class' => 'patch-submit-click'),
+        ));
+        $form->add('contentId', 'choice', array(
+            'label' => false,
+            'empty_value' => ' ',
+            'required' => $this->required,
+            'choices' => $choices,
+            'attr' => array('class' => 'subform-to-refresh'),
+        ));
     }
 
     /**

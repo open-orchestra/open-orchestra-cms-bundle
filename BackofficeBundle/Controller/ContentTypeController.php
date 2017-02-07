@@ -41,13 +41,10 @@ class ContentTypeController extends AbstractAdminController
         if ('PATCH' !== $request->getMethod()) {
             if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.success'), $newContentType)) {
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_UPDATE, new ContentTypeEvent($newContentType));
-                $form = $this->createContentTypeForm($request, array('action' => $action), $newContentType);
             }
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -91,9 +88,7 @@ class ContentTypeController extends AbstractAdminController
             }
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->renderAdminForm($form);
     }
 
     /**

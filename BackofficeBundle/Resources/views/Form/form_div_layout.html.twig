@@ -421,7 +421,6 @@
         {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
         {% set label_col = label_col|default(bootstrap_get_label_col()) %}
         {% set form_group_col = form_group_col|default('') %}
-        {% set refreshIcon = '' %}
 
         {% if attr.label_col is defined and attr.label_col is not empty %}
             {% set label_col = attr.label_col %}
@@ -440,17 +439,6 @@
         {% if attr.style is defined and attr.style is not empty %}
             {% set style = attr.style %}
         {% endif %}
-        {% if refresh is defined and refresh %}
-            {% set refreshIcon %}
-                <div class="col-{{ col_size }}-1">
-                    <span rel="tooltip" class="btn btn-ribbon refresh-form">
-                        <i class="fa fa-refresh"></i>
-                    </span>
-                </div>
-                {% set widget_col = widget_col - 1 %}
-            {% endset %}
-        {% endif %}
-
         {% if label is sameas(false) %}
             {% set widget_col = widget_col + label_col %}
         {% endif %}
@@ -468,7 +456,6 @@
         <div class="form-group{% if errors %} has-error{% endif %} {{ form_group_class }}">
             {% if style == 'horizontal' %}
                 {{ form_label(form) }}
-                {{ refreshIcon }}
                 <div class="col-{{ col_size }}-{{ widget_col }}">
                     {% if form.vars.original_type is defined and form.vars.original_type == 'collection' %}
                         {{ form_errors(form) }}

@@ -341,7 +341,7 @@ open_orchestra_backoffice:
             content_type: Content type to display
             content_keyword: Keyword to display
             choice_type: Type of choice
-            use: Use search fields to get a filtered contents list
+            refresh_content_list: Refresh contents list
         orchestra_fields:
             max_length: Max length
             required_field: Field required
