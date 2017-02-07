@@ -43,13 +43,15 @@ class ContentSearchType extends AbstractType
             $newAttr['data-authorize-new'] = $options['authorize_new'];
         }
 
+        $required = !$options['search_engine'] && $options['required'];
+
         $builder->add('contentType', 'oo_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
-            'required' => !$options['search_engine'] && $options['required']
+            'required' => $required
         ));
         $builder->add('choiceType', 'oo_operator_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.choice_type',
-            'required' => !$options['search_engine'] && $options['required']
+            'required' => $required
         ));
         $builder->add('keywords', 'oo_keywords_choice', array(
             'is_condition' => true,
@@ -57,7 +59,7 @@ class ContentSearchType extends AbstractType
             'constraints' => array(new BooleanCondition()),
             'name' => 'keywords',
             'new_attr' => $newAttr,
-            'required' => !$options['search_engine'] && $options['required'],
+            'required' => $required,
         ));
 
         if ($options['search_engine']) {

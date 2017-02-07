@@ -18,9 +18,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
     protected $builder;
     protected $resolver;
-    protected $fieldOptions;
-    protected $fieldTypeSearchable;
-    protected $fieldOptionClass = 'fieldOptionClass';
+    protected $fieldTypeParameters;
     protected $fieldTypeClass = 'fieldTypeClass';
 
     /**
@@ -28,7 +26,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->fieldOptions = array('text' => array(
+        $this->fieldTypeParameters = array('text' => array(
             'label' => 'foo',
             'type' => 'text',
             'options' =>array(
@@ -36,13 +34,11 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
             )
         ));
 
-        $this->fieldTypeSearchable = array(
-            "text" => array("search" => 'text'),
-            "date" => array("search" => 'date'),
-        );
-
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
+
+        $eventSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
         $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
@@ -50,11 +46,10 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
         $this->form = new FieldTypeType(
             $contextManager,
-            $this->fieldOptions,
-            $this->fieldOptionClass,
-            $this->fieldTypeClass,
-            $this->fieldTypeSearchable,
-            array()
+            $eventSubscriber,
+            array(),
+            $this->fieldTypeParameters,
+            $this->fieldTypeClass
         );
     }
 
@@ -78,6 +73,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
                 'data_class' => $this->fieldTypeClass,
                 'attr' => array('class' => 'form-to-patch'),
                 'group_enabled' => true,
+                'allow_extra_fields' => true,
                 'sub_group_render' => array(
                     'property' => array(
                         'rank' => 0,
@@ -108,7 +104,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
 
@@ -146,7 +142,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
 
-        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(9))->add(Phake::anyParameters());
         Phake::verify($this->builder)->setData($closure());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
