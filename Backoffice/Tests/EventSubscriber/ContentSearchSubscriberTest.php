@@ -15,7 +15,6 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
     protected $subscriber;
     protected $contentRepository;
     protected $contextManager;
-    protected $attributes;
     protected $form;
     protected $contentName1 = 'fakeContentName1';
     protected $contentId1 = 'fakeContentId1';
@@ -50,10 +49,6 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($language);
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
 
-        $this->attributes = array(
-            'fakeAttributes' => 'fakeAttributes'
-        );
-
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
 
@@ -68,7 +63,6 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         $this->subscriber = new ContentSearchSubscriber(
             $this->contentRepository,
             $this->contextManager,
-            $this->attributes,
             true
         );
     }
@@ -115,6 +109,11 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
 
         $this->subscriber->preSubmit($this->event);
 
+        Phake::verify($this->form)->add('refresh', 'button', array(
+            'label' => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
+            'attr' => array('class' => 'patch-submit-click'),
+        ));
+
         Phake::verify($this->form)->add('contentId', 'choice', array(
             'label' => false,
             'empty_value' => ' ',
@@ -122,8 +121,8 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
             'choices' => array(
                 $this->contentId1 => $this->contentName1,
                 $this->contentId2 => $this->contentName2,
-           ),
-            'attr' => $this->attributes,
+            ),
+            'attr' => array('class' => 'subform-to-refresh'),
         ));
     }
 
@@ -136,9 +135,14 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         Phake::when($config)->getMethod()->thenReturn('POST');
         $parent = Phake::mock('Symfony\Component\Form\FormInterface');
         Phake::when($parent)->getConfig()->thenReturn($config);
-        Phake::when($this->form)->getParent()->thenReturn($parent);
+        Phake::when($this->form)->getRoot()->thenReturn($parent);
 
         $this->subscriber->postSetData($this->event);
+
+        Phake::verify($this->form)->add('refresh', 'button', array(
+            'label' => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
+            'attr' => array('class' => 'patch-submit-click'),
+        ));
 
         Phake::verify($this->form)->add('contentId', 'choice', array(
             'label' => false,
@@ -147,8 +151,8 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
             'choices' => array(
                 $this->contentId1 => $this->contentName1,
                 $this->contentId2 => $this->contentName2,
-           ),
-            'attr' => $this->attributes,
+            ),
+            'attr' => array('class' => 'subform-to-refresh')
         ));
     }
 }

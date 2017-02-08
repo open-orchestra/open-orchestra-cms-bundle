@@ -67,6 +67,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType) && 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
+            $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentTypeInterface::ENTITY_TYPE));
         }
 
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {

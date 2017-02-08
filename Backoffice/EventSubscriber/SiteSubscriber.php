@@ -38,7 +38,10 @@ class SiteSubscriber implements EventSubscriberInterface
      */
     public function postSetData(FormEvent $event)
     {
-        $this->addFormElements($event) ;
+        $form = $event->getForm();
+        if ('PATCH' !== $form->getRoot()->getConfig()->getMethod()) {
+            $this->addFormElements($event);
+        }
     }
 
     /**
@@ -47,8 +50,8 @@ class SiteSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SUBMIT => 'preSubmit',
             FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::PRE_SUBMIT => 'preSubmit',
         );
     }
 
@@ -68,14 +71,12 @@ class SiteSubscriber implements EventSubscriberInterface
             $form->add('nodeId', 'oo_node_choice', array(
                 'label' => 'open_orchestra_backoffice.form.internal_link.node',
                 'siteId' => $siteId,
-                'attr' => array(
-                    'class' => 'orchestra-node-choice',
-                ),
+                'attr' => array('class' => 'orchestra-node-choice subform-to-refresh'),
                 'required' => true,
             ));
             $form->add('aliasId', 'choice', array(
                 'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
-                'attr' => $this->attributes,
+                'attr' => array('class' => 'subform-to-refresh'),
                 'choices' => $this->getChoices($siteId),
                 'required' => false,
             ));

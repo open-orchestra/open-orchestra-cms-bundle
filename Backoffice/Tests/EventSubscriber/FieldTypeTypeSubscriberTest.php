@@ -20,11 +20,14 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
 
     protected $form;
     protected $event;
-    protected $options;
+    protected $fieldTypeParameters;
     protected $fieldType;
     protected $fieldOptionClass;
     protected $fieldTypeClass;
-    protected $fieldTypeSearchable;
+    protected $fieldOptions;
+    protected $containerChild;
+    protected $optionsChild;
+    protected $optionChildName = 'fakeOptionChildName';
 
     /**
      * Set up the test
@@ -34,17 +37,33 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
         $this->fieldOptionClass = 'OpenOrchestra\ModelBundle\Document\FieldOption';
         $this->fieldTypeClass = 'OpenOrchestra\ModelBundle\Document\FieldType';
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        $this->fieldType = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
-        Phake::when($this->event)->getForm()->thenReturn($this->form);
-        Phake::when($this->event)->getData()->thenReturn($this->fieldType);
 
-        $this->fieldTypeSearchable = array(
-            "text" => array("search" => 'text'),
-            "date" => array("search" => 'date'),
+        $config = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($config)->getMethod()->thenReturn('POST');
+        $parent = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($parent)->getConfig()->thenReturn($config);
+        Phake::when($this->form)->getRoot()->thenReturn($parent);
+
+        $this->containerChild = Phake::mock('Symfony\Component\Form\Form');
+        Phake::when($this->containerChild)->has('default_value')->thenReturn(true);
+        Phake::when($this->form)->get('container')->thenReturn($this->containerChild);
+
+        $optionChild = Phake::mock('Symfony\Component\Form\Form');
+        Phake::when($optionChild)->getName()->thenReturn($this->optionChildName);
+
+        $this->optionsChild = Phake::mock('Symfony\Component\Form\Form');
+        Phake::when($this->optionsChild)->all()->thenReturn(array(
+            $optionChild,
+        ));
+        Phake::when($this->form)->get('options')->thenReturn($this->optionsChild);
+
+        $this->fieldOptions = array(
+            "text" => array("search" => 'text', 'type' => 'text'),
+            "date" => array("search" => 'date', 'type' => 'date'),
         );
 
-        $this->options = array(
+        $this->fieldTypeParameters = array(
             'text' => array(
                 'label' => 'label text',
                 'default_value' => array(
@@ -52,7 +71,6 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
                     'type' => 'text',
                     'options' => array(
                         'required' => 'false',
-                        'sub_group_id' => 'parameter',
                     )
                 ),
                 'options' => array(
@@ -69,7 +87,11 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
             )
         );
 
-        $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass, $this->fieldTypeClass, $this->fieldTypeSearchable);
+        $this->subscriber = new FieldTypeTypeSubscriber(
+            $this->fieldOptions,
+            $this->fieldTypeParameters,
+            $this->fieldOptionClass,
+            $this->fieldTypeClass);
     }
 
     /**
@@ -85,7 +107,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
      */
     public function testEventSubscribed()
     {
-        $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::POST_SET_DATA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(FormEvents::PRE_SUBMIT, $this->subscriber->getSubscribedEvents());
     }
 
@@ -93,143 +115,39 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
      * @param bool $hasMaxLength
      * @param bool $hasRequired
      * @param int  $timesCalled
-     *
-     * @dataProvider provideMultipleCase
      */
-    public function testPreSetDataWithTypeSet($hasMaxLength, $hasRequired, $timesCalled)
+    public function testPostSetData()
     {
-        $option = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
-        Phake::when($option)->getKey()->thenReturn('grouping');
-        $options = new ArrayCollection();
-        $options->add($option);
+        $defaultValue = 'fakeDefaultValue';
+        $optionValue = 'fakeOptionValue';
+        $expectedOptions = $this->fieldTypeParameters['text']['default_value']['options'];
+        $expectedOptions['data'] = $defaultValue;
 
-        $type = 'text';
-        Phake::when($this->fieldType)->getType()->thenReturn($type);
-        Phake::when($this->fieldType)->hasOption('max_length')->thenReturn($hasMaxLength);
-        Phake::when($this->fieldType)->hasOption('required')->thenReturn($hasRequired);
-        Phake::when($this->fieldType)->getOptions()->thenReturn($options);
+        $fieldOption = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
+        Phake::when($fieldOption)->getKey()->thenReturn('text');
+        Phake::when($fieldOption)->getValue()->thenReturn($optionValue);
 
-        $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->fieldType, Phake::times($timesCalled))->addOption(Phake::anyParameters());
-        Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'oo_field_option',
-            'allow_add' => false,
-            'allow_delete' => false,
-            'label' => false,
-            'options' => array( 'label' => false ),
-            'sub_group_id' => 'parameter',
-        ));
+        $fieldType = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
+        Phake::when($fieldType)->getDefaultValue()->thenReturn($defaultValue);
+        Phake::when($fieldType)->getType()->thenReturn('text');
+        Phake::when($fieldType)->getOptions()->thenReturn(array($fieldOption));
 
-        $defaultValue = $this->options[$type]['default_value'];
+        Phake::when($this->event)->getData()->thenReturn($fieldType);
+        Phake::when($this->event)->getForm()->thenReturn($this->form);
+        Phake::when($this->form)->getData()->thenReturn($fieldType);
 
-        Phake::verify($this->form)->add('default_value', $defaultValue['type'], $defaultValue['options']);
-    }
+        $this->subscriber->postSetData($this->event);
 
-    /**
-     * @param bool $hasMaxLength
-     * @param bool $hasRequired
-     * @param int  $timesCalled
-     *
-     * @dataProvider provideMultipleCase
-     */
-    public function testPreSubmitWithTypeSet($hasMaxLength, $hasRequired, $timesCalled)
-    {
-        $option = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
-        Phake::when($option)->getKey()->thenReturn('grouping');
-        $options = new ArrayCollection();
-        $options->add($option);
+        Phake::verify($this->containerChild)->remove('default_value');
+        Phake::verify($this->optionsChild)->remove($this->optionChildName);
 
-        $type = "text";
-        Phake::when($this->fieldType)->hasOption('max_length')->thenReturn($hasMaxLength);
-        Phake::when($this->fieldType)->hasOption('required')->thenReturn($hasRequired);
-        Phake::when($this->fieldType)->getOptions()->thenReturn($options);
-
-        Phake::when($this->form)->getData()->thenReturn($this->fieldType);
-        Phake::when($this->event)->getData()->thenReturn(array('type' => $type));
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->fieldType, Phake::times($timesCalled))->addOption(Phake::anyParameters());
-        Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'oo_field_option',
-            'allow_add' => false,
-            'allow_delete' => false,
-            'label' => false,
-            'options' => array( 'label' => false ),
-            'sub_group_id' => 'parameter',
-        ));
-
-        $defaultValue = $this->options[$type]['default_value'];
-        Phake::verify($this->form)->add('default_value', $defaultValue['type'], $defaultValue['options']);
-    }
-
-    /**
-     * @return array
-     */
-    public function provideMultipleCase()
-    {
-        return array(
-            array(false, false, 2),
-            array(false, true, 2),
-            array(true, false, 2),
-            array(true, true, 2),
+        Phake::verify($this->containerChild)->add(
+            'default_value',
+            'text',
+            $expectedOptions
         );
-    }
 
-    /**
-     * Test when no type is choosen
-     */
-    public function testPreSetDataWithNoTypeSet()
-    {
-        Phake::when($this->fieldType)->getType()->thenReturn(null);
-
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->fieldType, Phake::never())->addOption(Phake::anyParameters());
-        Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
-    }
-
-    /**
-     * Test preSetData when type has no option
-     */
-    public function testPreSetDataWithTypeNoOption()
-    {
-        Phake::when($this->fieldType)->getType()->thenReturn('hidden');
-
-        $this->subscriber->preSetData($this->event);
-
-        $this->verifyWithTypeNoOption();
-    }
-
-    /**
-     * Test preSubmit when type has no option
-     */
-    public function testPreSubmitWithTypeNoOption()
-    {
-        Phake::when($this->form)->getData()->thenReturn($this->fieldType);
-        Phake::when($this->event)->getData()->thenReturn(array('type' => 'hidden'));
-
-        $this->subscriber->preSubmit($this->event);
-
-        $this->verifyWithTypeNoOption();
-    }
-
-    /**
-     * Verify the field type with no option
-     */
-    protected function verifyWithTypeNoOption()
-    {
-        Phake::verify($this->fieldType, Phake::times(0))->addOption(Phake::anyParameters());
-        Phake::verify($this->fieldType, Phake::times(1))->clearOptions();
-
-        Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'oo_field_option',
-            'allow_add' => false,
-            'allow_delete' => false,
-            'label' => false,
-            'options' => array( 'label' => false ),
-            'sub_group_id' => 'parameter',
-        ));
+        Phake::verify($this->optionsChild)->add('text', 'text', array("search" => 'text', 'data' => $optionValue));
     }
 }

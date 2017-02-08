@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormEvents;
 class SiteSubscriberTest extends AbstractBaseTestCase
 {
     protected $subscriber;
-    protected $attributes;
     protected $siteRepository;
     protected $siteDomain1 = 'fakeSiteDomain1';
     protected $siteDomain2 = 'fakeSiteDomain2';
@@ -46,11 +45,7 @@ class SiteSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn(array('siteId' => 'fakeSiteId'));
 
-        $this->attributes = array(
-            'fakeAttributes' => 'fakeAttributes'
-        );
-
-        $this->subscriber = new SiteSubscriber($this->siteRepository, $this->attributes);
+        $this->subscriber = new SiteSubscriber($this->siteRepository, array());
     }
 
     /**
@@ -77,7 +72,10 @@ class SiteSubscriberTest extends AbstractBaseTestCase
     public function provideSubscribedEvent()
     {
         return array(
-            array(FormEvents::PRE_SUBMIT),
+            array(
+                FormEvents::POST_SET_DATA,
+                FormEvents::PRE_SUBMIT,
+            ),
         );
     }
 
@@ -88,9 +86,16 @@ class SiteSubscriberTest extends AbstractBaseTestCase
     {
         $this->subscriber->preSubmit($this->event);
 
+        Phake::verify($this->form)->add('nodeId', 'oo_node_choice', array(
+            'label' => 'open_orchestra_backoffice.form.internal_link.node',
+            'siteId' => 'fakeSiteId',
+            'attr' => array('class' => 'orchestra-node-choice subform-to-refresh'),
+            'required' => true,
+        ));
+
         Phake::verify($this->form)->add('aliasId', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
-            'attr' => $this->attributes,
+            'attr' => array('class' => 'subform-to-refresh'),
             'choices' => array(
                         0 => $this->siteDomain1 . '()',
                         1 => $this->siteDomain2 . '()',

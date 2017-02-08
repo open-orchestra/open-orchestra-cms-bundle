@@ -29,15 +29,16 @@ class AccordionExtension extends AbstractTypeExtension
                 $child = $form;
 
                 foreach($columnsDefinition as $columnDefinition) {
-                    if ($form->has($columnDefinition)) {
+                    if ($child->has($columnDefinition)) {
                         $child = $child->get($columnDefinition);
                     } else {
                         $child = false;
                         break;
                     }
                 }
+
                 if ($child) {
-                    $view->vars['columns'][$columnDefinition] = array(
+                    $view->vars['columns'][$column] = array(
                         'label' => $child->getConfig()->getOption('label'),
                         'data' => $child->getData(),
                     );

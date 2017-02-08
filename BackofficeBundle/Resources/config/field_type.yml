@@ -126,11 +126,11 @@ parameters:
             search: date
             deserialize_type: DateTime
             default_value:
-                type: date
+                type: oo_date_picker
                 options:
                     label: open_orchestra_backoffice.form.field_type.default_value
                     required: false
-                    format: yyyy-MM-dd
+                    format: dd-MM-yyyy
                     widget: single_text
                     input: string
             options:

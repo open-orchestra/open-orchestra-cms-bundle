@@ -35,10 +35,10 @@ class SiteSiteAliasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('siteId', 'oo_site_choice', array(
-            'label' => false,
+            'label' => 'open_orchestra_backoffice.form.internal_link.site',
             'empty_data' => $this->currentSiteManager->getCurrentSiteId(),
             'attr' => array(
-                'class' => 'to-tinyMce',
+                'class' => 'to-tinyMce patch-submit-change',
                 'data-key' => 'site'
             ),
             'required' => true,
@@ -51,23 +51,13 @@ class SiteSiteAliasType extends AbstractType
     }
 
     /**
-     * @param FormView      $view
-     * @param FormInterface $form
-     * @param array         $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars['refresh'] = true;
-    }
-
-    /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'attr' => array()
+                'attr' => array('class' => 'form-to-patch'),
             )
         );
     }

@@ -342,6 +342,7 @@ open_orchestra_backoffice:
             content_keyword: Mot-clé à afficher
             choice_type: Type de choix
             use: Utiliser les champs de recherche pour obtenir une liste de contenus filtrés
+            refresh_content_list: Rafraichir la liste des contenus
         orchestra_fields:
             max_length: Longueur max
             required_field: Champ obligatoire

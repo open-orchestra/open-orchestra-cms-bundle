@@ -60,7 +60,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     {
         $builder->add('contentSearch', 'oo_content_search', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.content',
-            'refresh' => true,
+            'search_engine' => true,
             'required' => true,
             'authorize_new' => false,
             'group_id' => 'data',

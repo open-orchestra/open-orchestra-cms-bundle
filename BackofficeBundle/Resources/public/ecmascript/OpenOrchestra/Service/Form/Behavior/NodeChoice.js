@@ -13,7 +13,7 @@ class NodeChoice extends AbstractBehavior
     activate($element) {
         let regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g');
         $('option', $element).each((index, element) => {
-            $(element).addClass('orchestra-node-choice')
+            $(element).addClass('orchestra-node-option-choice')
         });
 
         $element.select2({

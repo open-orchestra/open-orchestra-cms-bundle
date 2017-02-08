@@ -16,6 +16,7 @@ class FieldOptionTypeTest extends AbstractBaseTestCase
      */
     protected $form;
 
+    protected $dataTransformer;
     protected $builder;
     protected $resolver;
     protected $fieldOptionClass = 'fieldOptionClass';
@@ -25,12 +26,10 @@ class FieldOptionTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
-
+        $this->dataTransformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-
-        $this->form = new FieldOptionType(array(), $this->fieldOptionClass);
+        $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
+        $this->form = new FieldOptionType($this->dataTransformer);
     }
 
     /**
@@ -49,7 +48,6 @@ class FieldOptionTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($this->resolver);
 
         Phake::verify($this->resolver)->setDefaults(array(
-            'data_class' => $this->fieldOptionClass,
             'label' => 'open_orchestra_backoffice.form.field_option.label',
         ));
     }
@@ -60,8 +58,6 @@ class FieldOptionTypeTest extends AbstractBaseTestCase
     public function testFormBuilder()
     {
         $this->form->buildForm($this->builder, array());
-
-        Phake::verify($this->builder)->add(Phake::anyParameters());
-        Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($this->builder)->addModelTransformer($this->dataTransformer);
     }
 }
