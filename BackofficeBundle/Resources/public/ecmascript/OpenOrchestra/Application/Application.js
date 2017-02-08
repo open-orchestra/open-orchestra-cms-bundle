@@ -39,6 +39,7 @@ import NumberSearchFormGroup  from '../Service/Content/SearchFormGroup/NumberFor
 import CellFormatterManager   from '../Service/Content/CellFormatter/Manager'
 import TextCellFormatter      from '../Service/Content/CellFormatter/TextFormatter'
 import BooleanCellFormatter   from '../Service/Content/CellFormatter/BooleanFormatter'
+import DateCellFormatter      from '../Service/Content/CellFormatter/DateFormatter'
 
 import ApplicationError       from '../Service/Error/ApplicationError'
 import AjaxError              from '../Service/Error/AjaxError'
@@ -252,6 +253,7 @@ class Application
     _initCellFormatterManager() {
         CellFormatterManager.add(TextCellFormatter);
         CellFormatterManager.add(BooleanCellFormatter);
+        CellFormatterManager.add(DateCellFormatter);
     }
 }
 

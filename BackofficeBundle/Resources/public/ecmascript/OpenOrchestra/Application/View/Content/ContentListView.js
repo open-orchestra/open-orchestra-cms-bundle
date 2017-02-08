@@ -4,6 +4,7 @@ import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/Delete
 import DuplicateIconListViewMixin  from '../../../Service/DataTable/Mixin/DuplicateIconListViewMixin'
 import CellFormatterManager        from '../../../Service/Content/CellFormatter/Manager'
 import BooleanFormatter            from '../../../Service/Content/CellFormatter/BooleanFormatter'
+import DateFormatter               from '../../../Service/Content/CellFormatter/DateFormatter'
 
 /**
  * @class ContentListView
@@ -48,7 +49,9 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let columnsDefinition = [];
         let defaultListable = this._contentType.get('default_listable');
         let createdCell = {
-            'linked_to_site': BooleanFormatter.getType()
+            'linked_to_site': BooleanFormatter.getType(),
+            'created_at': DateFormatter.getType(),
+            'updated_at': DateFormatter.getType()
         };
         for (let column in defaultListable) {
             if (defaultListable[column]) {
