@@ -110,7 +110,6 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             $container->add('default_value', $defaultValueField['type'], $defaultOption);
             if (array_key_exists('search', $this->fieldTypeParameters[$type])) {
                 $fieldType->setFieldTypeSearchable($this->fieldTypeParameters[$type]['search']);
-                //$form->setData($fieldType);
             }
         }
     }
