@@ -36,7 +36,7 @@ class DateFormatter extends AbstractCellFormatter
             };
             
             let destinationDateFormat = $.datepicker.regional[Application.getContext().language].dateFormat + ' H:i:s';
-            let originDateFormat = Application.getContext().dateFormat
+            let originDateFormat = Application.getConfiguration().getParameter('dateFormat');
             
             let dd = getGeneralPattern(originDateFormat.replace('d', '([0-9]{2})'));
             let mm = getGeneralPattern(originDateFormat.replace('m', '([0-9]{2})'));

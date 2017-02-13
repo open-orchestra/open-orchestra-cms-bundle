@@ -46,7 +46,6 @@
                 siteId: '{{ context.currentSiteId }}',
                 siteLanguages: {{ context.currentSiteLanguages|json_encode()|raw }},
                 language: '{{ context.currentLocale }}',
-                dateFormat: '{{ dateFormat }}',
                 user: {
                     id : '{{ app.user.id }}',
                     username : '{{ app.user.username }}',
