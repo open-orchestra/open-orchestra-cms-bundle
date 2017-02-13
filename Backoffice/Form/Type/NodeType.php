@@ -72,7 +72,6 @@ class NodeType extends AbstractType
                 'group_id' => 'properties',
                 'sub_group_id' => 'properties',
             ))
-
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.node.title',
                 'group_id' => 'properties',
@@ -102,11 +101,6 @@ class NodeType extends AbstractType
                 'group_id' => 'properties',
                 'sub_group_id' => 'properties',
                 'required' => false,
-            ))
-            ->add('theme', 'oo_theme_choice', array(
-                'label' => 'open_orchestra_backoffice.form.node.theme',
-                'group_id' => 'properties',
-                'sub_group_id' => 'properties',
             ))
             ->add('inMenu', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.node.in_menu',

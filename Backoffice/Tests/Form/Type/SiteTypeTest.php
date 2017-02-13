@@ -60,7 +60,7 @@ class SiteTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->translator, Phake::times(2))->trans(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
