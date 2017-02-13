@@ -28,6 +28,10 @@ class TwigGlobalsCompilerPass implements CompilerPassInterface
             $formResources[] = 'OpenOrchestraBackofficeBundle:Form:form_div_layout.html.twig';
             $container->setParameter('twig.form.resources', $formResources);
         }
+
+        $container->setParameter('jms_serializer.handlers.datetime.default_format', \DateTime::ISO8601);
+        $container->setParameter('jms_serializer.handlers.datetime.default_timezone', date_default_timezone_get());
+        $container->setParameter('jms_serializer.handlers.datetime.cdata', true);
     }
 
 }
