@@ -3,9 +3,7 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use Doctrine\Common\Util\Inflector;
-use OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
@@ -14,8 +12,6 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
 class BlockManager
 {
     protected $blockClass;
-    protected $displayBlockManager;
-    protected $blockParameterManager;
     protected $generateFormManager;
     protected $fixedParameters;
 
@@ -23,21 +19,15 @@ class BlockManager
      * Constructor
      *
      * @param string                $blockClass
-     * @param DisplayBlockManager   $displayBlockManager
-     * @param BlockParameterManager $blockParameterManager
      * @param GenerateFormManager   $generateFormManager
      * @param array                 $fixedParameters
      */
     public function __construct(
         $blockClass,
-        DisplayBlockManager $displayBlockManager,
-        BlockParameterManager $blockParameterManager,
         GenerateFormManager $generateFormManager,
         array $fixedParameters
     ){
         $this->blockClass = $blockClass;
-        $this->displayBlockManager = $displayBlockManager;
-        $this->blockParameterManager = $blockParameterManager;
         $this->generateFormManager = $generateFormManager;
         $this->fixedParameters = $fixedParameters;
     }
@@ -58,8 +48,6 @@ class BlockManager
         $block->setTransverse($isTransverse);
         $block->setSiteId($siteId);
         $block->setLanguage($language);
-        $block->setPrivate(!$this->displayBlockManager->isPublic($block));
-        $block->setParameter($this->blockParameterManager->getBlockParameter($block));
         $this->setDefaultAttributes($block);
 
         return $block;

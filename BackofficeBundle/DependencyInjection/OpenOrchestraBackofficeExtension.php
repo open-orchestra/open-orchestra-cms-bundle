@@ -63,7 +63,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('value_transformer.yml');
         $loader->load('subscriber.yml');
         $loader->load('listener.yml');
-        $loader->load('block_parameter.yml');
         $loader->load('group.yml');
         $loader->load('voter.yml');
         $loader->load('validator.yml');
