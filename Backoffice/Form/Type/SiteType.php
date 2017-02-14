@@ -70,11 +70,6 @@ class SiteType extends AbstractType
                 'group_id' => 'content',
                 'sub_group_id' => 'block',
             ))
-            ->add('theme', 'oo_site_theme_choice', array(
-                'label' => 'open_orchestra_backoffice.form.website.theme',
-                'group_id' => 'template_set',
-                'sub_group_id' => 'property',
-            ))
             ->add('metaAuthor', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.metaAuthor',
                 'group_id' => 'seo',

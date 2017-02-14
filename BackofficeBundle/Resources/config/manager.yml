@@ -92,8 +92,6 @@ services:
         class: '%open_orchestra_backoffice.manager.block.class%'
         arguments:
             - '%open_orchestra_model.document.block.class%'
-            - '@open_orchestra_display.display_block_manager'
-            - '@open_orchestra_backoffice.block_parameter_manager'
             - '@open_orchestra_backoffice.generate_form_manager'
             - '%open_orchestra_backoffice.block.fixed_attributes%'
     open_orchestra_backoffice.manager.client_configuration:

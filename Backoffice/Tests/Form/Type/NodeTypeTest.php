@@ -49,7 +49,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
         $this->nodeType->buildForm($formBuilderMock, array());
-        Phake::verify($formBuilderMock, Phake::times(19))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(18))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
