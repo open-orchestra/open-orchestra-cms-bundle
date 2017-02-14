@@ -11,6 +11,7 @@ parameters:
     open_orchestra_backoffice.manager.template.class: OpenOrchestra\Backoffice\Manager\TemplateManager
     open_orchestra_backoffice.manager.block_configuration.class: OpenOrchestra\Backoffice\Manager\BlockConfigurationManager
     open_orchestra_backoffice.manager.block.class: OpenOrchestra\Backoffice\Manager\BlockManager
+    open_orchestra_backoffice.manager.client_configuration.class: OpenOrchestra\Backoffice\Manager\ClientConfigurationManager
 
 services:
     open_orchestra_backoffice.context_manager:
@@ -95,3 +96,5 @@ services:
             - '@open_orchestra_backoffice.block_parameter_manager'
             - '@open_orchestra_backoffice.generate_form_manager'
             - '%open_orchestra_backoffice.block.fixed_attributes%'
+    open_orchestra_backoffice.manager.client_configuration:
+        class: '%open_orchestra_backoffice.manager.client_configuration.class%'

@@ -36,17 +36,13 @@
         <div class="modal-region"></div>
         {% set siteIdKey = constant('OpenOrchestra\\UserBundle\\Document\\User::SITE_ID_PREFIX') ~ context.currentSiteId %}
         <script>
-            var config = {
-                debug: '{{ app.debug }}',
-                environment: '{{ app.environment }}',
+            var config = {{ clientConfiguration|json_encode()|raw }}
+            var context = {
                 routing: {
                     baseUrl: '{{ app.request.baseUrl }}',
                     scheme: '{{ app.request.scheme }}',
                     host: '{{ app.request.host }}'
                 },
-                templateSet: {{ templateSetConfig|json_encode()|raw }}
-            };
-            var context = {
                 siteId: '{{ context.currentSiteId }}',
                 siteLanguages: {{ context.currentSiteLanguages|json_encode()|raw }},
                 language: '{{ context.currentLocale }}',
