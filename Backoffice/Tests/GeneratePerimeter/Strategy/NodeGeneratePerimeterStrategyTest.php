@@ -87,42 +87,42 @@ class NodeGeneratePerimeterStrategyTest extends AbstractBaseTestCase
 
         $this->assertEquals(array(
             array(
-                'node' => array(
+                'root' => array(
                     'path' => 'root',
                     'name' => 'Orchestra ?',
                 ),
-                'child' =>
+                'children' =>
                 array(
                     array(
-                        'node' =>
+                        'root' =>
                         array(
                             'path' => 'root/fixture_page_community',
                             'name' => 'Communauté',
                         )
                     ),
                     array(
-                        'node' =>
+                        'root' =>
                         array(
                             'path' => 'root/fixture_page_news',
                             'name' => 'Actualités',
                         )
                     ),
                     array(
-                        'node' =>
+                        'root' =>
                         array(
                             'path' => 'root/fixture_page_contact',
                             'name' => 'Contact',
                         )
                     ),
                     array(
-                        'node' =>
+                        'root' =>
                         array(
                             'path' => 'root/fixture_page_legal_mentions',
                             'name' => 'Mentions Légales',
                         )
                     ),
                     array (
-                        'node' =>
+                        'root' =>
                         array (
                             'path' => 'root/fixture_auto_unpublish',
                             'name' => 'Dépublication auto',

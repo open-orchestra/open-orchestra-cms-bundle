@@ -90,21 +90,21 @@ class GroupPerimeterTransformerTest extends AbstractBaseTestCase
             array(array('root/fixture_page_news'), array(
                 'node' => array(
                     'root' => false,
-                    'root::fixture_page_community' => false,
-                    'root::fixture_page_news' => true,
-                    'root::fixture_page_contact' => false,
-                    'root::fixture_page_legal_mentions' => false,
-                    'root::fixture_auto_unpublish' => false,
+                    'root__fixture_page_community' => false,
+                    'root__fixture_page_news' => true,
+                    'root__fixture_page_contact' => false,
+                    'root__fixture_page_legal_mentions' => false,
+                    'root__fixture_auto_unpublish' => false,
                 )
             )),
             array(array('root'), array(
                 'node' => array(
                     'root' => true,
-                    'root::fixture_page_community' => true,
-                    'root::fixture_page_news' => true,
-                    'root::fixture_page_contact' => true,
-                    'root::fixture_page_legal_mentions' => true,
-                    'root::fixture_auto_unpublish' => true,
+                    'root__fixture_page_community' => true,
+                    'root__fixture_page_news' => true,
+                    'root__fixture_page_contact' => true,
+                    'root__fixture_page_legal_mentions' => true,
+                    'root__fixture_auto_unpublish' => true,
                 )
             )),
         );
