@@ -633,8 +633,15 @@ open_orchestra_backoffice:
             label: Default set
             template_name:
                 default: Default
+                home: Home
+                column_left: Colonne left
+                column_right: Colonne right
             style:
                 default: Default
+                33%: 33%
+                30%: 30%
+                50%: 50%
+                70%: 70%
     role:
         contributor: Contribuer
         editor: Modifier

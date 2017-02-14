@@ -184,10 +184,29 @@ class Configuration implements ConfigurationInterface
                         'areas' => array('header', 'main', 'footer'),
                         'label' => 'open_orchestra_backoffice.template_set.default.template_name.default',
                         'path' => '/bundles/openorchestrabackoffice/templateSet/default/default.html'
+                    ),
+                    'home' => array(
+                        'areas' => array('main'),
+                        'label' => 'open_orchestra_backoffice.template_set.default.template_name.home',
+                        'path' => '/bundles/openorchestrabackoffice/templateSet/default/home.html'
+                    ),
+                    'column_left' => array(
+                        'areas' => array('main', 'left_column'),
+                        'label' => 'open_orchestra_backoffice.template_set.default.template_name.column_left',
+                        'path' => '/bundles/openorchestrabackoffice/templateSet/default/column_left.html'
+                    ),
+                    'column_right' => array(
+                        'areas' => array('main', 'right_column'),
+                        'label' => 'open_orchestra_backoffice.template_set.default.template_name.column_right',
+                        'path' => '/bundles/openorchestrabackoffice/templateSet/default/column_right.html'
                     )
                 ),
                 'styles' => array(
-                    'default' => 'open_orchestra_backoffice.template_set.default.style.default'
+                    'default' => 'open_orchestra_backoffice.template_set.default.style.default',
+                    'col-33'  => 'open_orchestra_backoffice.template_set.default.style.33%',
+                    'col-30'  => 'open_orchestra_backoffice.template_set.default.style.30%',
+                    'col-50'  => 'open_orchestra_backoffice.template_set.default.style.50%',
+                    'col-70'  => 'open_orchestra_backoffice.template_set.default.style.70%',
                 )
             )
         ));
