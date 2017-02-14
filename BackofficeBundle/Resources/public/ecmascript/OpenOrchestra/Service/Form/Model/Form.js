@@ -37,17 +37,20 @@ class Form
     submit(statusCode = {}) {
         this.trigger('form:pre_submit');
         let promise = $.ajax({
-                url: this.action,
-                method: this.method,
-                data: this.$form.serialize(),
-                statusCode: statusCode,
-                context: this
+                url        : this.action,
+                method     : this.method,
+                data       : new FormData(this.$form[0]),
+                cache      : false,
+                contentType: false,
+                processData: false,
+                statusCode : statusCode,
+                context    : this
             });
             promise.done(this._formSuccess);
             promise.fail(this._formError);
             promise.always(() => {
                 this.trigger('form:post_submit');
-            });
+        });
 
         return promise;
     }
