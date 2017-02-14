@@ -1,3 +1,5 @@
+open_orchestra_backoffice:
+    oo_group_perimeters_tree_list_collection_node : Nodes
 open_orchestra_group:
     form:
         group:

@@ -35,10 +35,11 @@ class GroupPerimeterTransformer implements DataTransformerInterface
         $result = array();
         $configuration = $this->generatePerimeterManager->generatePerimeters();
         $value = $value->toArray();
+
         foreach ($configuration as $type => &$paths) {
             $items = array_key_exists($type, $value) ? $value[$type]->getItems() : array();
             array_walk($paths, function($path) use (&$result, $items, $type) {
-                $key = str_replace('/', '::', $path);
+                $key = GeneratePerimeterManager::changePathToName($path);
                 $result[$type][$key] = in_array($path, $items);
                 $result[$type][$key] = false;
                 foreach($items as $item) {
@@ -77,8 +78,8 @@ class GroupPerimeterTransformer implements DataTransformerInterface
                             }
                         }
                     }
-                    array_walk($perimeters, function(&$item) {
-                        $item = str_replace('::', '/', $item);
+                    array_walk($perimeters, function(&$name) {
+                        $name = GeneratePerimeterManager::changeNameToPath($name);
                     });
                     $perimeterCollection = new Perimeter($type);
                     $perimeterCollection->addItems($perimeters);

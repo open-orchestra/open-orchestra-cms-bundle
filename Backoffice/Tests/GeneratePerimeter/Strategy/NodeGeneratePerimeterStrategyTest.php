@@ -85,7 +85,7 @@ class NodeGeneratePerimeterStrategyTest extends AbstractBaseTestCase
     {
         $result = $this->strategy->getPerimeterConfiguration();
 
-        $this->assertEquals(
+        $this->assertEquals(array(
             array(
                 'node' => array(
                     'path' => 'root',
@@ -130,7 +130,7 @@ class NodeGeneratePerimeterStrategyTest extends AbstractBaseTestCase
                     ),
                 ),
             )
-        , $result);
+        ), $result);
     }
 
     /**
