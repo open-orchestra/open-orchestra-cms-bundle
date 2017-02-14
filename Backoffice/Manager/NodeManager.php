@@ -101,16 +101,17 @@ class NodeManager
      * @param string $siteId
      * @param string $language
      * @param string $template
+     * @param string $name
      *
      * @return NodeInterface
      */
-    public function createNewErrorNode($nodeId, $parentId, $siteId, $language, $template)
+    public function createNewErrorNode($nodeId, $name, $parentId, $siteId, $language, $template)
     {
         $node = $this->initializeNode(NodeInterface::ROOT_NODE_ID, $language, $siteId);
         $node->setNodeId($nodeId);
         $node->setParentId($parentId);
         $node->setNodeType(ReadNodeInterface::TYPE_ERROR);
-        $node->setName($nodeId);
+        $node->setName($name);
         $node->setInFooter(false);
         $node->setInMenu(false);
         $node->setVersion(1);

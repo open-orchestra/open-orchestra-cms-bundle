@@ -20,6 +20,8 @@ class CreateMandatoryNodesSubscriber implements EventSubscriberInterface
 {
     const ROOT_NODE_PATTERN = '/';
     const ROOT_NAME = 'Homepage';
+    const ERROR_404_NAME = '404';
+    const ERROR_503_NAME = '503';
 
     protected $nodeManager;
     protected $objectManager;
@@ -55,8 +57,8 @@ class CreateMandatoryNodesSubscriber implements EventSubscriberInterface
             $status = $this->statusRepository->findOneByTranslationState();
             foreach ($languages as $language) {
                 $this->createRootNodeWithStatus($status, $language, $site);
-                $this->createErrorNodeWithStatus($status, NodeInterface::ERROR_404_NODE_ID, $language, $site);
-                $this->createErrorNodeWithStatus($status, NodeInterface::ERROR_503_NODE_ID, $language, $site);
+                $this->createErrorNodeWithStatus($status, NodeInterface::ERROR_404_NODE_ID, self::ERROR_404_NAME, $language, $site);
+                $this->createErrorNodeWithStatus($status, NodeInterface::ERROR_503_NODE_ID, self::ERROR_503_NAME, $language, $site);
             }
 
             $this->objectManager->flush();
@@ -66,14 +68,15 @@ class CreateMandatoryNodesSubscriber implements EventSubscriberInterface
     /**
      * @param StatusInterface $status
      * @param string          $nodeId
+     * @param string          $name
      * @param string          $language
      * @param SiteInterface   $site
      *
      * @return NodeInterface
      */
-    protected function createErrorNodeWithStatus(StatusInterface $status, $nodeId, $language, SiteInterface $site)
+    protected function createErrorNodeWithStatus(StatusInterface $status, $nodeId, $name, $language, SiteInterface $site)
     {
-        $errorNode = $this->nodeManager->createNewErrorNode($nodeId, NodeInterface::ROOT_PARENT_ID, $site->getSiteId(), $language, $site->getTemplateNodeRoot());
+        $errorNode = $this->nodeManager->createNewErrorNode($nodeId, $name, NodeInterface::ROOT_PARENT_ID, $site->getSiteId(), $language, $site->getTemplateNodeRoot());
         $this->createMandatoryNode($errorNode, $status);
     }
 
