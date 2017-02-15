@@ -80,7 +80,6 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
                 'label' => 'open_orchestra_backoffice.form.node.template'
             ));
 
-
             $form->get('nodeTemplateSelection')->add('nodeSource', 'oo_node_choice', array(
                 'required' => false,
                 'mapped' => false,
