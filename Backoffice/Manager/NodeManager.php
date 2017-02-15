@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
+use OpenOrchestra\ModelInterface\BlockEvents;
+use OpenOrchestra\ModelInterface\Event\BlockEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -172,6 +174,21 @@ class NodeManager
     }
 
     /**
+     * @param $node
+     */
+    public function deleteBlockInNode($node)
+    {
+        foreach ($node->getAreas() as $area) {
+            foreach ($area->getBlocks() as $block) {
+                if (!$block->isTransverse()) {
+                    $this->blockRepository->getDocumentManager()->remove($block);
+                    $this->eventDispatcher->dispatch(BlockEvents::POST_BLOCK_DELETE, new BlockEvent($block));
+                }
+            }
+        }
+    }
+
+    /**
      * @param NodeInterface $node
      * @param string        $nodeId
      *
@@ -204,9 +221,11 @@ class NodeManager
                 if (!$block->isTransverse()) {
                     $newBlock = clone $block;
                     $this->blockRepository->getDocumentManager()->persist($newBlock);
+                    $this->eventDispatcher->dispatch(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($newBlock));
                     $newArea->addBlock($newBlock);
+                } else {
+                    $newArea->addBlock($block);
                 }
-                $newArea->addBlock($block);
             }
         }
 

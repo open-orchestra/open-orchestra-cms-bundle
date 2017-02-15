@@ -9,7 +9,9 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\BlockEvents;
 use OpenOrchestra\ModelInterface\BlockNodeEvents;
+use OpenOrchestra\ModelInterface\Event\BlockEvent;
 use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
@@ -130,6 +132,7 @@ class NodeController extends BaseController
             $objectManager = $this->get('object_manager');
             $objectManager->remove($block);
             $objectManager->flush();
+            $this->dispatchEvent(BlockEvents::POST_BLOCK_DELETE, new BlockEvent($block));
         }
 
         return array();
@@ -232,8 +235,10 @@ class NodeController extends BaseController
             if (false === $block->isTransverse()) {
                 $blockToTranslate = $this->get('open_orchestra_backoffice.manager.block')->createToTranslateBlock($block, $language);
                 $node->getArea($areaId)->addBlock($blockToTranslate);
-                $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockToTranslate));
                 $objectManager->persist($blockToTranslate);
+
+                $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockToTranslate));
+                $this->dispatchEvent(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($blockToTranslate));
             }
         }
 
@@ -608,17 +613,19 @@ class NodeController extends BaseController
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $versionsCount = $nodeRepository->countNotDeletedVersions($nodeId, $language, $siteId);
-            if ($versionsCount > count($nodes)) {
+        if ($versionsCount > count($nodes)) {
             $nodeIds = array();
             foreach ($nodes as $node) {
                 if ($this->isGranted(ContributionActionInterface::DELETE, $node) &&
                     !$node->getStatus()->isPublishedState()
                 ) {
+                    $this->get('open_orchestra_backoffice.manager.node')->deleteBlockInNode($node);
                     $nodeIds[] = $node->getId();
                     $this->dispatchEvent(NodeEvents::NODE_DELETE_VERSION, new NodeEvent($node));
                 }
             }
             $nodeRepository->removeNodeVersions($nodeIds);
+            $this->get('object_manager')->flush();
         }
 
         return array();
