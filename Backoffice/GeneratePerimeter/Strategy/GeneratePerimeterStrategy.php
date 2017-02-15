@@ -16,7 +16,6 @@ abstract class GeneratePerimeterStrategy
      */
     public function __construct(
         CurrentSiteIdInterface $contextManager
-
     ) {
         $this->contextManager = $contextManager;
     }

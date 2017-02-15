@@ -46,7 +46,7 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
     {
         $treeNodes = $this->nodeRepository->findTreeNode($this->contextManager->getCurrentSiteId(), $this->contextManager->getUserCurrentSiteDefaultLanguage(), NodeInterface::ROOT_PARENT_ID);
 
-        return $this->generateTreePerimeter(is_array($treeNodes) ? $treeNodes : array());
+        return $this->generateTreePerimeter($treeNodes);
     }
 
     /**
@@ -58,7 +58,7 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
     {
         $treeNodes = $this->nodeRepository->findTreeNode($this->contextManager->getCurrentSiteId(), $this->contextManager->getUserCurrentSiteDefaultLanguage(), NodeInterface::ROOT_PARENT_ID);
 
-        return $this->getTreePerimeterConfiguration(is_array($treeNodes) ? $treeNodes : array());
+        return $this->getTreePerimeterConfiguration($treeNodes);
     }
 
     /**
