@@ -24,5 +24,6 @@ class ClientConfigurationCompilerPass implements CompilerPassInterface
         $clientConfiguration->addMethodCall('addClientConfiguration', array('debug', $container->getParameter('kernel.debug')));
         $clientConfiguration->addMethodCall('addClientConfiguration', array('environment', $container->getParameter('kernel.environment')));
         $clientConfiguration->addMethodCall('addClientConfiguration', array('templateSet', $container->getParameter('open_orchestra_backoffice.template_set')));
+        $clientConfiguration->addMethodCall('addClientConfiguration', array('dateFormat', $container->getParameter('open_orchestra_api.handlers.datetime.default_format')));
     }
 }
