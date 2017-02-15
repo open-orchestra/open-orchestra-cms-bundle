@@ -227,7 +227,7 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
             ->end();
         $specialPageNames->defaultValue(array(
-            'DEFAULT' => 'open_orchestra_backoffice.node.special_page.default'
+            'DEFAULT' => 'open_orchestra_backoffice.node.special_page.default',
         ));
 
         return $specialPageNames;

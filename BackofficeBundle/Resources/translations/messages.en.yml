@@ -634,8 +634,8 @@ open_orchestra_backoffice:
             template_name:
                 default: Default
                 home: Home
-                column_left: Colonne left
-                column_right: Colonne right
+                column_left: Column left
+                column_right: Column right
             style:
                 default: Default
                 33%: 33%

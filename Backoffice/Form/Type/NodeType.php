@@ -24,9 +24,9 @@ class NodeType extends AbstractType
     protected $siteRepository;
     protected $templateManager;
     protected $nodeClass;
-    protected $specialPageList;
     protected $schemeChoices;
     protected $statusableChoiceStatusSubscriber;
+    protected $specialPageChoiceStatusSubscriber;
 
     /**
      * @param NodeManager              $nodeManager
@@ -34,8 +34,8 @@ class NodeType extends AbstractType
      * @param SiteRepositoryInterface  $siteRepository
      * @param TemplateManager          $templateManager
      * @param string                   $nodeClass
-     * @param array                    $specialPageList
      * @param EventSubscriberInterface $statusableChoiceStatusSubscriber
+     * @param EventSubscriberInterface $specialPageChoiceStatusSubscriber
      */
     public function __construct(
         NodeManager $nodeManager,
@@ -43,8 +43,8 @@ class NodeType extends AbstractType
         SiteRepositoryInterface $siteRepository,
         TemplateManager $templateManager,
         $nodeClass,
-        array $specialPageList,
-        EventSubscriberInterface $statusableChoiceStatusSubscriber
+        EventSubscriberInterface $statusableChoiceStatusSubscriber,
+        EventSubscriberInterface $specialPageChoiceStatusSubscriber
     ) {
         $this->nodeManager = $nodeManager;
         $this->contextManager = $contextManager;
@@ -56,8 +56,8 @@ class NodeType extends AbstractType
             SchemeableInterface::SCHEME_HTTP => SchemeableInterface::SCHEME_HTTP,
             SchemeableInterface::SCHEME_HTTPS => SchemeableInterface::SCHEME_HTTPS
         );
-        $this->specialPageList = $specialPageList;
         $this->statusableChoiceStatusSubscriber = $statusableChoiceStatusSubscriber;
+        $this->specialPageChoiceStatusSubscriber = $specialPageChoiceStatusSubscriber;
    }
 
     /**
@@ -94,13 +94,6 @@ class NodeType extends AbstractType
                 'group_id' => 'properties',
                 'sub_group_id' => 'properties',
                 'label' => 'open_orchestra_backoffice.form.node.scheme'
-            ))
-            ->add('specialPageName', 'choice', array(
-                'label' => 'open_orchestra_backoffice.form.node.specialPageName',
-                'choices' => $this->specialPageList,
-                'group_id' => 'properties',
-                'sub_group_id' => 'properties',
-                'required' => false,
             ))
             ->add('inMenu', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.node.in_menu',
@@ -188,6 +181,7 @@ class NodeType extends AbstractType
             ));
 
         $builder->addEventSubscriber($this->statusableChoiceStatusSubscriber);
+        $builder->addEventSubscriber($this->specialPageChoiceStatusSubscriber);
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
             $builder->addEventSubscriber(new NodeThemeSelectionSubscriber($this->siteRepository));
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber(

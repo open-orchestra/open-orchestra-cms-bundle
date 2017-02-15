@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

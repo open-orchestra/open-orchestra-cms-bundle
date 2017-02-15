@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
@@ -280,7 +281,9 @@ class NodeManager
         $templateSet = $site->getTemplateSet();
         $areasName = $this->templateManager->getTemplateAreas($node->getTemplate(), $templateSet);
         foreach($areasName as $areaName) {
-            $node->setArea($areaName, new $this->areaClass());
+            if (! $node->getArea($areaName) instanceof AreaInterface) {
+                $node->setArea($areaName, new $this->areaClass());
+            }
         }
 
         return $node;

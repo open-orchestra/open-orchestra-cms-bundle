@@ -8,6 +8,7 @@ parameters:
     open_orchestra_model.validator.boolean_condition.class                   : OpenOrchestra\Backoffice\Validator\Constraints\BooleanConditionValidator
     open_orchestra_model.validator.unique_main_alias.class                   : OpenOrchestra\Backoffice\Validator\Constraints\UniqueMainAliasValidator
     open_orchestra_model.validator.unique_redirection.class                  : OpenOrchestra\Backoffice\Validator\Constraints\UniqueRedirectionValidator
+    open_orchestra_model.validator.unique_node_special_page.class            : OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeSpecialPageValidator
 
 services:
     open_orchestra_model.validatorcontent_template:
@@ -64,3 +65,10 @@ services:
             - '@open_orchestra_model.repository.redirection'
         tags:
             - { name: validator.constraint_validator, alias: unique_redirection}
+
+    open_orchestra_model.validator.unique_node_special_page:
+        class: '%open_orchestra_model.validator.unique_node_special_page.class%'
+        arguments:
+            - '@open_orchestra_model.repository.node'
+        tags:
+            - { name: validator.constraint_validator, alias: unique_node_special_page}

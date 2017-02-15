@@ -195,7 +195,8 @@ class NodeController extends BaseController
      * @Config\Method({"PATCH"})
      *
      * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
      * })
      *
      * @return FacadeInterface
