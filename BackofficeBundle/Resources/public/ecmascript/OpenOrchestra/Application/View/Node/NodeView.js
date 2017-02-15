@@ -191,8 +191,6 @@ class NodeView extends OrchestraView
      * @private
      */
     _activeArea(event) {
-        console.log('active');
-        console.log('active');
         $('.area', this.$el).removeClass('active');
         if (this._node.get('rights').can_edit) {
             $(event.currentTarget).addClass('active');

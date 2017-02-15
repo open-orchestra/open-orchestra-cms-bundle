@@ -76,7 +76,7 @@ class NodeController extends AbstractAdminController
                 }
             }
 
-            //$this->get('object_manager')->flush();
+            $this->get('object_manager')->flush();
             $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
 
             if ($status->getId() !== $node->getStatus()->getId()) {
