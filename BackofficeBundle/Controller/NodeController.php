@@ -53,12 +53,17 @@ class NodeController extends AbstractAdminController
         ));
 
         $status = $node->getStatus();
+        $template = $node->getTemplate();
         $options = array('action' => $url);
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            if ($template !== $node->getTemplate()) {
+                $node = $this->get('open_orchestra_backoffice.manager.node')->initializeAreasNode($node);
+            }
+
             $saveOldPublishedVersion = $form->has('saveOldPublishedVersion') ? $form->get('saveOldPublishedVersion')->getData() : false;
             if (true === $node->getStatus()->isPublishedState() && false === $saveOldPublishedVersion) {
                 $oldPublishedVersion = $nodeRepository->findOnePublished(

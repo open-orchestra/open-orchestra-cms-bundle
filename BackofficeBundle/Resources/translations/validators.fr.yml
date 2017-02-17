@@ -6,6 +6,7 @@ open_orchestra_backoffice_validators:
         pattern: Le bloc %blockLabel% nécessite le paramètre %parameter% dans la pattern de l'url du node
         restore: Vous ne pouvez pas restaurer ce noeud, vous devez restaurer son parent %nodeparent% avant
         unique_node_order: L'emplacement de la page doit être unique
+        unique_node_special_page: Il existe déjà une page spéciale de ce type
         check_variable_route_pattern_in_menu: Le pattern de route dynamique ne peux être utilisé dans un menu
     authorize:
         edition: Ce document n'est plus modifiable

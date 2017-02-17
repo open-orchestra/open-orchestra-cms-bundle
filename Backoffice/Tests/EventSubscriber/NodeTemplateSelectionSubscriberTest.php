@@ -89,14 +89,12 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test the build form
-     *
-     * @param string|null $id
-     * @param integer     $nbrCall
-     *
+     * @param string $id
+     * @param int    $edit
+     * @param int    $new
      * @dataProvider getNodeIdAndTemplateSetParameters
      */
-    public function testPreSetData($id, $nbrCall)
+    public function testPreSetData($id, $edit, $new)
     {
         $choices = array(
             'default' => 'default',
@@ -109,7 +107,7 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('nodeTemplateSelection', 'form', array(
+        Phake::verify($this->event->getForm(), Phake::times($new))->add('nodeTemplateSelection', 'form', array(
             'virtual' => true,
             'label' => false,
             'mapped' => false,
@@ -117,18 +115,27 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
             'sub_group_id' => 'style'
         ));
 
-        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('template', 'choice', array(
+        Phake::verify($this->event->getForm(), Phake::times($new))->add('template', 'choice', array(
             'choices' => $choices,
             'required' => true,
             'label' => 'open_orchestra_backoffice.form.node.template'
         ));
 
-        Phake::verify($this->event->getForm(), Phake::times($nbrCall))->add('nodeSource', 'oo_node_choice', array(
+        Phake::verify($this->event->getForm(), Phake::times($new))->add('nodeSource', 'oo_node_choice', array(
             'required' => false,
             'mapped' => false,
             'label' => 'open_orchestra_backoffice.form.node.node_source'
         ));
+
+        Phake::verify($this->event->getForm(), Phake::times($edit))->add('template', 'choice', array(
+            'choices' => $choices,
+            'required' => true,
+            'label' => 'open_orchestra_backoffice.form.node.template',
+            'group_id' => 'properties',
+            'sub_group_id' => 'style'
+        ));
     }
+
 
     /**
      * Node Id provider
@@ -138,8 +145,8 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
     public function getNodeIdAndTemplateSetParameters()
     {
         return array(
-            array(null, 1),
-            array('fakeNodeId', 0),
+            array(null, 0, 1),
+            array('fakeNodeId', 1, 0),
         );
     }
 
