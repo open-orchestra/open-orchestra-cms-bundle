@@ -7,8 +7,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\SiteSubscriber;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
@@ -17,6 +15,7 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 class SiteSiteAliasType extends AbstractType
 {
     protected $siteRepository;
+    protected $currentSiteManager;
 
     /**
      * @param SiteRepositoryInterface $siteRepository

@@ -174,9 +174,9 @@ class NodeManager
     }
 
     /**
-     * @param $node
+     * @param NodeInterface $node
      */
-    public function deleteBlockInNode($node)
+    public function deleteBlockInNode(NodeInterface $node)
     {
         foreach ($node->getAreas() as $area) {
             foreach ($area->getBlocks() as $block) {
