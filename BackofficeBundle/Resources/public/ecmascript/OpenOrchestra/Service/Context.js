@@ -11,7 +11,7 @@ class Context
      * @param {Object} user
      * @param {Array}  siteLanguages
      */
-    constructor({routing, siteId, language, user, siteLanguages}) {
+   constructor({routing, siteId, language, user, siteLanguages}) {
         this.routing = routing;
         this.siteId = siteId;
         this.language = language;
