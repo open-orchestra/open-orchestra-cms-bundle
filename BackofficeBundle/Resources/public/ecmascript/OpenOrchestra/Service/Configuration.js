@@ -26,6 +26,13 @@ class Configuration
     getParameters() {
         return this._parameters;
     }
+
+    /**
+     * @param {String} name
+     */
+    addParameter(name, value) {
+        this._parameters[name] = value;
+    }
 }
 
 export default Configuration;
