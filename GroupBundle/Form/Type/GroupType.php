@@ -62,8 +62,8 @@ class GroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $configuration = $this->generatePerimeterManager->getPerimetersConfiguration();
-        array_walk_recursive($configuration, function(&$item) {
-            $item = str_replace('/', '::', $item);
+        array_walk_recursive($configuration, function(&$path) {
+            $path = GeneratePerimeterManager::changePathToName($path);
         });
 
         $builder
@@ -92,7 +92,6 @@ class GroupType extends AbstractType
                 'label' => false,
                 'configuration' => $configuration,
                 'group_id' => 'perimeter',
-                'sub_group_id' => 'page',
             ));
         $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
         $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);

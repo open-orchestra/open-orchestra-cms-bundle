@@ -217,27 +217,32 @@
 {% block oo_tree_list_widget %}
     {% set collection = form|first %}
     {% spaceless %}
-         <div class="perimeter-tree tree tree-form">
-            <ul class="children">
-                {{ _self.tabulation(form.vars.configuration, collection) }}
-            </ul>
-        </div>
+    	<fieldset>
+    		<legend class="underline-label">{{ ('open_orchestra_backoffice.' ~ form.vars.id)|trans }}</legend>
+             <div class="perimeter-tree tree tree-form">
+    	        {% for root in form.vars.configuration %}
+                    <ul class="children">
+                        {{ _self.tabulation(root, collection) }}
+                    </ul>
+                {% endfor %}
+            </div>
+       </fieldset>
     {% endspaceless %}
 {% endblock oo_tree_list_widget %}
 
 {% macro tabulation(configuration, collection) %}
-    {% set key = configuration['node']['path'] %}
-    {% set name = configuration['node']['name'] %}
+    {% set key = configuration['root']['path'] %}
+    {% set name = configuration['root']['name'] %}
     {% spaceless %}
         <li>
             <div>
-                {% if configuration['child'] is defined %}<i aria-hidden="true" class="fa fa-chevron-down toggle-tree"></i>{% endif %}
+                {% if configuration['children'] is defined %}<i aria-hidden="true" class="fa fa-chevron-down toggle-tree"></i>{% endif %}
                 <input type="checkbox" id="{{ collection[key].vars.id }}" name="{{ collection[key].vars.full_name }}" {% if collection[key].vars.value is defined %} value="{{ collection[key].vars.value }}"{% endif %}{% if collection[key].vars.checked %} checked="checked"{% endif %} />
                 <label for="{{ collection[key].vars.id }}">{{ name }}</label>
             </div>
-            {% if configuration['child'] is defined %}
+            {% if configuration['children'] is defined %}
                 <ul class="children">
-                {% for child in configuration['child'] %}
+                {% for child in configuration['children'] %}
                     {{ _self.tabulation(child, collection) }}
                 {% endfor %}
                 </ul>

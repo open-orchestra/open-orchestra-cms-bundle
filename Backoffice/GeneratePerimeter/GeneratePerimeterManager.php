@@ -8,6 +8,8 @@ use OpenOrchestra\Backoffice\GeneratePerimeter\Strategy\GeneratePerimeterStrateg
  */
 class GeneratePerimeterManager
 {
+    const DELIMITER = '__';
+
     protected $strategies = array();
 
     /**
@@ -49,4 +51,12 @@ class GeneratePerimeterManager
 
         return $perimetersConfiguration;
     }
+
+   static public function changePathToName($path) {
+       return str_replace('/', self::DELIMITER, $path);
+   }
+
+   static public function changeNameToPath($name) {
+       return str_replace(self::DELIMITER, '/', $name);
+   }
 }
