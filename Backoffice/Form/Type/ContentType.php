@@ -47,13 +47,27 @@ class ContentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.content.name',
-                'disabled' => $options['is_blocked_edition'],
-                'group_id' => 'property',
-                'sub_group_id' => 'information',
-            ))
-            ->add('keywords', 'oo_keywords_choice', array(
+        ->add('name', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.content.name',
+            'disabled' => $options['is_blocked_edition'],
+            'group_id' => 'property',
+            'sub_group_id' => 'information',
+        ))
+        ->add('media', 'oo_media_choice', array(
+            'label' => 'open_orchestra_backoffice.form.content.name',
+            'disabled' => $options['is_blocked_edition'],
+            'group_id' => 'property',
+            'sub_group_id' => 'information',
+            'mapped'=> false
+        ))
+        ->add('media2', 'oo_media_choice', array(
+            'label' => 'open_orchestra_backoffice.form.content.name',
+            'disabled' => $options['is_blocked_edition'],
+            'group_id' => 'property',
+            'sub_group_id' => 'information',
+            'mapped'=> false
+        ))
+        ->add('keywords', 'oo_keywords_choice', array(
                 'label' => 'open_orchestra_backoffice.form.content.keywords',
                 'required' => false,
                 'group_id' => 'property',
