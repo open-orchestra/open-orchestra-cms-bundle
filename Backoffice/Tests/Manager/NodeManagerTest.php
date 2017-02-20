@@ -157,7 +157,7 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         Phake::verify($alteredNode)->setVersion(1);
         Phake::verify($alteredNode)->setLanguage($language);
-        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
     }
 
     /**
@@ -343,5 +343,15 @@ class NodeManagerTest extends AbstractBaseTestCase
             array(3, 'test', '/test'),
             array(4, 'fixture', '/test/fixture'),
         );
+    }
+
+    /**
+     * Test delete block in node
+     */
+    public function testDeleteBlockInNode()
+    {
+        $this->manager->deleteBlockInNode($this->node);
+        Phake::verify($this->documentManager)->remove($this->block);
+        Phake::verify($this->documentManager, Phake::never())->remove($this->blockTransverse);
     }
 }

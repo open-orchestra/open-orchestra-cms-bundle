@@ -8,8 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentSearchSubscriber;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\Backoffice\Validator\Constraints\BooleanCondition;
 
 /**

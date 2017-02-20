@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 
 /**
