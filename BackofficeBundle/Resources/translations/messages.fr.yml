@@ -241,7 +241,7 @@ open_orchestra_backoffice:
             publish_date: Date de publication automatique
             unpublish_date: Date de dépublication automatique
             status: Status
-            save_old_published_version: Save a copy of old published version
+            save_old_published_version: Enregistrer une copie de l'ancienne version publiée
             node_type: Type de page
             priority:
                 label: Importance relative par rapport aux autres pages du site (pour le sitemap)

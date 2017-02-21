@@ -1,11 +1,11 @@
 open_orchestra_user_admin:
     navigation:
         user:
-          title: Users
+          title: User
           users: All users
     table:
         groups:
-            label: Label
+            name: Name
             site_name: Site name
             site: Site
             nbr_users: Number of members

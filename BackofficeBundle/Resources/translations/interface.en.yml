@@ -28,8 +28,8 @@ open_orchestra_backoffice:
           title: Dashboard
         contribution:
           title: Contribution
-          nodes: Pages
-          contents: Contents
+          node: Page
+          content: Content
           trashcan: Trashcan
           media: Media
         user:
@@ -37,15 +37,14 @@ open_orchestra_backoffice:
         platform:
           title: Platform
           tag: Tag
-          content: Contents
         developer:
           title:  Developer
           content_type: Content Type
         configuration:
           title       : Configuration
-          site        : Sites
-          redirections: Redirections
-          shared_block: Shared blocks
+          site        : Site
+          redirection : Redirection
+          shared_block: Shared block
     table:
         delete_button: Remove selected items
         duplicate: Duplicate
@@ -122,7 +121,7 @@ open_orchestra_backoffice:
         publish_modal:
             title: Published this version
             message: Do you want publish cette version, it will be visible in front ?
-            save_old_published_version: Save a copy of old published version
+            save_old_published_version: Save a copy of old published versions
         message_online:
             title: The node is actually online.
             message: |

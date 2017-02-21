@@ -27,7 +27,7 @@ class LogRouter extends OrchestraRouter
                 label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
             },
             {
-                label: Translator.trans('open_orchestra_log.navigation.configuration.logs'),
+                label: Translator.trans('open_orchestra_log.navigation.configuration.log'),
                 link: '#' + Backbone.history.generateUrl('listLog')
             }
         ]

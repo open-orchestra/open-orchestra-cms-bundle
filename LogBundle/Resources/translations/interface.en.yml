@@ -1,8 +1,8 @@
 open_orchestra_log:
     navigation:
         configuration:
-          logs: Logs
-    title_list: Logs
+          log: Log
+    title_list: Log
     search_engine:
         filter: Filter
     table:

@@ -1,8 +1,7 @@
 open_orchestra_group:
     navigation:
         group:
-          title: Groupes
-          groups: Tous les groupes
+          group: Groupe
     table:
         groups:
             new: Nouveau groupe
