@@ -68,18 +68,20 @@ class Accordion extends AbstractBehavior
      */
     _addForm(event) {
         event.preventDefault();
-        let $accordion = $(event.target).closest('.accordion')
+        let $accordion = $(event.target).closest('.accordion');
         let $table = $accordion.find('table').eq(0);
         let prototype = $accordion.data('prototype');
         let prototypeName = /data-prototype-id=&quot;(.*?)&quot;/.exec(prototype)[1];
         let rank = -1;
         $('tbody[data-prototype-id]', $table).each(function(){
             rank = Math.max(parseInt($(this).data('prototypeId')) || 0, rank);
-        })
+        });
         rank++;
         let regularExpression = new RegExp(prototypeName, 'g');
         let $prototype = $(_.unescape(prototype.replace(regularExpression, rank)));
         $table.append($prototype);
+        Backbone.Events.trigger('form:deactivate', this);
+        Backbone.Events.trigger('form:activate', this);
         $('body, html').animate({ scrollTop: $prototype.offset().top }, 1000);
     }
 

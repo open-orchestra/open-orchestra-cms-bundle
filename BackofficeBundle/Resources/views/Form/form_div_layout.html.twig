@@ -100,7 +100,10 @@
                                 </td>
                             {% endif %}
                         </tr>
-                        <tr>
+
+                        {% set attr = prototype.vars.attr|default([]) %}
+                        {% set id = null %}
+                        <tr {{ block('widget_container_attributes') }} >
                             <td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
                                 <div class="row">
                                     {{ form_widget(prototype) }}

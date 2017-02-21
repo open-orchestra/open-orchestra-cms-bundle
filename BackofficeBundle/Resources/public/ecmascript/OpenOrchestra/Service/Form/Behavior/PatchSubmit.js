@@ -61,7 +61,7 @@ class PatchSubmit extends AbstractBehavior
                 $.each(containers, function(id, $container){
                     let $subform = $('#' + id, response);
                     $container.html(($subform.length > 0) ? $subform.parent().html() : '');
-                })
+                });
                 Backbone.Events.trigger('form:activate', this);
             }
         });

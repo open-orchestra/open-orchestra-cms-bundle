@@ -135,17 +135,19 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             $container->remove($child->getName());
         }
 
-        $fieldOptions = array();
-        foreach ($data->getOptions() as  $fieldOption) {
-            $fieldOptions[$fieldOption->getKey()] = $fieldOption->getValue();
-        }
-
-        foreach ($this->fieldTypeParameters[$type]['options'] as $child => $option) {
-            $value = $option['default_value'];
-            if (array_key_exists($child, $fieldOptions)) {
-                $value = $fieldOptions[$child];
+        if (array_key_exists('options', $this->fieldTypeParameters[$type])) {
+            $fieldOptions = array();
+            foreach ($data->getOptions() as $fieldOption) {
+                $fieldOptions[$fieldOption->getKey()] = $fieldOption->getValue();
             }
-            $this->addOptionFormType($container, $child, $value);
+
+            foreach ($this->fieldTypeParameters[$type]['options'] as $child => $option) {
+                $value = $option['default_value'];
+                if (array_key_exists($child, $fieldOptions)) {
+                    $value = $fieldOptions[$child];
+                }
+                $this->addOptionFormType($container, $child, $value);
+            }
         }
     }
 
