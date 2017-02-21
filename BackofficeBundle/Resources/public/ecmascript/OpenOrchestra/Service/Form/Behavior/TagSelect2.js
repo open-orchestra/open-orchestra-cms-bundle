@@ -31,7 +31,7 @@ class TagSelect2 extends AbstractBehavior
             },
             formatSelection: (term, container) => {
                 if (term.isNew) {
-                   container.parent().addClass('bg-color-red')
+                   //container.parent().addClass('bg-color-red')
                 }
 
                 return term.text;
