@@ -15,7 +15,7 @@ class FieldOptionType extends AbstractType
     protected $fieldOptionTransformer;
 
     /**
-     * @param DataTransformerInterface $fieldTypeTypeTransformer
+     * @param DataTransformerInterface $fieldOptionTransformer
      */
     public function __construct(
         DataTransformerInterface $fieldOptionTransformer

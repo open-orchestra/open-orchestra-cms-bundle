@@ -54,10 +54,33 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
             $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').show();
         }
     }
-    /**
-     * Delete content type
-     */
-    _deleteElement() {
+
+   /**
+    * Redirect to edit content type view
+    *
+    * @param {mixed}  data
+    * @param {string} textStatus
+    * @param {object} jqXHR
+    * @private
+    */
+   _redirectEditElement(data, textStatus, jqXHR) {
+       let contentTypeId = jqXHR.getResponseHeader('contentTypeId');
+       let name = jqXHR.getResponseHeader('name');
+       if (null === contentTypeId || null === name) {
+              throw new ApplicationError('Invalid contentTypeId or name');
+       }
+       let url = Backbone.history.generateUrl('editContentType', {
+          contentTypeId: contentTypeId,
+          name: name
+       });
+       Backbone.Events.trigger('form:deactivate', this);
+       Backbone.history.navigate(url, true);
+    }
+
+   /**
+    * Delete content type
+    */
+   _deleteElement() {
         if (null === this._contentTypeId) {
             throw new ApplicationError('Invalid contentTypeId');
         }
@@ -68,7 +91,7 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
                 Backbone.history.navigate(url, true);
             }
         });
-    }
+   }
 }
 
 export default ContentTypeFormView;

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\EventSubscriber\FieldTypeTypeSubscriber;
@@ -59,8 +58,8 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->form)->get('options')->thenReturn($this->optionsChild);
 
         $this->fieldOptions = array(
-            "text" => array("search" => 'text', 'type' => 'text'),
-            "date" => array("search" => 'date', 'type' => 'date'),
+            "max_length" => array("search" => 'text', 'type' => 'text'),
+            "required" => array("search" => 'boolean', 'type' => 'choice'),
         );
 
         $this->fieldTypeParameters = array(
@@ -107,16 +106,14 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
      */
     public function testEventSubscribed()
     {
-        $this->assertArrayHasKey(FormEvents::POST_SET_DATA, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(FormEvents::PRE_SUBMIT, $this->subscriber->getSubscribedEvents());
     }
 
     /**
-     * @param bool $hasMaxLength
-     * @param bool $hasRequired
-     * @param int  $timesCalled
+     * Test pret set data
      */
-    public function testPostSetData()
+    public function testPreSetData()
     {
         $defaultValue = 'fakeDefaultValue';
         $optionValue = 'fakeOptionValue';
@@ -124,7 +121,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
         $expectedOptions['data'] = $defaultValue;
 
         $fieldOption = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
-        Phake::when($fieldOption)->getKey()->thenReturn('text');
+        Phake::when($fieldOption)->getKey()->thenReturn('max_length');
         Phake::when($fieldOption)->getValue()->thenReturn($optionValue);
 
 
@@ -135,9 +132,8 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
 
         Phake::when($this->event)->getData()->thenReturn($fieldType);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
-        Phake::when($this->form)->getData()->thenReturn($fieldType);
 
-        $this->subscriber->postSetData($this->event);
+        $this->subscriber->preSetData($this->event);
 
         Phake::verify($this->containerChild)->remove('default_value');
         Phake::verify($this->optionsChild)->remove($this->optionChildName);
@@ -148,6 +144,45 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
             $expectedOptions
         );
 
-        Phake::verify($this->optionsChild)->add('text', 'text', array("search" => 'text', 'data' => $optionValue));
+        Phake::verify($this->optionsChild)->add('max_length', 'text', array("search" => 'text', 'data' => $optionValue));
+        Phake::verify($this->optionsChild)->add('required', 'choice', array("search" => 'boolean', 'data' => false));
+    }
+
+    /**
+     * Test pre submit
+     */
+    public function testPreSubmit()
+    {
+        $defaultValue = 'fakeDefaultValue';
+        $optionValue = 'fakeOptionValue';
+        $expectedOptions = $this->fieldTypeParameters['text']['default_value']['options'];
+        $expectedOptions['data'] = $defaultValue;
+
+        $fieldOption = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
+        Phake::when($fieldOption)->getKey()->thenReturn('max_length');
+        Phake::when($fieldOption)->getValue()->thenReturn($optionValue);
+
+        $fieldType = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
+        Phake::when($fieldType)->getDefaultValue()->thenReturn($defaultValue);
+        Phake::when($fieldType)->getType()->thenReturn('text');
+        Phake::when($fieldType)->getOptions()->thenReturn(array($fieldOption));
+
+        Phake::when($this->event)->getData()->thenReturn(array('type' => 'text'));
+        Phake::when($this->event)->getForm()->thenReturn($this->form);
+        Phake::when($this->form)->getData()->thenReturn($fieldType);
+
+        $this->subscriber->preSubmit($this->event);
+
+        Phake::verify($this->containerChild)->remove('default_value');
+        Phake::verify($this->optionsChild)->remove($this->optionChildName);
+
+        Phake::verify($this->containerChild)->add(
+            'default_value',
+            'text',
+            $expectedOptions
+        );
+
+        Phake::verify($this->optionsChild)->add('max_length', 'text', array("search" => 'text', 'data' => $optionValue));
+        Phake::verify($this->optionsChild)->add('required', 'choice', array("search" => 'boolean', 'data' => false));
     }
 }
