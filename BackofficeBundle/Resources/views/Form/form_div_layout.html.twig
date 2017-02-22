@@ -59,7 +59,7 @@
             <ul role="tablist" class="nav nav-tabs">
                 {% for group in groups %}
                     <li class="{% if active == loop.index0 %}active{% endif %}">
-                        <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %}">
+                        <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %} nav-tab-{{ group.group_name }} ">
                             {{ group.label|default(loop.index0)|trans }}
                         </a>
                     </li>

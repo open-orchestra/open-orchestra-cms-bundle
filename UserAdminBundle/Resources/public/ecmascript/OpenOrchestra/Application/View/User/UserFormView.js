@@ -26,7 +26,7 @@ class UserFormView extends AbstractFormView
         super.render();
 
         if (true === this._activatePreferenceTab) {
-            $('.nav-tabs a[href="#tab-oo_user-2"]', this._$formRegion).tab('show');
+            $('.nav-tabs a.nav-tab-preference', this._$formRegion).tab('show');
             $('.tab-content .tab-pane', this._$formRegion).removeClass('active');
             $('.tab-content .tab-preference', this._$formRegion).addClass('active');
         }
