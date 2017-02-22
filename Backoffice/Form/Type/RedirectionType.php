@@ -93,6 +93,7 @@ class RedirectionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->redirectionClass,
+            'new_button' => false,
             'constraints'  => array(new UniqueRedirection()),
             'group_enabled' => true,
             'group_render' => array(
@@ -121,6 +122,7 @@ class RedirectionType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $view->vars['new_button'] = $options['new_button'];
         if (is_null($form->get('type')->getData())) {
             $type = self::TYPE_INTERNAL;
             if ('' !== trim($form->get('url')->getData())) {
