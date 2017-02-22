@@ -12,6 +12,7 @@ services:
             - '%open_orchestra_base.administration_languages%'
             - '@open_orchestra_user_admin.subscriber.user_profile'
             - '@open_orchestra_user_admin.subscriber.user_group'
+            - '@translator'
         tags:
             - { name: form.type, alias: oo_user}
     open_orchestra_user_admin.type.registration_user:

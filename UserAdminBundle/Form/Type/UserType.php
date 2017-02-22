@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\UserBundle\Model\UserInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class UserType
@@ -17,23 +18,27 @@ class UserType extends AbstractType
     protected $availableLanguages;
     protected $userProfileSubscriber;
     protected $userGroupSubscriber;
+    protected $translator;
 
     /**
      * @param string                   $class
      * @param array                    $availableLanguages
      * @param EventSubscriberInterface $userProfilSubscriber,
      * @param EventSubscriberInterface $userGroupSubscriber,
+     * @param TranslatorInterface      $translator,
      */
     public function __construct(
         $class,
         array $availableLanguages,
         EventSubscriberInterface $userProfilSubscriber,
-        EventSubscriberInterface $userGroupSubscriber
+        EventSubscriberInterface $userGroupSubscriber,
+        TranslatorInterface $translator
     ) {
         $this->class = $class;
         $this->availableLanguages = $availableLanguages;
         $this->userProfileSubscriber = $userProfilSubscriber;
         $this->userGroupSubscriber = $userGroupSubscriber;
+        $this->translator = $translator;
     }
 
     /**
@@ -77,17 +82,9 @@ class UserType extends AbstractType
                     'group_id' => 'authentication',
                     'sub_group_id' => 'identifier',
                     'required' => false,
-                ))
-                ->add('plainPassword', 'repeated', array(
-                    'type' => 'password',
-                    'options' => array('translation_domain' => 'FOSUserBundle'),
-                    'first_options' => array('label' => 'form.new_password'),
-                    'second_options' => array('label' => 'form.new_password_confirmation'),
-                    'invalid_message' => 'fos_user.password.mismatch',
-                    'group_id' => 'authentication',
-                    'sub_group_id' => 'identifier',
-                    'required' => $options['required_password'],
-                ))
+                ));
+            $this
+                ->addPlainPasswordField($builder, $options)
                 ->add('language', 'choice', array(
                     'choices' => $this->getLanguages(),
                     'label' => 'open_orchestra_user_admin.form.user.language',
@@ -101,22 +98,13 @@ class UserType extends AbstractType
                     'sub_group_id' => 'language',
                 ));
         } else {
-            $builder
-                ->add('plainPassword', 'repeated', array(
-                    'type' => 'password',
-                    'options' => array('translation_domain' => 'FOSUserBundle'),
-                    'first_options' => array('label' => 'form.password'),
-                    'second_options' => array('label' => 'form.password_confirmation'),
-                    'invalid_message' => 'fos_user.password.mismatch',
-                    'group_id' => 'authentication',
-                    'sub_group_id' => 'identifier',
-                    'required' => $options['required_password'],
-                ))
+            $this
+                ->addPlainPasswordField($builder, $options)
                 ->add('editAllowed', 'checkbox', array(
-                    'label' => 'open_orchestra_user_admin.form.user.edit_allowed',
-                    'required' => false,
-                    'group_id' => 'information',
-                    'sub_group_id' => 'profil',
+                     'label' => 'open_orchestra_user_admin.form.user.edit_allowed',
+                     'required' => false,
+                     'group_id' => 'information',
+                     'sub_group_id' => 'profil',
                 ));
             $builder->addEventSubscriber($this->userProfileSubscriber);
             $builder->addEventSubscriber($this->userGroupSubscriber);
@@ -203,5 +191,31 @@ class UserType extends AbstractType
         }
 
         return $languages;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return FormBuilderInterface
+     */
+    protected function addPlainPasswordField(FormBuilderInterface $builder, array $options)
+    {
+        return $builder->add('plainPassword', 'repeated', array(
+                    'type' => 'password',
+                    'options' => array('translation_domain' => 'FOSUserBundle'),
+                    'first_options' => array(
+                        'label' => 'form.password',
+                        'attr' => array(
+                            'help_text' => $this->translator->trans('open_orchestra_user.form.registration_user.complex_user_password', array(), 'validators'),
+                        ),
+                    ),
+                    'second_options' => array('label' => 'form.new_password_confirmation'),
+                    'invalid_message' => 'fos_user.password.mismatch',
+                    'group_id' => 'authentication',
+                    'sub_group_id' => 'identifier',
+                    'required' => $options['required_password'],
+                )
+            );
     }
 }
