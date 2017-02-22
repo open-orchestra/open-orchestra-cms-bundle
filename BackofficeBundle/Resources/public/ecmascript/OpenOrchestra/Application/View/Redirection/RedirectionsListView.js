@@ -92,7 +92,7 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
      * @private
      */
     _getSyncOptions() {
-        return {context: 'list'};
+        return {apiContext: 'list'};
     }
 }
 
