@@ -25,17 +25,27 @@
                     <%= Translator.trans('open_orchestra_backoffice.node.edit') %>
                 </a>
                 <% if (true === nodeTree.get('node').get('rights').can_create) {%>
-                    <a href="#<%= Backbone.history.generateUrl('newTreeNode', {
-                        language: nodeTree.get('node').get('language'),
-                        parentId: nodeTree.get('node').get('node_id')
-                    }) %>">
+                    <% if ( 0 !== nodeTree.get('children').length) { %>
+                        <a href="#<%= Backbone.history.generateUrl('newTreeNode', {
+                                language: nodeTree.get('node').get('language'),
+                                parentId: nodeTree.get('node').get('node_id')
+                            })
+                        %>">
+                    <% } else {%>
+                        <a href="#<%= Backbone.history.generateUrl('newNode', {
+                            language: nodeTree.get('node').get('language'),
+                            parentId: nodeTree.get('node').get('node_id'),
+                            order: 1
+                            })
+                        %>">
+                    <% }%>
                         <%= Translator.trans('open_orchestra_backoffice.node.add') %>
                     </a>
-                <% };%>
+                <% }%>
             </div>
         <% } else {%>
             <i class="state out-of-bounds" aria-hidden="true"></i>
-        <% }; %>
+        <% } %>
     </div>
     <% if ( 0 !== nodeTree.get('children').length) { %>
         <ul class="children <% if (true === nodeTree.get('node').get('rights').can_edit) {%> sortable-container<% }%>">
