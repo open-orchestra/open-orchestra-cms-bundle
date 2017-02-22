@@ -15,7 +15,7 @@ class GroupTable extends AbstractBehavior
      */
     getExtraEvents() {
         return {
-            'click .fa-close': '_deleteGroup',
+            'click .fa-trash': '_deleteGroup',
             'click .open-groups-list': '_openGroupList'
         }
     }
@@ -26,7 +26,7 @@ class GroupTable extends AbstractBehavior
      * @param {Object} view - instance of AbstractFormView
      */
     bindExtraEvents(view) {
-        Backbone.Events.on('group:select', _.bind(this._addGroups, view), this);
+        view.on('group:select', _.bind(this._addGroups, view), this);
         super.bindExtraEvents(view);
     }
 
@@ -50,13 +50,15 @@ class GroupTable extends AbstractBehavior
      * Open group list in modal
      */
     _openGroupList(event) {
-        let checkboxes = $(event.target).closest('.user-groups-list').find('[type="checkbox"]');
-        let blockedGroups = _.pluck(checkboxes.serializeArray(), 'value');
+        let $radios = $(event.target).closest('.user-groups-list').find('[type="radio"]');
+        let blockedGroups = _.pluck($radios.serializeArray(), 'value');
         let selectedGroups = blockedGroups;
+
         new SitesAvailable().fetch({
             success: (sites) => {
                 let groupListModalView = new GroupListModalView(
                         {
+                            groupTable: this,
                             sites: sites,
                             blockedGroups: blockedGroups,
                             selectedGroups: selectedGroups
@@ -75,7 +77,7 @@ class GroupTable extends AbstractBehavior
         let prototype = $('.prototype', this.$el).data('prototype');
         let container = $('.user-groups-list table tbody', this.$el);
         for (let group of selectedGroups) {
-            if($('[type="checkbox"][value="' + group.get('id') + '"]', this.$el).length == 0) {
+            if($('[type="radio"][value="' + group.get('id') + '"]', this.$el).length == 0) {
                 container.append(prototype.replace(/__([^_]*?)__/g, function(str, property) {
                     return eval('group.get("' + property.split('.').join('").get("') + '")');
                 }));

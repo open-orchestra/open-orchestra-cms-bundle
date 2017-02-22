@@ -16,17 +16,19 @@ class GroupListModalView extends ModalView
         super.preinitialize();
         $.extend(this.events, {
             'click .select-group': '_selectGroup',
-            'click .search-engine button.submit, .search-engine button.reset': '_search',
+            'click .search-engine button.submit, .search-engine button.reset': '_search'
         });
     }
 
     /**
      * Initialize
-     * @param {Sites} sites
-     * @param {array} blockedGroups
-     * @param {array} selectedGroups
+     * @param {GroupTable} groupTable
+     * @param {Sites}      sites
+     * @param {array}      blockedGroups
+     * @param {array}      selectedGroups
      */
-    initialize({sites, blockedGroups, selectedGroups}) {
+    initialize({groupTable, sites, blockedGroups, selectedGroups}) {
+        this._groupTable = groupTable;
         this._sites = sites;
         this._blockedGroups = blockedGroups;
         this._selectedGroups = selectedGroups;
@@ -94,7 +96,7 @@ class GroupListModalView extends ModalView
                 selectedGroups.push(group);
             }
         }
-        Backbone.Events.trigger('group:select', selectedGroups);
+        this._groupTable.trigger('group:select', selectedGroups);
         this.$el.modal('hide');
     }
 }
