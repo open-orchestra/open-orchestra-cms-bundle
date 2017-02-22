@@ -30,7 +30,7 @@ class SharedBlocksView extends AbstractCollectionView
     render() {
         if (0 === this._collection.recordsTotal) {
             let template = this._renderTemplate('List/emptyListView' , {
-                title: Translator.trans('open_orchestra_backoffice.shared_blocks.title_list'),
+                title: Translator.trans('open_orchestra_backoffice.shared_block.title_list'),
                 urlAdd: '#'+Backbone.history.generateUrl('newSharedBlockListComponent', {language: this._language})
             });
             this.$el.html(template);
