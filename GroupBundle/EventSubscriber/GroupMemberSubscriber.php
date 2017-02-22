@@ -42,6 +42,7 @@ class GroupMemberSubscriber implements EventSubscriberInterface
                 'data' => $members,
                 'mapped' => false,
                 'group_id' => 'member',
+                'required' => false
             ));
         }
     }

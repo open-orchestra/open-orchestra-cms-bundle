@@ -24,6 +24,9 @@ class GroupType extends AbstractType
     protected $groupRoleTransformer;
     protected $groupClass;
     protected $backOfficeLanguages;
+    protected $generatePerimeterManager;
+    protected $eventDispatcher;
+    protected $groupPerimeterTransformer;
 
     /**
      * @param EventSubscriberInterface $groupMemberSubscriber
@@ -67,7 +70,7 @@ class GroupType extends AbstractType
         });
 
         $builder
-            ->add('name', null, array(
+            ->add('name', 'text', array(
                 'label' => 'open_orchestra_group.form.group.name',
                 'group_id' => 'property',
                 'sub_group_id' => 'property',
@@ -87,11 +90,13 @@ class GroupType extends AbstractType
                 'label' => false,
                 'group_id' => 'right',
                 'sub_group_id' => 'right',
+                'required' => false
             ))
             ->add('perimeters', 'oo_tree_list_collection', array(
                 'label' => false,
                 'configuration' => $configuration,
                 'group_id' => 'perimeter',
+                'required' => false
             ));
         $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
         $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);

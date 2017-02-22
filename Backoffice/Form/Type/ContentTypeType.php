@@ -112,6 +112,7 @@ class ContentTypeType extends AbstractType
                 ),
                 'options' => array( 'label' => false ),
                 'group_id' => 'field',
+                'required' => false
             ));
 
         if ($options['need_link_to_site_defintion']) {
