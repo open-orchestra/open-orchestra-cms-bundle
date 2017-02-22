@@ -4,6 +4,7 @@ open_orchestra_backoffice:
         site: Site
         sign_out: Sign out
         preference: Preferences
+        my_account: My account
     log_out_modal:
         security_message: You can improve your security after disconnect by closing your browser
     search_engine:
