@@ -32,22 +32,37 @@ class AbstractNewBlockComponentListView extends OrchestraView
      * Render list block component
      */
     render() {
-        let orderedBlockComponents = this._orderBlockComponentByCategory(this._listBlockComponents);
         let template = this._renderTemplate('Block/newBlockListComponentView',
+            {
+                categories: this._categories,
+                messages: FlashMessageBag.getMessages(),
+                labelButtonBack: this._getLabelButtonBack(),
+                urlButtonBack: this._getUrlButtonBack()
+            }
+        );
+        this.$el.html(template);
+        this._renderListComponent();
+
+        return this;
+    }
+
+    /**
+     * Render list
+     * @private
+     */
+    _renderListComponent() {
+        let orderedBlockComponents = this._orderBlockComponentByCategory(this._listBlockComponents);
+        let template = this._renderTemplate('Block/blockListComponentView',
             {
                 numberResult: this._listBlockComponents.length,
                 orderedBlockComponents: orderedBlockComponents,
                 categories: this._categories,
-                messages: FlashMessageBag.getMessages(),
-                labelButtonBack: this._getLabelButtonBack(),
-                urlButtonBack: this._getUrlButtonBack(),
                 addBlockUrl: $.proxy(this._getAddBlockUrl, this)
             }
         );
-        this.$el.html(template);
-
-        return this;
+        $('.list-block-component', this.$el).html(template);
     }
+
 
     /**
      * @private
@@ -120,7 +135,7 @@ class AbstractNewBlockComponentListView extends OrchestraView
             return testName;
         });
 
-        this.render();
+        this._renderListComponent();
 
         return false;
     }
