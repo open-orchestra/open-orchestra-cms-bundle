@@ -463,7 +463,7 @@ open_orchestra_backoffice:
             description: Affiche un contenu.
             content_template: Erreur de syntax twig.
         language_list:
-            title: Séléction de langue
+            title: Sélection de langue
             description: Affiche la liste déroulante avec toutes les langues du site.
         delete_question: Voulez vous supprimer ce bloc ?
         delete_explanation: La suppression sera définitive.
