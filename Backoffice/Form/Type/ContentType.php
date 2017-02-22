@@ -53,20 +53,6 @@ class ContentType extends AbstractType
             'group_id' => 'property',
             'sub_group_id' => 'information',
         ))
-        ->add('media', 'oo_media_choice', array(
-            'label' => 'open_orchestra_backoffice.form.content.name',
-            'disabled' => $options['is_blocked_edition'],
-            'group_id' => 'property',
-            'sub_group_id' => 'information',
-            'mapped'=> false
-        ))
-        ->add('media2', 'oo_media_choice', array(
-            'label' => 'open_orchestra_backoffice.form.content.name',
-            'disabled' => $options['is_blocked_edition'],
-            'group_id' => 'property',
-            'sub_group_id' => 'information',
-            'mapped'=> false
-        ))
         ->add('keywords', 'oo_keywords_choice', array(
                 'label' => 'open_orchestra_backoffice.form.content.keywords',
                 'required' => false,

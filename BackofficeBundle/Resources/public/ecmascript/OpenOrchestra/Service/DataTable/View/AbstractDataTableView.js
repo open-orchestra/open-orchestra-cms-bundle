@@ -362,7 +362,7 @@ class AbstractDataTableView extends OrchestraView
                     return drawCallback(collection);
                 }
             };
-            options = Object.assign(options, this._getSyncOptions());
+            options = $.extend(true, options, this._getSyncOptions());
             settings.jqXHR = collection.fetch(options);
         }
     }
