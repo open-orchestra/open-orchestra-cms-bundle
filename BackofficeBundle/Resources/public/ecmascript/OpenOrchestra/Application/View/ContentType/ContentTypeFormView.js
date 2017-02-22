@@ -40,9 +40,6 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
         this._toggleAlwaysShared();
-        $('.nav-tabs a.nav-tab-preference', this._$formRegion).tab('show');
-        $('.tab-content .tab-preference', this._$formRegion).addClass('active');
-
 
         return this;
     }
