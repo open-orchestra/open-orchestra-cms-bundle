@@ -2,10 +2,10 @@
     <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: node.get('language')}) %>" role="button">
         <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
     </a>
-    <a class="btn btn-border" role="button" href="#<%= Backbone.history.generateUrl('editNode', {nodeId: node.get('node_id'), language: node.get('language'), version: node.get('version')}) %>">
+    <a class="btn btn-border btn-set" role="button" href="#<%= Backbone.history.generateUrl('editNode', {nodeId: node.get('node_id'), language: node.get('language'), version: node.get('version')}) %>">
         <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
     </a>
-    <a class="btn btn-blue" role="button"><%= Translator.trans('open_orchestra_backoffice.node.edit') %></a>
+    <a class="btn btn-border btn-edit" role="button"><%= Translator.trans('open_orchestra_backoffice.node.edit') %></a>
 </div>
 <div class="pull-right languages">
     <ul>

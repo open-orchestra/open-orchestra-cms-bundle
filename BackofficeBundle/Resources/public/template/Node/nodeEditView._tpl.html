@@ -2,8 +2,8 @@
     <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: language}) %>" role="button">
         <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
     </a>
-    <a class="btn btn-blue" role="button"><%= Translator.trans('open_orchestra_backoffice.node.parameterize') %></a>
-    <a class="btn btn-border" role="button" href="#<%= Backbone.history.generateUrl('showNode', {language: language, version: version, nodeId: nodeId}) %>">
+    <a class="btn btn-border btn-set" role="button"><%= Translator.trans('open_orchestra_backoffice.node.parameterize') %></a>
+    <a class="btn btn-border btn-edit" role="button" href="#<%= Backbone.history.generateUrl('showNode', {language: language, version: version, nodeId: nodeId}) %>">
         <%= Translator.trans('open_orchestra_backoffice.node.edit') %>
     </a>
 </div>
