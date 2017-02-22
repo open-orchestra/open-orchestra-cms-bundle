@@ -25,13 +25,19 @@ class UserFormView extends AbstractFormView
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
 
+        return this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    _renderForm() {
+        super._renderForm();
         if (true === this._activatePreferenceTab) {
             $('.nav-tabs a.nav-tab-preference', this._$formRegion).tab('show');
             $('.tab-content .tab-pane', this._$formRegion).removeClass('active');
             $('.tab-content .tab-preference', this._$formRegion).addClass('active');
         }
-
-        return this;
     }
 
     /**
