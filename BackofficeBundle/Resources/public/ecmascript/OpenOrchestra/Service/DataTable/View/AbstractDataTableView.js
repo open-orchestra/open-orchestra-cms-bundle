@@ -10,22 +10,22 @@ class AbstractDataTableView extends OrchestraView
      *
      * @param {Object} options
      */
-    constructor(options) {
-        super(options);
+    constructor({collection, settings}) {
+        super({'collection': collection, 'settings': settings});
         if (this.constructor === AbstractDataTableView) {
             throw TypeError("Can not construct abstract class");
         }
     }
 
     /**
-     * @inheritdoc
+     * @param {Object} options
      */
-    preinitialize(options) {
+    preinitialize({collection, settings}) {
         this.tagName = 'div';
     }
 
     /**
-     * @inheritdoc
+     * @param {Object} options
      */
     initialize({collection, settings}) {
         this.api = null;
@@ -362,7 +362,7 @@ class AbstractDataTableView extends OrchestraView
                     return drawCallback(collection);
                 }
             };
-            options = Object.assign(options, this._getSyncOptions());
+            options = $.extend(true, options, this._getSyncOptions());
             settings.jqXHR = collection.fetch(options);
         }
     }
