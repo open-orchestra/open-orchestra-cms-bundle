@@ -9,7 +9,8 @@
             <%= user.firstName %> <span><%= user.lastName %></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="select-action">
-            <li><a href="#<%= Backbone.history.generateUrl('editSelfUser') %>"><%= Translator.trans('open_orchestra_backoffice.header.preference') %></a></li>
+            <li><a href="#<%= Backbone.history.generateUrl('editSelfUser', {activatePreferenceTab: 'true'}) %>"><%= Translator.trans('open_orchestra_backoffice.header.preference') %></a></li>
+            <li><a href="#<%= Backbone.history.generateUrl('editSelfUser') %>"><%= Translator.trans('open_orchestra_backoffice.header.my_account') %></a></li>
             <li>
                 <a href="#" class="logout">
                     <%= Translator.trans('open_orchestra_backoffice.header.sign_out') %>

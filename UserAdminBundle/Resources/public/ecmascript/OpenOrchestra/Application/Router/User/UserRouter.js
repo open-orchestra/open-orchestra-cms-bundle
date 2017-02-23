@@ -17,7 +17,7 @@ class UserRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'user/selfedit': 'editSelfUser',
+            'user/selfedit(/:activatePreferenceTab)': 'editSelfUser',
             'user/edit/:userId': 'editUser',
             'user/list(/:page)': 'listUser',
             'user/new/': 'newUser'
@@ -41,12 +41,20 @@ class UserRouter extends OrchestraRouter
 
     /**
      * Edit user preference
+     * @param {boolean} activatePreferenceTab
      */
-    editSelfUser() {
+    editSelfUser(activatePreferenceTab) {
+        if (null === activatePreferenceTab) {
+            activatePreferenceTab = false;
+        }
+        activatePreferenceTab = (activatePreferenceTab === 'true');
         let url = Routing.generate('open_orchestra_user_admin_user_self_form');
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let userFormView = new UserFormView({form : form});
+            let userFormView = new UserFormView({
+                form : form,
+                activatePreferenceTab: activatePreferenceTab
+            });
             Application.getRegion('content').html(userFormView.render().$el);
         });
     }
@@ -60,7 +68,10 @@ class UserRouter extends OrchestraRouter
         let url = Routing.generate('open_orchestra_user_admin_user_form', {userId: userId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
-            let userFormView = new UserFormView({form: form});
+            let userFormView = new UserFormView({
+                form: form,
+                activatePreferenceTab: false
+            });
             Application.getRegion('content').html(userFormView.render().$el);
         });
     }

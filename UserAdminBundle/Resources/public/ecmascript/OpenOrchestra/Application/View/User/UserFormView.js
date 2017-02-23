@@ -7,6 +7,16 @@ import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
 class UserFormView extends AbstractFormView
 {
     /**
+     * Initialize
+     * @param {Form} form
+     * @param {Boolean} activatePreferenceTab
+     */
+    initialize({form, activatePreferenceTab}) {
+        super.initialize({form: form});
+        this._activatePreferenceTab = activatePreferenceTab;
+    }
+
+    /**
      * @inheritdoc
      */
     render() {
@@ -16,6 +26,18 @@ class UserFormView extends AbstractFormView
         super.render();
 
         return this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    _renderForm() {
+        super._renderForm();
+        if (true === this._activatePreferenceTab) {
+            $('.nav-tabs a.nav-tab-preference', this._$formRegion).tab('show');
+            $('.tab-content .tab-pane', this._$formRegion).removeClass('active');
+            $('.tab-content .tab-preference', this._$formRegion).addClass('active');
+        }
     }
 
     /**
