@@ -70,6 +70,11 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         super._renderForm();
         // hide checkbox oo_content_saveOldPublishedVersion by default
         $('#oo_content_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
+
+        // activate tab data
+        $('.nav-tabs a.nav-tab-data', this._$formRegion).tab('show');
+        $('.tab-content .tab-pane', this._$formRegion).removeClass('active');
+        $('.tab-content .tab-data', this._$formRegion).addClass('active');
     }
 
     /**
