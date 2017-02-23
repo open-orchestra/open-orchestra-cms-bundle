@@ -121,7 +121,7 @@ open_orchestra_backoffice:
         publish_modal:
             title: Published this version
             message: Do you want publish cette version, it will be visible in front ?
-            save_old_published_version: Save a copy of old published versions
+            save_old_published_version: Save a copy of the old published version
         message_online:
             title: The node is actually online.
             message: |
