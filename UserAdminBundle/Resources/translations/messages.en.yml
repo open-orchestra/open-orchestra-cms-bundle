@@ -58,3 +58,5 @@ open_orchestra_user_admin:
     block_configuration:
         category:
             user: User
+    security:
+        no_roles: Account has not access.

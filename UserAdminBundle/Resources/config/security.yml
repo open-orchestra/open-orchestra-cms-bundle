@@ -2,6 +2,7 @@ parameters:
     open_orchestra_user_admin.role_hierarchy:
         ROLE_PLATFORM_ADMIN: [ROLE_USER, ROLE_KEYWORD]
         ROLE_DEVELOPER:      [ROLE_PLATFORM_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    open_orchestra_user_admin.user_checker.class: OpenOrchestra\UserAdminBundle\Security\OrchestraUserChecker
 
 services:
     security.access.role_hierarchy_voter:
@@ -12,3 +13,6 @@ services:
             - { name: security.voter, priority: "245" }
     security.access.simple_role_voter:
         class: '%security.access.simple_role_voter.class%'
+
+    open_orchestra_user_admin.user_checker:
+        class: '%open_orchestra_user_admin.user_checker.class%'
