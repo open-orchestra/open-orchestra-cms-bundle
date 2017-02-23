@@ -1,11 +1,11 @@
 open_orchestra_user_admin:
     navigation:
         user:
-          title: Utilisateurs
+          title: Utilisateur
           users: Tous les utilisateurs
     table:
         groups:
-            label: Label
+            name: Nom
             site_name: Nom du site
             site: Site
             nbr_users: Nombre de membres
@@ -13,7 +13,7 @@ open_orchestra_user_admin:
             username: Nom d'utilisateur
             groups: Groupes
     user:
-        add_group: Ajouter un group à l'utilisateur
+        add_group: Ajouter un groupe à l'utilisateur
         select: Sélectionner
         title_list: Liste des utilisateurs
         title_new: Nouvel utilisateur

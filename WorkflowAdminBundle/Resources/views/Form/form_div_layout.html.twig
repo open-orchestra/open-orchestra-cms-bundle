@@ -1,44 +1,3 @@
-{% block oo_workflow_right_widget %}
-    {% spaceless %}
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped workflow-right-widget">
-                {% if form.authorizations is defined and form.authorizations|length > 0 and form.authorizations[0].workflowFunctions is defined %}
-                <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        {{ form.authorizations[0].workflowFunctions.vars.label }}
-                        {% for child in form.authorizations[0].workflowFunctions %}
-                            <th>{{ child.vars.label }}</th>
-                        {% endfor %}
-                        <th>{{ 'open_orchestra_workflow_admin.right.owner'|trans({}, translation_domain)|raw }}</th>
-                    </tr>
-                </thead>
-                {% endif %}
-                <tbody>
-                {% for child in form.authorizations %}
-                    <tr>
-                        <td>
-                            {% if child.vars.label is iterable %}
-                                {{ child.vars.label| multi_languages_choose}}
-                            {% else %}
-                                {{ child.vars.label |trans({}, translation_domain)|raw }}
-                            {% endif %}
-
-                            {{ form_widget(child.referenceId) }}
-                        </td>
-                        {{ form_widget(child.workflowFunctions) }}
-                        <td>
-                            {{ form_widget(child.owner) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {{ form_rest(form) }}
-    {% endspaceless %}
-{% endblock oo_workflow_right_widget %}
-
 {% block oo_authorization_widget %}
     {% spaceless %}
         {{ form_widget(form.workflowFunctions) }}
@@ -121,7 +80,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ 'open_orchestra_workflow_admin.form.transitions.roles'|trans() }}</th>
+                    <th>{{ 'open_orchestra_workflow_admin.form.transitions.profiles'|trans() }}</th>
                     {% for label in form.vars.statuses %}
                         <th>
                             {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label}) }}

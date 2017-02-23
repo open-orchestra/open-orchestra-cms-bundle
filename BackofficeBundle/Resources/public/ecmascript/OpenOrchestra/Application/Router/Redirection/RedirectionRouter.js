@@ -30,7 +30,7 @@ class RedirectionRouter extends OrchestraRouter
                 label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.redirections'),
+                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.redirection'),
                 link: '#'+Backbone.history.generateUrl('listRedirections')
             }
         ]

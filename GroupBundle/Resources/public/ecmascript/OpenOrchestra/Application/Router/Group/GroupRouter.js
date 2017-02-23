@@ -28,10 +28,10 @@ class GroupRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label:Translator.trans('open_orchestra_group.navigation.group.title')
+                label:Translator.trans('open_orchestra_user_admin.navigation.user.title')
             },
             {
-                label: Translator.trans('open_orchestra_group.navigation.group.groups'),
+                label: Translator.trans('open_orchestra_group.navigation.group.group'),
                 link: '#'+Backbone.history.generateUrl('listGroup')
             }
         ]

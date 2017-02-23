@@ -39,8 +39,8 @@ open_orchestra_workflow_admin:
         parameters:
             success: The parameters has been modified
         transitions:
-            success : The transitions have been updated
-            roles   : Roles
-            from_to : 'From %status% to ...'
+            success  : The transitions have been updated
+            profiles : Profiles
+            from_to  : 'From %status% to ...'
     profile:
         page: Page

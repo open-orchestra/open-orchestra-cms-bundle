@@ -38,7 +38,7 @@ class NodeRouter extends OrchestraRouter
                 label: Translator.trans('open_orchestra_backoffice.navigation.contribution.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.nodes'),
+                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.node'),
                 link: '#'+Backbone.history.generateUrl('showNodes')
             }
         ]

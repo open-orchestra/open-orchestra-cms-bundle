@@ -16,8 +16,8 @@ open_orchestra_backoffice:
         no: Non
         cancel: Annuler
     confirm_remove:
-        title: Supprimer les élements selectionner ?
-        message: La suppression sera définitif
+        title: Supprimer les éléments selectionnés ?
+        message: La suppression sera définitive
     no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
     back_to_list: Retour à la liste
@@ -28,8 +28,8 @@ open_orchestra_backoffice:
           title: Tableau de bord
         contribution:
           title: Contribution
-          nodes: Pages
-          contents: Contenus
+          node: Page
+          content: Contenu
           trashcan: Corbeille
           media: Médiathèque
         user:
@@ -37,15 +37,14 @@ open_orchestra_backoffice:
         platform:
           title: Plateforme
           tag: Tag
-          content: Contenus
         developer:
           title: Développeur
           content_type: Type de contenu
         configuration:
           title       : Configuration
-          site        : Sites
-          redirections: Redirections
-          shared_block: Blocs partagés
+          site        : Site
+          redirection : Redirection
+          shared_block: Blocs partagé
     table:
         delete_button: Supprimer les éléments sélectionnés
         duplicate: Dupliquer
