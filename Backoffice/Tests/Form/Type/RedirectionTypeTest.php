@@ -87,6 +87,7 @@ class RedirectionTypeTest extends AbstractBaseTestCase
                     'label' => 'open_orchestra_backoffice.form.redirection.group.redirection',
                 ),
             ),
+            'new_button' => false
         ));
     }
 
@@ -114,7 +115,7 @@ class RedirectionTypeTest extends AbstractBaseTestCase
         Phake::when($form)->get('type')->thenReturn($formType);
         Phake::when($form)->get('url')->thenReturn($formUrl);
 
-        $this->form->buildView($formView, $form, array());
+        $this->form->buildView($formView, $form, array('new_button' => false));
         if ($mustSet) {
             Phake::verify($formType)->setData($type);
         } else {

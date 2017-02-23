@@ -194,8 +194,9 @@ open_orchestra_backoffice:
                     This is a non editable block.
                     Please add the corresponding block in the language.
     redirection:
-      title_edit: Redirections
-      title_list: Redirections
+        title_edit: Edit redirection
+        title_list: Redirections
+        title_new: New redirection
     form:
         keyword:
             new: new

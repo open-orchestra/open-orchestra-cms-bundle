@@ -35,20 +35,16 @@ class RedirectionController extends AbstractAdminController
         $form = $this->createForm('oo_redirection', $redirection, array(
             'action'          => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
             'method'          => 'POST',
-            'csrf_protection' => false,
+            'new_button' => true
         ));
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.new.success');
 
-        if ($form->isValid()) {
-            $documentManager = $this->get('object_manager');
-            $documentManager->persist($redirection);
-            $documentManager->flush();
-            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.new.success');
-
+        if ($this->handleForm($form, $message, $redirection)) {
             $this->dispatchEvent(RedirectionEvents::REDIRECTION_CREATE, new RedirectionEvent($redirection));
             $response = new Response(
-                $message,
+                '',
                 Response::HTTP_CREATED,
                 array(
                     'Content-type' => 'text/html; charset=utf-8',
