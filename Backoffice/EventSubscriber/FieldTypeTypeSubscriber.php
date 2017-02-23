@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
+use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -39,11 +40,17 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent $event
      */
-    public function postSetData(FormEvent $event)
+    public function preSetData(FormEvent $event)
     {
         $form = $event->getForm();
         if ('PATCH' !== $form->getRoot()->getConfig()->getMethod()) {
-            $this->addFormType($event);
+            $data = $event->getData();
+            if ($data instanceof FieldTypeInterface) {
+                $type = $data->getType();
+
+                $this->addOptionsFormType($data, $type, $form);
+                $this->addDefaultValueFormType($data, $type, $form);
+            }
         }
     }
 
@@ -52,7 +59,18 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
      */
     public function preSubmit(FormEvent $event)
     {
-        $this->addFormType($event);
+        $form = $event->getForm();
+        $data = $form->getData();
+
+        if (is_null($data)) {
+            $data = new $this->fieldTypeClass();
+            $event->getForm()->setData($data);
+        }
+
+        $dataSend = $event->getData();
+        $type = $dataSend['type'];
+        $this->addOptionsFormType($data, $type, $form);
+        $this->addDefaultValueFormType($data, $type, $form);
     }
 
     /**
@@ -61,55 +79,39 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::PRE_SET_DATA => 'preSetData',
             FormEvents::PRE_SUBMIT => 'preSubmit',
         );
     }
 
-
     /**
-     * @param FormEvent $event
+     * @param FieldTypeInterface $data
+     * @param string             $type
+     * @param FormInterface      $form
      */
-    protected function addFormType(FormEvent $event)
+    protected function addDefaultValueFormType(FieldTypeInterface $data, $type, FormInterface $form)
     {
-        $this->addOptionsFormType($event);
-        $this->addDefaultValueFormType($event);
-    }
-
-    /**
-     * @param FormEvent     $event
-     */
-    protected function addDefaultValueFormType(FormEvent $event)
-    {
-        $form = $event->getForm();
-        $data = $event->getData();
-        $fieldType = $form->getData();
-        $type = $fieldType->getType();
         $container = $form->get('container');
 
         if ($container->has('default_value')) {
             $container->remove('default_value');
         }
-        $defaultValue = $form->getData()->getDefaultValue();
 
-        if(is_array($data)) {
-            $newType = array_key_exists('type', $data) ? $data['type'] : null;
-            if (is_null($newType) || !array_key_exists($newType, $this->fieldTypeParameters)) {
-                return;
-            }
-            $defaultValue = array_key_exists('default_value', $data) ? $data['default_value'] : $defaultValue;
-            if ($newType !== $type) {
-                $defaultValue = null;
-            }
-            $type = $newType;
+        if (is_null($type) || !array_key_exists($type, $this->fieldTypeParameters)) {
+            return;
         }
+
+        if ($data->getType() !== $type) {
+            $data->setDefaultValue(null);
+        }
+
         if (isset($this->fieldTypeParameters[$type]['default_value'])) {
             $defaultValueField = $this->fieldTypeParameters[$type]['default_value'];
             $defaultOption = (isset($defaultValueField['options'])) ? $defaultValueField['options'] : array();
-            $defaultOption['data'] = $defaultValue;
+            $defaultOption['data'] = $data->getDefaultValue();
             $container->add('default_value', $defaultValueField['type'], $defaultOption);
             if (array_key_exists('search', $this->fieldTypeParameters[$type])) {
-                $fieldType->setFieldTypeSearchable($this->fieldTypeParameters[$type]['search']);
+                $data->setFieldTypeSearchable($this->fieldTypeParameters[$type]['search']);
             }
         }
     }
@@ -117,28 +119,34 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent     $event
      */
-    protected function addOptionsFormType(FormEvent $event)
+    /**
+     * @param FieldTypeInterface $data
+     * @param string             $type
+     * @param FormInterface      $form
+     */
+    protected function addOptionsFormType(FieldTypeInterface $data, $type, FormInterface $form)
     {
-        $form = $event->getForm();
-        $data = $event->getData();
-
+        if (is_null($type) || !array_key_exists($type, $this->fieldTypeParameters)) {
+            return;
+        }
         $container = $form->get('options');
 
         foreach ($container->all() as  $child) {
             $container->remove($child->getName());
         }
 
-        if (is_array($data)) {
-            $fieldType = array_key_exists('type', $data) ? $data['type'] : '';
-            if (is_null($fieldType) || !array_key_exists($fieldType, $this->fieldTypeParameters) || !array_key_exists('options', $this->fieldTypeParameters[$fieldType])) {
-                return;
+        if (array_key_exists('options', $this->fieldTypeParameters[$type])) {
+            $fieldOptions = array();
+            foreach ($data->getOptions() as $fieldOption) {
+                $fieldOptions[$fieldOption->getKey()] = $fieldOption->getValue();
             }
-            foreach ($this->fieldTypeParameters[$fieldType]['options'] as $child => $option) {
-                $this->addOptionFormType($container, $child, $option['default_value']);
-            }
-        } else {
-            foreach ($data->getOptions() as $option) {
-                $this->addOptionFormType($container, $option->getKey(), $option->getValue());
+
+            foreach ($this->fieldTypeParameters[$type]['options'] as $child => $option) {
+                $value = $option['default_value'];
+                if (array_key_exists($child, $fieldOptions)) {
+                    $value = $fieldOptions[$child];
+                }
+                $this->addOptionFormType($container, $child, $value);
             }
         }
     }
