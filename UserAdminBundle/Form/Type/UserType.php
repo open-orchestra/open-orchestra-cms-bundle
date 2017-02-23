@@ -112,7 +112,7 @@ class UserType extends AbstractType
                     'sub_group_id' => 'identifier',
                     'required' => $options['required_password'],
                 ))
-                ->add('editAllowed', 'radio', array(
+                ->add('editAllowed', 'checkbox', array(
                     'label' => 'open_orchestra_user_admin.form.user.edit_allowed',
                     'required' => false,
                     'group_id' => 'information',
