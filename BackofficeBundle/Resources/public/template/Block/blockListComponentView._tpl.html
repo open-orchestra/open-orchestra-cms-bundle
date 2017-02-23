@@ -1,0 +1,20 @@
+<div class="header-results clearfix">
+    <div class="nb-results pull-left">
+        <%= Translator.trans('open_orchestra_datatable.info', {total: '<span>'+numberResult+'</span>'}) %>
+    </div>
+</div>
+<div class="well add-block clearfix">
+    <% _.each(orderedBlockComponents, function(blockComponents, category) { %>
+    <div class="group">
+        <div class="underline-label"><%= category %></div>
+        <% _.each(blockComponents, function(blockComponent, key) { %>
+        <div class="col-lg-3">
+            <a class="block" href="#<%= addBlockUrl(blockComponent) %>">
+                <span><%= blockComponent.get('name')%></span>
+                <p><%= blockComponent.get('description')%></p>
+            </a>
+        </div>
+        <% }); %>
+    </div>
+    <% }); %>
+</div>
