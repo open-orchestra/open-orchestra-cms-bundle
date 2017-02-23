@@ -96,6 +96,7 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
             ),
             'group_id' => 'profile',
             'sub_group_id' => 'backoffice',
+            'required' => false
         ));
 
         Phake::verify($builder, Phake::times(1))->addModelTransformer(Phake::anyParameters());

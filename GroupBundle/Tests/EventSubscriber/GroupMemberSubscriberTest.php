@@ -76,6 +76,7 @@ class GroupMemberSubscriberTest extends AbstractBaseTestCase
                 ),
                 'mapped' => false,
                 'group_id' => 'member',
+                'required' => false
             ));
     }
 

@@ -87,6 +87,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
             'configuration' => $configuration,
             'group_id' => 'profile',
             'sub_group_id' => 'backoffice',
+            'required' => false
         ));
         $builder->get('workflow_profile_collections')->addModelTransformer($this->workflowProfileCollectionTransformer);
     }
