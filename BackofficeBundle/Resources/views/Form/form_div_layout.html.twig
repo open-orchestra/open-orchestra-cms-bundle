@@ -559,7 +559,7 @@
         {% set label = 'open_orchestra_backoffice.form.submit' %}
         {% set id = 'submit_' ~ form.vars.name %}
         {% set attr = {'class': 'submit-form'} %}
-        {% set button_class= 'primary' %}
+        {% set button_class= 'success' %}
         {{ block('button_widget') }}
         {% if(form.vars.new_button is defined and true == form.vars.new_button) %}
             {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
