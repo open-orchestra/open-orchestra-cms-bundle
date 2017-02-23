@@ -28,8 +28,9 @@ class UserTypeTest extends AbstractUserTypeTest
         $parameters = array(0 => 'en', 1 => 'fr');
         $userProfilSubscriber = Phake::mock(UserProfilSubscriber::class);
         $userGroupSubscriber = Phake::mock(UserGroupsSubscriber::class);
+        $translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
 
-        $this->form = new UserType($this->class, $parameters, $userProfilSubscriber, $userGroupSubscriber);
+        $this->form = new UserType($this->class, $parameters, $userProfilSubscriber, $userGroupSubscriber, $translator);
     }
 
     /**

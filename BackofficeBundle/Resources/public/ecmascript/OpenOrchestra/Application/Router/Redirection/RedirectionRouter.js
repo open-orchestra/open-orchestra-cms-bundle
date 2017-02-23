@@ -49,7 +49,7 @@ class RedirectionRouter extends OrchestraRouter
         let redirections = new Redirections();
         page = Number(page) - 1;
         $.when(
-            redirections.fetch({context: 'list'})
+            redirections.fetch({apiContext: 'list'})
         ).done(() => {
             let redirectionsView = new RedirectionsView({
                 collection: redirections,

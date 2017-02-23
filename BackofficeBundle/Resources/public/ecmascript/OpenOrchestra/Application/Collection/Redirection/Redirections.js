@@ -43,8 +43,8 @@ class Redirections extends DataTableCollection
      * @private
      */
     _getSyncReadUrl(options, urlParameter) {
-        let context = options.context || null;
-        switch (context) {
+        let apiContext = options.apiContext || null;
+        switch (apiContext) {
             case "list":
                 return Routing.generate('open_orchestra_api_redirection_list', urlParameter);
             default:
