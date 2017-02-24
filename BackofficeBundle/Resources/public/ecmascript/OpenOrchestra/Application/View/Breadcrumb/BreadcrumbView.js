@@ -18,7 +18,8 @@ class BreadcrumbView extends OrchestraView
      */
     render() {
         let template = this._renderTemplate('Breadcrumb/breadcrumbView', {
-            breadcrumb: this._breadcrumb
+            breadcrumb: this._breadcrumb,
+            currentFragment: '#' + Backbone.history.fragment
         });
         this.$el.html(template);
 
