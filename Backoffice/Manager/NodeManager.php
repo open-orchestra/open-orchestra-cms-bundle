@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
+use OpenOrchestra\Backoffice\Util\UniqueIdGenerator;
 use OpenOrchestra\ModelInterface\BlockEvents;
 use OpenOrchestra\ModelInterface\Event\BlockEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
@@ -30,6 +31,7 @@ class NodeManager
     protected $templateManager;
     protected $nodeClass;
     protected $areaClass;
+    protected $uniqueIdGenerator;
 
     /**
      * Constructor
@@ -43,6 +45,7 @@ class NodeManager
      * @param string                     $areaClass
      * @param EventDispatcherInterface   $eventDispatcher
      * @param TemplateManager            $templateManager
+     * @param UniqueIdGenerator          $uniqueIdGenerator
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
@@ -53,7 +56,8 @@ class NodeManager
         TemplateManager $templateManager,
         $nodeClass,
         $areaClass,
-        $eventDispatcher
+        $eventDispatcher,
+        UniqueIdGenerator $uniqueIdGenerator
     ){
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
@@ -64,6 +68,7 @@ class NodeManager
         $this->areaClass = $areaClass;
         $this->eventDispatcher = $eventDispatcher;
         $this->templateManager = $templateManager;
+        $this->uniqueIdGenerator = $uniqueIdGenerator;
     }
 
     /**
@@ -76,18 +81,12 @@ class NodeManager
      */
     public function createNewVersionNode(NodeInterface $originalNode, $versionName = '')
     {
-        $lastNode = $this->nodeRepository->findInLastVersion(
-            $originalNode->getNodeId(),
-            $originalNode->getLanguage(),
-            $originalNode->getSiteId()
-        );
-        $lastNodeVersion = $lastNode->getVersion();
         $status = $this->statusRepository->findOneByInitial();
 
         /** @var NodeInterface $newNode */
         $newNode = clone $originalNode;
         $newNode->setStatus($status);
-        $newNode->setVersion($lastNodeVersion + 1);
+        $newNode->setVersion($this->uniqueIdGenerator->generateUniqueId());
         $this->duplicateBlockAndArea($originalNode, $newNode);
         $newNode->setVersionName($versionName);
         if (empty($versionName)) {
@@ -117,7 +116,6 @@ class NodeManager
         $node->setName($name);
         $node->setInFooter(false);
         $node->setInMenu(false);
-        $node->setVersion(1);
         $node->setTemplate($template);
         $node->setOrder(-1);
         $node = $this->setVersionName($node);
@@ -136,7 +134,7 @@ class NodeManager
     public function createNewLanguageNode(NodeInterface $node, $language)
     {
         $newNode = clone $node;
-        $newNode->setVersion(1);
+        $newNode->setVersion($this->uniqueIdGenerator->generateUniqueId());
         $status = $this->statusRepository->findOneByTranslationState();
 
         $newNode->setStatus($status);
@@ -247,7 +245,6 @@ class NodeManager
         $node->setTemplate($template);
         $node->setRoutePattern($routePattern);
         $node->setName($name);
-        $node->setVersion(1);
         $node->setInMenu(true);
         $node->setInFooter(true);
         $node = $this->setVersionName($node);
@@ -274,6 +271,7 @@ class NodeManager
         $node->setOrder($order);
         $node->setTheme(NodeInterface::THEME_DEFAULT);
         $node->setDefaultSiteTheme(true);
+        $node->setVersion($this->uniqueIdGenerator->generateUniqueId());
 
         $parentNode = $this->nodeRepository->findInLastVersion($parentId, $language, $siteId);
         $status = $this->statusRepository->findOneByInitial();
@@ -316,7 +314,7 @@ class NodeManager
     public function setVersionName(NodeInterface $node)
     {
         $date = new \DateTime("now");
-        $versionName = $node->getName().'_'. $node->getVersion(). '_'. $date->format("Y-m-d_H:i:s");
+        $versionName = $node->getName(). '_'. $date->format("Y-m-d_H:i:s");
         $node->setVersionName($versionName);
 
         return $node;

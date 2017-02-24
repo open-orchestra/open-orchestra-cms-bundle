@@ -19,6 +19,7 @@ class NodeManagerTest extends AbstractBaseTestCase
      */
     protected $manager;
 
+    protected $uniqueIdGenerator;
     protected $node;
     protected $area;
     protected $block;
@@ -34,6 +35,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     protected $statusRepository;
     protected $blockRepository;
     protected $documentManager;
+    protected $fakeVersion = 'fakeVersion';
 
     /**
      * Set up the test
@@ -75,6 +77,9 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
+        $this->uniqueIdGenerator = Phake::mock('OpenOrchestra\Backoffice\Util\UniqueIdGenerator');
+        Phake::when($this->uniqueIdGenerator)->generateUniqueId()->thenReturn($this->fakeVersion);
+
         $this->manager = new NodeManager(
             $this->nodeRepository,
             $this->siteRepository,
@@ -84,7 +89,8 @@ class NodeManagerTest extends AbstractBaseTestCase
             $this->templateManager,
             $this->nodeClass,
             $this->areaClass,
-            $this->eventDispatcher
+            $this->eventDispatcher,
+            $this->uniqueIdGenerator
         );
     }
 
@@ -94,15 +100,9 @@ class NodeManagerTest extends AbstractBaseTestCase
     public function testCreateNewVersionNode()
     {
         $versionName = 'fakeName';
-        $version = 1;
-
-        $lastNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($lastNode)->getVersion()->thenReturn($version);
-        Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($lastNode);
-
         $newNode = $this->manager->createNewVersionNode($this->node, $versionName);
 
-        Phake::verify($newNode)->setVersion($version + 1);
+        Phake::verify($newNode)->setVersion($this->fakeVersion);
         Phake::verify($newNode)->setStatus($this->status);
         Phake::verify($newNode)->setVersionName($versionName);
     }
@@ -128,7 +128,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals($language, $newNode->getLanguage());
         $this->assertEquals(false, $newNode->isInFooter());
         $this->assertEquals(false, $newNode->isInMenu());
-        $this->assertEquals(1, $newNode->getVersion());
+        $this->assertEquals($this->fakeVersion, $newNode->getVersion());
         $this->assertEquals($template, $newNode->getTemplate());
         $this->assertEquals($parentId, $newNode->getParentId());
 
@@ -155,7 +155,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     {
         $alteredNode = $this->manager->createNewLanguageNode($this->node, $language);
 
-        Phake::verify($alteredNode)->setVersion(1);
+        Phake::verify($alteredNode)->setVersion($this->fakeVersion);
         Phake::verify($alteredNode)->setLanguage($language);
         Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
     }

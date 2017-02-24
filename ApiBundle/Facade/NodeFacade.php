@@ -89,7 +89,7 @@ class NodeFacade extends DeletedFacade
     public $themeSiteDefault;
 
     /**
-     * @Serializer\Type("integer")
+     * @Serializer\Type("string")
      */
     public $version;
 

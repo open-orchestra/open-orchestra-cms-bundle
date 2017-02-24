@@ -3,9 +3,8 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
-use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
+use OpenOrchestra\Backoffice\Util\UniqueIdGenerator;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
@@ -13,32 +12,27 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
  */
 class ContentManager
 {
-    protected $contentRepository;
     protected $statusRepository;
     protected $contextManager;
-    protected $versionableSaver;
     protected $contentClass;
 
     /**
-     * @param ContentRepositoryInterface $contentRepository
      * @param StatusRepositoryInterface  $statusRepository
      * @param ContextManager             $contextManager
-     * @param VersionableSaverInterface  $versionableSaver
      * @param string                     $contentClass
+     * @param UniqueIdGenerator          $uniqueIdGenerator
      */
     public function __construct(
-        ContentRepositoryInterface $contentRepository,
         StatusRepositoryInterface $statusRepository,
         ContextManager $contextManager,
-        VersionableSaverInterface $versionableSaver,
-        $contentClass
+        $contentClass,
+        UniqueIdGenerator $uniqueIdGenerator
     )
     {
-        $this->contentRepository = $contentRepository;
         $this->statusRepository = $statusRepository;
         $this->contextManager = $contextManager;
-        $this->versionableSaver = $versionableSaver;
         $this->contentClass = $contentClass;
+        $this->uniqueIdGenerator = $uniqueIdGenerator;
     }
 
     /**
@@ -60,6 +54,7 @@ class ContentManager
         $content->setContentType($contentType);
         $content->setLinkedToSite($isLinkedToSite);
         $content->setStatus($initialStatus);
+        $content->setVersion($this->uniqueIdGenerator->generateUniqueId());
 
         return $content;
     }
@@ -91,12 +86,9 @@ class ContentManager
     public function duplicateContent(ContentInterface $content, $contentId = null)
     {
         $newContent = $this->cloneContent($content);
-        $newContent->setVersion(1);
         $newContent->setContentId($contentId);
         $newContent->setName($this->duplicateLabel($content->getName()));
         $newContent = $this->setVersionName($newContent);
-
-        $this->versionableSaver->saveDuplicated($newContent);
 
         return $newContent;
     }
@@ -111,13 +103,7 @@ class ContentManager
      */
     public function newVersionContent(ContentInterface $originalContent, $versionName = '')
     {
-        $lastContent = $this->contentRepository->findOneByLanguage($originalContent->getContentId(), $originalContent->getLanguage());
-        if (!$lastContent instanceof ContentInterface) {
-            throw new \UnexpectedValueException();
-        }
-        $lastVersion = $lastContent->getVersion();
         $newContent = $this->cloneContent($originalContent);
-        $newContent->setVersion($lastVersion + 1);
         $newContent->setVersionName($versionName);
         if (empty($versionName)) {
             $newContent = $this->setVersionName($newContent);
@@ -134,7 +120,7 @@ class ContentManager
     public function setVersionName(ContentInterface $node)
     {
         $date = new \DateTime("now");
-        $versionName = $node->getName().'_'. $node->getVersion(). '_'. $date->format("Y-m-d_H:i:s");
+        $versionName = $node->getName().'_'. $date->format("Y-m-d_H:i:s");
         $node->setVersionName($versionName);
 
         return $node;
@@ -152,6 +138,7 @@ class ContentManager
 
         $newContent = clone $content;
         $newContent->setStatus($status);
+        $newContent->setVersion($this->uniqueIdGenerator->generateUniqueId());
         foreach ($content->getKeywords() as $keyword) {
             $newContent->addKeyword($keyword);
         }
