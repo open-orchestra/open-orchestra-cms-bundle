@@ -10,7 +10,7 @@ open_orchestra_group:
             site: Site
             nbr_users: Nombre de membres
     group:
-        title_list: Liste des groupes
+        title_list: Groupes
         title_edit: Modifier le groupe
         search_engine:
           search: Rechercher

@@ -16,7 +16,7 @@ open_orchestra_backoffice:
         no: Non
         cancel: Annuler
     confirm_remove:
-        title: Supprimer les éléments selectionnés ?
+        title: Supprimer les éléments sélectionnés ?
         message: La suppression sera définitive
     no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
@@ -44,7 +44,7 @@ open_orchestra_backoffice:
           title       : Configuration
           site        : Site
           redirection : Redirection
-          shared_block: Blocs partagé
+          shared_block: Bloc partagé
     table:
         delete_button: Supprimer les éléments sélectionnés
         duplicate: Dupliquer
@@ -165,7 +165,7 @@ open_orchestra_backoffice:
             type: Type
             name: Nom
     keyword:
-        title_list: Tag
+        title_list: Tags
         title_new : Nouveau Tag
     block:
         add_block: Ajouter un bloc
