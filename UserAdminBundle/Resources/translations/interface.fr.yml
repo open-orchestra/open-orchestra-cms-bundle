@@ -21,7 +21,7 @@ open_orchestra_user_admin:
         search_engine:
           search: Rechercher
         new:
-          contact_information: Coordonées
+          contact_information: Coordonnées
           first_name: Prénom
           last_name: Nom
           email: Email

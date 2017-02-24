@@ -33,7 +33,7 @@ open_orchestra_backoffice:
           trashcan: Corbeille
           media: Médiathèque
         user:
-          title: User
+          title: Utilisateur
         platform:
           title: Plateforme
           tag: Tag
