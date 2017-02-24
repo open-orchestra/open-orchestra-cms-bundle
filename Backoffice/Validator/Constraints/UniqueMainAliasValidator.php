@@ -22,12 +22,15 @@ class UniqueMainAliasValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if ($value->getAliases()->filter(function(SiteAliasInterface $alias) {
+        $mainAliases = $value->getAliases()->filter(function(SiteAliasInterface $alias) {
             return $alias->isMain();
-        })->count() > 1) {
-            $this->context->buildViolation($constraint->message)
-                ->atPath('aliases')
-                ->addViolation();
+        });
+        if ($mainAliases->count() > 1) {
+            foreach ($mainAliases as $name => $siteAlias) {
+                $this->context->buildViolation($constraint->message)
+                    ->atPath('aliases[' . $name . '].main')
+                    ->addViolation();
+            }
         }
     }
 

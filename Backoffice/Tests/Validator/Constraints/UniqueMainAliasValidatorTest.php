@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Validator\Constraints\UniqueMainAlias;
 use OpenOrchestra\Backoffice\Validator\Constraints\UniqueMainAliasValidator;
-use Symfony\Component\Validator\Context\ExecutionContext;
 
 /**
  * Test UniqueMainAliasValidatorTest
@@ -37,11 +37,7 @@ class UniqueMainAliasValidatorTest extends AbstractBaseTestCase
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
         Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
 
-        $this->siteAliases = Phake::mock('Doctrine\Common\Collections\Collection');
-        Phake::when($this->siteAliases)->filter(Phake::anyParameters())->thenReturn($this->siteAliases);
-
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-        Phake::when($this->site)->getAliases()->thenReturn($this->siteAliases);
 
         $this->validator = new UniqueMainAliasValidator();
         $this->validator->initialize($this->context);
@@ -56,14 +52,14 @@ class UniqueMainAliasValidatorTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int $count
-     * @param int $violationTimes
+     * @param array $siteAliases
+     * @param int   $violationTimes
      *
      * @dataProvider provideCountAndViolation
      */
-    public function testValidate($count, $violationTimes)
+    public function testValidate(array $siteAliases, $violationTimes)
     {
-        Phake::when($this->siteAliases)->count()->thenReturn($count);
+        Phake::when($this->site)->getAliases()->thenReturn(new ArrayCollection($siteAliases));
 
         $this->validator->validate($this->site, $this->constraint);
 
@@ -75,11 +71,20 @@ class UniqueMainAliasValidatorTest extends AbstractBaseTestCase
      */
     public function provideCountAndViolation()
     {
+        $mainSiteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
+        Phake::when($mainSiteAlias)->isMain()->thenReturn(true);
+
+
+        $siteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
+        Phake::when($siteAlias)->isMain()->thenReturn(false);
+
         return array(
-            array(0, 0),
-            array(1, 0),
-            array(2, 1),
-            array(3, 1),
+            array(array(), 0),
+            array(array($mainSiteAlias), 0),
+            array(array($siteAlias), 0),
+            array(array($mainSiteAlias, $mainSiteAlias), 2),
+            array(array($mainSiteAlias, $siteAlias), 0),
+            array(array($mainSiteAlias, $siteAlias, $mainSiteAlias), 2),
         );
     }
 }

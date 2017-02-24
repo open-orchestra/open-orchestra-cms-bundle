@@ -23,8 +23,11 @@ class CheckMainAliasPresenceValidator extends ConstraintValidator
         try {
             $value->getMainAlias();
         } catch (MainAliasNotExisting $exception) {
-            $this->context->buildViolation($constraint->message)
-            ->addViolation();
+            foreach ($value->getAliases() as $name => $siteAlias) {
+                $this->context->buildViolation($constraint->message)
+                    ->atPath('aliases['.$name.'].main')
+                    ->addViolation();
+            }
         }
     }
 }
