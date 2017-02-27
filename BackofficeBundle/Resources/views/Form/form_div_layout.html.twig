@@ -19,14 +19,14 @@
         {% if form.parent is empty %}
             {{ block('global_form_errors') }}
         {% endif %}
-        {%  set active = -1 %}
+        {% set active = -1 %}
         {% for group in form.vars.group %}
             {% set err = false %}
             {% set req = false %}
             {% set group_name = '' %}
             {% set rank = loop.index0 %}
             {% set group_label  = '' %}
-            {%  set current_group %}
+            {% set current_group %}
                 {% for subgroup in group %}
                     {% set subgroup_html %}
                         {% set group_label = subgroup.group_label %}
@@ -341,42 +341,6 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block oo_translated_value_collection_widget %}
-    {% spaceless %}
-        <div {{ block('widget_container_attributes') }}>
-            <ul class="nav nav-tabs" role="tablist" id="myTab">
-                {% for key, field in form %}
-                    {% if attribute(field.children, 'value') is defined %}
-                        <li {% if app.request.locale == key %}class="active" {% endif %}>
-                            <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
-                                <img
-                                        src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
-                                        class="flag flag-{{ field.vars.value.language }}"
-                                        alt="{{ ('open_orchestra_backoffice.language.' ~ field.vars.value.language)|trans }}"
-                                >
-                                {{ form_label(field.value) }}
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <div class="tab-content">
-                {% for key, field in form %}
-                    {% if attribute(field.children, 'value') is defined %}
-                        <div class="tab-pane {% if app.request.locale == key %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
-                            <div class="form-group{% if field.value.vars.errors|length > 0 %} has-error{% endif %}">
-                                {{ form_widget(field.value) }}
-                                {{ form_rest(field) }}
-                                {{ form_errors(field.value) }}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    {% endspaceless %}
-{% endblock %}
-
 {% block form_label %}
     {% spaceless %}
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
@@ -451,17 +415,23 @@
             {% set widget_col = widget_col + label_col %}
         {% endif %}
 
-        {% set errors = false %}
-        {% if form.vars.errors|length > 0 %}
-            {% set errors = true %}
-        {% endif %}
-        {% for key, field in form %}
-            {% if field.vars.errors is defined and field.vars.errors|length > 0 %}
-                {% set errors = true %}
+        {{ dump(activeErrors is not defined) }}
+        {% if activeErrors is not defined %}
+            {% set activeErrors = false %}
+            {{ dump(form.vars.errors) }}
+            {% if form.vars.errors|length > 0 %}
+                {% set activeErrors = true %}
             {% endif %}
-        {% endfor %}
+            {% for key, field in form %}
+                {{ dump(field.vars.errors) }}
+                {% if field.vars.errors is defined and field.vars.errors|length > 0 %}
+                    {% set activeErrors = true %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {{ dump(activeErrors) }}
 
-        <div class="form-group{% if errors %} has-error{% endif %} {{ form_group_class }}">
+        <div class="form-group{% if activeErrors %} has-error{% endif %} {{ form_group_class }}">
             {% if style == 'horizontal' %}
                 {{ form_label(form) }}
                 <div class="col-{{ col_size }}-{{ widget_col }}">
@@ -644,12 +614,20 @@
     </div>
 {% endblock form_legend %}
 
+{% block oo_multi_languages_row %}
+    {# Disabled display error on form row. There are added in oo_multi_languages_widget #}
+    {% set activeErrors = false %}
+    {{ block('form_row') }}
+{% endblock oo_multi_languages_row %}
+
 {% block oo_multi_languages_widget %}
     {% spaceless %}
         <div {{ block('widget_container_attributes') }}>
-            <ul class="nav nav-tabs multi-languages" role="tablist" id="myTab">
+            <ul class="nav nav-tabs multi-languages " role="tablist" id="myTab">
+                {% set active = false %}
                 {% for key, field in form %}
-                    <li {% if loop.first %}class="active" {% endif %}>
+                    {% set active = (active == false and (field.vars.errors|length > 0 or form.vars.valid == true)) %}
+                    <li class="{% if active %} active {% endif %} {% if field.vars.errors|length > 0 %} has-error {% endif %} ">
                         <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
                             <img
                                     src="/images/languages/{{ key }}.png"
@@ -661,8 +639,10 @@
                 {% endfor %}
             </ul>
             <div class="tab-content">
+                {% set active = false %}
                 {% for key, field in form %}
-                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
+                    {% set active = (active == false and (field.vars.errors|length > 0 or form.vars.valid == true)) %}
+                    <div class="tab-pane {% if active %} active {% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
                         <div class="form-group{% if field.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_widget(field) }}
                             {{ form_rest(field) }}
