@@ -24,7 +24,7 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
      *
      * @return string
      */
-    _getLabelButtonBack() {
+    _getLabelButtonBackList() {
         return Translator.trans('open_orchestra_backoffice.back_to_list');
     }
 
@@ -34,6 +34,15 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
      * @return string
      */
     _getUrlButtonBack() {
+        return Backbone.history.generateUrl('newSharedBlockListComponent',{
+            language: this._language
+        });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    _getUrlButtonBackList() {
         return Backbone.history.generateUrl('listSharedBlock',{
             language: this._language
         });

@@ -31,7 +31,9 @@ class AbstractNewBlockFormView extends AbstractFormView
         let template = this._renderTemplate('Block/newBlockView', {
             name: this._name,
             labelButtonBack: this._getLabelButtonBack(),
-            urlButtonBack: this._getUrlButtonBack()
+            urlButtonBack: this._getUrlButtonBack(),
+            labelButtonBackList: this._getLabelButtonBackList(),
+            urlButtonBackList: this._getUrlButtonBackList()
         });
         this.$el.html(template);
         this._$formRegion = $('.form-new', this.$el);
@@ -46,8 +48,18 @@ class AbstractNewBlockFormView extends AbstractFormView
      * @return string
      */
     _getLabelButtonBack() {
-        throw new TypeError("Please implement abstract method _getLabelButtonBack.");
+        return Translator.trans('open_orchestra_backoffice.back');
     }
+
+    /**
+     * @private
+     *
+     * @return string
+     */
+    _getLabelButtonBackList() {
+        throw new TypeError("Please implement abstract method _getLabelButtonBackList.");
+    }
+
 
     /**
      * @private
@@ -56,6 +68,15 @@ class AbstractNewBlockFormView extends AbstractFormView
      */
     _getUrlButtonBack() {
         throw new TypeError("Please implement abstract method _getUrlButtonBack.");
+    }
+
+    /**
+     * @private
+     *
+     * @return string
+     */
+    _getUrlButtonBackList() {
+        throw new TypeError("Please implement abstract method _getUrlButtonBackList.");
     }
 
     /**
