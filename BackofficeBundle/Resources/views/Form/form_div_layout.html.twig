@@ -415,21 +415,17 @@
             {% set widget_col = widget_col + label_col %}
         {% endif %}
 
-        {{ dump(activeErrors is not defined) }}
         {% if activeErrors is not defined %}
             {% set activeErrors = false %}
-            {{ dump(form.vars.errors) }}
             {% if form.vars.errors|length > 0 %}
                 {% set activeErrors = true %}
             {% endif %}
             {% for key, field in form %}
-                {{ dump(field.vars.errors) }}
                 {% if field.vars.errors is defined and field.vars.errors|length > 0 %}
                     {% set activeErrors = true %}
                 {% endif %}
             {% endfor %}
         {% endif %}
-        {{ dump(activeErrors) }}
 
         <div class="form-group{% if activeErrors %} has-error{% endif %} {{ form_group_class }}">
             {% if style == 'horizontal' %}
