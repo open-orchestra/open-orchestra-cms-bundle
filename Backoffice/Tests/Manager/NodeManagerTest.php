@@ -157,7 +157,15 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         Phake::verify($alteredNode)->setVersion($this->fakeVersion);
         Phake::verify($alteredNode)->setLanguage($language);
-        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
+        Phake::verify($alteredNode)->setSeoTitle(null);
+        Phake::verify($alteredNode)->setMetaDescription(null);
+        Phake::verify($alteredNode)->setMetaIndex(false);
+        Phake::verify($alteredNode)->setMetaFollow(false);
+        Phake::verify($alteredNode)->setSitemapChangefreq(null);
+        Phake::verify($alteredNode)->setSitemapPriority(null);
+        Phake::verify($alteredNode)->initializeKeywords();
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
+
     }
 
     /**
