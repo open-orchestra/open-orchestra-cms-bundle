@@ -39,8 +39,6 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
             siteLanguageUrl: this._siteLanguageUrl,
             messages: FlashMessageBag.getMessages()
         });
-
-
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
