@@ -11,10 +11,6 @@ use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteNodeTemplateSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteSubscriber;
 use OpenOrchestra\Backoffice\Manager\TemplateManager;
-use Symfony\Component\Validator\Constraints\Count;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
-
 /**
  * Class SiteType
  */
