@@ -85,6 +85,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 $isUsed = $isUsed || $publishedContent->isUsed();
             }
             $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed);
+            $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
         }
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION)) {

@@ -137,6 +137,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
 
         $this->assertArrayHasKey('can_delete', $facade->getRights());
+        $this->assertArrayHasKey('can_duplicate', $facade->getRights());
     }
 
     /**
