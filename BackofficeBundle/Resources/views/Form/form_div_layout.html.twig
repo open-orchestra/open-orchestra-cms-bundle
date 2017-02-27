@@ -547,7 +547,7 @@
             {% set label = 'open_orchestra_backoffice.form.submit_continue' %}
             {% set id = 'submit_' ~ form.vars.name %}
             {% set attr = {'class': 'submit-continue-form'} %}
-            {% set button_class= 'primary' %}
+            {% set button_class= 'success' %}
             {{ block('button_widget') }}
         {% elseif(form.vars.delete_button is defined and true == form.vars.delete_button) %}
             {% set label = 'open_orchestra_backoffice.form.delete' %}
