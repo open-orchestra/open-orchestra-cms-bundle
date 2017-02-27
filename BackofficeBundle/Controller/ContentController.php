@@ -166,9 +166,7 @@ class ContentController extends AbstractAdminController
             return $response;
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->renderAdminForm($form);
     }
 
     /**
