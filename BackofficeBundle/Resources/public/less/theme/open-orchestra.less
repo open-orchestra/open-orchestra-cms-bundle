@@ -1157,14 +1157,17 @@ table.ui-sortable .fa.fa-arrows{
     }
 
     ul.root-level {
+        margin: 0 -30px;
+
         & > li > div {
-            padding-left: 35px;
+            padding-left: 60px;
+            padding-right: 30px;
 
             & .fa-arrows {
                 display: none;
             }
             & i[class*="fa-chevron-"] {
-                left: 5px;
+                left: 30px;
             }
         }
 
@@ -1343,6 +1346,7 @@ table.ui-sortable .fa.fa-arrows{
 
 .tree:not(.tree-new-node) li div:hover {
     background: @paleBlue;
+    position: relative;
 }
 
 .ui-state-highlight {
