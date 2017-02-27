@@ -39,6 +39,8 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
             siteLanguageUrl: this._siteLanguageUrl,
             messages: FlashMessageBag.getMessages()
         });
+
+
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
@@ -66,6 +68,9 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
             contentId: contentId,
             version: version
         });
+        let message = new FlashMessage(data, 'success');
+        FlashMessageBag.addMessageFlash(message);
+
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }

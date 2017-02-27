@@ -156,9 +156,8 @@ class ContentController extends AbstractAdminController
                 $this->dispatchEvent(ContentEvents::CONTENT_CREATION, $contentEvent);
             }
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
-            $this->get('session')->getFlashBag()->add('success', $message);
             $response = new Response(
-                '',
+                $message,
                 Response::HTTP_CREATED,
                 array('Content-type' => 'text/plain; charset=utf-8', 'contentId' => $content->getContentId(), 'version' => $content->getVersion())
             );
