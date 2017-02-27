@@ -34,10 +34,20 @@ class TinymceManager
     }
 
     /**
-     * @param [Object} settings
+     * @param {Object} settings
      */
     setSettings(settings) {
         this._settings = settings;
+    }
+
+    /**
+     * Get a setting
+     * @param {string} name
+     *
+     * @return {mixed}
+     */
+    getSetting(name) {
+        return this._settings[name];
     }
 
     /**

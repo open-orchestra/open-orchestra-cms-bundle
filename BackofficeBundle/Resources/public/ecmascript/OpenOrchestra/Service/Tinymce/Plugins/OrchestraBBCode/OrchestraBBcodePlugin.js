@@ -16,6 +16,7 @@ class OrchestraBBcodePlugin
     init(editor) {
         editor.on('submit', (e) => {
             editor.setContent(this.html2bbcode(e.getContent()));
+            editor.save();
         });
     }
 
@@ -38,7 +39,7 @@ class OrchestraBBcodePlugin
         let transformerList = BBcodeTransformerManager.getHtmlToBbcodeTransformer();
         string = tinymce.trim(string);
         $.each(transformerList, (regex, stringReplace) => {
-            string = string.replace(new RegExp(regex,'gi'), stringReplace)
+            string = string.replace(new RegExp(regex,'gi'), stringReplace);
         });
 
         return string;
