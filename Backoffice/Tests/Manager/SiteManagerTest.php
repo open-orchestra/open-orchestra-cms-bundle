@@ -24,8 +24,7 @@ class SiteManagerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->siteClass = 'OpenOrchestra\ModelBundle\Document\Site';
-        $this->siteAliasClass = 'OpenOrchestra\ModelBundle\Document\SiteAlias';
-        $this->manager = new SiteManager($this->siteClass, $this->siteAliasClass);
+        $this->manager = new SiteManager($this->siteClass);
     }
 
     /**
@@ -35,9 +34,7 @@ class SiteManagerTest extends AbstractBaseTestCase
     {
         $site = $this->manager->initializeNewSite();
 
-        $this->assertInstanceOf($this->siteClass, $site);
         $this->assertEquals(SiteInterface::PRIORITY_DEFAULT, $site->getSitemapPriority());
         $this->assertEquals(SiteInterface::CHANGE_FREQ_DEFAULT, $site->getSitemapChangefreq());
-        $this->assertEquals(1, $site->getAliases()->count());
     }
 }
