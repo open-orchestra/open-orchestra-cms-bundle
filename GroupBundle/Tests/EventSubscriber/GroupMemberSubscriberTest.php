@@ -49,35 +49,53 @@ class GroupMemberSubscriberTest extends AbstractBaseTestCase
 
     /**
      * Test preSetData
+     *
+     * @param array   $users
+     * @param integer $nbrAdd
+     * @param array   $data
+     *
+     * @dataProvider providerUsers
      */
-    public function testPreSetData()
+    public function testPreSetData(array $users, $nbrAdd, array $data)
     {
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($this->event)->getData()->thenReturn($group);
         $form = Phake::mock('Symfony\Component\Form\FormInterface');
         Phake::when($this->event)->getForm()->thenReturn($form);
 
+        Phake::when($this->userRepository)->findUsersByGroups(Phake::anyParameters())->thenReturn($users);
+
+        $this->subscriber->preSetData($this->event);
+
+        Phake::verify($form, Phake::times($nbrAdd))->add('members', 'oo_member_list', array(
+                'label' => false,
+                'data' => $data,
+                'mapped' => false,
+                'group_id' => 'member',
+                'required' => false
+            ));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerUsers()
+    {
         $user0 = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
         Phake::when($user0)->getId()->thenReturn('fakeUser0Id');
         $user1 = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
         Phake::when($user1)->getId()->thenReturn('fakeUser1Id');
 
         $users = array($user0, $user1);
+        $data = array(
+            'fakeUser0Id' => array('member' => true),
+            'fakeUser1Id' => array('member' => true)
+        );
 
-        Phake::when($this->userRepository)->findUsersByGroups(Phake::anyParameters())->thenReturn($users);
-
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($form)->add('members', 'oo_member_list', array(
-                'label' => false,
-                'data' => array(
-                    'fakeUser0Id' => array('member' => true),
-                    'fakeUser1Id' => array('member' => true)
-                ),
-                'mapped' => false,
-                'group_id' => 'member',
-                'required' => false
-            ));
+        return array(
+            array($users, 1, $data),
+            array(array(), 0, array()),
+        );
     }
 
     /**
