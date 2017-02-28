@@ -1029,6 +1029,10 @@ table.ui-sortable .fa.fa-arrows{
     .checkbox-inline {
         padding-left: 0;
     }
+
+    & > tbody > tr > td:first-child {
+        width: 300px;
+    }
 }
 
 .table-striped > tbody > tr {
@@ -1171,6 +1175,58 @@ table.ui-sortable .fa.fa-arrows{
             & > .fa-arrows {
                 left: (@paddingleft-counter)*@paddingleft-tree;
             }
+        }
+    }
+
+    & > ul.children {
+        & > li {
+            .padded_tree_levels (30px, 0);
+
+            // level 2
+            & > ul.children {
+
+                & > li {
+                    .padded_tree_levels (30px, 1);
+
+                    // level 3
+                    & > ul.children {
+
+                        & > li {
+                            .padded_tree_levels (30px, 2);
+
+                            // level 4
+                            & > ul.children {
+
+                                & > li {
+                                    .padded_tree_levels (30px, 3);
+
+                                    // level 5
+                                    & > ul.children {
+
+                                        & > li {
+                                            .padded_tree_levels (30px, 4);
+
+                                            // level 6
+                                            & > ul.children {
+
+                                                & > li {
+                                                    .padded_tree_levels (30px, 5);
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
         }
     }
 
@@ -1826,7 +1882,10 @@ li.orchestra-node-option-choice .hierarchical {
 }
 
 fieldset {
-    display: table-column
+    display: table-column;
+    & + fieldset {
+        margin-top: 50px;
+    }
 }
 
 .required {
@@ -1969,6 +2028,20 @@ fieldset {
 .multi-languages.nav-tabs > li > a {
     background-color: transparent;
     opacity: 0.5;
+    display: block;
+    min-height: 33px;
+    margin-bottom: 10px;
+    padding-left: 0;
+    margin-right: 10px;
+
+    img, label {
+        display: inline-block;
+    }
+
+    label {
+        width: auto;
+        padding: 5px 5px 0 5px;
+    }
 }
 
 .multi-languages.nav-tabs > li.active > a {
@@ -1976,7 +2049,7 @@ fieldset {
 }
 
 .multi-languages.nav-tabs > li > a img {
-    float: left;
+    width: 23px;
 }
 
 /* ===================================================================
