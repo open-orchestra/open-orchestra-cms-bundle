@@ -75,7 +75,6 @@
       "grunt-contrib-watch": "~1.0",
       "grunt-contrib-clean": "~1.0",
       "grunt-contrib-jst": "~1.0",
-      "grunt-js-test": "1.5.x",
       "grunt-commands": "~0.1",
       "load-grunt-tasks": "~3.5.0",
       "glob": "~7.0.3",
