@@ -15,6 +15,7 @@ class TransitionFactory
 
     /**
      * @param string $transitionClass
+     * @throws WrongClassException
      */
     public function __construct($transitionClass)
     {

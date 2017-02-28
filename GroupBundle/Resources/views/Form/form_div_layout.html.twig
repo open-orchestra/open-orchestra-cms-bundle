@@ -29,8 +29,8 @@
     {% spaceless %}
         {% set collection = form|first %}
         <div class="hierarchical-check-list">
-	        {% for table in form.vars.configuration %}
-	            {{ form_widget(collection[table]) }}
+            {% for table in form.vars.configuration %}
+                {{ form_widget(collection[table]) }}
             {% endfor %}
         </div>
     {% endspaceless %}

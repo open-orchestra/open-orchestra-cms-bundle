@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer;
 use OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer;
 
@@ -50,8 +49,6 @@ class KeywordsChoiceType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
-     *
-     * @throws NotAllowedClassNameException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

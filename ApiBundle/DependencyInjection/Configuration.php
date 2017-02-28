@@ -46,7 +46,6 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('field_type')->defaultValue('OpenOrchestra\ApiBundle\Facade\FieldTypeFacade')->end()
                     ->scalarNode('keyword')->defaultValue('OpenOrchestra\ApiBundle\Facade\KeywordFacade')->end()
                     ->scalarNode('keyword_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\KeywordCollectionFacade')->end()
-                    ->scalarNode('link')->defaultValue('OpenOrchestra\ApiBundle\Facade\LinkFacade')->end()
                     ->scalarNode('api_client')->defaultValue('OpenOrchestra\ApiBundle\Facade\ApiClientFacade')->end()
                     ->scalarNode('api_client_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\ApiClientCollectionFacade')->end()
                     ->scalarNode('trash_item')->defaultValue('OpenOrchestra\ApiBundle\Facade\TrashItemFacade')->end()

@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Form\Type\Component;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\UserBundle\Document\User;
 
@@ -32,8 +31,6 @@ class LanguageBySitesType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
-     *
-     * @throws NotAllowedClassNameException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
