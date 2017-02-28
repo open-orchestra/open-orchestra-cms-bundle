@@ -26,10 +26,6 @@ class ApiClientCollectionTransformer extends AbstractSecurityCheckerAwareTransfo
             $facade->addApiClient($this->getTransformer('api_client')->transform($apiClient));
         }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ApiClientInterface::ENTITY_TYPE)) {
-            $facade->addLink('_self_add', $this->generateRoute('open_orchestra_backoffice_api_client_new'));
-        }
-
         return $facade;
     }
 

@@ -32,23 +32,6 @@ class ThemeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->id = $theme->getId();
         $facade->name = $theme->getName();
 
-        if ($this->hasGroup(CMSGroupContext::THEME_LINKS)) {
-
-            if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $theme)) {
-                $facade->addLink('_self_delete', $this->generateRoute(
-                    'open_orchestra_api_theme_delete',
-                    array('themeId' => $theme->getId())
-                ));
-            }
-
-            if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $theme)) {
-                $facade->addLink('_self_form', $this->generateRoute(
-                    'open_orchestra_backoffice_theme_form',
-                    array('themeId' => $theme->getId())
-                ));
-            }
-        }
-
         return $facade;
     }
 

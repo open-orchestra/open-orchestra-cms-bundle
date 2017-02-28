@@ -26,13 +26,6 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
             $facade->addRedirection($this->getTransformer('redirection')->transform($redirection));
         }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, RedirectionInterface::ENTITY_TYPE)) {
-            $facade->addLink('_self_add', $this->generateRoute(
-                'open_orchestra_backoffice_redirection_new',
-                array()
-            ));
-        }
-
         return $facade;
     }
 

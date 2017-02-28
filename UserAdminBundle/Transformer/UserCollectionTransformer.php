@@ -26,10 +26,6 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addUser($this->getTransformer('user')->transform($user));
         }
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, UserInterface::ENTITY_TYPE)) {
-            $facade->addLink('_self_add', $this->generateRoute('open_orchestra_user_admin_new'));
-        }
-
         return $facade;
     }
 

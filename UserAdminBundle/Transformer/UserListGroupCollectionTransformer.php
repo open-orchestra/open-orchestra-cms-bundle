@@ -28,18 +28,6 @@ class UserListGroupCollectionTransformer extends AbstractSecurityCheckerAwareTra
             $facade->addUser($this->getTransformer('user_list_group')->transform($user, $group));
         }
 
-        if (null !== $group
-            && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, UserInterface::ENTITY_TYPE)
-        ) {
-            $facade->addLink('_list_without_group', $this->generateRoute(
-                'open_orchestra_api_user_list_by_username_without_group',
-                array(
-                    'groupId' => $group->getId()
-                )
-            ));
-        }
-
-
         return $facade;
     }
 

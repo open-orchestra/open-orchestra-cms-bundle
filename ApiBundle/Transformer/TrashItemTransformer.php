@@ -31,20 +31,6 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->name = $trashItem->getName();
         $facade->type = $trashItem->getType();
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::TRASH_RESTORE, $trashItem)) {
-            $facade->addLink('_self_restore',  $this->generateRoute(
-                'open_orchestra_api_trashcan_restore',
-                array('trashItemId' => $trashItem->getId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::TRASH_PURGE, $trashItem)) {
-            $facade->addLink('_self_remove',  $this->generateRoute(
-                'open_orchestra_api_trashcan_remove',
-                array('trashItemId' => $trashItem->getId())
-            ));
-        }
-
         return $facade;
     }
 
