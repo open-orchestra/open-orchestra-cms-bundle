@@ -87,7 +87,8 @@ class NodeManager
         $newNode = clone $originalNode;
         $newNode->setStatus($status);
         $newNode->setVersion($this->uniqueIdGenerator->generateUniqueId());
-        $this->duplicateBlockAndArea($originalNode, $newNode);
+        $this->duplicateArea($originalNode, $newNode);
+
         $newNode->setVersionName($versionName);
         if (empty($versionName)) {
             $newNode = $this->setVersionName($newNode);
@@ -138,9 +139,16 @@ class NodeManager
         $status = $this->statusRepository->findOneByTranslationState();
 
         $newNode->setStatus($status);
-        $newNode = $this->duplicateBlockAndArea($node, $newNode);
+        $newNode = $this->duplicateArea($node, $newNode, false);
 
         $newNode->setLanguage($language);
+        $newNode->setSeoTitle(null);
+        $newNode->setMetaDescription(null);
+        $newNode->setMetaIndex(false);
+        $newNode->setMetaFollow(false);
+        $newNode->setSitemapChangefreq(null);
+        $newNode->setSitemapPriority(null);
+        $newNode->initializeKeywords();
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_ADD_LANGUAGE, new NodeEvent($node));
 
@@ -198,7 +206,7 @@ class NodeManager
         $oldNode = $this->nodeRepository->findInLastVersion($nodeId, $node->getLanguage(), $siteId);
         if ($oldNode) {
             $node->setTemplate($oldNode->getTemplate());
-            $this->duplicateBlockAndArea($oldNode, $node);
+            $this->duplicateArea($oldNode, $node);
         }
 
         return $node;
@@ -207,22 +215,25 @@ class NodeManager
     /**
      * @param NodeInterface $node
      * @param NodeInterface $newNode
+     * @param boolean       $duplicateBlock
      *
      * @return NodeInterface
      */
-    protected function duplicateBlockAndArea(NodeInterface $node, NodeInterface $newNode)
+    protected function duplicateArea(NodeInterface $node, NodeInterface $newNode, $duplicateBlock = true)
     {
         foreach ($node->getAreas() as $areaId => $area) {
             $newArea = clone $area;
             $newNode->setArea($areaId, $newArea);
-            foreach ($area->getBlocks() as $block) {
-                if (!$block->isTransverse()) {
-                    $newBlock = clone $block;
-                    $this->blockRepository->getDocumentManager()->persist($newBlock);
-                    $this->eventDispatcher->dispatch(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($newBlock));
-                    $newArea->addBlock($newBlock);
-                } else {
-                    $newArea->addBlock($block);
+            if (true === $duplicateBlock) {
+                foreach ($area->getBlocks() as $block) {
+                    if (!$block->isTransverse()) {
+                        $newBlock = clone $block;
+                        $this->blockRepository->getDocumentManager()->persist($newBlock);
+                        $this->eventDispatcher->dispatch(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($newBlock));
+                        $newArea->addBlock($newBlock);
+                    } else {
+                        $newArea->addBlock($block);
+                    }
                 }
             }
         }
