@@ -21,7 +21,7 @@ class AbstractTreeView extends OrchestraView
     }
 
     /**
-     * Render node tree
+     * Render tree
      */
     render() {
         this.$el.html(this._getTreeTemplate());
