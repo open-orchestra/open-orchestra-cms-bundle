@@ -59,7 +59,7 @@ class SiteType extends AbstractType
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.delete'),
                 ),
                 'options' => array( 'label' => false ),
-                'group_id' => 'alias'
+                'group_id' => 'alias',
             ))
             ->add('blocks', 'oo_block_choice', array(
                 'multiple' => true,
