@@ -632,7 +632,6 @@ open_orchestra_backoffice:
         default:
             label: Default set
             template_name:
-                default: Default
                 home: Home
                 column_left: Column left
                 column_right: Column right

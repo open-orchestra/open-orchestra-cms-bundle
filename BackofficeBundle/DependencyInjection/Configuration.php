@@ -180,11 +180,6 @@ class Configuration implements ConfigurationInterface
             'default' => array(
                 'label' => 'open_orchestra_backoffice.template_set.default.label',
                 'templates' => array(
-                    'default' => array(
-                        'areas' => array('header', 'main', 'footer'),
-                        'label' => 'open_orchestra_backoffice.template_set.default.template_name.default',
-                        'path' => '/bundles/openorchestrabackoffice/templateSet/default/default.html'
-                    ),
                     'home' => array(
                         'areas' => array('main'),
                         'label' => 'open_orchestra_backoffice.template_set.default.template_name.home',
