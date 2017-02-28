@@ -71,8 +71,6 @@ class OpenOrchestraApiExtensionTest extends AbstractBaseTestCase
             array('site', 'SiteFacade'),
             array('site_collection', 'SiteCollectionFacade'),
             array('template', 'TemplateFacade'),
-            array('theme', 'ThemeFacade'),
-            array('theme_collection', 'ThemeCollectionFacade'),
             array('trash_item', 'TrashItemFacade'),
             array('trash_item_collection', 'TrashItemCollectionFacade')
         );

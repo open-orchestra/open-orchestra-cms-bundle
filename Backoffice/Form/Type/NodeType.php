@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
-use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -183,7 +182,6 @@ class NodeType extends AbstractType
         $builder->addEventSubscriber($this->statusableChoiceStatusSubscriber);
         $builder->addEventSubscriber($this->specialPageChoiceStatusSubscriber);
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
-            $builder->addEventSubscriber(new NodeThemeSelectionSubscriber($this->siteRepository));
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber(
                 $this->nodeManager,
                 $this->contextManager,

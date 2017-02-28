@@ -22,7 +22,5 @@ open_orchestra_api:
         site:                     FacadeClass
         site_collection:          FacadeClass
         template:                 FacadeClass
-        theme:                    FacadeClass
-        theme_collection:         FacadeClass
         trash_item:               FacadeClass
         trash_item_collection:    FacadeClass

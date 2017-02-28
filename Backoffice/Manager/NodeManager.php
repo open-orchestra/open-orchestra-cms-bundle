@@ -280,8 +280,6 @@ class NodeManager
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
         $node->setOrder($order);
-        $node->setTheme(NodeInterface::THEME_DEFAULT);
-        $node->setDefaultSiteTheme(true);
         $node->setVersion($this->uniqueIdGenerator->generateUniqueId());
 
         $parentNode = $this->nodeRepository->findInLastVersion($parentId, $language, $siteId);

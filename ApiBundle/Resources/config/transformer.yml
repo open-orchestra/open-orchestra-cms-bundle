@@ -17,8 +17,6 @@ parameters:
     open_orchestra_api.transformer.site.class                          : OpenOrchestra\ApiBundle\Transformer\SiteTransformer
     open_orchestra_api.transformer.site_alias.class                    : OpenOrchestra\ApiBundle\Transformer\SiteAliasTransformer
     open_orchestra_api.transformer.site_collection.class               : OpenOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
-    open_orchestra_api.transformer.theme.class                         : OpenOrchestra\ApiBundle\Transformer\ThemeTransformer
-    open_orchestra_api.transformer.theme_collection.class              : OpenOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
     open_orchestra_api.transformer.redirection.class                   : OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer
     open_orchestra_api.transformer.redirection_collection.class        : OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
     open_orchestra_api.transformer.field_type.class                    : OpenOrchestra\ApiBundle\Transformer\FieldTypeTransformer
@@ -177,22 +175,6 @@ services:
         class: '%open_orchestra_api.transformer.site_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.site_collection.class%'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
-    open_orchestra_api.transformer.theme:
-        class: '%open_orchestra_api.transformer.theme.class%'
-        arguments:
-            - '%open_orchestra_api.facade.theme.class%'
-            - '@security.authorization_checker'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
-    open_orchestra_api.transformer.theme_collection:
-        class: '%open_orchestra_api.transformer.theme_collection.class%'
-        arguments:
-            - '%open_orchestra_api.facade.theme_collection.class%'
-            - '@security.authorization_checker'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 

@@ -106,8 +106,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->metaDescription = $node->getMetaDescription();
         $facade->metaIndex = $node->getMetaIndex();
         $facade->metaFollow = $node->getMetaFollow();
-        $facade->theme = $node->getTheme();
-        $facade->themeSiteDefault = $node->hasDefaultSiteTheme();
         $facade->version = $node->getVersion();
         $facade->versionName = $node->getVersionName();
         $facade->createdBy = $node->getCreatedBy();

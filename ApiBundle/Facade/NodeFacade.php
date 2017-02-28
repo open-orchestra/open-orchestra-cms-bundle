@@ -81,16 +81,6 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("string")
      */
-    public $theme;
-
-    /**
-     * @Serializer\Type("boolean")
-     */
-    public $themeSiteDefault;
-
-    /**
-     * @Serializer\Type("string")
-     */
     public $version;
 
     /**
