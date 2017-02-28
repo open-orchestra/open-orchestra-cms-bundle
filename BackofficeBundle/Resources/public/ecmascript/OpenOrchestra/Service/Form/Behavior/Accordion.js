@@ -80,6 +80,7 @@ class Accordion extends AbstractBehavior
         let regularExpression = new RegExp(prototypeName, 'g');
         let $prototype = $(_.unescape(prototype.replace(regularExpression, rank)));
         $table.append($prototype);
+        $('thead', $table).removeClass('hide');
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.Events.trigger('form:activate', this);
         $('body, html').animate({ scrollTop: $prototype.offset().top }, 1000);
@@ -92,7 +93,12 @@ class Accordion extends AbstractBehavior
      */
     _removeForm(event) {
         event.preventDefault();
+        let $table = $(event.target).closest('table');
         $(event.target).closest('tbody').remove();
+        if ($table.children('tbody').length === 0) {
+            $('thead', $table).addClass('hide');
+        }
+
     }
 
     /**
