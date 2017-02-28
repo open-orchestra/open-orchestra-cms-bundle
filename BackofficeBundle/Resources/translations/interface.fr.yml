@@ -132,9 +132,9 @@ open_orchestra_backoffice:
         tree:
             open: Déployer l'arborescence
             close: Fermer l'arborescence
-        statuses_legend:
-            title: Légende
-            out_of_bounds: Hors périmètre
+            statuses_legend:
+                title: Légende
+                out_of_bounds: Hors périmètre
             new_select_page: Sélectionner l'emplacement de la page
             add_here: Ici
         search_engine:
