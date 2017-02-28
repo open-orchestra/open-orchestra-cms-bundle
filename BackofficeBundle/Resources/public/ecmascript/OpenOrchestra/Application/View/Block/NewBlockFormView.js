@@ -33,8 +33,8 @@ class NewBlockFormView extends AbstractNewBlockFormView
      *
      * @return string
      */
-    _getLabelButtonBack() {
-        return Translator.trans('open_orchestra_backoffice.back');
+    _getLabelButtonBackList() {
+        return Translator.trans('open_orchestra_backoffice.block.back_to_node');
     }
 
     /**
@@ -51,6 +51,17 @@ class NewBlockFormView extends AbstractNewBlockFormView
             componentName: this._name,
             areaName: this._areaName,
             position: this._position
+        });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    _getUrlButtonBackList() {
+        return Backbone.history.generateUrl('showNode',{
+            nodeId: this._nodeId,
+            language: this._nodeLanguage,
+            version: this._nodeVersion
         });
     }
 

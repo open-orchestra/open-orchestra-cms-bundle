@@ -2,6 +2,9 @@
     <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('newBlockListComponent', {nodeId: nodeId, nodeLanguage:nodeLanguage , nodeVersion: nodeVersion, areaName: areaName, position: position}) %>" role="button">
         <%= Translator.trans('open_orchestra_backoffice.back') %>
     </a>
+    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNode', {nodeId: nodeId, language:nodeLanguage , version: nodeVersion}) %>" role="button">
+        <%= Translator.trans('open_orchestra_backoffice.block.back_to_node') %>
+    </a>
 </div>
 <h1> <%= componentName %></h1>
 
