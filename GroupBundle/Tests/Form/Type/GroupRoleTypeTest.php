@@ -26,20 +26,26 @@ class GroupRoleTypeTest extends AbstractBaseTestCase
         $configuration = array(
             'firstpackage' => array(
                 'page' => array(
-                    'EDITORIAL_NODE_CONTRIBUTOR' => 'open_orchestra_backoffice.role.contributor',
-                    'EDITORIAL_NODE_SUPER_EDITOR' => 'open_orchestra_backoffice.role.editor',
-                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => 'open_orchestra_backoffice.role.suppresor',
+                    'EDITORIAL_NODE_CONTRIBUTOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.contributor'),
+                    'EDITORIAL_NODE_SUPER_EDITOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.editor'),
+                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.suppresor'),
                 ),
             ),
             'secondpackage' => array(
                 'trash' => array(
-                    'EDITORIAL_TRASH_RESTORER' => 'open_orchestra_backoffice.role.restorer',
-                    'EDITORIAL_TRASH_SUPRESSOR' => 'open_orchestra_backoffice.role.contributor',
+                    'EDITORIAL_TRASH_RESTORER' => array(
+                        'label' => 'open_orchestra_backoffice.role.restorer'),
+                    'EDITORIAL_TRASH_SUPRESSOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.trash_suppresor'),
                 ),
             ),
             'thirdpackage' => array(
                 'configuration' => array(
-                    'ROLE_SITE_ADMIN' => 'open_orchestra_backoffice.role.administrator',
+                    'ROLE_SITE_ADMIN' => array(
+                        'label' => 'open_orchestra_backoffice.role.administrator'),
                 ),
             ),
         );

@@ -37,8 +37,12 @@ class GroupRoleType extends AbstractType
         $configuration = array();
         foreach ($this->groupRolesConfiguration as $tableName => $chekLists) {
             $chekList = reset($chekLists);
-            foreach ($chekList as $columnName) {
-                $configuration[$tableName]['row'][] = $this->translator->trans($columnName);
+            foreach ($chekList as $columnConfiguration) {
+                $columnName = $this->translator->trans($columnConfiguration['label']);
+                if (array_key_exists('help_text', $columnConfiguration)) {
+                    $columnName .= ' <i class="form-help-tooltip icon-prepend fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" data-original-title="'.$columnConfiguration['help_text'].'"></i>';
+                }
+                $configuration[$tableName]['row'][] = $columnName ;
             }
             foreach ($chekLists as $chekListName => $chekList) {
                 $configuration[$tableName]['column'][$chekListName] = $this->translator->trans('open_orchestra_backoffice.form.role.' . $chekListName);

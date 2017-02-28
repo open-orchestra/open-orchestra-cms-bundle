@@ -180,7 +180,7 @@
                 <tr>
                     <th>&nbsp;</th>
                     {% for cell in form.vars.configuration.row %}
-                        <th>{{ cell }}</th>
+                        <th>{{ cell|raw }}</th>
                     {% endfor %}
                 </tr>
             </thead>

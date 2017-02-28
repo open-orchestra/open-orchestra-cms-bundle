@@ -68,7 +68,7 @@ class GroupTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array());
+        $this->form->buildForm($builder, array('new_button' => true));
 
         Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addModelTransformer(Phake::anyParameters());

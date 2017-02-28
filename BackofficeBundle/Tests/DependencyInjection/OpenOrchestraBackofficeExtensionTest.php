@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
-use OpenOrchestra\BackofficeBundle\DependencyInjection\OpenOrchestraBackofficeExtension;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -79,30 +78,54 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
             array (
                 'page' =>
                 array (
-                    'EDITORIAL_NODE_CONTRIBUTOR' => 'open_orchestra_backoffice.role.contributor',
-                    'EDITORIAL_NODE_SUPER_EDITOR' => 'open_orchestra_backoffice.role.editor',
-                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => 'open_orchestra_backoffice.role.suppresor',
+                    'EDITORIAL_NODE_CONTRIBUTOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.contributor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.contributor.help_text',
+                    ),
+                    'EDITORIAL_NODE_SUPER_EDITOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.editor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.editor.help_text',
+                    ),
+                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.supressor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.supressor.help_text',
+                    ),
                 ),
                 'content' =>
                 array (
-                    'EDITORIAL_CONTENT_CONTRIBUTOR' => 'open_orchestra_backoffice.role.contributor',
-                    'EDITORIAL_CONTENT_SUPER_EDITOR' => 'open_orchestra_backoffice.role.editor',
-                    'EDITORIAL_CONTENT_SUPER_SUPRESSOR' => 'open_orchestra_backoffice.role.suppresor',
+                    'EDITORIAL_CONTENT_CONTRIBUTOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.contributor.label',
+                    ),
+                    'EDITORIAL_CONTENT_SUPER_EDITOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.editor.label',
+                    ),
+                    'EDITORIAL_CONTENT_SUPER_SUPRESSOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.supressor.label',
+                    ),
                 ),
             ),
             'secondpackage' =>
             array (
                 'trash' =>
                 array (
-                    'EDITORIAL_TRASH_RESTORER' => 'open_orchestra_backoffice.role.restorer',
-                    'EDITORIAL_TRASH_SUPRESSOR' => 'open_orchestra_backoffice.role.contributor',
+                    'EDITORIAL_TRASH_RESTORER' => array(
+                        'label' => 'open_orchestra_backoffice.role.restorer.label',
+                        'help_text' => 'open_orchestra_backoffice.role.restorer.help_text',
+                    ),
+                    'EDITORIAL_TRASH_SUPRESSOR' => array(
+                        'label' => 'open_orchestra_backoffice.role.trash_supressor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.trash_supressor.help_text',
+                    ),
                 ),
             ),
             'thirdpackage' =>
             array (
                 'configuration' =>
                 array (
-                    'ROLE_SITE_ADMIN' => 'open_orchestra_backoffice.role.administrator',
+                    'ROLE_SITE_ADMIN' => array(
+                        'label' => 'open_orchestra_backoffice.role.administrator.label',
+                        'help_text' => 'open_orchestra_backoffice.role.administrator.help_text',
+                    ),
                 ),
             ),
         );

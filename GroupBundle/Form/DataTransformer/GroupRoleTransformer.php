@@ -31,9 +31,13 @@ class GroupRoleTransformer implements DataTransformerInterface
     {
         $result = $this->groupRolesConfiguration;
         if (is_array($value)) {
-            array_walk_recursive($result, function(&$item, $key) use($value) {
-                $item = in_array($key, $value);
-            });
+            foreach ($this->groupRolesConfiguration as $package => $rows) {
+                foreach ($rows as $row => $roles) {
+                    foreach ($roles as $role => $configuration) {
+                        $result[$package][$row][$role] = in_array($role, $value);
+                    }
+                }
+            }
         }
 
         return array('roles_collections' => $result);

@@ -247,25 +247,49 @@ class Configuration implements ConfigurationInterface
         $configurationRole->defaultValue(array(
             'firstpackage' => array(
                 'page' => array(
-                    ContributionRoleInterface::NODE_CONTRIBUTOR => 'open_orchestra_backoffice.role.contributor',
-                    ContributionRoleInterface::NODE_SUPER_EDITOR => 'open_orchestra_backoffice.role.editor',
-                    ContributionRoleInterface::NODE_SUPER_SUPRESSOR => 'open_orchestra_backoffice.role.suppresor',
+                    ContributionRoleInterface::NODE_CONTRIBUTOR => array(
+                        'label' => 'open_orchestra_backoffice.role.contributor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.contributor.help_text',
+                    ),
+                    ContributionRoleInterface::NODE_SUPER_EDITOR => array(
+                        'label' => 'open_orchestra_backoffice.role.editor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.editor.help_text',
+                    ),
+                    ContributionRoleInterface::NODE_SUPER_SUPRESSOR => array(
+                        'label' => 'open_orchestra_backoffice.role.supressor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.supressor.help_text',
+                    ),
                 ),
                 'content' => array(
-                    ContributionRoleInterface::CONTENT_CONTRIBUTOR => 'open_orchestra_backoffice.role.contributor',
-                    ContributionRoleInterface::CONTENT_SUPER_EDITOR => 'open_orchestra_backoffice.role.editor',
-                    ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR => 'open_orchestra_backoffice.role.suppresor',
+                    ContributionRoleInterface::CONTENT_CONTRIBUTOR => array(
+                        'label' => 'open_orchestra_backoffice.role.contributor.label',
+                    ),
+                    ContributionRoleInterface::CONTENT_SUPER_EDITOR => array(
+                        'label' => 'open_orchestra_backoffice.role.editor.label',
+                    ),
+                    ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR => array(
+                        'label' => 'open_orchestra_backoffice.role.supressor.label',
+                    ),
                 ),
             ),
             'secondpackage' => array(
                 'trash' => array(
-                    ContributionRoleInterface::TRASH_RESTORER => 'open_orchestra_backoffice.role.restorer',
-                    ContributionRoleInterface::TRASH_SUPRESSOR => 'open_orchestra_backoffice.role.contributor',
+                    ContributionRoleInterface::TRASH_RESTORER => array(
+                        'label' => 'open_orchestra_backoffice.role.restorer.label',
+                        'help_text' => 'open_orchestra_backoffice.role.restorer.help_text',
+                    ),
+                    ContributionRoleInterface::TRASH_SUPRESSOR => array(
+                        'label' => 'open_orchestra_backoffice.role.trash_supressor.label',
+                        'help_text' => 'open_orchestra_backoffice.role.trash_supressor.help_text',
+                    ),
                 ),
             ),
             'thirdpackage' => array(
                 'configuration' => array(
-                    ContributionRoleInterface::SITE_ADMIN => 'open_orchestra_backoffice.role.administrator',
+                    ContributionRoleInterface::SITE_ADMIN => array(
+                        'label' => 'open_orchestra_backoffice.role.administrator.label',
+                        'help_text' => 'open_orchestra_backoffice.role.administrator.help_text',
+                    ),
                 ),
             ),
         ));
