@@ -126,12 +126,22 @@ a {
 .glyphicon {
     &::before {
         margin-right: 5px;
-        font-size: 16px;
+        font-family: 'Glyphicons Halflings';
+        position: relative;
+        top: 2px;
     }
 }
 .fa {
     &-trash {
         font-size: 22px;
+    }
+}
+
+.btn {
+    &-nostyle {
+        background: none;
+        border: 0 none;
+        padding: 0;
     }
 }
 
@@ -643,7 +653,7 @@ a.btn.disabled {
     .fontSize(14);
     border: 2px solid @darkBlue;
     letter-spacing: 0;
-    padding: 0 5px;
+    padding: 2px 5px;
     &:hover {
         border-color: @purpleGrey;
         color: @purpleGrey;
@@ -1010,7 +1020,7 @@ table.ui-sortable .fa.fa-arrows{
     & > tfoot > tr > td,
     & > tfoot > tr > th {
         border-color: #e6e6e6;
-        padding: 12px 30px;
+        padding: 12px;
     }
     & > thead > tr > th {
         background-color: @lightGrey;
@@ -1047,6 +1057,46 @@ table.ui-sortable .fa.fa-arrows{
     &:nth-of-type(2n +1) {
         background-color: #fff;
     }
+
+    &.active {
+        background-color: #f1f5f8;
+        border: 2px solid #8d8f8e;
+    }
+
+    .accordion-formrow {
+        & > td {
+            border-top: 0 none;
+            padding: 0 12px;
+        }
+        .row {
+            background-color: #e1eaf1;
+            margin: 0 0 12px;
+        }
+    }
+
+    &.accordion-formrow-container {
+        & > tr:first-child > td:first-child {
+            font-weight: 600;
+        }
+    }
+
+    .nav-tabs {
+        background-color: #c9d9e6;
+
+        li {
+            &.active {
+                background-color: #e1eaf1;
+
+                a {
+                    background: none;
+                }
+            }
+            a {
+                background: none;
+            }
+        }
+    }
+
 }
 
 .table-form {
@@ -1626,7 +1676,11 @@ table.ui-sortable .fa.fa-arrows{
 .radioBouton();
 
 /* checkboxes */
-.checkBox();
+.checkBox('\f14a', 22px, @left: 0, @top: -5px, @color: @darkBlue);
+
+input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + label {
+    margin: 0 20px 20px 0;
+}
 
 /* surcharge checkbox et checkbox dans les tableaux */
 .table,

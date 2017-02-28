@@ -121,10 +121,10 @@
             {% set attr = attr|merge({'data-prototype': prototype_html|e }) %}
             <div class="accordion" {{ block('widget_container_attributes') }}>
                 <div class="action">
-                    <a href="#" class="btn btn-border close-forms">{{ 'open_orchestra_backoffice.form.collection.close_forms'|trans }}</a>
-                    <a href="#" class="btn btn-border open-forms">{{ 'open_orchestra_backoffice.form.collection.open_forms'|trans }}</a>
+                    <a href="#" class="btn btn-border close-forms glyphicon glyphicon-minus-sign">{{ 'open_orchestra_backoffice.form.collection.close_forms'|trans }}</a>
+                    <a href="#" class="btn btn-border open-forms glyphicon glyphicon-plus-sign">{{ 'open_orchestra_backoffice.form.collection.open_forms'|trans }}</a>
                     {% if form.vars.allow_add %}
-                        <a href="#" class="btn btn-primary btn-sm add-form">{{ form.vars.attr['data-prototype-label-add']|trans }}</a>
+                        <a href="#" class="btn btn-border add-form glyphicon glyphicon-plus">{{ form.vars.attr['data-prototype-label-add']|trans }}</a>
                     {% endif %}
                 </div>
                 <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
@@ -147,7 +147,7 @@
                            </tr>
                     </thead>
                     {% for field in form %}
-                        <tbody data-prototype-id="{{ field.vars.name }}">
+                        <tbody class="accordion-formrow-container" data-prototype-id="{{ field.vars.name }}">
                             <tr>
                                 {% if form.vars.sortable is defined and form.vars.sortable %}
                                     <td>
@@ -160,16 +160,16 @@
                                 </td>
                                 {% endfor %}
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm not open-form{% if not field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
-                                    <button type="button" class="btn btn-primary btn-sm close-form{% if field.vars.valid %} hide{% endif %}">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
+                                    <button type="button" class="btn-nostyle fa fa-pencil btn-sm not open-form{% if not field.vars.valid %} hide{% endif %}"></button>
+                                    <button type="button" class="btn-nostyle fa fa-close btn-sm close-form{% if field.vars.valid %} hide{% endif %}"></button>
                                 </td>
                                 {% if form.vars.allow_delete %}
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
+                                        <button type="button" class="btn-nostyle fa fa-trash btn-sm remove-form"></button>
                                     </td>
                                 {% endif %}
                             </tr>
-                            <tr class="{% if field.vars.valid %}hide{% endif %}{% if field.vars.attr.class is defined %} {{ field.vars.attr.class }}{% endif %}">
+                            <tr class="accordion-formrow {% if field.vars.valid %}hide{% endif %}{% if field.vars.attr.class is defined %} {{ field.vars.attr.class }}{% endif %}">
                                 <td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
                                     <div class="row">
                                         {{ form_widget(field) }}
