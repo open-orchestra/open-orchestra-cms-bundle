@@ -15,12 +15,10 @@ class SiteManager
      * Constructor
      *
      * @param string $siteClass
-     * @param string $siteAliasClass
      */
-    public function __construct($siteClass, $siteAliasClass)
+    public function __construct($siteClass)
     {
        $this->siteClass = $siteClass;
-       $this->siteAliasClass = $siteAliasClass;
     }
 
     /**
@@ -28,13 +26,9 @@ class SiteManager
      */
     public function initializeNewSite()
     {
-        $siteAliasClass = $this->siteAliasClass;
-        $siteAlias = new $siteAliasClass();
-
         $site = new $this->siteClass();
         $site->setSitemapPriority(SiteInterface::PRIORITY_DEFAULT);
         $site->setSitemapChangefreq(SiteInterface::CHANGE_FREQ_DEFAULT);
-        $site->addAlias($siteAlias);
 
         return $site;
     }

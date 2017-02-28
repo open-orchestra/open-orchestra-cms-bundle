@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteNodeTemplateSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteSubscriber;
 use OpenOrchestra\Backoffice\Manager\TemplateManager;
-
 /**
  * Class SiteType
  */
