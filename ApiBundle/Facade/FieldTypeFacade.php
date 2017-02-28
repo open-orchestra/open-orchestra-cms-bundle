@@ -43,11 +43,6 @@ class FieldTypeFacade extends AbstractFacade
     public $type;
 
     /**
-     * @Serializer\Type("string")
-     */
-    public $symfonyType;
-
-    /**
      * @Serializer\Type("array<string,string>")
      */
     public $options = array();
