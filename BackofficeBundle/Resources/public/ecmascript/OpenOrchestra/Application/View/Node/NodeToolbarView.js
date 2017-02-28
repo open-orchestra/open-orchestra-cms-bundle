@@ -58,7 +58,7 @@ class NodeToolbarView extends OrchestraView
      * Show input version name to add a new version
      */
     newVersionForm() {
-        let versionName = this._node.get('name') + '_' + (parseInt(this._node.get('version')) + 1) + '_' + new Date().toLocaleString();
+        let versionName = this._node.get('name') + '_' + new Date().toLocaleString();
         let template = this._renderTemplate('Node/newVersionForm', { versionName: versionName });
         $('.new-version-form-region', this.$el).html(template);
     }

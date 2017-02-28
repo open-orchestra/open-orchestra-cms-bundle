@@ -1,0 +1,6 @@
+parameters:
+    open_orchestra_backoffice.util.unique_id_generator.class: OpenOrchestra\Backoffice\Util\UniqueIdGenerator
+
+services:
+    open_orchestra_backoffice.util.unique_id_generator:
+        class: '%open_orchestra_backoffice.util.unique_id_generator.class%'

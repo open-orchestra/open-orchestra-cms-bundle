@@ -71,6 +71,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('usage_finder.yml');
         $loader->load('reference.yml');
         $loader->load('auto_publisher.yml');
+        $loader->load('util.yml');
 
         if (isset($config['field_types'])) {
             $this->addApplicationFieldTypes($config['field_types'], $container);

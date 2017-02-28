@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\Backoffice\Manager\ContentManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use Phake;
 
 /**
@@ -17,11 +16,8 @@ class ContentManagerTest extends AbstractBaseTestCase
      */
     protected $manager;
 
-    /** @var  VersionableSaverInterface */
-    protected $versionableSaver;
-    protected $contentTypeRepository;
+    protected $uniqueIdGenerator;
     protected $statusRepository;
-    protected $contentRepository;
     protected $contentAttribute;
     protected $contextManager;
     protected $contentClass;
@@ -32,6 +28,7 @@ class ContentManagerTest extends AbstractBaseTestCase
     protected $statusTranslationStateLabel = 'statusTranslationStateLabel';
     protected $statusInitial = 'statusTranslationStateLabel';
     protected $statusTranslationState = 'statusTranslationStateLabel';
+    protected $fakeVersion = 'fakeVersion';
 
     /**
      * Set up the test
@@ -46,8 +43,6 @@ class ContentManagerTest extends AbstractBaseTestCase
         Phake::when($this->statusTranslationState)->getName()->thenReturn($this->statusTranslationStateLabel);
 
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-
-        $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
 
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($this->statusInitial);
@@ -65,14 +60,14 @@ class ContentManagerTest extends AbstractBaseTestCase
 
         $this->contentClass = 'OpenOrchestra\ModelBundle\Document\Content';
 
-        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Saver\VersionableSaver');
+        $this->uniqueIdGenerator = Phake::mock('OpenOrchestra\Backoffice\Util\UniqueIdGenerator');
+        Phake::when($this->uniqueIdGenerator)->generateUniqueId()->thenReturn($this->fakeVersion);
 
         $this->manager = new ContentManager(
-            $this->contentRepository,
             $this->statusRepository,
             $this->contextManager,
-            $this->versionableSaver,
-            $this->contentClass
+            $this->contentClass,
+            $this->uniqueIdGenerator
         );
     }
 
@@ -90,21 +85,14 @@ class ContentManagerTest extends AbstractBaseTestCase
 
     /**
      * @param int  $versionName
-     * @param int  $lastVersion
-     * @param bool $expectedVersion
      *
      * @dataProvider provideVersionsAndExpected
      */
-    public function testNewVersionContent($versionName, $lastVersion, $expectedVersion)
+    public function testNewVersionContent($versionName)
     {
-        $lastContent = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        Phake::when($lastContent)->getVersion()->thenReturn($lastVersion);
-
-        Phake::when($this->contentRepository)->findOneByLanguage(Phake::anyParameters())->thenReturn($lastContent);
-
         $newContent = $this->manager->newVersionContent($this->content, $versionName);
 
-        Phake::verify($newContent)->setVersion($expectedVersion);
+        Phake::verify($newContent)->setVersion($this->fakeVersion);
         Phake::verify($newContent)->setStatus($this->statusInitial);
         Phake::verify($newContent)->addKeyword($this->keyword);
         Phake::verify($newContent)->addAttribute($this->contentAttribute);
@@ -116,21 +104,10 @@ class ContentManagerTest extends AbstractBaseTestCase
     public function provideVersionsAndExpected()
     {
         return array(
-            array('fake_version_name', 1, 2),
-            array('foo', 6, 7),
-            array('bar', 5, 6),
+            array('fake_version_name'),
+            array('foo'),
+            array('bar'),
         );
-    }
-
-    /**
-     * Test new version content with exception
-     */
-    public function testNewVersionContentWithException()
-    {
-        Phake::when($this->contentRepository)->findOneByLanguage(Phake::anyParameters())->thenReturn(null);
-        $this->expectException('\UnexpectedValueException');
-
-        $this->manager->newVersionContent($this->content, '');
     }
 
     /**
@@ -142,7 +119,7 @@ class ContentManagerTest extends AbstractBaseTestCase
     {
         $newContent = $this->manager->duplicateContent($this->content, $contentId);
 
-        Phake::verify($newContent)->setVersion(1);
+        Phake::verify($newContent)->setVersion($this->fakeVersion);
         Phake::verify($newContent)->setStatus($this->statusInitial);
         Phake::verify($newContent)->addKeyword($this->keyword);
         Phake::verify($newContent)->addAttribute($this->contentAttribute);

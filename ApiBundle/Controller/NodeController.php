@@ -109,7 +109,6 @@ class NodeController extends BaseController
      */
     public function deleteBlockInAreaAction($nodeId, $siteId, $language, $version, $blockId, $areaName)
     {
-        $version = (int) $version;
         $node = $this->findOneNode($nodeId, $language, $siteId, $version);
         if (!$node instanceof NodeInterface) {
             throw new NodeNotFoundHttpException();
@@ -264,7 +263,6 @@ class NodeController extends BaseController
      */
     public function updateBlockPositionAction(Request $request, $nodeId, $language, $version, $siteId)
     {
-        $version = (int) $version;
         $node = $this->findOneNode($nodeId, $language, $siteId, $version);
         if (!$node instanceof NodeInterface) {
             throw new NodeNotFoundHttpException();
@@ -333,7 +331,9 @@ class NodeController extends BaseController
         $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
         $newNode = $nodeManager->createNewVersionNode($originalNodeVersion, $facade->versionName);
 
-        $this->get('open_orchestra_model.saver.versionnable_saver')->saveDuplicated($newNode);
+        $objectManager = $this->get('object_manager');
+        $objectManager->persist($newNode);
+        $objectManager->flush();
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return array();
