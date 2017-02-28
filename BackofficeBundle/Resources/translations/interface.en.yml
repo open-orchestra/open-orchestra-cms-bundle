@@ -164,7 +164,7 @@ open_orchestra_backoffice:
             type: Type
             name: Name
     keyword:
-        title_list: Tag
+        title_list: Tags
         title_new : New tag
     block:
         add_block: Add a block

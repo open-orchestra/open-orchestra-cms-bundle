@@ -2,7 +2,7 @@ open_orchestra_log:
     navigation:
         configuration:
           logs: Log
-    title_list: Log
+    title_list: Logs
     search_engine:
         filter: Filtrer
     table:

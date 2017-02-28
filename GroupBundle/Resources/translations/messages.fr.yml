@@ -30,7 +30,7 @@ open_orchestra_group:
             group:
                 property: Propriétés
                 right: Droits
-                perimeter: Périmetre
+                perimeter: Périmètre
                 member: Liste des membres
             sub_group:
                 property: Propriété

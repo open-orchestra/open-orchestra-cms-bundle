@@ -15,13 +15,13 @@ open_orchestra_user_admin:
     user:
         add_group: Ajouter un groupe à l'utilisateur
         select: Sélectionner
-        title_list: Liste des utilisateurs
+        title_list: Utilisateurs
         title_new: Nouvel utilisateur
         title_edit: Modifier l'utilisateur
         search_engine:
           search: Rechercher
         new:
-          contact_information: Coordonées
+          contact_information: Coordonnées
           first_name: Prénom
           last_name: Nom
           email: Email
@@ -33,8 +33,3 @@ open_orchestra_user_admin:
           not_found:
             title: Utilisateur inexistant
             create: Créer le compte pour mon site
-    group:
-        title_list: Liste des groupes
-        title_edit: Modifier le groupe
-        search_engine:
-          search: Rechercher
