@@ -49,10 +49,21 @@ class AbstractTreeView extends OrchestraView
             handle: '.sortable-handler',
             items: '> li.sortable-node',
             zIndex: 20,
+            start: (event, ui) => {
+                this._startDrag(event, ui);
+            },
             stop: (event, ui) => {
                 this._sortAction(event, ui);
             }
         });
+    }
+
+    /**
+     * @param {Object} event
+     * @param {Object} ui
+     * @private
+     */
+    _startDrag(event, ui) {
     }
 
     /**
