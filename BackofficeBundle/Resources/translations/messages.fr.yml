@@ -633,7 +633,6 @@ open_orchestra_backoffice:
         default:
             label: Ensemble par défaut
             template_name:
-                default: Défaut
                 home: Accueil
                 column_left: Colonne gauche
                 column_right: Colonne droite
