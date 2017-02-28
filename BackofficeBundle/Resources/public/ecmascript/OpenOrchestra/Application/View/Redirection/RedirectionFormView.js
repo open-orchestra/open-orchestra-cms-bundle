@@ -61,8 +61,10 @@ class RedirectionFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
         let url = Backbone.history.generateUrl('editRedirection', {
             redirectionId: redirectionId
         });
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }

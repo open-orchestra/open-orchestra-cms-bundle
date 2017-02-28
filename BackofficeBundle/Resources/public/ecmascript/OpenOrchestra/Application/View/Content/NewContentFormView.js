@@ -66,8 +66,10 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
             contentId: contentId,
             version: version
         });
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
 
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);

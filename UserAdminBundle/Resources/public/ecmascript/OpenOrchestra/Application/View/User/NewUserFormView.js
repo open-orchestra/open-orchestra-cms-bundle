@@ -61,8 +61,10 @@ class NewUserFormView extends AbstractFormView
             throw new ApplicationError('Invalid userId');
         }
         let url = Backbone.history.generateUrl('editUser', {userId: userId});
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
 
@@ -75,8 +77,10 @@ class NewUserFormView extends AbstractFormView
      * @private
      */
     _redirectNewUser(data) {
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.loadUrl(Backbone.history.fragment);
     }

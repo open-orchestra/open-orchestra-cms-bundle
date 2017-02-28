@@ -40,8 +40,10 @@ let FormViewButtonsMixin = (superclass) => class extends superclass {
      * @private
      */
     _redirectNewElement(data) {
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.loadUrl(Backbone.history.fragment);
     }
