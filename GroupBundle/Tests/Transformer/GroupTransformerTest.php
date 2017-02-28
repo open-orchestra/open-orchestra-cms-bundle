@@ -36,7 +36,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
         Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn('foo');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->transformerInterface = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupInterface');
+        $this->transformerInterface = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
         Phake::when($this->transformerInterface)->transform(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface'));
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         $this->context = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
