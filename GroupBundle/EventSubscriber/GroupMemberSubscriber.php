@@ -37,13 +37,15 @@ class GroupMemberSubscriber implements EventSubscriberInterface
             foreach ($users as $user) {
                 $members[$user->getId()] = array('member' => true);
             }
-            $form->add('members', 'oo_member_list', array(
-                'label' => false,
-                'data' => $members,
-                'mapped' => false,
-                'group_id' => 'member',
-                'required' => false
-            ));
+            if (count($members) > 0) {
+                $form->add('members', 'oo_member_list', array(
+                    'label' => false,
+                    'data' => $members,
+                    'mapped' => false,
+                    'group_id' => 'member',
+                    'required' => false
+                ));
+            }
         }
     }
 
