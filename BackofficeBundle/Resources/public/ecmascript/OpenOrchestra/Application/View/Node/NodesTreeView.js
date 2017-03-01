@@ -1,4 +1,4 @@
-import OrchestraView    from '../OrchestraView'
+import AbstractTreeView from '../Tree/AbstractTreeView'
 import Nodes            from '../../Collection/Node/Nodes'
 import ApplicationError from '../../../Service/Error/ApplicationError'
 import Application      from '../../Application'
@@ -6,19 +6,14 @@ import Application      from '../../Application'
 /**
  * @class NodesTreeView
  */
-class NodesTreeView extends OrchestraView
+class NodesTreeView extends AbstractTreeView
 {
     /**
      * @inheritdoc
      */
     preinitialize() {
-        this.tagName = 'div';
-        this.events = {
-            'click .tree .toggle-tree' : '_toggleChildrenTree',
-            'click .tree .actions .btn-close' : '_openTree',
-            'click .tree .actions .btn-open' : '_closeTree',
-            'click .legend-panel .panel-heading': '_toggleLegend'
-        }
+        super.preinitialize();
+        this.events['click .legend-panel .panel-heading'] = '_toggleLegend';
     }
 
     /**
@@ -34,10 +29,12 @@ class NodesTreeView extends OrchestraView
     }
 
     /**
-     * Render node tree
+     * Get the tree template
+     * @return {Object}
+     * @private
      */
-    render() {
-        let template = this._renderTemplate('Node/nodesTreeView',
+    _getTreeTemplate() {
+        return this._renderTemplate('Node/nodesTreeView',
             {
                 nodesTree : this._nodesTree.models,
                 statuses: this._statuses.models,
@@ -45,75 +42,31 @@ class NodesTreeView extends OrchestraView
                 siteLanguages: Application.getContext().siteLanguages
             }
         );
-
-        this.$el.html(template);
-        this._enableTreeSortable($('.tree .children', this.$el));
-
-        return this;
-    }
-
-    /**
-     * @param {Object} $tree - Jquery selector
-     * @private
-     */
-    _enableTreeSortable($tree) {
-        $tree.sortable({
-            connectWith: '.tree .children.sortable-container',
-            handle: '.sortable-handler',
-            items: '> li.sortable-node',
-            zIndex: 20,
-            stop: (event, ui) => {
-                let $nodes = $(ui.item).parent().children();
-                let parentId = $(ui.item).parent().parent('li').data('node-id');
-                if (typeof parentId === 'undefined') {
-                    throw new ApplicationError('undefined parent node id');
-                }
-                let nodes = [];
-                $.each($nodes, function(index, node) {
-                    nodes.push({'node_id': $(node).data('node-id')})
-
-                });
-
-                nodes = new Nodes(nodes);
-                nodes.save({
-                    urlParameter: {
-                        'nodeId': parentId
-                    }
-                });
-            }
-        });
     }
 
     /**
      * @param {Object} event
+     * @param {Object} ui
      * @private
      */
-    _toggleChildrenTree(event) {
-        $(event.target).toggleClass('closed').parents("div").next('ul').slideToggle();
-    }
+    _sortAction(event, ui) {
+        let $nodes = $(ui.item).parent().children();
+        let parentId = $(ui.item).parent().parent('li').data('node-id');
+        if (typeof parentId === 'undefined') {
+            throw new ApplicationError('undefined parent node id');
+        }
+        let nodes = [];
 
-    /**
-     * Open Tree
-     *
-     * @returns {boolean}
-     * @private
-     */
-    _openTree() {
-        $('.tree .toggle-tree', this.$el).removeClass('closed').parents("div").next('ul').slideUp();
+        $.each($nodes, function(index, node) {
+            nodes.push({'node_id': $(node).data('node-id')})
+        });
 
-        return false;
-    }
-
-    /**
-     * Close tree
-     *
-     * @returns {boolean}
-     * @private
-     */
-    _closeTree() {
-        $('.tree .toggle-tree', this.$el).addClass('closed').parents("div").next('ul').slideDown();
-
-        return false;
+        nodes = new Nodes(nodes);
+        nodes.save({
+            urlParameter: {
+                'nodeId': parentId
+            }
+        });
     }
 
     /**
