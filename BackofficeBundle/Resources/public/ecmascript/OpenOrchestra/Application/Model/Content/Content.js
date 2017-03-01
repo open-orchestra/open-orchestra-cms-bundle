@@ -50,6 +50,8 @@ class Content extends OrchestraModel
         switch (apiContext) {
             case "new-version":
                 return Routing.generate('open_orchestra_api_content_new_version', urlParameter);
+            case "new-language":
+                return Routing.generate('open_orchestra_api_content_new_language', urlParameter);
             default:
                 return Routing.generate('open_orchestra_api_content_duplicate', urlParameter);
         }

@@ -275,6 +275,36 @@ class ContentController extends BaseController
      * @param string  $contentId
      * @param string  $language
      *
+     * @Config\Route("/new-language/{contentId}/{language}", name="open_orchestra_api_content_new_language")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     * @throws ContentNotFoundHttpException
+     */
+    public function newLanguageAction($contentId, $language)
+    {
+        $content = $this->get('open_orchestra_model.repository.content')->findLastVersion($contentId);
+        if (!$content instanceof ContentInterface) {
+            throw new ContentNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
+
+        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content);
+        $status = $this->get('open_orchestra_model.repository.status')->findOneByTranslationState();
+        $newContent->setStatus($status);
+        $newContent->setLanguage($language);
+        $objectManager = $this->get('object_manager');
+        $objectManager->persist($newContent);
+        $objectManager->flush();
+        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
+
+        return array();
+    }
+
+    /**
+     * @param string  $contentId
+     * @param string  $language
+     *
      * @Config\Route("/list-version/{contentId}/{language}", name="open_orchestra_api_content_list_version")
      * @Config\Method({"GET"})
      * @Api\Groups({

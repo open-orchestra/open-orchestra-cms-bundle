@@ -137,24 +137,19 @@ class ContentController extends AbstractAdminController
 
         if ($form->isValid()) {
             $content = $contentManager->setVersionName($content);
-            $contentsEvent = array();
             $documentManager = $this->get('object_manager');
             $documentManager->persist($content);
-            $contentsEvent[] = new ContentEvent($content);
+            $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content));
 
             $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
             foreach ($languages as $siteLanguage) {
                 if ($language !== $siteLanguage) {
                     $translatedContent = $contentManager->createNewLanguageContent($content, $siteLanguage);
                     $documentManager->persist($translatedContent);
-                    $contentsEvent[] = new ContentEvent($translatedContent);
+                    $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($translatedContent));
                 }
             }
             $documentManager->flush();
-
-            foreach ($contentsEvent as $contentEvent) {
-                $this->dispatchEvent(ContentEvents::CONTENT_CREATION, $contentEvent);
-            }
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
             $response = new Response(
                 $message,

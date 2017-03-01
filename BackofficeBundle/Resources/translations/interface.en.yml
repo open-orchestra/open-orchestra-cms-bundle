@@ -212,3 +212,7 @@ open_orchestra_backoffice:
         de: Deutsch
     internal_link:
         title: Internal link
+    content:
+        confirm_create:
+            title: Create content in a new language
+            message: This content does not exist in this language. Would you like to create it?
