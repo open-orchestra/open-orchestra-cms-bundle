@@ -188,6 +188,7 @@ class AbstractDataTableView extends OrchestraView
         $.fn.dataTableExt.classes.sLength = 'styled-select pull-right list-length';
         $.fn.dataTableExt.classes.sLengthSelect = 'form-control';
         $.fn.dataTable.Buttons.defaults.dom.container.className = 'pull-right';
+        $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-border btn-large';
 
         let dom = "<'header-results clearfix' <'nb-results pull-left' i>l B p>";
         dom += "<'table-responsive'tr>";
