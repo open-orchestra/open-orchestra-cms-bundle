@@ -277,16 +277,20 @@
 
 {% block oo_block_choice_widget %}
     {% spaceless %}
-        {% set col_size = col_size|default(bootstrap_get_col_size()) %}
-        {% set class = 'col-' ~ col_size ~ '-4' %}
-        <div {{ block('widget_container_attributes') }} class="form-group {% if form.vars.errors|length > 0 %} has-error{% endif %}">
-        {% for child in form %}
-            <div class="{{ class }}">
-                <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
-                <label for="{{ child.vars.id }}">{{ child.vars.label|trans }}</label>
+        {% if expanded %}
+            {% set col_size = col_size|default(bootstrap_get_col_size()) %}
+            {% set class = 'col-' ~ col_size ~ '-4' %}
+            <div {{ block('widget_container_attributes') }} class="form-group {% if form.vars.errors|length > 0 %} has-error{% endif %}">
+                {% for child in form %}
+                    <div class="{{ class }}">
+                        <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                        <label for="{{ child.vars.id }}">{{ child.vars.label|trans }}</label>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-        </div>
+        {% else %}
+            {{ block('choice_widget_collapsed') }}
+        {% endif %}
     {% endspaceless %}
 {% endblock oo_block_choice_widget %}
 
@@ -685,3 +689,29 @@
         </div>
     {% endspaceless %}
 {% endblock _oo_redirection_type_widget %}
+
+
+
+{% block choice_widget_collapsed %}
+    {% spaceless %}
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+
+        <div class="styled-select">
+            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+                {% if empty_value is not none %}
+                    <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% endif %} value="">{{ empty_value|trans({}, translation_domain) }}</option>
+                {% endif %}
+                {% if preferred_choices|length > 0 %}
+                    {% set options = preferred_choices %}
+                    {{ block('choice_widget_options') }}
+                    {% if choices|length > 0 and separator is not none %}
+                        <option disabled="disabled">{{ separator }}</option>
+                    {% endif %}
+                {% endif %}
+                {% set options = choices %}
+                {{ block('choice_widget_options') }}
+            </select>
+        </div>
+
+    {% endspaceless %}
+{% endblock choice_widget_collapsed %}
