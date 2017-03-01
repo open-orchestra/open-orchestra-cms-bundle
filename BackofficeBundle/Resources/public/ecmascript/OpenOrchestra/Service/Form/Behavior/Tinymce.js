@@ -13,14 +13,12 @@ class Tinymce extends AbstractBehavior
      * @param {AbstractFormView} view
      */
     activate($element, view) {
-        let id = $element.attr('id');
-        $('textarea#'+id).initialize(() => {
+        $('textarea#' + $element.attr('id')).initialize(() => {
             let editor = TinymceManager.createEditor($element);
             view.getForm().bind('form:pre_submit', () => {
                 editor.fire('submit', editor);
             });
-        })
-
+        });
     }
 
     /**
