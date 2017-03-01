@@ -47,8 +47,10 @@ class SiteController extends AbstractAdminController
             if ($this->handleForm($form, $message)) {
                 $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site, $oldAliases));
             }
+            $response = $this->renderAdminForm($form);
+            $response->headers->set('languages', json_encode($site->getLanguages()));
 
-            return $this->renderAdminForm($form);
+            return $response;
         }
 
         return new Response();

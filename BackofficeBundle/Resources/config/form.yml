@@ -81,6 +81,7 @@ services:
             - '%open_orchestra_model.document.site.class%'
             - '@translator'
             - '@open_orchestra_backoffice.manager.template'
+            - '@open_orchestra_backoffice.subscriber.website'
         tags:
             - { name: form.type, alias: oo_site }
     open_orchestra_backoffice.type.site_alias:

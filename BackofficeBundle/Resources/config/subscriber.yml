@@ -20,6 +20,7 @@ parameters:
     open_orchestra_backoffice.subscriber.sortable_collection.class               : OpenOrchestra\Backoffice\EventSubscriber\SortableCollectionSubscriber
     open_orchestra_backoffice.subscriber.field_type.class                        : OpenOrchestra\Backoffice\EventSubscriber\FieldTypeTypeSubscriber
     open_orchestra_backoffice.subscriber.special_page_choice.class               : OpenOrchestra\Backoffice\EventSubscriber\SpecialPageChoiceSubscriber
+    open_orchestra_backoffice.subscriber.website.class                           : OpenOrchestra\Backoffice\EventSubscriber\WebSiteSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -193,3 +194,8 @@ services:
             - '%open_orchestra_backoffice.special_page_name%'
         tags:
             - { name: kernel.event_subscriber }
+
+    open_orchestra_backoffice.subscriber.website:
+        class: '%open_orchestra_backoffice.subscriber.website.class%'
+        arguments:
+            - '@session'
