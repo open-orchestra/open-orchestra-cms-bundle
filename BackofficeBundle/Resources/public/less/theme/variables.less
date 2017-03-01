@@ -63,7 +63,7 @@
     padding: 0 22px 0 25px; /* fait un peu d'espace pour notre case à venir */
     cursor: pointer;    /* affiche un curseur adapté */
     font-weight: normal;
-    margin: 0 20px 0 0;
+    margin: 0 20px 20px 0;
     vertical-align: top;
     word-wrap: break-word;
   }
@@ -149,14 +149,19 @@
   /* :before sert à créer le bouton radio */
   [type="radio"]:not(:checked) + label:before,
   [type="radio"]:checked + label:before{
-    content: '\f10c';
-    font-family: 'FontAwesome';
+    content: '';
+    //font-family: 'FontAwesome';
     position: absolute;
     top: @top;
     left: @left;
-    font-size: @size;
-    color: @color;
+    //font-size: @size;
+    //color: @color;
     transition: all .2s; /* on prévoit une animation */
+
+    border: 2px solid @color;
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
   }
   /* Aspect général de la coche */
   [type="radio"]:not(:checked) + label:after,
@@ -164,8 +169,8 @@
     content: @coche;
     font-family: 'FontAwesome';
     position: absolute;
-    top: @top;
-    left: @left;
+    top: -5px;
+    left: 1px;
     font-size: @size;
     color: @color;
     transition: all .2s; /* on prévoit une animation */
