@@ -8,7 +8,7 @@
         <% }; %>
         <span><%= nodeTree.get('node').get('name') %></span>
         <% if (true === nodeTree.get('node').get('rights').can_read) {%>
-            <i class="state state-<%= nodeTree.get('node').get('status').get('code_color') %>" aria-hidden="true"></i>
+            <i class="state workflow-<%= nodeTree.get('node').get('status').get('code_color') %>" aria-hidden="true"></i>
             <div class="links">
                 <a href="#<%= Backbone.history.generateUrl('editNode', {
                     language: nodeTree.get('node').get('language'),

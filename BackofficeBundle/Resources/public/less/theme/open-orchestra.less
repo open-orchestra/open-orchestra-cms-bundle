@@ -1242,7 +1242,6 @@ table.ui-sortable .fa.fa-arrows{
         li {
             margin: 0 0 4px;
             &::before {
-                top: 5px;
                 margin-right: 10px;
             }
         }
@@ -1251,35 +1250,31 @@ table.ui-sortable .fa.fa-arrows{
         float: left;
         &::before {
             margin-left: 20px;
-            top: 3px;
         }
     }
     i.state::before, .state li::before {
-        content: "";
-        background-image: url("/images/state.png");
+        content: "\f0eb";
+        left: 5px;
         background-repeat: no-repeat;
         width: 20px;
         height: 20px;
         display: inline-block;
         position: relative;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
-    .state-blue::before {
-        background-position: 0 0;
+    .state li span {
+        color: #393d4e;
     }
-    .state-orange::before {
-        background-position: 0 -30px;
-    }
-    .state-red::before {
-        background-position: 0 -60px;
-    }
-    .state-green::before {
-        background-position: 0 -90px;
-    }
-    .state-grey::before {
-        background-position: 0 -120px;
-    }
-    .out-of-bounds::before {
+    .state li.out-of-bounds::before {
+        content: "";
+        background-image: url("/images/state.png");
         background-position: 0 -150px;
+        top: 5px;
+        left: 0px;
     }
 }
 
