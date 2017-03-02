@@ -8,8 +8,10 @@ import NewContentFormView from '../../View/Content/NewContentFormView'
 import ContentTypes       from '../../Collection/ContentType/ContentTypes'
 import Contents           from '../../Collection/Content/Contents'
 import ContentType        from '../../Model/ContentType/ContentType'
+import Content            from '../../Model/Content/Content'
 import Statuses           from '../../Collection/Status/Statuses'
 import ApplicationError   from '../../../Service/Error/ApplicationError'
+import ConfirmModalView from '../../../Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class ContentRouter
@@ -23,6 +25,7 @@ class ContentRouter extends OrchestraRouter
         this.routes = {
             'content/summary'                                             : 'showContentSummary',
             'content/list/:contentTypeId/:language(/:page)'               : 'listContent',
+            'content/edit/:contentTypeId/:language/:contentId(/:version)' : 'editContent',
             'content/edit/:contentTypeId/:language/:contentId(/:version)' : 'editContent',
             'content/new/:contentTypeId/:language'                        : 'newContent'
         };
@@ -78,7 +81,7 @@ class ContentRouter extends OrchestraRouter
             language: language,
             version: version
         });
-        
+
         let siteLanguageUrl = [];
         for (let siteLanguage of Application.getContext().siteLanguages) {
             siteLanguageUrl[siteLanguage] = Backbone.history.generateUrl('editContent', {
@@ -106,8 +109,40 @@ class ContentRouter extends OrchestraRouter
                         version: version
                     });
                     Application.getRegion('content').html(contentFormView.render().$el);
+                },
+                null, null, () => {
+                    let noCallback = () => {
+                        let url = Backbone.history.generateUrl('listContent',{
+                            contentTypeId: contentTypeId,
+                            language: language
+                        });
+                        Backbone.history.navigate(url, true);
+                    };
+                    let yesCallback = () => {
+                        new Content().save({}, {
+                            apiContext: 'new-language',
+                            urlParameter: {
+                                contentId: contentId,
+                                language: language,
+                            },
+                            success: () => {
+                                Backbone.history.loadUrl(Backbone.history.fragment);
+                            }
+                        })
+                    };
+
+                    let confirmModalView = new ConfirmModalView({
+                        confirmTitle: Translator.trans('open_orchestra_backoffice.content.confirm_create.title'),
+                        confirmMessage: Translator.trans('open_orchestra_backoffice.content.confirm_create.message'),
+                        yesCallback: yesCallback,
+                        context: this,
+                        noCallback: noCallback,
+                    });
+
+                    Application.getRegion('modal').html(confirmModalView.render().$el);
+                    confirmModalView.show();
                 });
-            }
+            },
         });
     }
 
