@@ -7,7 +7,6 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Model\PerimeterInterface;
@@ -35,11 +34,6 @@ class Group extends BaseGroup implements GroupInterface
      *
      * @ODM\Field(
      *  type="hash"
-     * )
-     *
-     * @ORCHESTRA\Search(
-     *  key="label",
-     *  type="multiLanguages"
      * )
      */
     protected $labels;
