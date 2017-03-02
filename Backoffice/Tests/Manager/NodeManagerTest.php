@@ -42,11 +42,6 @@ class NodeManagerTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $theme = Phake::mock('OpenOrchestra\ModelInterface\Model\ThemeInterface');
-        Phake::when($theme)->getName()->thenReturn('fakeNameTheme');
-        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-        Phake::when($site)->getTheme()->thenReturn($theme);
-
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $this->area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
@@ -62,6 +57,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
         $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
 
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         Phake::when($this->status)->isPublishedState()->thenReturn(true);
         Phake::when($this->status)->getLabels()->thenReturn(array());
@@ -241,8 +237,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertInstanceOf($this->nodeClass, $node);
         $this->assertEquals($siteId, $node->getSiteId());
         $this->assertEquals($language, $node->getLanguage());
-        $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
-        $this->assertTrue($node->hasDefaultSiteTheme());
         $this->assertEquals(0, $node->getOrder());
         if (is_null($parentNode)) {
             $this->assertSame(NodeInterface::ROOT_NODE_ID, $node->getNodeId());
@@ -284,8 +278,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertInstanceOf($this->nodeClass, $node);
         $this->assertEquals($siteId, $node->getSiteId());
         $this->assertEquals($language, $node->getLanguage());
-        $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
-        $this->assertTrue($node->hasDefaultSiteTheme());
         $this->assertEquals(0, $node->getOrder());
         if (is_null($parentNode)) {
             $this->assertSame(NodeInterface::ROOT_NODE_ID, $node->getNodeId());

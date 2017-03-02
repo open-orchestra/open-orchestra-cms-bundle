@@ -58,10 +58,6 @@ open_orchestra_log:
         create: Crée un nouveau statut nommé status_name
         delete: Supprime un statut nommé status_name
         update: Met à jour un statut nommé status_name
-    theme:
-        create: Crée un nouveau thème nommé theme_name
-        delete: Supprime un thème nommé theme_name
-        update: Met à jour un thème nommé theme_name
     user:
         create: Crée un nouvel utilisateur user_name
         delete: Supprime un utilisateur user_name

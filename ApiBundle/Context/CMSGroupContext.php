@@ -17,7 +17,5 @@ class CMSGroupContext
     const STATUS = 'status';
     const AUTHORIZATIONS = 'authorizations';
     const AUTHORIZATIONS_DELETE_VERSION = 'authorizations_delete_node_version';
-    const THEME = 'theme';
-    const THEME_LINKS = 'theme_links';
     const SITE_MAIN_ALIAS = 'site_main_alias';
 }

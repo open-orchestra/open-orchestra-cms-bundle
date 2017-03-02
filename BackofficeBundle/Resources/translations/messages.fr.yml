@@ -136,7 +136,6 @@ open_orchestra_backoffice:
             prefix: Préfix pour la langue
             main: Alias principal
             blocks: Blocs disponibles
-            theme: Thème par défaut
             meta_keywords: Meta keywords
             meta_description: Meta description
             meta_index: Meta index
@@ -167,12 +166,6 @@ open_orchestra_backoffice:
                 sitemap: Sitemap
                 robot: Robots.txt
                 block: Blocs
-        theme:
-            success: Le thème a été modifié
-            creation: Le thème a été créé
-            name: Nom
-            default: par defaut
-            site_theme: Par défaut (Configuration du site)
         content:
             transformation_error: Impossible de charger la valeur de ce champ (le type ne correspond pas)
             success: Le contenu a été modifié
@@ -247,7 +240,6 @@ open_orchestra_backoffice:
                 label: Importance relative par rapport aux autres pages du site (pour le sitemap)
                 helper: Importance relative par rapport aux autres pages du site (pour le sitemap)
             canonical: Page canonique
-            theme: Le thème
             alias: Alias
             route_pattern:
                 name : URL principale
@@ -627,8 +619,6 @@ open_orchestra_backoffice:
           restore_confirm_title: Restaurer
           remove_confirm_txt: Vous voulez vous supprimer cet élément définitivement?
           remove_confirm_title: Suppression définitive
-        themes:
-          name: Nom
     template_set:
         default:
             label: Ensemble par défaut

@@ -13,8 +13,6 @@ parameters:
     open_orchestra_backoffice.type.field_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\FieldChoiceType
     open_orchestra_backoffice.type.date_widget_option.class: OpenOrchestra\Backoffice\Form\Type\Component\DateWidgetOptionType
     open_orchestra_backoffice.type.date_picker.class: OpenOrchestra\Backoffice\Form\Type\Component\DatePickerType
-    open_orchestra_backoffice.type.theme_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\ThemeChoiceType
-    open_orchestra_backoffice.type.theme.class: OpenOrchestra\Backoffice\Form\Type\ThemeType
     open_orchestra_backoffice.type.node_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\NodeChoiceType
     open_orchestra_backoffice.type.site_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteChoiceType
     open_orchestra_backoffice.type.content_type_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\ContentTypeChoiceType
@@ -156,18 +154,6 @@ services:
         tags:
             - { name: form.type, alias: orchestra_language }
 
-    open_orchestra_backoffice.type.theme_choice:
-        class: '%open_orchestra_backoffice.type.theme_choice.class%'
-        arguments:
-            - '@open_orchestra_model.repository.theme'
-        tags:
-            - { name: form.type, alias: oo_theme_choice}
-    open_orchestra_backoffice.type.theme:
-        class: '%open_orchestra_backoffice.type.theme.class%'
-        arguments:
-            - '%open_orchestra_model.document.theme.class%'
-        tags:
-            - { name: form.type, alias: oo_theme}
     open_orchestra_backoffice.type.node_choice:
         class: '%open_orchestra_backoffice.type.node_choice.class%'
         arguments:

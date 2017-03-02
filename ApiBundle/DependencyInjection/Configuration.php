@@ -39,8 +39,6 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('site')->defaultValue('OpenOrchestra\ApiBundle\Facade\SiteFacade')->end()
                     ->scalarNode('site_alias')->defaultValue('OpenOrchestra\ApiBundle\Facade\SiteAliasFacade')->end()
                     ->scalarNode('site_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\SiteCollectionFacade')->end()
-                    ->scalarNode('theme')->defaultValue('OpenOrchestra\ApiBundle\Facade\ThemeFacade')->end()
-                    ->scalarNode('theme_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\ThemeCollectionFacade')->end()
                     ->scalarNode('redirection')->defaultValue('OpenOrchestra\ApiBundle\Facade\RedirectionFacade')->end()
                     ->scalarNode('redirection_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\RedirectionCollectionFacade')->end()
                     ->scalarNode('field_type')->defaultValue('OpenOrchestra\ApiBundle\Facade\FieldTypeFacade')->end()

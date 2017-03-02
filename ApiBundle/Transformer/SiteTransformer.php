@@ -32,10 +32,6 @@ class SiteTransformer extends AbstractTransformer
         $facade->siteId = $site->getSiteId();
         $facade->name = $site->getName();
 
-        if ($this->hasGroup(CMSGroupContext::THEME)) {
-            $facade->theme = $this->getTransformer('theme')->transform($site->getTheme());
-        }
-
         if ($this->hasGroup(CMSGroupContext::SITE_MAIN_ALIAS)) {
             $facade->mainAlias = $this->getTransformer('site_alias')->transform($site->getMainAlias());
         }
