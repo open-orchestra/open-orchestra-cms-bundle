@@ -64,9 +64,10 @@ class NewNodeFormView extends AbstractFormView
             throw new ApplicationError('Invalid nodeId');
         }
         let url = Backbone.history.generateUrl('showNode', {nodeId: nodeId, language: this._language});
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
-
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }

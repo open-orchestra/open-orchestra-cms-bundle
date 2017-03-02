@@ -75,11 +75,9 @@ class ContentTypeController extends AbstractAdminController
                 $documentManager->persist($contentType);
                 $documentManager->flush();
                 $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.creation');
-                $this->get('session')->getFlashBag()->add('success', $message);
-
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_CREATE, new ContentTypeEvent($contentType));
                 $response = new Response(
-                    '',
+                    $message,
                     Response::HTTP_CREATED,
                     array('Content-type' => 'text/plain; charset=utf-8', 'contentTypeId' => $contentType->getContentTypeId(), 'name' => $contentType->getName($language))
                 );

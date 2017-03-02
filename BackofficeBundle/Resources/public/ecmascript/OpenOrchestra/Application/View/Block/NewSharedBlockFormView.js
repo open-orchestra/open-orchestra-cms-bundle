@@ -83,9 +83,10 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
             blockLabel: blockLabel,
             language: this._language
         });
-
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
     }
@@ -96,8 +97,10 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
      * @private
      */
     _redirectNewSharedBlock(data) {
-        let message = new FlashMessage(data, 'success');
-        FlashMessageBag.addMessageFlash(message);
+        if (data != '') {
+            let message = new FlashMessage(data, 'success');
+            FlashMessageBag.addMessageFlash(message);
+        }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(Backbone.history.generateUrl('newSharedBlockListComponent', {language: this._language}), true);
     }
