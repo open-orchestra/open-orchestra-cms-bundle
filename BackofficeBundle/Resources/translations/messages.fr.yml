@@ -643,11 +643,24 @@ open_orchestra_backoffice:
                 50%: 50%
                 70%: 70%
     role:
-        contributor: Contribuer
-        editor: Modifier
-        suppresor: Supprimer
-        restorer: Restaurer
-        administrator: Gérer
+        contributor:
+            label: Contribuer
+            help_text: créer / éditer / supprimer ses propres contenus
+        editor:
+            label: Modifier
+            help_text: éditer n’importe quel contenu
+        supressor:
+            label: Supprimer
+            help_text: supprimer n’importe quel contenu
+        trash_supressor:
+            label: Supprimer
+            help_text: supprimer définitivement des éléments de la corbeille
+        restorer:
+            label: Restaurer
+            help_text: rendre actif des contenus supprimer dans la corbeille
+        administrator:
+            label: Gérer
+            help_text: donne accès au profil d’administrateur site
     block_configuration:
         category:
             navigation: Navigation

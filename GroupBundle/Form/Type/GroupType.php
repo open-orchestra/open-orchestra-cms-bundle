@@ -85,6 +85,7 @@ class GroupType extends AbstractType
                 'label' => 'open_orchestra_group.form.group.site',
                 'group_id' => 'property',
                 'sub_group_id' => 'property',
+                'disabled' => !$options['new_button']
             ))
             ->add('roles', 'oo_group_role', array(
                 'label' => false,

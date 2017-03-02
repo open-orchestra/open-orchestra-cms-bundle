@@ -179,8 +179,9 @@
             <thead>
                 <tr>
                     <th>&nbsp;</th>
-                    {% for cell in form.vars.configuration.row %}
-                        <th>{{ cell }}</th>
+                    {% for rank, cell in form.vars.configuration.row %}
+                        <th>{{ cell }}{% if form.vars.configuration.help[rank] is defined %} <i class="form-help-tooltip icon-prepend fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" data-original-title="{{ form.vars.configuration.help[rank] }}"></i>{% endif %}
+                        </th>
                     {% endfor %}
                 </tr>
             </thead>

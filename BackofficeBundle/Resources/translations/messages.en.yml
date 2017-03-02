@@ -642,11 +642,24 @@ open_orchestra_backoffice:
                 50%: 50%
                 70%: 70%
     role:
-        contributor: Contribuer
-        editor: Modifier
-        suppresor: Supprimer
-        restorer: Restaurer
-        administrator: Gérer
+        contributor:
+            label: Contribute
+            help_text: create / edit / delete own content
+        editor:
+            label: Edit
+            help_text: edit any content
+        supressor:
+            label: Delete
+            help_text: delete any content
+        trash_supressor:
+            label: Delete
+            help_text: Permanently delete items from the trash
+        restorer:
+            label: Restore
+            help_text: make active deleted content from the trash
+        administrator:
+            label: Manage
+            help_text: gives access to the site administrator profile
     block_configuration:
         category:
             navigation: Navigation

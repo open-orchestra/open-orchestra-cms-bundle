@@ -9,6 +9,16 @@ import ApplicationError     from '../../../Service/Error/ApplicationError'
  */
 class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 {
+
+    /**
+     * Pre initialize
+     * @param {Object} options
+     */
+    preinitialize(options) {
+        super.preinitialize(options);
+        this.events['click button.submit-form'] = '_refreshForm';
+    }
+
     /**
      * Initialize
      * @param {Form}   form
@@ -71,6 +81,19 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
                 Backbone.history.navigate(url, true);
             }
         });
+    }
+
+    /**
+     * Refresh form
+     * @param {object} event
+     */
+    _refreshForm(event) {
+        event.preventDefault();
+        $('.group-user:checked', this.$el).each(function() {
+            let container = $(this).parents('tr').eq(0);
+            $('.hide', container).remove();
+        });
+        this._form.submit(this.getStatusCodeForm(event));
     }
 }
 
