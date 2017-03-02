@@ -28,6 +28,26 @@ class TrashItemCollectionTransformer extends AbstractTransformer
     }
 
     /**
+     * @param FacadeInterface $facade
+     * @param null            $source
+     *
+     * @return array
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        $trashItems = array();
+        $trashItemsFacade = $facade->getTrashItems();
+        foreach ($trashItemsFacade as $trashItemFacade) {
+            $trashItem = $this->getTransformer('trash_item')->reverseTransform($trashItemFacade);
+            if (null !== $trashItem) {
+                $trashItems[] = $trashItem;
+            }
+        }
+
+        return $trashItems;
+    }
+
+    /**
      * @return string
      */
     public function getName()

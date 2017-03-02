@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\Backoffice\RemoveTrashcanEntity\Strategies;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\Backoffice\RemoveTrashcanEntity\RemoveTrashCanEntityInterface;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\TrashItemRepositoryInterface;
 use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -17,72 +17,48 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class RemoveTrashCanNodeStrategy implements RemoveTrashCanEntityInterface
 {
     protected $nodeRepository;
-    protected $trashItemRepository;
     protected $eventDispatcher;
-    protected $objectManager;
+    protected $nodeManager;
 
     /**
      * @param NodeRepositoryInterface      $nodeRepository
-     * @param TrashItemRepositoryInterface $trashItemRepository,
      * @param EventDispatcherInterface     $eventDispatcher
-     * @param ObjectManager                $objectManager
+     * @param NodeManager                  $nodeManager
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
-        TrashItemRepositoryInterface $trashItemRepository,
         EventDispatcherInterface $eventDispatcher,
-        ObjectManager $objectManager
+        NodeManager $nodeManager
     ){
         $this->nodeRepository = $nodeRepository;
-        $this->trashItemRepository = $trashItemRepository;
         $this->eventDispatcher = $eventDispatcher;
-        $this->objectManager = $objectManager;
+        $this->nodeManager = $nodeManager;
     }
 
     /**
-     * @param mixed $entity
+     * @param TrashItemInterface $trashItem
      *
      * @return bool
      */
-    public function support($entity)
+    public function support(TrashItemInterface $trashItem)
     {
-        return $entity instanceof NodeInterface;
+        return NodeInterface::ENTITY_TYPE === $trashItem->getType();
     }
 
     /**
-     * @param mixed $entity
+     * @param TrashItemInterface $trashItem
      */
-    public function remove($entity)
+    public function remove(TrashItemInterface $trashItem)
     {
-        $nodes = $this->nodeRepository->findByNodeAndSite($entity->getNodeId(), $entity->getSiteId());
-
-        // remove children if node is the last parent
-        if (count($nodes) == 1 ) {
-            $subNodes = $this->nodeRepository->findByIncludedPathAndSiteId($entity->getPath(), $entity->getSiteId());
-            $this->removeNodes($subNodes);
-        } else {
-            $this->eventDispatcher->dispatch(TrashcanEvents::TRASHCAN_REMOVE_ENTITY, new TrashcanEvent($entity));
-            $this->objectManager->remove($entity);
-        }
-
-        $this->objectManager->flush();
-    }
-
-    /**
-     * @param array $nodes
-     */
-    protected function removeNodes(array $nodes)
-    {
+        $nodes = $this->nodeRepository->findByNodeAndSite($trashItem->getEntityId(), $trashItem->getSiteId());
+        $nodeIds = array();
+        /** @var NodeInterface $node */
         foreach ($nodes as $node) {
-            if ($node->isDeleted()) {
-                $trashItem = $this->trashItemRepository->findByEntity($node->getId());
-                if (null !== $trashItem) {
-                    $this->objectManager->remove($trashItem);
-                }
-                $this->objectManager->remove($node);
+                $this->nodeManager->deleteBlockInNode($node);
+                $nodeIds[] = $node->getId();
                 $this->eventDispatcher->dispatch(TrashcanEvents::TRASHCAN_REMOVE_ENTITY, new TrashcanEvent($node));
-            }
         }
+        $this->nodeRepository->removeNodeVersions($nodeIds);
     }
 
     /**

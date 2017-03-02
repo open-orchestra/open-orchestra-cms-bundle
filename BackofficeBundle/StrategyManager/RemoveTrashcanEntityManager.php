@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
 use OpenOrchestra\Backoffice\RemoveTrashcanEntity\RemoveTrashCanEntityInterface;
+use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 
 /**
  * Class RemoveTrashcanEntityManager
@@ -20,14 +21,14 @@ class RemoveTrashcanEntityManager
     }
 
     /**
-     * @param mixed $entity
+     * @param TrashItemInterface $trashItem
      */
-    public function remove($entity)
+    public function remove(TrashItemInterface $trashItem)
     {
         /** @var RemoveTrashCanEntityInterface $strategy */
         foreach ($this->strategies as $strategy) {
-            if ($strategy->support($entity)) {
-                $strategy->remove($entity);
+            if ($strategy->support($trashItem)) {
+                $strategy->remove($trashItem);
                 break;
             }
         }

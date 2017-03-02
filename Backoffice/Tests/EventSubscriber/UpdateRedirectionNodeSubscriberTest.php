@@ -75,8 +75,6 @@ class UpdateRedirectionNodeSubscriberTest extends AbstractBaseTestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(NodeEvents::NODE_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_RESTORE, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_DELETE, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -101,23 +99,5 @@ class UpdateRedirectionNodeSubscriberTest extends AbstractBaseTestCase
             array(true, 1),
             array(false, 0),
         );
-    }
-
-    /**
-     * test updateRedirectionRoutes
-     */
-    public function testUpdateRedirectionRoutes()
-    {
-        $this->subscriber->updateRedirectionRoutes($this->nodeEvent);
-        Phake::verify($this->redirectionManager)->updateRedirection($this->nodeId, $this->language, $this->siteId);
-    }
-
-    /**
-     * test updateRedirectionRoutes
-     */
-    public function testUpdateRedirectionRoutesOnNodeDelete()
-    {
-        $this->subscriber->updateRedirectionRoutesOnNodeDelete($this->nodeEvent);
-        Phake::verify($this->redirectionManager, Phake::times(3))->deleteRedirection(Phake::anyParameters());
     }
 }

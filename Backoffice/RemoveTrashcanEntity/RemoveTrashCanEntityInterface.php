@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenOrchestra\Backoffice\RemoveTrashcanEntity;
+use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 
 /**
  * Interface RemoveTrashCanEntityInterface
@@ -8,16 +9,16 @@ namespace OpenOrchestra\Backoffice\RemoveTrashcanEntity;
 interface RemoveTrashCanEntityInterface
 {
     /**
-     * @param mixed $entity
+     * @param TrashItemInterface $trashItem
      *
      * @return bool
      */
-    public function support($entity);
+    public function support(TrashItemInterface $trashItem);
 
     /**
-     * @param mixed $entity
+     * @param TrashItemInterface $trashItem
      */
-    public function remove($entity);
+    public function remove(TrashItemInterface $trashItem);
 
     /**
      * @return string

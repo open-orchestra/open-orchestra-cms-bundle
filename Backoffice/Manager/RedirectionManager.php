@@ -96,24 +96,12 @@ class RedirectionManager
     }
 
     /**
-     * @param string $nodeId
-     * @param string $language
-     * @param string $siteId
-     */
-    public function updateRedirection($nodeId, $language, $siteId)
-    {
-        $redirections = $this->redirectionRepository->findByNode($nodeId, $language, $siteId);
-        foreach ($redirections as $redirection) {
-            $this->eventDispatcher->dispatch(RedirectionEvents::REDIRECTION_UPDATE, new RedirectionEvent($redirection));
-        }
-    }
-
-    /**
      * @param string|null $parentId
      * @param string|null $suffix
      *
      * @return string|null
      */
+
     protected function completeRoutePattern($parentId = null, $suffix = null, $language)
     {
         if (is_null($parentId) || '-' == $parentId || '' == $parentId) {

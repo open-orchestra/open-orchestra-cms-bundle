@@ -132,16 +132,10 @@ class RedirectionManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * test updateRedirection
+     * Test generate redirection for node
      */
-    public function testUpdateRedirection()
+    public function testGenerateRedirectionForNode()
     {
-        $this->manager->updateRedirection('fakeNodeId', 'fakeLanguage', 'fakeSiteId');
-
-        Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
-    }
-
-    public function testGenerateRedirectionForNode() {
         $this->manager->generateRedirectionForNode($this->nodeSource);
         Phake::verify($this->documentManager, Phake::times(2))->persist(Phake::anyParameters());
         Phake::verify($this->documentManager, Phake::times(5))->flush(Phake::anyParameters());

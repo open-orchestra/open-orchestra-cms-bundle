@@ -2,8 +2,10 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
@@ -18,8 +20,6 @@ use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
  */
 class TrashcanController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param Request $request
      *
@@ -31,12 +31,23 @@ class TrashcanController extends BaseController
     public function listAction(Request $request)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $mapping = array(
+            'name' => 'name',
+            'type' => 'type',
+            'deleted_at' => 'deletedAt'
+        );
 
-        $mapping = $this->get('open_orchestra.annotation_search_reader')->extractMapping($this->getParameter('open_orchestra_model.document.trash_item.class'));
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.trash_item');
+        $collection = $repository->findForPaginate($configuration, $siteId);
+        $recordsTotal = $repository->countBySite($siteId);
+        $recordsFiltered = $repository->countWithFilter($configuration, $siteId);
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('trash_item_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
-        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer, array("site_id" => $siteId));
+        return $facade;
     }
 
 
@@ -74,29 +85,34 @@ class TrashcanController extends BaseController
 
 
     /**
-     * @param $trashItemId
+     * @param Request $request
      *
-     * @Config\Route("/{trashItemId}/remove", name="open_orchestra_api_trashcan_remove")
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_trashcan_delete_multiple")
      * @Config\Method({"DELETE"})
      *
      * @return array|mixed
      */
-    public function removeAction($trashItemId)
+    public function deleteTrashitemsAction(Request $request)
     {
-        /* @var TrashItemInterface $trashItem */
-        $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
-        if ($this->isValid($trashItem, 'remove')) {
-            /* @var $entity SoftDeleteableInterface */
-            $entity = $trashItem->getEntity();
-            $om = $this->get('object_manager');
-            $om->remove($trashItem);
-            $om->flush($trashItem);
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.trash_item_collection.class'),
+            $format
+        );
+        $trashItems = $this->get('open_orchestra_api.transformer_manager')->get('trash_item_collection')->reverseTransform($facade);
+        $trashItemIds = array();
 
-            $this->get('open_orchestra_backoffice.remove_trashcan_entity.manager')->remove($entity);
-
-            return array();
+        foreach ($trashItems as $trashItem) {
+            //if ($this->isValid($trashItem, 'remove')) {
+                $trashItemIds[] = $trashItem->getId();
+                $this->get('open_orchestra_backoffice.remove_trashcan_entity.manager')->remove($trashItem);
+            //}
         }
 
-        return $this->getViolations();
+        $this->get('open_orchestra_model.repository.trash_item')->removeTrashItems($trashItemIds);
+        $this->get('object_manager')->flush();
+
+        return array();
     }
 }

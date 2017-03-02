@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
+use OpenOrchestra\ModelInterface\Event\NodeDeleteEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -28,11 +29,13 @@ class LogNodeSubscriber extends AbstractLogSubscriber
     }
 
     /**
-     * @param NodeEvent $event
+     * @param NodeDeleteEvent $event
      */
-    public function nodeDelete(NodeEvent $event)
+    public function nodeDelete(NodeDeleteEvent $event)
     {
-        $this->info('open_orchestra_log.node.delete', $event->getNode());
+        $this->logger->info('open_orchestra_log.node.delete', array(
+            'node_id' => $event->getNodeId(),
+        ));
     }
 
     /**

@@ -54,7 +54,10 @@ class NodeController extends AbstractAdminController
 
         $status = $node->getStatus();
         $template = $node->getTemplate();
-        $options = array('action' => $url);
+        $options = array(
+            'action' => $url,
+            'delete_button' => true
+        );
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
 
         $form->handleRequest($request);

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\ModelInterface\Event\NodeDeleteEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -123,9 +124,9 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NodeEvent $event
+     * @param NodeDeleteEvent $event
      */
-    public function addNodeDeleteHistory(NodeEvent $event)
+    public function addNodeDeleteHistory(NodeDeleteEvent $event)
     {
         $this->addNodeHistory($event, NodeEvents::NODE_DELETE);
     }
@@ -214,6 +215,20 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param TokenInterface $token
+     * @param string         $eventType
+     */
+    protected function createHistoryDocument(TokenInterface $token, $eventType)
+    {
+        $user = $token->getUser();
+        $historyClass = $this->historyClass;
+        $history = new $historyClass();
+        $history->setUpdatedAt(new \DateTime());
+        $history->setUser($user);
+        $history->setEventType($eventType);
+    }
+
+    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
@@ -230,7 +245,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_UPDATE_BLOCK => 'addNodeUpdateBlockHistory',
             NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'addNodeUpdateBlockPositionHistory',
             NodeEvents::NODE_CREATION => 'addNodeCreationHistory',
-            NodeEvents::NODE_DELETE => 'addNodeDeleteHistory',
             NodeEvents::NODE_RESTORE => 'addNodeRestoreHistory',
             NodeEvents::NODE_DUPLICATE => 'addNodeDuplicateHistory',
             NodeEvents::NODE_ADD_LANGUAGE => 'addNodeAddLanguageHistory',

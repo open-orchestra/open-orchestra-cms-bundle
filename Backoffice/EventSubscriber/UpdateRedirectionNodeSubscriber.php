@@ -40,53 +40,12 @@ class UpdateRedirectionNodeSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NodeEvent $event
-     */
-    public function updateRedirectionRoutes(NodeEvent $event)
-    {
-        $node = $event->getNode();
-        $this->redirectionManager->updateRedirection(
-            $node->getNodeId(),
-            $node->getLanguage(),
-            $node->getSiteId()
-        );
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
-    public function updateRedirectionRoutesOnNodeDelete(NodeEvent $event)
-    {
-        $node = $event->getNode();
-        $this->deleteRedirectionForNodeTree($node);
-    }
-
-    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
     {
         return array(
-            NodeEvents::NODE_CHANGE_STATUS => 'updateRedirection',
-            NodeEvents::NODE_RESTORE => 'updateRedirectionRoutes',
-            NodeEvents::NODE_DELETE => 'updateRedirectionRoutesOnNodeDelete',
+            NodeEvents::NODE_CHANGE_STATUS => 'updateRedirection'
         );
-    }
-
-    /**
-     * @param NodeInterface $node
-     */
-    protected function deleteRedirectionForNodeTree(NodeInterface $node)
-    {
-        $this->redirectionManager->deleteRedirection(
-            $node->getNodeId(),
-            $node->getLanguage(),
-            $node->getSiteId()
-        );
-
-        $nodes = $this->nodeRepository->findByParent($node->getNodeId(), $node->getSiteId());
-        foreach ($nodes as $node) {
-            $this->deleteRedirectionForNodeTree($node);
-        }
     }
 }

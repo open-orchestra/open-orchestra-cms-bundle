@@ -50,9 +50,7 @@ class BlockMenuCacheSubscriber implements EventSubscriberInterface
     {
         return array(
             NodeEvents::PATH_UPDATED => 'invalidateNodeTag',
-            NodeEvents::NODE_DELETE => 'invalidateNodeTag',
             NodeEvents::NODE_CHANGE_STATUS => 'invalidateNodeTag',
-            NodeEvents::NODE_RESTORE => 'invalidateNodeTag',
         );
     }
 }

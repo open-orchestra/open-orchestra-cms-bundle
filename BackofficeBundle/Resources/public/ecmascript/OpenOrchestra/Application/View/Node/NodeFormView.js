@@ -1,10 +1,12 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import Redirections     from '../../Collection/Redirection/Redirections'
+import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
+import Redirections         from '../../Collection/Redirection/Redirections'
+import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import Node                 from '../../Model/Node/Node'
 
 /**
  * @class NodeFormView
  */
-class NodeFormView extends AbstractFormView
+class NodeFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 {
     /**
      * Pre initialize
@@ -66,17 +68,6 @@ class NodeFormView extends AbstractFormView
     }
 
     /**
-     * @return {Object}
-     */
-    getStatusCodeForm() {
-        return {
-            '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
-            '422': $.proxy(this.refreshRender, this)
-        }
-    }
-
-    /**
      * @private
      */
     _toggleCheckboxSaveOldPublishedVersion(event) {
@@ -102,6 +93,24 @@ class NodeFormView extends AbstractFormView
                     let template = this._renderTemplate('Node/redirectionListView', { redirections: redirections.models });
                     $('.tab-seo', this.$el).append(template);
                 }
+            }
+        });
+    }
+
+    /**
+     * Delete
+     * @param {event} event
+     */
+    _deleteElement(event) {
+        console.log('delete');
+        let node = new Node({id: this._nodeId});
+        node.destroy({
+            success: () => {
+                console.log('ok');
+                let url = Backbone.history.generateUrl('showNodes', {
+                    language: this._language
+                });
+                Backbone.history.navigate(url, true);
             }
         });
     }

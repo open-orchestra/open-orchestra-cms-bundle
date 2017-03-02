@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\RemoveTrashcanEntity\RemoveTrashCanEntityInterface;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -36,26 +37,26 @@ class RemoveTrashCanContentStrategy implements RemoveTrashCanEntityInterface
     }
 
     /**
-     * @param mixed $entity
+     * @param TrashItemInterface $trashItem
      *
      * @return bool
      */
-    public function support($entity)
+    public function support(TrashItemInterface $trashItem)
     {
-        return $entity instanceof ContentInterface;
+        return ContentInterface::ENTITY_TYPE === $trashItem->getType();
     }
 
     /**
-     * @param mixed $entity
+     * @param TrashItemInterface $trashItem
      */
-    public function remove($entity)
+    public function remove(TrashItemInterface $trashItem)
     {
-        $contents = $this->contentRepository->findByContentId($entity->getContentId());
+        /*$contents = $this->contentRepository->findByContentId($entity->getContentId());
         foreach ($contents as $content) {
             $this->objectManager->remove($content);
             $this->eventDispatcher->dispatch(TrashcanEvents::TRASHCAN_REMOVE_ENTITY, new TrashcanEvent($content));
         }
-        $this->objectManager->flush();
+        $this->objectManager->flush();*/
     }
 
     /**

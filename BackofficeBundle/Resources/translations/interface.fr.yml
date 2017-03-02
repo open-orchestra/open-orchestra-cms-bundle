@@ -52,6 +52,10 @@ open_orchestra_backoffice:
         keyword:
             label: Libellé
             number_use: Utilisation
+        trash_item:
+            name: Nom
+            deleted_at: Supprimer le
+            type: Type
         node:
             title: Titre
             author: Auteur
@@ -166,6 +170,12 @@ open_orchestra_backoffice:
     keyword:
         title_list: Tags
         title_new : Nouveau Tag
+    trash_item:
+        title_list: Corbeille
+        search_engine:
+            name: Nom
+            deleted_before: Supprimer avant le
+            deleted_after: Supprimer après le
     block:
         add_block: Ajouter un bloc
         copy_block: Copier les blocs

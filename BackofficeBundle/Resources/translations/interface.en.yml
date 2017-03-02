@@ -52,6 +52,12 @@ open_orchestra_backoffice:
         keyword:
             label: Label
             number_use: Use
+        trash_item:
+            name: Name
+            deleted_at: Deleted at
+            type: Type
+            deleted_before: Deleted before the
+            deleted_after: Deleted after the
         node:
             title: Title
             author: Author
@@ -165,6 +171,12 @@ open_orchestra_backoffice:
     keyword:
         title_list: Tags
         title_new : New tag
+    trash_item:
+        title_list: Trashcan
+        search_engine:
+            name: Name
+            deleted_before: Deleted before the
+            deleted_after: Deleted after the
     block:
         add_block: Add a block
         copy_block: Copy blocks

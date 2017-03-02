@@ -25,18 +25,19 @@ abstract class AbstractDeleteSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param mixed  $entity
+     * @param string $entityId
+     * @param string $siteId
      * @param string $name
      * @param string $type
      */
-    protected function createTrashItem($entity, $name, $type)
+    protected function createTrashItem($entityId, $siteId, $name, $type)
     {
         /** @var TrashItemInterface $trashItem */
         $trashItem = new $this->trashItemClass();
-        $trashItem->setEntity($entity);
+        $trashItem->setEntityId($entityId);
         $trashItem->setName($name);
         $trashItem->setType($type);
-        $trashItem->setSiteId($entity->getSiteId());
+        $trashItem->setSiteId($siteId);
 
         $this->objectManager->persist($trashItem);
         $this->objectManager->flush($trashItem);
