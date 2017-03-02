@@ -27,13 +27,8 @@ parameters:
     open_orchestra_api.transformer.link.class                          : OpenOrchestra\ApiBundle\Transformer\LinkTransformer
     open_orchestra_api.transformer.api_client.class                    : OpenOrchestra\ApiBundle\Transformer\ApiClientTransformer
     open_orchestra_api.transformer.api_client_collection.class         : OpenOrchestra\ApiBundle\Transformer\ApiClientCollectionTransformer
-    open_orchestra_api.transformer.datatable_translation.class         : OpenOrchestra\ApiBundle\Transformer\DatatableTranslationTransformer
-    open_orchestra_api.transformer.datatable_collection_parameter.class: OpenOrchestra\ApiBundle\Transformer\DatatableCollectionParameterTransformer
-    open_orchestra_api.transformer.datatable_entity_parameter.class    : OpenOrchestra\ApiBundle\Transformer\DatatableEntityParameterTransformer
-    open_orchestra_api.transformer.datatable_column_parameter.class    : OpenOrchestra\ApiBundle\Transformer\DatatableColumnParameterTransformer
     open_orchestra_api.transformer.trash_item.class                    : OpenOrchestra\ApiBundle\Transformer\TrashItemTransformer
     open_orchestra_api.transformer.trash_item_collection.class         : OpenOrchestra\ApiBundle\Transformer\TrashItemCollectionTransformer
-    open_orchestra_api.transformer.translation.class                   : OpenOrchestra\ApiBundle\Transformer\TranslationTransformer
 
 services:
     open_orchestra_api.transformer.node:
@@ -266,35 +261,6 @@ services:
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 
-    open_orchestra_api.transformer.datatable_translation:
-        class: '%open_orchestra_api.transformer.datatable_translation.class%'
-        arguments:
-            - '%open_orchestra_api.facade.datatable_translation.class%'
-            - '@translator'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
-    open_orchestra_api.transformer.datatable_collection_parameter:
-        class: '%open_orchestra_api.transformer.datatable_collection_parameter.class%'
-        arguments:
-            - '%open_orchestra_api.facade.datatable_collection_parameter.class%'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
-    open_orchestra_api.transformer.datatable_entity_parameter:
-        class: '%open_orchestra_api.transformer.datatable_entity_parameter.class%'
-        arguments:
-            - '%open_orchestra_api.facade.datatable_entity_parameter.class%'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
-    open_orchestra_api.transformer.datatable_column_paramater:
-        class: '%open_orchestra_api.transformer.datatable_column_parameter.class%'
-        arguments:
-            - '%open_orchestra_api.facade.datatable_column_parameter.class%'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
     open_orchestra_api.transformer.trash_item:
         class: '%open_orchestra_api.transformer.trash_item.class%'
         arguments:
@@ -307,12 +273,5 @@ services:
         class: '%open_orchestra_api.transformer.trash_item_collection.class%'
         arguments:
             - '%open_orchestra_api.facade.trash_item_collection.class%'
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-
-    open_orchestra_api.transformer.translation:
-        class: '%open_orchestra_api.transformer.translation.class%'
-        arguments:
-            - '%open_orchestra_api.facade.translation.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}

@@ -43,26 +43,6 @@ class KeywordController extends BaseController
     }
 
     /**
-     * @param int $keywordId
-     *
-     * @Config\Route("/{keywordId}", name="open_orchestra_api_keyword_show")
-     * @Config\Method({"GET"})
-     *
-     * @return FacadeInterface
-     */
-    public function showAction($keywordId)
-    {
-        $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
-        if ($keyword instanceof KeywordInterface) {
-            $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $keyword);
-
-            return $this->get('open_orchestra_api.transformer_manager')->get('keyword')->transform($keyword);
-        }
-
-        return array();
-    }
-
-    /**
      * @param Request $request
      *
      * @Config\Route("", name="open_orchestra_api_keyword_list")

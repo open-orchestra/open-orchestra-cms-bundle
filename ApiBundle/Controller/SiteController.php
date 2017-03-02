@@ -25,27 +25,6 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 class SiteController extends BaseController
 {
     /**
-     * @param string $siteId
-     *
-     * @return FacadeInterface
-     *
-     * @Config\Route("/{siteId}", name="open_orchestra_api_site_show")
-     * @Config\Method({"GET"})
-     *
-     * @Api\Groups({
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::THEME,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::BLOCKS
-     * })
-     */
-    public function showAction($siteId)
-    {
-        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $this->denyAccessUnlessGranted($site, SiteInterface::ENTITY_TYPE);
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('site')->transform($site);
-    }
-
-    /**
      * @param Request $request
      *
      * @Config\Route("", name="open_orchestra_api_site_list")
@@ -118,21 +97,5 @@ class SiteController extends BaseController
         }
 
         return array();
-    }
-
-    /**
-     * @param {string} $siteId
-     *
-     * @Config\Route("/{siteId}/languages", name="open_orchestra_api_site_languages_show")
-     * @Config\Method({"GET"})
-     *
-     * @return Response
-     */
-    public function getAllLanguagesAction($siteId)
-    {
-        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $this->denyAccessUnlessGranted($site, SiteInterface::ENTITY_TYPE);
-
-        return array('languages' => $site->getLanguages());
     }
 }

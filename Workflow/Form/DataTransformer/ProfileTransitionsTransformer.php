@@ -20,7 +20,7 @@ class ProfileTransitionsTransformer implements DataTransformerInterface
 
     /**
      * @param StatusRepositoryInterface $statusRepository
-     * @param TransitionFactory         $transitionClass
+     * @param TransitionFactory         $transitionFactory
      */
     public function __construct(StatusRepositoryInterface $statusRepository, TransitionFactory $transitionFactory)
     {

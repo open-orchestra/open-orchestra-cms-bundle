@@ -4,7 +4,7 @@ use OpenOrchestra\ApiBundle\DependencyInjection\OpenOrchestraApiExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use \OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class OpenOrchestraApiExtensionTest
@@ -59,7 +59,6 @@ class OpenOrchestraApiExtensionTest extends AbstractBaseTestCase
             array('content_collection', 'ContentCollectionFacade'),
             array('content_type', 'ContentTypeFacade'),
             array('content_type_collection', 'ContentTypeCollectionFacade'),
-            array('datatable_translation', 'DatatableTranslationFacade'),
             array('field_type', 'FieldTypeFacade'),
             array('keyword', 'KeywordFacade'),
             array('keyword_collection', 'KeywordCollectionFacade'),
@@ -75,8 +74,7 @@ class OpenOrchestraApiExtensionTest extends AbstractBaseTestCase
             array('theme', 'ThemeFacade'),
             array('theme_collection', 'ThemeCollectionFacade'),
             array('trash_item', 'TrashItemFacade'),
-            array('trash_item_collection', 'TrashItemCollectionFacade'),
-            array('translation', 'TranslationFacade'),
+            array('trash_item_collection', 'TrashItemCollectionFacade')
         );
     }
 

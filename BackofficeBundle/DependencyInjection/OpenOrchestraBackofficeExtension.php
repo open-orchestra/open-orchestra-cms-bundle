@@ -57,7 +57,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('form.yml');
         $loader->load('generator.yml');
         $loader->load('display.yml');
-        $loader->load('twig.yml');
         $loader->load('field_type.yml');
         $loader->load('transformer.yml');
         $loader->load('value_transformer.yml');

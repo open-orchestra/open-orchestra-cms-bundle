@@ -17,7 +17,7 @@ class WorkflowProfileTransitionsType extends AbstractType
 
     /**
      * @param string                        $dataClass
-     * @apram ProfileTransitionsTransformer $transitionTransformer
+     * @param ProfileTransitionsTransformer $transitionTransformer
      */
     public function __construct($dataClass, ProfileTransitionsTransformer $transitionTransformer)
     {
@@ -55,7 +55,7 @@ class WorkflowProfileTransitionsType extends AbstractType
     /**
      * Generate all possible transitions between statuses
      *
-     * @aprameter array $statuses
+     * @param array $statuses
      *
      * @return array
      */

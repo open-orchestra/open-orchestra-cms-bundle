@@ -34,26 +34,6 @@ class ApiClientTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->secret = $apiClient->getSecret();
         $facade->roles = implode(',', $apiClient->getRoles());
 
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $apiClient)) {
-            $facade->addLink(
-                '_self_delete',
-                $this->generateRoute(
-                    'open_orchestra_api_api_client_delete',
-                    array('apiClientId' => $apiClient->getId())
-                )
-            );
-        }
-
-        if ($this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $apiClient)) {
-            $facade->addLink(
-                '_self_form',
-                $this->generateRoute(
-                    'open_orchestra_backoffice_api_client_form',
-                    array('apiClientId' => $apiClient->getId())
-                )
-            );
-        }
-
         return $facade;
     }
 

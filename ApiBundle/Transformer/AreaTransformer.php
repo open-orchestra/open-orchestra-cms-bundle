@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaTransformerHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -36,7 +35,6 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
-     * @throws AreaTransformerHttpException
      */
     public function transform($area)
     {
