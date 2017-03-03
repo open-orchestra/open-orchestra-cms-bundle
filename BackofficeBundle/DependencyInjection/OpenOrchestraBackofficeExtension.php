@@ -92,16 +92,11 @@ class OpenOrchestraBackofficeExtension extends Extension
     protected function updateBlockParameter(ContainerBuilder $container, $config)
     {
         $blockType = array(
-            FooterStrategy::NAME,
-            LanguageListStrategy::NAME,
-            MenuStrategy::NAME,
-            SubMenuStrategy::NAME,
             ContentListStrategy::NAME,
             ContentStrategy::NAME,
             ConfigurableContentStrategy::NAME,
             TinyMCEWysiwygStrategy::NAME,
             VideoStrategy::NAME,
-            AudienceAnalysisStrategy::NAME,
             ContactStrategy::NAME,
         );
 
