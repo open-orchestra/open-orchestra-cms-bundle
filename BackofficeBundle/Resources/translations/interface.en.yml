@@ -56,8 +56,7 @@ open_orchestra_backoffice:
             name: Name
             deleted_at: Deleted at
             type: Type
-            deleted_before: Deleted before the
-            deleted_after: Deleted after the
+            restore: Restore
         node:
             title: Title
             author: Author

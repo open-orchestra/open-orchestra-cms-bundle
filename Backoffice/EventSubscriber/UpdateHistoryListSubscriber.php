@@ -54,14 +54,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     /**
      * @param ContentEvent $event
      */
-    public function addContentDeleteHistory(ContentEvent $event)
-    {
-        $this->addContentHistory($event, ContentEvents::CONTENT_DELETE);
-    }
-
-    /**
-     * @param ContentEvent $event
-     */
     public function addContentRestoreHistory(ContentEvent $event)
     {
         $this->addContentHistory($event, ContentEvents::CONTENT_RESTORE);
@@ -121,14 +113,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     public function addNodeCreationHistory(NodeEvent $event)
     {
         $this->addNodeHistory($event, NodeEvents::NODE_CREATION);
-    }
-
-    /**
-     * @param NodeDeleteEvent $event
-     */
-    public function addNodeDeleteHistory(NodeDeleteEvent $event)
-    {
-        $this->addNodeHistory($event, NodeEvents::NODE_DELETE);
     }
 
     /**
@@ -236,7 +220,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
         return array(
             ContentEvents::CONTENT_UPDATE => 'addContentUpdateHistory',
             ContentEvents::CONTENT_CREATION => 'addContentCreationHistory',
-            ContentEvents::CONTENT_DELETE => 'addContentDeleteHistory',
             ContentEvents::CONTENT_RESTORE => 'addContentRestoreHistory',
             ContentEvents::CONTENT_DUPLICATE => 'addContentDuplicateHistory',
             ContentEvents::CONTENT_CHANGE_STATUS => 'addContentChangeStatusHistory',

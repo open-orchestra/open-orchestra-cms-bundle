@@ -19,16 +19,17 @@ class DeleteContentSubscriberTest extends AbstractBaseTestCase
 
     protected $objectManager;
     protected $contentEvent;
-    protected $content;
+    protected $contentId = 'fakeId';
+    protected $siteId = 'siteId';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        $this->contentEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentEvent');
-        Phake::when($this->contentEvent)->getContent()->thenReturn($this->content);
+        $this->contentEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentDeleteEvent');
+        Phake::when($this->contentEvent)->getEntityId()->thenReturn($this->contentId);
+        Phake::when($this->contentEvent)->getSiteId()->thenReturn($this->siteId);
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $trashItemClass = 'OpenOrchestra\ModelBundle\Document\TrashItem';
         $this->subscriber = new DeleteContentSubscriber($this->objectManager, $trashItemClass);

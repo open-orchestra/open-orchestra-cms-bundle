@@ -6,6 +6,7 @@ import Contents             from '../../Collection/Content/Contents'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 import ContentToolbarView   from './ContentToolbarView'
 import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
+import FlashMessage         from '../../../Service/FlashMessage/FlashMessage'
 
 /**
  * @class NewContentFormView

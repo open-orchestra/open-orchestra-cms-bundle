@@ -54,8 +54,6 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
     {
         $this->assertArrayHasKey(ContentEvents::CONTENT_UPDATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_CREATION, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(ContentEvents::CONTENT_DELETE, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(ContentEvents::CONTENT_RESTORE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_DUPLICATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(ContentEvents::CONTENT_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::PATH_UPDATED, $this->subscriber->getSubscribedEvents());
@@ -63,8 +61,6 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
         $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_BLOCK, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_UPDATE_BLOCK_POSITION, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_CREATION, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_DELETE, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_RESTORE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_DUPLICATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_ADD_LANGUAGE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::NODE_DELETE_BLOCK, $this->subscriber->getSubscribedEvents());
@@ -82,7 +78,6 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
     {
         $this->addContentHistory('addContentUpdateHistory', $document, $token);
         $this->addContentHistory('addContentCreationHistory', $document, $token);
-        $this->addContentHistory('addContentDeleteHistory', $document, $token);
         $this->addContentHistory('addContentRestoreHistory', $document, $token);
         $this->addContentHistory('addContentDuplicateHistory', $document, $token);
         $this->addContentHistory('addContentChangeStatusHistory', $document, $token);
@@ -93,14 +88,13 @@ class UpdateHistoryListSubscriberTest extends AbstractBaseTestCase
         $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token);
         $this->addNodeHistory('addNodeUpdateBlockPositionHistory', $document, $token);
         $this->addNodeHistory('addNodeCreationHistory', $document, $token);
-        $this->addNodeHistory('addNodeDeleteHistory', $document, $token);
         $this->addNodeHistory('addNodeRestoreHistory', $document, $token);
         $this->addNodeHistory('addNodeDuplicateHistory', $document, $token);
         $this->addNodeHistory('addNodeAddLanguageHistory', $document, $token);
         $this->addNodeHistory('addNodeDeleteBlockHistory', $document, $token);
         $this->addNodeHistory('addNodeChangeStatusHistory', $document, $token);
 
-        Phake::verify($this->objectManager, Phake::times($nbrUpdate * 18))->flush();
+        Phake::verify($this->objectManager, Phake::times($nbrUpdate * 16))->flush();
     }
 
     /**

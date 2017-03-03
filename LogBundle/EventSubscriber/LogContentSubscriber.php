@@ -3,6 +3,7 @@
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\ContentEvents;
+use OpenOrchestra\ModelInterface\Event\ContentDeleteEvent;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
@@ -23,14 +24,12 @@ class LogContentSubscriber extends AbstractLogSubscriber
     }
 
     /**
-     * @param ContentEvent $event
+     * @param ContentDeleteEvent $event
      */
-    public function contentDelete(ContentEvent $event)
+    public function contentDelete(ContentDeleteEvent $event)
     {
-        $content = $event->getContent();
         $this->logger->info('open_orchestra_log.content.delete', array(
-            'content_id' => $content->getContentId(),
-            'content_name' => $content->getName(),
+            'content_id' => $event->getContentId(),
         ));
     }
 

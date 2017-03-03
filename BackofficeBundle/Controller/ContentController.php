@@ -48,16 +48,17 @@ class ContentController extends AbstractAdminController
         foreach ($publishedContents as $publishedContent) {
             $isUsed = $isUsed || $publishedContent->isUsed();
         }
-        $form = $this->createForm('oo_content', $content, array(
+        $options = array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_form', array(
                 'contentId' => $content->getContentId(),
                 'language' => $content->getLanguage(),
                 'version' => $content->getVersion(),
             )),
-            'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed),
+            'delete_button' => $this->canDeleteContent($content),
             'need_link_to_site_defintion' => false,
             'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
-        ));
+        );
+        $form = $this->createForm('oo_content', $content, $options);
 
         $status = $content->getStatus();
         $form->handleRequest($request);
@@ -79,6 +80,8 @@ class ContentController extends AbstractAdminController
 
             if ($status->getId() !== $content->getStatus()->getId()) {
                 $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, new ContentEvent($content, $status));
+                $options['delete_button'] = $this->canDeleteContent($content);
+                $form = $this->createForm('oo_content', $content, $options);
             }
 
             $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
@@ -164,10 +167,22 @@ class ContentController extends AbstractAdminController
     }
 
     /**
+     * @param ContentInterface $content
+     *
+     * @return bool
+     */
+    protected function canDeleteContent(ContentInterface $content) {
+        $contentRepository = $this->get('open_orchestra_model.repository.content');
+
+        return false === $contentRepository->hasContentIdWithoutAutoUnpublishToState($content->getContentId()) &&
+               $this->isGranted(ContributionActionInterface::DELETE, $content);
+    }
+
+    /**
      * Get Form Template related to content of $contentTypeId
      *
      * @param string $contentTypeId
-     *
+     *fof
      * @return string
      */
     protected function getFormTemplate($contentTypeId)

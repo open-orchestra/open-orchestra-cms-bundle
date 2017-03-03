@@ -65,9 +65,6 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
     {
         return array(
             array(ContentEvents::CONTENT_CHANGE_STATUS),
-            array(ContentEvents::CONTENT_DELETE),
-            array(ContentEvents::CONTENT_UPDATE),
-            array(ContentEvents::CONTENT_RESTORE),
         );
     }
 
@@ -96,63 +93,6 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
         return array(
             array(0, false),
             array(1, true),
-        );
-    }
-
-    /**
-     * @param int  $countInvalidate
-     * @param bool $isPublishedState
-     *
-     * @dataProvider provideCountInvalidateAndStatusOnUpdate
-     */
-    public function testInvalidateCacheOnUpdatePublishedContent($countInvalidate, $isPublishedState)
-    {
-        $previousStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($previousStatus)->isPublishedState()->thenReturn($isPublishedState);
-        Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($previousStatus);
-
-        $this->subscriber->invalidateCacheOnUpdatePublishedContent($this->contentEvent);
-
-        Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
-    }
-
-    /**
-     * @return array
-     */
-    public function provideCountInvalidateAndStatusOnUpdate()
-    {
-        return array(
-            array(1, true),
-            array(0, false),
-        );
-    }
-
-    /**
-     * @param int  $countInvalidate
-     * @param bool $isPublishedState
-     *
-     * @dataProvider provideCountInvalidateAndStatusOnDelete
-     */
-    public function testDeleteContent($countInvalidate, $isPublishedState)
-    {
-        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($status)->isPublishedState()->thenReturn($isPublishedState);
-        Phake::when($this->content)->getStatus()->thenReturn($status);
-        $this->subscriber->invalidateCacheOnDeletePublishedContent($this->contentEvent);
-
-        Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
-    }
-
-    /**
-     * @return array
-     */
-    public function provideCountInvalidateAndStatusOnDelete()
-    {
-        return array(
-            array(0, false, true),
-            array(1, true, true),
-            array(0, false, false),
-            array(1, true, false),
         );
     }
 }

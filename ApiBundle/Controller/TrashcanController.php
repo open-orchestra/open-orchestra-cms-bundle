@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
-use OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,8 +54,8 @@ class TrashcanController extends BaseController
     /**
      * @param $trashItemId
      *
-     * @Config\Route("/{trashItemId}/restore", name="open_orchestra_api_trashcan_restore")
-     * @Config\Method({"PUT"})
+     * @Config\Route("/restore/{trashItemId}", name="open_orchestra_api_trashcan_restore")
+     * @Config\Method({"DELETE"})
      *
      * @return array|mixed
      */
@@ -63,21 +63,14 @@ class TrashcanController extends BaseController
     {
         /* @var TrashItemInterface $trashItem */
         $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::TRASH_RESTORE, $trashItem);
 
         if ($trashItem instanceof TrashItemInterface) {
-            /* @var $entity SoftDeleteableInterface */
-            $entity = $trashItem->getEntity();
             $om = $this->get('object_manager');
 
-            if ($this->isValid($entity, 'restore')) {
-                $this->get('open_orchestra_backoffice.restore_entity.manager')->restore($entity);
-                $om->remove($trashItem);
-                $om->flush();
-
-                return array();
-            }
-
-            return $this->getViolations();
+            $this->get('open_orchestra_backoffice.trashcan_entity.manager')->restore($trashItem);
+            $om->remove($trashItem);
+            $om->flush();
         }
 
         return array();
@@ -92,7 +85,7 @@ class TrashcanController extends BaseController
      *
      * @return array|mixed
      */
-    public function deleteTrashitemsAction(Request $request)
+    public function deleteTrashItemsAction(Request $request)
     {
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
@@ -104,10 +97,10 @@ class TrashcanController extends BaseController
         $trashItemIds = array();
 
         foreach ($trashItems as $trashItem) {
-            //if ($this->isValid($trashItem, 'remove')) {
+            if ($this->isValid($trashItem, 'remove') && $this->isGranted(ContributionActionInterface::TRASH_PURGE)) {
                 $trashItemIds[] = $trashItem->getId();
-                $this->get('open_orchestra_backoffice.remove_trashcan_entity.manager')->remove($trashItem);
-            //}
+                $this->get('open_orchestra_backoffice.trashcan_entity.manager')->remove($trashItem);
+            }
         }
 
         $this->get('open_orchestra_model.repository.trash_item')->removeTrashItems($trashItemIds);

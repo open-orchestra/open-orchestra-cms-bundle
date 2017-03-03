@@ -7,16 +7,16 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class TrashcanRemoveNode
  */
-class TrashcanRemoveNode extends Constraint
+class TrashcanRemove extends Constraint
 {
-    public $message = 'open_orchestra_backoffice_validators.trashitem.remove_node_date';
+    public $message = 'open_orchestra_backoffice_validators.trashitem.remove_date';
 
     /**
      * @return string
      */
     public function validatedBy()
     {
-        return 'remove_node_date';
+        return 'remove_date';
     }
 
     /**

@@ -56,6 +56,7 @@ open_orchestra_backoffice:
             name: Nom
             deleted_at: Supprimer le
             type: Type
+            restore: Restaurer
         node:
             title: Titre
             author: Auteur

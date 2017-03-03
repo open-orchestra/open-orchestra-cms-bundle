@@ -19,10 +19,6 @@ class TrashItemsView extends AbstractCollectionView
             settings: this._settings
         });
         $('.trash-item-list', this.$el).html(this._listView.render().$el);
-        $('.datepicker', this.$el).datepicker({
-            prevText: '<i class="fa fa-chevron-left"></i>',
-            nextText: '<i class="fa fa-chevron-right"></i>'
-        });
 
         return this;
     }

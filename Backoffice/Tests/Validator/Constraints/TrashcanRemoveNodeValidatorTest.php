@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 
-use OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveNodeValidator;
+use OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveValidator;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class TrashcanRemoveNodeValidatorTest
+ * Class TrashcanRemoveValidatorTest
  */
-class TrashcanRemoveNodeValidatorTest extends AbstractBaseTestCase
+class TrashcanRemoveValidatorTest extends AbstractBaseTestCase
 {
     /**
-     * @var TrashcanRemoveNodeValidator
+     * @var TrashcanRemoveValidatorTest
      */
     protected $validator;
     protected $context;
@@ -35,7 +35,7 @@ class TrashcanRemoveNodeValidatorTest extends AbstractBaseTestCase
 
         $this->trashItem = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
 
-        $this->validator = new TrashcanRemoveNodeValidator();
+        $this->validator = new TrashcanRemoveValidator();
         $this->validator->initialize($this->context);
     }
 
@@ -49,15 +49,13 @@ class TrashcanRemoveNodeValidatorTest extends AbstractBaseTestCase
 
     /**
      * @param string $dateTrashItem
-     * @param string $type
      * @param int    $count
      *
      * @dataProvider provideDateAndTypeTrashItem
      */
-    public function testValidate($dateTrashItem, $type, $count)
+    public function testValidate($dateTrashItem, $count)
     {
         Phake::when($this->trashItem)->getDeletedAt()->thenReturn($dateTrashItem);
-        Phake::when($this->trashItem)->getType()->thenReturn($type);
 
         $this->validator->validate($this->trashItem, $this->constraint);
 
@@ -67,10 +65,10 @@ class TrashcanRemoveNodeValidatorTest extends AbstractBaseTestCase
     public function provideDateAndTypeTrashItem()
     {
         return array(
-          "trash item content" => array('now', 'content', 0),
-          "trash item node deleted now" => array('now', 'node', 1),
-          "trash item node deleted yesterday" => array('yesterday', 'node', 1),
-          "trash item node deleted 8 days" => array('8 days ago', 'node', 0),
+          "trash item content" => array(new \DateTime(), 1),
+          "trash item node deleted now" => array(new \DateTime(), 1),
+          "trash item node deleted yesterday" => array(new \DateTime('yesterday'), 1),
+          "trash item node deleted 8 days" => array(new \DateTime('8 days ago'), 0),
         );
     }
 }

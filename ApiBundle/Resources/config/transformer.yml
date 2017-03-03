@@ -249,7 +249,7 @@ services:
           - '%open_orchestra_api.facade.trash_item.class%'
           - '@security.authorization_checker'
           - '@open_orchestra_model.repository.trash_item'
-
+          - '@validator'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 

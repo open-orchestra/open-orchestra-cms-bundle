@@ -21,7 +21,7 @@ class TrashItemFacade extends AbstractFacade
     public $type;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("DateTime")
      */
     public $deletedAt;
 }
