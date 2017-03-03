@@ -28,10 +28,10 @@ class SortableCollectionSubscriber implements EventSubscriberInterface
         if (is_array($event->getData())) {
             $order = array_flip(array_keys($event->getData()));
             if ($data instanceof Collection) {
-                $dataClone = $data;
+                $dataClone = $data->toArray();
                 $data->clear();
                 foreach ($order as $key => $value) {
-                    $data->set($key, $dataClone->get($key));
+                    $data->set($key, $dataClone[$key]);
                 }
             }
             if (is_array($data)) {
