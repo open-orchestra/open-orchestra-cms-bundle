@@ -79,6 +79,15 @@ class TagCondition extends AbstractBehavior
         $element.parent().append(ul);
     }
 
+    /**
+     * deactivate behavior
+     *
+     * @param {Object} $element - jQuery object
+     */
+    deactivate($element) {
+        $element.tokenInput('destroy');
+    }
+
     applicateSqlCss(obj) {
         let addClass = 'operator';
         let removeClass = 'operator-ok';
