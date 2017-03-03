@@ -47,6 +47,7 @@ class CollectionExtension extends AbstractTypeExtension
             } else {
                 $view->vars['attr'] = array_merge_recursive($view->vars['attr'], array('class' => 'collection-sortable'));
             }
+            $view->vars['sortable'] = true;
         }
     }
 

@@ -85,6 +85,11 @@
                 {% spaceless %}
                     <tbody data-prototype-id="{{ prototype.vars.name }}">
                         <tr>
+                            {% if form.vars.sortable is defined and form.vars.sortable %}
+                                <td>
+                                    <i class="fa fa-arrows"></i>
+                                </td>
+                            {% endif %}
                             {% for column in prototype.vars.columns %}
                             <td>
                                 {{ 'open_orchestra_backoffice.form.collection.new_form'|trans }}
@@ -125,6 +130,11 @@
                 <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
                     <thead {% if form|length == 0 %} class="hide" {% endif %}>
                         <tr>
+                            {% if form.vars.sortable is defined and form.vars.sortable %}
+                                <th>
+                                    &nbsp;
+                                </th>
+                            {% endif %}
                             {% for column in prototype.vars.columns %}
                             <th>
                                 {{ column.label|trans }}
@@ -139,6 +149,11 @@
                     {% for field in form %}
                         <tbody data-prototype-id="{{ field.vars.name }}">
                             <tr>
+                                {% if form.vars.sortable is defined and form.vars.sortable %}
+                                    <td>
+                                        <i class="fa fa-arrows"></i>
+                                    </td>
+                                {% endif %}
                                 {% for column in field.vars.columns %}
                                 <td>
                                     {{ column.data|trans }}
