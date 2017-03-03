@@ -29,8 +29,9 @@ class SiteTypeTest extends AbstractBaseTestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
+        $webSiteSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
 
-        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager);
+        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager, $webSiteSubscriber);
     }
 
     /**

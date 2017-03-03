@@ -10,6 +10,15 @@ import ApplicationError     from '../../../Service/Error/ApplicationError'
 class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 {
     /**
+     * Pre initialize
+     * @param {Object} options
+     */
+    preinitialize(options) {
+        super.preinitialize(options);
+        this.events['click button.submit-form'] = '_submitWithContextRefresh'
+    }
+
+    /**
      * Initialize
      * @param {Form}   form
      * @param {Array}  name
@@ -71,6 +80,26 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
                 Backbone.history.navigate(url, true);
             }
         });
+    }
+
+    /**
+     * Submit form
+     * @param {object} event
+     */
+    _submitWithContextRefresh(event) {
+        event.preventDefault();
+        this._form._formSuccess = (function(form){
+            return (data, textStatus, jqXHR) => {
+                let languages = jqXHR.getResponseHeader('languages');
+                if (null !== languages) {
+                    let context = Application.getContext();
+                    context.siteLanguages = eval(languages);
+                    Application.setContext(context);
+                }
+                form._parseHtml(data);
+            }
+        })(this._form);
+        this._form.submit(this.getStatusCodeForm(event));
     }
 }
 

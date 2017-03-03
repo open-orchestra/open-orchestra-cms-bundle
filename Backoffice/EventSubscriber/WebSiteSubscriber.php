@@ -2,15 +2,36 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Context\ContextManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class WebSiteSubscriber
  */
 class WebSiteSubscriber implements EventSubscriberInterface
 {
+    protected $session;
+
+    /**
+     * @param Session $session
+     */
+    public function __construct(
+        Session $session
+    ) {
+        $this->session = $session;
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function preSubmit(FormEvent $event)
+    {
+        $this->session->remove(ContextManager::KEY_SITE);
+    }
+
     /**
      * @param FormEvent $event
      */
@@ -37,6 +58,7 @@ class WebSiteSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'onPreSetData',
+            FormEvents::PRE_SUBMIT => 'preSubmit',
         );
     }
 }
