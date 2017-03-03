@@ -31,7 +31,6 @@ open_orchestra_backoffice:
           node: Page
           content: Content
           trashcan: Trashcan
-          media: Media
         user:
           title: User
         platform:

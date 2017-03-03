@@ -31,7 +31,6 @@ open_orchestra_backoffice:
           node: Page
           content: Contenu
           trashcan: Corbeille
-          media: Médiathèque
         user:
           title: Utilisateur
         platform:
