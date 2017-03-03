@@ -47,11 +47,11 @@
             <i class="state out-of-bounds" aria-hidden="true"></i>
         <% } %>
     </div>
-    <% if ( 0 !== nodeTree.get('children').length) { %>
+    <% if ( 'page' === nodeTree.get('node').get('node_type')) { %>
         <ul class="children <% if (true === nodeTree.get('node').get('rights').can_edit) {%> sortable-container<% }%>">
             <% _.each(nodeTree.get('children'), function(nodeTree, key) { %>
                 <%= renderTemplate('Node/nodeElementTreeView', {renderTemplate: renderTemplate, nodeTree: nodeTree}) %>
             <% }); %>
         </ul>
-    <% }; %>
+    <% } %>
 </li>

@@ -45,14 +45,16 @@ class AbstractTreeView extends OrchestraView
      */
     _enableTreeSortable($tree) {
         $tree.sortable({
+            distance   : 15,
+            placeholder: 'ui-state-highlight',
             connectWith: '.tree .children.sortable-container',
-            handle: '.sortable-handler',
-            items: '> li.sortable-node',
-            zIndex: 20,
-            start: (event, ui) => {
+            handle     : '.sortable-handler',
+            items      : '> li.sortable-node',
+            zIndex     : 20,
+            start      : (event, ui) => {
                 this._startDrag(event, ui);
             },
-            stop: (event, ui) => {
+            stop       : (event, ui) => {
                 this._sortAction(event, ui);
             }
         });

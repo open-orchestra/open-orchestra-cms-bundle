@@ -28,6 +28,7 @@ class NodeTreeLeafTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->siteId = $node['siteId'];
         $facade->order = $node['order'];
         $facade->status = $this->getTransformer('status_node_tree')->transform($node['status']);
+        $facade->nodeType = $node['nodeType'];
 
         $facade->addRight('can_create', (
             $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, $node) &&
