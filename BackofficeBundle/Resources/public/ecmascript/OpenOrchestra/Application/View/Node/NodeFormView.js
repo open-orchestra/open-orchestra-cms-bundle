@@ -102,11 +102,9 @@ class NodeFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @param {event} event
      */
     _deleteElement(event) {
-        console.log('delete');
         let node = new Node({id: this._nodeId});
         node.destroy({
             success: () => {
-                console.log('ok');
                 let url = Backbone.history.generateUrl('showNodes', {
                     language: this._language
                 });

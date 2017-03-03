@@ -199,20 +199,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param TokenInterface $token
-     * @param string         $eventType
-     */
-    protected function createHistoryDocument(TokenInterface $token, $eventType)
-    {
-        $user = $token->getUser();
-        $historyClass = $this->historyClass;
-        $history = new $historyClass();
-        $history->setUpdatedAt(new \DateTime());
-        $history->setUser($user);
-        $history->setEventType($eventType);
-    }
-
-    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()

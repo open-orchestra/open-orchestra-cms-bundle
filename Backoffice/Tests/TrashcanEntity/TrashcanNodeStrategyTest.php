@@ -19,6 +19,8 @@ class TrashcanNodeStrategyTest extends AbstractBaseTestCase
     protected $nodeRepository;
     protected $eventDispatcher;
     protected $nodeManager;
+    protected $trashItem;
+    protected $nodeId;
 
     /**
      * Set up the test
@@ -28,6 +30,13 @@ class TrashcanNodeStrategyTest extends AbstractBaseTestCase
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getId()->thenReturn('fake_node_id');
+
+        Phake::when($this->nodeRepository)->findByNodeAndSite(Phake::anyParameters())->thenReturn(array($node));
+
+        $this->trashItem = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        Phake::when($this->trashItem)->getEntityId()->thenReturn($this->nodeId);
 
         $this->strategy = new TrashCanNodeStrategy($this->nodeRepository, $this->eventDispatcher, $this->nodeManager);
     }
@@ -64,15 +73,23 @@ class TrashcanNodeStrategyTest extends AbstractBaseTestCase
     /**
      * Test remove
      */
-    public function testRemoveOnlyOneNode()
+    public function testRemove()
     {
-        /*$node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($this->nodeRepository)->findByNodeAndSite(Phake::anyParameters())->thenReturn(array());
+        $this->strategy->remove($this->trashItem);
 
-        $this->strategy->remove($node);
-
-        Phake::verify($this->objectManager)->remove($node);
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
-        Phake::verify($this->objectManager)->flush();*/
+        Phake::verify($this->nodeManager)->deleteBlockInNode(Phake::anyParameters());
+        Phake::verify($this->nodeRepository)->removeNodeVersions(array('fake_node_id'));
+    }
+
+    /**
+     * Test restore
+     */
+    public function testRestore()
+    {
+        $this->strategy->restore($this->trashItem);
+
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
+        Phake::verify($this->nodeRepository)->restoreDeletedNode(Phake::anyParameters());
     }
 }

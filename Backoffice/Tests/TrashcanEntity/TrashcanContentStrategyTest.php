@@ -18,6 +18,9 @@ class TrashcanContentStrategyTest extends AbstractBaseTestCase
 
     protected $contentRepository;
     protected $eventDispatcher;
+    protected $contents;
+    protected $trashItem;
+    protected $contentId = 'fake_content_id';
 
     /**
      * Set up the test
@@ -26,6 +29,18 @@ class TrashcanContentStrategyTest extends AbstractBaseTestCase
     {
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $contentDe = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($contentDe)->getId()->thenReturn('content_de');
+        $contentFr = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($contentFr)->getId()->thenReturn('content_fr');
+        $contentEn = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($contentEn)->getId()->thenReturn('content_en');
+        $this->contents = array($contentDe, $contentFr, $contentEn);
+
+        $this->trashItem = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        Phake::when($this->trashItem)->getEntityId()->thenReturn($this->contentId);
+
+        Phake::when($this->contentRepository)->findByContentId(Phake::anyParameters())->thenReturn($this->contents);
 
         $this->strategy = new TrashCanContentStrategy($this->contentRepository, $this->eventDispatcher);
     }
@@ -64,18 +79,19 @@ class TrashcanContentStrategyTest extends AbstractBaseTestCase
      */
     public function testRemove()
     {
-        /*$contentDe = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        $contentFr = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        $contentEn = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        $contents = array($contentDe, $contentFr, $contentEn);
+        $this->strategy->remove($this->trashItem);
 
-        Phake::when($this->contentRepository)->findByContentId(Phake::anyParameters())->thenReturn($contents);
+        Phake::verify($this->eventDispatcher, Phake::times(count($this->contents)))->dispatch(Phake::anyParameters());
+        Phake::verify($this->contentRepository)->removeContentVersion(array('content_de', 'content_fr', 'content_en'));
+    }
 
-        $this->strategy->remove($contentFr);
-        foreach ($contents as $content) {
-            Phake::verify($this->objectManager)->remove($content);
-        }
-        Phake::verify($this->eventDispatcher, Phake::times(count($contents)))->dispatch(Phake::anyParameters());
-        Phake::verify($this->objectManager)->flush();*/
+    /**
+     * Test restore
+     */
+    public function testRestore()
+    {
+        $this->strategy->restore($this->trashItem);
+        Phake::verify($this->eventDispatcher, Phake::times(count($this->contents)))->dispatch(Phake::anyParameters());
+        Phake::verify($this->contentRepository)->restoreDeletedContent($this->contentId);
     }
 }
