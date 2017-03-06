@@ -1142,6 +1142,7 @@ table.ui-sortable .fa.fa-arrows{
     }
     ul.children {
         padding-left: 50px;
+        min-height: 5px;
         & > li {
             & > ul.children, & > div {
                 padding-left: 60px;
@@ -1285,6 +1286,14 @@ table.ui-sortable .fa.fa-arrows{
 
 .tree:not(.tree-new-node) li div:hover {
     background: @paleBlue;
+}
+
+.ui-state-highlight {
+    height: 50px;
+    line-height: 1.2em;
+    background: #ddd;
+    border: 2px dashed #c9c9c9;
+    color: #737687;
 }
 
 /* ===================================================================
