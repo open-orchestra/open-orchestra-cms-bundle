@@ -1,27 +1,64 @@
+@import "../../theme/variables.less";
+
+
 .tag.token-input-token-facebook {
-    background-color: #92a2a8;
-    border-color: #4c4f53;
-    color: #fff;
+    background-color: @lightGrey;
+    color: #333;
 }
 .operator.token-input-token-facebook {
-    background-color: #a65858;
-    border-color: #a90329;
-    color: #fff;
+
 }
 .operator-ok.token-input-token-facebook {
-    background-color: #252837;
-    border-color: #252837;
+    background: #3875d7;
     color: #fff;
 }
 .new.token-input-token-facebook {
-    background-color: #c79121;
-    border-color: #a57225;
-    color: #fff;
+
 }
 ul.token-input-list-facebook {
     border-color: #cccccc;
-	width:100%;
+    width: 100%;
+    .fontSize(16px);
+
+    li {
+        .fontSize(16px);
+
+        &.token-input-token-facebook {
+            background-color: @lightGrey;
+            padding: 3px 10px;
+            border-radius: 5px;
+            margin-right: 5px;
+            border: none;
+            box-shadow: none;
+            line-height: inherit;
+
+            &:before {
+                content: "\f02b";
+                font-family: 'FontAwesome';
+                color: #858c9a;
+                margin-right: 5px;
+            }
+            &.disabled {
+                cursor: not-allowed;
+            }
+
+            span {
+                display: inline-block;
+                position: relative;
+                vertical-align: middle;
+                color: #50577b;
+            }
+        }
+    }
 }
+
+.token-input-dropdown-facebook {
+    li {
+        .fontSize(16px);
+    }
+}
+
+
 ul.operator-list li {
     background: transparent;
     border: 2px solid #252837;
