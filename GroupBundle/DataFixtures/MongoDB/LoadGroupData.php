@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterfa
 use OpenOrchestra\GroupBundle\Document\Group;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 
 /**
  * Class LoadGroupData
@@ -48,6 +49,7 @@ class LoadGroupData extends AbstractLoadGroupData implements OrchestraFunctional
         $sadmin2->addLabel('en', 'Site admin demo');
         $sadmin2->addLabel('fr', 'Admin site demo');
         $sadmin2->setSite($this->getReference('site2'));
+        $sadmin2->addRole(ContributionRoleInterface::SITE_ADMIN);
         $sadmin2->addPerimeter($sitePerimeter);
 
         return $sadmin2;

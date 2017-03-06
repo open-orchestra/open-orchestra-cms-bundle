@@ -28,9 +28,13 @@ class GroupController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
-        $groupClass = $this->container->getParameter('open_orchestra_user.document.group.class');
+        $groupClass = $this->getParameter('open_orchestra_user.document.group.class');
         /** @var GroupInterface $group */
         $group = new $groupClass();
+
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $group->setSite($this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId));
+
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $group);
 
         $form = $this->createForm('oo_group', $group, array(
