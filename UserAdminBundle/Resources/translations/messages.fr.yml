@@ -1,3 +1,8 @@
+open_orchestra_backoffice:
+    block:
+        login:
+            title: Connexion
+
 open_orchestra_user_admin:
     left_menu:
         administration:

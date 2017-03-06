@@ -6,14 +6,9 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
@@ -24,16 +19,11 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
 class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
 {
     protected $defaultBlocks = array(
-        FooterStrategy::NAME,
-        LanguageListStrategy::NAME,
-        MenuStrategy::NAME,
-        SubMenuStrategy::NAME,
         ContentListStrategy::NAME,
         ContentStrategy::NAME,
         ConfigurableContentStrategy::NAME,
         TinyMCEWysiwygStrategy::NAME,
         VideoStrategy::NAME,
-        AudienceAnalysisStrategy::NAME,
         ContactStrategy::NAME,
     );
 
