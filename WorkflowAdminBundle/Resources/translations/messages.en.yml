@@ -20,15 +20,15 @@ open_orchestra_workflow_admin:
                 label : Out of validation workflow
                 helper: If set to "Yes", this status will be used to characterize contents with no validation workflow.
             color:
-                turquoise  : Turquoise
-                emerald    : Green
-                peter-river: Blue
-                amethyst   : Purple
-                wet-asphalt: Dark grey
-                sun-flower : Yellow
-                carrot     : Orange
-                alizarin   : Red
-                concrete   : Grey
+                turquoise: Turquoise
+                green    : Green
+                blue     : Blue
+                purple   : Purple
+                dark-grey: Dark grey
+                yellow   : Yellow
+                orange   : Orange
+                red      : Red
+                grey     : Grey
             group:
                 properties: Properties
         workflow_profile:
