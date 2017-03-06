@@ -21,12 +21,17 @@ class OpenOrchestraWorkflowAdminExtensionTest extends AbstractBaseTestCase
         $container = $this->loadContainerFromFile('empty');
 
         $defaultColor =  array(
-            'red'      => 'open_orchestra_workflow_admin.form.status.color.red',
-            'green'    => 'open_orchestra_workflow_admin.form.status.color.green',
-            'orange'   => 'open_orchestra_workflow_admin.form.status.color.orange',
-            'grayDark' => 'open_orchestra_workflow_admin.form.status.color.grayDark',
-            'blue'     => 'open_orchestra_workflow_admin.form.status.color.blue',
+            'turquoise' => 'open_orchestra_workflow_admin.form.status.color.turquoise',
+            'green'     => 'open_orchestra_workflow_admin.form.status.color.green',
+            'blue'      => 'open_orchestra_workflow_admin.form.status.color.blue',
+            'purplue'   => 'open_orchestra_workflow_admin.form.status.color.purple',
+            'dark-grey' => 'open_orchestra_workflow_admin.form.status.color.dark-grey',
+            'yellow'    => 'open_orchestra_workflow_admin.form.status.color.yellow',
+            'orange'    => 'open_orchestra_workflow_admin.form.status.color.orange',
+            'red'       => 'open_orchestra_workflow_admin.form.status.color.red',
+            'grey'      => 'open_orchestra_workflow_admin.form.status.color.grey',
         );
+
         $this->assertEquals($defaultColor, $container->getParameter('open_orchestra_workflow_admin.choice.available_color'));
    }
 
