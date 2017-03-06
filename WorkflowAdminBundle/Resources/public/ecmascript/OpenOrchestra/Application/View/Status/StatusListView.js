@@ -113,7 +113,7 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
     * @private
     */
     _getFormatedColor(data, type, full, meta) {
-        return '<span style="color:' + full.get('code_color') + '">' + full.get('display_color') + '</span>';
+        return '<span class="workflow-' + full.get('code_color') + '">' + full.get('display_color') + '</span>';
     }
 
     /**

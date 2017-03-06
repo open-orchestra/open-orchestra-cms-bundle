@@ -13,7 +13,7 @@
         <div class="panel-body">
             <ul class="state">
                 <% _.each(statuses, function(status, key) { %>
-                    <li class="state-<%= status.get('code_color') %>"><%= status.get('label') %></li>
+                    <li class="workflow-<%= status.get('code_color') %>"><span><%= status.get('label') %></span></li>
                 <% }); %>
                 <li class="out-of-bounds"><%= Translator.trans('open_orchestra_backoffice.node.tree.statuses_legend.out_of_bounds') %></li>
             </ul>

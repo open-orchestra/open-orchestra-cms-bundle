@@ -6,7 +6,6 @@ use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class TrashItemTransformer

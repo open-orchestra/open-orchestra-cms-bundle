@@ -5,7 +5,6 @@ namespace OpenOrchestra\UserAdminBundle\Transformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**

@@ -238,9 +238,9 @@ module.exports = {
       src: 'web/bundles/openorchestrabackoffice/images/languages/de.png',
       dest: 'web/images/languages/de.png'
     },
-    state: {
-      src: 'web/bundles/openorchestrabackoffice/images/state.png',
-      dest: 'web/images/state.png'
+    out_of_bounds: {
+      src: 'web/bundles/openorchestrabackoffice/images/out-of-bounds.png',
+      dest: 'web/images/out-of-bounds.png'
     },
     no_item: {
       src: 'web/bundles/openorchestrabackoffice/images/no-item.png',

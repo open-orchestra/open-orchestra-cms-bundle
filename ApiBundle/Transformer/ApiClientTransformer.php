@@ -6,7 +6,6 @@ use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Model\ApiClientInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * Class ApiClientTransformer

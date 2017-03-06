@@ -6,8 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
  * Class UserListGroupCollectionTransformer

@@ -32,11 +32,15 @@ class Configuration implements ConfigurationInterface
                 ->info('List of the color available, in the status for instance')
                 ->useAttributeAsKey('key')
                     ->defaultValue( array(
-                        'red'      => 'open_orchestra_workflow_admin.form.status.color.red',
-                        'green'    => 'open_orchestra_workflow_admin.form.status.color.green',
-                        'orange'   => 'open_orchestra_workflow_admin.form.status.color.orange',
-                        'grayDark' => 'open_orchestra_workflow_admin.form.status.color.grayDark',
-                        'blue'     => 'open_orchestra_workflow_admin.form.status.color.blue',
+                        'turquoise' => 'open_orchestra_workflow_admin.form.status.color.turquoise',
+                        'green'     => 'open_orchestra_workflow_admin.form.status.color.green',
+                        'blue'      => 'open_orchestra_workflow_admin.form.status.color.blue',
+                        'purplue'   => 'open_orchestra_workflow_admin.form.status.color.purple',
+                        'dark-grey' => 'open_orchestra_workflow_admin.form.status.color.dark-grey',
+                        'yellow'    => 'open_orchestra_workflow_admin.form.status.color.yellow',
+                        'orange'    => 'open_orchestra_workflow_admin.form.status.color.orange',
+                        'red'       => 'open_orchestra_workflow_admin.form.status.color.red',
+                        'grey'      => 'open_orchestra_workflow_admin.form.status.color.grey',
                     ))
                     ->prototype('scalar')->end()
                 ->end()
