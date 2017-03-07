@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\UsageFinder;
 
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\ModelInterface\Repository\StatusableElementRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusableContainerRepositoryInterface;
 
 /**
  * Class StatusUsageFinder
@@ -13,9 +13,9 @@ class StatusUsageFinder
     protected $statusableElementRepositories = array();
 
     /**
-     * @param StatusableElementRepositoryInterface $repository
+     * @param StatusableContainerRepositoryInterface $repository
      */
-    public function addRepository(StatusableElementRepositoryInterface $repository)
+    public function addRepository(StatusableContainerRepositoryInterface $repository)
     {
         $this->statusableElementRepositories[] = $repository;
     }
@@ -27,7 +27,7 @@ class StatusUsageFinder
      */
     public function hasUsage(StatusInterface $status)
     {
-        /** @var StatusableElementRepositoryInterface $repository */
+        /** @var StatusableContainerRepositoryInterface $repository */
         foreach ($this->statusableElementRepositories as $repository) {
             if ($repository->hasStatusedElement($status)) {
                 return true;
