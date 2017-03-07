@@ -71,7 +71,6 @@ class SiteController extends BaseController
      */
     public function listAvailableSiteAction()
     {
-        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         $availableSite = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
 
         return $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($availableSite);

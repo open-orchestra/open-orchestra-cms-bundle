@@ -64,4 +64,4 @@ open_orchestra_user_admin:
         category:
             user: Utilisateur
     security:
-        no_roles: Le compte n'a pas accès.
+        no_roles: Votre compte n'a pas de droits suffisants pour vous connecter au Back Office.
