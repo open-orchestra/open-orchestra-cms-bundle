@@ -15,7 +15,6 @@
     "doctrine/data-fixtures": "~1.2.0",
     "alav/composer-assets": "~1.0.0",
     "sensio/generator-bundle": "~3.0.0",
-    "symfony/assetic-bundle": "~2.8.0",
     "symfony/monolog-bundle": "~2.11.0",
     "open-orchestra/open-orchestra-base-api-bundle": "self.version",
     "open-orchestra/open-orchestra-base-bundle": "self.version",
