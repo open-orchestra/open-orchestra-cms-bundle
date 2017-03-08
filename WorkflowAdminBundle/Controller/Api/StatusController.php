@@ -62,7 +62,6 @@ class StatusController extends BaseController
      */
     public function listAction()
     {
-        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, StatusInterface::ENTITY_TYPE);
         $status = $this->get('open_orchestra_model.repository.status')->findNotOutOfWorkflow();
 
         return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($status);
