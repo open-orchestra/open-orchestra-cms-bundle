@@ -2,6 +2,11 @@
 	{% set collection = form|first %}
     {% spaceless %}
         <div class="user-groups-list">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button class="open-groups-list btn btn-border glyphicon glyphicon-plus" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
+                </div>
+            </div>
             <table class="table table-striped">
                 <tbody>
             {% for child in collection %}
@@ -10,9 +15,6 @@
                 </tbody>
             </table>
             <div class="prototype hidden" data-prototype="{{ form_widget(collection.vars.prototype)|e('html') }}"></div>
-            <div>
-                <button class="open-groups-list btn btn-primary" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
-            </div>
         </div>
     {% endspaceless %}
 {% endblock oo_group_list_widget %}

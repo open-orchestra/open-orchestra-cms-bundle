@@ -122,9 +122,36 @@ a {
     }
 }
 
+
+.glyphicon {
+    &::before {
+        margin-right: 5px;
+        font-family: 'Glyphicons Halflings';
+        position: relative;
+        top: 2px;
+    }
+}
+.fa {
+    &-trash {
+        font-size: 22px;
+    }
+}
+
+.btn {
+    &-nostyle {
+        background: none;
+        border: 0 none;
+        padding: 0;
+    }
+}
+
 /* ===================================================================
  * HEADER
  * =================================================================*/
+.header-region {
+    position: relative;
+    z-index: 99;
+}
 .header {
     position: fixed;
     width: 100%;
@@ -630,7 +657,7 @@ a.btn.disabled {
     .fontSize(14);
     border: 2px solid @darkBlue;
     letter-spacing: 0;
-    padding: 0 5px;
+    padding: 2px 5px;
     &:hover {
         border-color: @purpleGrey;
         color: @purpleGrey;
@@ -805,6 +832,11 @@ a.btn.disabled {
     background: #fff;
     padding: 20px 30px;
     min-height: 115px;
+    margin: 15px 0;
+    -webkit-box-shadow: 0px 0px 7px -2px rgba(148,148,148,0.39);
+    -moz-box-shadow: 0px 0px 7px -2px rgba(148,148,148,0.39);
+    box-shadow: 0px 0px 7px -2px rgba(148,148,148,0.39);
+
     span {
         .fontSize(18);
         font-weight: 700;
@@ -850,7 +882,7 @@ a.btn.disabled {
 
 /* List add block */
 .add-block .block {
-    background: #dadada;
+    background: #ffffff;
     display: block;
     color: @baseColor;
     text-decoration: none;
@@ -984,6 +1016,10 @@ table.ui-sortable .fa.fa-arrows{
     cursor: pointer;
 }
 
+table.ui-sortable .fa.fa-arrows{
+    cursor: pointer;
+}
+
 .table {
     & > tbody > tr > td,
     & > tbody > tr > th,
@@ -992,7 +1028,7 @@ table.ui-sortable .fa.fa-arrows{
     & > tfoot > tr > td,
     & > tfoot > tr > th {
         border-color: #e6e6e6;
-        padding: 12px 30px;
+        padding: 12px;
     }
     & > thead > tr > th {
         background-color: @lightGrey;
@@ -1011,6 +1047,10 @@ table.ui-sortable .fa.fa-arrows{
     .checkbox-inline {
         padding-left: 0;
     }
+
+    & > tbody > tr > td:first-child {
+        //width: 300px;
+    }
 }
 
 .table-striped > tbody > tr {
@@ -1025,6 +1065,46 @@ table.ui-sortable .fa.fa-arrows{
     &:nth-of-type(2n +1) {
         background-color: #fff;
     }
+
+    &.active {
+        background-color: #f1f5f8;
+        border: 2px solid #8d8f8e;
+    }
+
+    .accordion-formrow {
+        & > td {
+            border-top: 0 none;
+            padding: 0 12px;
+        }
+        .row {
+            background-color: #e1eaf1;
+            margin: 0 0 12px;
+        }
+    }
+
+    &.accordion-formrow-container {
+        & > tr:first-child > td:first-child {
+            font-weight: 600;
+        }
+    }
+
+    .nav-tabs:not(.multi-languages) {
+        background-color: #c9d9e6;
+
+        li {
+            &.active {
+                background-color: #e1eaf1;
+
+                a {
+                    background: none;
+                }
+            }
+            a {
+                background: none;
+            }
+        }
+    }
+
 }
 
 .table-form {
@@ -1072,7 +1152,7 @@ table.ui-sortable .fa.fa-arrows{
 
 .pagination > li {
     display: inline-block;
-    padding: 0;
+    padding: 0 5px;
     & > a, & > span {
         background: #6b6e78;
         font-weight: bold;
@@ -1140,41 +1220,157 @@ table.ui-sortable .fa.fa-arrows{
             }
         }
     }
-    ul.children {
-        padding-left: 50px;
-        min-height: 5px;
-        & > li {
-            & > ul.children, & > div {
-                padding-left: 60px;
+
+    // mixin for padded levels in tree view
+    .padded_tree_levels ( @paddingleft-tree : 30px, @paddingleft-counter : 1  ) {
+        & > div {
+            padding-left: (@paddingleft-counter+2)*@paddingleft-tree;
+
+            & > i[class*="fa-chevron-"] {
+                left: (@paddingleft-counter+1)*@paddingleft-tree;
             }
-            & div > .fa-arrows {
-                left: 5px;
-            }
-            & div > i[class*="fa-chevron-"] {
-                left: 30px;
+
+            & > .fa-arrows {
+                left: (@paddingleft-counter)*@paddingleft-tree;
             }
         }
     }
 
+    ul.children {
+        min-height: 50px;
+    }
+
+    & > ul.children {
+        & > li {
+            .padded_tree_levels (30px, 0);
+
+            // level 2
+            & > ul.children {
+
+                & > li {
+                    .padded_tree_levels (30px, 1);
+
+                    // level 3
+                    & > ul.children {
+
+                        & > li {
+                            .padded_tree_levels (30px, 2);
+
+                            // level 4
+                            & > ul.children {
+
+                                & > li {
+                                    .padded_tree_levels (30px, 3);
+
+                                    // level 5
+                                    & > ul.children {
+
+                                        & > li {
+                                            .padded_tree_levels (30px, 4);
+
+                                            // level 6
+                                            & > ul.children {
+
+                                                & > li {
+                                                    .padded_tree_levels (30px, 5);
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+    }
+
     ul.root-level {
+        margin: 0 -30px;
+
         & > li > div {
-            padding-left: 35px;
+            padding-left: 60px;
+            padding-right: 30px;
 
             & .fa-arrows {
                 display: none;
             }
             & i[class*="fa-chevron-"] {
-                left: 5px;
+                left: 30px;
             }
         }
+
+        & > li {
+
+            ul.children {
+                padding-left: 0;
+            }
+
+            // level 1
+            & > ul.children {
+
+                & > li {
+                    .padded_tree_levels (30px, 1);
+
+                    // level 2
+                    & > ul.children {
+
+                        & > li {
+                            .padded_tree_levels (30px, 2);
+
+                            // level 3
+                            & > ul.children {
+
+                                & > li {
+                                    .padded_tree_levels (30px, 3);
+
+                                    // level 4
+                                    & > ul.children {
+
+                                        & > li {
+                                            .padded_tree_levels (30px, 4);
+
+                                            // level 5
+                                            & > ul.children {
+
+                                                & > li {
+                                                    .padded_tree_levels (30px, 5);
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+
     }
 
     li {
         list-style: none;
         position: relative;
+
         & > div {
             display: block;
-            padding: 13px 0 13px 60px;
+            padding: 13px 0 13px 90px;
             border-bottom: 1px solid @paleBlue;
             min-height: 50px;
             overflow: hidden;
@@ -1286,6 +1482,7 @@ table.ui-sortable .fa.fa-arrows{
 
 .tree:not(.tree-new-node) li div:hover {
     background: @paleBlue;
+    position: relative;
 }
 
 .ui-state-highlight {
@@ -1294,6 +1491,7 @@ table.ui-sortable .fa.fa-arrows{
     background: #ddd;
     border: 2px dashed #c9c9c9;
     color: #737687;
+    margin-left: 50px;
 }
 
 /* ===================================================================
@@ -1488,17 +1686,21 @@ table.ui-sortable .fa.fa-arrows{
  * FORMS
  * =================================================================*/
 /* radio buttons */
-.radioBouton();
+.radioBouton('\f058', 22px, 0, 0, @baseColor);
 
 /* checkboxes */
-.checkBox();
+.checkBox('\f14a', 22px, @left: 0, @top: -5px, @color: @darkBlue);
+
+input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + label {
+    margin: 0 20px 20px 0;
+}
 
 /* surcharge checkbox et checkbox dans les tableaux */
 .table,
 .tree-form,
 .list-checkbox {
-    .checkBox('\f14a', 22px, 0, 0, @darkBlue);
-    .radioBouton('\f058', 22px, 0, 0, @baseColor);
+    //.checkBox('\f14a', 22px, 0, -5px, @darkBlue);
+    //.radioBouton('\f058', 22px, 0, 0, @baseColor);
 }
 
 .list-checkbox {
@@ -1602,8 +1804,15 @@ table.ui-sortable .fa.fa-arrows{
         margin: 0 5px;
         input {
             display: none;
+
             &:checked + .slider::before {
                 background-color: @lightBlue;
+                -webkit-transform: translateX(20px);
+                -ms-transform: translateX(20px);
+                transform: translateX(20px);
+            }
+            &:checked:disabled + .slider::before {
+                background-color: @lightGrey;
                 -webkit-transform: translateX(20px);
                 -ms-transform: translateX(20px);
                 transform: translateX(20px);
@@ -1747,7 +1956,10 @@ li.orchestra-node-option-choice .hierarchical {
 }
 
 fieldset {
-    display: table-column
+    display: table-column;
+    & + fieldset {
+        margin-top: 50px;
+    }
 }
 
 .required {
@@ -1866,9 +2078,6 @@ fieldset {
             cursor: pointer;
         }
     }
-    [type="radio"] + label {
-        line-height: 1;
-    }
     .btn-border {
         margin-right: 10px;
     }
@@ -1890,6 +2099,20 @@ fieldset {
 .multi-languages.nav-tabs > li > a {
     background-color: transparent;
     opacity: 0.5;
+    display: block;
+    min-height: 33px;
+    margin-bottom: 10px;
+    padding-left: 0;
+    margin-right: 10px;
+
+    img, label {
+        display: inline-block;
+    }
+
+    label {
+        width: auto;
+        padding: 5px 5px 0 5px;
+    }
 }
 
 .multi-languages.nav-tabs > li.active > a {
@@ -1897,7 +2120,7 @@ fieldset {
 }
 
 .multi-languages.nav-tabs > li > a img {
-    float: left;
+    width: 23px;
 }
 
 /* ===================================================================
@@ -2332,7 +2555,7 @@ fieldset {
 }
 
 .multi-languages.nav-tabs > li > a {
-    background-color: #fff;
+    //background-color: #fff;
     opacity: 0.5;
 }
 

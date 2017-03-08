@@ -84,7 +84,8 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         }
         $form->add('refresh', 'button', array(
             'label' => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
-            'attr' => array('class' => 'patch-submit-click'),
+            'attr' => array('class' => 'glyphicon glyphicon-refresh patch-submit-click'),
+            'button_class' => 'border'
         ));
         $form->add('contentId', 'choice', array(
             'label' => false,

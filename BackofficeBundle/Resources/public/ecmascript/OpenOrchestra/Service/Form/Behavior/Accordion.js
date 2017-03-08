@@ -33,6 +33,7 @@ class Accordion extends AbstractBehavior
         let $td = $(event.target).parent();
         $td.children().toggleClass('hide');
         $td.parent().next().toggleClass('hide');
+        $td.parent().parent('.accordion-formrow-container').toggleClass('active');
     }
 
     /**
@@ -46,6 +47,7 @@ class Accordion extends AbstractBehavior
         $('.open-form', $table).addClass('hide');
         $('.close-form', $table).removeClass('hide');
         $('tbody > tr:nth-of-type(2n)', $table).removeClass('hide');
+        $table.find('.accordion-formrow-container').addClass('active');
     }
 
     /**
@@ -59,6 +61,7 @@ class Accordion extends AbstractBehavior
         $('.open-form', $table).removeClass('hide');
         $('.close-form', $table).addClass('hide');
         $('tbody > tr:nth-of-type(2n)', $table).addClass('hide');
+        $table.find('.accordion-formrow-container').removeClass('active');
     }
 
     /**

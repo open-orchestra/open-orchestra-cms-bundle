@@ -110,8 +110,9 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->add('refresh', 'button', array(
-            'label' => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
-            'attr' => array('class' => 'patch-submit-click'),
+            'label'        => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
+            'attr'         => array('class' => 'glyphicon glyphicon-refresh patch-submit-click'),
+            'button_class' => 'border'
         ));
 
         Phake::verify($this->form)->add('contentId', 'choice', array(
@@ -140,8 +141,9 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->postSetData($this->event);
 
         Phake::verify($this->form)->add('refresh', 'button', array(
-            'label' => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
-            'attr' => array('class' => 'patch-submit-click'),
+            'label'        => 'open_orchestra_backoffice.form.content_search.refresh_content_list',
+            'attr'         => array('class' => 'glyphicon glyphicon-refresh patch-submit-click'),
+            'button_class' => 'border'
         ));
 
         Phake::verify($this->form)->add('contentId', 'choice', array(
