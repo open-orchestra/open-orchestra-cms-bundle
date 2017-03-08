@@ -7,7 +7,7 @@ use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
- * Class AbstractStrategy
+ * Class AbstractDisplayBlockStrategy
  */
 abstract class AbstractDisplayBlockStrategy implements DisplayBlockInterface
 {

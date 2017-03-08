@@ -7,7 +7,7 @@ use OpenOrchestra\BaseApi\Exceptions\HttpException\BadUserCredentialsHttpExcepti
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Facade\OAuth2\AccessTokenFacade;
 use OpenOrchestra\BaseApi\Manager\AccessTokenManager;
-use OpenOrchestra\BaseApi\OAuth2\Strategy\AbstractStrategy;
+use OpenOrchestra\BaseApi\OAuth2\Strategy\AbstractOAuth2Strategy;
 use OpenOrchestra\BaseApi\Repository\AccessTokenRepositoryInterface;
 use OpenOrchestra\BaseApi\Repository\ApiClientRepositoryInterface;
 use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * Class ResourceOwnerPasswordGrantStrategy
  */
-class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
+class ResourceOwnerPasswordGrantStrategy extends AbstractOAuth2Strategy
 {
     protected $encoderFactory;
     protected $userRepository;
