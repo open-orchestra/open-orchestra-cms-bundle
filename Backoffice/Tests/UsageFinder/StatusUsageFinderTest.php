@@ -35,9 +35,9 @@ class StatusUsageFinderTest extends AbstractBaseTestCase
     {
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
-        $repository1 = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusableElementRepositoryInterface');
+        $repository1 = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusableContainerRepositoryInterface');
         Phake::when($repository1)->hasStatusedElement(Phake::anyParameters())->thenReturn($elementPresent1);
-        $repository2 = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusableElementRepositoryInterface');
+        $repository2 = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusableContainerRepositoryInterface');
         Phake::when($repository2)->hasStatusedElement(Phake::anyParameters())->thenReturn($elementPresent2);
 
         $this->finder->addRepository($repository1);
