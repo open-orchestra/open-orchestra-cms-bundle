@@ -8,17 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block stylesheets %}
-
             {% if app.debug %}
-                {% stylesheets 'css/all.css' filter='cssrewrite' %}
-                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-                {% endstylesheets %}
+                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/all.css') }}" />
             {% else %}
-                {% stylesheets 'css/all.min.css' filter='cssrewrite' %}
-                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-                {% endstylesheets %}
+                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/all.min.css') }}" />
             {% endif %}
-
         {% endblock %}
 </head>
     <body>
@@ -66,13 +60,9 @@
             };
         </script>
         {% if app.debug %}
-            {% javascripts 'js/all.js' %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            <script type="text/javascript" src="{{ asset('js/all.js') }}"></script>
         {% else %}
-            {% javascripts 'js/all.min.js' %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            <script type="text/javascript" src="{{ asset('js/all.min.js') }}"></script>
         {% endif %}
     {% endblock %}
     </body>
