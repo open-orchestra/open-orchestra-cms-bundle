@@ -22,16 +22,14 @@ class ContentToolbarView extends OrchestraView
     /**
      * Initialize
      * @param {Contents}        contentVersions
-     * @param {string}          name
      * @param {string}          version
      * @param {string}          contentTypeId
      * @param {string}          contentId
      * @param {string}          language
      * @param {ContentFormView} contentFormView
      */
-    initialize({contentVersions, name, version, contentTypeId, contentId, language, contentFormView}) {
+    initialize({contentVersions, version, contentTypeId, contentId, language, contentFormView}) {
         this._contentVersions = contentVersions;
-        this._name = name;
         this._version = version;
         this._contentTypeId = contentTypeId;
         this._contentId = contentId;
@@ -58,7 +56,7 @@ class ContentToolbarView extends OrchestraView
      * Show input version name to add a new version
      */
     newVersionForm() {
-        let versionName = this._name + '_' + new Date().toLocaleString();
+        let versionName = this._contentId + '_' + new Date().toLocaleString();
         let template = this._renderTemplate('Content/newVersionForm', { versionName: versionName });
         $('.new-version-form-region', this.$el).html(template);
     }

@@ -26,7 +26,6 @@ class ContentRouter extends OrchestraRouter
             'content/summary'                                             : 'showContentSummary',
             'content/list/:contentTypeId/:language(/:page)'               : 'listContent',
             'content/edit/:contentTypeId/:language/:contentId(/:version)' : 'editContent',
-            'content/edit/:contentTypeId/:language/:contentId(/:version)' : 'editContent',
             'content/new/:contentTypeId/:language'                        : 'newContent'
         };
     }
@@ -101,7 +100,6 @@ class ContentRouter extends OrchestraRouter
                     }
                     let contentFormView = new ContentFormView({
                         form: form,
-                        name: contentId,
                         contentType: contentType,
                         language: language,
                         siteLanguageUrl: siteLanguageUrl,
@@ -166,7 +164,6 @@ class ContentRouter extends OrchestraRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let newContentFormView = new NewContentFormView({
                 form: form,
-                name: Translator.trans('open_orchestra_backoffice.table.contents.new'),
                 contentTypeId: contentTypeId,
                 language: language,
                 siteLanguageUrl: siteLanguageUrl

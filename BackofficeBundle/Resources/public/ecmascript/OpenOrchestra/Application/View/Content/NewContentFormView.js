@@ -15,14 +15,12 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
     /**
      * Initialize
      * @param {Form}   form
-     * @param {String} name
      * @param {String} contentTypeId
      * @param {String} language
      * @param {Array}  siteLanguageUrl
      */
-    initialize({form, name, contentTypeId, language, siteLanguageUrl}) {
+    initialize({form, contentTypeId, language, siteLanguageUrl}) {
         super.initialize({form : form});
-        this._name = name;
         this._contentTypeId = contentTypeId;
         this._language = language;
         this._siteLanguageUrl = siteLanguageUrl;
@@ -35,11 +33,11 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
         let template = this._renderTemplate('Content/contentEditView', {
             contentTypeId: this._contentTypeId,
             language: this._language,
-            name: this._name,
             siteLanguageUrl: this._siteLanguageUrl,
             messages: FlashMessageBag.getMessages()
         });
         this.$el.html(template);
+        $('#page-name', this.$el).html(Translator.trans('open_orchestra_backoffice.table.contents.new'));
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
 

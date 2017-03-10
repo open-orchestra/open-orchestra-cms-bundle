@@ -25,16 +25,14 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}        form
-     * @param {String}      name
      * @param {ContentType} contentType
      * @param {String}      language
      * @param {Array}       siteLanguageUrl
      * @param {String}      contentId
      * @param {String}      version
      */
-    initialize({form, name, contentType, language, siteLanguageUrl, contentId, version}) {
+    initialize({form, contentType, language, siteLanguageUrl, contentId, version}) {
         super.initialize({form : form});
-        this._name = name;
         this._contentType = contentType;
         this._language = language;
         this._siteLanguageUrl = siteLanguageUrl;
@@ -49,7 +47,6 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         let template = this._renderTemplate('Content/contentEditView', {
             contentTypeId: this._contentType.get('content_type_id'),
             language: this._language,
-            name: this._name,
             siteLanguageUrl: this._siteLanguageUrl,
             messages: FlashMessageBag.getMessages()
         });
@@ -68,6 +65,8 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             this._renderContentActionToolbar($('.content-action-toolbar', this.$el));
         }
         super._renderForm();
+        $('#page-name', this.$el).html($('#oo_content_name', this.$el).val());
+
         // hide checkbox oo_content_saveOldPublishedVersion by default
         $('#oo_content_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
 
@@ -91,13 +90,12 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             },
             success: (contentVersions) => {
                 let contentToolbarView = new ContentToolbarView({
-                        contentVersions: contentVersions,
-                        name: this._name,
-                        version: this._version,
-                        contentTypeId: this._contentType.get('content_type_id'),
-                        language: this._language,
-                        contentId: this._contentId,
-                        contentFormView: this
+                    contentVersions: contentVersions,
+                    version: this._version,
+                    contentTypeId: this._contentType.get('content_type_id'),
+                    language: this._language,
+                    contentId: this._contentId,
+                    contentFormView: this
                 });
                 $selector.html(contentToolbarView.render().$el);
             }
