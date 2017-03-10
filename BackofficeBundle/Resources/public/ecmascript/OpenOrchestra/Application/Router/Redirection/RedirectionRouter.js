@@ -74,8 +74,7 @@ class RedirectionRouter extends OrchestraRouter
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let redirectionFormView = new RedirectionFormView({
-                form: form,
-                name: Translator.trans('open_orchestra_backoffice.redirection.title_new')
+                form: form
              });
             Application.getRegion('content').html(redirectionFormView.render().$el);
         });
@@ -94,8 +93,7 @@ class RedirectionRouter extends OrchestraRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let redirectionFormView = new RedirectionFormView({
                 form: form,
-                redirectionId: redirectionId,
-                name: Translator.trans('open_orchestra_backoffice.redirection.title_edit')
+                redirectionId: redirectionId
             });
             Application.getRegion('content').html(redirectionFormView.render().$el);
         });
