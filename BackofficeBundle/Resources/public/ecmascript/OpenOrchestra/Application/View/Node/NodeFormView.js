@@ -59,6 +59,9 @@ class NodeFormView extends AbstractFormView
      */
     _renderForm() {
         super._renderForm();
+
+        $('#page-name', this.$el).html($('#oo_node_name', this.$el).val());
+
         // hide checkbox oo_node_save_old_published_version by default
         $('#oo_node_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
     }

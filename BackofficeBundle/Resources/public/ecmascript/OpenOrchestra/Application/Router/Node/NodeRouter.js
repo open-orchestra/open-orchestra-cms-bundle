@@ -21,11 +21,11 @@ class NodeRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'nodes(/:language)': 'showNodes',
+            'nodes(/:language)'                     : 'showNodes',
             'node/edit/:nodeId/:language(/:version)': 'editNode',
-            'node/new/tree/:language/:parentId': 'newTreeNode',
-            'node/new/:language/:parentId/:order': 'newNode',
-            'node/:nodeId/:language(/:version)':  'showNode'
+            'node/new/tree/:language/:parentId'     : 'newTreeNode',
+            'node/new/:language/:parentId/:order'   : 'newNode',
+            'node/:nodeId/:language(/:version)'     : 'showNode'
         };
     }
 
