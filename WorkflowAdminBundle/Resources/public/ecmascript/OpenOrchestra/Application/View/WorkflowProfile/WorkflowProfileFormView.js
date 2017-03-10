@@ -12,12 +12,10 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
     /**
      * Initialize
      * @param {Form}   form
-     * @param {String} name
      * @param {String} workflowProfileId
      */
     initialize({form, name, workflowProfileId = null}) {
         super.initialize({form : form});
-        this._name = name;
         this._workflowProfileId = workflowProfileId;
     }
 
@@ -25,12 +23,26 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('WorkflowProfile/workflowProfileFormView', {
-            name: this._name
-        });
+        let template = this._renderTemplate('WorkflowProfile/workflowProfileFormView');
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
+
+        return this;
+    }
+
+    /**
+     * Render a form
+     *
+     * @private
+     */
+    _renderForm() {
+        super._renderForm();
+        let title = $("input[id*='oo_workflow_profile_labels_']", this.$el).val();
+        if (null === this._workflowProfileId) {
+            title = Translator.trans('open_orchestra_workflow_admin.workflow_profile.title_new');
+        }
+        $('#page-name', this.$el).html(title);
 
         return this;
     }
