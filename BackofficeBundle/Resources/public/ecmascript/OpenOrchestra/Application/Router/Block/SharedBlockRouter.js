@@ -20,10 +20,10 @@ class SharedBlockRouter extends AbstractBlockRouter
      */
     preinitialize(options) {
         this.routes = {
-            'shared-block/list(/:language)(/:page)': 'listSharedBlock',
-            'shared-block/edit/:blockId/:blockLabel/:language(/:activateUsageTab)': 'editSharedBlock',
-            'shared-block/new/list/:language': 'newSharedBlockListComponent',
-            'shared-block/new/:component/:language/:name': 'newSharedBlock'
+            'shared-block/list(/:language)(/:page)'                   : 'listSharedBlock',
+            'shared-block/edit/:blockId/:language(/:activateUsageTab)': 'editSharedBlock',
+            'shared-block/new/list/:language'                         : 'newSharedBlockListComponent',
+            'shared-block/new/:component/:language'                   : 'newSharedBlock'
         };
     }
 
@@ -124,11 +124,10 @@ class SharedBlockRouter extends AbstractBlockRouter
      * Edit shared block
      *
      * @param {string} blockId
-     * @param {string} blockLabel
      * @param {string} language
      * @param {boolean} activateUsageTab
      */
-    editSharedBlock(blockId, blockLabel, language, activateUsageTab) {
+    editSharedBlock(blockId, language, activateUsageTab) {
         if (null === activateUsageTab) {
             activateUsageTab = false;
         }
@@ -140,7 +139,6 @@ class SharedBlockRouter extends AbstractBlockRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let sharedblockFormView = new SharedBlockFormView({
                 form : form,
-                blockLabel: blockLabel,
                 blockId: blockId,
                 language: language,
                 activateUsageTab: activateUsageTab
