@@ -96,16 +96,15 @@
                             </td>
                             {% endfor %}
                             <td>
-                                <button type="button" class="btn btn-primary btn-sm hide open-form">{{ 'open_orchestra_backoffice.form.collection.open_form'|trans }}</button>
-                                <button type="button" class="btn btn-primary btn-sm close-form">{{ 'open_orchestra_backoffice.form.collection.close_form'|trans }}</button>
+                                <button type="button" class="btn-nostyle fa fa-pencil btn-sm not open-form hide"></button>
+                                <button type="button" class="btn-nostyle fa fa-close btn-sm close-form"></button>
                             </td>
                             {% if form.vars.allow_delete %}
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-sm remove-form">{{ form.vars.attr['data-prototype-label-remove']|trans }}</button>
+                                    <button type="button" class="btn-nostyle fa fa-trash btn-sm remove-form"></button>
                                 </td>
                             {% endif %}
                         </tr>
-
                         {% set attr = prototype.vars.attr|default([]) %}
                         {% set id = null %}
                         <tr {{ block('widget_container_attributes') }} >
