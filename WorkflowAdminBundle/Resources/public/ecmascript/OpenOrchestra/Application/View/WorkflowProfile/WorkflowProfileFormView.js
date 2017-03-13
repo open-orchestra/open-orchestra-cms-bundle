@@ -57,13 +57,8 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let workflowProfileId = jqXHR.getResponseHeader('workflowProfileId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === workflowProfileId || null === name) {
-            throw new ApplicationError('Invalid workflowProfileId or name');
-        }
         let url = Backbone.history.generateUrl('editWorkflowProfile', {
-            workflowProfileId: workflowProfileId,
-            name: name
+            workflowProfileId: workflowProfileId
         });
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);

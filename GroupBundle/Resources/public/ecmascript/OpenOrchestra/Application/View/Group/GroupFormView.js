@@ -68,13 +68,8 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let groupId = jqXHR.getResponseHeader('groupId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === groupId || null === name) {
-            throw new ApplicationError('Invalid groupId or name');
-        }
         let url = Backbone.history.generateUrl('editGroup', {
-            groupId: groupId,
-            name: name
+            groupId: groupId
         });
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);

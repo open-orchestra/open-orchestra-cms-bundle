@@ -55,10 +55,6 @@ class KeywordFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let keywordId = jqXHR.getResponseHeader('keywordId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === keywordId || null === name) {
-            throw new ApplicationError('Invalid keywordId or name');
-        }
         let url = Backbone.history.generateUrl('editKeyword', {
             keywordId: keywordId
         });

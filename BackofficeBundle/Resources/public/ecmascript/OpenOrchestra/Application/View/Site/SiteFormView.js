@@ -66,13 +66,8 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let siteId = jqXHR.getResponseHeader('siteId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === siteId || null === name) {
-            throw new ApplicationError('Invalid siteId or name');
-        }
         let url = Backbone.history.generateUrl('editSite', {
-            siteId: siteId,
-            name: name
+            siteId: siteId
         });
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
