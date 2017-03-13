@@ -14,7 +14,7 @@ class ContentTypesView extends AbstractCollectionView
         if (0 === this._collection.recordsTotal) {
             let template = this._renderTemplate('List/emptyListView' , {
                 title: Translator.trans('open_orchestra_backoffice.content_type.title_list'),
-                urlAdd: ''
+                urlAdd: '#' + Backbone.history.generateUrl('newContentType')
             });
             this.$el.html(template);
         } else {
