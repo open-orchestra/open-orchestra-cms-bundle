@@ -26,16 +26,13 @@ class ContentSummaryView extends OrchestraView
      * Render node tree
      */
     render() {
-        for (let contentType of this.contentTypes.models) {
-            let template = this._renderTemplate('Content/summaryElementView',
-                    {
-                        name: contentType.get('name'),
-                        contentTypeId: contentType.get('content_type_id'),
-                        language: Application.getContext().user.language.contribution
-                    }
-                );
-            this.$el.append(template);
-        }
+        let template = this._renderTemplate('Content/summaryView',
+            {
+                contentTypes: this.contentTypes.models,
+                Application: Application
+            }
+        );
+        this.$el.append(template);
 
         return this;
     }

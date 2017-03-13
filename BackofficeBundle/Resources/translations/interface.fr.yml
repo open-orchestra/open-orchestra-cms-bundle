@@ -212,6 +212,8 @@ open_orchestra_backoffice:
         de: Deutsch
     internal_link:
         title: Lien interne
+    content_types:
+        title: Contenus
     content:
         confirm_create:
             title: Créer un contenu dans une nouvelle langue
