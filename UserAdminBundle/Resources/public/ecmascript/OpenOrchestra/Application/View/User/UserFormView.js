@@ -40,7 +40,7 @@ class UserFormView extends AbstractFormView
             $('.tab-content .tab-preference', this._$formRegion).addClass('active');
         }
 
-        $('#page-name', this.$el).html($('#oo_user_email', this.$el).val());
+        $('#page-name', this.$el).html($('#oo_user_firstName', this.$el).val() + ' ' + $('#oo_user_lastName', this.$el).val());
 
         return this;
     }
