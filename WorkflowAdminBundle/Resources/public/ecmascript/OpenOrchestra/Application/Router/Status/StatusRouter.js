@@ -15,9 +15,9 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     preinitialize(options) {
         this.routes = {
-            'workflow/status/new'                 : 'newStatus',
-            'workflow/status/edit/:statusId/:name': 'editStatus',
-            'workflow/status/list(/:page)'        : 'listStatus'
+            'workflow/status/new'           : 'newStatus',
+            'workflow/status/edit/:statusId': 'editStatus',
+            'workflow/status/list(/:page)'  : 'listStatus'
         };
     }
 
@@ -30,8 +30,7 @@ class StatusRouter extends AbstractWorkflowRouter
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let statusFormView = new StatusFormView({
-                form: form,
-                name: Translator.trans('open_orchestra_workflow_admin.status.title_new')
+                form: form
              });
             Application.getRegion('content').html(statusFormView.render().$el);
         });
@@ -41,15 +40,13 @@ class StatusRouter extends AbstractWorkflowRouter
      * Edit Status
      *
      * @param  {String} statusId
-     * @param  {String} name
      */
-    editStatus(statusId, name) {
+    editStatus(statusId) {
         let url = Routing.generate('open_orchestra_workflow_admin_status_form', {statusId: statusId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let statusFormView = new StatusFormView({
                 form: form,
-                name: name,
                 statusId: statusId
             });
             Application.getRegion('content').html(statusFormView.render().$el);

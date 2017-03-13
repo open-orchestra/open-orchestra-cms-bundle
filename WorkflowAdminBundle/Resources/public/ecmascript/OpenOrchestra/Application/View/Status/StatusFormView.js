@@ -14,26 +14,38 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}   form
-     * @param {String} name
      * @param {String} statusId
 
      */
-    initialize({form, name, statusId = null}) {
+    initialize({form, statusId = null}) {
         super.initialize({form : form});
         this._statusId = statusId;
-        this._name = name;
     }
 
     /**
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Status/statusFormView', {
-            name: this._name
-        });
+        let template = this._renderTemplate('Status/statusFormView');
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
+
+        return this;
+    }
+
+    /**
+     * Render a form
+     *
+     * @private
+     */
+    _renderForm() {
+        super._renderForm();
+        let title = $('#oo_status_name', this.$el).val();
+        if (null === this._statusId) {
+            title = Translator.trans('open_orchestra_workflow_admin.status.title_new');
+        }
+        $('#page-name', this.$el).html(title);
 
         return this;
     }
@@ -48,13 +60,8 @@ class StatusFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let statusId = jqXHR.getResponseHeader('statusId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === statusId || null === name) {
-            throw new ApplicationError('Invalid statusId or name');
-        }
         let url = Backbone.history.generateUrl('editStatus', {
-            statusId: statusId,
-            name: name
+            statusId: statusId
         });
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);
