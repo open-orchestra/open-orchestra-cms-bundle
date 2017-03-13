@@ -3,13 +3,23 @@
  */
 class AbstractCellFormatter
 {
+
+    /**
+     * return data formatter
+     *
+     * @return Object
+     */
+    getDataFormatter() {
+        throw new Error('Missing getDataFormatter method');
+    }
+
     /**
      * return supported type
      *
      * @return string
      */
     getType() {
-        throw new Error('Missing getType method');
+        return this.getDataFormatter().getType();
     }
 
     /**
@@ -27,7 +37,9 @@ class AbstractCellFormatter
      * @param {Object} field
      */
     format(field) {
-        throw new Error('Missing format method');
+        return function(td, cellData, rowData) {
+            $(td).html(this.getDataFormatter().format(cellData));
+        };
     }
 }
 

@@ -1,4 +1,4 @@
-import TemplateManager         from '../../TemplateManager'
+import TemplateManager         from '../TemplateManager'
 import AbstractSearchFormGroup from './AbstractSearchFormGroup'
 
 /**

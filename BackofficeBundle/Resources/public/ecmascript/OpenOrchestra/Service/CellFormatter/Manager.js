@@ -30,7 +30,7 @@ class Manager
     format(field) {
         for (let cellFormatter of this._cellFormatters) {
             if (cellFormatter.support(field)) {
-                return cellFormatter.format(field);
+                return $.proxy(cellFormatter.format(field), cellFormatter);
             }
         }
         

@@ -1,10 +1,10 @@
-import TemplateManager         from '../../TemplateManager'
+import TemplateManager         from '../TemplateManager'
 import AbstractSearchFormGroup from './AbstractSearchFormGroup'
 
 /**
- * @class TextForm
+ * @class NumberForm
  */
-class TextForm extends AbstractSearchFormGroup
+class NumberForm extends AbstractSearchFormGroup
 {
     /**
      * test if field is supported
@@ -12,7 +12,7 @@ class TextForm extends AbstractSearchFormGroup
      * @param {Object} field
      */
     support(field) {
-        return field.search == 'text';
+        return field.search == 'number';
     }
 
     /**
@@ -21,11 +21,11 @@ class TextForm extends AbstractSearchFormGroup
      * @param {Object} field
      */
     render(field) {
-        return TemplateManager.get('Content/textForm')({
+        return TemplateManager.get('Content/numberForm')({
             field: field
         });
     }
 }
 
-// unique instance of TextForm
-export default (new TextForm);
+// unique instance of NumberForm
+export default (new NumberForm);
