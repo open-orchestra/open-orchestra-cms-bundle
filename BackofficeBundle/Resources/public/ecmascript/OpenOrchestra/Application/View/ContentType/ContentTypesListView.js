@@ -70,8 +70,7 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
      */
     _createEditLink(td, cellData, rowData) {
         let link = Backbone.history.generateUrl('editContentType', {
-            'contentTypeId': rowData.get('content_type_id'),
-            'name': rowData.get('name')
+            'contentTypeId': rowData.get('content_type_id')
         });
         cellData = $('<a>',{
             text: cellData,
