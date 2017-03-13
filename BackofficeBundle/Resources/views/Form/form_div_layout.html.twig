@@ -639,14 +639,25 @@
     {% spaceless %}
         <div {{ block('widget_container_attributes') }}>
             <ul class="nav nav-tabs multi-languages " role="tablist" id="myTab">
-                {% set active = false %}
+                {% set activeKey = -1 %}
+                {% set firstKey = -1 %}
                 {% for key, field in form %}
-                    {% set active = (active == false and (field.vars.errors|length > 0 or form.vars.valid == true)) %}
-                    <li class="{% if active %} active {% endif %} {% if field.vars.errors|length > 0 %} has-error {% endif %} ">
+                    {% if -1 == firstKey %}
+                        {% set firstKey = key %}
+                    {% endif %}
+                    {% if -1 == activeKey and field.vars.errors|length > 0 %}
+                        {% set activeKey = key %}
+                    {% endif %}
+                {% endfor %}
+                {% if -1 == activeKey %}
+                    {% set activeKey = firstKey %}
+                {% endif %}
+                {% for key, field in form %}
+                    <li class="{% if key == activeKey %} active {% endif %} {% if field.vars.errors|length > 0 %} has-error {% endif %} ">
                         <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
                             <img
-                                    src="/images/languages/{{ key }}.png"
-                                    alt="{{ ('open_orchestra_backoffice.language.' ~ key)|trans }}"
+                                src="/images/languages/{{ key }}.png"
+                                alt="{{ ('open_orchestra_backoffice.language.' ~ key)|trans }}"
                             >
                             {{ form_label(field) }}
                         </a>
@@ -654,10 +665,8 @@
                 {% endfor %}
             </ul>
             <div class="tab-content">
-                {% set active = false %}
                 {% for key, field in form %}
-                    {% set active = (active == false and (field.vars.errors|length > 0 or form.vars.valid == true)) %}
-                    <div class="tab-pane {% if active %} active {% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
+                    <div class="tab-pane {% if key == activeKey %} active {% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
                         <div class="form-group{% if field.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_widget(field) }}
                             {{ form_rest(field) }}
