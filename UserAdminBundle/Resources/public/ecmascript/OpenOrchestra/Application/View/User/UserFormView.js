@@ -20,7 +20,10 @@ class UserFormView extends AbstractFormView
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('User/userFormView', {messages: FlashMessageBag.getMessages()});
+        let template = this._renderTemplate('User/userFormView', {
+            messages: FlashMessageBag.getMessages(),
+            title   : $('#oo_user_firstName', this._form.$form).val() + ' ' + $('#oo_user_lastName', this._form.$form).val()
+        });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
@@ -39,8 +42,6 @@ class UserFormView extends AbstractFormView
             $('.tab-content .tab-pane', this._$formRegion).removeClass('active');
             $('.tab-content .tab-preference', this._$formRegion).addClass('active');
         }
-
-        $('#page-name', this.$el).html($('#oo_user_firstName', this.$el).val() + ' ' + $('#oo_user_lastName', this.$el).val());
 
         return this;
     }
