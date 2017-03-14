@@ -33,27 +33,16 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Group/groupFormView');
-        this.$el.html(template);
-        this._$formRegion = $('.form-edit', this.$el);
-        super.render();
-
-        return this;
-    }
-
-    /**
-     * Render a form
-     *
-     * @private
-     */
-    _renderForm() {
-        super._renderForm();
-
-        let title = $('#oo_group_name', this.$el).val();
+        let title = $('#oo_group_name', this._form.$form).val();
         if (null === this._groupId) {
             title = Translator.trans('open_orchestra_group.table.groups.new');
         }
-        $('#page-name', this.$el).html(title);
+        let template = this._renderTemplate('Group/groupFormView', {
+            title: title
+        });
+        this.$el.html(template);
+        this._$formRegion = $('.form-edit', this.$el);
+        super.render();
 
         return this;
     }
