@@ -39,10 +39,11 @@ class NodeFormView extends AbstractFormView
     render() {
         let template = this._renderTemplate('Node/nodeEditView',
             {
-                language: this._language,
-                nodeId: this._nodeId,
+                language     : this._language,
+                nodeId       : this._nodeId,
                 siteLanguages: this._siteLanguages,
-                version: this._version
+                version      : this._version,
+                title        : $('#oo_node_name', this._form.$form).val()
             }
         );
         this.$el.html(template);
@@ -59,8 +60,6 @@ class NodeFormView extends AbstractFormView
      */
     _renderForm() {
         super._renderForm();
-
-        $('#page-name', this.$el).html($('#oo_node_name', this.$el).val());
 
         // hide checkbox oo_node_save_old_published_version by default
         $('#oo_node_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
