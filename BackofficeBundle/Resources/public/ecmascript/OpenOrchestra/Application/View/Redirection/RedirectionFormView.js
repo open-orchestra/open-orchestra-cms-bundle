@@ -31,28 +31,18 @@ class RedirectionFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Redirection/redirectionFormView');
+        let title = $('#oo_redirection_routePattern', this._form.$form).val();
+        if (null === this._redirectionId) {
+            title = Translator.trans('open_orchestra_backoffice.redirection.title_new');
+        }
+        let template = this._renderTemplate('Redirection/redirectionFormView', {
+            title: title
+        });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
 
         this._switchType($("input[name='oo_redirection[type]']:checked", this.$el).val());
-
-        return this;
-    }
-
-    /**
-     * Render a form
-     *
-     * @private
-     */
-    _renderForm() {
-        super._renderForm();
-        let title = $('#oo_redirection_routePattern', this.$el).val();
-        if (null === this._redirectionId) {
-            title = Translator.trans('open_orchestra_backoffice.redirection.title_new');
-        }
-        $('#page-name', this.$el).html(title);
 
         return this;
     }

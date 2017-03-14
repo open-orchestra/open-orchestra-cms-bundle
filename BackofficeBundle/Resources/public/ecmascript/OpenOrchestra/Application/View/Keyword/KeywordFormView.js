@@ -25,9 +25,8 @@ class KeywordFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         if (null === this._keywordId) {
             title = Translator.trans('open_orchestra_backoffice.keyword.title_new');
         }
-        $('#page-name', this.$el).html(title);
         let template = this._renderTemplate('Keyword/keywordFormView', {
-            'title': title
+            title: title
         });
         this.$el.html(template);
         this._$formRegion = $('.form', this.$el);
