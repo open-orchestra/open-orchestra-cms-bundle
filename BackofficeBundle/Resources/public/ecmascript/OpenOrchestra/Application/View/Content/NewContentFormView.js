@@ -31,13 +31,13 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
      */
     render() {
         let template = this._renderTemplate('Content/contentEditView', {
-            contentTypeId: this._contentTypeId,
-            language: this._language,
+            contentTypeId  : this._contentTypeId,
+            language       : this._language,
             siteLanguageUrl: this._siteLanguageUrl,
-            messages: FlashMessageBag.getMessages()
+            messages       : FlashMessageBag.getMessages(),
+            title          : Translator.trans('open_orchestra_backoffice.table.contents.new')
         });
         this.$el.html(template);
-        $('#page-name', this.$el).html(Translator.trans('open_orchestra_backoffice.table.contents.new'));
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
 

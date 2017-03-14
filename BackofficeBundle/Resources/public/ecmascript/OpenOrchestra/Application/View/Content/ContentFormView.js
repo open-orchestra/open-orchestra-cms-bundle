@@ -45,10 +45,11 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     render() {
         let template = this._renderTemplate('Content/contentEditView', {
-            contentTypeId: this._contentType.get('content_type_id'),
-            language: this._language,
+            contentTypeId  : this._contentType.get('content_type_id'),
+            language       : this._language,
             siteLanguageUrl: this._siteLanguageUrl,
-            messages: FlashMessageBag.getMessages()
+            messages       : FlashMessageBag.getMessages(),
+            title          : $('#oo_content_name', this._form.$form).val()
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -65,7 +66,6 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             this._renderContentActionToolbar($('.content-action-toolbar', this.$el));
         }
         super._renderForm();
-        $('#page-name', this.$el).html($('#oo_content_name', this.$el).val());
 
         // hide checkbox oo_content_saveOldPublishedVersion by default
         $('#oo_content_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
