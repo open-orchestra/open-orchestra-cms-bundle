@@ -36,10 +36,10 @@ import DateSearchFormGroup    from '../Service/SearchFormGroup/DateForm'
 import TextSearchFormGroup    from '../Service/SearchFormGroup/TextForm'
 import NumberSearchFormGroup  from '../Service/SearchFormGroup/NumberForm'
 
-import CellFormatterManager   from '../Service/CellFormatter/Manager'
-import TextCellFormatter      from '../Service/CellFormatter/TextFormatter'
-import BooleanCellFormatter   from '../Service/CellFormatter/BooleanFormatter'
-import DateCellFormatter      from '../Service/CellFormatter/DateFormatter'
+import CellFormatterManager   from '../Service/DataFormatter/Manager'
+import TextFormatter      from '../Service/DataFormatter/TextFormatter'
+import BooleanFormatter   from '../Service/DataFormatter/BooleanFormatter'
+import DateFormatter      from '../Service/DataFormatter/DateFormatter'
 
 import ApplicationError       from '../Service/Error/ApplicationError'
 import TinymceManager         from '../Service/Tinymce/TinymceManager'
@@ -250,9 +250,9 @@ class Application
      * @private
      */
     _initCellFormatterManager() {
-        CellFormatterManager.add(TextCellFormatter);
-        CellFormatterManager.add(BooleanCellFormatter);
-        CellFormatterManager.add(DateCellFormatter);
+        CellFormatterManager.add(TextFormatter);
+        CellFormatterManager.add(BooleanFormatter);
+        CellFormatterManager.add(DateFormatter);
     }
 }
 
