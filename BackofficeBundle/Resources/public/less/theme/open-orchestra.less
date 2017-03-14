@@ -1757,7 +1757,7 @@ input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + l
             color: @baseColor;
         }
         &[disabled] {
-            background-color: #ffffff;
+            background-color: #ccc;
             pointer-events: auto;
             cursor: not-allowed;
             &::-moz-placeholder {
@@ -1770,6 +1770,11 @@ input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + l
                 color: @lightGrey;
             }
         }
+    }
+    [disabled] + .slider {
+        background-color: #ccc;
+        pointer-events: auto;
+        cursor: not-allowed;
     }
     /* textarea */
     textarea {
