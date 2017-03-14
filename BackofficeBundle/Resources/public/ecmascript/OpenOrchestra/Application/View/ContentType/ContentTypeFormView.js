@@ -31,27 +31,18 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('ContentType/contentTypeEditView');
-        this.$el.html(template);
-        this._$formRegion = $('.form-edit', this.$el);
-        super.render();
-        this._toggleAlwaysShared();
-
-        return this;
-    }
-
-    /**
-     * Render a form
-     *
-     * @private
-     */
-    _renderForm() {
-        super._renderForm();
-        let title = $("input[id*='oo_content_type_names_']", this.$el).first().val();;
+        let title = $("input[id*='oo_content_type_names_']", this._form.$form).first().val();
         if (null === this._contentTypeId) {
             title = Translator.trans('open_orchestra_backoffice.table.content_types.new');
         }
         $('#page-name', this.$el).html(title);
+        let template = this._renderTemplate('ContentType/contentTypeEditView', {
+            title: title
+        });
+        this.$el.html(template);
+        this._$formRegion = $('.form-edit', this.$el);
+        super.render();
+        this._toggleAlwaysShared();
 
         return this;
     }
