@@ -41,7 +41,8 @@ class SharedBlockFormView extends AbstractFormView
     render() {
         let template = this._renderTemplate('Block/sharedBlockEditView', {
             language: this._language,
-            messages: FlashMessageBag.getMessages()
+            messages: FlashMessageBag.getMessages(),
+            title   : $("input[id*='_label']", this._form.$form).first().val()
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -56,7 +57,6 @@ class SharedBlockFormView extends AbstractFormView
     _renderForm() {
         super._renderForm();
         this._addTabUsageBlock();
-        $('#page-name', this.$el).html($("input[id*='_label']", this.$el).first().val());
     }
 
     /**
@@ -122,7 +122,8 @@ class SharedBlockFormView extends AbstractFormView
                 'data-toggle': 'tab',
                 role: 'tab',
                 href: '#'+tabId
-        }));
+            })
+        );
         let $tabContent = $('<div/>', {
             class: 'tab-pane',
             id: tabId,
