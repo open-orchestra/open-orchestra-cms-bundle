@@ -35,7 +35,6 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
         if (null === this._contentTypeId) {
             title = Translator.trans('open_orchestra_backoffice.table.content_types.new');
         }
-        $('#page-name', this.$el).html(title);
         let template = this._renderTemplate('ContentType/contentTypeEditView', {
             title: title
         });
