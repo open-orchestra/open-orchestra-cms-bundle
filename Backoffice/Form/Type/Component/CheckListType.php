@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Form\Type\Component;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CheckListType
