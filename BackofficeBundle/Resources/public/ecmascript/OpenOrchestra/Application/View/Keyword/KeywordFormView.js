@@ -21,26 +21,17 @@ class KeywordFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Keyword/keywordFormView');
-        this.$el.html(template);
-        this._$formRegion = $('.form', this.$el);
-        super.render();
-
-        return this;
-    }
-
-    /**
-     * Render a form
-     *
-     * @private
-     */
-    _renderForm() {
-        super._renderForm();
-        let title = $('#oo_keyword_label', this.$el).val();
+        let title = $('#oo_keyword_label', this._form.$form).val();
         if (null === this._keywordId) {
             title = Translator.trans('open_orchestra_backoffice.keyword.title_new');
         }
         $('#page-name', this.$el).html(title);
+        let template = this._renderTemplate('Keyword/keywordFormView', {
+            'title': title
+        });
+        this.$el.html(template);
+        this._$formRegion = $('.form', this.$el);
+        super.render();
 
         return this;
     }
