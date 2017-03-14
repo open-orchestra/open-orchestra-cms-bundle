@@ -52,7 +52,6 @@ class NodeController extends AbstractAdminController
             'language' => $language
         ));
 
-        $status = $node->getStatus();
         $template = $node->getTemplate();
         $options = array(
             'action' => $url,
@@ -67,26 +66,8 @@ class NodeController extends AbstractAdminController
                 $node = $this->get('open_orchestra_backoffice.manager.node')->initializeAreasNode($node);
             }
 
-            $saveOldPublishedVersion = $form->has('saveOldPublishedVersion') ? $form->get('saveOldPublishedVersion')->getData() : false;
-            if (true === $node->getStatus()->isPublishedState() && false === $saveOldPublishedVersion) {
-                $oldPublishedVersion = $nodeRepository->findOnePublished(
-                    $node->getNodeId(),
-                    $node->getLanguage(),
-                    $node->getSiteId()
-                );
-                if ($oldPublishedVersion instanceof NodeInterface && $oldPublishedVersion !== $node) {
-                    $this->get('object_manager')->remove($oldPublishedVersion);
-                }
-            }
-
             $this->get('object_manager')->flush();
             $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
-
-            if ($status->getId() !== $node->getStatus()->getId()) {
-                $this->dispatchEvent(NodeEvents::NODE_CHANGE_STATUS, new NodeEvent($node, $status));
-                $options['delete_button'] = $this->canDeleteNode($node);
-                $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
-            }
 
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
             $this->get('session')->getFlashBag()->add('success', $message);

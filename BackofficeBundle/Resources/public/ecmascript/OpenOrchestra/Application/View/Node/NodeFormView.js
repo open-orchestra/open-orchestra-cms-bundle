@@ -1,38 +1,22 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Redirections         from '../../Collection/Redirection/Redirections'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import Node                 from '../../Model/Node/Node'
+import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
+import Redirections           from '../../Collection/Redirection/Redirections'
+import RenderToolbarViewMixin from './Mixin/RenderToolbarViewMixin'
 
 /**
  * @class NodeFormView
  */
-class NodeFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
+class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin)
 {
     /**
-     * Pre initialize
-     * @param {Object} options
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['change #oo_node_status'] = this._toggleCheckboxSaveOldPublishedVersion;
-    }
-
-    /**
      * Initialize
+     * @param {Node}   node
      * @param {Form}   form
      * @param {Array}  siteLanguages
-     * @param {string} siteId
-     * @param {string} nodeId
-     * @param {string} language
-     * @param {string} version
      */
-    initialize({form, siteLanguages, siteId, nodeId, language, version}) {
+    initialize({node, siteLanguages, form}) {
         super.initialize({form : form});
+        this._node = node;
         this._siteLanguages = siteLanguages;
-        this._siteId = siteId;
-        this._nodeId = nodeId;
-        this._language = language;
-        this._version = version;
     }
 
     /**
@@ -41,40 +25,27 @@ class NodeFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     render() {
         let template = this._renderTemplate('Node/nodeEditView',
             {
-                language     : this._language,
-                nodeId       : this._nodeId,
-                siteLanguages: this._siteLanguages,
-                version      : this._version,
-                title        : $('#oo_node_name', this._form.$form).val()
+                node : this._node,
+                siteLanguages: this._siteLanguages
             }
         );
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
-
+        this._renderNodeActionToolbar($('.node-action-toolbar', this.$el), 'editNode');
         this._renderRedirections();
 
         return this;
     }
 
     /**
-     * @inheritDoc
+     * @return {Object}
      */
-    _renderForm() {
-        super._renderForm();
-
-        // hide checkbox oo_node_save_old_published_version by default
-        $('#oo_node_saveOldPublishedVersion', this.$el).closest('.form-group').hide();
-    }
-
-    /**
-     * @private
-     */
-    _toggleCheckboxSaveOldPublishedVersion(event) {
-        let formGroupCheckbox = $('#oo_node_saveOldPublishedVersion', this.$el).closest('.form-group');
-        formGroupCheckbox.hide();
-        if ($('option:selected', $(event.currentTarget)).attr('data-published-state')) {
-            formGroupCheckbox.show();
+    getStatusCodeForm() {
+        return {
+            '200': $.proxy(this.refreshRender, this),
+            '201': $.proxy(this.refreshRender, this),
+            '422': $.proxy(this.refreshRender, this)
         }
     }
 
@@ -84,9 +55,9 @@ class NodeFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     _renderRedirections() {
         new Redirections().fetch({
             urlParameter: {
-                locale: this._language,
-                nodeId: this._nodeId,
-                siteId: this._siteId
+                locale: this._node.get('language'),
+                nodeId: this._node.get('node_id'),
+                siteId: this._node.get('site_id')
             },
             success: (redirections) => {
                 if (redirections.length > 0) {

@@ -27,7 +27,6 @@ class NodeTypeTest extends AbstractBaseTestCase
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
-        $nodeChoiceStatusSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
         $specialPageChoiceSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
 
         $this->nodeType = new NodeType(
@@ -36,7 +35,6 @@ class NodeTypeTest extends AbstractBaseTestCase
             $this->siteRepository,
             $this->templateManager,
             $this->nodeClass,
-            $nodeChoiceStatusSubscriber,
             $specialPageChoiceSubscriber
         );
     }
@@ -53,7 +51,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::verify($formBuilderMock, Phake::times(17))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**

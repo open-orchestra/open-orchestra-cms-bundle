@@ -5,7 +5,7 @@ import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/Delete
 /**
  * @class AbstractVersionsListView
  */
-class AbstractVersionsListView extends mix(AbstractDataTableView).with(DeleteCheckboxListViewMixin)
+class AbstractVersionsListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin, DeleteCheckboxListViewMixin)
 {
     /**
      * @inheritDoc
@@ -20,12 +20,19 @@ class AbstractVersionsListView extends mix(AbstractDataTableView).with(DeleteChe
                 name: 'version_name',
                 title: Translator.trans('open_orchestra_backoffice.table.versionable.version_name'),
                 orderable: true,
+                visibile: true,
+                createdCell: this._createEditLink
+            },
+            {
+                name: 'updated_at',
+                title: Translator.trans('open_orchestra_backoffice.table.versionable.updated_at'),
+                orderable: true,
                 orderDirection: 'desc',
                 visibile: true
             },
             {
-                name: 'created_at',
-                title: Translator.trans('open_orchestra_backoffice.table.versionable.created_at'),
+                name: 'created_by',
+                title: Translator.trans('open_orchestra_backoffice.table.versionable.created_by'),
                 orderable: true,
                 visibile: true
             },
@@ -38,6 +45,18 @@ class AbstractVersionsListView extends mix(AbstractDataTableView).with(DeleteChe
         ]);
 
         return columnsDefinition;
+    }
+
+    /**
+     *
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
+     *
+     * @private
+     */
+    _createEditLink(td, cellData, rowData) {
+        throw new TypeError("Please implement abstract method _createEditLink.");
     }
 }
 

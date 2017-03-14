@@ -17,7 +17,6 @@ class NodeToolbarView extends OrchestraView
         this.className = 'container-fluid search-engine';
         this.events = {
             'click .dropdown-workflow li a': '_changeStatus',
-            'click .btn-manage-version': '_manageVersion',
             'click .btn-new-version': 'newVersionForm',
             'change #select-version': '_changeVersion',
             'click .btn-validate-new-version': '_newVersion'
@@ -29,13 +28,13 @@ class NodeToolbarView extends OrchestraView
      * @param {Node}     node
      * @param {Statuses} statuses
      * @param {Nodes}    nodeVersions
-     * @param {NodeView} nodeView
+     * @param {string}   routeName
      */
-    initialize({node, statuses, nodeVersions, nodeView}) {
+    initialize({node, statuses, nodeVersions, routeName}) {
         this._node = node;
         this._nodeVersions = nodeVersions;
         this._statuses = statuses;
-        this._nodeView = nodeView;
+        this._routeName = routeName;
     }
 
     /**
@@ -58,16 +57,9 @@ class NodeToolbarView extends OrchestraView
      * Show input version name to add a new version
      */
     newVersionForm() {
-        let versionName = this._node.get('name') + '_' + new Date().toLocaleString();
+        let versionName = this._node.get('name');
         let template = this._renderTemplate('Node/newVersionForm', { versionName: versionName });
         $('.new-version-form-region', this.$el).html(template);
-    }
-
-    /**
-     * @private
-     */
-    _manageVersion() {
-        this._nodeView.manageVersion(this._nodeVersions);
     }
 
     /**
@@ -76,7 +68,7 @@ class NodeToolbarView extends OrchestraView
      * @private
      */
     _newVersion() {
-        let versionName = $('#version_name', this.$el).val();
+        let versionName = $('#version_name', this.$el).val() + '_' + new Date().toLocaleString();
         new Node().save({version_name: versionName}, {
             urlParameter: {
                 nodeId: this._node.get('node_id'),
@@ -84,7 +76,7 @@ class NodeToolbarView extends OrchestraView
                 originalVersion : this._node.get('version')
             },
             success: () => {
-                let url = Backbone.history.generateUrl('showNode', {
+                let url = Backbone.history.generateUrl(this._routeName, {
                     nodeId: this._node.get('node_id'),
                     language: this._node.get('language')
                 });
@@ -106,7 +98,7 @@ class NodeToolbarView extends OrchestraView
     _changeVersion(event) {
         let version = $(event.currentTarget).val();
         if (null !== version) {
-            let url = Backbone.history.generateUrl('showNode', {
+            let url = Backbone.history.generateUrl(this._routeName, {
                 nodeId: this._node.get('node_id'),
                 language: this._node.get('language'),
                 version: version

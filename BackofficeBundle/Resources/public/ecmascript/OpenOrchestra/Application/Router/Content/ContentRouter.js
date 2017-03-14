@@ -149,7 +149,7 @@ class ContentRouter extends OrchestraRouter
                     Application.getRegion('modal').html(confirmModalView.render().$el);
                     confirmModalView.show();
                 });
-            },
+            }
         });
     }
 

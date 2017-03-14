@@ -1,15 +1,17 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import NodesTree       from '../../Collection/Node/NodesTree'
-import Statuses        from '../../Collection/Status/Statuses'
-import Nodes           from '../../Collection/Node/Nodes'
-import NewNodeTreeView from '../../View/Node/NewNodeTreeView'
-import NodeFormView    from '../../View/Node/NodeFormView'
-import NewNodeFormView from '../../View/Node/NewNodeFormView'
-import NodesView       from '../../View/Node/NodesView'
-import Node            from '../../Model/Node/Node'
-import NodeView        from '../../View/Node/NodeView'
+import OrchestraRouter  from '../OrchestraRouter'
+import Application      from '../../Application'
+import FormBuilder      from '../../../Service/Form/Model/FormBuilder'
+import NodesTree        from '../../Collection/Node/NodesTree'
+import Statuses         from '../../Collection/Status/Statuses'
+import Nodes            from '../../Collection/Node/Nodes'
+import NewNodeTreeView  from '../../View/Node/NewNodeTreeView'
+import NodeFormView     from '../../View/Node/NodeFormView'
+import NewNodeFormView  from '../../View/Node/NewNodeFormView'
+import NodesView        from '../../View/Node/NodesView'
+import Node             from '../../Model/Node/Node'
+import NodeView         from '../../View/Node/NodeView'
+import NodeVersionsView from '../../View/Node/NodeVersionsView'
+import ApplicationError from '../../../Service/Error/ApplicationError'
 
 /**
  * @class NodeRouter
@@ -23,9 +25,10 @@ class NodeRouter extends OrchestraRouter
         this.routes = {
             'nodes(/:language)'                     : 'showNodes',
             'node/edit/:nodeId/:language(/:version)': 'editNode',
-            'node/new/tree/:language/:parentId'     : 'newTreeNode',
-            'node/new/:language/:parentId/:order'   : 'newNode',
-            'node/:nodeId/:language(/:version)'     : 'showNode'
+            'node/new/tree/:language/:parentId': 'newTreeNode',
+            'node/new/:language/:parentId/:order': 'newNode',
+            'node/manage-versions/:nodeId/:language(/:page)': 'manageVersionsNode',
+            'node/:nodeId/:language(/:version)': 'showNode'
         };
     }
 
@@ -51,6 +54,45 @@ class NodeRouter extends OrchestraRouter
         return {
             '*' : 'navigation-node'
         };
+    }
+
+    /**
+     * Manage version node
+     *
+     * @param {string} nodeId
+     * @param {string} language
+     * @param {string} page
+     */
+    manageVersionsNode(nodeId, language, page) {
+        if (null === page) {
+            page = 1
+        }
+        page = Number(page) - 1;
+        this._displayLoader(Application.getRegion('content'));
+
+        let nodeVersions = new Nodes();
+        nodeVersions.fetch({
+            apiContext: 'list-version',
+            urlParameter: {
+                nodeId: nodeId,
+                language: language
+            },
+            success: () => {
+                let node = nodeVersions.first();
+                if (typeof node === 'undefined') {
+                    throw ApplicationError('A node should be have at least one version')
+                }
+                let nodeVersionsView = new NodeVersionsView({
+                    collection: nodeVersions,
+                    settings: {
+                        page: page
+                    },
+                    siteLanguages: Application.getContext().siteLanguages,
+                    node: node
+                });
+                Application.getRegion('content').html(nodeVersionsView.render().$el);
+            }
+        });
     }
 
     /**
@@ -93,16 +135,23 @@ class NodeRouter extends OrchestraRouter
             language: language,
             version: version
         });
-        FormBuilder.createFormFromUrl(url, (form) => {
-            let nodeFormView = new NodeFormView({
-                form : form,
-                siteLanguages: Application.getContext().siteLanguages,
-                siteId : Application.getContext().siteId,
-                nodeId : nodeId,
-                language: language,
-                version: version
-            });
-            Application.getRegion('content').html(nodeFormView.render().$el);
+        let node = new Node();
+        node.fetch({
+            urlParameter: {
+                'language': language,
+                'nodeId': nodeId,
+                'siteId': Application.getContext().siteId
+            },
+            success: () => {
+                FormBuilder.createFormFromUrl(url, (form) => {
+                    let nodeFormView = new NodeFormView({
+                        node: node,
+                        siteLanguages: Application.getContext().siteLanguages,
+                        form : form
+                    });
+                    Application.getRegion('content').html(nodeFormView.render().$el);
+                });
+            }
         });
     }
 

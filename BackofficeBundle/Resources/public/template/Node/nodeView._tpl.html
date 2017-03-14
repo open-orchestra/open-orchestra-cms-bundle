@@ -1,12 +1,4 @@
-<div class="top-action-buttons">
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: node.get('language')}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
-    </a>
-    <a class="btn btn-border btn-set" role="button" href="#<%= Backbone.history.generateUrl('editNode', {nodeId: node.get('node_id'), language: node.get('language'), version: node.get('version')}) %>">
-        <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
-    </a>
-    <a class="btn btn-border btn-edit" role="button"><%= Translator.trans('open_orchestra_backoffice.node.edit') %></a>
-</div>
+<%= renderTemplate('Node/nodeTopButtonsView', {nodeId: node.get('node_id'), language: node.get('language'), version: node.get('version')}) %>
 <div class="pull-right languages">
     <ul>
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
@@ -29,15 +21,6 @@
 <div class="node-template movement <%= (node.get('rights').can_edit) ? '' : 'node-disabled' %>">
     <div class="node-action-toolbar">
     </div>
-    <% if (true === node.get('status').get('published_state')) {%>
-        <div class="alert alert-success alert-published-state" role="alert">
-            <div class="heading"><%= Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
-            <p>
-                <%= (Translator.trans('open_orchestra_backoffice.node.message_online.message').replace(/\\n/g, '<br>')) %>
-            </p>
-            <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
-        </div>
-    <% }; %>
     <div class="well">
     </div>
 </div>
