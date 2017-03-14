@@ -23,26 +23,16 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('WorkflowProfile/workflowProfileFormView');
-        this.$el.html(template);
-        this._$formRegion = $('.form-edit', this.$el);
-        super.render();
-
-        return this;
-    }
-
-    /**
-     * Render a form
-     *
-     * @private
-     */
-    _renderForm() {
-        super._renderForm();
-        let title = $("input[id*='oo_workflow_profile_labels_']", this.$el).val();
+        let title = $("input[id*='oo_workflow_profile_labels_']", this._form.$form).val();
         if (null === this._workflowProfileId) {
             title = Translator.trans('open_orchestra_workflow_admin.workflow_profile.title_new');
         }
-        $('#page-name', this.$el).html(title);
+        let template = this._renderTemplate('WorkflowProfile/workflowProfileFormView', {
+            title: title
+        });
+        this.$el.html(template);
+        this._$formRegion = $('.form-edit', this.$el);
+        super.render();
 
         return this;
     }
