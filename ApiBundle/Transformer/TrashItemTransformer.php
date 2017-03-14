@@ -53,6 +53,8 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->deletedAt = $trashItem->getDeletedAt();
         $facade->name = $trashItem->getName();
         $facade->type = $trashItem->getType();
+        $facade->entityId = $trashItem->getEntityId();
+        $facade->siteId = $trashItem->getSiteId();
         $facade->addRight('can_delete', (
             $this->authorizationChecker->isGranted(ContributionActionInterface::TRASH_PURGE, $trashItem) &&
             0 === count($this->validator->validate($trashItem, null, array('remove')))

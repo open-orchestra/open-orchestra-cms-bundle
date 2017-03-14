@@ -45,6 +45,7 @@ import DateFormatter      from '../Service/DataFormatter/DateFormatter'
 import ApplicationError       from '../Service/Error/ApplicationError'
 import TinymceManager         from '../Service/Tinymce/TinymceManager'
 
+
 /**
  * @class Application
  */
@@ -63,6 +64,7 @@ class Application
      * Run Application
      */
     run() {
+        this._initConfiguration();
         this._initRouting();
         this._initTranslator();
         this._initRouter();
@@ -153,6 +155,13 @@ class Application
             this.getRegion('modal').html(errorView.render().$el);
             errorView.show();
         }
+    }
+
+    _initConfiguration() {
+        this.getConfiguration().addParameter('restoreModalViews', {
+            'node':    NodeRestoreModalView,
+            'content': ContentRestoreModalView
+        });
     }
 
     /**

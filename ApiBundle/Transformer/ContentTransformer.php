@@ -60,6 +60,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade = $this->newFacade();
         $facade->id = $content->getId();
         $facade->contentId = $content->getContentId();
+        $facade->contentType = $content->getContentType();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
         $facade->versionName = $content->getVersionName();

@@ -174,8 +174,15 @@ open_orchestra_backoffice:
         title_list: Trashcan
         search_engine:
             name: Name
+            type: Type
             deleted_before: Deleted before the
             deleted_after: Deleted after the
+        restore_modal:
+            valid_and_edit: Validate and edit the entity
+            valid: Validate and stay on the trash
+            title: Restore
+            message: The %name% element will be restored
+            cancel: Cancel
     block:
         add_block: Add a block
         copy_block: Copy blocks

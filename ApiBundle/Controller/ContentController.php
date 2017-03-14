@@ -31,6 +31,29 @@ class ContentController extends BaseController
     use ListStatus;
 
     /**
+     * @param string  $contentId
+     *
+     * @Config\Route("/{contentId}", name="open_orchestra_api_content_show")
+     * @Config\Method({"GET"})
+     *
+     * @return FacadeInterface
+     * @throws ContentNotFoundHttpException
+     */
+    public function showAction($contentId)
+    {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
+        $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
+
+        $content = $this->findOneContent($contentId, $language);
+
+        if (!$content) {
+            throw new ContentNotFoundHttpException();
+        }
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
+    }
+
+    /**
      * @param Request $request
      * @param string  $contentTypeId
      * @param string  $siteId

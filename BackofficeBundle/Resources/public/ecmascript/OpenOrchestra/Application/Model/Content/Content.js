@@ -30,6 +30,9 @@ class Content extends OrchestraModel
     _getSyncUrl(method, options) {
         let urlParameter = options.urlParameter || {};
         switch (method) {
+            case "read":
+                urlParameter.contentId = this.get('id');
+                return Routing.generate('open_orchestra_api_content_show', urlParameter);
             case "create":
                 return this._getSyncCreateUrl(options, urlParameter);
             case "delete":

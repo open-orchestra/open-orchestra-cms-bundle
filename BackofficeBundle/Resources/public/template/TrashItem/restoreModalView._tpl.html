@@ -1,0 +1,22 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">
+                <%= Translator.trans('open_orchestra_backoffice.trash_item.restore_modal.title') %>
+            </h4>
+        </div>
+        <div class="modal-body text-center">
+            <p><%= Translator.trans('open_orchestra_backoffice.trash_item.restore_modal.message', {name: model.get('name')}) %></p>
+            <button class="btn btn-success valid-edit">
+                <%= Translator.trans('open_orchestra_backoffice.trash_item.restore_modal.valid_and_edit') %>
+            </button>
+            <button class="btn btn-success valid">
+                <%= Translator.trans('open_orchestra_backoffice.trash_item.restore_modal.valid') %>
+            </button>
+            <button class="btn btn-danger" data-dismiss="modal">
+                <%= Translator.trans('open_orchestra_backoffice.trash_item.restore_modal.cancel') %>
+            </button>
+        </div>
+    </div>
+</div>

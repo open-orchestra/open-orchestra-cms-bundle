@@ -1,7 +1,9 @@
 import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
+
 import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 import DateFormatter               from '../../../Service/DataFormatter/DateFormatter'
+import Application                 from '../../Application'
 
 /**
  * @class TrashItemListView
@@ -53,7 +55,7 @@ class TrashItemListView extends mix(AbstractDataTableView).with(UrlPaginateViewM
                 visibile: true,
                 width: '20px',
                 createdCell: this._createRestoreIcon,
-                render: () => { return ''}
+                render: () => { '' }
             }
         ];
     }
@@ -82,11 +84,20 @@ class TrashItemListView extends mix(AbstractDataTableView).with(UrlPaginateViewM
     _restore(event) {
         let model = $(event.currentTarget).data();
         model = this._collection.findWhere({'id': model.get('id')});
-        model.destroy({
-            success: () => {
-                this.api.draw(false);
+        let type = model.get('type');
+
+        if (typeof Application.getConfiguration().getParameter('restoreModalViews')[type] === 'undefined') {
+            throw new TypeError('Unknown restore modal view for the type ' + type );
+        }
+
+        let restoreModalViewClass = Application.getConfiguration().getParameter('restoreModalViews')[type];
+        let restoreModalView = new restoreModalViewClass({
+                model: model,
+                listApi: this.api
             }
-        });
+        );
+        Application.getRegion('modal').html(restoreModalView.render().$el);
+        restoreModalView.show();
     }
 
 

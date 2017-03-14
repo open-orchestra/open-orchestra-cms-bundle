@@ -175,8 +175,15 @@ open_orchestra_backoffice:
         title_list: Corbeille
         search_engine:
             name: Nom
+            type: Type
             deleted_before: Supprimer avant le
             deleted_after: Supprimer après le
+        restore_modal:
+            valid_and_edit: Valider et modifier l'entité
+            valid: Valider et rester sur la corbeille
+            title: Restaurer
+            message: L'élément %name% sera restauré
+            cancel: Annuler
     block:
         add_block: Ajouter un bloc
         copy_block: Copier les blocs
