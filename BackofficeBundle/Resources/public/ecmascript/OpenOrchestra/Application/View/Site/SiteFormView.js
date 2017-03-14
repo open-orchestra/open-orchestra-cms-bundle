@@ -32,26 +32,16 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Site/siteEditView');
-        this.$el.html(template);
-        this._$formRegion = $('.form-edit', this.$el);
-        super.render();
-
-        return this;
-    }
-
-    /**
-     * Render a form
-     *
-     * @private
-     */
-    _renderForm() {
-        super._renderForm();
-        let title = $('#oo_site_name', this.$el).val();
+        let title = $('#oo_site_name', this._form.$form).val();
         if (null === this._siteId) {
             title = Translator.trans('open_orchestra_backoffice.table.sites.new');
         }
-        $('#page-name', this.$el).html(title);
+        let template = this._renderTemplate('Site/siteEditView', {
+            title: title
+        });
+        this.$el.html(template);
+        this._$formRegion = $('.form-edit', this.$el);
+        super.render();
 
         return this;
     }
