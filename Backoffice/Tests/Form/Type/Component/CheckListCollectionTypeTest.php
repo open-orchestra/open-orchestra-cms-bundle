@@ -54,6 +54,7 @@ class CheckListCollectionTypeTest extends AbstractBaseTestCase
         Phake::verify($resolver)->setDefaults(
             array(
                 'configuration' => array(),
+                'max_columns' => 0,
         ));
     }
 
@@ -70,6 +71,7 @@ class CheckListCollectionTypeTest extends AbstractBaseTestCase
         $options = array(
             'configuration' => array('default' => $this->default, 'fakePropertyPath' => $this->propertyPath),
             'property_path' => $propertyPath,
+            'max_columns' => 0,
         );
 
         $this->form->buildView($formView, $formInterface, $options);

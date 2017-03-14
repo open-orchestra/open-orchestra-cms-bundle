@@ -48,6 +48,7 @@ class CheckListCollectionType extends AbstractType
         $resolver->setDefaults(
             array(
                 'configuration' => array(),
+                'max_columns' => 0,
         ));
     }
 
@@ -64,6 +65,7 @@ class CheckListCollectionType extends AbstractType
        }
 
        $view->vars['configuration'] = $options['configuration'][$id];
+       $view->vars['max_columns'] = $options['max_columns'];
    }
 
     /**

@@ -35,25 +35,32 @@ class GroupRoleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $configuration = array();
+        $maxColumns = 0;
         foreach ($this->groupRolesConfiguration as $tableName => $chekLists) {
             $chekList = reset($chekLists);
             foreach ($chekList as $columnConfiguration) {
                 $configuration[$tableName]['row'][] = $this->translator->trans($columnConfiguration['label']) ;
-                if (array_key_exists('help_text', $columnConfiguration)) {
-                    $configuration[$tableName]['help'][] = $this->translator->trans($columnConfiguration['help_text']) ;
+                if (array_key_exists('icon', $columnConfiguration)) {
+                    $configuration[$tableName]['icon'][] = $columnConfiguration['icon'];
+                }
+                if (array_key_exists('help', $columnConfiguration)) {
+                    $configuration[$tableName]['help'][] = $this->translator->trans($columnConfiguration['help']);
                 }
             }
             foreach ($chekLists as $chekListName => $chekList) {
                 $configuration[$tableName]['column'][$chekListName] = $this->translator->trans('open_orchestra_backoffice.form.role.' . $chekListName);
+                $maxColumns = max($maxColumns, count($configuration[$tableName]['column']));
             }
         }
+
 
         $builder
             ->add('roles_collections', 'collection', array(
                 'entry_type' => 'oo_check_list_collection',
                 'label' => false,
                 'entry_options' => array(
-                    'configuration' => $configuration
+                    'configuration' => $configuration,
+                    'max_columns' => $maxColumns,
          )));
    }
 

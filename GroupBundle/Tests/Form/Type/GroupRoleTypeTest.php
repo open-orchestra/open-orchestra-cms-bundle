@@ -94,7 +94,8 @@ class GroupRoleTypeTest extends AbstractBaseTestCase
                             'row' => array ('test'),
                             'column' => array('configuration' => 'test'),
                          ),
-                    )
+                    ),
+                    'max_columns' => 1,
                 )
          ));
     }
