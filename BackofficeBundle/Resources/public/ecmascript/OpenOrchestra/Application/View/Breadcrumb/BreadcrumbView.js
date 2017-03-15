@@ -31,6 +31,16 @@ class BreadcrumbView extends OrchestraView
     setItems(items) {
         this._breadcrumb = items;
     }
+
+    /**
+     * highlight sub menu
+     *
+     * @param {string} item
+     */
+    highlight(item) {
+        $('li', this.$el).removeClass('active');
+        $('#' + item, this.$el).addClass('active');
+    }
 }
 
 export default BreadcrumbView;

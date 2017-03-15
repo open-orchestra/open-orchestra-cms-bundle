@@ -1,5 +1,5 @@
-import LoaderView     from '../View/Loader/LoaderView'
-import Application    from '../Application'
+import LoaderView    from '../View/Loader/LoaderView'
+import CourseManager from '../../Service/CourseManager'
 
 /**
  * @class OrchestraRouter
@@ -32,6 +32,7 @@ class OrchestraRouter extends Backbone.Router
         super.execute(callback, args, name);
         let items = this.getBreadcrumb();
         this._updateBreadcrumb(items);
+        this._highlight(name);
     }
 
     /**
@@ -43,13 +44,45 @@ class OrchestraRouter extends Backbone.Router
     }
 
     /**
+     * @returns {Array}
+     * @private
+     */
+    getNavigationHighlight() {
+        return null;
+    }
+
+    /**
+     * @returns {Array}
+     * @private
+     */
+    getBreadcrumbHighlight() {
+        return null;
+    }
+
+    /**
      * @param {Array} items
      * @private
      */
     _updateBreadcrumb(items) {
-        Application.breadcrumbView.setItems(items);
-        Application.breadcrumbView.render();
+        CourseManager.updateBreadcrumb(items);
     }
+
+    /**
+     * @param {string} name
+     * @private
+     */
+    _highlight(name) {
+        let breadcrumb = this.getBreadcrumbHighlight();
+        let navigation = this.getNavigationHighlight();
+
+        if (breadcrumb !== null && breadcrumb.hasOwnProperty(name)) {
+            CourseManager.highlightBreadcrumb(breadcrumb[name]);
+        }
+        if (navigation !== null && navigation.hasOwnProperty(name)) {
+            CourseManager.highlightNavigation(navigation[name]);
+        }
+    }
+
 }
 
 export default OrchestraRouter;

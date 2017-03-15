@@ -46,6 +46,18 @@ class ContentRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            showContentSummary : 'course-content',
+            listContent        : 'course-content',
+            editContent        : 'course-content',
+            newContent         : 'course-content',
+        };
+    }
+
+    /**
      * show content summary
      */
     showContentSummary() {

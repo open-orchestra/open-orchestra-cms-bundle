@@ -18,6 +18,24 @@ class ParameterRouter extends AbstractWorkflowRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            editParameters : 'course-workflow'
+        };
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getBreadcrumbHighlight() {
+        return {
+            editParameters : 'course-parameter'
+        };
+    }
+
+    /**
      * Edit Parameters
      */
     editParameters() {

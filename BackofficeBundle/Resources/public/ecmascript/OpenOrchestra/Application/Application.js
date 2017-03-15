@@ -2,6 +2,7 @@ import NodeRouter              from './Router/Node/NodeRouter'
 import KeywordRouter           from './Router/Keyword/KeywordRouter'
 import DashboardRouter         from './Router/Dashboard/DashboardRouter'
 import SiteRouter              from './Router/Site/SiteRouter'
+import SitePlatformRouter      from './Router/Site/SitePlatformRouter'
 import ContentTypeRouter       from './Router/ContentType/ContentTypeRouter'
 import ContentRouter           from './Router/Content/ContentRouter'
 import BlockRouter             from './Router/Block/BlockRouter'
@@ -11,6 +12,7 @@ import TrashItemRouter         from './Router/TrashItem/TrashItemRouter'
 
 import HeaderView              from './View/Header/HeaderView'
 import ErrorView               from './View/Error/ErrorView'
+import CourseManager           from '../Service/CourseManager'
 import NavigationView          from './View/Navigation/NavigationView'
 import BreadcrumbView          from './View/Breadcrumb/BreadcrumbView'
 import NodeRestoreModalView    from './View/TrashItem/NodeRestoreModalView'
@@ -46,7 +48,6 @@ import DateFormatter           from '../Service/DataFormatter/DateFormatter'
 
 import ApplicationError        from '../Service/Error/ApplicationError'
 import TinymceManager          from '../Service/Tinymce/TinymceManager'
-
 
 /**
  * @class Application
@@ -175,6 +176,7 @@ class Application
         new NodeRouter();
         new KeywordRouter();
         new SiteRouter();
+        new SitePlatformRouter();
         new ContentTypeRouter();
         new ContentRouter();
         new BlockRouter();
@@ -197,8 +199,10 @@ class Application
         let navigationView = new NavigationView();
         this.getRegion('left_column').html(navigationView.render().$el);
 
-        this.breadcrumbView = new BreadcrumbView();
-        this.getRegion('breadcrumb').html(this.breadcrumbView.render().$el);
+        let breadcrumbView = new BreadcrumbView();
+        this.getRegion('breadcrumb').html(breadcrumbView.render().$el);
+
+        CourseManager.initialize(navigationView, breadcrumbView);
     }
 
     /**

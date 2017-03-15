@@ -22,6 +22,28 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            listWorkflowProfile : 'course-workflow',
+            newWorkflowProfile  : 'course-workflow',
+            editWorkflowProfile : 'course-workflow'
+        };
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getBreadcrumbHighlight() {
+        return {
+            listWorkflowProfile : 'course-profile',
+            newWorkflowProfile  : 'course-profile',
+            editWorkflowProfile : 'course-profile'
+        };
+    }
+
+    /**
      *  List WorkflowProfile
      *
      * @param {String} page

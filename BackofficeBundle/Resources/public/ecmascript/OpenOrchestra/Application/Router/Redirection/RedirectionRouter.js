@@ -37,6 +37,17 @@ class RedirectionRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            listRedirections : 'course-redirection',
+            newRedirection   : 'course-redirection',
+            editRedirection  : 'course-redirection'
+        };
+    }
+
+    /**
      * List Site
      *
      * @param {int} page

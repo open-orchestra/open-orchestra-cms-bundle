@@ -6,6 +6,17 @@ import UrlPaginateViewMixin from '../../../Service/DataTable/Mixin/UrlPaginateVi
  */
 class SiteListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
 {
+
+    /**
+     * @param {Object}  collection
+     * @param {Array}   settings
+     * @param {boolean} inPlatformContext
+     */
+    initialize({collection, settings, inPlatformContext}) {
+        super.initialize({collection, settings});
+        this._inPlatformContext = inPlatformContext;
+    }
+
     /**
      * @inheritDoc
      */
@@ -39,7 +50,7 @@ class SiteListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
      * @inheritDoc
      */
     generateUrlUpdatePage(page) {
-        return Backbone.history.generateUrl('listSite', {page : page});
+        return Backbone.history.generateUrl(this._inPlatformContext ? 'listPlatformSite' : 'listSite', {page : page});
     }
 
     /**
@@ -50,7 +61,7 @@ class SiteListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
      * @private
      */
     _createEditLink(td, cellData, rowData) {
-        let link = Backbone.history.generateUrl('editSite', {
+        let link = Backbone.history.generateUrl(this._inPlatformContext ? 'editPlatformSite' : 'editSite', {
             siteId: rowData.get('site_id'),
         });
         cellData = $('<a>',{

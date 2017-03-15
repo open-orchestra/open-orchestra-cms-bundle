@@ -43,6 +43,18 @@ class BlockRouter extends AbstractBlockRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            newBlockListComponent : 'course-node',
+            newBlockListAvailable : 'course-node',
+            editBlock             : 'course-node',
+            newBlockForm          : 'course-node'
+        };
+    }
+
+    /**
      * New block list component
      *
      * @param {string} nodeId

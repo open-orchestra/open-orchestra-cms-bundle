@@ -40,6 +40,18 @@ class UserRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            editSelfUser : 'course-user',
+            editUser     : 'course-user',
+            listUser     : 'course-user',
+            newUser      : 'course-user',
+        };
+    }
+
+    /**
      * Edit user preference
      * @param {boolean} activatePreferenceTab
      */

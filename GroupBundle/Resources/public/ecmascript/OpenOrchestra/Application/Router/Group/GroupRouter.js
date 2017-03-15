@@ -38,6 +38,17 @@ class GroupRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            listGroup : 'course-group',
+            editGroup : 'course-group',
+            newGroup  : 'course-group'
+        };
+    }
+
+    /**
      *  List Group
      *
      * @param {String} page

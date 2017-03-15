@@ -18,6 +18,24 @@ class TransitionRouter extends AbstractWorkflowRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            editTransitions : 'course-workflow'
+        };
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getBreadcrumbHighlight() {
+        return {
+            editTransitions : 'course-transition'
+        };
+    }
+
+    /**
      * Edit Transitions
      */
     editTransitions() {

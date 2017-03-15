@@ -34,6 +34,15 @@ class LogRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            listLog : 'course-log',
+        };
+    }
+
+    /**
      * List Logs
      *
      * @param {int} page

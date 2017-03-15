@@ -33,7 +33,7 @@
       "rank": 0
     },
     "site": {
-      "template": "Navigation/Configuration/site",
+      "template": "Navigation/Platform/site",
       "rank": 20
     }
   },

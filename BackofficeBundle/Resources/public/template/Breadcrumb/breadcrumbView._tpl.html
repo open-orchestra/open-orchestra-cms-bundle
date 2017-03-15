@@ -5,7 +5,7 @@
             <li class="breadcrumb-tab">
                 <ul class="nav nav-tabs page-tabs" role="tablist">
                     <% _.each(item, function(tab) { %>
-                        <li><a href="<%= tab.link %>"><%= tab.label%></a></li>
+                        <li id="<%= tab.id %>"><a href="<%= tab.link %>"><%= tab.label%></a></li>
                     <% }); %>
                 </ul>
             </li>

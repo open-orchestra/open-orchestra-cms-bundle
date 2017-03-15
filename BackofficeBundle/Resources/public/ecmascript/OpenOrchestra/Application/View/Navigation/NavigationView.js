@@ -116,6 +116,23 @@ class NavigationView extends OrchestraView
     }
 
     /**
+     * highlight sub menu
+     *
+     * @param {string} item
+     */
+    highlight(item) {
+        let target = $('#' + item, this.$el);
+        if (target.parents('.sublevels').length > 0) {
+            $('.sublevels li', this.$el).removeClass('active');
+            target.parent().addClass('active');
+            let tab = target.parents('.tab-pane').eq(0);
+            tab.addClass('active');
+            target = $('a[href="#' + tab.attr('id') + '"]', this.$el);
+        }
+        this._toggleSubLevel({currentTarget: target});
+    }
+
+    /**
      * Button return menu level1
      *
      * @private

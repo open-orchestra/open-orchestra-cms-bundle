@@ -43,6 +43,18 @@ class SharedBlockRouter extends AbstractBlockRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            listSharedBlock             : 'course-shared-block',
+            editSharedBlock             : 'course-shared-block',
+            newSharedBlockListComponent : 'course-shared-block',
+            newSharedBlock              : 'course-shared-block'
+        };
+    }
+
+    /**
      * List shared block
      *
      * @param {string} language

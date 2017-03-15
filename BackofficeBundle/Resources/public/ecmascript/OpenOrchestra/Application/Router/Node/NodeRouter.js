@@ -45,6 +45,19 @@ class NodeRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            showNodes   : 'course-node',
+            editNode    : 'course-node',
+            newTreeNode : 'course-node',
+            newNode     : 'course-node',
+            showNode    : 'course-node'
+        };
+    }
+
+    /**
      * Show nodes
      *
      * @param {string} language

@@ -39,6 +39,17 @@ class ContentTypeRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            listContentType : 'course-content-type',
+            editContentType : 'course-content-type',
+            newContentType  : 'course-content-type'
+        };
+    }
+
+    /**
      * Edit contentType
      *
      * @param {string} contentTypeId

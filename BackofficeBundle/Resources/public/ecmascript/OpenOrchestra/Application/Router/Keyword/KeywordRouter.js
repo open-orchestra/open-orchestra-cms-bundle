@@ -39,6 +39,17 @@ class KeywordRouter extends OrchestraRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            newKeyword  : 'course-keyword',
+            editKeyword : 'course-keyword',
+            listKeyword : 'course-keyword'
+        };
+    }
+
+    /**
      * New Keyword
      */
     newKeyword() {

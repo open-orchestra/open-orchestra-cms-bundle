@@ -14,35 +14,35 @@
     <% } %>
     <% if (user.access_section.contribution) { %>
         <li>
-            <a href="#menu-contribution" role="tab" data-toggle="tab">
+            <a href="#menu-contribution" role="tab" data-toggle="tab" id="course-contribution">
                 <img src="/images/navigation/contribution.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.navigation.contribution.title') %></span>
             </a>
         </li>
     <% } %>
     <% if (user.access_section.user) { %>
         <li>
-            <a href="#menu-user" role="tab" data-toggle="tab">
+            <a href="#menu-user" role="tab" data-toggle="tab" id="course-user">
                 <img src="/images/navigation/user.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.navigation.user.title') %></span>
             </a>
         </li>
     <% }; %>
     <% if (user.access_section.configuration) { %>
         <li>
-            <a href="#menu-configuration" role="tab" data-toggle="tab">
+            <a href="#menu-configuration" role="tab" data-toggle="tab" id="course-configuration">
                 <img src="/images/navigation/configuration.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.navigation.configuration.title') %></span>
             </a>
         </li>
     <% } %>
     <% if (user.access_section.platform) { %>
         <li>
-            <a href="#menu-platform" role="tab" data-toggle="tab">
+            <a href="#menu-platform" role="tab" data-toggle="tab" id="course-platform">
                 <img src="/images/navigation/platform.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.navigation.platform.title') %></span>
             </a>
         </li>
     <% } %>
     <% if (user.access_section.developer) { %>
         <li>
-            <a href="#menu-developer" role="tab" data-toggle="tab">
+            <a href="#menu-developer" role="tab" data-toggle="tab" id="course-developer">
                 <img src="/images/navigation/developer.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.navigation.developer.title') %></span>
             </a>
         </li>

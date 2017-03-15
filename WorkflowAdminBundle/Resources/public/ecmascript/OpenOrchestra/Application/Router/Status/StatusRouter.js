@@ -22,6 +22,28 @@ class StatusRouter extends AbstractWorkflowRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getNavigationHighlight() {
+        return {
+            newStatus  : 'course-workflow',
+            editStatus : 'course-workflow',
+            listStatus : 'course-workflow'
+        };
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getBreadcrumbHighlight() {
+        return {
+            newStatus  : 'course-status',
+            editStatus : 'course-status',
+            listStatus : 'course-status'
+        };
+    }
+
+    /**
      * New status
      */
     newStatus() {

@@ -22,10 +22,12 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * Initialize
      * @param {Form}   form
      * @param {string} siteId
+     * @param {boolean}             inPlatformContext
      */
-    initialize({form, siteId = null}) {
+    initialize({form, siteId = null, inPlatformContext}) {
         super.initialize({form : form});
         this._siteId = siteId;
+        this._inPlatformContext = inPlatformContext;
     }
 
     /**
@@ -37,7 +39,8 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             title = Translator.trans('open_orchestra_backoffice.table.sites.new');
         }
         let template = this._renderTemplate('Site/siteEditView', {
-            title: title
+            title: title,
+            inPlatformContext : this._inPlatformContext
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -56,7 +59,7 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let siteId = jqXHR.getResponseHeader('siteId');
-        let url = Backbone.history.generateUrl('editSite', {
+        let url = Backbone.history.generateUrl(this._inPlatformContext ? 'editPlatformSite' : 'editSite', {
             siteId: siteId
         });
         Backbone.Events.trigger('form:deactivate', this);
@@ -73,7 +76,7 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         let site = new Site({'site_id': this._siteId});
         site.destroy({
             success: () => {
-                let url = Backbone.history.generateUrl('listSite');
+                let url = Backbone.history.generateUrl(this._inPlatformContext ? 'listPlatformSite' : 'listSite');
                 Backbone.history.navigate(url, true);
             }
         });
