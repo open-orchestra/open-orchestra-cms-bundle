@@ -21,7 +21,7 @@ class DateForm extends AbstractSearchFormGroup
      * @param {Object} field
      */
     render(field) {
-        return TemplateManager.get('Content/dateForm')({
+        return TemplateManager.get('SearchFormGroup/dateForm')({
             field: field
         });
     }

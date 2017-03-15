@@ -21,7 +21,7 @@ class TextForm extends AbstractSearchFormGroup
      * @param {Object} field
      */
     render(field) {
-        return TemplateManager.get('Content/textForm')({
+        return TemplateManager.get('SearchFormGroup/textForm')({
             field: field
         });
     }
