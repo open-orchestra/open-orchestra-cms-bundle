@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentDeleteEvent;
@@ -32,20 +33,26 @@ class ContentController extends BaseController
 
     /**
      * @param string  $contentId
+     * @param string  $version
+     * @param string  $language
      *
-     * @Config\Route("/{contentId}", name="open_orchestra_api_content_show")
+     * @Config\Route(
+     *     "/show/{contentId}/{language}/{version}",
+     *     name="open_orchestra_api_content_show",
+     *     defaults={"version": null, "language": null},
+     * )
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
      * @throws ContentNotFoundHttpException
      */
-    public function showAction($contentId)
+    public function showAction($contentId, $language, $version)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
-        $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
-
-        $content = $this->findOneContent($contentId, $language);
-
+        if (null === $language) {
+            $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
+        }
+        $content = $this->findOneContent($contentId, $language, $version);
         if (!$content) {
             throw new ContentNotFoundHttpException();
         }
@@ -351,6 +358,92 @@ class ContentController extends BaseController
         $contents = $this->get('open_orchestra_model.repository.content')->findNotDeletedSortByUpdatedAt($contentId, $language);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
+     * @param string $version
+     *
+     * @Config\Route(
+     *     "/list-statuses/{contentId}/{language}/{version}",
+     *     name="open_orchestra_api_content_list_status")
+     * @Config\Method({"GET"})
+     *
+     * @return Response
+     * @throws ContentNotFoundHttpException
+     */
+    public function listStatusesForContentAction($contentId, $language, $version)
+    {
+        $content = $this->findOneContent($contentId, $language, $version);
+        if (!$content instanceof ContentInterface) {
+            throw new ContentNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $content);
+
+        return $this->listStatuses($content);
+    }
+
+    /**
+     * @param Request $request
+     * @param boolean $saveOldPublishedVersion
+     *
+     * @Config\Route(
+     *     "/update-status",
+     *     name="open_orchestra_api_content_update_status",
+     *     defaults={"saveOldPublishedVersion": false},
+     * )
+     * @Config\Route(
+     *     "/update-status-with-save-published-version",
+     *     name="open_orchestra_api_content_update_status_with_save_published",
+     *     defaults={"saveOldPublishedVersion": true},
+     * )
+     * @Config\Method({"PUT"})
+     *
+     * @return Response
+     * @throws ContentNotFoundHttpException
+     * @throws StatusChangeNotGrantedHttpException
+     */
+    public function changeStatusAction(Request $request, $saveOldPublishedVersion)
+    {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\ContentFacade',
+            $request->get('_format', 'json')
+        );
+
+        $contentRepository = $this->get('open_orchestra_model.repository.content');
+        $content = $contentRepository->find($facade->id);
+        if (!$content instanceof ContentInterface) {
+            throw new ContentNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
+        $contentSource = clone $content;
+
+        $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade, $content);
+        $status = $content->getStatus();
+        if ($status !== $contentSource->getStatus()) {
+            if (!$this->isGranted($status, $contentSource)) {
+                throw new StatusChangeNotGrantedHttpException();
+            }
+
+            if (true === $status->isPublishedState() && false === $saveOldPublishedVersion) {
+                $oldPublishedVersion = $contentRepository->findOnePublished(
+                    $content->getContentId(),
+                    $content->getLanguage(),
+                    $content->getSiteId()
+                );
+                if ($oldPublishedVersion instanceof ContentInterface) {
+                    $this->get('object_manager')->remove($oldPublishedVersion);
+                }
+            }
+
+            $this->get('object_manager')->flush();
+            $event = new ContentEvent($content, $contentSource->getStatus());
+            $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, $event);
+        }
+
+        return array();
     }
 
     /**

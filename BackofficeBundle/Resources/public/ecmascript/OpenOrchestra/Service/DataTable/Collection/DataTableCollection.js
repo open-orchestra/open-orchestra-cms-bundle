@@ -29,7 +29,6 @@ class DataTableCollection extends OrchestraCollection
      */
     destroyModels(models, options = {}) {
         super.destroyModels(models, options);
-        console.log(this.length);
         this.recordsTotal = this.length;
     }
 }

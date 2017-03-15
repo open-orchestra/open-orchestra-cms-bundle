@@ -22,6 +22,7 @@ let OrchestraApiSyncMixin = (superclass) => class extends superclass {
         if (typeof url != 'undefined') {
             options.url = url;
         }
+        options.enabledCallbackError = options.enabledCallbackError || true;
 
         return Backbone.sync.apply(this, [method, model, options]);
     }
@@ -32,14 +33,16 @@ let OrchestraApiSyncMixin = (superclass) => class extends superclass {
      * @param {object}         options
      */
     syncError(model, response, options) {
-        var error;
-        if (typeof response.responseJSON !== 'undefined') {
-            error = new ApiError(response.status, response.responseJSON, response.statusText);
-        } else {
-            error = new ServerError(response.status, response.responseText, response.statusText)
-        }
+        if (options.enabledCallbackError !== false) {
+            var error;
+            if (typeof response.responseJSON !== 'undefined') {
+                error = new ApiError(response.status, response.responseJSON, response.statusText);
+            } else {
+                error = new ServerError(response.status, response.responseText, response.statusText)
+            }
 
-        Backbone.Events.trigger('application:error', error);
+            Backbone.Events.trigger('application:error', error);
+        }
     }
 };
 

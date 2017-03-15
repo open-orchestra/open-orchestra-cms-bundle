@@ -3,7 +3,7 @@ import Application             from '../../Application'
 import Status                  from '../../Model/Status/Status'
 import Node                    from '../../Model/Node/Node'
 import ApplicationError        from '../../../Service/Error/ApplicationError'
-import ConfirmPublishModalView from './ConfirmPublishModalView'
+import ConfirmPublishModalView from '../Statusable/ConfirmPublishModalView'
 
 /**
  * @class NodeToolbarView

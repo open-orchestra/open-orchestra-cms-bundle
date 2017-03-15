@@ -21,6 +21,7 @@ class StatusableChoiceStatusSubscriberTest extends AbstractBaseTestCase
     protected $authorizationChecker;
     protected $event;
     protected $object;
+    protected $objectManager;
     protected $form;
 
     /**
@@ -34,11 +35,12 @@ class StatusableChoiceStatusSubscriberTest extends AbstractBaseTestCase
 
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
 
         Phake::when($this->event)->getData()->thenReturn($this->object);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new StatusableChoiceStatusSubscriber($this->statusRepository, $this->authorizationChecker, array(
+        $this->subscriber = new StatusableChoiceStatusSubscriber($this->statusRepository, $this->authorizationChecker, $this->objectManager, array(
             'label' => 'open_orchestra_backoffice.form.node.status',
             'group_id' => 'properties',
             'sub_group_id' => 'publication',
@@ -56,9 +58,9 @@ class StatusableChoiceStatusSubscriberTest extends AbstractBaseTestCase
     /**
      * Test pre set data with new node
      */
-    public function testPreSetDataWithoutId()
+    public function testPreSetDataWithId()
     {
-        Phake::when($this->object)->getId()->thenReturn(null);
+        Phake::when($this->object)->getId()->thenReturn('fakeId');
 
         $this->subscriber->preSetData($this->event);
 
@@ -77,13 +79,13 @@ class StatusableChoiceStatusSubscriberTest extends AbstractBaseTestCase
     public function testPreSetData($status, $isGranted, array $expectedStatus)
     {
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
-        Phake::when($this->object)->getId()->thenReturn('fakeId');
+        Phake::when($this->object)->getId()->thenReturn(null);
         Phake::when($this->statusRepository)->findAll()->thenReturn($expectedStatus);
         Phake::when($this->object)->getStatus()->thenReturn($status);
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->form, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($this->form, Phake::times(1))->add(Phake::anyParameters());
     }
 
     /**

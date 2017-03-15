@@ -1,7 +1,6 @@
 import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
 import ContentVersionsListView from './ContentVersionsListView'
-import FlashMessageBag         from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage            from '../../../Service/FlashMessage/FlashMessage'
+import ApplicationError        from '../../../Service/Error/ApplicationError'
 
 /**
  * @class ContentVersionsView
@@ -10,15 +9,19 @@ class ContentVersionsView extends AbstractCollectionView
 {
     /**
      * @param {OrchestraCollection} collection
+     * @param {Object}              settings
      * @param {string}              contentId
      * @param {string}              language
      * @param {string}              contentTypeId
+     * @param {Object}              siteLanguages
      */
-    initialize({collection, contentId, language, contentTypeId}) {
-        super.initialize({collection: collection});
+    initialize({collection, settings, contentId, language, contentTypeId, siteLanguages}) {
+        super.initialize({collection: collection, settings: settings});
+        console.log(settings);
         this._contentId = contentId;
         this._contentTypeId = contentTypeId;
-        this._language = language
+        this._language = language;
+        this._siteLanguages = siteLanguages;
     }
 
     /**
@@ -36,18 +39,34 @@ class ContentVersionsView extends AbstractCollectionView
      * Render content versions
      */
     render() {
+        let content = this._collection.first();
+        if (typeof content === 'undefined') {
+            throw new ApplicationError('A content should be have at least one version')
+        }
+        let title = content.get('name');
         let template = this._renderTemplate('Content/contentVersionsView', {
-            collection: this._collection
+            collection: this._collection,
+            contentId: this._contentId,
+            contentTypeId: this._contentTypeId,
+            language: this._language,
+            siteLanguages: this._siteLanguages,
+            title: title
         });
         this.$el.html(template);
 
-        this._listView = new ContentVersionsListView({
-            collection: this._collection,
-            settings: {
+        let settings = $.extend(true, this._settings, {
                 serverSide: false,
                 processing: false,
                 data: this._collection.models
             }
+        );
+        console.log(settings);
+        this._listView = new ContentVersionsListView({
+            collection: this._collection,
+            settings: settings,
+            contentId: this._contentId,
+            contentTypeId: this._contentTypeId,
+            language: this._language
         });
         $('.content-versions-list', this.$el).html(this._listView.render().$el);
 
@@ -71,19 +90,10 @@ class ContentVersionsView extends AbstractCollectionView
                 language: this._language
             },
             success: () => {
-                let message = new FlashMessage(Translator.trans('open_orchestra_backoffice.versionable.success_remove'), 'success');
-                FlashMessageBag.addMessageFlash(message);
-
-                let url = Backbone.history.generateUrl('editContent', {
-                    contentTypeId: this._contentTypeId,
-                    language: this._language,
-                    contentId: this._contentId
-                });
-                if (url === Backbone.history.fragment) {
-                    Backbone.history.loadUrl(url);
-                } else {
-                    Backbone.history.navigate(url, true);
-                }
+                this._listView.api.clear();
+                this._listView.api.rows.add(this._collection.models);
+                this._listView.api.draw();
+                this._toggleButtonDelete();
             }
         });
     }

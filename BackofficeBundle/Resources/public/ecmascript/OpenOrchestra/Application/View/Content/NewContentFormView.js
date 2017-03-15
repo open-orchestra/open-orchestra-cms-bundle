@@ -18,28 +18,27 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
      * @param {Form}   form
      * @param {String} contentTypeId
      * @param {String} language
-     * @param {Array}  siteLanguageUrl
+     * @param {Array}  siteLanguages
      */
-    initialize({form, contentTypeId, language, siteLanguageUrl}) {
+    initialize({form, contentTypeId, language, siteLanguages}) {
         super.initialize({form : form});
         this._contentTypeId = contentTypeId;
         this._language = language;
-        this._siteLanguageUrl = siteLanguageUrl;
+        this._siteLanguages = siteLanguages;
     }
 
     /**
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Content/contentEditView', {
-            contentTypeId  : this._contentTypeId,
-            language       : this._language,
-            siteLanguageUrl: this._siteLanguageUrl,
-            messages       : FlashMessageBag.getMessages(),
-            title          : Translator.trans('open_orchestra_backoffice.table.contents.new')
+        let template = this._renderTemplate('Content/newContentView', {
+            contentTypeId: this._contentTypeId,
+            language: this._language,
+            siteLanguages: this._siteLanguages,
+            messages: FlashMessageBag.getMessages()
         });
         this.$el.html(template);
-        this._$formRegion = $('.form-edit', this.$el);
+        this._$formRegion = $('.form-new', this.$el);
         super.render();
 
         return this;

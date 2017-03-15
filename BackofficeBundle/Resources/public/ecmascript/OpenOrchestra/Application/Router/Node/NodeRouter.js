@@ -80,7 +80,7 @@ class NodeRouter extends OrchestraRouter
             success: () => {
                 let node = nodeVersions.first();
                 if (typeof node === 'undefined') {
-                    throw ApplicationError('A node should be have at least one version')
+                    throw new ApplicationError('A node should be have at least one version')
                 }
                 let nodeVersionsView = new NodeVersionsView({
                     collection: nodeVersions,

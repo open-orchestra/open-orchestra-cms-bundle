@@ -1,20 +1,18 @@
-<%= renderTemplate('Content/contentTopButtonsView', {
-    contentTypeId: contentType.get('content_type_id'),
-    language: content.get('language'),
-    version: content.get('version'),
-    contentId: content.get('content_id'),
-    versionable: contentType.get('defining_versionable')
-}) %>
+<div class="top-action-buttons">
+    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language}) %>" role="button">
+        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
+    </a>
+</div>
 <div class="pull-right languages">
     <ul>
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
-            <% if (siteLanguage === content.get('language')) { %>
+            <% if (siteLanguage === language) { %>
                 <li class="active">
                     <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
                 </li>
             <% } else { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('editContent', {contentTypeId: contentType.get('content_type_id'), contentId: content.get('content_id'), language: siteLanguage}) %>">
+                    <a href="#<%= Backbone.history.generateUrl('newContent', {contentTypeId: contentTypeId, language: siteLanguage}) %>">
                         <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
                     </a>
                 </li>
@@ -22,7 +20,6 @@
         <% }); %>
     </ul>
 </div>
-<h1> <%= content.get('name') %></h1>
+<h1> <%= Translator.trans('open_orchestra_backoffice.table.contents.new') %></h1>
 <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
-<div class="content-action-toolbar"></div>
-<div class='form-edit'></div>
+<div class='form-new'></div>

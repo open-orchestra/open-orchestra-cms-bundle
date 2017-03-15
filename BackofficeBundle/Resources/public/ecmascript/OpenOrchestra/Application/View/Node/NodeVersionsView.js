@@ -42,13 +42,15 @@ class NodeVersionsView extends AbstractCollectionView
         });
         this.$el.html(template);
 
-        this._listView = new NodeVersionsListView({
-            collection: this._collection,
-            settings: {
+        let settings = $.extend(true, this._settings, {
                 serverSide: false,
                 processing: false,
                 data: this._collection.models
-            },
+            }
+        );
+        this._listView = new NodeVersionsListView({
+            collection: this._collection,
+            settings: settings,
             nodeId: this._node.get('node_id'),
             language: this._node.get('language')
         });

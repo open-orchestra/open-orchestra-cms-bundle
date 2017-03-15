@@ -233,6 +233,7 @@ open_orchestra_backoffice:
     content_types:
         title: Contenus
     content:
+        edit: Modifier
         confirm_create:
             title: Créer un contenu dans une nouvelle langue
             message: Ce contenu n’existe pas dans cette langue. Souhaitez-vous le créer?

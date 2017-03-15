@@ -232,6 +232,13 @@ open_orchestra_backoffice:
     content_types:
         title: Contents
     content:
+        edit: Edit
         confirm_create:
             title: Create content in a new language
             message: This content does not exist in this language. Would you like to create it?
+        message_online:
+            title: The content is actually online.
+            message: |
+                Editing an online content is not possible. \n
+                To modify this content please create a new version. \n
+                You can also modify the workflow of this version but the content will not be visible on the site
