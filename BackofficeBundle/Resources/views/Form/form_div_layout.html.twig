@@ -189,14 +189,16 @@
 {% block oo_check_list_collection_widget %}
     {% spaceless %}
         {% set collection = form|first %}
+        {% set width = form.vars.max_columns > 0 ? (100 / form.vars.max_columns)|number_format(4) ~ '%' : 'auto' %}
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
+                    <th style="width:{{ width }}">&nbsp;</th>
                     {% for rank, cell in form.vars.configuration.row %}
-                        <th>{{ cell }}{% if form.vars.configuration.help[rank] is defined %} <i class="form-help-tooltip icon-prepend fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" data-original-title="{{ form.vars.configuration.help[rank] }}"></i>{% endif %}
+                        <th style="width:{{ width }}">{% if form.vars.configuration.icon[rank] is defined %} <i class="{{ form.vars.configuration.icon[rank] }}"></i>{% endif %}{{ cell }}{% if form.vars.configuration.help[rank] is defined %} <i class="form-help-tooltip icon-prepend fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" data-original-title="{{ form.vars.configuration.help[rank] }}"></i>{% endif %}
                         </th>
                     {% endfor %}
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -204,6 +206,7 @@
                 <tr>
                     <td>{{ cell }}</td>
                     {{ form_widget(collection[name]) }}
+                    <td>&nbsp;</td>
                 </tr>
             {% endfor %}
             </tbody>

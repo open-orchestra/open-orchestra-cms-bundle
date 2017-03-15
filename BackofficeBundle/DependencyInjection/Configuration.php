@@ -249,15 +249,18 @@ class Configuration implements ConfigurationInterface
                 'page' => array(
                     ContributionRoleInterface::NODE_CONTRIBUTOR => array(
                         'label' => 'open_orchestra_backoffice.role.contributor.label',
-                        'help_text' => 'open_orchestra_backoffice.role.contributor.help_text',
+                        'help' => 'open_orchestra_backoffice.role.contributor.help',
+                        'icon' => 'fa fa-user',
                     ),
                     ContributionRoleInterface::NODE_SUPER_EDITOR => array(
                         'label' => 'open_orchestra_backoffice.role.editor.label',
-                        'help_text' => 'open_orchestra_backoffice.role.editor.help_text',
+                        'help' => 'open_orchestra_backoffice.role.editor.help',
+                        'icon' => 'fa fa-pencil',
                     ),
                     ContributionRoleInterface::NODE_SUPER_SUPRESSOR => array(
                         'label' => 'open_orchestra_backoffice.role.supressor.label',
-                        'help_text' => 'open_orchestra_backoffice.role.supressor.help_text',
+                        'help' => 'open_orchestra_backoffice.role.supressor.help',
+                        'icon' => 'fa fa-trash',
                     ),
                 ),
                 'content' => array(
@@ -276,11 +279,13 @@ class Configuration implements ConfigurationInterface
                 'trash' => array(
                     ContributionRoleInterface::TRASH_RESTORER => array(
                         'label' => 'open_orchestra_backoffice.role.restorer.label',
-                        'help_text' => 'open_orchestra_backoffice.role.restorer.help_text',
+                        'help' => 'open_orchestra_backoffice.role.restorer.help',
+                        'icon' => 'fa fa-save',
                     ),
                     ContributionRoleInterface::TRASH_SUPRESSOR => array(
                         'label' => 'open_orchestra_backoffice.role.trash_supressor.label',
-                        'help_text' => 'open_orchestra_backoffice.role.trash_supressor.help_text',
+                        'help' => 'open_orchestra_backoffice.role.trash_supressor.help',
+                        'icon' => 'fa fa-trash',
                     ),
                 ),
             ),
@@ -288,7 +293,8 @@ class Configuration implements ConfigurationInterface
                 'configuration' => array(
                     ContributionRoleInterface::SITE_ADMIN => array(
                         'label' => 'open_orchestra_backoffice.role.administrator.label',
-                        'help_text' => 'open_orchestra_backoffice.role.administrator.help_text',
+                        'help' => 'open_orchestra_backoffice.role.administrator.help',
+                        'icon' => 'fa fa-cog',
                     ),
                 ),
             ),
