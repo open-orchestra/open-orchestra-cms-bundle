@@ -24,14 +24,12 @@ class SharedBlockFormView extends AbstractFormView
     /**
      * Initialize
      * @param {Form}    form
-     * @param {string}  blockLabel
      * @param {string}  blockId
      * @param {string}  language
      * @param {boolean} activateUsageTab
      */
-    initialize({form, blockLabel, blockId, language, activateUsageTab}) {
+    initialize({form, blockId, language, activateUsageTab}) {
         super.initialize({form: form});
-        this._blockLabel = blockLabel;
         this._blockId = blockId;
         this._language = language;
         this._activateUsageTab = activateUsageTab;
@@ -42,9 +40,9 @@ class SharedBlockFormView extends AbstractFormView
      */
     render() {
         let template = this._renderTemplate('Block/sharedBlockEditView', {
-            blockLabel : this._blockLabel,
             language: this._language,
-            messages: FlashMessageBag.getMessages()
+            messages: FlashMessageBag.getMessages(),
+            title   : $("input[id*='_label']", this._form.$form).first().val()
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -124,7 +122,8 @@ class SharedBlockFormView extends AbstractFormView
                 'data-toggle': 'tab',
                 role: 'tab',
                 href: '#'+tabId
-        }));
+            })
+        );
         let $tabContent = $('<div/>', {
             class: 'tab-pane',
             id: tabId,

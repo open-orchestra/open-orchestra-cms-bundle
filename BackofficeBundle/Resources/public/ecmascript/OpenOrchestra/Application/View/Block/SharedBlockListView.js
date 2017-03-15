@@ -84,7 +84,6 @@ class SharedBlockListView extends mix(AbstractDataTableView).with(UrlPaginateVie
     _createUsageBlockLink(td, cellData, rowData) {
         let link = Backbone.history.generateUrl('editSharedBlock', {
             blockId: rowData.get('id'),
-            blockLabel: rowData.get('label'),
             language: rowData.get('language'),
             activateUsageTab: true
         });

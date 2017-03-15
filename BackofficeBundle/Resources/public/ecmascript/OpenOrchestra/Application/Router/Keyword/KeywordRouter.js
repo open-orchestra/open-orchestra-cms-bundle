@@ -1,11 +1,11 @@
-import OrchestraRouter    from '../OrchestraRouter'
-import Application        from '../../Application'
-import FormBuilder        from '../../../Service/Form/Model/FormBuilder'
+import OrchestraRouter from '../OrchestraRouter'
+import Application     from '../../Application'
+import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 
-import KeywordsView       from '../../View/Keyword/KeywordsView'
-import KeywordFormView    from '../../View/Keyword/KeywordFormView'
+import KeywordsView    from '../../View/Keyword/KeywordsView'
+import KeywordFormView from '../../View/Keyword/KeywordFormView'
 
-import Keywords           from '../../Collection/Keyword/Keywords'
+import Keywords        from '../../Collection/Keyword/Keywords'
 
 /**
  * @class KeywordRouter
@@ -17,9 +17,9 @@ class KeywordRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'keyword/new': 'newKeyword',
-            'keyword/edit/:keywordId/:name': 'editKeyword',
-            'keyword/list(/:page)': 'listKeyword'
+            'keyword/new'            : 'newKeyword',
+            'keyword/edit/:keywordId': 'editKeyword',
+            'keyword/list(/:page)'   : 'listKeyword'
         };
     }
 
@@ -46,8 +46,7 @@ class KeywordRouter extends OrchestraRouter
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let keywordFormView = new KeywordFormView({
-                form: form,
-                name: Translator.trans('open_orchestra_backoffice.keyword.title_new')
+                form: form
             });
             Application.getRegion('content').html(keywordFormView.render().$el);
         });
@@ -58,13 +57,13 @@ class KeywordRouter extends OrchestraRouter
      *
      * @param {String} keywordId
      */
-    editKeyword(keywordId, name) {
+    editKeyword(keywordId) {
         let url = Routing.generate('open_orchestra_backoffice_keyword_form', {keywordId: keywordId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let keywordFormView = new KeywordFormView({
                 form: form,
-                name: name
+                keywordId: keywordId
             });
             Application.getRegion('content').html(keywordFormView.render().$el);
         });

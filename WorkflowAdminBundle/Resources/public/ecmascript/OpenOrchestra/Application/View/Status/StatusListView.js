@@ -61,8 +61,7 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
      */
     _createEditLink(td, cellData, rowData) {
         let link = Backbone.history.generateUrl('editStatus', {
-            statusId: rowData.get('id'),
-            name: rowData.get('label')
+            statusId: rowData.get('id')
         });
         cellData = $('<a>',{
             text: cellData,

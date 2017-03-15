@@ -21,20 +21,22 @@ class RedirectionFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      * Initialize
      * @param {Form}   form
      * @param {String} redirectionId
-     * @param {String} name
      */
-    initialize({form, redirectionId, name}) {
+    initialize({form, redirectionId = null}) {
         super.initialize({form : form});
         this._redirectionId = redirectionId;
-        this._name = name;
     }
 
     /**
      * @inheritdoc
      */
     render() {
+        let title = $('#oo_redirection_routePattern', this._form.$form).val();
+        if (null === this._redirectionId) {
+            title = Translator.trans('open_orchestra_backoffice.redirection.title_new');
+        }
         let template = this._renderTemplate('Redirection/redirectionFormView', {
-            name: this._name
+            title: title
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);

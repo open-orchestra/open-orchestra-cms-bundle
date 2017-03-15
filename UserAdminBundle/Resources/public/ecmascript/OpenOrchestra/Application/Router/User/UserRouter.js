@@ -18,9 +18,9 @@ class UserRouter extends OrchestraRouter
     preinitialize(options) {
         this.routes = {
             'user/selfedit(/:activatePreferenceTab)': 'editSelfUser',
-            'user/edit/:userId': 'editUser',
-            'user/list(/:page)': 'listUser',
-            'user/new/': 'newUser'
+            'user/edit/:userId'                     : 'editUser',
+            'user/list(/:page)'                     : 'listUser',
+            'user/new/'                             : 'newUser'
         };
     }
 

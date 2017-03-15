@@ -20,12 +20,10 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
     /**
      * Initialize
      * @param {Form}   form
-     * @param {Array}  name
      * @param {string} contentTypeId
      */
-    initialize({form, name, contentTypeId = null}) {
+    initialize({form, contentTypeId = null}) {
         super.initialize({form : form});
-        this._name = name;
         this._contentTypeId = contentTypeId;
     }
 
@@ -33,8 +31,12 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      * @inheritdoc
      */
     render() {
+        let title = $("input[id*='oo_content_type_names_']", this._form.$form).first().val();
+        if (null === this._contentTypeId) {
+            title = Translator.trans('open_orchestra_backoffice.table.content_types.new');
+        }
         let template = this._renderTemplate('ContentType/contentTypeEditView', {
-            name: this._name
+            title: title
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -65,13 +67,8 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
     */
    _redirectEditElement(data, textStatus, jqXHR) {
        let contentTypeId = jqXHR.getResponseHeader('contentTypeId');
-       let name = jqXHR.getResponseHeader('name');
-       if (null === contentTypeId || null === name) {
-              throw new ApplicationError('Invalid contentTypeId or name');
-       }
        let url = Backbone.history.generateUrl('editContentType', {
-          contentTypeId: contentTypeId,
-          name: name
+          contentTypeId: contentTypeId
        });
        Backbone.Events.trigger('form:deactivate', this);
        Backbone.history.navigate(url, true);

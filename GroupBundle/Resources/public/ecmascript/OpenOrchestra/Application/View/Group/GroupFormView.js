@@ -22,21 +22,23 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}   form
-     * @param {Array}  name
      * @param {String} groupId
      */
-    initialize({form, name, groupId = null}) {
+    initialize({form, groupId = null}) {
         super.initialize({form : form});
         this._groupId = groupId;
-        this._name = name;
     }
 
     /**
      * @inheritdoc
      */
     render() {
+        let title = $('#oo_group_name', this._form.$form).val();
+        if (null === this._groupId) {
+            title = Translator.trans('open_orchestra_group.table.groups.new');
+        }
         let template = this._renderTemplate('Group/groupFormView', {
-            name: this._name
+            title: title
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -55,13 +57,8 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let groupId = jqXHR.getResponseHeader('groupId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === groupId || null === name) {
-            throw new ApplicationError('Invalid groupId or name');
-        }
         let url = Backbone.history.generateUrl('editGroup', {
-            groupId: groupId,
-            name: name
+            groupId: groupId
         });
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);

@@ -12,12 +12,10 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
     /**
      * Initialize
      * @param {Form}   form
-     * @param {String} name
      * @param {String} workflowProfileId
      */
     initialize({form, name, workflowProfileId = null}) {
         super.initialize({form : form});
-        this._name = name;
         this._workflowProfileId = workflowProfileId;
     }
 
@@ -25,8 +23,12 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
      * @inheritdoc
      */
     render() {
+        let title = $("input[id*='oo_workflow_profile_labels_']", this._form.$form).val();
+        if (null === this._workflowProfileId) {
+            title = Translator.trans('open_orchestra_workflow_admin.workflow_profile.title_new');
+        }
         let template = this._renderTemplate('WorkflowProfile/workflowProfileFormView', {
-            name: this._name
+            title: title
         });
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
@@ -45,13 +47,8 @@ class WorkflowProfileFormView extends mix(AbstractFormView).with(FormViewButtons
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let workflowProfileId = jqXHR.getResponseHeader('workflowProfileId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === workflowProfileId || null === name) {
-            throw new ApplicationError('Invalid workflowProfileId or name');
-        }
         let url = Backbone.history.generateUrl('editWorkflowProfile', {
-            workflowProfileId: workflowProfileId,
-            name: name
+            workflowProfileId: workflowProfileId
         });
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);

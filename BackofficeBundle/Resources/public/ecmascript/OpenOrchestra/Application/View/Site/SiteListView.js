@@ -52,7 +52,6 @@ class SiteListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
     _createEditLink(td, cellData, rowData) {
         let link = Backbone.history.generateUrl('editSite', {
             siteId: rowData.get('site_id'),
-            name: rowData.get('name'),
         });
         cellData = $('<a>',{
             text: cellData,

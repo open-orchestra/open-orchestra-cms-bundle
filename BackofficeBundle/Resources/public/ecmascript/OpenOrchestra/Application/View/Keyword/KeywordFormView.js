@@ -10,20 +10,23 @@ class KeywordFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     /**
      * Initialize
      * @param {Form}   form
-     * @param {String} name
-
+     * @param {String} keywordId
      */
-    initialize({form, name}) {
+    initialize({form, keywordId = null}) {
         super.initialize({form : form});
-        this._name = name;
+        this._keywordId = keywordId;
     }
 
     /**
      * @inheritdoc
      */
     render() {
+        let title = $('#oo_keyword_label', this._form.$form).val();
+        if (null === this._keywordId) {
+            title = Translator.trans('open_orchestra_backoffice.keyword.title_new');
+        }
         let template = this._renderTemplate('Keyword/keywordFormView', {
-            name: this._name
+            title: title
         });
         this.$el.html(template);
         this._$formRegion = $('.form', this.$el);
@@ -42,13 +45,8 @@ class KeywordFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _redirectEditElement(data, textStatus, jqXHR) {
         let keywordId = jqXHR.getResponseHeader('keywordId');
-        let name = jqXHR.getResponseHeader('name');
-        if (null === keywordId || null === name) {
-            throw new ApplicationError('Invalid keywordId or name');
-        }
         let url = Backbone.history.generateUrl('editKeyword', {
-            keywordId: keywordId,
-            name: name
+            keywordId: keywordId
         });
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.navigate(url, true);

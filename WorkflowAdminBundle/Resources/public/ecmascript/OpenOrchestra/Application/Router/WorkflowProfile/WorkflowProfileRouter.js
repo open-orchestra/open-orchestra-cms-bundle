@@ -15,9 +15,9 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
      */
     preinitialize(options) {
         this.routes = {
-            'workflow/profile/list(/:page)'                 : 'listWorkflowProfile',
-            'workflow/profile/new'                          : 'newWorkflowProfile',
-            'workflow/profile/edit/:workflowProfileId/:name': 'editWorkflowProfile'
+            'workflow/profile/list(/:page)'           : 'listWorkflowProfile',
+            'workflow/profile/new'                    : 'newWorkflowProfile',
+            'workflow/profile/edit/:workflowProfileId': 'editWorkflowProfile'
         };
     }
 
@@ -62,8 +62,7 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let workflowProfileFormView = new WorkflowProfileFormView({
-                form: form,
-                name: Translator.trans('open_orchestra_workflow_admin.workflow_profile.title_new')
+                form: form
             });
             Application.getRegion('content').html(workflowProfileFormView.render().$el);
         });
@@ -73,15 +72,13 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
      * Edit WorkflowProfile
      *
      * @param  {String} workflowProfileId
-     * @param  {String} name
      */
-    editWorkflowProfile(workflowProfileId, name) {
+    editWorkflowProfile(workflowProfileId) {
         let url = Routing.generate('open_orchestra_workflow_admin_workflow_profile_form', {workflowProfileId: workflowProfileId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let workflowProfileFormView = new WorkflowProfileFormView({
                 form: form,
-                name: name,
                 workflowProfileId: workflowProfileId
             });
             Application.getRegion('content').html(workflowProfileFormView.render().$el);

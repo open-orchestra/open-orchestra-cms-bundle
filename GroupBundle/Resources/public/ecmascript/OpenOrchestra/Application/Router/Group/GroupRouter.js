@@ -16,9 +16,9 @@ class GroupRouter extends OrchestraRouter
      */
     preinitialize(options) {
         this.routes = {
-            'group/list(/:page)': 'listGroup',
-            'group/edit/:groupId/:name': 'editGroup',
-            'group/new': 'newGroup'
+            'group/list(/:page)' : 'listGroup',
+            'group/edit/:groupId': 'editGroup',
+            'group/new'          : 'newGroup'
         };
     }
 
@@ -79,15 +79,13 @@ class GroupRouter extends OrchestraRouter
      * Edit Group
      *
      * @param  {String} groupId
-     * @param  {String} name
      */
-    editGroup(groupId, name) {
+    editGroup(groupId) {
         let url = Routing.generate('open_orchestra_group_form', {groupId: groupId});
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let groupFormView = new GroupFormView({
                 form: form,
-                name: name,
                 groupId: groupId
             });
             Application.getRegion('content').html(groupFormView.render().$el);
@@ -102,8 +100,7 @@ class GroupRouter extends OrchestraRouter
         this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let groupFormView = new GroupFormView({
-                form: form,
-                name: Translator.trans('open_orchestra_group.table.groups.new')
+                form: form
              });
             Application.getRegion('content').html(groupFormView.render().$el);
         });
