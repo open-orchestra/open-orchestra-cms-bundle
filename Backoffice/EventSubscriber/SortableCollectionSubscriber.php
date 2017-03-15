@@ -31,7 +31,7 @@ class SortableCollectionSubscriber implements EventSubscriberInterface
                 $dataClone = $data->toArray();
                 $data->clear();
                 foreach ($order as $key => $value) {
-                    $data->set($key, $dataClone[$key]);
+                    $data->set($key, array_key_exists($key, $dataClone) ? $dataClone[$key] : null);
                 }
             }
             if (is_array($data)) {

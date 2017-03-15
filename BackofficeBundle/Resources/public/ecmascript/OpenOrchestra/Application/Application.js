@@ -31,18 +31,17 @@ import ColorPicker            from '../Service/Form/Behavior/ColorPicker'
 import Tinymce                from '../Service/Form/Behavior/Tinymce'
 import TagCondition           from '../Service/Form/Behavior/TagCondition'
 
-import SearchFormGroupManager from '../Service/Content/SearchFormGroup/Manager'
-import DateSearchFormGroup    from '../Service/Content/SearchFormGroup/DateForm'
-import TextSearchFormGroup    from '../Service/Content/SearchFormGroup/TextForm'
-import NumberSearchFormGroup  from '../Service/Content/SearchFormGroup/NumberForm'
+import SearchFormGroupManager from '../Service/SearchFormGroup/Manager'
+import DateSearchFormGroup    from '../Service/SearchFormGroup/DateForm'
+import TextSearchFormGroup    from '../Service/SearchFormGroup/TextForm'
+import NumberSearchFormGroup  from '../Service/SearchFormGroup/NumberForm'
 
-import CellFormatterManager   from '../Service/Content/CellFormatter/Manager'
-import TextCellFormatter      from '../Service/Content/CellFormatter/TextFormatter'
-import BooleanCellFormatter   from '../Service/Content/CellFormatter/BooleanFormatter'
-import DateCellFormatter      from '../Service/Content/CellFormatter/DateFormatter'
+import CellFormatterManager   from '../Service/DataFormatter/Manager'
+import TextFormatter      from '../Service/DataFormatter/TextFormatter'
+import BooleanFormatter   from '../Service/DataFormatter/BooleanFormatter'
+import DateFormatter      from '../Service/DataFormatter/DateFormatter'
 
 import ApplicationError       from '../Service/Error/ApplicationError'
-import AjaxError              from '../Service/Error/AjaxError'
 import TinymceManager         from '../Service/Tinymce/TinymceManager'
 
 /**
@@ -251,9 +250,9 @@ class Application
      * @private
      */
     _initCellFormatterManager() {
-        CellFormatterManager.add(TextCellFormatter);
-        CellFormatterManager.add(BooleanCellFormatter);
-        CellFormatterManager.add(DateCellFormatter);
+        CellFormatterManager.add(TextFormatter);
+        CellFormatterManager.add(BooleanFormatter);
+        CellFormatterManager.add(DateFormatter);
     }
 }
 

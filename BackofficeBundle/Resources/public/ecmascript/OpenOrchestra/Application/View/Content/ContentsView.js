@@ -1,5 +1,5 @@
 import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import SearchFormGroupManager from '../../../Service/Content/SearchFormGroup/Manager'
+import SearchFormGroupManager from '../../../Service/SearchFormGroup/Manager'
 import Application            from '../../Application'
 import ContentListView        from '../../View/Content/ContentListView'
 

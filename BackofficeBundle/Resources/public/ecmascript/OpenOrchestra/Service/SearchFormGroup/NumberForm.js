@@ -1,4 +1,4 @@
-import TemplateManager         from '../../TemplateManager'
+import TemplateManager         from '../TemplateManager'
 import AbstractSearchFormGroup from './AbstractSearchFormGroup'
 
 /**
@@ -21,7 +21,7 @@ class NumberForm extends AbstractSearchFormGroup
      * @param {Object} field
      */
     render(field) {
-        return TemplateManager.get('Content/numberForm')({
+        return TemplateManager.get('SearchFormGroup/numberForm')({
             field: field
         });
     }

@@ -1,4 +1,5 @@
 import OrchestraView from '../OrchestraView'
+import DateFormatter from '../../../Service/DataFormatter/DateFormatter'
 
 /**
  * @class AbstractWidgetView
@@ -60,7 +61,8 @@ class AbstractWidgetView extends OrchestraView
             {
                 title: this.getTitleKey(),
                 editLink: this.getEditLink,
-                entities: this.collection.models
+                entities: this.collection.models,
+                DateFormatter: DateFormatter
             }
         );
         this.$el.html(template);

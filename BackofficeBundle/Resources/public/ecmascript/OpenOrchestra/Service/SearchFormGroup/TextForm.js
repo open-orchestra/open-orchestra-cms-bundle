@@ -1,10 +1,10 @@
-import TemplateManager         from '../../TemplateManager'
+import TemplateManager         from '../TemplateManager'
 import AbstractSearchFormGroup from './AbstractSearchFormGroup'
 
 /**
- * @class DateForm
+ * @class TextForm
  */
-class DateForm extends AbstractSearchFormGroup
+class TextForm extends AbstractSearchFormGroup
 {
     /**
      * test if field is supported
@@ -12,7 +12,7 @@ class DateForm extends AbstractSearchFormGroup
      * @param {Object} field
      */
     support(field) {
-        return field.search == 'date';
+        return field.search == 'text';
     }
 
     /**
@@ -21,11 +21,11 @@ class DateForm extends AbstractSearchFormGroup
      * @param {Object} field
      */
     render(field) {
-        return TemplateManager.get('Content/dateForm')({
+        return TemplateManager.get('SearchFormGroup/textForm')({
             field: field
         });
     }
 }
 
-// unique instance of DateForm
-export default (new DateForm);
+// unique instance of TextForm
+export default (new TextForm);

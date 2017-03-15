@@ -2,9 +2,9 @@ import AbstractDataTableView       from '../../../Service/DataTable/View/Abstrac
 import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 import DuplicateIconListViewMixin  from '../../../Service/DataTable/Mixin/DuplicateIconListViewMixin'
-import CellFormatterManager        from '../../../Service/Content/CellFormatter/Manager'
-import BooleanFormatter            from '../../../Service/Content/CellFormatter/BooleanFormatter'
-import DateFormatter               from '../../../Service/Content/CellFormatter/DateFormatter'
+import CellFormatterManager        from '../../../Service/DataFormatter/Manager'
+import BooleanFormatter            from '../../../Service/DataFormatter/BooleanFormatter'
+import DateFormatter               from '../../../Service/DataFormatter/DateFormatter'
 
 /**
  * @class ContentListView

@@ -13,7 +13,7 @@
                 <tr>
                     <td><a href='#<%= editLink(entity) %>'><%= entity.get('name') %></a></td>
                     <td><%= entity.get('language')  %></td>
-                    <td><%= entity.get('updated_at')  %></td>
+                    <td><%= DateFormatter.format(entity.get('updated_at'))  %></td>
                 </tr>
             <% }); %>
         <% } %>
