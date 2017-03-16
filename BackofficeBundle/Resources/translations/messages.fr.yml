@@ -153,7 +153,7 @@ open_orchestra_backoffice:
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
                 helper: Fréquence de modification indicative (pour le sitemap)
-            template_set: ensemble de templates
+            template_set: Ensemble de templates
             group:
                 information: Informations
                 template_set: Habillage
@@ -207,12 +207,12 @@ open_orchestra_backoffice:
             keywords: Mots-clé
             template:
                 label: Template personnalisé de formulaire d'édition
-                helper: "Utilisation avancée.\nTempate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig"
+                helper: "Utilisation avancée.\nTemplate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig"
             defining_versionable:
-                label: Définit des contenus versionables
+                label: Autoriser les versions
                 helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition seront versionables.
             defining_statusable:
-                label: Définit des contenus ayant un workflow de validation
+                label: Activer le workflow
                 helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition intégreront un workflow de publication.
             group:
                 property: Propriétés

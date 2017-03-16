@@ -209,10 +209,10 @@ open_orchestra_backoffice:
                 label: Edit form custom template
                 helper: Advanced usage only.\nAlternate template to render the current content form.\nUse the Symfony2 format:\nMyBundle::myTemplate.html.twig
             defining_versionable:
-                label: Defines versionable contents
+                label: Authorize versions
                 helper: If set to "Yes", The contents with this content type for model will be versionable.
             defining_statusable:
-                label: Defines statusable contents
+                label: Activate workflow
                 helper: If set to "Yes", The contents with this content type for model will use a validation workflow.
             group:
                 property: Properties
