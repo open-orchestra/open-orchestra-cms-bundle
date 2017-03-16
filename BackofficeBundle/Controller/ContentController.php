@@ -57,29 +57,15 @@ class ContentController extends AbstractAdminController
             'delete_button' => $this->canDeleteContent($content),
             'need_link_to_site_defintion' => false,
             'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
-<<<<<<< ecba49d256fa83456f9c2023bab9ae768aef396b
         );
         $form = $this->createForm('oo_content', $content, $options);
 
-        $status = $content->getStatus();
-=======
-        ));
->>>>>>> refacto manager version content
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $this->get('object_manager')->flush();
             $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
 
-<<<<<<< ecba49d256fa83456f9c2023bab9ae768aef396b
-            if ($status->getId() !== $content->getStatus()->getId()) {
-                $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, new ContentEvent($content, $status));
-                $options['delete_button'] = $this->canDeleteContent($content);
-                $form = $this->createForm('oo_content', $content, $options);
-            }
-
-=======
->>>>>>> refacto manager version content
             $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
             $this->get('session')->getFlashBag()->add('success', $message);
 
