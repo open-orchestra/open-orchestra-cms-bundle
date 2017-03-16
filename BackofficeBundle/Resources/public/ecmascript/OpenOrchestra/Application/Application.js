@@ -1,48 +1,52 @@
-import NodeRouter             from './Router/Node/NodeRouter'
-import KeywordRouter          from './Router/Keyword/KeywordRouter'
-import DashboardRouter        from './Router/Dashboard/DashboardRouter'
-import SiteRouter             from './Router/Site/SiteRouter'
-import ContentTypeRouter      from './Router/ContentType/ContentTypeRouter'
-import ContentRouter          from './Router/Content/ContentRouter'
-import BlockRouter            from './Router/Block/BlockRouter'
-import SharedBlockRouter      from './Router/Block/SharedBlockRouter'
-import RedirectionRouter      from './Router/Redirection/RedirectionRouter'
+import NodeRouter              from './Router/Node/NodeRouter'
+import KeywordRouter           from './Router/Keyword/KeywordRouter'
+import DashboardRouter         from './Router/Dashboard/DashboardRouter'
+import SiteRouter              from './Router/Site/SiteRouter'
+import ContentTypeRouter       from './Router/ContentType/ContentTypeRouter'
+import ContentRouter           from './Router/Content/ContentRouter'
+import BlockRouter             from './Router/Block/BlockRouter'
+import SharedBlockRouter       from './Router/Block/SharedBlockRouter'
+import RedirectionRouter       from './Router/Redirection/RedirectionRouter'
+import TrashItemRouter         from './Router/TrashItem/TrashItemRouter'
 
-import HeaderView             from './View/Header/HeaderView'
-import ErrorView              from './View/Error/ErrorView'
-import NavigationView         from './View/Navigation/NavigationView'
-import BreadcrumbView         from './View/Breadcrumb/BreadcrumbView'
+import HeaderView              from './View/Header/HeaderView'
+import ErrorView               from './View/Error/ErrorView'
+import NavigationView          from './View/Navigation/NavigationView'
+import BreadcrumbView          from './View/Breadcrumb/BreadcrumbView'
+import NodeRestoreModalView    from './View/TrashItem/NodeRestoreModalView'
+import ContentRestoreModalView from './View/TrashItem/ContentRestoreModalView'
 
-import SitesAvailable         from './Collection/Site/SitesAvailable'
+import SitesAvailable          from './Collection/Site/SitesAvailable'
 
-import FormBehaviorManager    from '../Service/Form/Behavior/Manager'
-import PatchSubmit            from '../Service/Form/Behavior/PatchSubmit'
-import ScrollTable            from '../Service/Form/Behavior/ScrollTable'
-import Tooltip                from '../Service/Form/Behavior/Tooltip'
-import TagSelect2             from '../Service/Form/Behavior/TagSelect2'
-import DatePicker             from '../Service/Form/Behavior/DatePicker'
-import NodeChoice             from '../Service/Form/Behavior/NodeChoice'
-import NodeTemplateSelection  from '../Service/Form/Behavior/NodeTemplateSelection'
-import GenerateId             from '../Service/Form/Behavior/GenerateId'
-import CollectionSortable     from '../Service/Form/Behavior/CollectionSortable'
-import Accordion              from '../Service/Form/Behavior/Accordion'
-import BlockVideoType         from '../Service/Form/Behavior/BlockVideoType'
-import ColorPicker            from '../Service/Form/Behavior/ColorPicker'
-import Tinymce                from '../Service/Form/Behavior/Tinymce'
-import TagCondition           from '../Service/Form/Behavior/TagCondition'
+import FormBehaviorManager     from '../Service/Form/Behavior/Manager'
+import PatchSubmit             from '../Service/Form/Behavior/PatchSubmit'
+import ScrollTable             from '../Service/Form/Behavior/ScrollTable'
+import Tooltip                 from '../Service/Form/Behavior/Tooltip'
+import TagSelect2              from '../Service/Form/Behavior/TagSelect2'
+import DatePicker              from '../Service/Form/Behavior/DatePicker'
+import NodeChoice              from '../Service/Form/Behavior/NodeChoice'
+import NodeTemplateSelection   from '../Service/Form/Behavior/NodeTemplateSelection'
+import GenerateId              from '../Service/Form/Behavior/GenerateId'
+import CollectionSortable      from '../Service/Form/Behavior/CollectionSortable'
+import Accordion               from '../Service/Form/Behavior/Accordion'
+import BlockVideoType          from '../Service/Form/Behavior/BlockVideoType'
+import ColorPicker             from '../Service/Form/Behavior/ColorPicker'
+import Tinymce                 from '../Service/Form/Behavior/Tinymce'
+import TagCondition            from '../Service/Form/Behavior/TagCondition'
 
-import SearchFormGroupManager from '../Service/SearchFormGroup/Manager'
-import DateSearchFormGroup    from '../Service/SearchFormGroup/DateForm'
-import TextSearchFormGroup    from '../Service/SearchFormGroup/TextForm'
-import NumberSearchFormGroup  from '../Service/SearchFormGroup/NumberForm'
+import SearchFormGroupManager  from '../Service/SearchFormGroup/Manager'
+import DateSearchFormGroup     from '../Service/SearchFormGroup/DateForm'
+import TextSearchFormGroup     from '../Service/SearchFormGroup/TextForm'
+import NumberSearchFormGroup   from '../Service/SearchFormGroup/NumberForm'
 
-import CellFormatterManager   from '../Service/DataFormatter/Manager'
-import TextFormatter      from '../Service/DataFormatter/TextFormatter'
-import BooleanFormatter   from '../Service/DataFormatter/BooleanFormatter'
-import DateFormatter      from '../Service/DataFormatter/DateFormatter'
+import CellFormatterManager    from '../Service/DataFormatter/Manager'
+import TextFormatter           from '../Service/DataFormatter/TextFormatter'
+import BooleanFormatter        from '../Service/DataFormatter/BooleanFormatter'
+import DateFormatter           from '../Service/DataFormatter/DateFormatter'
 
-import ApplicationError       from '../Service/Error/ApplicationError'
-import TinymceManager         from '../Service/Tinymce/TinymceManager'
+import ApplicationError        from '../Service/Error/ApplicationError'
+import TinymceManager          from '../Service/Tinymce/TinymceManager'
+
 
 /**
  * @class Application
@@ -62,6 +66,7 @@ class Application
      * Run Application
      */
     run() {
+        this._initConfiguration();
         this._initRouting();
         this._initTranslator();
         this._initRouter();
@@ -154,6 +159,13 @@ class Application
         }
     }
 
+    _initConfiguration() {
+        this.getConfiguration().addParameter('restoreModalViews', {
+            'node':    NodeRestoreModalView,
+            'content': ContentRestoreModalView
+        });
+    }
+
     /**
      * Initialize router
      * @private
@@ -168,6 +180,7 @@ class Application
         new BlockRouter();
         new SharedBlockRouter();
         new RedirectionRouter();
+        new TrashItemRouter();
     }
 
     /**

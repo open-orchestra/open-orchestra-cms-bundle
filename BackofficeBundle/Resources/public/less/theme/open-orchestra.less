@@ -953,6 +953,7 @@ a.btn.disabled {
     text-decoration: none;
     margin: 0 0 0 7px;
     vertical-align: text-top;
+    vertical-align: text-top;
     &:focus {
         text-decoration: none;
     }
@@ -1008,12 +1009,17 @@ table.dataTable thead .sorting_desc:after {
     /* sort-by-attributes-alt */
 }
 
-table.dataTable i.fa-clone {
+table.dataTable i.duplicate-icon:hover, table.dataTable i.btn-restore:hover {
     cursor: pointer;
 }
 
-table.ui-sortable .fa.fa-arrows{
-    cursor: pointer;
+table.dataTable i.btn-restore.disabled {
+  cursor: not-allowed;
+  color: #999;
+}
+
+table.ui-sortable .fa.fa-arrows {
+  cursor: pointer;
 }
 
 table.ui-sortable .fa.fa-arrows{

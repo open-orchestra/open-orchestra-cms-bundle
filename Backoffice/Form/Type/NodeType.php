@@ -6,6 +6,8 @@ use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
@@ -202,6 +204,7 @@ class NodeType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => $this->nodeClass,
             'group_enabled' => true,
+            'delete_button' => false,
             'group_render' => array(
                 'properties' => array(
                     'rank' => 0,
@@ -252,6 +255,18 @@ class NodeType extends AbstractType
             ),
         ));
     }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
+        $view->vars['delete_button'] = $options['delete_button'];
+    }
+
 
     /**
      * @return string

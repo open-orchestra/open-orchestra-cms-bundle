@@ -1,0 +1,56 @@
+<h1> <%= Translator.trans('open_orchestra_backoffice.trash_item.title_list') %></h1>
+<form class="form-horizontal search-engine">
+    <div class="row">
+        <div class="form-group col-lg-6">
+            <label for="name" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.trash_item.search_engine.name')%></label>
+            <div class="col-md-7">
+                <input type="text" name='name' class="form-control" id="name">
+            </div>
+        </div>
+        <div class="form-group col-lg-6">
+            <label for="select-type" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.trash_item.search_engine.type') %></label>
+            <div class="col-md-7">
+                <div class="styled-select">
+                    <select name='type' class="form-control" id="type">
+                        <option value=""></option>
+                        <% _.each(filterType, function(type) { %>
+                            <option value="<%= type %>"><%= type %></option>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-6">
+            <label for="date_before" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.trash_item.search_engine.deleted_before')%></label>
+            <div class="col-md-7">
+                <input type="text"
+                       name="date-before" class="form-control datepicker" id="date_before"
+                       data-dateformat="<%= Translator.trans('open_orchestra_backoffice.date_format')%>"
+                >
+                <input type="hidden" name="date-format-before" value="<%= Translator.trans('open_orchestra_backoffice.date_format')%>">
+            </div>
+        </div>
+        <div class="form-group col-lg-6">
+            <label for="date_after" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.trash_item.search_engine.deleted_after')%></label>
+            <div class="col-md-7">
+                <input type="text"
+                       name="date-after" class="form-control datepicker" id="date_after"
+                       data-dateformat="<%= Translator.trans('open_orchestra_backoffice.date_format')%>"
+                >
+                <input type="hidden" name="date-format-after" value="<%= Translator.trans('open_orchestra_backoffice.date_format')%>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-6">
+            <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+        </div>
+    </div>
+</form>
+<div class="trash-item-list">
+</div>
+<div class="bottom-action-buttons">
+    <button class="btn btn-danger btn-delete disabled"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
+</div>

@@ -74,6 +74,9 @@ class Node extends OrchestraModel
                 return this._getSyncUpdateUrl(options);
             case "patch":
                 return Routing.generate('open_orchestra_node_copy_blocks_in_area', urlParameter);
+            case "delete":
+                urlParameter.nodeId = this.get('id');
+                return Routing.generate('open_orchestra_api_node_delete', urlParameter);
         }
     }
 

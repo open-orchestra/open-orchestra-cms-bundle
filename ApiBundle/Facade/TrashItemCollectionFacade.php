@@ -27,4 +27,12 @@ class TrashItemCollectionFacade extends PaginateCollectionFacade
     {
         $this->trashItems[] = $facade;
     }
+
+    /**
+     * @return array
+     */
+    public function getTrashItems()
+    {
+        return $this->trashItems;
+    }
 }

@@ -46,6 +46,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $container->setParameter('open_orchestra_backoffice.block_default_configuration', $config['block_default_configuration']);
         $container->setParameter('open_orchestra_backoffice.template_set', $config['template_set']);
         $container->setParameter('open_orchestra_backoffice.special_page_name', $config['special_page_name']);
+        $container->setParameter('open_orchestra_backoffice.trash_item_type', $config['trash_item_type']);
 
         $configurationRoles = $config['configuration_roles'];
         if ($container->hasParameter('open_orchestra_backoffice.configuration.roles')) {
@@ -65,8 +66,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('group.yml');
         $loader->load('voter.yml');
         $loader->load('validator.yml');
-        $loader->load('restore_entity.yml');
-        $loader->load('remove_trashcan_entity.yml');
+        $loader->load('trashcan_entity.yml');
         $loader->load('usage_finder.yml');
         $loader->load('reference.yml');
         $loader->load('auto_publisher.yml');
@@ -151,7 +151,7 @@ class OpenOrchestraBackofficeExtension extends Extension
             FooterStrategy::NAME => array(
                 'category' => 'open_orchestra_backoffice.block_configuration.category.navigation',
                 'name'     => 'open_orchestra_backoffice.block.footer.title',
-                'description'     => 'open_orchestra_backoffice.block.footer.description',
+                'description' => 'open_orchestra_backoffice.block.footer.description',
             ),
             MenuStrategy::NAME => array(
                 'category' => 'open_orchestra_backoffice.block_configuration.category.navigation',

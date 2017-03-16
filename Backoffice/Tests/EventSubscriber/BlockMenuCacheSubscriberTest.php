@@ -63,7 +63,6 @@ class BlockMenuCacheSubscriberTest extends AbstractBaseTestCase
     {
         return array(
             array(NodeEvents::PATH_UPDATED),
-            array(NodeEvents::NODE_DELETE),
             array(NodeEvents::NODE_CHANGE_STATUS),
         );
     }

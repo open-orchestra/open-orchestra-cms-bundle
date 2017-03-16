@@ -12,7 +12,7 @@ open_orchestra_log:
           message: Message
     node:
         create: Create a new node with node id node_id
-        delete: Delete a node with node id node_id and node name node_name
+        delete: Delete a node with node id node_id
         restore: Restore a node with node id node_id and node name node_name
         update: Update a node with node id node_id, node version node_version and node language node_language
         duplicate: Duplicate a node with node id node_id, node version node_version and node language node_language

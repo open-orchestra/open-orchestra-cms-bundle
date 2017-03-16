@@ -3,11 +3,10 @@
 namespace OpenOrchestra\BackofficeBundle;
 
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ClientConfigurationCompilerPass;
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RemoveTrashcanEntityCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TrashcanEntityCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\FieldToElasticaTypeCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RestoreEntityCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ReferenceCompilerPass;
@@ -32,8 +31,7 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new TwigGlobalsCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());
-        $container->addCompilerPass(new RestoreEntityCompilerPass());
-        $container->addCompilerPass(new RemoveTrashcanEntityCompilerPass());
+        $container->addCompilerPass(new TrashcanEntityCompilerPass());
         $container->addCompilerPass(new FieldToElasticaTypeCompilerPass());
         $container->addCompilerPass(new TemplateCompilerPass());
         $container->addCompilerPass(new ClientConfigurationCompilerPass());

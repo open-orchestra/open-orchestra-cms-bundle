@@ -1,0 +1,24 @@
+parameters:
+    open_orchestra_backoffice.trashcan_entity.manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\TrashcanEntityManager
+    open_orchestra_backoffice.trashcan_entity.node.class: OpenOrchestra\Backoffice\TrashcanEntity\Strategies\TrashCanNodeStrategy
+    open_orchestra_backoffice.trashcan_entity.content.class: OpenOrchestra\Backoffice\TrashcanEntity\Strategies\TrashCanContentStrategy
+
+services:
+    open_orchestra_backoffice.trashcan_entity.manager:
+        class: '%open_orchestra_backoffice.trashcan_entity.manager.class%'
+
+    open_orchestra_backoffice.trashcan_entity.node_version:
+        class: '%open_orchestra_backoffice.trashcan_entity.node.class%'
+        arguments:
+            - '@open_orchestra_model.repository.node'
+            - '@event_dispatcher'
+            - '@open_orchestra_backoffice.manager.node'
+        tags:
+            - { name: open_orchestra_backoffice.trashcan_entity.strategy }
+    open_orchestra_backoffice.trashcan_entity.content_version:
+        class: '%open_orchestra_backoffice.trashcan_entity.content.class%'
+        arguments:
+            - '@open_orchestra_model.repository.content'
+            - '@event_dispatcher'
+        tags:
+            - { name: open_orchestra_backoffice.trashcan_entity.strategy }

@@ -1,6 +1,8 @@
 import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
 import FlashMessage     from '../../../Service/FlashMessage/FlashMessage'
 import ApplicationError from '../../../Service/Error/ApplicationError'
+import ConfirmModalView from '../../ConfirmModal/View/ConfirmModalView'
+import Application      from '../../../Application/Application'
 
 let FormViewButtonsMixin = (superclass) => class extends superclass {
 
@@ -11,7 +13,7 @@ let FormViewButtonsMixin = (superclass) => class extends superclass {
         super.preinitialize();
         this.events = this.events || {};
         this.events['click button.submit-continue-form'] = '_submit';
-        this.events['click button.delete-button'] = '_deleteElement';
+        this.events['click button.delete-button:not(.disabled)'] = '_confirmDelete';
     }
 
     /**
@@ -46,6 +48,29 @@ let FormViewButtonsMixin = (superclass) => class extends superclass {
         }
         Backbone.Events.trigger('form:deactivate', this);
         Backbone.history.loadUrl(Backbone.history.fragment);
+    }
+
+    /**
+     * Show modal confirm to delete models
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _confirmDelete(event) {
+        event.stopPropagation();
+        let confirmModalView = new ConfirmModalView({
+            confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove.title'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove.message'),
+            yesCallback: this._deleteElement,
+            context: this
+        });
+
+        Application.getRegion('modal').html(confirmModalView.render().$el);
+        confirmModalView.show();
+
+        return false;
     }
 
     /**

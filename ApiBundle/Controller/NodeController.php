@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -13,9 +14,11 @@ use OpenOrchestra\ModelInterface\BlockEvents;
 use OpenOrchestra\ModelInterface\BlockNodeEvents;
 use OpenOrchestra\ModelInterface\Event\BlockEvent;
 use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
+use OpenOrchestra\ModelInterface\Event\NodeDeleteEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -75,20 +78,30 @@ class NodeController extends BaseController
     /**
      * @param string $nodeId
      *
-     * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")
+     * @Config\Route("/delete/{nodeId}", name="open_orchestra_api_node_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
+     * @throws NodeNotDeletableException
      */
     public function deleteAction($nodeId)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSiteSortedByVersion($nodeId, $siteId);
-        $node = !empty($nodes) ? $nodes[0] : null;
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+
+        if (
+            $nodeId === NodeInterface::ROOT_NODE_ID ||
+            true === $nodeRepository->hasNodeIdWithoutAutoUnpublishToState($nodeId, $siteId) ||
+            $nodeRepository->countByParentId($nodeId, $siteId) > 0
+        ) {
+            throw new NodeNotDeletableException();
+        }
+
+        $node = $nodeRepository->findOneByNodeAndSite($nodeId, $siteId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $node);
 
-        $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
-        $this->get('object_manager')->flush();
+        $nodeRepository->softDeleteNode($nodeId, $siteId);
+        $this->dispatchEvent(NodeEvents::NODE_DELETE, new NodeDeleteEvent($nodeId, $siteId));
 
         return array();
     }
@@ -470,7 +483,6 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
         $nodeSource = clone $node;
-
         $this->get('open_orchestra_api.transformer_manager')->get('node')->reverseTransform($facade, $node);
         $status = $node->getStatus();
         if ($status !== $nodeSource->getStatus()) {

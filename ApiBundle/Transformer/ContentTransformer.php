@@ -60,6 +60,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade = $this->newFacade();
         $facade->id = $content->getId();
         $facade->contentId = $content->getContentId();
+        $facade->contentType = $content->getContentType();
         $facade->name = $content->getName();
         $facade->version = $content->getVersion();
         $facade->versionName = $content->getVersionName();
@@ -79,12 +80,10 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
-            $publishedContents = $this->contentRepository->findAllPublishedByContentId($content->getContentId());
-            $isUsed = false;
-            foreach ($publishedContents as $publishedContent) {
-                $isUsed = $isUsed || $publishedContent->isUsed();
-            }
-            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$isUsed);
+            $facade->addRight('can_delete',(
+                false === $this->contentRepository->hasContentIdWithoutAutoUnpublishToState($content->getContentId()) &&
+                $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content)
+            ));
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
         }
 

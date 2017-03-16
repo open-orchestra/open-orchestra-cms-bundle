@@ -134,7 +134,7 @@ class ContentRouter extends OrchestraRouter
                         confirmMessage: Translator.trans('open_orchestra_backoffice.content.confirm_create.message'),
                         yesCallback: yesCallback,
                         context: this,
-                        noCallback: noCallback,
+                        noCallback: noCallback
                     });
 
                     Application.getRegion('modal').html(confirmModalView.render().$el);

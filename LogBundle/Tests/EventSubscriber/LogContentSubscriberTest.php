@@ -57,10 +57,12 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
      */
     public function testContentDelete()
     {
-        $this->subscriber->contentDelete($this->contentEvent);
+        $contentDeleteEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentDeleteEvent');
+        Phake::when($contentDeleteEvent)->getContentId()->thenReturn($this->content->getContentId());
+
+        $this->subscriber->contentDelete($contentDeleteEvent);
         $this->assertEventLogged('open_orchestra_log.content.delete', array(
             'content_id' => $this->content->getContentId(),
-            'content_name' => $this->content->getName(),
         ));
     }
 

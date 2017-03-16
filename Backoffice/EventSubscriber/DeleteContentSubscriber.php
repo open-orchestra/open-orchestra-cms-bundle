@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\ContentEvents;
+use OpenOrchestra\ModelInterface\Event\ContentDeleteEvent;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
@@ -12,14 +13,13 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 class DeleteContentSubscriber extends  AbstractDeleteSubscriber
 {
     /**
-     * @param ContentEvent $event
+     * @param ContentDeleteEvent $event
      */
-    public function addContentTrashCan(ContentEvent $event)
+    public function addContentTrashCan(ContentDeleteEvent $event)
     {
-        $content = $event->getContent();
-        $name = $content->getName();
+        $name = $event->getContentId();
         $type = ContentInterface::TRASH_ITEM_TYPE;
-        $this->createTrashItem($content, $name, $type);
+        $this->createTrashItem($event->getContentId(), $event->getSiteId(), $name, $type);
     }
 
     /**

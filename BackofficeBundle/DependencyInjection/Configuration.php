@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
@@ -51,6 +53,14 @@ class Configuration implements ConfigurationInterface
                     'maxAge',
                     'label',
                     'style'
+                ))
+            ->end()
+            ->arrayNode('trash_item_type')
+                ->info('List of trash item type')
+                ->prototype('scalar')->end()
+                ->defaultValue(array(
+                    NodeInterface::TRASH_ITEM_TYPE,
+                    ContentInterface::TRASH_ITEM_TYPE
                 ))
             ->end()
             ->append($this->addFieldTypesParameter())

@@ -1,3 +1,3 @@
 OpenOrchestra\ModelInterface\Model\TrashItemInterface:
     constraints:
-        - OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveNode: { groups: [remove] }
+        - OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemove: { groups: [remove] }

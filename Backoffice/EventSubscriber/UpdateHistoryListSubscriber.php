@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\ModelInterface\Event\NodeDeleteEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -48,14 +49,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     public function addContentCreationHistory(ContentEvent $event)
     {
         $this->addContentHistory($event, ContentEvents::CONTENT_CREATION);
-    }
-
-    /**
-     * @param ContentEvent $event
-     */
-    public function addContentDeleteHistory(ContentEvent $event)
-    {
-        $this->addContentHistory($event, ContentEvents::CONTENT_DELETE);
     }
 
     /**
@@ -120,14 +113,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
     public function addNodeCreationHistory(NodeEvent $event)
     {
         $this->addNodeHistory($event, NodeEvents::NODE_CREATION);
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
-    public function addNodeDeleteHistory(NodeEvent $event)
-    {
-        $this->addNodeHistory($event, NodeEvents::NODE_DELETE);
     }
 
     /**
@@ -221,7 +206,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
         return array(
             ContentEvents::CONTENT_UPDATE => 'addContentUpdateHistory',
             ContentEvents::CONTENT_CREATION => 'addContentCreationHistory',
-            ContentEvents::CONTENT_DELETE => 'addContentDeleteHistory',
             ContentEvents::CONTENT_RESTORE => 'addContentRestoreHistory',
             ContentEvents::CONTENT_DUPLICATE => 'addContentDuplicateHistory',
             ContentEvents::CONTENT_CHANGE_STATUS => 'addContentChangeStatusHistory',
@@ -230,7 +214,6 @@ class UpdateHistoryListSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_UPDATE_BLOCK => 'addNodeUpdateBlockHistory',
             NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'addNodeUpdateBlockPositionHistory',
             NodeEvents::NODE_CREATION => 'addNodeCreationHistory',
-            NodeEvents::NODE_DELETE => 'addNodeDeleteHistory',
             NodeEvents::NODE_RESTORE => 'addNodeRestoreHistory',
             NodeEvents::NODE_DUPLICATE => 'addNodeDuplicateHistory',
             NodeEvents::NODE_ADD_LANGUAGE => 'addNodeAddLanguageHistory',

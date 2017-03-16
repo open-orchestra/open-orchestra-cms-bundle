@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Event\NodeDeleteEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 
@@ -12,14 +12,13 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 class DeleteNodeSubscriber extends AbstractDeleteSubscriber
 {
     /**
-     * @param NodeEvent $event
+     * @param NodeDeleteEvent $event
      */
-    public function addNodeTrashCan(NodeEvent $event)
+    public function addNodeTrashCan(NodeDeleteEvent $event)
     {
-        $node = $event->getNode();
-        $name = $node->getName() . " (".$node->getLanguage()." - #".$node->getVersion().")";
+        $name = $event->getNodeId();
         $type = NodeInterface::TRASH_ITEM_TYPE;
-        $this->createTrashItem($node, $name, $type);
+        $this->createTrashItem($event->getNodeId(), $event->getSiteId(), $name, $type);
     }
 
     /**

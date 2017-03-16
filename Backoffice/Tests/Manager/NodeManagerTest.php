@@ -176,37 +176,6 @@ class NodeManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test deleteTree
-     */
-    public function testDeleteTree()
-    {
-        $nodePath = 'nodePath';
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node)->getPath()->thenReturn($nodePath);
-        Phake::when($node)->isDeleted()->thenReturn(false);
-
-        $nodes = new ArrayCollection();
-        $nodes->add($node);
-
-        $subNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($subNode)->isDeleted()->thenReturn(false);
-        $subNodes = new ArrayCollection();
-        $subNodes->add($subNode);
-        $subNodes->add($subNode);
-
-        $siteId = $this->contextManager->getCurrentSiteId();
-        Phake::when($this->nodeRepository)->findByIncludedPathAndSiteId($nodePath, $siteId)->thenReturn($subNodes);
-
-        $this->manager->deleteTree($nodes);
-
-        Phake::verify($node, Phake::times(1))->setDeleted(true);
-        Phake::verify($subNode, Phake::times(2))->setDeleted(true);
-        Phake::verify($node, Phake::times(1))->setOrder(NodeInterface::DELETED_ORDER);
-        Phake::verify($subNode, Phake::times(2))->setOrder(NodeInterface::DELETED_ORDER);
-        Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
-    }
-
-    /**
      * test hydrateNodeFromNodeId
      */
     public function testHydrateNodeFromNodeId()

@@ -3,9 +3,11 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
+use OpenOrchestra\ModelInterface\Event\ContentDeleteEvent;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -27,6 +29,29 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 class ContentController extends BaseController
 {
     use ListStatus;
+
+    /**
+     * @param string  $contentId
+     *
+     * @Config\Route("/{contentId}", name="open_orchestra_api_content_show")
+     * @Config\Method({"GET"})
+     *
+     * @return FacadeInterface
+     * @throws ContentNotFoundHttpException
+     */
+    public function showAction($contentId)
+    {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
+        $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
+
+        $content = $this->findOneContent($contentId, $language);
+
+        if (!$content) {
+            throw new ContentNotFoundHttpException();
+        }
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
+    }
 
     /**
      * @param Request $request
@@ -126,36 +151,6 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
-     *
-     * @Config\Route("/delete-multiple", name="open_orchestra_api_content_delete_multiple")
-     * @Config\Method({"DELETE"})
-     *
-     * @return Response
-     */
-    public function deleteContentsAction(Request $request)
-    {
-        $format = $request->get('_format', 'json');
-        $facade = $this->get('jms_serializer')->deserialize(
-            $request->getContent(),
-            $this->getParameter('open_orchestra_api.facade.content_collection.class'),
-            $format
-        );
-        $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
-        $contentIds = array();
-        foreach ($contents as $content) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$this->isContentIdUsed($content->getContentId())) {
-                $contentIds[] = $content->getContentId();
-                $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
-            }
-        }
-
-        $this->get('open_orchestra_model.repository.content')->removeContentIds($contentIds);
-
-        return array();
-    }
-
-    /**
-     * @param Request $request
      * @param string  $contentId
      * @param string  $language
      *
@@ -179,7 +174,7 @@ class ContentController extends BaseController
             foreach ($contents as $content) {
                 if ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$content->getStatus()->isPublishedState()) {
                     $storageIds[] = $content->getId();
-                    $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
+                    $this->dispatchEvent(ContentEvents::CONTENT_DELETE_VERSION, new ContentEvent($content));
                 }
             }
             $this->get('open_orchestra_model.repository.content')->removeContentVersion($storageIds);
@@ -189,12 +184,47 @@ class ContentController extends BaseController
     }
 
     /**
-     * @param string $contentId
+     * @param Request $request
      *
-     * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
+     * @Config\Route("/delete-multiple", name="open_orchestra_api_content_delete_multiple")
      * @Config\Method({"DELETE"})
      *
      * @return Response
+     */
+    public function deleteContentsAction(Request $request)
+    {
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_api.facade.content_collection.class'),
+            $format
+        );
+        $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
+        $repository = $this->get('open_orchestra_model.repository.content');
+
+        foreach ($contents as $content) {
+            $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
+            $contentId = $content->getContentId();
+            if (
+                false === $repository->hasContentIdWithoutAutoUnpublishToState($contentId) &&
+                $this->isGranted(ContributionActionInterface::DELETE, $content)
+            ) {
+                $repository->softDeleteContent($contentId);
+                $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentDeleteEvent($contentId, $content->getSiteId()));
+            }
+        }
+
+        return array();
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @Config\Route("/delete/{contentId}", name="open_orchestra_api_content_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     * @throws ContentNotDeletableException
      */
     public function deleteAction($contentId)
     {
@@ -202,9 +232,12 @@ class ContentController extends BaseController
         $content = $repository->findOneByContentId($contentId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
 
-        if (!$this->isContentIdUsed($contentId)) {
-            $repository->removeContentIds(array($contentId));
+        if (true === $repository->hasContentIdWithoutAutoUnpublishToState($contentId)) {
+            throw new ContentNotDeletableException();
         }
+
+        $repository->softDeleteContent($contentId);
+        $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentDeleteEvent($contentId, $content->getSiteId()));
 
         return array();
     }
@@ -333,21 +366,5 @@ class ContentController extends BaseController
         $content = $contentRepository->findOneByLanguageAndVersion($contentId, $language, $version);
 
         return $content;
-    }
-
-    /**
-     * @param string   $contentId
-     *
-     * @return boolean
-     */
-    protected function isContentIdUsed($contentId)
-    {
-        $publishedContents = $this->get('open_orchestra_model.repository.content')->findAllPublishedByContentId($contentId);
-        $isUsed = false;
-        foreach ($publishedContents as $publishedContent) {
-            $isUsed = $isUsed || $publishedContent->isUsed();
-        }
-
-        return $isUsed;
     }
 }

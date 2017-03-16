@@ -67,6 +67,7 @@ class NodeTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->nodeClass,
+            'delete_button' => false,
             'group_enabled' => true,
             'group_render' => array(
                 'properties' => array(

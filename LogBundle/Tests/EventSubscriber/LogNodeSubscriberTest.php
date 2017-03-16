@@ -67,9 +67,14 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
      */
     public function testNodeDelete()
     {
-        $this->subscriber->nodeDelete($this->nodeEvent);
+        $nodeDeleteEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeDeleteEvent');
+        Phake::when($nodeDeleteEvent)->getNodeId()->thenReturn($this->node->getNodeId());
 
-        $this->assertEventLogged('open_orchestra_log.node.delete', $this->context);
+        $this->subscriber->nodeDelete($nodeDeleteEvent);
+
+        $this->assertEventLogged('open_orchestra_log.node.delete', array(
+            'node_id' => $this->node->getNodeId(),
+        ));
     }
 
     /**
