@@ -3,11 +3,9 @@
 namespace OpenOrchestra\LogBundle\Controller;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Symfony\Component\HttpFoundation\Request;
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\LogBundle\Model\LogInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
@@ -22,8 +20,6 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
  */
 class LogController extends BaseController
 {
-    use HandleRequestDataTable;
-
     /**
      * @param Request $request
      *

@@ -6,45 +6,13 @@ use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
+use Solution\MongoAggregation\Pipeline\Stage;
 
 /**
  * Class GroupRepository
  */
 class GroupRepository extends AbstractAggregateRepository implements GroupRepositoryInterface
 {
-    /**
-     * Find all groups linked to a site
-     *
-     * @return array
-     */
-    public function findAllWithSite()
-    {
-        $qa = $this->createAggregationQuery();
-        $filter = array(
-            'site' => array('$ne' => null)
-        );
-        $qa->match($filter);
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
-     * Find all groups linked to site with $id
-     *
-     * @param string $id   The site id
-     * @return array
-     */
-    public function findAllWithSiteId($id)
-    {
-        $qa = $this->createAggregationQuery();
-        $filter = array(
-            'site.$id' => new \MongoId($id)
-        );
-        $qa->match($filter);
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
     /**
      * @param PaginateFinderConfiguration $configuration
      * @param array                       $siteIds

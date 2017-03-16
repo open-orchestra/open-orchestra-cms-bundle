@@ -1,47 +1,15 @@
-open_orchestra_backoffice:
-    block:
-        login:
-            title: Connexion
-
 open_orchestra_user_admin:
-    left_menu:
-        administration:
-            user:
-                list: Utilisateurs
-    user:
-        profile: Profil
-        password: Mot de passe
-    table:
-        username: Nom d'utilisateur
-        groups: Groupes
-        email: Email
-        first_name: Prénom
-        last_name: Nom
-        delete_confirm:
-            title: Supprimer cette utilisateur du groupe ?
-    password:
-        title: Mot de passe
     block:
         login:
             title: Connexion
             description: Affiche un formulaire pour ce logger.
     form:
-        title: Général
-        super_admin_help_text: Cet utilisateur est super admin, il est donc impossible de sélectionner des droits car il possède déjà tous les accès.
-        registration_user:
-            first_name: Prénom
-            last_name: Nom
-            roles: Rôles
         user:
             firstName: Prénom
             lastName: Nom
             email: Email
-            password: Mot de passe
-            password_confirmation: Confirmation du mot de passe
-            password_mismatch: Mots de passe et confirmation différents
             groups: Groupe(s) d'appartenance
             language: Langage par défaut
-            success: L'utilisateur a été mis à jour
             group:
                 information: Informations
                 authentication: Authentification

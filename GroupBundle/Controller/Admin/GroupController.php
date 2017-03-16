@@ -92,8 +92,7 @@ class GroupController extends AbstractAdminController
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(GroupEvents::GROUP_UPDATE, new GroupEvent($group));
         }
-        $title = $this->get('translator')->trans('open_orchestra_group.form.group.title');
 
-        return $this->renderAdminForm($form, array('title' => $title));
+        return $this->renderAdminForm($form);
     }
 }

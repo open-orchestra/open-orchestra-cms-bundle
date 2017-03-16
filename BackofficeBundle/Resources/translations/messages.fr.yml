@@ -1,7 +1,5 @@
 open_orchestra_backoffice:
     no_translation: Aucune traduction
-    modal:
-        close: Fermer
     scheme:
         http: http
         https: https
@@ -10,77 +8,23 @@ open_orchestra_backoffice:
         fr: Français
         es: Español
         de: Deutsch
-    error_txt: Impossible de terminer votre opération
-    clear_local_storage:
-        tooltip: '*Attention ! Ceci réinitialisera tous les settings de widgets.*'
-        title: Purger le Local Storage
-        text: Voulez-vous REINITIALISER toutes vos configurations de widgets sauvegardées et purger votre Local Storage ?
-    internal_link:
-        title: Lien interne
     form:
-        personnal_account: Mon compte
         submit: Sauvegarder
         submit_continue: Sauvegarder et continuer
-        edit: Editer
-        duplicate: Dupliquer
         delete: Supprimer
         global_error: Le formulaire contient des erreurs
-        delete_confirm:
-            title: Supprimer cet élément ?
-            text: La suppression sera définitive
         add: Ajouter
-        select: Sélectionner
         swchoff:
             on: Oui
             off: Non
-        javascript:
-          error: Une erreur est survenue dans votre navigateur lors de la soumission du formulaire!
         allowed_characters:
           helper: "Caractères autorisés : a-z, 0-9, _, -"
         collection:
             close_forms: Fermer la liste
             open_forms: Déployer la liste
-            open_form: Editer
-            close_form: Fermer
             new_form: Nouvelle entrée
-        status:
-            name: Nom
-            published:
-                label: Publié
-                helper: Si réglé à "Oui", les contenus et noeuds avec ce statut seront considérés comme "Publiés"
-            initial:
-                label: Statut initial
-                helper: Si réglé à "Oui", ce statut sera utilisé pour initier les nouveaux contenus et noeuds. Le régler à "Oui" supprimera ce réglage des autres statuts car un seul statut peut être "Initial".
-            auto_publish_from:
-                label: Statut permettant la publication automatique
-                helper: Un noeud avec ce statut est automatiquement publié quand sa date de publication est venue.
-            auto_unpublish_to:
-                label: Statut de dépublication automatique
-                helper: Si réglé à "Oui", ce statut sera utilisé pour dépublier les noeuds par le processus de dépublication automatique. Le régler à "Oui" supprimera ce réglage des autres statuts car un seul statut peut avoir cette fonctionnalité.
-            labels: Libellé
-            color:
-                red: Rouge
-                orange: Orange
-                green: Vert
-                grayDark: Gris
-                blue: Bleu
-            display_color: Couleur du statut
-            creation: Le nouveau statut a été créé
-            success: Le statut a été modifié
-            translation_state: Status de traduction
-            blocked_edition:
-                label: édition bloquée
-                helper: Si réglé à "Oui", les contenus ayant ce statut ne peuvent être modifiés.
-            out_of_workflow:
-                label: En dehors du workflow de validation
-                helper: Si réglé à "Oui", ce statut sera utilisé pour caractériser des contenus n'ayant pas de workflow de validation.
         field_option:
             label: Option existante
-            new: Nouvelle option
-            add: Ajouter une option
-            delete: Supprimer l'option
-            key: Clé
-            value: Valeur
         field_type:
             label: Champ existant
             add: Ajout d'un champ
@@ -91,17 +35,12 @@ open_orchestra_backoffice:
             default_value: Valeur par défaut
             searchable: Recherchable
             orderable: Ordonnable
-            orderDirection: Direction de l'ordre
-            position: Position
-            additionalParameters: Paramètres supplémentaires
             order_direction_choice:
               asc: Croissant
               desc: Décroissant
-            type_searchable: Type de champ de recherche
             translatable: Champ multilingue
             listable: Restituer dans le tableau back-office
             type: Type
-            options: Champ existant
             field_searchable_view:
                 text: Texte
                 date: Date
@@ -128,15 +67,10 @@ open_orchestra_backoffice:
             scheme: Protocole par défaut
             domain: Domaine
             name: Nom
-            aliases: Alias
-            alias: Alias
             add_alias: Ajouter un alias
-            default_language: Langue par défaut
             language: Langue
             prefix: Préfix pour la langue
             main: Alias principal
-            blocks: Blocs disponibles
-            meta_keywords: Meta keywords
             meta_description: Meta description
             meta_index: Meta index
             meta_follow: Meta follow
@@ -172,10 +106,7 @@ open_orchestra_backoffice:
             creation: Le contenu a été créé
             name: Nom du contenu
             status: Statut
-            language: Langue
-            linked_to_site: Partagé sur les autres sites
             keywords: Mots-clé
-            content_id: Id du contenu
             publish_date: Date de publication automatique
             unpublish_date: Date de dépublication automatique
             group:
@@ -191,10 +122,8 @@ open_orchestra_backoffice:
             content_type_id: Id
             names: Libellé back-office
             version: Version
-            status: Statut
             linked_to_site: Partagé sur les autres sites
             always_shared: Toujours (ou à la demande)
-            default_display: Visible par défaut dans les listes du Backoffice
             default_listable_label:
                 name: Nom
                 status_label: Etat workflow
@@ -223,9 +152,6 @@ open_orchestra_backoffice:
                 share: Partage des contenus
                 visible: Eléments à afficher dans la liste back-office
                 version: Version
-        template:
-            success: Le gabarit a été sauvegardé
-            name: Nom
         node:
             success: La page a été sauvegardée
             title: Titre
@@ -235,18 +161,14 @@ open_orchestra_backoffice:
             unpublish_date: Date de dépublication automatique
             status: Status
             save_old_published_version: Enregistrer une copie de l'ancienne version publiée
-            node_type: Type de page
             priority:
                 label: Importance relative par rapport aux autres pages du site (pour le sitemap)
                 helper: Importance relative par rapport aux autres pages du site (pour le sitemap)
             canonical: Page canonique
-            alias: Alias
             route_pattern:
                 name : URL principale
                 helper: |
                     Types de pattern : simple (pattern), absolu (/pattern), avec variable (/{contentId})
-            language: Langue
-            status: Statut
             in_menu: Affiché dans les menus
             in_footer: Affiché dans le pied de page
             keywords: Mot clés
@@ -281,22 +203,6 @@ open_orchestra_backoffice:
             monthly: Mensuel
             yearly: Annuel
             never: Jamais
-        area:
-            success: La zone a été modifiée
-            html_class: Classe html pour la zone
-            label: Libellé de la zone
-            area_id: Id de la zone
-            width: Taille de la zone
-            add_block_title: Ajouter un block
-            new_row_title: Nouvelle ligne
-            edit_row_title: Editer la ligne
-            edit_column_title: Editer la colonne
-            column_layout:
-                label: Réparition des colonnes
-                helper: "Répartition des colonnes: 10%, auto, 100px"
-            layout:
-                select_layout: Sélectionner une option
-                manually: Ou le spécifier manuellement
         block:
             success: Le bloc a été modifié
             creation: Le bloc a été créé
@@ -333,7 +239,6 @@ open_orchestra_backoffice:
             content_type: Type de contenu à afficher
             content_keyword: Mot-clé à afficher
             choice_type: Type de choix
-            use: Utiliser les champs de recherche pour obtenir une liste de contenus filtrés
             refresh_content_list: Rafraichir la liste des contenus
         orchestra_fields:
             max_length: Longueur max
@@ -457,8 +362,6 @@ open_orchestra_backoffice:
         language_list:
             title: Sélection de langue
             description: Affiche la liste déroulante avec toutes les langues du site.
-        delete_question: Voulez vous supprimer ce bloc ?
-        delete_explanation: La suppression sera définitive.
         video:
             title: Vidéo
             description: Insère une vidéo Youtube, Dailymotion ou Vimeo
@@ -526,99 +429,14 @@ open_orchestra_backoffice:
             google_analytics: Google Analytics
             xiti_free: Xiti Free 7.5
             site_id: "Id de site (Google Analytics : Id de suivi / Xiti : paramètre 's')"
-    element:
-        version:
-            create: Nouvelle version
-            display: version
-            updated: dernière mise à jour
-        preview: Prévisualisation
-        last_update:
-            at: Dernière mise à jour
-            by: par
     node:
-        version:
-            create: Nouvelle version
-            display: version
-        preview: Prévisualisation
-        configuration: Editer
-        last_update:
-            at: Dernière mise à jour
-            by: par
-        delete:
-            button: Supprimer
-            text: Cette opération est définitive.
-            title: Souhaitez-vous supprimer ce noeud ?
-        blocks: Blocs
         special_page:
             default: Defaut
-    status:
-        none_available: Pas de statut disponible
-    top_menu:
-        collapse_menu: Replier le menu
-
-        improve_security: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
-    areas:
-        delete_question: Souhaitez-vous supprimer cette zone ?
-        delete_explanation: Cette opération est non réversible.
-        delete_error_title: Suppression de zone
-        delete_error_txt: Erreur durant la suppression de la zone, veuillez recharger la page
-        delete_column_question: Souhaitez-vous supprimer cette colonne ?
-        delete_row_question: Souhaitez-vous supprimer cette ligne ?
-        delete_explanation: Cette opération est non réversible.
-        delete_error_txt: Erreur durant la suppression de la zone, veuillez recharger la page
-        edit_column_label: Editer la colonne
-        edit_row_label: Editer la ligne
-        new_row_label: Ligne
-        add_block_label: Bloc
-    templates:
-        delete:
-            title: Souhaitez-vous supprimer ce gabarit ?
-            text: Cette opération est définitive.
     command:
         node:
             success: Les références des pages sont cohérentes.
             error: Les références des pages ne sont pas cohérentes.
         empty_choices: Choisissez un table à vérifier.
-    global:
-        back_to_list: Retour à la liste
-    smart_confirm:
-        button:
-            yes: Oui
-            no: Non
-    table:
-        search : Rechercher
-        content_types:
-            content_type_id: Id
-            name: Nom
-            version: Version
-            status_label: Statut
-            linked_to_site: Liaison au site
-        group:
-            name: Nom
-            label: Libellé
-        redirection:
-            site_name: Nom du site
-            route_pattern: Masque de la route
-            locale: Langue
-            redirection: Redirection
-            permanent: Permanente
-        status:
-            label: Nom
-            published: Publié
-            display_color: Couleur
-            initial: Initial
-            auto_publish_from: Autorise la publication automatique
-            auto_unpublish_to: Etat de dépublication automatique
-        api_client:
-            name: Nom
-            trusted: Confiance
-        trashcan:
-          name: Nom
-          deleted_at: Supprimé le
-          restore_confirm_txt: Vous voulez vous restaurer cet élément ?
-          restore_confirm_title: Restaurer
-          remove_confirm_txt: Vous voulez vous supprimer cet élément définitivement?
-          remove_confirm_title: Suppression définitive
     template_set:
         default:
             label: Ensemble par défaut
