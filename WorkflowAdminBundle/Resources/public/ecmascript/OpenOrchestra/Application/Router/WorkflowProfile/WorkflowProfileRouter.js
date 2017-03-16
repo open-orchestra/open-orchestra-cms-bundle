@@ -24,11 +24,11 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            listWorkflowProfile : 'course-workflow',
-            newWorkflowProfile  : 'course-workflow',
-            editWorkflowProfile : 'course-workflow'
+            listWorkflowProfile : 'navigation-workflow',
+            newWorkflowProfile  : 'navigation-workflow',
+            editWorkflowProfile : 'navigation-workflow'
         };
     }
 
@@ -37,9 +37,9 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
      */
     getBreadcrumbHighlight() {
         return {
-            listWorkflowProfile : 'course-profile',
-            newWorkflowProfile  : 'course-profile',
-            editWorkflowProfile : 'course-profile'
+            listWorkflowProfile : 'navigation-profile',
+            newWorkflowProfile  : 'navigation-profile',
+            editWorkflowProfile : 'navigation-profile'
         };
     }
 

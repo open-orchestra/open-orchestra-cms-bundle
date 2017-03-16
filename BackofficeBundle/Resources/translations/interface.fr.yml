@@ -22,7 +22,7 @@ open_orchestra_backoffice:
     add: Ajouter
     back_to_list: Retour à la liste
     back: Retour
-    navigation:
+    menu:
         hide_menu: Réduire le menu
         dashboard:
           title: Tableau de bord

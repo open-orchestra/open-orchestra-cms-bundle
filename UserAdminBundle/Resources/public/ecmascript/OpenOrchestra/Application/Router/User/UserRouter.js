@@ -30,10 +30,10 @@ class UserRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label:Translator.trans('open_orchestra_user_admin.navigation.user.title')
+                label:Translator.trans('open_orchestra_user_admin.menu.user.title')
             },
             {
-                label: Translator.trans('open_orchestra_user_admin.navigation.user.users'),
+                label: Translator.trans('open_orchestra_user_admin.menu.user.users'),
                 link: '#'+Backbone.history.generateUrl('listUser')
             }
         ]
@@ -42,12 +42,12 @@ class UserRouter extends OrchestraRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            editSelfUser : 'course-user',
-            editUser     : 'course-user',
-            listUser     : 'course-user',
-            newUser      : 'course-user',
+            editSelfUser : 'navigation-user',
+            editUser     : 'navigation-user',
+            listUser     : 'navigation-user',
+            newUser      : 'navigation-user',
         };
     }
 

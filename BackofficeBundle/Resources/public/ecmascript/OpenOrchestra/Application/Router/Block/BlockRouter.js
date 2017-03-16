@@ -33,10 +33,10 @@ class BlockRouter extends AbstractBlockRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.node'),
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.node'),
                 link: '#'+Backbone.history.generateUrl('showNodes')
             }
         ]
@@ -45,12 +45,12 @@ class BlockRouter extends AbstractBlockRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            newBlockListComponent : 'course-node',
-            newBlockListAvailable : 'course-node',
-            editBlock             : 'course-node',
-            newBlockForm          : 'course-node'
+            newBlockListComponent : 'navigation-node',
+            newBlockListAvailable : 'navigation-node',
+            editBlock             : 'navigation-node',
+            newBlockForm          : 'navigation-node'
         };
     }
 

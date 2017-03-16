@@ -29,10 +29,10 @@ class KeywordRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.platform.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.platform.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.platform.tag'),
+                label: Translator.trans('open_orchestra_backoffice.menu.platform.tag'),
                 link: '#'+Backbone.history.generateUrl('listKeyword')
             }
         ]
@@ -41,11 +41,11 @@ class KeywordRouter extends OrchestraRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            newKeyword  : 'course-keyword',
-            editKeyword : 'course-keyword',
-            listKeyword : 'course-keyword'
+            newKeyword  : 'navigation-keyword',
+            editKeyword : 'navigation-keyword',
+            listKeyword : 'navigation-keyword'
         };
     }
 

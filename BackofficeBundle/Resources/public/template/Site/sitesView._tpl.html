@@ -1,5 +1,7 @@
 <div class="top-action-buttons">
-    <a class="btn btn-info" href="#<%= Backbone.history.generateUrl(inPlatformContext ? 'newPlatformSite' : 'newSite') %>" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+    <% if (!inPlatformContext) { %>
+        <a class="btn btn-info" href="#<%= Backbone.history.generateUrl('newSite') %>" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+    <% } %>
 </div>
 <h1> <%= Translator.trans('open_orchestra_backoffice.site.title_list') %></h1>
 <form class="form-horizontal search-engine">

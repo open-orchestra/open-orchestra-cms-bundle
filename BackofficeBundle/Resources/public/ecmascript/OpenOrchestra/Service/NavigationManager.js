@@ -1,15 +1,15 @@
 /**
- * @class CourseManager
+ * @class NavigationManager
  */
-class CourseManager
+class NavigationManager
 {
     /**
      * initialize
-     * @param {Object} navigationView
+     * @param {Object} menuView
      * @param {Object} breadcrumbView
      */
-    initialize(navigationView, breadcrumbView) {
-        this._navigationView = navigationView;
+    initialize(menuView, breadcrumbView) {
+        this._menuView = menuView;
         this._breadcrumbView = breadcrumbView;
     }
 
@@ -31,10 +31,10 @@ class CourseManager
     /**
      * @param {Array} items
      */
-    highlightNavigation(item) {
-        this._navigationView.highlight(item);
+    highlightMenu(item) {
+        this._menuView.highlight(item);
     }
 }
 
-// unique instance of CourseManager
-export default (new CourseManager)
+// unique instance of NavigationManager
+export default (new NavigationManager)

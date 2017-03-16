@@ -33,10 +33,10 @@ class SharedBlockRouter extends AbstractBlockRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.shared_block'),
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.shared_block'),
                 link: '#'+Backbone.history.generateUrl('listSharedBlock')
             }
         ]
@@ -45,12 +45,12 @@ class SharedBlockRouter extends AbstractBlockRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            listSharedBlock             : 'course-shared-block',
-            editSharedBlock             : 'course-shared-block',
-            newSharedBlockListComponent : 'course-shared-block',
-            newSharedBlock              : 'course-shared-block'
+            listSharedBlock             : 'navigation-shared-block',
+            editSharedBlock             : 'navigation-shared-block',
+            newSharedBlockListComponent : 'navigation-shared-block',
+            newSharedBlock              : 'navigation-shared-block'
         };
     }
 

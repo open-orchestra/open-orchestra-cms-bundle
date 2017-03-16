@@ -203,28 +203,28 @@ module.exports = {
       dest: 'web/images/logo.png'
     },
     menu_dashboard: {
-      src: 'web/bundles/openorchestrabackoffice/images/navigation/dashboard.png',
-      dest: 'web/images/navigation/dashboard.png'
+      src: 'web/bundles/openorchestrabackoffice/images/menu/dashboard.png',
+      dest: 'web/images/menu/dashboard.png'
     },
     menu_configuration: {
-      src: 'web/bundles/openorchestrabackoffice/images/navigation/configuration.png',
-      dest: 'web/images/navigation/configuration.png'
+      src: 'web/bundles/openorchestrabackoffice/images/menu/configuration.png',
+      dest: 'web/images/menu/configuration.png'
     },
     menu_contribution: {
-      src: 'web/bundles/openorchestrabackoffice/images/navigation/contribution.png',
-      dest: 'web/images/navigation/contribution.png'
+      src: 'web/bundles/openorchestrabackoffice/images/menu/contribution.png',
+      dest: 'web/images/menu/contribution.png'
     },
     menu_developer: {
-      src: 'web/bundles/openorchestrabackoffice/images/navigation/developer.png',
-      dest: 'web/images/navigation/developer.png'
+      src: 'web/bundles/openorchestrabackoffice/images/menu/developer.png',
+      dest: 'web/images/menu/developer.png'
     },
     menu_platform: {
-      src: 'web/bundles/openorchestrabackoffice/images/navigation/platform.png',
-      dest: 'web/images/navigation/platform.png'
+      src: 'web/bundles/openorchestrabackoffice/images/menu/platform.png',
+      dest: 'web/images/menu/platform.png'
     },
     menu_user: {
-      src: 'web/bundles/openorchestrabackoffice/images/navigation/user.png',
-      dest: 'web/images/navigation/user.png'
+      src: 'web/bundles/openorchestrabackoffice/images/menu/user.png',
+      dest: 'web/images/menu/user.png'
     },
     language_fr: {
       src: 'web/bundles/openorchestrabackoffice/images/languages/fr.png',

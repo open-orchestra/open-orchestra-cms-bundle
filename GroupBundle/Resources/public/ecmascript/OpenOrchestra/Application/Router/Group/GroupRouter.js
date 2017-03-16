@@ -28,10 +28,10 @@ class GroupRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label:Translator.trans('open_orchestra_user_admin.navigation.user.title')
+                label:Translator.trans('open_orchestra_user_admin.menu.user.title')
             },
             {
-                label: Translator.trans('open_orchestra_group.navigation.group.group'),
+                label: Translator.trans('open_orchestra_group.menu.group.group'),
                 link: '#'+Backbone.history.generateUrl('listGroup')
             }
         ]
@@ -40,11 +40,11 @@ class GroupRouter extends OrchestraRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            listGroup : 'course-group',
-            editGroup : 'course-group',
-            newGroup  : 'course-group'
+            listGroup : 'navigation-group',
+            editGroup : 'navigation-group',
+            newGroup  : 'navigation-group'
         };
     }
 

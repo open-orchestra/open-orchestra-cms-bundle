@@ -12,7 +12,7 @@ import TrashItemRouter         from './Router/TrashItem/TrashItemRouter'
 
 import HeaderView              from './View/Header/HeaderView'
 import ErrorView               from './View/Error/ErrorView'
-import CourseManager           from '../Service/CourseManager'
+import NavigationManager       from '../Service/CourseManager'
 import NavigationView          from './View/Navigation/NavigationView'
 import BreadcrumbView          from './View/Breadcrumb/BreadcrumbView'
 import NodeRestoreModalView    from './View/TrashItem/NodeRestoreModalView'
@@ -196,13 +196,13 @@ class Application
                 this.getRegion('header').html(headerView.render().$el);
             }
         });
-        let navigationView = new NavigationView();
-        this.getRegion('left_column').html(navigationView.render().$el);
+        let menuView = new MenuView();
+        this.getRegion('left_column').html(menuView.render().$el);
 
         let breadcrumbView = new BreadcrumbView();
         this.getRegion('breadcrumb').html(breadcrumbView.render().$el);
 
-        CourseManager.initialize(navigationView, breadcrumbView);
+        NavigationManager.initialize(menuView, breadcrumbView);
     }
 
     /**

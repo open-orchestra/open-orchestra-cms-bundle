@@ -24,11 +24,11 @@ class StatusRouter extends AbstractWorkflowRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            newStatus  : 'course-workflow',
-            editStatus : 'course-workflow',
-            listStatus : 'course-workflow'
+            newStatus  : 'navigation-workflow',
+            editStatus : 'navigation-workflow',
+            listStatus : 'navigation-workflow'
         };
     }
 
@@ -37,9 +37,9 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     getBreadcrumbHighlight() {
         return {
-            newStatus  : 'course-status',
-            editStatus : 'course-status',
-            listStatus : 'course-status'
+            newStatus  : 'navigation-status',
+            editStatus : 'navigation-status',
+            listStatus : 'navigation-status'
         };
     }
 

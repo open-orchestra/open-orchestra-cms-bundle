@@ -27,10 +27,10 @@ class RedirectionRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.redirection'),
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.redirection'),
                 link: '#'+Backbone.history.generateUrl('listRedirections')
             }
         ]
@@ -39,11 +39,11 @@ class RedirectionRouter extends OrchestraRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            listRedirections : 'course-redirection',
-            newRedirection   : 'course-redirection',
-            editRedirection  : 'course-redirection'
+            listRedirections : 'navigation-redirection',
+            newRedirection   : 'navigation-redirection',
+            editRedirection  : 'navigation-redirection'
         };
     }
 

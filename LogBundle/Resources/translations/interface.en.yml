@@ -1,5 +1,5 @@
 open_orchestra_log:
-    navigation:
+    menu:
         configuration:
           log: Log
     title_list: Logs

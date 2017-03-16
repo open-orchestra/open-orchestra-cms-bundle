@@ -29,10 +29,10 @@ class ContentTypeRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.developer.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.developer.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.developer.content_type'),
+                label: Translator.trans('open_orchestra_backoffice.menu.developer.content_type'),
                 link: '#' + Backbone.history.generateUrl('listContentType')
             }
         ]
@@ -41,11 +41,11 @@ class ContentTypeRouter extends OrchestraRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            listContentType : 'course-content-type',
-            editContentType : 'course-content-type',
-            newContentType  : 'course-content-type'
+            listContentType : 'navigation-content-type',
+            editContentType : 'navigation-content-type',
+            newContentType  : 'navigation-content-type'
         };
     }
 

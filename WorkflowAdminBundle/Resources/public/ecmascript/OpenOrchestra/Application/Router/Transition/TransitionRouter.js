@@ -20,9 +20,9 @@ class TransitionRouter extends AbstractWorkflowRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            editTransitions : 'course-workflow'
+            editTransitions : 'navigation-workflow'
         };
     }
 
@@ -31,7 +31,7 @@ class TransitionRouter extends AbstractWorkflowRouter
      */
     getBreadcrumbHighlight() {
         return {
-            editTransitions : 'course-transition'
+            editTransitions : 'navigation-transition'
         };
     }
 

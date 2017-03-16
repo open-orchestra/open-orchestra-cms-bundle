@@ -27,10 +27,10 @@ class SiteRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.site'),
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.site'),
                 link: '#'+Backbone.history.generateUrl('listSite')
             }
         ]
@@ -39,11 +39,11 @@ class SiteRouter extends OrchestraRouter
     /**
      * @inheritdoc
      */
-    getNavigationHighlight() {
+    getMenuHighlight() {
         return {
-            listSite : 'course-site',
-            editSite : 'course-site',
-            newSite  : 'course-site'
+            listSite : 'navigation-site',
+            editSite : 'navigation-site',
+            newSite  : 'navigation-site'
         };
     }
 
