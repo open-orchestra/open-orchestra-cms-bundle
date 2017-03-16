@@ -8,6 +8,8 @@ services:
         class: '%open_orchestra_group.subscriber.soft_delete_group.class%'
         arguments:
             - '@open_orchestra_user.repository.group'
+        tags:
+            - { name: kernel.event_subscriber }
     open_orchestra_group.subscriber.group_member:
         class: '%open_orchestra_group.subscriber.group_member.class%'
         arguments:
