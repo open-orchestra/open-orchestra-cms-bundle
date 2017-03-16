@@ -90,13 +90,13 @@ class SiteRouter extends OrchestraRouter
     /**
      * New site
      */
-    newSite(inPlatformContext) {
+    newSite() {
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_site_new');
         FormBuilder.createFormFromUrl(url, (form) => {
             let siteFormView = new SiteFormView({
                 form: form,
-                inPlatformContext : inPlatformContext
+                inPlatformContext : false
             });
             Application.getRegion('content').html(siteFormView.render().$el);
         });

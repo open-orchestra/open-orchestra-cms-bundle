@@ -12,7 +12,6 @@ class SitePlatformRouter extends SiteRouter
         this.routes = {
             'plateform/site/list(/:page)' : 'listPlatformSite',
             'plateform/site/edit/:siteId' : 'editPlatformSite',
-            'plateform/site/new/'         : 'newPlatformSite'
         }
     }
 
@@ -38,7 +37,6 @@ class SitePlatformRouter extends SiteRouter
         return {
             listPlatformSite : 'course-platform-site',
             editPlatformSite : 'course-platform-site',
-            newPlatformSite  : 'course-platform-site'
         };
     }
 
@@ -61,13 +59,6 @@ class SitePlatformRouter extends SiteRouter
      */
     editPlatformSite(siteId) {
         super.editSite(siteId, true);
-    }
-
-    /**
-     * New site
-     */
-    newPlatformSite() {
-        super.newSite(true);
     }
 }
 

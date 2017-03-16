@@ -48,7 +48,7 @@ class OrchestraRouter extends Backbone.Router
      * @private
      */
     getNavigationHighlight() {
-        return null;
+        return {};
     }
 
     /**
@@ -56,7 +56,7 @@ class OrchestraRouter extends Backbone.Router
      * @private
      */
     getBreadcrumbHighlight() {
-        return null;
+        return {};
     }
 
     /**
