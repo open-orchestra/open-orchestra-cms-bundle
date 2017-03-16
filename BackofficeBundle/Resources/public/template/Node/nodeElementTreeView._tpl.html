@@ -1,11 +1,13 @@
 <li data-node-id="<%= nodeTree.get('node').get('node_id') %>" <% if (true === nodeTree.get('node').get('rights').can_edit) {%> class="sortable-node"<% }%> >
     <div>
-        <% if (true === nodeTree.get('node').get('rights').can_edit) {%>
-            <i class="fa fa-arrows sortable-handler" aria-hidden="true"></i>
-        <% }; %>
-        <% if ( 0 !== nodeTree.get('children').length) { %>
-            <i class="fa fa-chevron-down toggle-tree" aria-hidden="true"></i>
-        <% }; %>
+        <p class="tree-icon">
+            <% if (true === nodeTree.get('node').get('rights').can_edit) {%>
+                <i class="fa fa-arrows sortable-handler" aria-hidden="true"></i>
+            <% }; %>
+            <% if ( 0 !== nodeTree.get('children').length) { %>
+                <i class="fa fa-chevron-down toggle-tree" aria-hidden="true"></i>
+            <% }; %>
+        </p>
         <span><%= nodeTree.get('node').get('name') %></span>
         <% if (true === nodeTree.get('node').get('rights').can_read) {%>
             <i class="state workflow-<%= nodeTree.get('node').get('status').get('code_color') %>" aria-hidden="true"></i>

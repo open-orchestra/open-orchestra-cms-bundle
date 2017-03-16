@@ -1208,8 +1208,6 @@ table.ui-sortable .fa.fa-arrows{
     }
 
     i.fa {
-        position: absolute;
-        top: 16px;
         cursor: pointer;
         &.fa-arrows {
             color: @lightBlue;
@@ -1229,11 +1227,10 @@ table.ui-sortable .fa.fa-arrows{
     }
 
     ul.children {
-      padding-left: 50px;
-      min-height: 5px;
+      min-height: 10px;
       & > li {
         & > ul.children, & > div {
-          padding-left: 60px;
+          padding-left: 40px;
         }
         & div > .fa-arrows {
           left: 5px;
@@ -1246,7 +1243,7 @@ table.ui-sortable .fa.fa-arrows{
 
     ul.root-level {
       & > li > div {
-        padding-left: 35px;
+        padding-left: 0;
 
         & .fa-arrows {
           display: none;
@@ -1259,7 +1256,6 @@ table.ui-sortable .fa.fa-arrows{
 
     li {
         list-style: none;
-        position: relative;
 
         & > div {
             display: block;
@@ -1267,8 +1263,10 @@ table.ui-sortable .fa.fa-arrows{
             border-bottom: 1px solid @paleBlue;
             min-height: 50px;
             overflow: hidden;
-            & > span {
+          & > span {
                 float: left;
+                position: relative;
+                z-index: 1;
             }
             &:hover .links {
                 display: block;
@@ -1289,6 +1287,8 @@ table.ui-sortable .fa.fa-arrows{
         margin-left: 30px;
         float: left;
         display: none;
+        position: relative;
+        z-index: 1;
         a {
             color: @lightBlue;
             font-weight: 700;
@@ -1310,7 +1310,7 @@ table.ui-sortable .fa.fa-arrows{
         position: absolute;
         right: 0;
         top: 0;
-        z-index: 1;
+        z-index: 2;
         border: 2px solid @lightGrey;
         border-radius: 10px;
         min-width: 202px;
@@ -1338,6 +1338,8 @@ table.ui-sortable .fa.fa-arrows{
     }
     i.state {
         float: left;
+        position: relative;
+        z-index: 1;
         &::before {
             margin-left: 20px;
         }
@@ -1372,14 +1374,23 @@ table.ui-sortable .fa.fa-arrows{
         padding-left: 30px;
     }
 }
-.tree:not(.tree-new-node) li div::before {
-  content : " ";
-  background: red;
-  width: 100%;
+.tree:not(.tree-new-node) li > div::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 1.3em;
 }
-.tree:not(.tree-new-node) li div:hover {
-    background: @paleBlue;
-    position: relative;
+
+.tree:not(.tree-new-node) li > div:hover::before {
+  background: @paleBlue;
+}
+
+.tree p.tree-icon {
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ===================================================================
