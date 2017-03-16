@@ -1206,6 +1206,7 @@ table.ui-sortable .fa.fa-arrows{
         margin: 0;
         padding: 0;
     }
+
     i.fa {
         position: absolute;
         top: 16px;
@@ -1227,147 +1228,33 @@ table.ui-sortable .fa.fa-arrows{
         }
     }
 
-    // mixin for padded levels in tree view
-    .padded_tree_levels ( @paddingleft-tree : 30px, @paddingleft-counter : 1  ) {
-        & > div {
-            padding-left: (@paddingleft-counter+2)*@paddingleft-tree;
-
-            & > i[class*="fa-chevron-"] {
-                left: (@paddingleft-counter+1)*@paddingleft-tree;
-            }
-
-            & > .fa-arrows {
-                left: (@paddingleft-counter)*@paddingleft-tree;
-            }
-        }
-    }
-
     ul.children {
-        min-height: 50px;
-    }
-
-    & > ul.children {
-        & > li {
-            .padded_tree_levels (30px, 0);
-
-            // level 2
-            & > ul.children {
-
-                & > li {
-                    .padded_tree_levels (30px, 1);
-
-                    // level 3
-                    & > ul.children {
-
-                        & > li {
-                            .padded_tree_levels (30px, 2);
-
-                            // level 4
-                            & > ul.children {
-
-                                & > li {
-                                    .padded_tree_levels (30px, 3);
-
-                                    // level 5
-                                    & > ul.children {
-
-                                        & > li {
-                                            .padded_tree_levels (30px, 4);
-
-                                            // level 6
-                                            & > ul.children {
-
-                                                & > li {
-                                                    .padded_tree_levels (30px, 5);
-                                                }
-
-                                            }
-                                        }
-
-                                    }
-                                }
-
-                            }
-                        }
-
-                    }
-                }
-
-            }
-
+      padding-left: 50px;
+      min-height: 5px;
+      & > li {
+        & > ul.children, & > div {
+          padding-left: 60px;
         }
+        & div > .fa-arrows {
+          left: 5px;
+        }
+        & div > i[class*="fa-chevron-"] {
+          left: 30px;
+        }
+      }
     }
 
     ul.root-level {
-        margin: 0 -30px;
+      & > li > div {
+        padding-left: 35px;
 
-        & > li > div {
-            padding-left: 60px;
-            padding-right: 30px;
-
-            & .fa-arrows {
-                display: none;
-            }
-            & i[class*="fa-chevron-"] {
-                left: 30px;
-            }
+        & .fa-arrows {
+          display: none;
         }
-
-        & > li {
-
-            ul.children {
-                padding-left: 0;
-            }
-
-            // level 1
-            & > ul.children {
-
-                & > li {
-                    .padded_tree_levels (30px, 1);
-
-                    // level 2
-                    & > ul.children {
-
-                        & > li {
-                            .padded_tree_levels (30px, 2);
-
-                            // level 3
-                            & > ul.children {
-
-                                & > li {
-                                    .padded_tree_levels (30px, 3);
-
-                                    // level 4
-                                    & > ul.children {
-
-                                        & > li {
-                                            .padded_tree_levels (30px, 4);
-
-                                            // level 5
-                                            & > ul.children {
-
-                                                & > li {
-                                                    .padded_tree_levels (30px, 5);
-                                                }
-
-                                            }
-                                        }
-
-                                    }
-                                }
-
-                            }
-                        }
-
-                    }
-
-                }
-
-            }
-
+        & i[class*="fa-chevron-"] {
+          left: 5px;
         }
-
-
+      }
     }
 
     li {
@@ -1485,7 +1372,11 @@ table.ui-sortable .fa.fa-arrows{
         padding-left: 30px;
     }
 }
-
+.tree:not(.tree-new-node) li div::before {
+  content : " ";
+  background: red;
+  width: 100%;
+}
 .tree:not(.tree-new-node) li div:hover {
     background: @paleBlue;
     position: relative;
