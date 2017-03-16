@@ -1,6 +1,7 @@
 import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
 import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
+import DateFormatter               from '../../../Service/DataFormatter/DateFormatter'
 
 /**
  * @class AbstractVersionsListView
@@ -28,6 +29,7 @@ class AbstractVersionsListView extends mix(AbstractDataTableView).with(UrlPagina
                 title: Translator.trans('open_orchestra_backoffice.table.versionable.updated_at'),
                 orderable: true,
                 orderDirection: 'desc',
+                render: DateFormatter.format,
                 visibile: true
             },
             {
