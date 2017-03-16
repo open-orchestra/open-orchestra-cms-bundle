@@ -1051,7 +1051,7 @@ table.ui-sortable .fa.fa-arrows{
         font-weight: 500;
     }
     .checkbox-inline {
-        padding-left: 0;
+        padding-left: 10px;
     }
 
     & > tbody > tr > td:first-child {
@@ -1365,7 +1365,16 @@ table.ui-sortable .fa.fa-arrows{
         content: "";
         background-image: url("/images/out-of-bounds.png");
         top: 5px;
-        left: 0px;
+        left: 0;
+    }
+
+    .ui-state-highlight {
+      height: 50px;
+      line-height: 1.2em;
+      background: #ddd;
+      border: 2px dashed #c9c9c9;
+      color: #737687;
+      margin-left: 50px;
     }
 }
 
@@ -1378,7 +1387,8 @@ table.ui-sortable .fa.fa-arrows{
   content: "";
   position: absolute;
   left: 0; right: 0;
-  height: 1.3em;
+  height: 51px;
+  margin-top: -12px;
 }
 
 .tree:not(.tree-new-node) li > div:hover::before {
