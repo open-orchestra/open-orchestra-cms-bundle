@@ -583,9 +583,7 @@
 {% block oo_node_submit_widget %}
     {% spaceless %}
         {{ block('save_button') }}
-        {% if(form.vars.new_button is defined and true == form.vars.new_button) %}
-            {{ block('new_button') }}
-        {% elseif form.vars.delete_button is defined %}
+        {% if form.vars.delete_button is defined and not form.vars.value.id is null%}
             {{ block('trashcan_delete_button') }}
         {% endif %}
     {% endspaceless %}

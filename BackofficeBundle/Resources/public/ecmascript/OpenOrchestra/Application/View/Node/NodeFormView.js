@@ -1,11 +1,12 @@
 import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
 import Redirections           from '../../Collection/Redirection/Redirections'
 import RenderToolbarViewMixin from './Mixin/RenderToolbarViewMixin'
+import FormViewButtonsMixin   from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 
 /**
  * @class NodeFormView
  */
-class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin)
+class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, FormViewButtonsMixin)
 {
     /**
      * Initialize
@@ -39,17 +40,6 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin)
     }
 
     /**
-     * @return {Object}
-     */
-    getStatusCodeForm() {
-        return {
-            '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
-            '422': $.proxy(this.refreshRender, this)
-        }
-    }
-
-    /**
      * @private
      */
     _renderRedirections() {
@@ -73,11 +63,10 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin)
      * @param {event} event
      */
     _deleteElement(event) {
-        let node = new Node({id: this._nodeId});
-        node.destroy({
+        this._node.destroy({
             success: () => {
                 let url = Backbone.history.generateUrl('showNodes', {
-                    language: this._language
+                    language: this._node.get('language')
                 });
                 Backbone.history.navigate(url, true);
             }
