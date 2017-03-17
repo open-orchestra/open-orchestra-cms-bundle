@@ -40,7 +40,7 @@ class ContentVersionsView extends AbstractCollectionView
     render() {
         let content = this._collection.first();
         if (typeof content === 'undefined') {
-            throw new ApplicationError('A content should be have at least one version')
+            throw new ApplicationError('A content should have at least one version')
         }
         let title = content.get('name');
         let template = this._renderTemplate('Content/contentVersionsView', {
