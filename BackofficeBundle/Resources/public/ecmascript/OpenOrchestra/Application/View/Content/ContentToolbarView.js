@@ -118,7 +118,7 @@ class ContentToolbarView extends OrchestraView
         let statusId = $(event.currentTarget).attr('data-id');
         let status = this._statuses.findWhere({id: statusId});
         if (typeof status == "undefined") {
-            throw new ApplicationError('Status with id '+statusId+ 'not found');
+            throw new ApplicationError('Status with id '+statusId+ ' not found');
         }
 
         if (true === this._contentType.get('defining_versionable') && true === status.get('published_state')) {

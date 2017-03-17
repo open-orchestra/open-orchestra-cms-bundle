@@ -238,7 +238,6 @@ class ContentRouter extends OrchestraRouter
      */
     _errorCallbackEdit(contentTypeId, contentId, language) {
         let noCallback = () => {
-            console.log("no");
             let url = Backbone.history.generateUrl('listContent',{
                 contentTypeId: contentTypeId,
                 language: language

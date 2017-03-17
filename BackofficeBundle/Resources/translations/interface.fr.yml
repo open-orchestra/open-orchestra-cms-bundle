@@ -237,3 +237,9 @@ open_orchestra_backoffice:
         confirm_create:
             title: Créer un contenu dans une nouvelle langue
             message: Ce contenu n’existe pas dans cette langue. Souhaitez-vous le créer?
+        message_online:
+            title: La contenu est actuellement en ligne sur votre site.
+            message: |
+                L'édition d'un contenu en ligne est impossible. \n
+                Pour modifier ce contenu veuillez créer une révision. \n
+                Vous pouvez également modifier le workflow de cette version mais le contenu ne sera plus visible sur le site

@@ -17,7 +17,6 @@ class ContentVersionsView extends AbstractCollectionView
      */
     initialize({collection, settings, contentId, language, contentTypeId, siteLanguages}) {
         super.initialize({collection: collection, settings: settings});
-        console.log(settings);
         this._contentId = contentId;
         this._contentTypeId = contentTypeId;
         this._language = language;
@@ -60,7 +59,7 @@ class ContentVersionsView extends AbstractCollectionView
                 data: this._collection.models
             }
         );
-        console.log(settings);
+
         this._listView = new ContentVersionsListView({
             collection: this._collection,
             settings: settings,
