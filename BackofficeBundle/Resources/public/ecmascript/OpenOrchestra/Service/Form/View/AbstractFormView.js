@@ -1,9 +1,10 @@
-import OrchestraView from '../../../Application/View/OrchestraView'
+import OrchestraView      from '../../../Application/View/OrchestraView'
+import LoadingButtonMixin from '../Mixin/LoadingButtonMixin'
 
 /**
  * @class AbstractFormView
  */
-class AbstractFormView extends OrchestraView
+class AbstractFormView extends mix(OrchestraView).with(LoadingButtonMixin)
 {
     /**
      * Constructor
@@ -80,7 +81,8 @@ class AbstractFormView extends OrchestraView
      */
     _submit(event) {
         event.preventDefault();
-        this._form.submit(this.getStatusCodeForm(event));
+        this.activateLoading($(event.currentTarget));
+        //this._form.submit(this.getStatusCodeForm(event));
     }
 
     /**

@@ -8,7 +8,7 @@ let FormViewButtonsMixin = (superclass) => class extends superclass {
 
     /**
      * @inheritDoc
-     */
+    */
     preinitialize() {
         super.preinitialize();
         this.events = this.events || {};
