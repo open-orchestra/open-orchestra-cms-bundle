@@ -33,6 +33,7 @@ class AbstractFormView extends mix(OrchestraView).with(LoadingButtonMixin)
     initialize({form}) {
         this._form = form;
         this._$formRegion = this.$el;
+        this._form.on('form:post_submit', $.proxy(this._resetSubmitButton, this));
     }
 
     /**
@@ -82,7 +83,15 @@ class AbstractFormView extends mix(OrchestraView).with(LoadingButtonMixin)
     _submit(event) {
         event.preventDefault();
         this.activateLoading($(event.currentTarget));
-        //this._form.submit(this.getStatusCodeForm(event));
+        this._form.submit(this.getStatusCodeForm(event));
+    }
+
+    /**
+     * Reset laading submit button
+     * @private
+     */
+    _resetSubmitButton() {
+        this.resetLoadingButton($('button.submit-form', this.$el));
     }
 
     /**
