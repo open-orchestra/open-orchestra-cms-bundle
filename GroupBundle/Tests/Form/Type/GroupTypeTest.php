@@ -113,10 +113,6 @@ class GroupTypeTest extends AbstractBaseTestCase
                         'rank' => 0,
                         'label' => 'open_orchestra_group.form.group.sub_group.property',
                     ),
-                    'right' => array(
-                        'rank' => 0,
-                        'label' => 'open_orchestra_group.form.group.sub_group.right',
-                    ),
                     'page' => array(
                         'rank' => 0,
                         'label' => 'open_orchestra_group.form.group.sub_group.page',

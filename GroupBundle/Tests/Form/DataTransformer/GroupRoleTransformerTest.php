@@ -18,28 +18,32 @@ class GroupRoleTransformerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $configuration = array(
-            'firstpackage' => array(
-                'page' => array(
-                    'EDITORIAL_NODE_CONTRIBUTOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.contributor.label'),
-                    'EDITORIAL_NODE_SUPER_EDITOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.editor.label'),
-                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.supressor.label'),
+            'open_orchestra_backoffice.role.contribution' => array(
+                'firstpackage' => array(
+                    'page' => array(
+                        'EDITORIAL_NODE_CONTRIBUTOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.contributor.label'),
+                        'EDITORIAL_NODE_SUPER_EDITOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.editor.label'),
+                        'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.supressor.label'),
+                    ),
+                ),
+                'secondpackage' => array(
+                    'trash' => array(
+                        'EDITORIAL_TRASH_RESTORER' => array(
+                            'label' => 'open_orchestra_backoffice.role.restorer.label'),
+                        'EDITORIAL_TRASH_SUPRESSOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.trash_supressor.label'),
+                    ),
                 ),
             ),
-            'secondpackage' => array(
-                'trash' => array(
-                    'EDITORIAL_TRASH_RESTORER' => array(
-                        'label' => 'open_orchestra_backoffice.role.restorer.label'),
-                    'EDITORIAL_TRASH_SUPRESSOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.trash_supressor.label'),
-                ),
-            ),
-            'thirdpackage' => array(
-                'configuration' => array(
-                    'ROLE_SITE_ADMIN' => array(
-                        'label' => 'open_orchestra_backoffice.role.administrator.label'),
+            'open_orchestra_backoffice.role.administration' => array(
+                'thirdpackage' => array(
+                    'configuration' => array(
+                        'ROLE_SITE_ADMIN' => array(
+                            'label' => 'open_orchestra_backoffice.role.administrator.label'),
+                    ),
                 ),
             ),
         );
@@ -90,24 +94,24 @@ class GroupRoleTransformerTest extends AbstractBaseTestCase
     {
         return array(
             array(array('EDITORIAL_NODE_CONTRIBUTOR', 'EDITORIAL_TRASH_SUPRESSOR', 'ROLE_SITE_ADMIN'), array('roles_collections' => array(
-                    'firstpackage' => array(
-                        'page' => array(
-                            'EDITORIAL_NODE_CONTRIBUTOR' => true,
-                            'EDITORIAL_NODE_SUPER_EDITOR' => false,
-                            'EDITORIAL_NODE_SUPER_SUPRESSOR' => false,
-                        ),
+                'firstpackage' => array(
+                    'page' => array(
+                        'EDITORIAL_NODE_CONTRIBUTOR' => true,
+                        'EDITORIAL_NODE_SUPER_EDITOR' => false,
+                        'EDITORIAL_NODE_SUPER_SUPRESSOR' => false,
                     ),
-                    'secondpackage' => array(
-                        'trash' => array(
-                            'EDITORIAL_TRASH_RESTORER' => false,
-                            'EDITORIAL_TRASH_SUPRESSOR' => true,
-                        ),
+                ),
+                'secondpackage' => array(
+                    'trash' => array(
+                        'EDITORIAL_TRASH_RESTORER' => false,
+                        'EDITORIAL_TRASH_SUPRESSOR' => true,
                     ),
-                    'thirdpackage' => array(
-                        'configuration' => array(
-                            'ROLE_SITE_ADMIN' => true,
-                        ),
+                ),
+                'thirdpackage' => array(
+                    'configuration' => array(
+                        'ROLE_SITE_ADMIN' => true,
                     ),
+                ),
                 ))),
         );
     }

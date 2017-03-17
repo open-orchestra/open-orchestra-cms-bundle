@@ -24,28 +24,32 @@ class GroupRoleTypeTest extends AbstractBaseTestCase
         $translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($translator)->trans(\Phake::anyParameters())->thenReturn('test');
         $configuration = array(
-            'firstpackage' => array(
-                'page' => array(
-                    'EDITORIAL_NODE_CONTRIBUTOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.contributor'),
-                    'EDITORIAL_NODE_SUPER_EDITOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.editor'),
-                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.suppresor'),
+            'open_orchestra_backoffice.role.contribution' => array(
+                'firstpackage' => array(
+                    'page' => array(
+                        'EDITORIAL_NODE_CONTRIBUTOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.contributor'),
+                        'EDITORIAL_NODE_SUPER_EDITOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.editor'),
+                        'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.suppresor'),
+                    ),
+                ),
+                'secondpackage' => array(
+                    'trash' => array(
+                        'EDITORIAL_TRASH_RESTORER' => array(
+                            'label' => 'open_orchestra_backoffice.role.restorer'),
+                        'EDITORIAL_TRASH_SUPRESSOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.trash_suppresor'),
+                    ),
                 ),
             ),
-            'secondpackage' => array(
-                'trash' => array(
-                    'EDITORIAL_TRASH_RESTORER' => array(
-                        'label' => 'open_orchestra_backoffice.role.restorer'),
-                    'EDITORIAL_TRASH_SUPRESSOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.trash_suppresor'),
-                ),
-            ),
-            'thirdpackage' => array(
-                'configuration' => array(
-                    'ROLE_SITE_ADMIN' => array(
-                        'label' => 'open_orchestra_backoffice.role.administrator'),
+            'open_orchestra_backoffice.role.administration' => array(
+                'thirdpackage' => array(
+                    'configuration' => array(
+                        'ROLE_SITE_ADMIN' => array(
+                            'label' => 'open_orchestra_backoffice.role.administrator'),
+                    ),
                 ),
             ),
         );
@@ -109,6 +113,14 @@ class GroupRoleTypeTest extends AbstractBaseTestCase
         $formView = Phake::mock('Symfony\Component\Form\FormView');
 
         $this->form->buildView($formView, $formInterface, array());
-        $this->assertEquals($formView->vars['configuration'], array('firstpackage', 'secondpackage', 'thirdpackage'));
+        $this->assertEquals($formView->vars['configuration'], array(
+            'open_orchestra_backoffice.role.contribution' => array(
+                'firstpackage',
+                'secondpackage',
+            ),
+            'open_orchestra_backoffice.role.administration' => array(
+                'thirdpackage'
+            ),
+        ));
     }
 }

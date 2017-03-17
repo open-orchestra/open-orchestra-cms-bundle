@@ -31,8 +31,13 @@
     {% spaceless %}
         {% set collection = form|first %}
         <div class="hierarchical-check-list">
-            {% for table in form.vars.configuration %}
-                {{ form_widget(collection[table]) }}
+            {% for fieldset, tables in form.vars.configuration %}
+                <fieldset>
+                    <legend class="underline-label">{{ fieldset|trans }}</legend>
+                    {% for table in tables %}
+                        {{ form_widget(collection[table]) }}
+                    {% endfor %}
+                </fieldset>
             {% endfor %}
         </div>
     {% endspaceless %}

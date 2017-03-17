@@ -52,6 +52,18 @@ class OpenOrchestraBackofficeExtension extends Extension
         if ($container->hasParameter('open_orchestra_backoffice.configuration.roles')) {
             $configurationRoles = array_merge_recursive($container->getParameter('open_orchestra_backoffice.configuration.roles'), $configurationRoles);
         }
+        if ($container->hasParameter('open_orchestra_frontoffice.configuration.roles')) {
+            $result = array();
+            foreach ($container->getParameter('open_orchestra_frontoffice.configuration.roles') as $role) {
+                $result[$role] =  array($role => array(
+                    'configuration' => array(
+                        'label' => 'open_orchestra_backoffice.role.front_access.label',
+                        'icon' => 'fa fa-cog',
+                )));
+            }
+            $result = array('open_orchestra_backoffice.role.front_acces' => $result);
+            $configurationRoles = array_merge_recursive($configurationRoles, $result);
+        }
         $container->setParameter('open_orchestra_backoffice.configuration.roles', $configurationRoles);
 
         $loader->load('manager.yml');

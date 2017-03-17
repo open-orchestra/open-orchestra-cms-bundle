@@ -452,6 +452,8 @@ open_orchestra_backoffice:
                 50%: 50%
                 70%: 70%
     role:
+        contribution : Contribution
+        administration: Administration
         contributor:
             label: Contribute
             help: create / edit / delete own content

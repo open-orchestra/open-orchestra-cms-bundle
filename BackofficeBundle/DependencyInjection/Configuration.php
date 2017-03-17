@@ -255,56 +255,60 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         $configurationRole->defaultValue(array(
-            'firstpackage' => array(
-                'page' => array(
-                    ContributionRoleInterface::NODE_CONTRIBUTOR => array(
-                        'label' => 'open_orchestra_backoffice.role.contributor.label',
-                        'help' => 'open_orchestra_backoffice.role.contributor.help',
-                        'icon' => 'fa fa-user',
+            'open_orchestra_backoffice.role.contribution' => array(
+                'firstpackage' => array(
+                    'page' => array(
+                        ContributionRoleInterface::NODE_CONTRIBUTOR => array(
+                            'label' => 'open_orchestra_backoffice.role.contributor.label',
+                            'help' => 'open_orchestra_backoffice.role.contributor.help',
+                            'icon' => 'fa fa-user',
+                        ),
+                        ContributionRoleInterface::NODE_SUPER_EDITOR => array(
+                            'label' => 'open_orchestra_backoffice.role.editor.label',
+                            'help' => 'open_orchestra_backoffice.role.editor.help',
+                            'icon' => 'fa fa-pencil',
+                        ),
+                        ContributionRoleInterface::NODE_SUPER_SUPRESSOR => array(
+                            'label' => 'open_orchestra_backoffice.role.supressor.label',
+                            'help' => 'open_orchestra_backoffice.role.supressor.help',
+                            'icon' => 'fa fa-trash',
+                        ),
                     ),
-                    ContributionRoleInterface::NODE_SUPER_EDITOR => array(
-                        'label' => 'open_orchestra_backoffice.role.editor.label',
-                        'help' => 'open_orchestra_backoffice.role.editor.help',
-                        'icon' => 'fa fa-pencil',
-                    ),
-                    ContributionRoleInterface::NODE_SUPER_SUPRESSOR => array(
-                        'label' => 'open_orchestra_backoffice.role.supressor.label',
-                        'help' => 'open_orchestra_backoffice.role.supressor.help',
-                        'icon' => 'fa fa-trash',
+                    'content' => array(
+                        ContributionRoleInterface::CONTENT_CONTRIBUTOR => array(
+                            'label' => 'open_orchestra_backoffice.role.contributor.label',
+                        ),
+                        ContributionRoleInterface::CONTENT_SUPER_EDITOR => array(
+                            'label' => 'open_orchestra_backoffice.role.editor.label',
+                        ),
+                        ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR => array(
+                            'label' => 'open_orchestra_backoffice.role.supressor.label',
+                        ),
                     ),
                 ),
-                'content' => array(
-                    ContributionRoleInterface::CONTENT_CONTRIBUTOR => array(
-                        'label' => 'open_orchestra_backoffice.role.contributor.label',
-                    ),
-                    ContributionRoleInterface::CONTENT_SUPER_EDITOR => array(
-                        'label' => 'open_orchestra_backoffice.role.editor.label',
-                    ),
-                    ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR => array(
-                        'label' => 'open_orchestra_backoffice.role.supressor.label',
+                'secondpackage' => array(
+                    'trash' => array(
+                        ContributionRoleInterface::TRASH_RESTORER => array(
+                            'label' => 'open_orchestra_backoffice.role.restorer.label',
+                            'help' => 'open_orchestra_backoffice.role.restorer.help',
+                            'icon' => 'fa fa-save',
+                        ),
+                        ContributionRoleInterface::TRASH_SUPRESSOR => array(
+                            'label' => 'open_orchestra_backoffice.role.trash_supressor.label',
+                            'help' => 'open_orchestra_backoffice.role.trash_supressor.help',
+                            'icon' => 'fa fa-trash',
+                        ),
                     ),
                 ),
             ),
-            'secondpackage' => array(
-                'trash' => array(
-                    ContributionRoleInterface::TRASH_RESTORER => array(
-                        'label' => 'open_orchestra_backoffice.role.restorer.label',
-                        'help' => 'open_orchestra_backoffice.role.restorer.help',
-                        'icon' => 'fa fa-save',
-                    ),
-                    ContributionRoleInterface::TRASH_SUPRESSOR => array(
-                        'label' => 'open_orchestra_backoffice.role.trash_supressor.label',
-                        'help' => 'open_orchestra_backoffice.role.trash_supressor.help',
-                        'icon' => 'fa fa-trash',
-                    ),
-                ),
-            ),
-            'thirdpackage' => array(
-                'configuration' => array(
-                    ContributionRoleInterface::SITE_ADMIN => array(
-                        'label' => 'open_orchestra_backoffice.role.administrator.label',
-                        'help' => 'open_orchestra_backoffice.role.administrator.help',
-                        'icon' => 'fa fa-cog',
+            'open_orchestra_backoffice.role.administration' => array(
+                'thirdpackage' => array(
+                    'configuration' => array(
+                        ContributionRoleInterface::SITE_ADMIN => array(
+                            'label' => 'open_orchestra_backoffice.role.administrator.label',
+                            'help' => 'open_orchestra_backoffice.role.administrator.help',
+                            'icon' => 'fa fa-cog',
+                        ),
                     ),
                 ),
             ),

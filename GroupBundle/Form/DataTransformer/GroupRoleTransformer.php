@@ -29,12 +29,11 @@ class GroupRoleTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        $result = $this->groupRolesConfiguration;
-        if (is_array($value)) {
-            foreach ($this->groupRolesConfiguration as $package => $rows) {
+        foreach ($this->groupRolesConfiguration as $tables) {
+            foreach ($tables as $package => $rows) {
                 foreach ($rows as $row => $roles) {
                     foreach ($roles as $role => $configuration) {
-                        $result[$package][$row][$role] = in_array($role, $value);
+                        $result[$package][$row][$role] = is_array($value) ? in_array($role, $value) : false;
                     }
                 }
             }

@@ -64,63 +64,67 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
         $this->assertEquals($choice_frequence, $container->getParameter('open_orchestra_backoffice.choice.frequence'));
 
         $configurationRoles = array (
-            'firstpackage' =>
-            array (
-                'page' =>
+            'open_orchestra_backoffice.role.contribution' => array(
+                'firstpackage' =>
                 array (
-                    'EDITORIAL_NODE_CONTRIBUTOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.contributor.label',
-                        'help' => 'open_orchestra_backoffice.role.contributor.help',
-                        'icon' => 'fa fa-user',
+                    'page' =>
+                    array (
+                        'EDITORIAL_NODE_CONTRIBUTOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.contributor.label',
+                            'help' => 'open_orchestra_backoffice.role.contributor.help',
+                            'icon' => 'fa fa-user',
+                        ),
+                        'EDITORIAL_NODE_SUPER_EDITOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.editor.label',
+                            'help' => 'open_orchestra_backoffice.role.editor.help',
+                            'icon' => 'fa fa-pencil',
+                        ),
+                        'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.supressor.label',
+                            'help' => 'open_orchestra_backoffice.role.supressor.help',
+                            'icon' => 'fa fa-trash',
+                        ),
                     ),
-                    'EDITORIAL_NODE_SUPER_EDITOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.editor.label',
-                        'help' => 'open_orchestra_backoffice.role.editor.help',
-                        'icon' => 'fa fa-pencil',
-                    ),
-                    'EDITORIAL_NODE_SUPER_SUPRESSOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.supressor.label',
-                        'help' => 'open_orchestra_backoffice.role.supressor.help',
-                        'icon' => 'fa fa-trash',
+                    'content' =>
+                    array (
+                        'EDITORIAL_CONTENT_CONTRIBUTOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.contributor.label',
+                        ),
+                        'EDITORIAL_CONTENT_SUPER_EDITOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.editor.label',
+                        ),
+                        'EDITORIAL_CONTENT_SUPER_SUPRESSOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.supressor.label',
+                        ),
                     ),
                 ),
-                'content' =>
+                'secondpackage' =>
                 array (
-                    'EDITORIAL_CONTENT_CONTRIBUTOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.contributor.label',
-                    ),
-                    'EDITORIAL_CONTENT_SUPER_EDITOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.editor.label',
-                    ),
-                    'EDITORIAL_CONTENT_SUPER_SUPRESSOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.supressor.label',
+                    'trash' =>
+                    array (
+                        'EDITORIAL_TRASH_RESTORER' => array(
+                            'label' => 'open_orchestra_backoffice.role.restorer.label',
+                            'help' => 'open_orchestra_backoffice.role.restorer.help',
+                            'icon' => 'fa fa-save',
+                        ),
+                        'EDITORIAL_TRASH_SUPRESSOR' => array(
+                            'label' => 'open_orchestra_backoffice.role.trash_supressor.label',
+                            'help' => 'open_orchestra_backoffice.role.trash_supressor.help',
+                            'icon' => 'fa fa-trash',
+                        ),
                     ),
                 ),
             ),
-            'secondpackage' =>
-            array (
-                'trash' =>
+            'open_orchestra_backoffice.role.administration' => array(
+                'thirdpackage' =>
                 array (
-                    'EDITORIAL_TRASH_RESTORER' => array(
-                        'label' => 'open_orchestra_backoffice.role.restorer.label',
-                        'help' => 'open_orchestra_backoffice.role.restorer.help',
-                        'icon' => 'fa fa-save',
-                    ),
-                    'EDITORIAL_TRASH_SUPRESSOR' => array(
-                        'label' => 'open_orchestra_backoffice.role.trash_supressor.label',
-                        'help' => 'open_orchestra_backoffice.role.trash_supressor.help',
-                        'icon' => 'fa fa-trash',
-                    ),
-                ),
-            ),
-            'thirdpackage' =>
-            array (
-                'configuration' =>
-                array (
-                    'ROLE_SITE_ADMIN' => array(
-                        'label' => 'open_orchestra_backoffice.role.administrator.label',
-                        'help' => 'open_orchestra_backoffice.role.administrator.help',
-                        'icon' => 'fa fa-cog',
+                    'configuration' =>
+                    array (
+                        'ROLE_SITE_ADMIN' => array(
+                            'label' => 'open_orchestra_backoffice.role.administrator.label',
+                            'help' => 'open_orchestra_backoffice.role.administrator.help',
+                            'icon' => 'fa fa-cog',
+                        ),
                     ),
                 ),
             ),
