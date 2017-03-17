@@ -2,6 +2,7 @@ import NodeRouter              from './Router/Node/NodeRouter'
 import KeywordRouter           from './Router/Keyword/KeywordRouter'
 import DashboardRouter         from './Router/Dashboard/DashboardRouter'
 import SiteRouter              from './Router/Site/SiteRouter'
+import SitePlatformRouter      from './Router/Site/SitePlatformRouter'
 import ContentTypeRouter       from './Router/ContentType/ContentTypeRouter'
 import ContentRouter           from './Router/Content/ContentRouter'
 import BlockRouter             from './Router/Block/BlockRouter'
@@ -11,7 +12,8 @@ import TrashItemRouter         from './Router/TrashItem/TrashItemRouter'
 
 import HeaderView              from './View/Header/HeaderView'
 import ErrorView               from './View/Error/ErrorView'
-import NavigationView          from './View/Navigation/NavigationView'
+import NavigationManager       from '../Service/NavigationManager'
+import MenuView                from './View/Navigation/MenuView'
 import BreadcrumbView          from './View/Breadcrumb/BreadcrumbView'
 import NodeRestoreModalView    from './View/TrashItem/NodeRestoreModalView'
 import ContentRestoreModalView from './View/TrashItem/ContentRestoreModalView'
@@ -46,7 +48,6 @@ import DateFormatter           from '../Service/DataFormatter/DateFormatter'
 
 import ApplicationError        from '../Service/Error/ApplicationError'
 import TinymceManager          from '../Service/Tinymce/TinymceManager'
-
 
 /**
  * @class Application
@@ -175,6 +176,7 @@ class Application
         new NodeRouter();
         new KeywordRouter();
         new SiteRouter();
+        new SitePlatformRouter();
         new ContentTypeRouter();
         new ContentRouter();
         new BlockRouter();
@@ -194,11 +196,13 @@ class Application
                 this.getRegion('header').html(headerView.render().$el);
             }
         });
-        let navigationView = new NavigationView();
-        this.getRegion('left_column').html(navigationView.render().$el);
+        let menuView = new MenuView();
+        this.getRegion('left_column').html(menuView.render().$el);
 
-        this.breadcrumbView = new BreadcrumbView();
-        this.getRegion('breadcrumb').html(this.breadcrumbView.render().$el);
+        let breadcrumbView = new BreadcrumbView();
+        this.getRegion('breadcrumb').html(breadcrumbView.render().$el);
+
+        NavigationManager.initialize(menuView, breadcrumbView);
     }
 
     /**

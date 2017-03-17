@@ -1,5 +1,5 @@
 open_orchestra_workflow_admin:
-    navigation:
+    menu:
         developer:
           title   : Développeur
           workflow: Workflow

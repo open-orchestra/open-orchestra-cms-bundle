@@ -36,13 +36,22 @@ class ContentRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.content'),
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
                 link: '#'+Backbone.history.generateUrl('showContentSummary')
             }
         ]
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getMenuHighlight() {
+        return {
+            '*' : 'navigation-content'
+        };
     }
 
     /**

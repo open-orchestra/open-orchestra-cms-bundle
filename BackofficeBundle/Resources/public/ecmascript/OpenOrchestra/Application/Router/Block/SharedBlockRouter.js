@@ -33,13 +33,22 @@ class SharedBlockRouter extends AbstractBlockRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.shared_block'),
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.shared_block'),
                 link: '#'+Backbone.history.generateUrl('listSharedBlock')
             }
         ]
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getMenuHighlight() {
+        return {
+            '*' : 'navigation-shared-block'
+        };
     }
 
     /**

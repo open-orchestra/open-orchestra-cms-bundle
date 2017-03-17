@@ -14,14 +14,27 @@ class SitesView extends AbstractCollectionView
     }
 
     /**
+     * List view should be an instance of AbstractDataTableView
+     *
+     * @param {OrchestraCollection} collection
+     * @param {Object}              settings
+     * @param {boolean}             inPlatformContext
+     */
+    initialize({collection, settings, inPlatformContext}) {
+        super.initialize({collection, settings});
+        this._inPlatformContext = inPlatformContext;
+    }
+
+    /**
      * Render sites view
      */
     render() {
-        let template = this._renderTemplate('Site/sitesView');
+        let template = this._renderTemplate('Site/sitesView', {inPlatformContext: this._inPlatformContext});
         this.$el.html(template);
         this._listView = new SiteListView({
             collection: this._collection,
-            settings: this._settings
+            settings: this._settings,
+            inPlatformContext: this._inPlatformContext
         });
         $('.sites-list', this.$el).html(this._listView.render().$el);
 

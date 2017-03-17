@@ -1,5 +1,5 @@
 open_orchestra_group:
-    navigation:
+    menu:
         group:
           group: Group
     table:

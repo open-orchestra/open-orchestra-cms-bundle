@@ -1,0 +1,46 @@
+{
+  "contribution": {
+    "page": {
+      "template": "Menu/Contribution/page",
+      "rank": 0
+    },
+    "content": {
+      "template": "Menu/Contribution/content",
+      "rank": 10
+    },
+    "trashcan": {
+      "template": "Menu/Contribution/trashcan",
+      "rank": 20
+    }
+  },
+  "configuration": {
+    "site": {
+      "template": "Menu/Configuration/site",
+      "rank": 0
+    },
+    "redirection": {
+      "template": "Menu/Configuration/redirection",
+      "rank": 10
+    },
+    "shared_block": {
+      "template": "Menu/Configuration/shared_block",
+      "rank": 40
+    }
+  },
+  "platform": {
+    "tag": {
+      "template": "Menu/Platform/tag",
+      "rank": 0
+    },
+    "site": {
+      "template": "Menu/Platform/site",
+      "rank": 20
+    }
+  },
+  "developer": {
+    "contentType": {
+      "template": "Menu/Developer/contentType",
+      "rank": 0
+    }
+  }
+}

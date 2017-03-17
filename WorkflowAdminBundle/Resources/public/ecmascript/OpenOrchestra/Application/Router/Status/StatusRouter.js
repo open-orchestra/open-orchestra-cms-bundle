@@ -22,6 +22,24 @@ class StatusRouter extends AbstractWorkflowRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getMenuHighlight() {
+        return {
+            '*' : 'navigation-workflow'
+        };
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getBreadcrumbHighlight() {
+        return {
+            '*' : 'navigation-status'
+        };
+    }
+
+    /**
      * New status
      */
     newStatus() {

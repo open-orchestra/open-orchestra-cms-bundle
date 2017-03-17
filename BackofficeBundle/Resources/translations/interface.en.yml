@@ -22,7 +22,7 @@ open_orchestra_backoffice:
     add: Add
     back_to_list: Back to list
     back: Back
-    navigation:
+    menu:
         hide_menu: Hide menu
         dashboard:
           title: Dashboard

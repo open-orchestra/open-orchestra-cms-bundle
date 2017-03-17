@@ -12,8 +12,8 @@ module.exports = {
     //--[ TEMPLATE UNDERSCORE ]--//
     'web/built/template/templates.js',
 
-    //--[ NAVIGATION CONFIG ]--//
-    'web/built/navigation/navigation.js',
+    //--[ MENU CONFIG ]--//
+    'web/built/menu/menu.js',
 
     //--[ APPLICATION ]--//
     'web/built/oo_application.js'

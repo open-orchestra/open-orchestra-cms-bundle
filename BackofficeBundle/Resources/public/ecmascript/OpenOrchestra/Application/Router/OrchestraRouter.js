@@ -1,5 +1,5 @@
-import LoaderView     from '../View/Loader/LoaderView'
-import Application    from '../Application'
+import LoaderView        from '../View/Loader/LoaderView'
+import NavigationManager from '../../Service/NavigationManager'
 
 /**
  * @class OrchestraRouter
@@ -32,6 +32,7 @@ class OrchestraRouter extends Backbone.Router
         super.execute(callback, args, name);
         let items = this.getBreadcrumb();
         this._updateBreadcrumb(items);
+        this._highlight(name);
     }
 
     /**
@@ -43,12 +44,53 @@ class OrchestraRouter extends Backbone.Router
     }
 
     /**
+     * @returns {Array}
+     * @private
+     */
+    getMenuHighlight() {
+        return {};
+    }
+
+    /**
+     * @returns {Array}
+     * @private
+     */
+    getBreadcrumbHighlight() {
+        return {};
+    }
+
+    /**
      * @param {Array} items
      * @private
      */
     _updateBreadcrumb(items) {
-        Application.breadcrumbView.setItems(items);
-        Application.breadcrumbView.render();
+        NavigationManager.updateBreadcrumb(items);
+    }
+
+    /**
+     * @param {string} name
+     * @private
+     */
+    _highlight(name) {
+        let breadcrumb = this.getBreadcrumbHighlight();
+        let menu = this.getMenuHighlight();
+
+        if (breadcrumb !== null) {
+            if (breadcrumb.hasOwnProperty(name)) {
+                NavigationManager.highlightBreadcrumb(breadcrumb[name]);
+            } else if (breadcrumb.hasOwnProperty('*')) {
+                NavigationManager.highlightBreadcrumb(breadcrumb['*']);
+            }
+        }
+
+        if (menu !== null) {
+            if (menu.hasOwnProperty(name)) {
+                NavigationManager.highlightMenu(menu[name]);
+            } else if (menu.hasOwnProperty('*')) {
+                NavigationManager.highlightMenu(menu['*']);
+            }
+
+        }
     }
 }
 

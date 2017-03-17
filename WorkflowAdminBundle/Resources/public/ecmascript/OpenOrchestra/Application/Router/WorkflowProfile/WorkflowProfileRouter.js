@@ -22,6 +22,24 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
     }
 
     /**
+     * @inheritdoc
+     */
+    getMenuHighlight() {
+        return {
+            '*' : 'navigation-workflow'
+        };
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getBreadcrumbHighlight() {
+        return {
+            '*' : 'navigation-profile'
+        };
+    }
+
+    /**
      *  List WorkflowProfile
      *
      * @param {String} page

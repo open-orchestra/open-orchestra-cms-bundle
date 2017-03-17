@@ -3,9 +3,9 @@ import Application      from '../../Application'
 import ApplicationError from '../../../Service/Error/ApplicationError'
 
 /**
- * @class NavigationView
+ * @class MenuView
  */
-class NavigationView extends OrchestraView
+class MenuView extends OrchestraView
 {
     /**
      * @inheritdoc
@@ -28,16 +28,16 @@ class NavigationView extends OrchestraView
      */
     render() {
         /**
-         * Orchestra.Config.Navigation is a parameter which contain the navigation configuration
-         * described in files public/config/navigation.json of all bundles
+         * Orchestra.Config.Menu is a parameter which contain the navigation configuration
+         * described in files public/config/menu.json of all bundles
          */
-        if (typeof Orchestra.Config.Navigation === "undefined") {
-            throw new ApplicationError('Navigation configuration is not found');
+        if (typeof Orchestra.Config.Menu === "undefined") {
+            throw new ApplicationError('Menu configuration is not found');
         }
 
-        let template = this._renderTemplate('Navigation/navigationView',
+        let template = this._renderTemplate('Menu/menuView',
             {
-                navConfig: Orchestra.Config.Navigation,
+                menuConfig: Orchestra.Config.Menu,
                 user: Application.getContext().user
             }
         );
@@ -116,6 +116,23 @@ class NavigationView extends OrchestraView
     }
 
     /**
+     * highlight sub menu
+     *
+     * @param {string} item
+     */
+    highlight(item) {
+        let target = $('#' + item, this.$el);
+        if (target.parents('.sublevels').length > 0) {
+            $('.sublevels li', this.$el).removeClass('active');
+            target.parent().addClass('active');
+            let tab = target.parents('.tab-pane').eq(0);
+            tab.addClass('active');
+            target = $('a[href="#' + tab.attr('id') + '"]', this.$el);
+        }
+        this._toggleSubLevel({currentTarget: target});
+    }
+
+    /**
      * Button return menu level1
      *
      * @private
@@ -139,4 +156,4 @@ class NavigationView extends OrchestraView
     }
 }
 
-export default NavigationView;
+export default MenuView;

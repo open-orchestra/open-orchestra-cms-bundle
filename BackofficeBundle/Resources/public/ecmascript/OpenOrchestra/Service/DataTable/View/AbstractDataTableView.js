@@ -25,7 +25,8 @@ class AbstractDataTableView extends OrchestraView
     }
 
     /**
-     * @param {Object} options
+     * @param {Object} collection
+     * @param {Array}  settings
      */
     initialize({collection, settings}) {
         this.api = null;

@@ -1,5 +1,5 @@
 open_orchestra_user_admin:
-    navigation:
+    menu:
         user:
           title: Utilisateur
           users: Tous les utilisateurs

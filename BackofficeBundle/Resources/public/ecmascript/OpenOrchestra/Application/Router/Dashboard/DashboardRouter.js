@@ -22,7 +22,7 @@ class DashboardRouter extends OrchestraRouter
      */
     getBreadcrumb() {
         return [
-            {label: Translator.trans('open_orchestra_backoffice.navigation.dashboard.title')}
+            {label: Translator.trans('open_orchestra_backoffice.menu.dashboard.title')}
         ]
     }
 

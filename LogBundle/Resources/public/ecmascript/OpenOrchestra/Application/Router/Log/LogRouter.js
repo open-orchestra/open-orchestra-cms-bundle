@@ -24,13 +24,22 @@ class LogRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.configuration.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.configuration.title')
             },
             {
-                label: Translator.trans('open_orchestra_log.navigation.configuration.log'),
+                label: Translator.trans('open_orchestra_log.menu.configuration.log'),
                 link: '#' + Backbone.history.generateUrl('listLog')
             }
         ]
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getMenuHighlight() {
+        return {
+            '*' : 'navigation-log'
+        };
     }
 
     /**
