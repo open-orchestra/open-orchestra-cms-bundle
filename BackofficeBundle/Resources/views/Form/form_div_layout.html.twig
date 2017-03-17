@@ -238,10 +238,10 @@
 {% block oo_tree_list_widget %}
     {% set collection = form|first %}
     {% spaceless %}
-    	<fieldset>
-    		<legend class="underline-label">{{ ('open_orchestra_backoffice.' ~ form.vars.id)|trans }}</legend>
+        <fieldset>
+            <legend class="underline-label">{{ ('open_orchestra_backoffice.' ~ form.vars.id)|trans }}</legend>
              <div class="perimeter-tree tree tree-form">
-    	        {% for root in form.vars.configuration %}
+                {% for root in form.vars.configuration %}
                     <ul class="children">
                         {{ _self.tabulation(root, collection) }}
                     </ul>
@@ -257,7 +257,10 @@
     {% spaceless %}
         <li>
             <div>
-                {% if configuration['children'] is defined %}<i aria-hidden="true" class="fa fa-chevron-down toggle-tree"></i>{% endif %}
+                {% if configuration['children'] is defined %}
+                    <p class="tree-icon"><i aria-hidden="true" class="fa fa-chevron-down toggle-tree"></i></p>
+                {% endif %}
+
                 <input type="checkbox" id="{{ collection[key].vars.id }}" name="{{ collection[key].vars.full_name }}" {% if collection[key].vars.value is defined %} value="{{ collection[key].vars.value }}"{% endif %}{% if collection[key].vars.checked %} checked="checked"{% endif %} />
                 <label for="{{ collection[key].vars.id }}">{{ name }}</label>
             </div>

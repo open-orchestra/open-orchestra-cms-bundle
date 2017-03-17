@@ -45,7 +45,7 @@ class AbstractTreeView extends OrchestraView
      */
     _enableTreeSortable($tree) {
         $tree.sortable({
-            distance   : 15,
+            tolerance: "pointer",
             placeholder: 'ui-state-highlight',
             connectWith: '.tree .children.sortable-container',
             handle     : '.sortable-handler',
