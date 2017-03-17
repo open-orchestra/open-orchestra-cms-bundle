@@ -1,7 +1,5 @@
 open_orchestra_backoffice:
     no_translation: No translation
-    modal:
-        close: Close
     scheme:
         http: http
         https: https
@@ -10,77 +8,23 @@ open_orchestra_backoffice:
         fr: Français
         es: Español
         de: Deutsch
-    error_txt: Unable to finish your request
-    clear_local_storage:
-        tooltip: '*Warning! This will reset all your widget settings.*'
-        title: Clear Local Storage
-        text: Would you like to RESET all your saved widgets and clear LocalStorage?
-    internal_link:
-        title: Internal link
     form:
-        personnal_account: My account
         submit: Save
         submit_continue: Save and continue
-        edit: Edit
-        duplicate: Duplicate
         delete: Delete
         global_error: There are errors in the form
-        delete_confirm:
-            title: Delete this element?
-            text: The removal will be final
         add: Add
-        select: Select
         swchoff:
             on: Yes
             off: No
-        javascript:
-          error: An error occurs on your browser during form submission!
         allowed_characters:
           helper: "Allowed characters: a-z, 0-9, _, -"
         collection:
             close_forms: Close list
             open_forms: Open list
-            open_form: Edit
-            close_form: Close
             new_form: New enter
-        status:
-            name: Name
-            published:
-                label: Published status
-                helper: If set to "Yes", contents and nodes with this status will be considered as "Published"
-            initial:
-                label: Initial status
-                helper: If set to "Yes", this status will be used to initiate new contents and nodes. Setting it to "Yes" will remove this setting from other status as only one status can be Initial.
-            auto_publish_from:
-                label: Status allowing the automatic publishing
-                helper: A node with this status is auomatically published when its publishing date has come
-            auto_unpublish_to:
-                label: Automatic unpublish status
-                helper: If set to "Yes", this status will be used to unpublish nodes by the auto-unpublish process. Setting it to "Yes" will remove this setting from other status as only one status can have this feature.
-            labels: Label
-            color:
-                red: Red
-                orange: Orange
-                green: Green
-                grayDark: Grey
-                blue: Blue
-            display_color: Diplay color
-            creation: The new status has been created
-            success: The status has been modified
-            translation_state: Translation state
-            blocked_edition:
-                label: Blocked edition
-                helper: If set to "Yes", the contents with this status can not be changed.
-            out_of_workflow:
-                label: Out of validation workflow
-                helper: If set to "Yes", this status will be used to characterize contents with no validation workflow.
         field_option:
             label: Existing option
-            new: New option
-            add: Add option
-            delete: Delete option
-            key: Key
-            value: Value
         field_type:
             label: Existing field
             add: Add field
@@ -91,17 +35,12 @@ open_orchestra_backoffice:
             default_value: Default value
             searchable: Searchable
             orderable: Orderable
-            orderDirection: Order direction
-            position: Position
-            additionalParameters: Additional parameters
             order_direction_choice:
               asc: Ascending
               desc: Descending
-            type_searchable: Multilingual field
             translatable: Translatable
             listable: Display in the back office table
             type: Type
-            options: Existing field
             field_searchable_view:
                 text: Text
                 date: Date
@@ -128,15 +67,10 @@ open_orchestra_backoffice:
             scheme: Default scheme
             domain: Domain
             name: Name
-            aliases: Aliases
-            alias: Alias
             add_alias: Add an alias
-            default_language: Default language
             language: Language
             prefix: Language prefix
             main: Main alias
-            blocks: Blocks available
-            meta_keywords: Meta keywords
             meta_description: Meta description
             meta_index: Meta index
             meta_follow: Meta follow
@@ -172,10 +106,7 @@ open_orchestra_backoffice:
             creation: The content has been created
             name: Content name
             status: Status
-            language: Language
-            linked_to_site: Shared on other sites
             keywords: Keywords
-            content_id: Content id
             publish_date: Automatic publish date
             unpublish_date: Automatic unpublish date
             group:
@@ -191,10 +122,8 @@ open_orchestra_backoffice:
             content_type_id: Id
             names: Back office name
             version: Version
-            status: Status
             linked_to_site: Shared on other sites
             always_shared: Always (or on demand)
-            default_display: Visible by default in BackOffice list
             default_listable_label:
               name: Name
               status_label: Workflow state
@@ -223,9 +152,6 @@ open_orchestra_backoffice:
                 share: Content sharing
                 visible: Items to display in the back office list
                 version: Version
-        template:
-            success: The template has been saved
-            name: Name
         node:
             success: The page has been saved
             title: Title
@@ -234,18 +160,14 @@ open_orchestra_backoffice:
             publish_date: Automatic publish date
             unpublish_date: Automatic unpublish date
             status: Status
-            node_type: Type of Node
             priority:
                 label: Relative importance compared to the other pages of the site (for the sitemap)
                 helper: Relative importance compared to the other pages of the site (for the sitemap)
             canonical: Canonical page
-            alias: Alias
             route_pattern:
                 name : Main URL
                 helper: |
                     Pattern types: simple (pattern), absolute (/pattern), with variable (/{contentId})
-            language: Language
-            status: Status
             save_old_published_version: Enregistrer une copie de l'ancienne version publiée
             in_menu: Shown in menus
             in_footer: Shown in footer
@@ -281,22 +203,6 @@ open_orchestra_backoffice:
             monthly: Monthly
             yearly: Yearly
             never: Never
-        area:
-            success: The area has been modified
-            html_class: Html class for the area
-            label: Area label
-            area_id: The area id
-            width: Area width
-            new_row_title: New row
-            add_block_title: Add a block
-            edit_row_title: Edit row
-            edit_column_title: Edit column
-            column_layout:
-                label: Column Layout
-                helper: "Column layout: 10%, auto, 100px"
-            layout:
-                select_layout: Select an option
-                manually: Or specify manually
         block:
             success: The block has been modified
             creation: The block has been created
@@ -456,8 +362,6 @@ open_orchestra_backoffice:
         language_list:
             title: Language choice
             description: Display dropdown list with all the languages of the site.
-        delete_question: Delete this block?
-        delete_explanation: The removal will be final.
         video:
             title: Video
             description: Insert a Youtube, Dailymotion or Vimeo video
@@ -525,99 +429,14 @@ open_orchestra_backoffice:
             google_analytics: Google Analytics
             xiti_free: Xiti Free 7.5
             site_id: "Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)"
-    element:
-        version:
-            create: New version
-            display: version
-            updated: last updated
-        preview: Preview
-        last_update:
-            at: Last update
-            by: by
     node:
-        version:
-            create: New version
-            display: version
-        preview: Preview
-        configuration: Edit
-        last_update:
-            at: Last update
-            by: by
-        delete:
-            button: Delete
-            text: This operation is not reversible.
-            title: Would you like delete this page?
-        blocks: Blocks
         special_page:
             default: Defaut
-    status:
-        none_available: No status available
-    top_menu:
-        collapse_menu: Collapse menu
-        sign_out: Sign out
-        improve_security: You can improve your security further after logging out by closing this opened browser
-    areas:
-        delete_question: Would you like to delete this area?
-        delete_explanation: This operation is not reversible.
-        delete_error_title: Area removal
-        delete_error_txt: Error while removing area, please reload the page
-        delete_column_question: Would you like to delete this column?
-        delete_row_question: Would you like to delete this row?
-        delete_explanation: This operation is not reversible.
-        delete_error_txt: Error while removing area, please reload the page
-        edit_column_label: Edit column
-        edit_row_label: Edit Row
-        new_row_label: Row
-        add_block_label: Block
-    templates:
-        delete:
-            title: Would you like delete this template?
-            text: This operation is not reversible.
     command:
         node:
             success: Nodes references are consistent.
             error: Nodes refercences are not consistent.
         empty_choices: Choose which table to check.
-    global:
-        back_to_list: Back to list
-    smart_confirm:
-        button:
-            yes: Yes
-            no: No
-    table:
-        search : Search
-        content_types:
-            content_type_id: Id
-            name: Name
-            version: Version
-            status_label: Status label
-            linked_to_site: Site linked
-        group:
-            name: Name
-            label: Label
-        redirection:
-            site_name: Site name
-            route_pattern: Routte pattern
-            locale: Locale
-            redirection: Redirection
-            permanent: Permanent
-        status:
-            label: Label
-            published: Published
-            display_color: Display Color
-            initial: Initial
-            auto_publish_from: Allow the auto publishing
-            auto_unpublish_to: State of auto unpublishing
-        api_client:
-            name: Name
-            trusted: Trusted
-        trashcan:
-          name: Name
-          deleted_at: Deleted at
-          restore_confirm_txt: Would you like to restore this element?
-          restore_confirm_title: Restore
-          remove_confirm_txt: Would you like to remove this element permanently?
-          remove_confirm_title: Permanent removal
     template_set:
         default:
             label: Default set

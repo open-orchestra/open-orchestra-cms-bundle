@@ -4,44 +4,17 @@ open_orchestra_backoffice:
             title: Login
 
 open_orchestra_user_admin:
-    left_menu:
-        administration:
-            user:
-                list: Users
-    user:
-        profile: Profile
-        password: Password
-    table:
-        username: Username
-        groups: Groups
-        email: Email
-        first_name: First name
-        last_name: Last name
-        delete_confirm:
-            title: Remove this user of group?
-    password:
-        title: Password
     block:
         login:
             title: Login
             description: Display a log form.
     form:
-        title: General
-        super_admin_help_text: This user is super admin, so it is impossible to select rights because he already has all the access.
-        registration_user:
-            first_name: First name
-            last_name: Last name
-            roles: Roles
         user:
             firstName: First name
             lastName: Last name
             email: Email
-            password: Password
-            password_confirmation: Password confirmation
-            password_mismatch: Password mismatch
             groups: Group(s) of membership
             language: Default language
-            success: The user has been updated
             group:
                 information: Informations
                 authentication: Authentication
