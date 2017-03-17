@@ -110,9 +110,9 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             $defaultOption = (isset($defaultValueField['options'])) ? $defaultValueField['options'] : array();
             $defaultOption['data'] = $data->getDefaultValue();
             $container->add('default_value', $defaultValueField['type'], $defaultOption);
-            if (array_key_exists('search', $this->fieldTypeParameters[$type])) {
-                $data->setFieldTypeSearchable($this->fieldTypeParameters[$type]['search']);
-            }
+        }
+        if (array_key_exists('search', $this->fieldTypeParameters[$type])) {
+            $data->setFieldTypeSearchable($this->fieldTypeParameters[$type]['search']);
         }
     }
 
