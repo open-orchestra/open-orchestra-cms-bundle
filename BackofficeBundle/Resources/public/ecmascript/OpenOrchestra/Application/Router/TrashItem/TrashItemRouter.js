@@ -25,13 +25,22 @@ class TrashItemRouter extends OrchestraRouter
     getBreadcrumb() {
         return [
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.title')
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.title')
             },
             {
-                label: Translator.trans('open_orchestra_backoffice.navigation.contribution.trashcan'),
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.trashcan'),
                 link: '#'+Backbone.history.generateUrl('listTrashItem')
             }
         ]
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getMenuHighlight() {
+        return {
+            '*' : 'navigation-trashcan'
+        };
     }
 
     /**
