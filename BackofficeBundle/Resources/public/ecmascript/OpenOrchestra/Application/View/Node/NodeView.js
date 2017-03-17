@@ -10,19 +10,19 @@ import Node             from '../../Model/Node/Node'
 import NodeToolbarView  from './NodeToolbarView'
 import Nodes            from '../../Collection/Node/Nodes'
 import NodeVersionsView from './NodeVersionsView'
+import RenderToolbarViewMixin from './Mixin/RenderToolbarViewMixin'
 
 /**
  * @class NodeView
  */
-class NodeView extends OrchestraView
+class NodeView extends mix(OrchestraView).with(RenderToolbarViewMixin)
 {
     /**
      * @inheritdoc
      */
     preinitialize() {
         this.events = {
-            'click .area:not(.disabled)': '_activeArea',
-            'click .btn-new-version': '_showNewVersionForm'
+            'click .area:not(.disabled)': '_activeArea'
         }
     }
 
@@ -49,71 +49,10 @@ class NodeView extends OrchestraView
         );
         this.$el.html(template);
         this._displayLoader($('.well', this.$el));
-        this._renderNodeActionToolbar($('.node-action-toolbar', this.$el));
+        this._renderNodeActionToolbar($('.node-action-toolbar', this.$el), 'showNode');
         this._renderNodeTemplate($('.node-template .well', this.$el));
 
         return this;
-    }
-
-    /**
-     * @param {Object} $selector
-     * @private
-     */
-    _renderNodeActionToolbar($selector) {
-        this._displayLoader($selector);
-        let statuses = new Statuses();
-        let nodeVersions = new Nodes();
-        $.when(
-            statuses.fetch({
-                apiContext: 'node',
-                urlParameter: {
-                    nodeId: this._node.get('node_id'),
-                    siteId: this._node.get('site_id'),
-                    language: this._node.get('language'),
-                    version: this._node.get('version')
-                }
-            }),
-            nodeVersions.fetch({
-                apiContext: 'list-version',
-                urlParameter: {
-                    nodeId: this._node.get('node_id'),
-                    language: this._node.get('language')
-                }
-            })
-        ).done( () => {
-            let nodeToolbarView = new NodeToolbarView(
-                {
-                    node: this._node,
-                    statuses: statuses,
-                    nodeVersions: nodeVersions,
-                    nodeView: this
-                }
-            );
-            nodeToolbarView.listenTo(this, 'show.new_version.form', nodeToolbarView.newVersionForm);
-            $selector.html(nodeToolbarView.render().$el);
-        });
-    }
-
-    /**
-     * Manage Version
-     * @param {Nodes} nodeVersions
-     */
-    manageVersion(nodeVersions) {
-        let nodeVersionsView = new NodeVersionsView({
-            node: this._node,
-            collection: nodeVersions
-        });
-        $('.well', this.$el).html(nodeVersionsView.render().$el);
-    }
-
-    /**
-     * Show new version form
-     *
-     * @private
-     */
-    _showNewVersionForm() {
-        this.trigger('show.new_version.form');
-        $('.alert-published-state').hide();
     }
 
     /**

@@ -37,6 +37,11 @@ class ContentTypeFacade extends AbstractFacade
     public $definingVersionable;
 
     /**
+     * @Serializer\Type("boolean")
+     */
+    public $definingStatusable;
+
+    /**
      * @Serializer\Type("array")
      */
     public $defaultListable;

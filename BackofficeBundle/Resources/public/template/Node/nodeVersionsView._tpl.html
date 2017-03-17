@@ -1,3 +1,22 @@
+<%= renderTemplate('Node/nodeTopButtonsView', {nodeId: node.get('node_id'), language: node.get('language'), version: null}) %>
+<div class="pull-right languages">
+    <ul>
+        <% _.each(siteLanguages, function(siteLanguage, key) { %>
+        <% if (siteLanguage === node.get('language')) { %>
+        <li class="active">
+            <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+        </li>
+        <% } else { %>
+        <li>
+            <a href="#<%= Backbone.history.generateUrl('manageVersionsNode', {language: siteLanguage, nodeId: node.get('node_id')}) %>">
+                <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+            </a>
+        </li>
+        <% }; %>
+        <% }); %>
+    </ul>
+</div>
+<h1> <%= node.get('name') %></h1>
 <div class="node-versions-list">
 </div>
 <% if(collection.length > 1) { %>

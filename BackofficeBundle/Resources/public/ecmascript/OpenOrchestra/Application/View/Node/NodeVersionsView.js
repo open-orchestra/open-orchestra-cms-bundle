@@ -10,10 +10,13 @@ class NodeVersionsView extends AbstractCollectionView
 {
     /**
      * @param {OrchestraCollection} collection
-     * @param {Node}              node
+     * @param {Object}              settings
+     * @param {array}               siteLanguages
+     * @param {Node}                node
      */
-    initialize({collection, node}) {
-        super.initialize({collection: collection});
+    initialize({collection, settings, siteLanguages, node}) {
+        super.initialize({collection: collection, settings: settings});
+        this._siteLanguages = siteLanguages;
         this._node = node;
     }
 
@@ -33,17 +36,23 @@ class NodeVersionsView extends AbstractCollectionView
      */
     render() {
         let template = this._renderTemplate('Node/nodeVersionsView', {
-            collection: this._collection
+            collection: this._collection,
+            siteLanguages: this._siteLanguages,
+            node: this._node
         });
         this.$el.html(template);
 
-        this._listView = new NodeVersionsListView({
-            collection: this._collection,
-            settings: {
+        let settings = $.extend(true, this._settings, {
                 serverSide: false,
                 processing: false,
                 data: this._collection.models
             }
+        );
+        this._listView = new NodeVersionsListView({
+            collection: this._collection,
+            settings: settings,
+            nodeId: this._node.get('node_id'),
+            language: this._node.get('language')
         });
         $('.node-versions-list', this.$el).html(this._listView.render().$el);
 
@@ -66,18 +75,10 @@ class NodeVersionsView extends AbstractCollectionView
                 language: this._node.get('language')
             },
             success: () => {
-                let message = new FlashMessage(Translator.trans('open_orchestra_backoffice.versionable.success_remove'), 'success');
-                FlashMessageBag.addMessageFlash(message);
-
-                let url = Backbone.history.generateUrl('showNode', {
-                    nodeId: this._node.get('node_id'),
-                    language: this._node.get('language')
-                });
-                if (url === Backbone.history.fragment) {
-                    Backbone.history.loadUrl(url);
-                } else {
-                    Backbone.history.navigate(url, true);
-                }
+                this._listView.api.clear();
+                this._listView.api.rows.add(this._collection.models);
+                this._listView.api.draw();
+                this._toggleButtonDelete();
             }
         });
     }

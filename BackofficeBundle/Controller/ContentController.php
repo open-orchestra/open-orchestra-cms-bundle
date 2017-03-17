@@ -60,29 +60,11 @@ class ContentController extends AbstractAdminController
         );
         $form = $this->createForm('oo_content', $content, $options);
 
-        $status = $content->getStatus();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $saveOldPublishedVersion = $form->has('saveOldPublishedVersion') ? $form->get('saveOldPublishedVersion')->getData() : false;
-            if (true === $content->getStatus()->isPublishedState() && false === $saveOldPublishedVersion) {
-                $oldPublishedVersion = $this->get('open_orchestra_model.repository.content')->findOnePublished(
-                    $content->getContentId(),
-                    $content->getLanguage(),
-                    $content->getSiteId()
-                );
-                if ($oldPublishedVersion instanceof ContentInterface && $oldPublishedVersion !== $content) {
-                    $this->get('object_manager')->remove($oldPublishedVersion);
-                }
-            }
             $this->get('object_manager')->flush();
             $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
-
-            if ($status->getId() !== $content->getStatus()->getId()) {
-                $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, new ContentEvent($content, $status));
-                $options['delete_button'] = $this->canDeleteContent($content);
-                $form = $this->createForm('oo_content', $content, $options);
-            }
 
             $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
             $this->get('session')->getFlashBag()->add('success', $message);
@@ -136,6 +118,7 @@ class ContentController extends AbstractAdminController
             'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
         ));
 
+        $status = $content->getStatus();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -153,6 +136,10 @@ class ContentController extends AbstractAdminController
                 }
             }
             $documentManager->flush();
+            if ($status->getId() !== $content->getStatus()->getId()) {
+                $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, new ContentEvent($content, $status));
+            }
+
             $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
             $response = new Response(
                 $message,

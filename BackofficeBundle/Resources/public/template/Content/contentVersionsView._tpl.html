@@ -1,3 +1,28 @@
+<%= renderTemplate('Content/contentTopButtonsView', {
+    contentTypeId: contentTypeId,
+    language: language,
+    contentId: contentId,
+    version: null,
+    versionable: true
+}) %>
+<div class="pull-right languages">
+    <ul>
+        <% _.each(siteLanguages, function(siteLanguage, key) { %>
+            <% if (siteLanguage === language) { %>
+                <li class="active">
+                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                </li>
+            <% } else { %>
+                <li>
+                    <a href="#<%= Backbone.history.generateUrl('manageVersionsContent', {contentTypeId: contentTypeId, contentId: contentId, language: siteLanguage}) %>">
+                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    </a>
+                </li>
+            <% } %>
+        <% }); %>
+    </ul>
+</div>
+<h1> <%= title %></h1>
 <div class="content-versions-list">
 </div>
 <% if(collection.length > 1) { %>

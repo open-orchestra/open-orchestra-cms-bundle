@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
@@ -103,6 +104,17 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
+        if ($source instanceof ContentInterface &&
+            null !== $facade->status &&
+            null !== $facade->status->id &&
+            $source->getStatus()->getId() !== $facade->status->id
+        ) {
+            $status = $this->statusRepository->find($facade->status->id);
+            if ($status instanceof StatusInterface) {
+                $source->setStatus($status);
+            }
+        }
+
         if (null !== $facade->id) {
             return $this->contentRepository->findById($facade->id);
         }

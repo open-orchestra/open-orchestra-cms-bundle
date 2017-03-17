@@ -1,22 +1,14 @@
-<div class="top-action-buttons">
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: language}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
-    </a>
-    <a class="btn btn-border btn-set" role="button"><%= Translator.trans('open_orchestra_backoffice.node.parameterize') %></a>
-    <a class="btn btn-border btn-edit" role="button" href="#<%= Backbone.history.generateUrl('showNode', {language: language, version: version, nodeId: nodeId}) %>">
-        <%= Translator.trans('open_orchestra_backoffice.node.edit') %>
-    </a>
-</div>
+<%= renderTemplate('Node/nodeTopButtonsView', {nodeId: node.get('node_id'), language: node.get('language'), version: node.get('version')}) %>
 <div class="pull-right languages">
     <ul>
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
-            <% if (siteLanguage === language) { %>
+            <% if (siteLanguage === node.get('language')) { %>
                 <li class="active">
                     <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
                 </li>
             <% } else { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('editNode', {language: siteLanguage, nodeId: nodeId}) %>">
+                    <a href="#<%= Backbone.history.generateUrl('editNode', {language: siteLanguage, nodeId: node.get('node_id')}) %>">
                         <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
                     </a>
                 </li>
@@ -24,5 +16,7 @@
         <% }); %>
     </ul>
 </div>
-<h1 id="page-name"><%= title %></h1>
+<h1> <%= node.get('name') %></h1>
+<div class="node-action-toolbar">
+</div>
 <div class='form-edit'></div>

@@ -16,7 +16,6 @@ class ConfirmModalView extends ModalView
         this._context = context;
         this._callbackParameter = callbackParameter;
         this.events['click .btn-success'] = '_yesConfirm';
-
         if (noCallback) {
             this.events['click .btn-danger'] = '_noConfirm';
             this._noCallback = noCallback;

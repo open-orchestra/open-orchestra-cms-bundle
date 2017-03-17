@@ -27,6 +27,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param ContentRepositoryInterface           $contentRepository
      * @param ContentTypeRepositoryInterface       $contentTypeRepository
+     * @param AuthorizationCheckerInterface        $authorizationChecker
      */
     public function __construct(
         $facadeClass,
@@ -63,6 +64,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $contentType->getVersion();
         $facade->linkedToSite = $contentType->isLinkedToSite();
         $facade->definingVersionable = $contentType->isDefiningVersionable();
+        $facade->definingStatusable = $contentType->isDefiningStatusable();
         $facade->defaultListable = $contentType->getDefaultListable();
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {

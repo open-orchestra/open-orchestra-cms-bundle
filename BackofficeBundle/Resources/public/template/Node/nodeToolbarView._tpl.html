@@ -1,4 +1,12 @@
 <div class="form-inline row">
+    <% if (true === node.get('status').get('published_state')) {%>
+        <div class="alert alert-success alert-published-state" role="alert">
+            <div class="heading"><%= Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
+            <p>
+                <%= (Translator.trans('open_orchestra_backoffice.node.message_online.message').replace(/\\n/g, '<br>')) %>
+            </p>
+        </div>
+    <% }; %>
     <div class="pull-left">
         <div class="form-group">
             <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
@@ -14,9 +22,6 @@
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
-        </div>
-        <div class="form-group">
-            <button type="button" class="btn btn-info btn-manage-version"><%= Translator.trans('open_orchestra_backoffice.versionable.manage_version') %></button>
         </div>
     </div>
 

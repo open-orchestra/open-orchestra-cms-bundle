@@ -92,7 +92,8 @@ open_orchestra_backoffice:
         versionable:
             version_name: Nom de la version
             status_label: Etat workflow
-            created_at: Date de création
+            created_by: Auteur
+            updated_at: Date de mise à jour
         redirections:
             site_name    : Nom du site
             route_pattern: Pattern de route
@@ -117,7 +118,6 @@ open_orchestra_backoffice:
     node:
         title: Pages
         parameterize: Paramétrer
-        move: Déplacement
         add: Ajouter une page
         new: Nouvelle page
         edit: Modifier
@@ -233,6 +233,13 @@ open_orchestra_backoffice:
     content_types:
         title: Contenus
     content:
+        edit: Modifier
         confirm_create:
             title: Créer un contenu dans une nouvelle langue
             message: Ce contenu n’existe pas dans cette langue. Souhaitez-vous le créer?
+        message_online:
+            title: La contenu est actuellement en ligne sur votre site.
+            message: |
+                L'édition d'un contenu en ligne est impossible. \n
+                Pour modifier ce contenu veuillez créer une révision. \n
+                Vous pouvez également modifier le workflow de cette version mais le contenu ne sera plus visible sur le site

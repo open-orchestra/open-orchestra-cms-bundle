@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -17,20 +17,24 @@ class StatusableChoiceStatusSubscriber implements EventSubscriberInterface
 {
     protected $statusRepository;
     protected $authorizationChecker;
+    protected $objectManager;
     protected $options;
 
     /**
      * @param StatusRepositoryInterface     $statusRepository
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param ObjectManager                 $objectManager
      * @param array                         $options
      */
      public function __construct(
          StatusRepositoryInterface $statusRepository,
          AuthorizationCheckerInterface $authorizationChecker,
+         ObjectManager $objectManager,
          array $options
     ) {
         $this->statusRepository = $statusRepository;
         $this->authorizationChecker = $authorizationChecker;
+        $this->objectManager = $objectManager;
         $this->options = $options;
     }
 
@@ -42,25 +46,12 @@ class StatusableChoiceStatusSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        if (null !== $data->getId()) {
+        if (null === $data->getId()) {
             $form->add('status', 'oo_status_choice', array_merge(array(
                 'embedded' => true,
                 'choices' => $this->getStatusChoices($data),
-                'choice_attr' => function(StatusInterface $val, $key, $index) {
-                    if ($val->isPublishedState()) {
-                        return array('data-published-state' => true);
-                    }
-
-                    return array();
-                }), $this->options)
+                ), $this->options)
             );
-            $form->add('saveOldPublishedVersion', 'checkbox', array(
-                'mapped' => false,
-                'required' => false,
-                'group_id' => isset($this->options['group_id']) ? $this->options['group_id'] : '',
-                'sub_group_id' => isset($this->options['sub_group_id']) ? $this->options['sub_group_id'] : '',
-                'label' => 'open_orchestra_backoffice.form.node.save_old_published_version',
-            ));
         }
     }
 
@@ -81,7 +72,10 @@ class StatusableChoiceStatusSubscriber implements EventSubscriberInterface
      */
     protected function getStatusChoices(StatusableInterface $statusable)
     {
-        $choices = array($statusable->getStatus());
+        $currentStatus = $statusable->getStatus();
+        $this->objectManager->persist($currentStatus);
+
+        $choices = array($currentStatus);
         $availableStatus = $this->statusRepository->findAll();
 
         foreach ($availableStatus as $status) {

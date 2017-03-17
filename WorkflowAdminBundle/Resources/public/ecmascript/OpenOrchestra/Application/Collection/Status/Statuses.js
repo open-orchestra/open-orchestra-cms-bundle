@@ -52,6 +52,8 @@ class Statuses extends DataTableCollection
                 return Routing.generate('open_orchestra_api_status_list');
             case "node":
                 return Routing.generate('open_orchestra_api_node_list_status', urlParameter);
+            case "content":
+                return Routing.generate('open_orchestra_api_content_list_status', urlParameter);
         }
     }
 }

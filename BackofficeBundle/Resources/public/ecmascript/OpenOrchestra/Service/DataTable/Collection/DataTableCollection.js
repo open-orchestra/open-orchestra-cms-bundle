@@ -23,6 +23,14 @@ class DataTableCollection extends OrchestraCollection
 
         return response;
     }
+
+    /**
+     * @inheritDoc
+     */
+    destroyModels(models, options = {}) {
+        super.destroyModels(models, options);
+        this.recordsTotal = this.length;
+    }
 }
 
 export default DataTableCollection
