@@ -35,7 +35,7 @@ class SiteListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
                 orderable: true,
                 orderDirection: 'desc',
                 visibile: true,
-                createdCell: this._createEditLink
+                createdCell: $.proxy(this._createEditLink, this)
             },
             {
                 name: "site_id",
