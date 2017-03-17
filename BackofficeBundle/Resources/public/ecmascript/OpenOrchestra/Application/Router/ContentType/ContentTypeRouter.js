@@ -43,9 +43,7 @@ class ContentTypeRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            listContentType : 'navigation-content-type',
-            editContentType : 'navigation-content-type',
-            newContentType  : 'navigation-content-type'
+            '*' : 'navigation-content-type'
         };
     }
 

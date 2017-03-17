@@ -22,7 +22,7 @@ class ParameterRouter extends AbstractWorkflowRouter
      */
     getMenuHighlight() {
         return {
-            editParameters : 'navigation-workflow'
+            '*' : 'navigation-workflow'
         };
     }
 
@@ -31,7 +31,7 @@ class ParameterRouter extends AbstractWorkflowRouter
      */
     getBreadcrumbHighlight() {
         return {
-            editParameters : 'navigation-parameter'
+            '*' : 'navigation-parameter'
         };
     }
 

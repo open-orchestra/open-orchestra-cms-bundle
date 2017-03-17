@@ -47,10 +47,7 @@ class SharedBlockRouter extends AbstractBlockRouter
      */
     getMenuHighlight() {
         return {
-            listSharedBlock             : 'navigation-shared-block',
-            editSharedBlock             : 'navigation-shared-block',
-            newSharedBlockListComponent : 'navigation-shared-block',
-            newSharedBlock              : 'navigation-shared-block'
+            '*' : 'navigation-shared-block'
         };
     }
 

@@ -38,7 +38,7 @@ class LogRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            listLog : 'navigation-log',
+            '*' : 'navigation-log'
         };
     }
 

@@ -42,9 +42,7 @@ class GroupRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            listGroup : 'navigation-group',
-            editGroup : 'navigation-group',
-            newGroup  : 'navigation-group'
+            '*' : 'navigation-group'
         };
     }
 

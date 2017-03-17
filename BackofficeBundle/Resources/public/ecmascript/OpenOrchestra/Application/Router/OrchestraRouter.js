@@ -75,14 +75,23 @@ class OrchestraRouter extends Backbone.Router
         let breadcrumb = this.getBreadcrumbHighlight();
         let menu = this.getMenuHighlight();
 
-        if (breadcrumb !== null && breadcrumb.hasOwnProperty(name)) {
-            NavigationManager.highlightBreadcrumb(breadcrumb[name]);
+        if (breadcrumb !== null) {
+            if (breadcrumb.hasOwnProperty(name)) {
+                NavigationManager.highlightBreadcrumb(breadcrumb[name]);
+            } else if (breadcrumb.hasOwnProperty('*')) {
+                NavigationManager.highlightBreadcrumb(breadcrumb['*']);
+            }
         }
-        if (menu !== null && menu.hasOwnProperty(name)) {
-            NavigationManager.highlightMenu(menu[name]);
+
+        if (menu !== null) {
+            if (menu.hasOwnProperty(name)) {
+                NavigationManager.highlightMenu(menu[name]);
+            } else if (menu.hasOwnProperty('*')) {
+                NavigationManager.highlightMenu(menu['*']);
+            }
+
         }
     }
-
 }
 
 export default OrchestraRouter;

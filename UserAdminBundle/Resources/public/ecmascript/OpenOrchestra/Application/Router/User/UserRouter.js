@@ -44,10 +44,7 @@ class UserRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            editSelfUser : 'navigation-user',
-            editUser     : 'navigation-user',
-            listUser     : 'navigation-user',
-            newUser      : 'navigation-user',
+            '*' : 'navigation-user'
         };
     }
 

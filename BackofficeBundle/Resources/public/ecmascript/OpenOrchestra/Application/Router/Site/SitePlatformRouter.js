@@ -35,8 +35,7 @@ class SitePlatformRouter extends SiteRouter
      */
     getMenuHighlight() {
         return {
-            listPlatformSite : 'navigation-platform-site',
-            editPlatformSite : 'navigation-platform-site',
+            '*' : 'navigation-platform-site'
         };
     }
 

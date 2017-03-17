@@ -41,9 +41,7 @@ class RedirectionRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            listRedirections : 'navigation-redirection',
-            newRedirection   : 'navigation-redirection',
-            editRedirection  : 'navigation-redirection'
+            '*' : 'navigation-redirection'
         };
     }
 

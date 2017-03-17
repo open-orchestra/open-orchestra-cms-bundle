@@ -26,9 +26,7 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     getMenuHighlight() {
         return {
-            newStatus  : 'navigation-workflow',
-            editStatus : 'navigation-workflow',
-            listStatus : 'navigation-workflow'
+            '*' : 'navigation-workflow'
         };
     }
 
@@ -37,9 +35,7 @@ class StatusRouter extends AbstractWorkflowRouter
      */
     getBreadcrumbHighlight() {
         return {
-            newStatus  : 'navigation-status',
-            editStatus : 'navigation-status',
-            listStatus : 'navigation-status'
+            '*' : 'navigation-status'
         };
     }
 

@@ -47,10 +47,7 @@ class BlockRouter extends AbstractBlockRouter
      */
     getMenuHighlight() {
         return {
-            newBlockListComponent : 'navigation-node',
-            newBlockListAvailable : 'navigation-node',
-            editBlock             : 'navigation-node',
-            newBlockForm          : 'navigation-node'
+            '*' : 'navigation-node'
         };
     }
 

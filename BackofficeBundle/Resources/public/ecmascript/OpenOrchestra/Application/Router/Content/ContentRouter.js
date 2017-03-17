@@ -50,10 +50,7 @@ class ContentRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            showContentSummary : 'navigation-content',
-            listContent        : 'navigation-content',
-            editContent        : 'navigation-content',
-            newContent         : 'navigation-content',
+            '*' : 'navigation-content'
         };
     }
 

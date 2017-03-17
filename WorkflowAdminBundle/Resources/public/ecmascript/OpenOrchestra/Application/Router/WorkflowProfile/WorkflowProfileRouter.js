@@ -26,9 +26,7 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
      */
     getMenuHighlight() {
         return {
-            listWorkflowProfile : 'navigation-workflow',
-            newWorkflowProfile  : 'navigation-workflow',
-            editWorkflowProfile : 'navigation-workflow'
+            '*' : 'navigation-workflow'
         };
     }
 
@@ -37,9 +35,7 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
      */
     getBreadcrumbHighlight() {
         return {
-            listWorkflowProfile : 'navigation-profile',
-            newWorkflowProfile  : 'navigation-profile',
-            editWorkflowProfile : 'navigation-profile'
+            '*' : 'navigation-profile'
         };
     }
 

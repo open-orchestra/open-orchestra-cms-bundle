@@ -43,9 +43,7 @@ class KeywordRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            newKeyword  : 'navigation-keyword',
-            editKeyword : 'navigation-keyword',
-            listKeyword : 'navigation-keyword'
+            '*' : 'navigation-keyword'
         };
     }
 

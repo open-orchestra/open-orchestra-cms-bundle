@@ -41,9 +41,7 @@ class SiteRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            listSite : 'navigation-site',
-            editSite : 'navigation-site',
-            newSite  : 'navigation-site'
+            '*' : 'navigation-site'
         };
     }
 

@@ -49,11 +49,7 @@ class NodeRouter extends OrchestraRouter
      */
     getMenuHighlight() {
         return {
-            showNodes   : 'navigation-node',
-            editNode    : 'navigation-node',
-            newTreeNode : 'navigation-node',
-            newNode     : 'navigation-node',
-            showNode    : 'navigation-node'
+            '*' : 'navigation-node'
         };
     }
 
