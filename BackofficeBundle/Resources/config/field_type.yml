@@ -124,7 +124,7 @@ parameters:
             label: open_orchestra_backoffice.form.field_type.custom_type.date
             type: oo_date_picker
             search: date
-            deserialize_type: DateTime
+            deserialize_type: string
             default_value:
                 type: oo_date_picker
                 options:
