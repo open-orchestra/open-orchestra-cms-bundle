@@ -35,7 +35,8 @@ class NodeTypeTest extends AbstractBaseTestCase
             $this->siteRepository,
             $this->templateManager,
             $this->nodeClass,
-            $specialPageChoiceSubscriber
+            $specialPageChoiceSubscriber,
+            array()
         );
     }
 
@@ -48,7 +49,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
         $this->nodeType->buildForm($formBuilderMock, array());
-        Phake::verify($formBuilderMock, Phake::times(17))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(18))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
@@ -113,6 +114,10 @@ class NodeTypeTest extends AbstractBaseTestCase
                 'cache' => array(
                     'rank' => 0,
                     'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
+                ),
+                'access' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.node.sub_group.access',
                 )
             ),
         ));
