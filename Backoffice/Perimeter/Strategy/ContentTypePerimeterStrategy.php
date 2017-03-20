@@ -28,10 +28,6 @@ class ContentTypePerimeterStrategy implements PerimeterStrategyInterface
      */
     public function isInPerimeter($item, PerimeterInterface $perimeter)
     {
-        if ($perimeter->getType() == $this->getType() && is_string($item)) {
-            return in_array($item, $perimeter->getItems());
-        }
-
-        return false;
+        return true;
     }
 }

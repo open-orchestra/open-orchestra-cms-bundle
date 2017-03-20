@@ -1,17 +1,17 @@
 parameters:
-    open_orchestra_backoffice.manager.context.class: OpenOrchestra\Backoffice\Context\ContextManager
+    open_orchestra_backoffice.manager.context.class               : OpenOrchestra\Backoffice\Context\ContextManager
     open_orchestra_backoffice.manager.multi_languages_choice.class: OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManager
-    open_orchestra_backoffice.manager.node.class: OpenOrchestra\Backoffice\Manager\NodeManager
-    open_orchestra_backoffice.manager.site.class: OpenOrchestra\Backoffice\Manager\SiteManager
-    open_orchestra_backoffice.manager.content.class: OpenOrchestra\Backoffice\Manager\ContentManager
-    open_orchestra_backoffice.manager.content_type.class: OpenOrchestra\Backoffice\Manager\ContentTypeManager
-    open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\Backoffice\Manager\RedirectionManager
-    open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\Backoffice\Manager\RouteDocumentManager
-    open_orchestra_backoffice.manager.keyword_to_document.class: OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager
-    open_orchestra_backoffice.manager.template.class: OpenOrchestra\Backoffice\Manager\TemplateManager
-    open_orchestra_backoffice.manager.block_configuration.class: OpenOrchestra\Backoffice\Manager\BlockConfigurationManager
-    open_orchestra_backoffice.manager.block.class: OpenOrchestra\Backoffice\Manager\BlockManager
-    open_orchestra_backoffice.manager.client_configuration.class: OpenOrchestra\Backoffice\Manager\ClientConfigurationManager
+    open_orchestra_backoffice.manager.node.class                  : OpenOrchestra\Backoffice\Manager\NodeManager
+    open_orchestra_backoffice.manager.site.class                  : OpenOrchestra\Backoffice\Manager\SiteManager
+    open_orchestra_backoffice.manager.content.class               : OpenOrchestra\Backoffice\Manager\ContentManager
+    open_orchestra_backoffice.manager.content_type.class          : OpenOrchestra\Backoffice\Manager\ContentTypeManager
+    open_orchestra_backoffice.manager.redirection.class           : OpenOrchestra\Backoffice\Manager\RedirectionManager
+    open_orchestra_backoffice.manager.route_document.class        : OpenOrchestra\Backoffice\Manager\RouteDocumentManager
+    open_orchestra_backoffice.manager.keyword_to_document.class   : OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager
+    open_orchestra_backoffice.manager.template.class              : OpenOrchestra\Backoffice\Manager\TemplateManager
+    open_orchestra_backoffice.manager.block_configuration.class   : OpenOrchestra\Backoffice\Manager\BlockConfigurationManager
+    open_orchestra_backoffice.manager.block.class                 : OpenOrchestra\Backoffice\Manager\BlockManager
+    open_orchestra_backoffice.manager.client_configuration.class  : OpenOrchestra\Backoffice\Manager\ClientConfigurationManager
 
 services:
     open_orchestra_backoffice.context_manager:
@@ -22,11 +22,13 @@ services:
             - '%kernel.default_locale%'
             - '@open_orchestra_model.repository.site'
             - '@security.authorization_checker'
+
     open_orchestra_backoffice.manager.multi_languages_choice:
         class: '%open_orchestra_backoffice.manager.multi_languages_choice.class%'
         arguments:
             - '@open_orchestra_backoffice.context_manager'
             - '@translator'
+
     open_orchestra_backoffice.manager.node:
         class: '%open_orchestra_backoffice.manager.node.class%'
         arguments:
@@ -40,14 +42,17 @@ services:
             - '%open_orchestra_model.document.area.class%'
             - '@event_dispatcher'
             - '@open_orchestra_backoffice.util.unique_id_generator'
+
     open_orchestra_backoffice.manager.site:
         class: '%open_orchestra_backoffice.manager.site.class%'
         arguments:
             - '%open_orchestra_model.document.site.class%'
+
     open_orchestra_backoffice.manager.content_type:
         class: '%open_orchestra_backoffice.manager.content_type.class%'
         arguments:
             - '%open_orchestra_model.document.content_type.class%'
+
     open_orchestra_backoffice.manager.content:
         class: '%open_orchestra_backoffice.manager.content.class%'
         arguments:
@@ -55,6 +60,8 @@ services:
             - '@open_orchestra_backoffice.context_manager'
             - '%open_orchestra_model.document.content.class%'
             - '@open_orchestra_backoffice.util.unique_id_generator'
+            - '@security.token_storage'
+
     open_orchestra_backoffice.manager.redirection:
         class: '%open_orchestra_backoffice.manager.redirection.class%'
         arguments:
@@ -65,6 +72,7 @@ services:
             - '@open_orchestra_model.repository.site'
             - '@open_orchestra_model.repository.node'
             - '@open_orchestra_model.repository.redirection'
+
     open_orchestra_backoffice.manager.route_document:
         class: '%open_orchestra_backoffice.manager.route_document.class%'
         arguments:
@@ -73,6 +81,7 @@ services:
             - '@open_orchestra_model.repository.node'
             - '@open_orchestra_model.repository.redirection'
             - '@open_orchestra_model.repository.route_document'
+
     open_orchestra_backoffice.manager.keyword_to_document:
         class: '%open_orchestra_backoffice.manager.keyword_to_document.class%'
         arguments:
@@ -80,18 +89,22 @@ services:
             - '@open_orchestra_model.helper.suppress_special_character'
             - '%open_orchestra_model.document.keyword.class%'
             - '@security.authorization_checker'
+
     open_orchestra_backoffice.manager.template:
         class: '%open_orchestra_backoffice.manager.template.class%'
+
     open_orchestra_backoffice.manager.block_configuration:
         class: '%open_orchestra_backoffice.manager.block_configuration.class%'
         arguments:
             - '%open_orchestra_backoffice.block_configuration%'
             - '@translator'
+
     open_orchestra_backoffice.manager.block:
         class: '%open_orchestra_backoffice.manager.block.class%'
         arguments:
             - '%open_orchestra_model.document.block.class%'
             - '@open_orchestra_backoffice.generate_form_manager'
             - '%open_orchestra_backoffice.block.fixed_attributes%'
+
     open_orchestra_backoffice.manager.client_configuration:
         class: '%open_orchestra_backoffice.manager.client_configuration.class%'

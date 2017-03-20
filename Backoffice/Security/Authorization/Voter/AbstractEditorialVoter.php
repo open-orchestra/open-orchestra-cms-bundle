@@ -59,7 +59,9 @@ abstract class AbstractEditorialVoter extends AbstractPerimeterVoter
             return true;
         }
 
-        if (ContributionActionInterface::READ === $attribute) {
+        if (ContributionActionInterface::READ === $attribute
+            || (is_string($subject) && ContributionActionInterface::CREATE === $attribute)
+        ) {
             return $this->voteForReadAction($subject, $token);
         }
 

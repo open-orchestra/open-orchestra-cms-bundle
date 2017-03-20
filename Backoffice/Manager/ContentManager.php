@@ -6,6 +6,7 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\Backoffice\Util\UniqueIdGenerator;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class ContentManager
@@ -15,24 +16,27 @@ class ContentManager
     protected $statusRepository;
     protected $contextManager;
     protected $contentClass;
+    protected $username;
 
     /**
      * @param StatusRepositoryInterface  $statusRepository
      * @param ContextManager             $contextManager
      * @param string                     $contentClass
      * @param UniqueIdGenerator          $uniqueIdGenerator
+     * @apram                            $tokenStorageManager
      */
     public function __construct(
         StatusRepositoryInterface $statusRepository,
         ContextManager $contextManager,
         $contentClass,
-        UniqueIdGenerator $uniqueIdGenerator
-    )
-    {
+        UniqueIdGenerator $uniqueIdGenerator,
+        TokenStorage $tokenStorage
+    ) {
         $this->statusRepository = $statusRepository;
         $this->contextManager = $contextManager;
         $this->contentClass = $contentClass;
         $this->uniqueIdGenerator = $uniqueIdGenerator;
+        $this->username = $tokenStorage->getToken()->getUser()->getUsername();
     }
 
     /**
@@ -55,6 +59,7 @@ class ContentManager
         $content->setLinkedToSite($isLinkedToSite);
         $content->setStatus($initialStatus);
         $content->setVersion($this->uniqueIdGenerator->generateUniqueId());
+        $content->setCreatedBy($this->username);
 
         return $content;
     }

@@ -19,7 +19,7 @@ abstract class AbstractPerimeterVoter extends AbstractVoter
 
     /**
      * @param AccessDecisionManagerInterface $decisionManager
-     * @param PerimeterManager              $perimeterManager
+     * @param PerimeterManager               $perimeterManager
      */
     public function __construct(AccessDecisionManagerInterface $decisionManager, PerimeterManager $perimeterManager)
     {
