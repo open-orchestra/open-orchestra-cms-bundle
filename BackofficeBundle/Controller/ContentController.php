@@ -71,16 +71,10 @@ class ContentController extends AbstractAdminController
 
         }
 
-        $code = Response::HTTP_OK;
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $code = Response::HTTP_UNPROCESSABLE_ENTITY;
-        }
-        $response = new Response('', $code, array('Content-type' => 'text/html; charset=utf-8', 'version' => $content->getVersion()));
-
         return $this->renderAdminForm(
             $form,
             array(),
-            $response,
+            null,
             $this->getFormTemplate($content->getContentType()
         ));
     }
@@ -88,6 +82,7 @@ class ContentController extends AbstractAdminController
     /**
      * @param Request $request
      * @param string  $contentTypeId
+     * @param string  $language
      *
      * @Config\Route("/content/new/{contentTypeId}/{language}", name="open_orchestra_backoffice_content_new")
      * @Config\Method({"GET", "POST"})
@@ -127,14 +122,8 @@ class ContentController extends AbstractAdminController
             $documentManager->persist($content);
             $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content));
 
-            $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
-            foreach ($languages as $siteLanguage) {
-                if ($language !== $siteLanguage) {
-                    $translatedContent = $contentManager->createNewLanguageContent($content, $siteLanguage);
-                    $documentManager->persist($translatedContent);
-                    $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($translatedContent));
-                }
-            }
+            $this->createContentInNewLanguage($content, $language);
+
             $documentManager->flush();
             if ($status->getId() !== $content->getStatus()->getId()) {
                 $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, new ContentEvent($content, $status));
@@ -187,5 +176,21 @@ class ContentController extends AbstractAdminController
         }
 
         return $template;
+    }
+
+    /**
+     * @param ContentInterface $content
+     * @param string           $currentLanguage
+     */
+    protected function createContentInNewLanguage(ContentInterface $content, $currentLanguage)
+    {
+        $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
+        foreach ($languages as $siteLanguage) {
+            if ($currentLanguage !== $siteLanguage) {
+                $translatedContent = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($content, $siteLanguage);
+                $this->get('object_manager')->persist($translatedContent);
+                $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($translatedContent));
+            }
+        }
     }
 }

@@ -126,18 +126,19 @@ class ContentController extends BaseController
 
         $contentId = $content->getContentId();
         $newContentId = null;
+        $objectManager = $this->get('object_manager');
+
         foreach (array_keys($frontLanguages) as $language) {
             $content = $this->findOneContent($contentId, $language);
             if ($content instanceof ContentInterface) {
                 $duplicateContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $newContentId);
-                $objectManager = $this->get('object_manager');
                 $objectManager->persist($duplicateContent);
-                $objectManager->flush();
 
                 $newContentId = $duplicateContent->getContentId();
                 $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
             }
         }
+        $objectManager->flush();
 
         return array();
     }
