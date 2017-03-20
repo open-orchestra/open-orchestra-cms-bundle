@@ -362,4 +362,15 @@ class ContextManagerTest extends AbstractBaseTestCase
             array('en', 'en', 'FOS\UserBundle\Model\UserInterface'),
         );
     }
+
+    /**
+     * Test clear context
+     */
+    public function testClearContext()
+    {
+        $this->contextManager->clearContext();
+        Phake::verify($this->session)->remove(ContextManager::KEY_SITE);
+        Phake::verify($this->session)->remove(ContextManager::KEY_LOCALE);
+        Phake::verify($this->token)->setAuthenticated(false);
+    }
 }

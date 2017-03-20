@@ -255,6 +255,4 @@ class ContextManager implements CurrentSiteIdInterface
 
         return $currentSite;
     }
-
-
 }
