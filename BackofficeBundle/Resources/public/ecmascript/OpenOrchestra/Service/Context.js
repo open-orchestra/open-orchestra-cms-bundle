@@ -11,12 +11,20 @@ class Context
      * @param {Object} user
      * @param {Array}  siteLanguages
      */
-   constructor({routing, siteId, language, user, siteLanguages}) {
+    constructor({routing, siteId, language, user, siteLanguages}) {
         this.routing = routing;
         this.siteId = siteId;
         this.language = language;
         this.user = user;
         this.siteLanguages = siteLanguages;
+    }
+
+    /**
+     * Reset context on server and reload pages
+     */
+    refreshContext() {
+        let url = Routing.generate('clearContext');
+        $.get(url).done(() => window.location.reload());
     }
 }
 

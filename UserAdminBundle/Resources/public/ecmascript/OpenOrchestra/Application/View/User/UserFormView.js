@@ -1,5 +1,6 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
+import Application      from '../../../Application/Application'
 
 /**
  * @class UserFormView
@@ -51,11 +52,13 @@ class UserFormView extends AbstractFormView
      */
     getStatusCodeForm() {
         return {
-            '200': $.proxy(this.refreshRender, this),
+            '200': Application.getContext().refreshContext,
             '201': $.proxy(this.refreshRender, this),
             '422': $.proxy(this.refreshRender, this)
         }
     }
+
+
 }
 
 export default UserFormView;

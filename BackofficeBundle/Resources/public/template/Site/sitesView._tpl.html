@@ -1,5 +1,5 @@
 <div class="top-action-buttons">
-    <% if (!inPlatformContext) { %>
+    <% if (inPlatformContext) { %>
         <a class="btn btn-info" href="#<%= Backbone.history.generateUrl('newSite') %>" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
     <% } %>
 </div>

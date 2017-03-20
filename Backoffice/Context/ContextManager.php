@@ -222,6 +222,16 @@ class ContextManager implements CurrentSiteIdInterface
     }
 
     /**
+     * Clear saved context
+     */
+    public function clearContext()
+    {
+        $this->session->remove(self::KEY_SITE);
+        $this->session->remove(self::KEY_LOCALE);
+        $this->tokenStorage->getToken()->setAuthenticated(false);
+    }
+
+    /**
      * Get current selected site (BO Context)
      *
      * @return array
@@ -245,4 +255,6 @@ class ContextManager implements CurrentSiteIdInterface
 
         return $currentSite;
     }
+
+
 }
