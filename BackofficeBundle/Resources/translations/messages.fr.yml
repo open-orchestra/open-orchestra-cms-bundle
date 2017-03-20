@@ -196,6 +196,7 @@ open_orchestra_backoffice:
                 canonical: Canonique
                 keywords: Mot-clés / moteur de recherche
                 cache: Cache
+                access: Accès
         changefreq:
             always: Toujours
             hourly: Toutes les heures
@@ -454,6 +455,8 @@ open_orchestra_backoffice:
     role:
         contribution : Contribution
         administration: Administration
+        front_access: Accès Front
+        access: Accès
         contributor:
             label: Contribuer
             help: créer / éditer / supprimer ses propres contenus

@@ -27,6 +27,7 @@ class NodeType extends AbstractType
     protected $nodeClass;
     protected $schemeChoices;
     protected $specialPageChoiceStatusSubscriber;
+    protected $frontRoles;
 
     /**
      * @param NodeManager              $nodeManager
@@ -35,6 +36,7 @@ class NodeType extends AbstractType
      * @param TemplateManager          $templateManager
      * @param string                   $nodeClass
      * @param EventSubscriberInterface $specialPageChoiceStatusSubscriber
+     * @param array                    $frontRoles
      */
     public function __construct(
         NodeManager $nodeManager,
@@ -42,7 +44,8 @@ class NodeType extends AbstractType
         SiteRepositoryInterface $siteRepository,
         TemplateManager $templateManager,
         $nodeClass,
-        EventSubscriberInterface $specialPageChoiceStatusSubscriber
+        EventSubscriberInterface $specialPageChoiceStatusSubscriber,
+        array $frontRoles
     ) {
         $this->nodeManager = $nodeManager;
         $this->contextManager = $contextManager;
@@ -55,6 +58,10 @@ class NodeType extends AbstractType
             SchemeableInterface::SCHEME_HTTPS => SchemeableInterface::SCHEME_HTTPS
         );
         $this->specialPageChoiceStatusSubscriber = $specialPageChoiceStatusSubscriber;
+        $this->frontRoles = $frontRoles;
+        array_walk($this->frontRoles, function(&$item) {
+            $item = 'open_orchestra_backoffice.form.role.' . $item;
+        });
    }
 
     /**
@@ -170,11 +177,21 @@ class NodeType extends AbstractType
                 'sub_group_id' => 'keywords',
                 'required' => false
             ))
+
             ->add('maxAge', 'integer', array(
                 'label' => 'open_orchestra_backoffice.form.node.max_age',
                 'group_id' => 'cache',
                 'sub_group_id' => 'cache',
                 'required' => false,
+            ))
+            ->add('frontRoles', 'choice', array(
+                'label' => false,
+                'choices' => $this->frontRoles,
+                'multiple' => true,
+                'expanded' => true,
+                'group_id' => 'cache',
+                'sub_group_id' => 'access',
+                'required' => false
             ));
 
         $builder->addEventSubscriber($this->specialPageChoiceStatusSubscriber);
@@ -246,6 +263,10 @@ class NodeType extends AbstractType
                 'cache' => array(
                     'rank' => 0,
                     'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
+                ),
+                'access' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.node.sub_group.access',
                 )
             ),
         ));
