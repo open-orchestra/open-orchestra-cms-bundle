@@ -228,7 +228,7 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
-        $facade = $this->get('jms_>serializer')->deserialize(
+        $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
             $request->get('_format', 'json')
