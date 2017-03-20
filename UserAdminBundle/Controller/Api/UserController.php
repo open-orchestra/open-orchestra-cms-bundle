@@ -66,17 +66,12 @@ class UserController extends BaseController
             $recordsTotal = $repository->count();
             $recordsFiltered = $repository->countWithFilter($configuration);
         } else {
-            $sitesId = array();
-            $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
-            foreach ($availableSites as $site) {
-                $sitesId[] = $site->getId();
-            }
+            $sitesId = $this->getAvailableSiteIds();
 
             $collection = $repository->findForPaginateFilterBySiteIds($configuration, $sitesId);
             $recordsTotal = $repository->countFilterBySiteIds($sitesId);
             $recordsFiltered = $repository->countWithFilterAndSiteIds($configuration, $sitesId);
         }
-
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
         $facade = $collectionTransformer->transform($collection);
@@ -115,5 +110,19 @@ class UserController extends BaseController
         $userRepository->removeUsers($userIds);
 
         return array();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableSiteIds()
+    {
+        $sitesId = array();
+        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        foreach ($availableSites as $site) {
+            $sitesId[] = $site->getId();
+        }
+
+        return $sitesId;
     }
 }

@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\ModelInterface\Event\NodeDeleteEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

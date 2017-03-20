@@ -87,9 +87,8 @@ class BlockController extends AbstractAdminController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $blockManager = $this->get('open_orchestra_backoffice.manager.block');
 
-        $block = $blockManager->initializeBlock($component, $siteId, $language, false);
+        $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, false);
 
         $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
         $form = $this->createForm($formType, $block, array(
@@ -106,21 +105,12 @@ class BlockController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $documentManager = $this->get('object_manager');
             $node = $this->get('open_orchestra_model.repository.node')->findVersionNotDeleted($nodeId, $language, $siteId, $version);
             if (!$node instanceof NodeInterface) {
                 throw new NodeNotFoundHttpException();
             }
             $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
-
-            $area = $node->getArea($areaId);
-            $area->addBlock($block, $position);
-
-            $documentManager->persist($block);
-            $documentManager->flush();
-
-            $this->dispatchEvent(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($block));
-            $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $block));
+            $this->addBlockToNode($block, $node, $areaId, $position);
 
             return new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
         }
@@ -167,4 +157,25 @@ class BlockController extends AbstractAdminController
 
         return $this->renderAdminForm($form, array(), null, $form->getConfig()->getAttribute('template'));
     }
+
+    /**
+     * @param BlockInterface $block
+     * @param NodeInterface  $node
+     * @param string         $areaId
+     * @param string         $position
+     */
+    protected function addBlockToNode(BlockInterface $block, NodeInterface $node, $areaId, $position)
+    {
+        $documentManager = $this->get('object_manager');
+
+        $area = $node->getArea($areaId);
+        $area->addBlock($block, $position);
+
+        $documentManager->persist($block);
+        $documentManager->flush();
+
+        $this->dispatchEvent(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($block));
+        $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $block));
+    }
+
 }
