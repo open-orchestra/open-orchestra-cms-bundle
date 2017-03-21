@@ -55,7 +55,8 @@
                         'configuration': {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles  or 'ROLE_SITE_ADMIN' in app.user.roles)|json_encode()|raw }},
                         'platform'     : {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles)|json_encode()|raw  }},
                         'developer'    : {{ ('ROLE_DEVELOPER' in app.user.roles)|json_encode()|raw }},
-                        'trashcan'     : {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles  or 'EDITORIAL_TRASH_RESTORER' in app.user.roles)|json_encode()|raw }}
+                        'trashcan'     : {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles  or 'EDITORIAL_TRASH_RESTORER' in app.user.roles)|json_encode()|raw }},
+                        'content'      : {{ ('ROLE_DEVELOPER' in app.user.roles  or 'ROLE_PLATFORM_ADMIN' in app.user.roles  or 'EDITORIAL_CONTENT_CONTRIBUTOR' in app.user.roles)|json_encode()|raw }}
                     }
                 }
             };
