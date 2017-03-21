@@ -12,6 +12,7 @@ class SitePlatformRouter extends SiteRouter
         this.routes = {
             'plateform/site/list(/:page)' : 'listPlatformSite',
             'plateform/site/edit/:siteId' : 'editPlatformSite',
+            'plateform/site/new/'         : 'newPlatformSite'
         }
     }
 
@@ -58,6 +59,21 @@ class SitePlatformRouter extends SiteRouter
      */
     editPlatformSite(siteId) {
         super.editSite(siteId, true);
+    }
+
+    /**
+     * New site
+     */
+    newPlatformSite() {
+        this._displayLoader(Application.getRegion('content'));
+        let url = Routing.generate('open_orchestra_backoffice_site_new');
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let siteFormView = new SiteFormView({
+                form: form,
+                inPlatformContext : true
+            });
+            Application.getRegion('content').html(siteFormView.render().$el);
+        });
     }
 }
 
