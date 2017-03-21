@@ -36,7 +36,6 @@ let OrchestraApiSyncMixin = (superclass) => class extends superclass {
      * @param {object}         options
      */
     syncError(model, response, options) {
-        console.log(options);
         if (options.enabledCallbackError !== false) {
             var error;
             if (typeof response.responseJSON !== 'undefined') {
