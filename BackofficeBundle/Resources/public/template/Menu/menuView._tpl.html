@@ -57,7 +57,7 @@
             <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.menu.contribution.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.contribution, function(entity, key) { %>
-                    <%= renderTemplate(entity.template) %>
+                    <%= renderTemplate(entity.template, {access_section: user.access_section}) %>
                 <% }); %>
             </ul>
         </div>
