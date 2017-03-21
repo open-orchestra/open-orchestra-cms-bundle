@@ -80,6 +80,7 @@ class Configuration implements ConfigurationInterface
             ->append($this->addSpecialPageConfiguration())
             ->append($this->addConfigurationRoleConfiguration())
             ->append($this->addBlockConfiguration())
+            ->append($this->addConfigurationFrontRoleConfiguration())
         ->end();
 
         return $treeBuilder;
@@ -343,5 +344,23 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         return $blockConfiguration;
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public function addConfigurationFrontRoleConfiguration()
+    {
+        $builder = new TreeBuilder();
+        $configurationRole = $builder->root('front_configuration_roles');
+
+        $configurationRole
+            ->info('Configure front role configuration')
+                ->prototype('array')
+            ->end();
+
+        $configurationRole->defaultValue(array());
+
+        return $configurationRole;
     }
 }

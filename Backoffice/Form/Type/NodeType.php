@@ -59,9 +59,6 @@ class NodeType extends AbstractType
         );
         $this->specialPageChoiceStatusSubscriber = $specialPageChoiceStatusSubscriber;
         $this->frontRoles = $frontRoles;
-        array_walk($this->frontRoles, function(&$item) {
-            $item = 'open_orchestra_backoffice.form.role.' . $item;
-        });
    }
 
     /**
@@ -186,7 +183,10 @@ class NodeType extends AbstractType
             ))
             ->add('frontRoles', 'choice', array(
                 'label' => false,
-                'choices' => $this->frontRoles,
+                'choices_as_values' => true,
+                'choice_label' => function ($allChoices, $currentChoiceKey) {
+                    return 'open_orchestra_backoffice.form.role.' . $currentChoiceKey;
+                },
                 'multiple' => true,
                 'expanded' => true,
                 'group_id' => 'cache',
