@@ -77,14 +77,15 @@ class SiteAdministrationVoter extends AbstractPerimeterVoter
         }
 
         $user = $token->getUser();
-        if(
-            $subject instanceof RedirectionInterface ||
-            $subject instanceof SiteInterface
+        if ($subject instanceof RedirectionInterface
+            || $subject instanceof SiteInterface
         ) {
             return $this->canActOnSite($subject->getSiteId(), $user);
         }
 
-        if ($subject instanceof LogInterface) {
+        if ($subject instanceof LogInterface
+            || $subject instanceof BlockInterface
+        ) {
             return true;
         }
 
