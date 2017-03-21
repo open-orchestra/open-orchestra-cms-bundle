@@ -86,7 +86,7 @@ class ContentController extends BaseController
      */
     public function listAction(Request $request, $contentTypeId, $siteId, $language)
     {
-        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, ContentInterface::ENTITY_TYPE);
 
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
         $mapping = $this->getMappingContentType($language, $contentType);
