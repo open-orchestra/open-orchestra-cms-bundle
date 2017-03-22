@@ -33,7 +33,7 @@ class NodeManager
     protected $nodeClass;
     protected $areaClass;
     protected $uniqueIdGenerator;
-    protected $username;
+    protected $tokenStorage;
 
     /**
      * Constructor
@@ -73,7 +73,7 @@ class NodeManager
         $this->eventDispatcher = $eventDispatcher;
         $this->templateManager = $templateManager;
         $this->uniqueIdGenerator = $uniqueIdGenerator;
-        $this->username = $tokenStorage->getToken()->getUser()->getUsername();
+        $this->tokenStorage;
     }
 
     /**
@@ -262,7 +262,7 @@ class NodeManager
         $node->setParentId($parentId);
         $node->setOrder($order);
         $node->setVersion($this->uniqueIdGenerator->generateUniqueId());
-        $node->setCreatedBy($this->username);
+        $node->setCreatedBy($this->tokenStorage->getToken()->getUser()->getUsername());
 
         $parentNode = $this->nodeRepository->findInLastVersion($parentId, $language, $siteId);
         $status = $this->statusRepository->findOneByInitial();

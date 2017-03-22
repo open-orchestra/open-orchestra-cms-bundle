@@ -16,7 +16,7 @@ class ContentManager
     protected $statusRepository;
     protected $contextManager;
     protected $contentClass;
-    protected $username;
+    protected $tokenStorage;
 
     /**
      * @param StatusRepositoryInterface  $statusRepository
@@ -36,7 +36,7 @@ class ContentManager
         $this->contextManager = $contextManager;
         $this->contentClass = $contentClass;
         $this->uniqueIdGenerator = $uniqueIdGenerator;
-        $this->username = $tokenStorage->getToken()->getUser()->getUsername();
+        $this->tokenManager = $tokenStorage;
     }
 
     /**
@@ -59,7 +59,7 @@ class ContentManager
         $content->setLinkedToSite($isLinkedToSite);
         $content->setStatus($initialStatus);
         $content->setVersion($this->uniqueIdGenerator->generateUniqueId());
-        $content->setCreatedBy($this->username);
+        $content->setCreatedBy($this->tokenStorage->getToken()->getUser()->getUsername());
 
         return $content;
     }
