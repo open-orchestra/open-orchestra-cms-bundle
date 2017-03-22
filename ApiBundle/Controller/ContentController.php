@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
-use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class ContentController
@@ -52,7 +51,6 @@ class ContentController extends BaseController
      */
     public function showAction($contentId, $language, $version)
     {
-        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         if (null === $language) {
             $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
         }
@@ -61,9 +59,12 @@ class ContentController extends BaseController
         if (!$content) {
             throw new ContentNotFoundHttpException();
         }
+
         if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
+
+        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $content);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
     }
@@ -234,6 +235,10 @@ class ContentController extends BaseController
      * @Config\Method({"DELETE"})
      *
      * @return Response
+<<<<<<< 207cbdd4284ce36395dd3bea442e14f65e84c0ed
+=======
+     * @throws ContentTypeNotAllowedException,
+>>>>>>> Fix edit owned content
      * @throws ContentNotDeletableException
      */
     public function deleteAction($contentId)
@@ -370,12 +375,12 @@ class ContentController extends BaseController
      * @Api\Groups({
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION
      * })
+     * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return Response
      * @throws ContentTypeNotAllowedException
      */
     public function listVersionAction($contentId, $language)
     {
-        $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         $contents = $this->get('open_orchestra_model.repository.content')->findNotDeletedSortByUpdatedAt($contentId, $language);
 
         foreach ($contents as $content) {
@@ -436,6 +441,7 @@ class ContentController extends BaseController
      *
      * @return Response
      * @throws ContentNotFoundHttpException
+     * @throws ContentTypeNotAllowedException
      * @throws StatusChangeNotGrantedHttpException
      */
     public function changeStatusAction(Request $request, $saveOldPublishedVersion)
