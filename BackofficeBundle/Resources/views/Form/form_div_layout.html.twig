@@ -146,7 +146,7 @@
                            </tr>
                     </thead>
                     {% for field in form %}
-                        <tbody class="accordion-formrow-container" data-prototype-id="{{ field.vars.name }}">
+                        <tbody class="accordion-form" data-prototype-id="{{ field.vars.name }}">
                             <tr>
                                 {% if form.vars.sortable is defined and form.vars.sortable %}
                                     <td>
@@ -169,7 +169,7 @@
                                 {% endif %}
                             </tr>
                             <tr class="accordion-formrow {% if field.vars.valid %}hide{% endif %}{% if field.vars.attr.class is defined %} {{ field.vars.attr.class }}{% endif %}">
-                                <td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) }}">
+                                <td colspan="{{ prototype.vars.columns|length + 1 + ((form.vars.allow_delete) ? 1 : 0) + ((form.vars.sortable is defined and form.vars.sortable) ? 1 : 0) }}">
                                     <div class="row">
                                         {{ form_widget(field) }}
                                         {{ form_errors(field) }}
