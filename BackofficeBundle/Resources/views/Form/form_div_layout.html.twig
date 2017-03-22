@@ -285,9 +285,9 @@
     {% endspaceless %}
 {% endblock oo_check_widget %}
 
-{% block choice_widget %}
+{% block oo_block_choice_widget %}
     {% spaceless %}
-        {% if expanded and multiple %}
+        {% if expanded %}
             {% set col_size = col_size|default(bootstrap_get_col_size()) %}
             {% set class = 'col-' ~ col_size ~ '-4' %}
             <div {{ block('widget_container_attributes') }} class="form-group {% if form.vars.errors|length > 0 %} has-error{% endif %}">
@@ -302,7 +302,7 @@
             {{ block('choice_widget_collapsed') }}
         {% endif %}
     {% endspaceless %}
-{% endblock choice_widget %}
+{% endblock oo_block_choice_widget %}
 
 {% block oo_default_listable_checkbox_row %}
     {% spaceless %}
