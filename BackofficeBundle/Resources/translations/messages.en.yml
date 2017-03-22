@@ -100,6 +100,7 @@ open_orchestra_backoffice:
                 sitemap: Sitemap
                 robot: Robots.txt
                 block: Blocks
+                content_type: Content types
         content:
             transformation_error: Unable to load the value of this field (the type does not match)
             success: The content has been modified

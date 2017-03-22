@@ -43,7 +43,7 @@ class ContentSearchType extends AbstractType
 
         $required = !$options['search_engine'] && $options['required'];
 
-        $builder->add('contentType', 'oo_content_type_choice', array(
+        $builder->add('contentType', 'oo_siite_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
             'required' => $required
         ));

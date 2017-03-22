@@ -61,7 +61,7 @@ class SiteTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(7))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
         Phake::verify($this->translator, Phake::times(2))->trans(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
@@ -111,6 +111,10 @@ class SiteTypeTest extends AbstractBaseTestCase
                     'block' => array(
                         'rank' => 0,
                         'label' => 'open_orchestra_backoffice.form.website.sub_group.block',
+                    ),
+                    'content_type' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.content_type',
                     ),
                     'meta' => array(
                         'rank' => 0,

@@ -72,6 +72,14 @@ class SiteType extends AbstractType
                 'group_id' => 'content',
                 'sub_group_id' => 'block',
             ))
+            ->add('contentTypes', 'oo_content_type_choice', array(
+                'multiple' => true,
+                'expanded' => true,
+                'label' => false,
+                'required' => false,
+                'group_id' => 'content',
+                'sub_group_id' => 'content_type',
+            ))
             ->add('metaAuthor', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.metaAuthor',
                 'group_id' => 'seo',
@@ -146,6 +154,10 @@ class SiteType extends AbstractType
                     'block' => array(
                         'rank' => 0,
                         'label' => 'open_orchestra_backoffice.form.website.sub_group.block',
+                    ),
+                    'content_type' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.website.sub_group.content_type',
                     ),
                     'meta' => array(
                         'rank' => 0,

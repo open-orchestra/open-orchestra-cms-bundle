@@ -10,14 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BlockChoiceType extends AbstractType
 {
+    protected $choices;
+
     /**
      * @param array $choices
      */
     public function __construct(array $choices)
     {
-        foreach ($choices as $choice) {
-            $this->choices[$choice] = 'open_orchestra_backoffice.block.' . $choice . '.title';
-        }
+        $this->choices = $choices;
     }
 
     /**
@@ -27,9 +27,22 @@ class BlockChoiceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'choices' => $this->choices,
+                'choices' => $this->getChoices(),
             )
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getChoices()
+    {
+        $choices = array();
+        foreach ($this->choices as $choice) {
+            $choices[$choice] = 'open_orchestra_backoffice.block.' . $choice . '.title';
+        }
+
+        return $choices;
     }
 
     /**

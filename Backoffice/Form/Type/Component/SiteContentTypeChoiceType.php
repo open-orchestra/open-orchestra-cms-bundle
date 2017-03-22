@@ -5,26 +5,31 @@ namespace OpenOrchestra\Backoffice\Form\Type\Component;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ContentTypeChoiceType
+ * Class SiteContentTypeChoiceType
  */
-class ContentTypeChoiceType extends AbstractType
+class SiteContentTypeChoiceType extends AbstractType
 {
     protected $contentTypeRepository;
+    protected $siteRepository;
     protected $context;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param SiteTypeRepositoryInterface    $siteRepository
      * @param ContextManager                 $context
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
+        SiteRepositoryInterface $siteRepository,
         ContextManager $context
     ) {
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->siteRepository = $siteRepository;
         $this->context = $context;
     }
 
@@ -45,8 +50,11 @@ class ContentTypeChoiceType extends AbstractType
      */
     protected function getChoices()
     {
+        $siteId = $this->context->getCurrentSiteId();
+        $site = $this->siteRepository->findOneBySiteId($siteId);
+
         $currentLanguage = $this->context->getCurrentLocale();
-        $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion();
+        $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
 
         $choices = array_map(function (ContentTypeInterface $element) use ($currentLanguage) {
             return $element->getName($currentLanguage);
@@ -62,7 +70,7 @@ class ContentTypeChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'oo_content_type_choice';
+        return 'oo_site_content_type_choice';
     }
 
     /**
