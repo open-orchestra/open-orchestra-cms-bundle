@@ -2,11 +2,11 @@
     <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language}) %>" role="button">
         <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
     </a>
-    <a class="btn btn-border btn-edit" role="button" href="#<%= Backbone.history.generateUrl('editContent', {contentTypeId: contentTypeId, contentId: contentId, language: language, version: version}) %>">
+    <a class="btn <%= (type == 'edit') ? 'btn-blue' : 'btn-border' %> btn-edit" role="button" href="#<%= Backbone.history.generateUrl('editContent', {contentTypeId: contentTypeId, contentId: contentId, language: language, version: version}) %>">
         <%= Translator.trans('open_orchestra_backoffice.content.edit') %>
     </a>
     <% if (true == versionable) { %>
-        <a class="btn btn-border" role="button" href="#<%= Backbone.history.generateUrl('manageVersionsContent', {contentTypeId: contentTypeId, contentId: contentId, language: language}) %>">
+        <a class="btn <%= (type == 'version') ? 'btn-blue' : 'btn-border' %> " role="button" href="#<%= Backbone.history.generateUrl('manageVersionsContent', {contentTypeId: contentTypeId, contentId: contentId, language: language}) %>">
             <%= Translator.trans('open_orchestra_backoffice.versionable.manage_version') %>
         </a>
     <% } %>
