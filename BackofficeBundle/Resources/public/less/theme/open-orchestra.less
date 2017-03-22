@@ -976,6 +976,19 @@ input[type=date].datepicker::-webkit-inner-spin-button, input[type=date].datepic
     display: none;
 }
 
+/** button loading **/
+button.active-loading {
+  position: relative;
+
+  .fa-spin {
+    position: absolute;
+    font-size: 2em;
+    width: 100%;
+    left: 0;
+    top: ~'calc(50% - 13px)';
+  }
+}
+
 /* ===================================================================
  * TABLES
  * =================================================================*/

@@ -1,9 +1,10 @@
-import OrchestraView from '../../../Application/View/OrchestraView'
+import OrchestraView      from '../../../Application/View/OrchestraView'
+import LoadingButtonMixin from '../Mixin/LoadingButtonMixin'
 
 /**
  * @class AbstractFormView
  */
-class AbstractFormView extends OrchestraView
+class AbstractFormView extends mix(OrchestraView).with(LoadingButtonMixin)
 {
     /**
      * Constructor
@@ -32,6 +33,7 @@ class AbstractFormView extends OrchestraView
     initialize({form}) {
         this._form = form;
         this._$formRegion = this.$el;
+        this._form.on('form:post_submit', $.proxy(this._resetSubmitButton, this));
     }
 
     /**
@@ -80,7 +82,16 @@ class AbstractFormView extends OrchestraView
      */
     _submit(event) {
         event.preventDefault();
+        this.activateLoading($(event.currentTarget));
         this._form.submit(this.getStatusCodeForm(event));
+    }
+
+    /**
+     * Reset laading submit button
+     * @private
+     */
+    _resetSubmitButton() {
+        this.resetLoadingButton($('button.submit-form', this.$el));
     }
 
     /**
