@@ -17,7 +17,6 @@ class SiteRouter extends OrchestraRouter
         this.routes = {
             'site/list(/:page)': 'listSite',
             'site/edit/:siteId': 'editSite',
-            'site/new/'        : 'newSite'
         }
     }
 
@@ -80,21 +79,6 @@ class SiteRouter extends OrchestraRouter
                 form: form,
                 siteId: siteId,
                 inPlatformContext : inPlatformContext
-            });
-            Application.getRegion('content').html(siteFormView.render().$el);
-        });
-    }
-
-    /**
-     * New site
-     */
-    newSite() {
-        this._displayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_backoffice_site_new');
-        FormBuilder.createFormFromUrl(url, (form) => {
-            let siteFormView = new SiteFormView({
-                form: form,
-                inPlatformContext : false
             });
             Application.getRegion('content').html(siteFormView.render().$el);
         });
