@@ -26,6 +26,17 @@ class Context
         let url = Routing.generate('clearContext');
         $.get(url).done(() => window.location.reload());
     }
+
+    /**
+     * Update user access rights
+     * @param {String} section
+     * @param {String} access
+     */
+    updateUserAccessSection(section, access) {
+        if (typeof this.user !== 'undefined' && typeof this.user.access_section !== 'undefined') {
+            this.user.access_section[section] = access;
+        }
+    }
 }
 
 export default Context;

@@ -41,13 +41,14 @@
                 siteLanguages: {{ context.currentSiteLanguages|json_encode()|raw }},
                 language: '{{ context.currentLocale }}',
                 user: {
-                    id : '{{ app.user.id }}',
-                    username : '{{ app.user.username }}',
-                    firstName : '{{ app.user.firstName }}',
-                    lastName : '{{ app.user.lastName }}',
-                    language: {
+                    id            : '{{ app.user.id }}',
+                    username      : '{{ app.user.username }}',
+                    firstName     : '{{ app.user.firstName }}',
+                    lastName      : '{{ app.user.lastName }}',
+                    language      : {
                         contribution: {% if app.user.languageBySites[siteIdKey] is defined %} '{{ app.user.languageBySites[siteIdKey] }}' {% else %} '{{context.currentSiteDefaultLanguage}}' {% endif %}
                     },
+                    roles         : {{ app.user.roles|json_encode()|raw }},
                     access_section: {
                         'dashboard'    : true,
                         'contribution' : true,
