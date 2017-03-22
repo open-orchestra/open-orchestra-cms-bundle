@@ -606,14 +606,18 @@
 {% endblock oo_content_submit_widget %}
 
 {% block trashcan_delete_button %}
+
     {% set label = 'open_orchestra_backoffice.form.delete' %}
     {% set class = 'delete-button' %}
     {% if not form.vars.delete_button %}
         {% set class = class ~ ' disabled' %}
+        {% set help_text = 'open_orchestra_backoffice.form.delete_help_text' %}
+        <i class='form-help-tooltip icon-prepend fa fa-question-circle-o' data-toggle="tooltip" data-placement="right" data-original-title="{{ help_text|trans }}"></i>
     {% endif %}
     {% set attr = {'class': class} %}
     {% set button_class = 'danger' %}
     {{ block('button_widget') }}
+
 {% endblock trashcan_delete_button %}
 
 {% block form_start %}

@@ -12,6 +12,7 @@ open_orchestra_backoffice:
         submit: Sauvegarder
         submit_continue: Sauvegarder et continuer
         delete: Supprimer
+        delete_help_text: Toutes les versions dans toutes les langues doivent être hors ligne
         global_error: Le formulaire contient des erreurs
         add: Ajouter
         swchoff:
