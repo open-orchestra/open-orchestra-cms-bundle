@@ -5,7 +5,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentTypeNotAllowed;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentTypeNotAllowedException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
@@ -14,7 +14,6 @@ use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +46,7 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowed
+     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
      */
     public function showAction($contentId, $language, $version)
     {
@@ -60,8 +59,8 @@ class ContentController extends BaseController
         if (!$content) {
             throw new ContentNotFoundHttpException();
         }
-        if ($this->isContentOnSiteAllowed($content)) {
-            throw new ContentTypeNotAllowed();
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
@@ -81,7 +80,7 @@ class ContentController extends BaseController
      * })
      *
      * @return FacadeInterface
-     * @throws ContentTypeNotAllowed
+     * @throws ContentTypeNotAllowedException
      */
     public function listAction(Request $request, $contentTypeId, $siteId, $language)
     {
@@ -90,8 +89,8 @@ class ContentController extends BaseController
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
         $mapping = $this->getMappingContentType($language, $contentType);
 
-        if ($this->isContentTypeOnSiteAllowed($contentType)) {
-            throw new ContentTypeNotAllowed();
+        if (!$this->isContentTypeOnSiteAllowed($contentType)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         $searchTypes = array();
@@ -120,7 +119,7 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
-     * @throws ContentTypeNotAllowed
+     * @throws ContentTypeNotAllowedException
      */
     public function duplicateAction(Request $request)
     {
@@ -134,8 +133,8 @@ class ContentController extends BaseController
         );
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
 
-        if ($this->isContentOnSiteAllowed($content)) {
-            throw new ContentTypeNotAllowed();
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
@@ -238,7 +237,7 @@ class ContentController extends BaseController
      * @Config\Method({"DELETE"})
      *
      * @return Response
-     * @throws ContentTypeNotAllowed, ContentNotDeletableException
+     * @throws ContentTypeNotAllowedException, ContentNotDeletableException
      */
     public function deleteAction($contentId)
     {
@@ -246,8 +245,8 @@ class ContentController extends BaseController
         $content = $repository->findOneByContentId($contentId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
 
-        if ($this->isContentOnSiteAllowed($content)) {
-            throw new ContentTypeNotAllowed();
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         if (true === $repository->hasContentIdWithoutAutoUnpublishToState($contentId)) {
@@ -299,7 +298,7 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowed
+     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
      */
     public function newVersionAction(Request $request, $contentId, $language, $originalVersion)
     {
@@ -310,8 +309,8 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if ($this->isContentOnSiteAllowed($content)) {
-            throw new ContentTypeNotAllowed();
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
@@ -339,7 +338,7 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowed
+     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
      */
     public function newLanguageAction($contentId, $language)
     {
@@ -349,8 +348,8 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if ($this->isContentOnSiteAllowed($content)) {
-            throw new ContentTypeNotAllowed();
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
@@ -377,15 +376,15 @@ class ContentController extends BaseController
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION
      * })
      * @return Response
-     * @throws ContentTypeNotAllowed
+     * @throws ContentTypeNotAllowedException
      */
     public function listVersionAction($contentId, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         $contents = $this->get('open_orchestra_model.repository.content')->findNotDeletedSortByUpdatedAt($contentId, $language);
 
-        if ($this->isContentsOnSiteAllowed($contents)) {
-            throw new ContentTypeNotAllowed();
+        if (!$this->isContentsOnSiteAllowed($contents)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
@@ -402,7 +401,7 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @return Response
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowed
+     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
      */
     public function listStatusesForContentAction($contentId, $language, $version)
     {
@@ -413,7 +412,7 @@ class ContentController extends BaseController
         }
 
         if ($this->isContentOnSiteAllowed($content)) {
-            throw new ContentTypeNotAllowed();
+            throw new ContentTypeNotAllowedException();
         }
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $content);
@@ -455,7 +454,7 @@ class ContentController extends BaseController
         }
 
         if ($this->isContentOnSiteAllowed($content)) {
-            throw new ContentTypeNotAllowed();
+            throw new ContentTypeNotAllowedException();
         }
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);

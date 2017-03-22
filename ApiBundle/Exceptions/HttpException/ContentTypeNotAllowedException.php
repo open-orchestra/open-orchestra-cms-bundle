@@ -5,9 +5,9 @@ namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
 
 /**
- * Class ContentTypeNotAllowed
+ * Class ContentTypeNotAllowedException
  */
-class ContentTypeNotAllowed extends ApiException
+class ContentTypeNotAllowedException extends ApiException
 {
     const DEVELOPER_MESSAGE  = 'open_orchestra_api.content_type.select_not_granted';
     const HUMAN_MESSAGE      = 'open_orchestra_api.content.select_not_granted';
