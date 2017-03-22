@@ -35,4 +35,15 @@ class AdminController extends Controller
             'clientConfiguration' => $clientConfiguration->getClientConfiguration()
         ));
     }
+
+    /**
+     * @Config\Route("/clear-context", name="clearContext")
+     */
+    public function cleanContextAction()
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->get('open_orchestra_backoffice.context_manager')->clearContext();
+
+        return new Response();
+    }
 }

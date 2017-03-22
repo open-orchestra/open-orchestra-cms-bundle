@@ -50,6 +50,23 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     }
 
     /**
+     * @inheritdoc
+     */
+    getStatusCodeForm(event) {
+        let statusCodeForm = {
+            '422': $.proxy(this.refreshRender, this),
+            '200': Application.getContext().refreshContext,
+            '201': Application.getContext().refreshContext
+        };
+
+        if ($(event.currentTarget).hasClass('submit-continue-form')) {
+            statusCodeForm['201'] = $.proxy(this._redirectNewElement, this);
+        }
+
+        return statusCodeForm;
+    }
+
+    /**
      * Redirect to edit site view
      *
      * @param {mixed}  data
