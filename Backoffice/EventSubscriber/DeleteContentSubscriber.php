@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentDeleteEvent;
-use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**

@@ -138,11 +138,7 @@ class ContentRouter extends OrchestraRouter
                 enabledCallbackError: false
             })
         ).done(() => {
-            FormBuilder.createFormFromUrl(url, (form, jqXHR) => {
-                    let version = jqXHR.getResponseHeader('version');
-                    if (null === version) {
-                        throw new ApplicationError('Invalid version');
-                    }
+            FormBuilder.createFormFromUrl(url, (form) => {
                     let contentFormView = new ContentFormView({
                         form: form,
                         contentType: contentType,

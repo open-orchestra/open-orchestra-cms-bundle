@@ -12,6 +12,8 @@ use OpenOrchestra\ModelInterface\Event\ContentDeleteEvent;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,24 +81,8 @@ class ContentController extends BaseController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
 
-        $mapping = array(
-            'name' => 'name',
-            'status_label' => 'status.labels.'.$language,
-            'linked_to_site' => 'linkedToSite',
-            'created_at' => 'createdAt',
-            'created_by' => 'createdBy',
-            'updated_at' => 'updatedAt',
-            'updated_by' => 'updatedBy',
-        );
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
-        foreach ($contentType->getDefaultListable() as $column => $isListable) {
-            if (!$isListable) {
-                unset($mapping[$column]);
-            }
-        }
-        foreach ($contentType->getFields() as $field) {
-            $mapping['fields.' . $field->getFieldId() . '.string_value'] = 'attributes.' .     $field->getFieldId() . '.stringValue';
-        }
+        $mapping = $this->getMappingContentType($language, $contentType);
 
         $searchTypes = array();
         foreach ($contentType->getFields() as $field) {
@@ -140,18 +126,19 @@ class ContentController extends BaseController
 
         $contentId = $content->getContentId();
         $newContentId = null;
+        $objectManager = $this->get('object_manager');
+
         foreach (array_keys($frontLanguages) as $language) {
             $content = $this->findOneContent($contentId, $language);
             if ($content instanceof ContentInterface) {
                 $duplicateContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $newContentId);
-                $objectManager = $this->get('object_manager');
                 $objectManager->persist($duplicateContent);
-                $objectManager->flush();
 
                 $newContentId = $duplicateContent->getContentId();
                 $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($duplicateContent));
             }
         }
+        $objectManager->flush();
 
         return array();
     }
@@ -412,8 +399,7 @@ class ContentController extends BaseController
             $request->get('_format', 'json')
         );
 
-        $contentRepository = $this->get('open_orchestra_model.repository.content');
-        $content = $contentRepository->find($facade->id);
+        $content = $this->get('open_orchestra_model.repository.content')->find($facade->id);
         if (!$content instanceof ContentInterface) {
             throw new ContentNotFoundHttpException();
         }
@@ -427,20 +413,7 @@ class ContentController extends BaseController
                 throw new StatusChangeNotGrantedHttpException();
             }
 
-            if (true === $status->isPublishedState() && false === $saveOldPublishedVersion) {
-                $oldPublishedVersion = $contentRepository->findOnePublished(
-                    $content->getContentId(),
-                    $content->getLanguage(),
-                    $content->getSiteId()
-                );
-                if ($oldPublishedVersion instanceof ContentInterface) {
-                    $this->get('object_manager')->remove($oldPublishedVersion);
-                }
-            }
-
-            $this->get('object_manager')->flush();
-            $event = new ContentEvent($content, $contentSource->getStatus());
-            $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, $event);
+            $this->updateStatus($contentSource, $content, $saveOldPublishedVersion);
         }
 
         return array();
@@ -459,5 +432,60 @@ class ContentController extends BaseController
         $content = $contentRepository->findOneByLanguageAndVersion($contentId, $language, $version);
 
         return $content;
+    }
+
+    /**
+     * @param ContentInterface $contentSource
+     * @param ContentInterface $content
+     * @param boolean          $saveOldPublishedVersion
+     */
+    protected function updateStatus(
+        ContentInterface $contentSource,
+        ContentInterface $content,
+        $saveOldPublishedVersion
+    ) {
+        if (true === $content->getStatus()->isPublishedState() && false === $saveOldPublishedVersion) {
+            $oldPublishedVersion = $this->get('open_orchestra_model.repository.content')->findOnePublished(
+                $content->getContentId(),
+                $content->getLanguage(),
+                $content->getSiteId()
+            );
+            if ($oldPublishedVersion instanceof ContentInterface) {
+                $this->get('object_manager')->remove($oldPublishedVersion);
+            }
+        }
+
+        $this->get('object_manager')->flush();
+        $event = new ContentEvent($content, $contentSource->getStatus());
+        $this->dispatchEvent(ContentEvents::CONTENT_CHANGE_STATUS, $event);
+    }
+
+    /**
+     * @param string               $language
+     * @param ContentTypeInterface $contentType
+     *
+     * @return array
+     */
+    protected function getMappingContentType($language, ContentTypeInterface $contentType)
+    {
+        $mapping = array(
+            'name' => 'name',
+            'status_label' => 'status.labels.'.$language,
+            'linked_to_site' => 'linkedToSite',
+            'created_at' => 'createdAt',
+            'created_by' => 'createdBy',
+            'updated_at' => 'updatedAt',
+            'updated_by' => 'updatedBy',
+        );
+        foreach ($contentType->getDefaultListable() as $column => $isListable) {
+            if (!$isListable) {
+                unset($mapping[$column]);
+            }
+        }
+        foreach ($contentType->getFields() as $field) {
+            $mapping['fields.' . $field->getFieldId() . '.string_value'] = 'attributes.' .     $field->getFieldId() . '.stringValue';
+        }
+
+        return $mapping;
     }
 }

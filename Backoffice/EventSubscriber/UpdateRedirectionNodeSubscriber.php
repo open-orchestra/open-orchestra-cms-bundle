@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use OpenOrchestra\Backoffice\Manager\RedirectionManager;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

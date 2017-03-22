@@ -41,16 +41,8 @@ class GroupController extends BaseController
     public function listAction(Request $request, $withCount)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, GroupInterface::ENTITY_TYPE);
-        $siteIds = array();
-        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
-        foreach ($availableSites as $site) {
-            if ($this->isGranted(ContributionActionInterface::READ, $site)) {
-                $siteIds[] = $site->getId();
-            }
-        }
-        $mapping = array(
-            'label' => 'labels',
-        );
+        $siteIds = $this->getAvailableSiteIds();
+        $mapping = array('label' => 'labels');
 
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_user.repository.group');
@@ -174,5 +166,19 @@ class GroupController extends BaseController
         }
 
         return array();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableSiteIds()
+    {
+        $sitesId = array();
+        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        foreach ($availableSites as $site) {
+            $sitesId[] = $site->getId();
+        }
+
+        return $sitesId;
     }
 }

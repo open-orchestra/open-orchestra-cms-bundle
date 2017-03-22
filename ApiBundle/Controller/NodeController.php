@@ -240,19 +240,8 @@ class NodeController extends BaseController
 
         $areaFacade = $facade->getAreas()[$areaId];
         $area = $this->get('open_orchestra_api.transformer_manager')->get('area')->reverseTransform($areaFacade);
-        $blocks = $area->getBlocks();
+        $this->copyTranslatedBlocks($node, $area, $language, $areaId);
         $objectManager = $this->get('object_manager');
-        /** @var BlockInterface $block */
-        foreach ($blocks as $block) {
-            if (false === $block->isTransverse()) {
-                $blockToTranslate = $this->get('open_orchestra_backoffice.manager.block')->createToTranslateBlock($block, $language);
-                $node->getArea($areaId)->addBlock($blockToTranslate);
-                $objectManager->persist($blockToTranslate);
-
-                $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockToTranslate));
-                $this->dispatchEvent(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($blockToTranslate));
-            }
-        }
 
         $objectManager->persist($node);
         $objectManager->flush();
@@ -698,5 +687,28 @@ class NodeController extends BaseController
         }
 
         return $this->get('open_orchestra_model.repository.node')->findInLastVersion($nodeId, $language, $siteId);
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param AreaInterface $area
+     * @param string        $language
+     * @param string        $areaId
+     */
+    protected function copyTranslatedBlocks(NodeInterface $node, AreaInterface $area, $language, $areaId)
+    {
+        $objectManager = $this->get('object_manager');
+        $blocks = $area->getBlocks();
+        /** @var BlockInterface $block */
+        foreach ($blocks as $block) {
+            if (false === $block->isTransverse()) {
+                $blockToTranslate = $this->get('open_orchestra_backoffice.manager.block')->createToTranslateBlock($block, $language);
+                $node->getArea($areaId)->addBlock($blockToTranslate);
+                $objectManager->persist($blockToTranslate);
+
+                $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockToTranslate));
+                $this->dispatchEvent(BlockEvents::POST_BLOCK_CREATE, new BlockEvent($blockToTranslate));
+            }
+        }
     }
 }
