@@ -42,6 +42,7 @@ services:
             - '%open_orchestra_model.document.area.class%'
             - '@event_dispatcher'
             - '@open_orchestra_backoffice.util.unique_id_generator'
+            - '@security.token_storage'
 
     open_orchestra_backoffice.manager.site:
         class: '%open_orchestra_backoffice.manager.site.class%'

@@ -23,7 +23,7 @@ class ContentManager
      * @param ContextManager             $contextManager
      * @param string                     $contentClass
      * @param UniqueIdGenerator          $uniqueIdGenerator
-     * @apram                            $tokenStorageManager
+     * @param TokenStorage               $tokenStorageManager
      */
     public function __construct(
         StatusRepositoryInterface $statusRepository,
