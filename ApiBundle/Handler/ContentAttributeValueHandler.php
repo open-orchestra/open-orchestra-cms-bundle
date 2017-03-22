@@ -72,7 +72,7 @@ class ContentAttributeValueHandler implements SubscribingHandlerInterface
             if (isset($this->fieldTypes[$facade->type]) &&
                 isset($this->fieldTypes[$facade->type]['deserialize_type'])
             ) {
-                return $visitor->getNavigator()->accept($contentAttributeValue, array('name' => $this->fieldTypes[$facade->type]['deserialize_type']), $context);
+                return $visitor->getNavigator()->accept($contentAttributeValue, array('name' => $this->fieldTypes[$facade->type]['deserialize_type'], 'params' => array()), $context);
             }
         }
 
