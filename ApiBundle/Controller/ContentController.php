@@ -46,7 +46,8 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
+     * @throws ContentTypeNotAllowedException
+     * @throws ContentNotFoundHttpException
      */
     public function showAction($contentId, $language, $version)
     {
@@ -298,7 +299,8 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
+     * @throws ContentTypeNotAllowedException
+     * @throws ContentNotFoundHttpException
      */
     public function newVersionAction(Request $request, $contentId, $language, $originalVersion)
     {
@@ -338,7 +340,8 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
+     * @throws ContentTypeNotAllowedException
+     * @throws ContentNotFoundHttpException
      */
     public function newLanguageAction($contentId, $language)
     {
@@ -401,7 +404,8 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @return Response
-     * @throws ContentNotFoundHttpException, ContentTypeNotAllowedException
+     * @throws ContentTypeNotAllowedException
+     * @throws ContentNotFoundHttpException
      */
     public function listStatusesForContentAction($contentId, $language, $version)
     {
