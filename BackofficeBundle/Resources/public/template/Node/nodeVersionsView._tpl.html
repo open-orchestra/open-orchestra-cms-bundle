@@ -1,4 +1,4 @@
-<%= renderTemplate('Node/nodeTopButtonsView', {nodeId: node.get('node_id'), language: node.get('language'), version: null}) %>
+<%= renderTemplate('Node/nodeTopButtonsView', {nodeId: node.get('node_id'), language: node.get('language'), version: null, type: 'version'}) %>
 <div class="pull-right languages">
     <ul>
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
