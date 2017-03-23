@@ -90,7 +90,6 @@ class GroupType extends AbstractType
             ->add('roles', 'oo_group_role', array(
                 'label' => false,
                 'group_id' => 'right',
-                'sub_group_id' => 'right',
                 'required' => false
             ))
             ->add('perimeters', 'oo_tree_list_collection', array(
@@ -139,10 +138,6 @@ class GroupType extends AbstractType
                     'property' => array(
                         'rank' => 0,
                         'label' => 'open_orchestra_group.form.group.sub_group.property',
-                    ),
-                    'right' => array(
-                        'rank' => 0,
-                        'label' => 'open_orchestra_group.form.group.sub_group.right',
                     ),
                     'page' => array(
                         'rank' => 0,

@@ -36,23 +36,24 @@ class GroupRoleType extends AbstractType
     {
         $configuration = array();
         $maxColumns = 0;
-        foreach ($this->groupRolesConfiguration as $tableName => $chekLists) {
-            $chekList = reset($chekLists);
-            foreach ($chekList as $columnConfiguration) {
-                $configuration[$tableName]['row'][] = $this->translator->trans($columnConfiguration['label']) ;
-                if (array_key_exists('icon', $columnConfiguration)) {
-                    $configuration[$tableName]['icon'][] = $columnConfiguration['icon'];
+        foreach ($this->groupRolesConfiguration as $fieldset => $tables) {
+            foreach ($tables as $tableName => $chekLists) {
+                $chekList = reset($chekLists);
+                foreach ($chekList as $columnConfiguration) {
+                    $configuration[$tableName]['row'][] = $this->translator->trans($columnConfiguration['label']);
+                    if (array_key_exists('icon', $columnConfiguration)) {
+                        $configuration[$tableName]['icon'][] = $columnConfiguration['icon'];
+                    }
+                    if (array_key_exists('help', $columnConfiguration)) {
+                        $configuration[$tableName]['help'][] = $this->translator->trans($columnConfiguration['help']);
+                    }
                 }
-                if (array_key_exists('help', $columnConfiguration)) {
-                    $configuration[$tableName]['help'][] = $this->translator->trans($columnConfiguration['help']);
+                foreach ($chekLists as $chekListName => $chekList) {
+                    $configuration[$tableName]['column'][$chekListName] = $this->translator->trans('open_orchestra_backoffice.form.role.' . $chekListName);
+                    $maxColumns = max($maxColumns, count($configuration[$tableName]['column']));
                 }
-            }
-            foreach ($chekLists as $chekListName => $chekList) {
-                $configuration[$tableName]['column'][$chekListName] = $this->translator->trans('open_orchestra_backoffice.form.role.' . $chekListName);
-                $maxColumns = max($maxColumns, count($configuration[$tableName]['column']));
             }
         }
-
 
         $builder
             ->add('roles_collections', 'collection', array(
@@ -71,7 +72,9 @@ class GroupRoleType extends AbstractType
     */
    public function buildView(FormView $view, FormInterface $form, array $options)
    {
-       $view->vars['configuration'] = array_keys($this->groupRolesConfiguration);
+       foreach ($this->groupRolesConfiguration as $fieldset => $configuration) {
+           $view->vars['configuration'][$fieldset] = array_keys($configuration);
+       }
    }
 
     /**
