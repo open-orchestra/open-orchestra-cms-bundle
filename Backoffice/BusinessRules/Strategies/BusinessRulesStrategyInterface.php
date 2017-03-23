@@ -9,27 +9,27 @@ Interface BusinessRulesStrategyInterface
 {
     /**
      * @param string $action
-     * @param mixed  $object
+     * @param mixed  $entity
      *
      * @return boolean
      */
-    public function support($action, $object);
+    public function support($action, $entity);
 
     /**
      * @param string $action
-     * @param mixed  $object
-     * @param array  $optionalParameters
+     * @param mixed  $entity
+     * @param array  $parameters
      *
      * @return boolean
      */
-    public function isGranted($action, $object, array $optionalParameters);
+    public function isGranted($action, $entity, array $parameters);
 
     /**
-     * @param mixed  $object
+     * @param mixed  $entity
      *
      * @return boolean
      */
-    public function supportObject($object);
+    public function supportEntity($entity);
 
     /**
      * @return array

@@ -25,16 +25,16 @@ class BusinessRulesManager
      * Check if object is granted
      *
      * @param string $action
-     * @param mixed  $object
-     * @param array  $optionalParameters
+     * @param mixed  $entity
+     * @param array  $parameters
      *
      * @return boolean
      */
-    public function isGranted($action, $object, array $optionalParameters = array())
+    public function isGranted($action, $entity, array $parameters = array())
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->support($action, $object)) {
-                return $strategy->isGranted($action, $object, $optionalParameters);
+            if ($strategy->support($action, $entity)) {
+                return $strategy->isGranted($action, $entity, $parameters);
             }
         }
 

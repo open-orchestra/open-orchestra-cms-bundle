@@ -23,6 +23,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
     protected $authorizationChecker;
     protected $multiLanguagesChoiceManager;
     protected $groupRepository;
+    protected $businessRulesManager;
 
     /**
      * Set up the test
@@ -32,6 +33,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->multiLanguagesChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
         $this->groupRepository = Phake::mock('OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface');
+        $this->businessRulesManager = Phake::mock('OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager');
 
         Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn('foo');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
@@ -51,7 +53,8 @@ class GroupTransformerTest extends AbstractBaseTestCase
             $this->facadeClass,
             $this->authorizationChecker,
             $this->multiLanguagesChoiceManager,
-            $this->groupRepository
+            $this->groupRepository,
+            $this->businessRulesManager
         );
         $this->transformer->setContext($this->context);
     }

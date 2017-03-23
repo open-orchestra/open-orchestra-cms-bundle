@@ -14,20 +14,20 @@ class GroupMemberStrategy extends AbstractBusinessRulesStrategy
 {
 
     /**
-     * @param UserRepositoryInterface $repositoryUser
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(UserRepositoryInterface $repositoryUser)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->repositoryUser = $repositoryUser;
+        $this->userRepository = $userRepository;
     }
 
     /**
-     * @param mixed $object
+     * @param mixed $entity
      *
      * @return boolean
      */
-    public function supportObject($object){
-        return $object instanceof GroupInterface;
+    public function supportEntity($entity){
+        return $entity instanceof GroupInterface;
     }
 
     /**
@@ -41,14 +41,14 @@ class GroupMemberStrategy extends AbstractBusinessRulesStrategy
 
     /**
      * @param GroupInterface $group
-     * @param array          $optionalParameters
+     * @param array          $parameters
      *
      * @return boolean
      */
-    protected function canDelete(GroupInterface $group, array $optionalParameters){
-        $nbrGroupsUsers = $optionalParameters;
+    public function canDelete(GroupInterface $group, array $parameters){
+        $nbrGroupsUsers = $parameters;
         if (!array_key_exists($group->getId(), $nbrGroupsUsers)) {
-            $nbrGroupsUsers = $this->repositoryUser->getCountsUsersByGroups(array($group->getId()));
+            $nbrGroupsUsers = $this->userRepository->getCountsUsersByGroups(array($group->getId()));
         }
 
         return 0 === $nbrGroupsUsers[$group->getId()];
