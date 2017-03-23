@@ -128,8 +128,8 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
                     ),
                 ),
             ),
+            'open_orchestra_backoffice.role.front_access' => array('fourthpackage' => array()),
         );
-
         $this->assertEquals($configurationRoles, $container->getParameter('open_orchestra_backoffice.configuration.roles'));
    }
 
