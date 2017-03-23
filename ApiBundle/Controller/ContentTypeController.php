@@ -114,9 +114,12 @@ class ContentTypeController extends BaseController
      */
     public function listForContentAction()
     {
-        $repository = $this->get('open_orchestra_model.repository.content_type');
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
-        $collection = $repository->findAllNotDeletedInLastVersion();
+        $repository = $this->get('open_orchestra_model.repository.content_type');
+        $collection = $repository->findAllNotDeletedInLastVersion($site->getContentTypes());
+
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
         $facade = $collectionTransformer->transform($collection);
 

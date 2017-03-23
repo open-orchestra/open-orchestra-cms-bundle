@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentTypeNotAllowedException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
@@ -13,7 +14,6 @@ use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,6 +46,7 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
+     * @throws ContentTypeNotAllowedException
      * @throws ContentNotFoundHttpException
      */
     public function showAction($contentId, $language, $version)
@@ -55,8 +56,12 @@ class ContentController extends BaseController
             $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
         }
         $content = $this->findOneContent($contentId, $language, $version);
+
         if (!$content) {
             throw new ContentNotFoundHttpException();
+        }
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
         }
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
@@ -76,6 +81,7 @@ class ContentController extends BaseController
      * })
      *
      * @return FacadeInterface
+     * @throws ContentTypeNotAllowedException
      */
     public function listAction(Request $request, $contentTypeId, $siteId, $language)
     {
@@ -83,6 +89,10 @@ class ContentController extends BaseController
 
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
         $mapping = $this->getMappingContentType($language, $contentType);
+
+        if (!$this->isContentTypeOnSiteAllowed($contentType)) {
+            throw new ContentTypeNotAllowedException();
+        }
 
         $searchTypes = array();
         foreach ($contentType->getFields() as $field) {
@@ -110,6 +120,7 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
+     * @throws ContentTypeNotAllowedException
      */
     public function duplicateAction(Request $request)
     {
@@ -122,6 +133,11 @@ class ContentController extends BaseController
             $format
         );
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
+
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
+        }
+
         $frontLanguages = $this->getParameter('open_orchestra_backoffice.orchestra_choice.front_language');
 
         $contentId = $content->getContentId();
@@ -166,7 +182,10 @@ class ContentController extends BaseController
         if ($versionsCount > count($contents)) {
             $storageIds = array();
             foreach ($contents as $content) {
-                if ($this->isGranted(ContributionActionInterface::DELETE, $content) && !$content->getStatus()->isPublishedState()) {
+                if ($this->isGranted(ContributionActionInterface::DELETE, $content)
+                    && !$content->getStatus()->isPublishedState()
+                    && $this->isContentOnSiteAllowed($content)
+                ) {
                     $storageIds[] = $content->getId();
                     $this->dispatchEvent(ContentEvents::CONTENT_DELETE_VERSION, new ContentEvent($content));
                 }
@@ -202,6 +221,7 @@ class ContentController extends BaseController
             if (
                 false === $repository->hasContentIdWithoutAutoUnpublishToState($contentId) &&
                 $this->isGranted(ContributionActionInterface::DELETE, $content)
+                && $this->isContentOnSiteAllowed($content)
             ) {
                 $repository->softDeleteContent($contentId);
                 $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentDeleteEvent($contentId, $content->getSiteId()));
@@ -218,13 +238,17 @@ class ContentController extends BaseController
      * @Config\Method({"DELETE"})
      *
      * @return Response
-     * @throws ContentNotDeletableException
+     * @throws ContentTypeNotAllowedException, ContentNotDeletableException
      */
     public function deleteAction($contentId)
     {
         $repository = $this->get('open_orchestra_model.repository.content');
         $content = $repository->findOneByContentId($contentId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
+
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
+        }
 
         if (true === $repository->hasContentIdWithoutAutoUnpublishToState($contentId)) {
             throw new ContentNotDeletableException();
@@ -248,18 +272,21 @@ class ContentController extends BaseController
     public function listContentByAuthorAndSiteIdAction($published)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $availableContentTypes = $site->getContentTypes();
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $content = $this->get('open_orchestra_model.repository.content')->findByHistoryAndSiteId(
+        $contents = $this->get('open_orchestra_model.repository.content')->findByHistoryAndSiteId(
             $user->getId(),
             $siteId,
             array(ContentEvents::CONTENT_CREATION, ContentEvents::CONTENT_UPDATE),
             $published,
             10,
-            array('histories.updatedAt' => -1)
+            array('histories.updatedAt' => -1),
+            $availableContentTypes
         );
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
+        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
     }
 
     /**
@@ -272,15 +299,22 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
+     * @throws ContentTypeNotAllowedException
      * @throws ContentNotFoundHttpException
      */
     public function newVersionAction(Request $request, $contentId, $language, $originalVersion)
     {
         /** @var ContentInterface $content */
         $content = $this->findOneContent($contentId, $language, $originalVersion);
+
         if (!$content instanceof ContentInterface) {
             throw new ContentNotFoundHttpException();
         }
+
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
+        }
+
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
         $facade = $this->get('jms_serializer')->deserialize(
@@ -306,14 +340,21 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
+     * @throws ContentTypeNotAllowedException
      * @throws ContentNotFoundHttpException
      */
     public function newLanguageAction($contentId, $language)
     {
         $content = $this->get('open_orchestra_model.repository.content')->findLastVersion($contentId);
+
         if (!$content instanceof ContentInterface) {
             throw new ContentNotFoundHttpException();
         }
+
+        if (!$this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
+        }
+
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
         $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content);
@@ -338,11 +379,16 @@ class ContentController extends BaseController
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION
      * })
      * @return Response
+     * @throws ContentTypeNotAllowedException
      */
     public function listVersionAction($contentId, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, SiteInterface::ENTITY_TYPE);
         $contents = $this->get('open_orchestra_model.repository.content')->findNotDeletedSortByUpdatedAt($contentId, $language);
+
+        if (!$this->isContentsOnSiteAllowed($contents)) {
+            throw new ContentTypeNotAllowedException();
+        }
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
     }
@@ -358,14 +404,21 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @return Response
+     * @throws ContentTypeNotAllowedException
      * @throws ContentNotFoundHttpException
      */
     public function listStatusesForContentAction($contentId, $language, $version)
     {
         $content = $this->findOneContent($contentId, $language, $version);
+
         if (!$content instanceof ContentInterface) {
             throw new ContentNotFoundHttpException();
         }
+
+        if ($this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
+        }
+
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $content);
 
         return $this->listStatuses($content);
@@ -403,6 +456,11 @@ class ContentController extends BaseController
         if (!$content instanceof ContentInterface) {
             throw new ContentNotFoundHttpException();
         }
+
+        if ($this->isContentOnSiteAllowed($content)) {
+            throw new ContentTypeNotAllowedException();
+        }
+
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
         $contentSource = clone $content;
 
@@ -470,7 +528,7 @@ class ContentController extends BaseController
     {
         $mapping = array(
             'name' => 'name',
-            'status_label' => 'status.labels.'.$language,
+            'status_label' => 'status.labels.' . $language,
             'linked_to_site' => 'linkedToSite',
             'created_at' => 'createdAt',
             'created_by' => 'createdBy',
@@ -483,9 +541,59 @@ class ContentController extends BaseController
             }
         }
         foreach ($contentType->getFields() as $field) {
-            $mapping['fields.' . $field->getFieldId() . '.string_value'] = 'attributes.' .     $field->getFieldId() . '.stringValue';
+            $mapping['fields.' . $field->getFieldId() . '.string_value'] = 'attributes.' . $field->getFieldId() . '.stringValue';
         }
 
         return $mapping;
+    }
+
+    /**
+     * @param ContentTypeInterface $contentType
+     *
+     * @return bool
+     */
+    protected function isContentTypeOnSiteAllowed(ContentTypeInterface $contentType)
+    {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $availableContentTypes = $site->getContentTypes();
+
+        return in_array($contentType->getContentTypeId(), $availableContentTypes);
+    }
+
+    /**
+     * @param ContentInterface $content
+     * @param array            $availableContentTypes
+     *
+     * @return bool
+     */
+    protected function isContentOnSiteAllowed(ContentInterface $content, $availableContentTypes = array())
+    {
+        if (empty($availableContentTypes)) {
+            $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+            $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+            $availableContentTypes = $site->getContentTypes();
+        }
+
+        return in_array($content->getContentType(), $availableContentTypes);
+    }
+
+    /**
+     * @param array $contents
+     *
+     * @return bool
+     */
+    protected function isContentsOnSiteAllowed(array $contents)
+    {
+        $result = true;
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $availableContentTypes = $site->getContentTypes();
+
+        foreach ($contents as $content) {
+            $result = $result && $this->isContentOnSiteAllowed($content, $availableContentTypes);
+        }
+
+        return $result;
     }
 }

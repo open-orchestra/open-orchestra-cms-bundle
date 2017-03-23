@@ -33,14 +33,18 @@ class ContentController extends AbstractAdminController
      */
     public function formAction(Request $request, $contentId, $language, $version)
     {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+
         $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
         if (!$content instanceof ContentInterface) {
             throw new \UnexpectedValueException();
         }
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($content->getContentType());
-        if (!$contentType instanceof ContentTypeInterface) {
+        if (!$contentType instanceof ContentTypeInterface || !in_array($contentType->getContentTypeId(), $site->getContentTypes())) {
             throw new \UnexpectedValueException();
         }
+
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
         $publishedContents = $this->get('open_orchestra_model.repository.content')->findAllPublishedByContentId($contentId);
@@ -91,9 +95,12 @@ class ContentController extends AbstractAdminController
      */
     public function newAction(Request $request, $contentTypeId, $language)
     {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+
         $contentManager = $this->get('open_orchestra_backoffice.manager.content');
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
-        if (!$contentType instanceof ContentTypeInterface) {
+        if (!$contentType instanceof ContentTypeInterface || !in_array($contentType->getContentTypeId(), $site->getContentTypes())) {
             throw new \UnexpectedValueException();
         }
         $content = $contentManager->initializeNewContent($contentTypeId, $language, $contentType->isLinkedToSite() && $contentType->isAlwaysShared());

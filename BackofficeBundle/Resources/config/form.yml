@@ -16,6 +16,7 @@ parameters:
     open_orchestra_backoffice.type.node_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\NodeChoiceType
     open_orchestra_backoffice.type.site_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteChoiceType
     open_orchestra_backoffice.type.content_type_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\ContentTypeChoiceType
+    open_orchestra_backoffice.type.site_content_type_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteContentTypeChoiceType
     open_orchestra_backoffice.type.content_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\ContentChoiceType
     open_orchestra_backoffice.type.tinymce.class: OpenOrchestra\Backoffice\Form\Type\Component\TinymceType
     open_orchestra_backoffice.type.keyword.class: OpenOrchestra\Backoffice\Form\Type\KeywordType
@@ -174,6 +175,14 @@ services:
             - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: form.type, alias: oo_content_type_choice}
+    open_orchestra_backoffice.type.site_content_type_choice:
+        class: '%open_orchestra_backoffice.type.site_content_type_choice.class%'
+        arguments:
+            - '@open_orchestra_model.repository.content_type'
+            - '@open_orchestra_model.repository.site'
+            - '@open_orchestra_backoffice.context_manager'
+        tags:
+            - { name: form.type, alias: oo_site_content_type_choice}
     open_orchestra_backoffice.type.content_choice:
         class: '%open_orchestra_backoffice.type.content_choice.class%'
         arguments:
