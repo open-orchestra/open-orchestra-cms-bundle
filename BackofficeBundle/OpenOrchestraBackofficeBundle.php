@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle;
 
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BusinessRulesCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ClientConfigurationCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TrashcanEntityCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
@@ -35,5 +36,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new FieldToElasticaTypeCompilerPass());
         $container->addCompilerPass(new TemplateCompilerPass());
         $container->addCompilerPass(new ClientConfigurationCompilerPass());
+        $container->addCompilerPass(new BusinessRulesCompilerPass());
     }
 }

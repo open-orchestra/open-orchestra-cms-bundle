@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Transformer;
 
+use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
@@ -24,27 +25,30 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param GroupRepositoryInterface             $groupRepository
+     * @param BusinessRulesManager                 $businessRulesManager
      */
     public function __construct(
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
-        GroupRepositoryInterface $groupRepository
+        GroupRepositoryInterface $groupRepository,
+        BusinessRulesManager $businessRulesManager
     ){
         parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->groupRepository = $groupRepository;
+        $this->businessRulesManager = $businessRulesManager;
     }
 
     /**
      * @param GroupInterface $group
-     * @param integer        $nbrUsers
+     * @param array          $nbrGroupsUsers
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($group, $nbrUsers = 0)
+    public function transform($group, $nbrGroupsUsers = array())
     {
         if (!$group instanceof GroupInterface) {
             throw new TransformerParameterTypeException();
@@ -55,11 +59,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->id = $group->getId();
         $facade->name = $group->getName();
         $facade->label = $this->multiLanguagesChoiceManager->choose($group->getLabels());
-        $facade->nbrUsers = $nbrUsers;
+        $facade->nbrUsers = array_key_exists($group->getId(), $nbrGroupsUsers) ? $nbrGroupsUsers[$group->getId()] : 0;
 
         $facade = $this->addSite($facade, $group);
         $facade = $this->addRoles($facade, $group);
-        $facade = $this->addRights($facade, $group, $nbrUsers);
+        $facade = $this->addRights($facade, $group, $nbrGroupsUsers);
 
         return $facade;
     }
@@ -99,14 +103,17 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param FacadeInterface $facade
      * @param GroupInterface  $group
-     * @param integer         $nbrUsers
+     * @param array           $nbrUsers
      *
      * @return FacadeInterface
      */
-    protected function addRights(FacadeInterface $facade, GroupInterface $group, $nbrUsers = 0)
+    protected function addRights(FacadeInterface $facade, GroupInterface $group, array $nbrGroupsUsers)
     {
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
-            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group) && $nbrUsers == 0);
+            $facade->addRight('can_delete',
+                $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group) &&
+                $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $group, $nbrGroupsUsers)
+            );
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE));
         }
 

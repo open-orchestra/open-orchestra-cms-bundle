@@ -1,0 +1,6 @@
+parameters:
+    open_orchestra_backoffice.business_rules_manager.class: OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager
+
+services:
+    open_orchestra_backoffice.business_rules_manager:
+        class: '%open_orchestra_backoffice.business_rules_manager.class%'

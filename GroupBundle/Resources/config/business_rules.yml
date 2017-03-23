@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_group.business_rules_manager.group_member.class: OpenOrchestra\GroupBundle\BusinessRules\Strategies\GroupMemberStrategy
+
+services:
+    open_orchestra_group.business_rules_manager.group_member:
+        class: '%open_orchestra_group.business_rules_manager.group_member.class%'
+        arguments:
+            - '@open_orchestra_user.repository.user'
+        tags:
+            - { name: open_orchestra_backoffice.business_rules.strategy }
