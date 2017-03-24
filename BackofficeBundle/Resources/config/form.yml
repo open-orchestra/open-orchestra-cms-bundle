@@ -162,7 +162,7 @@ services:
             - '%open_orchestra_frontoffice.configuration.roles%'
             - 'oo_front_role_language'
         tags:
-            - { name: form.type, alias: orchestra_language }
+            - { name: form.type, alias: oo_front_role_language }
 
     open_orchestra_backoffice.type.node_choice:
         class: '%open_orchestra_backoffice.type.node_choice.class%'
