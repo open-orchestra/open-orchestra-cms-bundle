@@ -56,7 +56,7 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         let statusCodeForm = {
             '422': $.proxy(this.refreshRender, this),
             '200': Application.getContext().refreshContext,
-            '201': Application.getContext().refreshContext
+            '201': $.proxy(this._redirectEditElement, this)
         };
 
         if ($(event.currentTarget).hasClass('submit-continue-form')) {
@@ -80,7 +80,8 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             siteId: siteId
         });
         Backbone.Events.trigger('form:deactivate', this);
-        Backbone.history.navigate(url, true);
+        Backbone.history.navigate(url);
+        Application.getContext().refreshContext();
     }
 
     /**
