@@ -12,6 +12,7 @@ open_orchestra_backoffice:
         submit: Save
         submit_continue: Save and continue
         delete: Delete
+        delete_help_text: All versions in all languages should be offline
         global_error: There are errors in the form
         add: Add
         swchoff:

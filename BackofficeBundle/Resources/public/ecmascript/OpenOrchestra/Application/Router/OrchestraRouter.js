@@ -44,7 +44,7 @@ class OrchestraRouter extends Backbone.Router
     }
 
     /**
-     * @returns {Array}
+     * @returns {Object}
      * @private
      */
     getMenuHighlight() {
@@ -52,7 +52,7 @@ class OrchestraRouter extends Backbone.Router
     }
 
     /**
-     * @returns {Array}
+     * @returns {Object}
      * @private
      */
     getBreadcrumbHighlight() {
