@@ -72,7 +72,6 @@ class OrchestraRouter extends Backbone.Router
      * @private
      */
     _highlight(name) {
-        console.log(name);
         let breadcrumb = this.getBreadcrumbHighlight();
         let menu = this.getMenuHighlight();
 
