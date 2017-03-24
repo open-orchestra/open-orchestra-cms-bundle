@@ -2,6 +2,7 @@ import AbstractBehavior   from './AbstractBehavior'
 import Application        from '../../../Application/Application'
 import SitesAvailable     from '../../../Application/Collection/Site/SitesAvailable'
 import GroupListModalView from '../../../Application/View/Group/GroupListModalView'
+import ConfirmModalView   from '../../ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class Accordion
@@ -14,13 +15,14 @@ class Accordion extends AbstractBehavior
      * @return {Object}
      */
     getExtraEvents() {
+        console.log(this);
         return {
             'click .open-form': '_toggleForm',
             'click .close-form': '_toggleForm',
             'click .open-forms': '_openForms',
             'click .close-forms': '_closeForms',
             'click .add-form': '_addForm',
-            'click .remove-form': '_removeForm'
+            'click .remove-form': $.proxy(this._confirmRemove, this)
         }
     }
 
@@ -90,12 +92,35 @@ class Accordion extends AbstractBehavior
     }
 
     /**
+     * Show modal confirm to remove
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _confirmRemove(event) {
+        event.stopPropagation();
+        let confirmModalView = new ConfirmModalView({
+            confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove.title'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove.message'),
+            yesCallback: this._removeForm,
+            context: this,
+            callbackParameter: [event]
+        });
+
+        Application.getRegion('modal').html(confirmModalView.render().$el);
+        confirmModalView.show();
+
+        return false;
+    }
+
+    /**
      * remove a form
      *
      * {Object} event
      */
     _removeForm(event) {
-        event.preventDefault();
         let $table = $(event.target).closest('table');
         $(event.target).closest('tbody').remove();
         if ($table.children('tbody').length === 0) {
