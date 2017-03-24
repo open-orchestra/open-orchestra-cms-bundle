@@ -22,7 +22,8 @@ class AbstractFormView extends mix(OrchestraView).with(LoadingButtonMixin)
      */
     preinitialize(options) {
         this.events = {
-            'click button.submit-form': '_submit'
+            'click button.submit-form': '_submit',
+            'keydown form': '_preventSubmitEnter'
         };
     }
 
@@ -92,6 +93,17 @@ class AbstractFormView extends mix(OrchestraView).with(LoadingButtonMixin)
      */
     _resetSubmitButton() {
         this.resetLoadingButton($('button.submit-form', this.$el));
+    }
+
+    /**
+     * @param {Object} event
+     * @private
+     */
+    _preventSubmitEnter(event) {
+        if (13 === event.keyCode)  {
+            event.preventDefault();
+            return false;
+        }
     }
 
     /**
