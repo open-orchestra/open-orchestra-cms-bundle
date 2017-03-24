@@ -27,7 +27,10 @@
         <% _.each(nodesTree, function(nodeTree, key) { %>
             <li>
                 <div>
-                    <i class="fa fa-chevron-down toggle-tree" aria-hidden="true"></i>
+                    <p class="tree-icon">
+                        <i class="fa fa-chevron-down toggle-tree" aria-hidden="true"></i>
+                    </p>
+
                     <span><%= nodeTree.get('node').get('name') %></span>
                 </div>
                 <ul class="children">
