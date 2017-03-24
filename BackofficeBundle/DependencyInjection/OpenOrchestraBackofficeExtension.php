@@ -53,10 +53,9 @@ class OpenOrchestraBackofficeExtension extends Extension
             $configurationRoles = array_merge_recursive($container->getParameter('open_orchestra_backoffice.configuration.roles'), $configurationRoles);
         }
 
-        $configurationFrontRoles = $config['front_configuration_roles'];
-        $container->setParameter('open_orchestra_frontoffice.configuration.roles', array());
-        if ($container->hasParameter('open_orchestra_frontoffice.configuration.roles')) {
-            $configurationFrontRoles = array_merge_recursive($container->getParameter('open_orchestra_frontoffice.configuration.roles'), $configurationFrontRoles);
+        $configurationFrontRoles = $config['front_roles'];
+        if ($container->hasParameter('open_orchestra_backoffice.configuration.front_roles')) {
+            $configurationFrontRoles = array_merge_recursive($container->getParameter('open_orchestra_backoffice.configuration.front_roles'), $configurationFrontRoles);
         }
         $container->setParameter('open_orchestra_backoffice.configuration.front_roles', $configurationFrontRoles);
 
