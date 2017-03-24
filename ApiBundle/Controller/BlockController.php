@@ -95,7 +95,7 @@ class BlockController extends BaseController
         }
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $block);
-        if (0 !== $this->get('open_orchestra_model.repository.node')->countBlockUsed($block->getId())) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block)) {
             $this->createAccessDeniedException();
         }
 

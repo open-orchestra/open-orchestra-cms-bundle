@@ -1,6 +1,42 @@
 parameters:
-    open_orchestra_backoffice.business_rules_manager.class: OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager
+    open_orchestra_backoffice.business_rules_manager.class:              OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager
+    open_orchestra_backoffice.business_rules_manager.block.class:        OpenOrchestra\Backoffice\BusinessRules\Strategies\BlockStrategy
+    open_orchestra_backoffice.business_rules_manager.content.class:      OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentStrategy
+    open_orchestra_backoffice.business_rules_manager.content_type.class: OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentTypeStrategy
+    open_orchestra_backoffice.business_rules_manager.keyword.class:      OpenOrchestra\Backoffice\BusinessRules\Strategies\KeywordStrategy
+    open_orchestra_backoffice.business_rules_manager.node.class:         OpenOrchestra\Backoffice\BusinessRules\Strategies\NodeStrategy
 
 services:
     open_orchestra_backoffice.business_rules_manager:
         class: '%open_orchestra_backoffice.business_rules_manager.class%'
+    open_orchestra_backoffice.business_rules_manager.block:
+        class: '%open_orchestra_backoffice.business_rules_manager.block.class%'
+        arguments:
+            - '@open_orchestra_model.repository.node'
+        tags:
+            - { name: open_orchestra_backoffice.business_rules.strategy }
+    open_orchestra_backoffice.business_rules_manager.content:
+        class: '%open_orchestra_backoffice.business_rules_manager.content.class%'
+        arguments:
+            - '@open_orchestra_model.repository.content'
+            - '@open_orchestra_model.repository.site'
+            - '@open_orchestra_backoffice.context_manager'
+        tags:
+            - { name: open_orchestra_backoffice.business_rules.strategy }
+    open_orchestra_backoffice.business_rules_manager.content_type:
+        class: '%open_orchestra_backoffice.business_rules_manager.content_type.class%'
+        arguments:
+            - '@open_orchestra_model.repository.content'
+        tags:
+            - { name: open_orchestra_backoffice.business_rules.strategy }
+    open_orchestra_backoffice.business_rules_manager.keyword:
+        class: '%open_orchestra_backoffice.business_rules_manager.keyword.class%'
+        tags:
+            - { name: open_orchestra_backoffice.business_rules.strategy }
+    open_orchestra_backoffice.business_rules_manager.node:
+        class: '%open_orchestra_backoffice.business_rules_manager.node.class%'
+        arguments:
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_backoffice.context_manager'
+        tags:
+            - { name: open_orchestra_backoffice.business_rules.strategy }

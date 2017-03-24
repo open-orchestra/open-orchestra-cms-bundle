@@ -136,17 +136,13 @@ class BlockController extends AbstractAdminController
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $block);
 
-        $deleteButton = false;
-        if ($block->isTransverse() && 0 === $this->get('open_orchestra_model.repository.node')->countBlockUsed($block->getId())) {
-            $deleteButton = true;
-        }
         $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
         $form = $this->createForm($formType, $block, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_block_form', array(
                 'blockId' => $blockId
             )),
             'method' => 'POST',
-            'delete_button' => $deleteButton
+            'delete_button' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block, array('isTransverse' => $block->isTransverse()))
         ));
 
         $form->handleRequest($request);

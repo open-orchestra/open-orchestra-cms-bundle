@@ -18,7 +18,7 @@ class BusinessRulesManager
      */
     public function addStrategy(BusinessRulesStrategyInterface $strategy)
     {
-        $this->strategies[] = $strategy;
+        $this->strategies[$strategy->getType()] = $strategy;
     }
 
     /**
@@ -32,10 +32,10 @@ class BusinessRulesManager
      */
     public function isGranted($action, $entity, array $parameters = array())
     {
-        foreach ($this->strategies as $strategy) {
-            if ($strategy->support($action, $entity)) {
-                return $strategy->isGranted($action, $entity, $parameters);
-            }
+        $entityType = defined(get_class($entity) . '::ENTITY_TYPE') ? $entity::ENTITY_TYPE : null;
+
+        if (!is_null($entityType) && array_key_exists($entityType, $this->strategies) && $this->strategies[$entityType]->support($action)) {
+            return  $this->strategies[$entityType]->isGranted($action, $entity, $parameters);
         }
 
         return true;

@@ -3,6 +3,8 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
+use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\NodeStrategy;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -30,6 +32,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $statusRepository;
     protected $eventDispatcher;
     protected $nodeRepository;
+    protected $businessRulesManager;
 
     /**
      * @param string                        $facadeClass
@@ -39,6 +42,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param NodeRepositoryInterface       $nodeRepository
+     * @param BusinessRulesManager          $businessRulesManager
      */
     public function __construct(
         $facadeClass,
@@ -47,14 +51,16 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
-        NodeRepositoryInterface $nodeRepository
+        NodeRepositoryInterface $nodeRepository,
+        BusinessRulesManager $businessRulesManager
     ) {
-        parent::__construct($facadeClass, $authorizationChecker);
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->statusRepository = $statusRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->nodeRepository = $nodeRepository;
+        $this->businessRulesManager = $businessRulesManager;
+        parent::__construct($facadeClass, $authorizationChecker);
     }
 
     /**
@@ -114,11 +120,11 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedAt = $node->getUpdatedAt();
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION)) {
-            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $node) && !$node->getStatus()->isPublishedState());
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $node) && $this->businessRulesManager->isGranted(NodeStrategy::DELETE_VERSION, $node));
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
-            $facade->addRight('can_edit', !$node->getStatus()->isBlockedEdition() && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
+            $facade->addRight('can_edit', $this->businessRulesManager->isGranted(ContributionActionInterface::EDIT, $node) && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
         }
         return $facade;
     }

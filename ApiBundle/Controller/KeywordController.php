@@ -88,7 +88,9 @@ class KeywordController extends BaseController
         $keywords = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection')->reverseTransform($facade);
         $keywordIds = array();
         foreach ($keywords as $keyword) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, $keyword)) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $keyword) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $keyword)
+            ) {
                 $keywordIds[] = $keyword->getId();
                 $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
             }

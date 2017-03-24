@@ -7,8 +7,10 @@ use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotDeletableException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotEditableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\NodeStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\BlockEvents;
 use OpenOrchestra\ModelInterface\BlockNodeEvents;
@@ -18,7 +20,6 @@ use OpenOrchestra\ModelInterface\Event\NodeDeleteEvent;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -89,16 +90,12 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
 
-        if (
-            $nodeId === NodeInterface::ROOT_NODE_ID ||
-            true === $nodeRepository->hasNodeIdWithoutAutoUnpublishToState($nodeId, $siteId) ||
-            $nodeRepository->countByParentId($nodeId, $siteId) > 0
-        ) {
-            throw new NodeNotDeletableException();
-        }
-
         $node = $nodeRepository->findOneByNodeAndSite($nodeId, $siteId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $node);
+
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $node)) {
+            throw new NodeNotDeletableException();
+        }
 
         $nodeRepository->softDeleteNode($nodeId, $siteId);
         $this->dispatchEvent(NodeEvents::NODE_DELETE, new NodeDeleteEvent($nodeId, $siteId));
@@ -128,7 +125,7 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
-        if ($node->getStatus()->isBlockedEdition()) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $node)) {
             return array();
         }
 
@@ -169,6 +166,7 @@ class NodeController extends BaseController
      *
      * @throws NodeNotFoundHttpException
      * @throws BlockNotFoundHttpException
+     * @throws NodeNotEditableException
      */
     public function addBlockInAreaAction($nodeId, $language, $version, $blockId, $areaId, $position)
     {
@@ -179,6 +177,10 @@ class NodeController extends BaseController
             throw new NodeNotFoundHttpException();
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $node)) {
+            throw new NodeNotEditableException();
+        }
 
         $area = $node->getArea($areaId);
         $block = $this->get('open_orchestra_model.repository.block')->findById($blockId);
@@ -262,6 +264,7 @@ class NodeController extends BaseController
      * @return FacadeInterface
      *
      * @throws NodeNotFoundHttpException
+     * @throws NodeNotEditableException
      */
     public function updateBlockPositionAction(Request $request, $nodeId, $language, $version, $siteId)
     {
@@ -271,8 +274,8 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
-        if ($node->getStatus()->isBlockedEdition()) {
-            return array();
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $node)) {
+            throw new NodeNotEditableException();
         }
 
         $facade = $this->get('jms_serializer')->deserialize(
@@ -618,7 +621,7 @@ class NodeController extends BaseController
             $nodeIds = array();
             foreach ($nodes as $node) {
                 if ($this->isGranted(ContributionActionInterface::DELETE, $node) &&
-                    !$node->getStatus()->isPublishedState()
+                    $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(NodeStrategy::DELETE_VERSION, $node)
                 ) {
                     $this->get('open_orchestra_backoffice.manager.node')->deleteBlockInNode($node);
                     $nodeIds[] = $node->getId();

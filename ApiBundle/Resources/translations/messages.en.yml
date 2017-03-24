@@ -3,3 +3,6 @@ open_orchestra_api:
         change_not_granted: You cannot apply this status due to some right limitation
     content_type:
       select_not_granted : This content type is not allowed on this site
+    node:
+        edit:
+            impossible: This node could not be edited

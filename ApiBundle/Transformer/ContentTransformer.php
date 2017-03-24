@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentStrategy;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
@@ -23,6 +25,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $statusRepository;
     protected $contentRepository;
     protected $contextManager;
+    protected $businessRulesManager;
 
     /**
      * @param string                         $facadeClass
@@ -30,18 +33,21 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param ContentRepositoryInterface     $contentRepository,
      * @param AuthorizationCheckerInterface  $authorizationChecker
      * @param CurrentSiteIdInterface         $contextManager
+     * @param BusinessRulesManager           $businessRulesManager
      */
     public function __construct(
         $facadeClass,
         StatusRepositoryInterface $statusRepository,
         ContentRepositoryInterface $contentRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        CurrentSiteIdInterface $contextManager
+        CurrentSiteIdInterface $contextManager,
+        BusinessRulesManager $businessRulesManager
     )
     {
         $this->statusRepository = $statusRepository;
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
+        $this->businessRulesManager = $businessRulesManager;
         parent::__construct($facadeClass, $authorizationChecker);
     }
 
@@ -81,15 +87,16 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
-            $facade->addRight('can_delete',(
-                false === $this->contentRepository->hasContentIdWithoutAutoUnpublishToState($content->getContentId()) &&
-                $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content)
-            ));
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) &&
+                $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $content)
+            );
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
         }
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION)) {
-            $facade->addRight('can_delete_version', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) && !$content->getStatus()->isPublishedState());
+            $facade->addRight('can_delete_version', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) &&
+                $this->businessRulesManager->isGranted(ContentStrategy::DELETE_VERSION, $content)
+            );
         }
 
         return $facade;

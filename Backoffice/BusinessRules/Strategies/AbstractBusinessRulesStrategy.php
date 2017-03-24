@@ -9,12 +9,12 @@ abstract class AbstractBusinessRulesStrategy implements BusinessRulesStrategyInt
 {
     /**
      * @param string $action
-     * @param mixed  $entity
      *
      * @return boolean
      */
-    public function support($action, $entity){
-        return array_key_exists($action, $this->getActions()) && $this->supportEntity($entity);
+    public function support($action)
+    {
+        return array_key_exists($action, $this->getActions());
     }
 
     /**
@@ -23,18 +23,17 @@ abstract class AbstractBusinessRulesStrategy implements BusinessRulesStrategyInt
      *
      * @return boolean
      */
-    public function isGranted($action, $entity, array $parameters){
+    public function isGranted($action, $entity, array $parameters)
+    {
         $method = $this->getActions()[$action];
 
         return $this->$method($entity, $parameters);
     }
 
     /**
-     * @param mixed $entity
-     *
-     * @return boolean
+     * @return string
      */
-    abstract public function supportEntity($entity);
+    abstract public function getType();
 
     /**
      * @return array

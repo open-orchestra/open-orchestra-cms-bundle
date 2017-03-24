@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -28,19 +29,21 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param ContentRepositoryInterface           $contentRepository
      * @param ContentTypeRepositoryInterface       $contentTypeRepository
      * @param AuthorizationCheckerInterface        $authorizationChecker
+     * @param BusinessRulesManager                 $businessRulesManager
      */
     public function __construct(
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         ContentRepositoryInterface $contentRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        BusinessRulesManager $businessRulesManager
     ) {
-        parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->contentRepository = $contentRepository;
         $this->contentTypeRepository = $contentTypeRepository;
-
+        $this->businessRulesManager = $businessRulesManager;
+        parent::__construct($facadeClass, $authorizationChecker);
     }
 
     /**
@@ -68,7 +71,8 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->defaultListable = $contentType->getDefaultListable();
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
-            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType) && 0 == $this->contentRepository->countByContentType($contentType->getContentTypeId()));
+            $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType) &&
+                $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $contentType));
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentTypeInterface::ENTITY_TYPE));
         }
 

@@ -9,11 +9,10 @@ Interface BusinessRulesStrategyInterface
 {
     /**
      * @param string $action
-     * @param mixed  $entity
      *
      * @return boolean
      */
-    public function support($action, $entity);
+    public function support($action);
 
     /**
      * @param string $action
@@ -25,11 +24,9 @@ Interface BusinessRulesStrategyInterface
     public function isGranted($action, $entity, array $parameters);
 
     /**
-     * @param mixed  $entity
-     *
-     * @return boolean
+     * @return string
      */
-    public function supportEntity($entity);
+    public function getType();
 
     /**
      * @return array

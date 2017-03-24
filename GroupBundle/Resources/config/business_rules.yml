@@ -1,9 +1,9 @@
 parameters:
-    open_orchestra_group.business_rules_manager.group_member.class: OpenOrchestra\GroupBundle\BusinessRules\Strategies\GroupMemberStrategy
+    open_orchestra_group.business_rules_manager.group.class: OpenOrchestra\GroupBundle\BusinessRules\Strategies\GroupStrategy
 
 services:
-    open_orchestra_group.business_rules_manager.group_member:
-        class: '%open_orchestra_group.business_rules_manager.group_member.class%'
+    open_orchestra_group.business_rules_manager.group:
+        class: '%open_orchestra_group.business_rules_manager.group.class%'
         arguments:
             - '@open_orchestra_user.repository.user'
         tags:

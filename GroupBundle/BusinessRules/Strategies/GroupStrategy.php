@@ -8,9 +8,9 @@ use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
 
 /**
- * class GroupMemberStrategy
+ * class GroupStrategy
  */
-class GroupMemberStrategy extends AbstractBusinessRulesStrategy
+class GroupStrategy extends AbstractBusinessRulesStrategy
 {
 
     /**
@@ -22,18 +22,18 @@ class GroupMemberStrategy extends AbstractBusinessRulesStrategy
     }
 
     /**
-     * @param mixed $entity
-     *
-     * @return boolean
+     * @return string
      */
-    public function supportEntity($entity){
-        return $entity instanceof GroupInterface;
+    public function getType()
+    {
+        return GroupInterface::ENTITY_TYPE;
     }
 
     /**
      * @return array
      */
-    public function getActions(){
+    public function getActions()
+    {
         return array(
             ContributionActionInterface::DELETE => 'canDelete',
         );
@@ -45,7 +45,8 @@ class GroupMemberStrategy extends AbstractBusinessRulesStrategy
      *
      * @return boolean
      */
-    public function canDelete(GroupInterface $group, array $parameters){
+    public function canDelete(GroupInterface $group, array $parameters)
+    {
         $nbrGroupsUsers = $parameters;
         if (!array_key_exists($group->getId(), $nbrGroupsUsers)) {
             $nbrGroupsUsers = $this->userRepository->getCountsUsersByGroups(array($group->getId()));

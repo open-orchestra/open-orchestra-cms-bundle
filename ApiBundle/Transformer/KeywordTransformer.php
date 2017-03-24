@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -16,19 +17,23 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $keywordRepository;
+    protected $businessRulesManager;
 
     /**
      * @param string                        $facadeClass
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param KeywordRepositoryInterface    $keywordRepository
+     * @param BusinessRulesManager          $businessRulesManager
      */
     public function __construct(
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
-        KeywordRepositoryInterface    $keywordRepository
+        KeywordRepositoryInterface $keywordRepository,
+        BusinessRulesManager $businessRulesManager
     ) {
-        parent::__construct($facadeClass, $authorizationChecker);
         $this->keywordRepository = $keywordRepository;
+        $this->businessRulesManager = $businessRulesManager;
+        parent::__construct($facadeClass, $authorizationChecker);
     }
 
     /**
@@ -52,9 +57,8 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->numberUse = $keyword->countUse();
 
         $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $keyword));
-        $can_delete =
-            $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $keyword) && !$keyword->isUsed();
-        $facade->addRight('can_delete', $can_delete);
+        $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $keyword) &&
+            $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $keyword));
 
         return $facade;
     }
