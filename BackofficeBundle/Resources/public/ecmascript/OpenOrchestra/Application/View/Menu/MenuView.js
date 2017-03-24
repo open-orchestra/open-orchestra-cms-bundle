@@ -122,8 +122,10 @@ class MenuView extends OrchestraView
      */
     highlight(item) {
         let target = $('#' + item, this.$el);
+        $('.tab-pane', this.$el).removeClass('active');
+        $('.nav li', this.$el).removeClass('active');
+
         if (target.parents('.sublevels').length > 0) {
-            $('.sublevels li', this.$el).removeClass('active');
             target.parent().addClass('active');
             let tab = target.parents('.tab-pane').eq(0);
             tab.addClass('active');

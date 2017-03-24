@@ -1,7 +1,7 @@
 {
   "developer": {
     "workflow": {
-      "template": "Navigation/Developer/workflow",
+      "template": "Menu/Developer/workflow",
       "rank": 10
     }
   }
