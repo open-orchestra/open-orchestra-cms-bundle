@@ -52,7 +52,7 @@ services:
             - '@open_orchestra_backoffice.manager.template'
             - '%open_orchestra_model.document.node.class%'
             - '@open_orchestra_backoffice.subscriber.special_page_choice'
-            - '%open_orchestra_frontoffice.configuration.roles%'
+            - '%open_orchestra_backoffice.configuration.front_roles%'
         tags:
             - { name: form.type, alias: oo_node }
     # Block form type
@@ -153,14 +153,6 @@ services:
         arguments:
             - '%open_orchestra_backoffice.orchestra_choice.front_language%'
             - 'orchestra_language'
-        tags:
-            - { name: form.type, alias: orchestra_language }
-
-    open_orchestra_backoffice.type.front_role:
-        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
-        arguments:
-            - '%open_orchestra_frontoffice.configuration.roles%'
-            - 'oo_front_role_language'
         tags:
             - { name: form.type, alias: orchestra_language }
 

@@ -352,7 +352,7 @@ class Configuration implements ConfigurationInterface
     public function addConfigurationFrontRoleConfiguration()
     {
         $builder = new TreeBuilder();
-        $configurationRole = $builder->root('front_configuration_roles');
+        $configurationRole = $builder->root('front_roles');
 
         $configurationRole
             ->info('Configure front role configuration')
