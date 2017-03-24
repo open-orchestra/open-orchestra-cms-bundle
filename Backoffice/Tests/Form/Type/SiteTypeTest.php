@@ -20,6 +20,7 @@ class SiteTypeTest extends AbstractBaseTestCase
     protected $translator;
     protected $templateManager;
     protected $languages = array('en', 'fr');
+    protected $eventDispatcher;
 
     /**
      * Set up the test
@@ -30,8 +31,15 @@ class SiteTypeTest extends AbstractBaseTestCase
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
         $webSiteSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->form = new SiteType($this->siteClass, $this->translator, $this->templateManager, $webSiteSubscriber);
+        $this->form = new SiteType(
+            $this->siteClass,
+            $this->translator,
+            $this->templateManager,
+            $webSiteSubscriber,
+            $this->eventDispatcher
+        );
     }
 
     /**
@@ -64,6 +72,7 @@ class SiteTypeTest extends AbstractBaseTestCase
         Phake::verify($builder, Phake::times(8))->add(Phake::anyParameters());
         Phake::verify($this->translator, Phake::times(2))->trans(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
     /**

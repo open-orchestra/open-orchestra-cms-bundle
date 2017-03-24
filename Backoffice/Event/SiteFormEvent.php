@@ -6,9 +6,9 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class GroupEvent
+ * Class SiteFormEvent
  */
-class ContentFormEvent extends Event
+class SiteFormEvent extends Event
 {
     protected $builder;
 
