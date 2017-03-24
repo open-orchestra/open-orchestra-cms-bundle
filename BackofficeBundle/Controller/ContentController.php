@@ -38,10 +38,9 @@ class ContentController extends AbstractAdminController
             throw new \UnexpectedValueException();
         }
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($content->getContentType());
-        if (!$contentType instanceof ContentTypeInterface) {
-            throw new \UnexpectedValueException();
-        }
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $content)) {
+        if (!$contentType instanceof ContentTypeInterface &&
+            !$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $content)
+        ) {
             throw new \UnexpectedValueException();
         }
 
