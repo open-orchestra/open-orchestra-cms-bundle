@@ -4,12 +4,12 @@ namespace OpenOrchestra\GroupBundle\Tests\BusinessRules\Strategies;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\GroupBundle\BusinessRules\Strategies\GroupMemberStrategy;
+use OpenOrchestra\GroupBundle\BusinessRules\Strategies\GroupStrategy;
 
 /**
- * Class GroupMemberStrategyTest
+ * Class GroupStrategyTest
  */
-class GroupMemberStrategyTest extends AbstractBaseTestCase
+class GroupStrategyTest extends AbstractBaseTestCase
 {
     protected $userRepository;
     protected $idGroup0 = 'fake_id_group0';
@@ -24,31 +24,7 @@ class GroupMemberStrategyTest extends AbstractBaseTestCase
         Phake::when($this->userRepository)->getCountsUsersByGroups(array($this->idGroup0))->thenReturn(array($this->idGroup0 => 0));
         Phake::when($this->userRepository)->getCountsUsersByGroups(array($this->idGroup1))->thenReturn(array($this->idGroup1 => 1));
 
-        $this->strategy = new GroupMemberStrategy($this->userRepository);
-    }
-
-    /**
-     * @param mixed   $entity
-     * @param boolean $isSupported
-     *
-     * @dataProvider provideEntity
-     */
-    public function testSupportObject($entity, $isSupported)
-    {
-        $this->assertSame($isSupported, $this->strategy->supportEntity($entity));
-    }
-
-    /**
-     * provide entity
-     *
-     * @return array
-     */
-    public function provideEntity()
-    {
-        return array(
-            array(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'), false),
-            array(Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface'), true),
-        );
+        $this->strategy = new GroupStrategy($this->userRepository);
     }
 
     /**

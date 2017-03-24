@@ -30,6 +30,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
     protected $status;
     protected $node;
     protected $site;
+    protected $businessRulesManager;
 
     /**
      * Set up the test
@@ -76,6 +77,9 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
+        $this->businessRulesManager = Phake::mock('OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager');
+        Phake::when($this->businessRulesManager)->isGranted(Phake::anyParameters())->thenReturn(true);
+
         $this->nodeTransformer = new NodeTransformer(
             $this->facadeClass,
             $this->encryptionManager,
@@ -83,7 +87,8 @@ class NodeTransformerTest extends AbstractBaseTestCase
             $this->statusRepository,
             $this->eventDispatcher,
             $this->authorizationChecker,
-            $this->nodeRepository
+            $this->nodeRepository,
+            $this->businessRulesManager
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);

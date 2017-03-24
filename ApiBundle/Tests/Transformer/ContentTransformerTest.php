@@ -25,6 +25,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
     protected $contentRepository;
     protected $authorizationChecker;
     protected $contextManager;
+    protected $businessRulesManager;
 
     /**
      * Set up the test
@@ -65,12 +66,16 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('en');
 
+        $this->businessRulesManager = Phake::mock('OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager');
+        Phake::when($this->businessRulesManager)->isGranted(Phake::anyParameters())->thenReturn(true);
+
         $this->contentTransformer = new ContentTransformer(
             $this->facadeClass,
             $this->statusRepository,
             $this->contentRepository,
             $this->authorizationChecker,
-            $this->contextManager
+            $this->contextManager,
+            $this->businessRulesManager
         );
         $this->contentTransformer->setContext($this->transformerManager);
     }
@@ -132,7 +137,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $this->assertSame($linkedToSite, $facade->linkedToSite);
         $this->assertSame($facade->status->label, $facade->statusLabel);
 
-        Phake::verify($content, Phake::times(3))->getStatus();
+        Phake::verify($content, Phake::times(2))->getStatus();
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
 
