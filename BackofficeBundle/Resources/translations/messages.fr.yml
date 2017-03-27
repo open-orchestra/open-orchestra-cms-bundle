@@ -213,6 +213,7 @@ open_orchestra_backoffice:
             max_age: Max age pour le cache de la réponse
             id: Id html du bloc
             style: Style du bloc
+            code: Code
             group:
                 property: Propriétés
                 data: Données
@@ -222,6 +223,7 @@ open_orchestra_backoffice:
                 style: Style
                 content: Contenu
                 cache: Cache
+                code: Code
                 html: Html
         sub_menu:
             node: Racine du menu
