@@ -45,7 +45,6 @@ class NodeStrategy extends AbstractBusinessRulesStrategy
             ContributionActionInterface::DELETE => 'canDelete',
             self::DELETE_VERSION => 'canDeleteVersion',
             ContributionActionInterface::EDIT => 'canEdit',
-            ContributionActionInterface::READ => 'canRead',
         );
     }
 

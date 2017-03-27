@@ -2,6 +2,7 @@
 namespace OpenOrchestra\GroupBundle\Tests\BusinessRules\Strategies;
 
 use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\GroupBundle\BusinessRules\Strategies\GroupStrategy;
@@ -58,5 +59,23 @@ class GroupStrategyTest extends AbstractBaseTestCase
             array($group0, array($this->idGroup0 => 1), false),
             array($group1, array($this->idGroup1 => 0), true),
         );
+    }
+
+    /**
+     * test getActions
+     */
+    public function testGetActions()
+    {
+        $this->assertEquals(array(
+            ContributionActionInterface::DELETE => 'canDelete',
+        ), $this->strategy->getActions());
+    }
+
+    /**
+     * test getActions
+     */
+    public function testType()
+    {
+        $this->assertEquals(GroupInterface::ENTITY_TYPE, $this->strategy->getType());
     }
 }

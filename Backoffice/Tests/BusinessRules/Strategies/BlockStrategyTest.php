@@ -3,6 +3,7 @@ namespace OpenOrchestra\BackOffice\Tests\BusinessRules\Strategies;
 
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Phake;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BlockStrategy;
 
@@ -25,9 +26,9 @@ class BlockStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int            $count
-     * @param array          $parameters
-     * @param boolean        $isGranted
+     * @param int     $count
+     * @param array   $parameters
+     * @param boolean $isGranted
      *
      * @dataProvider provideBlockAndParameters
      */
@@ -68,5 +69,13 @@ class BlockStrategyTest extends AbstractBaseTestCase
         $this->assertEquals(array(
             ContributionActionInterface::DELETE => 'canDelete',
         ), $this->strategy->getActions());
+    }
+
+    /**
+     * test getActions
+     */
+    public function testType()
+    {
+        $this->assertEquals(BlockInterface::ENTITY_TYPE, $this->strategy->getType());
     }
 }
