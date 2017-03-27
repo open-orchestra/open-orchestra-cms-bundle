@@ -29,20 +29,12 @@ class StatusController extends AbstractAdminController
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $status);
-
-        $isDeletable = $this->isGranted(ContributionActionInterface::DELETE, $status)
-            && !$this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
-            && !$status->isInitialState()
-            && !$status->isPublishedState()
-            && !$status->isTranslationState()
-            && !$status->isAutoPublishFromState()
-            && !$status->isAutoUnpublishToState();
-
         $form = $this->createForm('oo_status', $status, array(
             'action' => $this->generateUrl('open_orchestra_workflow_admin_status_form', array(
                 'statusId' => $statusId,
             )),
-            'delete_button' => $isDeletable
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $status) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $status)
         ));
 
         $form->handleRequest($request);

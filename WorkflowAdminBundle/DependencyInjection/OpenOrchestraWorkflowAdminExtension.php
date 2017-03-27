@@ -33,6 +33,7 @@ class OpenOrchestraWorkflowAdminExtension extends Extension
         $loader->load('subscriber.yml');
         $loader->load('validator.yml');
         $loader->load('service.yml');
+        $loader->load('business_rules.yml');
 
         $container->setParameter('open_orchestra_workflow_admin.choice.available_color', $config['available_color']);
     }

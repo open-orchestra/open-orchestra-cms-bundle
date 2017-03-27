@@ -112,7 +112,7 @@ class StatusController extends BaseController
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $status);
 
-        if ($status instanceof StatusInterface && $this->isDeleteGranted($status)) {
+        if ($this->isDeleteGranted($status)) {
             $objectManager = $this->get('object_manager');
             $objectManager->remove($status);
             $objectManager->flush();
@@ -131,13 +131,7 @@ class StatusController extends BaseController
      */
     protected function isDeleteGranted(StatusInterface $status)
     {
-        return ($this->isGranted(ContributionActionInterface::DELETE, $status)
-            && !$this->get('open_orchestra_backoffice.usage_finder.status')->hasUsage($status)
-            && !$status->isInitialState()
-            && !$status->isPublishedState()
-            && !$status->isTranslationState()
-            && !$status->isAutoPublishFromState()
-            && !$status->isAutoUnpublishToState()
-        );
+        return $this->isGranted(ContributionActionInterface::DELETE, $status)
+            && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $status);
     }
 }
