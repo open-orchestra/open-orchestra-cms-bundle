@@ -27,10 +27,10 @@ class ContentTypePerimeterStrategyTest extends AbstractPerimeterStrategyTest
         $contentType = 'contentType';
 
         return array(
-            'Bad perimeter type : Node' => array($contentType, $this->createPhakeNodePerimeter(), false),
-            'Bad perimeter type : Site' => array($contentType, $this->createPhakeSitePerimeter(), false),
-            'Bad item : Site id'        => array(2 , $this->createPhakeContentTypePerimeter(), false),
-            'Not in perimeter'          => array('otherContentType', $this->createPhakeContentTypePerimeter(), false),
+            'Bad perimeter type : Node' => array($contentType, $this->createPhakeNodePerimeter(), true),
+            'Bad perimeter type : Site' => array($contentType, $this->createPhakeSitePerimeter(), true),
+            'Bad item : Site id'        => array(2 , $this->createPhakeContentTypePerimeter(), true),
+            'Not in perimeter'          => array('otherContentType', $this->createPhakeContentTypePerimeter(), true),
             'In perimeter'              => array($contentType, $this->createPhakeContentTypePerimeter(), true),
         );
     }

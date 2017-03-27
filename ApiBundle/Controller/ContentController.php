@@ -90,6 +90,7 @@ class ContentController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, ContentInterface::ENTITY_TYPE);
 
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
+
         $mapping = $this->getMappingContentType($language, $contentType);
 
         $searchTypes = array();
@@ -126,8 +127,6 @@ class ContentController extends BaseController
      */
     public function duplicateAction(Request $request)
     {
-        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE);
-
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
@@ -135,6 +134,7 @@ class ContentController extends BaseController
             $format
         );
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
 
         if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use DateTime;
+use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\ContentTransformer;
@@ -143,6 +144,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
 
         $this->assertArrayHasKey('can_delete', $facade->getRights());
         $this->assertArrayHasKey('can_duplicate', $facade->getRights());
+        $this->assertArrayHasKey('can_edit', $facade->getRights());
+        Phake::verify($this->authorizationChecker)->isGranted(ContributionActionInterface::EDIT, $content);
     }
 
     /**

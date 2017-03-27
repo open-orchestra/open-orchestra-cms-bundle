@@ -29,6 +29,7 @@ class ContentManagerTest extends AbstractBaseTestCase
     protected $statusInitial = 'statusTranslationStateLabel';
     protected $statusTranslationState = 'statusTranslationStateLabel';
     protected $fakeVersion = 'fakeVersion';
+    protected $user;
 
     /**
      * Set up the test
@@ -63,11 +64,19 @@ class ContentManagerTest extends AbstractBaseTestCase
         $this->uniqueIdGenerator = Phake::mock('OpenOrchestra\Backoffice\Util\UniqueIdGenerator');
         Phake::when($this->uniqueIdGenerator)->generateUniqueId()->thenReturn($this->fakeVersion);
 
+        $tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage');
+        $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $this->user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
+
+        Phake::when($tokenStorage)->getToken()->thenReturn($token);
+        Phake::when($token)->getUser()->thenReturn($this->user);
+
         $this->manager = new ContentManager(
             $this->statusRepository,
             $this->contextManager,
             $this->contentClass,
-            $this->uniqueIdGenerator
+            $this->uniqueIdGenerator,
+            $tokenStorage
         );
     }
 
@@ -147,7 +156,9 @@ class ContentManagerTest extends AbstractBaseTestCase
      */
     public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId)
     {
+        $userName = 'fakeUserName';
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
+        Phake::when($this->user)->getUsername()->thenReturn($userName);
 
         $content = $this->manager->initializeNewContent($contentType, $language, $linkedToSite);
 
@@ -156,6 +167,7 @@ class ContentManagerTest extends AbstractBaseTestCase
         $this->assertSame($contentType, $content->getContentType());
         $this->assertSame($linkedToSite, $content->isLinkedToSite());
         $this->assertSame($siteId, $content->getSiteId());
+        $this->assertSame($userName, $content->getCreatedBy());
         $this->assertEquals($this->statusInitialLabel, $content->getStatus()->getName());
     }
 

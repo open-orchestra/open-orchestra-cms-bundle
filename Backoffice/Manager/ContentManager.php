@@ -23,7 +23,7 @@ class ContentManager
      * @param ContextManager             $contextManager
      * @param string                     $contentClass
      * @param UniqueIdGenerator          $uniqueIdGenerator
-     * @param TokenStorage               $tokenStorageManager
+     * @param TokenStorage               $tokenStorage
      */
     public function __construct(
         StatusRepositoryInterface $statusRepository,
@@ -36,7 +36,7 @@ class ContentManager
         $this->contextManager = $contextManager;
         $this->contentClass = $contentClass;
         $this->uniqueIdGenerator = $uniqueIdGenerator;
-        $this->tokenManager = $tokenStorage;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**

@@ -48,7 +48,7 @@ class NodeManager
      * @param EventDispatcherInterface   $eventDispatcher
      * @param TemplateManager            $templateManager
      * @param UniqueIdGenerator          $uniqueIdGenerator
-     * @param TokenStorage               $tokenStorageManager
+     * @param TokenStorage               $tokenStorage
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
@@ -73,7 +73,7 @@ class NodeManager
         $this->eventDispatcher = $eventDispatcher;
         $this->templateManager = $templateManager;
         $this->uniqueIdGenerator = $uniqueIdGenerator;
-        $this->tokenStorage;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
