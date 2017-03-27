@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
-use  OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;

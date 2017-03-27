@@ -46,6 +46,6 @@ class BlockStrategy extends AbstractBusinessRulesStrategy
      */
     public function canDelete(BlockInterface $block, array $parameters)
     {
-        return 0 == $this->nodeRepository->countBlockUsed($block->getId()) && array_key_exists('isTransverse', $parameters) ? $parameters['isTransverse'] : true;
+        return 0 == $this->nodeRepository->countBlockUsed($block->getId()) && (array_key_exists('isTransverse', $parameters) ? $parameters['isTransverse'] : true);
     }
 }
