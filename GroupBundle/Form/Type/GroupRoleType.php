@@ -24,8 +24,8 @@ class GroupRoleType extends AbstractType
         TranslatorInterface $translator,
         array $groupRolesConfiguration
     ) {
-            $this->groupRolesConfiguration = $groupRolesConfiguration;
-            $this->translator = $translator;
+        $this->groupRolesConfiguration = $groupRolesConfiguration;
+        $this->translator = $translator;
     }
 
     /**
@@ -36,21 +36,24 @@ class GroupRoleType extends AbstractType
     {
         $configuration = array();
         $maxColumns = 0;
+
         foreach ($this->groupRolesConfiguration as $fieldset => $tables) {
             foreach ($tables as $tableName => $chekLists) {
-                $chekList = reset($chekLists);
-                foreach ($chekList as $columnConfiguration) {
-                    $configuration[$tableName]['row'][] = $this->translator->trans($columnConfiguration['label']);
-                    if (array_key_exists('icon', $columnConfiguration)) {
-                        $configuration[$tableName]['icon'][] = $columnConfiguration['icon'];
+                if (!empty($chekLists)) {
+                    $chekList = reset($chekLists);
+                    foreach ($chekList as $columnConfiguration) {
+                        $configuration[$tableName]['row'][] = $this->translator->trans($columnConfiguration['label']);
+                        if (array_key_exists('icon', $columnConfiguration)) {
+                            $configuration[$tableName]['icon'][] = $columnConfiguration['icon'];
+                        }
+                        if (array_key_exists('help', $columnConfiguration)) {
+                            $configuration[$tableName]['help'][] = $this->translator->trans($columnConfiguration['help']);
+                        }
                     }
-                    if (array_key_exists('help', $columnConfiguration)) {
-                        $configuration[$tableName]['help'][] = $this->translator->trans($columnConfiguration['help']);
+                    foreach ($chekLists as $chekListName => $chekList) {
+                        $configuration[$tableName]['column'][$chekListName] = $this->translator->trans('open_orchestra_backoffice.form.role.' . $chekListName);
+                        $maxColumns = max($maxColumns, count($configuration[$tableName]['column']));
                     }
-                }
-                foreach ($chekLists as $chekListName => $chekList) {
-                    $configuration[$tableName]['column'][$chekListName] = $this->translator->trans('open_orchestra_backoffice.form.role.' . $chekListName);
-                    $maxColumns = max($maxColumns, count($configuration[$tableName]['column']));
                 }
             }
         }
@@ -62,20 +65,24 @@ class GroupRoleType extends AbstractType
                 'entry_options' => array(
                     'configuration' => $configuration,
                     'max_columns' => $maxColumns,
-         )));
-   }
+                )));
+    }
 
-   /**
-    * @param FormView      $view
-    * @param FormInterface $form
-    * @param array         $options
-    */
-   public function buildView(FormView $view, FormInterface $form, array $options)
-   {
-       foreach ($this->groupRolesConfiguration as $fieldset => $configuration) {
-           $view->vars['configuration'][$fieldset] = array_keys($configuration);
-       }
-   }
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        foreach ($this->groupRolesConfiguration as $fieldset => $tableConfiguration) {
+            foreach ($tableConfiguration as $table => $configuration) {
+                if (!empty($configuration)) {
+                    $view->vars['configuration'][$fieldset][] = $table;
+                }
+            }
+        }
+    }
 
     /**
      * Returns the name of this type.
