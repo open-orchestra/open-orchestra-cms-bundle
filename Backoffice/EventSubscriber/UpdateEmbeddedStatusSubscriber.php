@@ -39,7 +39,6 @@ class UpdateEmbeddedStatusSubscriber implements EventSubscriberInterface
         }
     }
 
-
     /**
      * @return array The event names to listen to
      */
