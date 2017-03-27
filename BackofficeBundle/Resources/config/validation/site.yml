@@ -1,4 +1,4 @@
-OpenOrchestra\ModelBundle\Document\Site:
+OpenOrchestra\ModelInterface\Model\SiteInterface:
     constraints:
         - OpenOrchestra\Backoffice\Validator\Constraints\CheckMainAliasPresence: ~
         - OpenOrchestra\Backoffice\Validator\Constraints\UniqueMainAlias: ~

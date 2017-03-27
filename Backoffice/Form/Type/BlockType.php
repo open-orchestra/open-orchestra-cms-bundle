@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCode;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +22,7 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
  */
 class BlockType extends AbstractType
 {
+    protected $blockClass;
     protected $templateManager;
     protected $contextManager;
     protected $generateFormManager;
@@ -87,6 +89,9 @@ class BlockType extends AbstractType
                 'required' => false,
                 'group_id' => 'technical',
                 'sub_group_id' => 'code',
+                'constraints' => new UniqueBlockCode(array(
+                    'block' => $options['data'],
+                ))
             ));
         }
 

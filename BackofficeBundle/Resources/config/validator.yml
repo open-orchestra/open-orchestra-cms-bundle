@@ -8,6 +8,7 @@ parameters:
     open_orchestra_model.validator.unique_main_alias.class                   : OpenOrchestra\Backoffice\Validator\Constraints\UniqueMainAliasValidator
     open_orchestra_model.validator.unique_redirection.class                  : OpenOrchestra\Backoffice\Validator\Constraints\UniqueRedirectionValidator
     open_orchestra_model.validator.unique_node_special_page.class            : OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeSpecialPageValidator
+    open_orchestra_model.validator.unique_block_code.class                   : OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCodeValidator
 
 services:
     open_orchestra_model.validatorcontent_template:
@@ -64,3 +65,10 @@ services:
             - '@open_orchestra_model.repository.node'
         tags:
             - { name: validator.constraint_validator, alias: unique_node_special_page}
+
+    open_orchestra_model.validator.unique_block_code:
+        class: '%open_orchestra_model.validator.unique_block_code.class%'
+        arguments:
+            - '@open_orchestra_model.repository.block'
+        tags:
+            - { name: validator.constraint_validator, alias: unique_block_code}

@@ -46,7 +46,8 @@ class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
         $fixedAttributes = array(
             'maxAge',
             'label',
-            'style'
+            'style',
+            'code'
         );
         $this->assertEquals($fixedAttributes, $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
 

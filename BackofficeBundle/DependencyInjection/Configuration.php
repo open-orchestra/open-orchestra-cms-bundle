@@ -52,7 +52,8 @@ class Configuration implements ConfigurationInterface
                 ->defaultValue(array(
                     'maxAge',
                     'label',
-                    'style'
+                    'style',
+                    'code'
                 ))
             ->end()
             ->arrayNode('trash_item_type')
