@@ -142,7 +142,7 @@ class BlockController extends AbstractAdminController
                 'blockId' => $blockId
             )),
             'method' => 'POST',
-            'delete_button' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block, array('isTransverse' => $block->isTransverse()))
+            'delete_button' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block)
         ));
 
         $form->handleRequest($request);

@@ -13,7 +13,6 @@ use OpenOrchestra\Backoffice\BusinessRules\Strategies\NodeStrategy;
 class NodeStrategyTest extends AbstractBaseTestCase
 {
     protected $nodeRepository;
-    protected $contextManeger;
     protected $strategy;
 
     /**
@@ -22,22 +21,16 @@ class NodeStrategyTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->contextManeger = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-
-        Phake::when($this->contextManeger)->getCurrentSiteId()->thenReturn('fakeSiteId');
-
-        $this->strategy = new NodeStrategy(
-            $this->nodeRepository,
-            $this->contextManeger);
+        $this->strategy = new NodeStrategy($this->nodeRepository);
     }
 
     /**
-     * @param int            $node
-     * @param boolean        $isGranted
+     * @param NodeInterface $node
+     * @param boolean       $isGranted
      *
      * @dataProvider provideEditNode
      */
-    public function testCanEdit($node, $isGranted)
+    public function testCanEdit(NodeInterface $node, $isGranted)
     {
         $this->assertSame($isGranted, $this->strategy->canEdit($node, array()));
     }
@@ -66,14 +59,14 @@ class NodeStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int     $node
-     * @param boolean $isWithoutAutoUnpublishToState
-     * @param int     $countByParentId
-     * @param boolean $isGranted
+     * @param NodeInterface $node
+     * @param boolean       $isWithoutAutoUnpublishToState
+     * @param int           $countByParentId
+     * @param boolean       $isGranted
      *
      * @dataProvider provideDeleteNode
      */
-    public function testCanDelete($node, $isWithoutAutoUnpublishToState, $countByParentId, $isGranted)
+    public function testCanDelete(NodeInterface $node, $isWithoutAutoUnpublishToState, $countByParentId, $isGranted)
     {
         Phake::when($this->nodeRepository)->hasNodeIdWithoutAutoUnpublishToState(Phake::anyParameters())->thenReturn($isWithoutAutoUnpublishToState);
         Phake::when($this->nodeRepository)->countByParentId(Phake::anyParameters())->thenReturn($countByParentId);
@@ -107,13 +100,15 @@ class NodeStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int            $node
-     * @param boolean        $isGranted
+     * @param NodeInterface $node
+     * @param int           $nbrVersions
+     * @param boolean       $isGranted
      *
      * @dataProvider provideDeleteVersionNode
      */
-    public function testCanDeleteVersion($node, $isGranted)
+    public function testCanDeleteVersion(NodeInterface $node, $nbrVersions, $isGranted)
     {
+        Phake::when($this->nodeRepository)->countNotDeletedVersions(Phake::anyParameters())->thenReturn($nbrVersions);
         $this->assertSame($isGranted, $this->strategy->canDeleteVersion($node, array()));
     }
 
@@ -135,8 +130,9 @@ class NodeStrategyTest extends AbstractBaseTestCase
         Phake::when($node1)->getStatus()->thenReturn($status1);
 
         return array(
-            array($node0, true),
-            array($node1, false),
+            array($node0, 1, false),
+            array($node0, 2, true),
+            array($node1, 2, false),
         );
     }
 

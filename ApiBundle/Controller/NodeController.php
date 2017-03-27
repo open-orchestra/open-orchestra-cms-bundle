@@ -137,7 +137,7 @@ class NodeController extends BaseController
 
         $this->get('open_orchestra_model.repository.node')->removeBlockInArea($blockId, $areaName, $nodeId, $siteId, $language, $version);
 
-        if (false === $block->isTransverse()) {
+        if ($this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block)) {
             $objectManager = $this->get('object_manager');
             $objectManager->remove($block);
             $objectManager->flush();
@@ -595,15 +595,13 @@ class NodeController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $nodeId
-     * @param string  $language
      *
-     * @Config\Route("/delete-multiple-version/{nodeId}/{language}", name="open_orchestra_api_node_delete_multiple_versions")
+     * @Config\Route("/delete-multiple-version", name="open_orchestra_api_node_delete_multiple_versions")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
-    public function deleteNodeVersionsAction(Request $request, $nodeId, $language)
+    public function deleteNodeVersionsAction(Request $request)
     {
         $format = $request->get('_format', 'json');
 
@@ -615,22 +613,18 @@ class NodeController extends BaseController
         $nodes = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->reverseTransform($facade);
 
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $versionsCount = $nodeRepository->countNotDeletedVersions($nodeId, $language, $siteId);
-        if ($versionsCount > count($nodes)) {
-            $nodeIds = array();
-            foreach ($nodes as $node) {
-                if ($this->isGranted(ContributionActionInterface::DELETE, $node) &&
-                    $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(NodeStrategy::DELETE_VERSION, $node)
-                ) {
-                    $this->get('open_orchestra_backoffice.manager.node')->deleteBlockInNode($node);
-                    $nodeIds[] = $node->getId();
-                    $this->dispatchEvent(NodeEvents::NODE_DELETE_VERSION, new NodeEvent($node));
-                }
+        $nodeIds = array();
+        foreach ($nodes as $node) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $node) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(NodeStrategy::DELETE_VERSION, $node)
+            ) {
+                $this->get('open_orchestra_backoffice.manager.node')->deleteBlockInNode($node);
+                $nodeIds[] = $node->getId();
+                $this->dispatchEvent(NodeEvents::NODE_DELETE_VERSION, new NodeEvent($node));
             }
-            $nodeRepository->removeNodeVersions($nodeIds);
-            $this->get('object_manager')->flush();
         }
+        $nodeRepository->removeNodeVersions($nodeIds);
+        $this->get('object_manager')->flush();
 
         return array();
     }

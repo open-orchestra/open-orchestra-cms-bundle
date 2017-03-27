@@ -18,14 +18,11 @@ class NodeStrategy extends AbstractBusinessRulesStrategy
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
-     * @param ContextManager          $contextManager
      */
     public function __construct(
-        NodeRepositoryInterface $nodeRepository,
-        ContextManager $contextManager
+        NodeRepositoryInterface $nodeRepository
     ) {
         $this->nodeRepository = $nodeRepository;
-        $this->contextManager = $contextManager;
     }
 
     /**
@@ -56,11 +53,9 @@ class NodeStrategy extends AbstractBusinessRulesStrategy
      */
     public function canDelete(NodeInterface $node, array $parameters)
     {
-        $siteId = $this->contextManager->getCurrentSiteId();
-
         return $node->getNodeId() !== NodeInterface::ROOT_NODE_ID &&
-            false === $this->nodeRepository->hasNodeIdWithoutAutoUnpublishToState($node->getNodeId(), $siteId) &&
-            $this->nodeRepository->countByParentId($node->getNodeId(), $siteId) == 0;
+            false === $this->nodeRepository->hasNodeIdWithoutAutoUnpublishToState($node->getNodeId(), $node->getSiteId()) &&
+            $this->nodeRepository->countByParentId($node->getNodeId(), $node->getSiteId()) == 0;
     }
 
     /**
@@ -71,7 +66,7 @@ class NodeStrategy extends AbstractBusinessRulesStrategy
      */
     public function canDeleteVersion(NodeInterface $node, array $parameters)
     {
-        return !$node->getStatus()->isPublishedState();
+        return $this->nodeRepository->countNotDeletedVersions($node->getNodeId(), $node->getLanguage(), $node->getSiteId()) > 1 && !$node->getStatus()->isPublishedState();
     }
 
     /**

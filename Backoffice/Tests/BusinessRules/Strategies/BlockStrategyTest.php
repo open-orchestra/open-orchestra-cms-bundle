@@ -27,21 +27,22 @@ class BlockStrategyTest extends AbstractBaseTestCase
 
     /**
      * @param int     $count
-     * @param array   $parameters
+     * @param boolean $isTransverse
      * @param boolean $isGranted
      *
      * @dataProvider provideBlockAndParameters
      */
-    public function testCanDelete($count, array $parameters, $isGranted)
+    public function testCanDelete($count, $isTransverse, $isGranted)
     {
         $id = 'fakeId';
 
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block)->getId()->thenReturn($id);
+        Phake::when($block)->isTransverse()->thenReturn($isTransverse);
 
         Phake::when($this->nodeRepository)->countBlockUsed($id)->thenReturn($count);
 
-        $this->assertSame($isGranted, $this->strategy->canDelete($block, $parameters));
+        $this->assertSame($isGranted, $this->strategy->canDelete($block, array()));
     }
 
     /**
@@ -52,12 +53,10 @@ class BlockStrategyTest extends AbstractBaseTestCase
     public function provideBlockAndParameters()
     {
         return array(
-            array(0, array(), true),
-            array(0, array('isTransverse' => true), true),
-            array(0, array('isTransverse' => false), false),
-            array(1, array(), false),
-            array(1, array('isTransverse' => true), false),
-            array(1, array('isTransverse' => false), false),
+            array(0, true, true),
+            array(1, true, false),
+            array(0, false, true),
+            array(1, false, true),
         );
     }
 

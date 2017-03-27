@@ -103,7 +103,6 @@ class ContentController extends BaseController
         $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language, $searchTypes);
         if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $collection[0])) {
             throw new ContentTypeNotAllowedException();
-
         }
 
         $recordsTotal = $repository->countFilterByContentTypeSiteAndLanguage($contentTypeId, $siteId, $language);
@@ -163,15 +162,13 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $contentId
-     * @param string  $language
      *
-     * @Config\Route("/delete-multiple-version/{contentId}/{language}", name="open_orchestra_api_content_delete_multiple_versions")
+     * @Config\Route("/delete-multiple-version", name="open_orchestra_api_content_delete_multiple_versions")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
-    public function deleteContentVersionsAction(Request $request, $contentId, $language)
+    public function deleteContentVersionsAction(Request $request)
     {
         $format = $request->get('_format', 'json');
         $facade = $this->get('jms_serializer')->deserialize(
@@ -180,19 +177,16 @@ class ContentController extends BaseController
             $format
         );
         $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
-        $versionsCount = $this->get('open_orchestra_model.repository.content')->countNotDeletedByLanguage($contentId, $language);
-        if ($versionsCount > count($contents)) {
-            $storageIds = array();
-            foreach ($contents as $content) {
-                if ($this->isGranted(ContributionActionInterface::DELETE, $content) &&
-                    $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContentStrategy::DELETE_VERSION, $content)
-                ) {
-                    $storageIds[] = $content->getId();
-                    $this->dispatchEvent(ContentEvents::CONTENT_DELETE_VERSION, new ContentEvent($content));
-                }
+        $storageIds = array();
+        foreach ($contents as $content) {
+            if ($this->isGranted(ContributionActionInterface::DELETE, $content) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContentStrategy::DELETE_VERSION, $content)
+            ) {
+                $storageIds[] = $content->getId();
+                $this->dispatchEvent(ContentEvents::CONTENT_DELETE_VERSION, new ContentEvent($content));
             }
-            $this->get('open_orchestra_model.repository.content')->removeContentVersion($storageIds);
         }
+        $this->get('open_orchestra_model.repository.content')->removeContentVersion($storageIds);
 
         return array();
     }

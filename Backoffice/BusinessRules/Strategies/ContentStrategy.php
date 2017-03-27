@@ -71,7 +71,7 @@ class ContentStrategy extends AbstractBusinessRulesStrategy
      */
     public function canDeleteVersion(ContentInterface $content, array $parameters)
     {
-        return $this->isContentOnSiteAllowed($content) && !$content->getStatus()->isPublishedState();
+        return $this->contentRepository->countNotDeletedByLanguage($content->getContentId(), $content->getLanguage()) > 1 && $this->isContentOnSiteAllowed($content) && !$content->getStatus()->isPublishedState();
     }
 
     /**

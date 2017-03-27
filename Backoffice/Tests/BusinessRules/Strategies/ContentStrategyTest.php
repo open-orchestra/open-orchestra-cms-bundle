@@ -72,12 +72,12 @@ class ContentStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int     $content
-     * @param boolean $isGranted
+     * @param ContentInterface $content
+     * @param boolean          $isGranted
      *
      * @dataProvider provideEditContent
      */
-    public function testCanEdit($content, $isGranted)
+    public function testCanEdit(ContentInterface $content, $isGranted)
     {
         $this->assertSame($isGranted, $this->strategy->canEdit($content, array()));
     }
@@ -122,13 +122,13 @@ class ContentStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int     $content
-     * @param boolean $isWithoutAutoUnpublishToState
-     * @param boolean $isGranted
+     * @param ContentInterface $content
+     * @param boolean          $isWithoutAutoUnpublishToState
+     * @param boolean          $isGranted
      *
      * @dataProvider provideDeleteContent
      */
-    public function testCanDelete($content, $isWithoutAutoUnpublishToState, $isGranted)
+    public function testCanDelete(ContentInterface $content, $isWithoutAutoUnpublishToState, $isGranted)
     {
         Phake::when($this->contentRepository)->hasContentIdWithoutAutoUnpublishToState($content->getContentId())->thenReturn($isWithoutAutoUnpublishToState);
         $this->assertSame($isGranted, $this->strategy->canDelete($content, array()));
@@ -158,13 +158,16 @@ class ContentStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int     $content
-     * @param boolean $isGranted
+     * @param ContentInterface $content
+     * @param int              $nbrVersions
+     * @param boolean          $isGranted
      *
      * @dataProvider provideDeleteVersionContent
      */
-    public function testCanDeleteVersion($content, $isGranted)
+    public function testCanDeleteVersion(ContentInterface $content, $nbrVersions, $isGranted)
     {
+        Phake::when($this->contentRepository)->countNotDeletedByLanguage(Phake::anyParameters())->thenReturn($nbrVersions);
+
         $this->assertSame($isGranted, $this->strategy->canDeleteVersion($content, array()));
     }
 
@@ -200,10 +203,11 @@ class ContentStrategyTest extends AbstractBaseTestCase
         Phake::when($content3)->getStatus()->thenReturn($status3);
 
         return array(
-            array($content0, true),
-            array($content1, false),
-            array($content2, false),
-            array($content3, false),
+            array($content0, 2, true),
+            array($content0, 1, false),
+            array($content1, 2, false),
+            array($content2, 2, false),
+            array($content3, 2, false),
         );
     }
 
