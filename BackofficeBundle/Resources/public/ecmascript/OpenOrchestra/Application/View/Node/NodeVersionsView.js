@@ -70,10 +70,6 @@ class NodeVersionsView extends AbstractCollectionView
         }
         let models = this._collection.where({'delete': true});
         this._collection.destroyModels(models, {
-            urlParameter: {
-                nodeId: this._node.get('node_id'),
-                language: this._node.get('language')
-            },
             success: () => {
                 this._listView.api.clear();
                 this._listView.api.rows.add(this._collection.models);

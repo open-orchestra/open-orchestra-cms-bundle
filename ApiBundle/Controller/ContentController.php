@@ -135,7 +135,7 @@ class ContentController extends BaseController
         );
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
@@ -301,7 +301,7 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
