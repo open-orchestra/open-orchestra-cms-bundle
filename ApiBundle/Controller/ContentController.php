@@ -348,10 +348,6 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $content)) {
-            throw new ContentTypeNotAllowedException();
-        }
-
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
         $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content);
