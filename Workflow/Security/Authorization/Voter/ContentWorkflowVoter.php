@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 
-use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
