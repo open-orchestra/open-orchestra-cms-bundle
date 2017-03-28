@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCode;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +22,7 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
  */
 class BlockType extends AbstractType
 {
+    protected $blockClass;
     protected $templateManager;
     protected $contextManager;
     protected $generateFormManager;
@@ -76,6 +79,21 @@ class BlockType extends AbstractType
             'group_id' => 'technical',
             'sub_group_id' => 'cache',
         ));
+        if (
+            isset($options['data']) &&
+            $options['data'] instanceof BlockInterface &&
+            $options['data']->isTransverse()
+        ) {
+            $builder->add('code', 'text', array(
+                'label' => 'open_orchestra_backoffice.form.block.code',
+                'required' => false,
+                'group_id' => 'technical',
+                'sub_group_id' => 'code',
+                'constraints' => new UniqueBlockCode(array(
+                    'block' => $options['data'],
+                ))
+            ));
+        }
 
         $builder->setAttribute('template', $this->generateFormManager->getTemplate($options['data']));
 
@@ -129,6 +147,10 @@ class BlockType extends AbstractType
                     'cache' => array(
                         'rank' => 0,
                         'label' => 'open_orchestra_backoffice.form.block.sub_group.cache',
+                    ),
+                    'code' => array(
+                        'rank' => 1,
+                        'label' => 'open_orchestra_backoffice.form.block.sub_group.code',
                     ),
                     'html' => array(
                         'rank' => 1,

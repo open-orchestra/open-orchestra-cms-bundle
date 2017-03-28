@@ -23,6 +23,7 @@ class BlockToArrayTransformer implements DataTransformerInterface
                 'label' => $data->getLabel(),
                 'style' => $data->getStyle(),
                 'maxAge' => $data->getMaxAge(),
+                'code' => $data->getCode(),
             ), $data->getAttributes());
         }
 

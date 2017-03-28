@@ -130,6 +130,10 @@ class BlockTypeTest extends AbstractBaseTestCase
                     'rank' => 0,
                     'label' => 'open_orchestra_backoffice.form.block.sub_group.cache',
                 ),
+                'code' => array(
+                    'rank' => 1,
+                    'label' => 'open_orchestra_backoffice.form.block.sub_group.code',
+                ),
                 'html' => array(
                     'rank' => 1,
                     'label' => 'open_orchestra_backoffice.form.block.sub_group.html',

@@ -8,6 +8,8 @@ open_orchestra_backoffice_validators:
         unique_node_order: L'emplacement de la page doit être unique
         unique_node_special_page: Il existe déjà une page spéciale de ce type
         check_variable_route_pattern_in_menu: Le pattern de route dynamique ne peux être utilisé dans un menu
+    block:
+        unique_code: Il existe déjà un bloc avec ce code
     authorize:
         edition: Ce document n'est plus modifiable
     area:

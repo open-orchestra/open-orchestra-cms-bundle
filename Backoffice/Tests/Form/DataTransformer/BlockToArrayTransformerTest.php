@@ -68,6 +68,7 @@ class BlockToArrayTransformerTest extends AbstractBaseTestCase
         Phake::when($data)->getStyle()->thenReturn($element);
         Phake::when($data)->getId()->thenReturn($element);
         Phake::when($data)->getMaxAge()->thenReturn($element);
+        Phake::when($data)->getCode()->thenReturn($element);
         Phake::when($data)->getAttributes()->thenReturn(array('foo' => $element));
 
         $this->assertSame(array(
@@ -75,6 +76,7 @@ class BlockToArrayTransformerTest extends AbstractBaseTestCase
             'label' => $element,
             'style' => $element,
             'maxAge' => $element,
+            'code' => $element,
             'foo' => $element
         ), $this->transformer->transform($data));
     }
