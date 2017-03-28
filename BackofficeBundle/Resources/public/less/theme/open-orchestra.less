@@ -1382,10 +1382,11 @@ table.ui-sortable .fa.fa-arrows{
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
+
     .state li span {
         color: #393d4e;
     }
-    .state li.out-of-bounds::before {
+    .state li.out-of-bounds::before, i.state.out-of-bounds::before {
         content: "";
         background-image: url("/images/out-of-bounds.png");
         top: 5px;
