@@ -150,7 +150,7 @@ class ContentVoterTest extends AbstractVoterTest
             'Ok : Edit other'         => array($content,                      ContributionActionInterface::EDIT,   array(ContributionRoleInterface::CONTENT_SUPER_EDITOR),    true, VoterInterface::ACCESS_GRANTED),
             'Ok : Delete other'       => array($content,                      ContributionActionInterface::DELETE, array(ContributionRoleInterface::CONTENT_SUPER_SUPRESSOR), true, VoterInterface::ACCESS_GRANTED),
             'Ok : Read entity type'   => array(ContentInterface::ENTITY_TYPE, ContributionActionInterface::READ,   array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
-            'Ok : create entity type' => array(ContentInterface::ENTITY_TYPE, ContributionActionInterface::CREATE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
+            'Ok : create entity type' => array($contentSelf,                  ContributionActionInterface::CREATE, array(ContributionRoleInterface::CONTENT_CONTRIBUTOR),     true, VoterInterface::ACCESS_GRANTED),
         );
     }
 }

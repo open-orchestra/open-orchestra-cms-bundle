@@ -110,6 +110,9 @@ class ContentTypeController extends BaseController
     /**
      * @Config\Route("/content/content-type-list", name="open_orchestra_api_content_type_list_for_content")
      * @Config\Method({"GET"})
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
+     * })
      * @return FacadeInterface
      */
     public function listForContentAction()

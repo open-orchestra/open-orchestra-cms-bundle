@@ -100,6 +100,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
     /**
      * @param {Object} td
      * @param {Object} cellData
+     * @param {Object} cellData
      * @param {Object} rowData
      * @private
      */
@@ -111,7 +112,8 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
             contentId: rowData.get('content_id'),
             version: rowData.get('version')
         });
-        if (!rowData.get('status').blocked_edition) {
+        console.log(rowData.get('rights').can_edit);
+        if (!rowData.get('status').blocked_edition && rowData.get('rights').can_edit) {
             cellData = $('<a>',{
                 text: cellData,
                 href: '#'+link

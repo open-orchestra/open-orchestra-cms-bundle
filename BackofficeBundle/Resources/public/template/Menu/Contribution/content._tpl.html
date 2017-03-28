@@ -1,5 +1,7 @@
-<li>
-    <a href="#<%= Backbone.history.generateUrl('showContentSummary') %>" id="navigation-content">
-        <%= Translator.trans('open_orchestra_backoffice.menu.contribution.content') %>
-    </a>
-</li>
+<% if (access_section.content) { %>
+    <li>
+        <a href="#<%= Backbone.history.generateUrl('showContentSummary') %>" id="navigation-content">
+            <%= Translator.trans('open_orchestra_backoffice.menu.contribution.content') %>
+        </a>
+    </li>
+<% } %>

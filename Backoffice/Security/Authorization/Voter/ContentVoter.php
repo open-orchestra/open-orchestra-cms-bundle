@@ -6,6 +6,7 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentVoter
@@ -47,7 +48,7 @@ class ContentVoter extends AbstractEditorialVoter
             $contentType = $subject->getContentType();
         }
 
-        return $this->isSubjectInPerimeter($contentType, $token->getUser(), ContentInterface::ENTITY_TYPE);
+        return $this->isSubjectInPerimeter($contentType, $token->getUser(), ContentTypeInterface::ENTITY_TYPE);
     }
 
     /**
@@ -63,7 +64,7 @@ class ContentVoter extends AbstractEditorialVoter
     protected function voteForOwnedSubject($action, $content, TokenInterface $token)
     {
         return $this->hasRole($token, ContributionRoleInterface::CONTENT_CONTRIBUTOR)
-            && $this->isSubjectInPerimeter($content->getContentType(), $token->getUser(), ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($content->getContentType(), $token->getUser(), ContentTypeInterface::ENTITY_TYPE);
     }
 
     /**
@@ -94,6 +95,6 @@ class ContentVoter extends AbstractEditorialVoter
         }
 
         return $this->hasRole($token, $requiredRole)
-            && $this->isSubjectInPerimeter($subject->getContentType(), $token->getUser(), ContentInterface::ENTITY_TYPE);
+            && $this->isSubjectInPerimeter($subject->getContentType(), $token->getUser(), ContentTypeInterface::ENTITY_TYPE);
     }
 }

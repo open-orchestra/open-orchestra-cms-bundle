@@ -13,6 +13,7 @@ use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\Backoffice\Manager\ContentManager;
 
 /**
  * Class ContentTypeTransformer
@@ -22,6 +23,8 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $multiLanguagesChoiceManager;
     protected $contentRepository;
     protected $contentTypeRepository;
+    protected $contentManager;
+    protected $businessRulesManager;
 
     /**
      * @param string                               $facadeClass
@@ -30,6 +33,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param ContentTypeRepositoryInterface       $contentTypeRepository
      * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param BusinessRulesManager                 $businessRulesManager
+     * @param ContentManager                       $contentManager
      */
     public function __construct(
         $facadeClass,
@@ -37,12 +41,14 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
         ContentRepositoryInterface $contentRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        BusinessRulesManager $businessRulesManager
+        BusinessRulesManager $businessRulesManager,
+        ContentManager $contentManager
     ) {
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->contentRepository = $contentRepository;
         $this->contentTypeRepository = $contentTypeRepository;
         $this->businessRulesManager = $businessRulesManager;
+        $this->contentManager = $contentManager;
         parent::__construct($facadeClass, $authorizationChecker);
     }
 
@@ -71,9 +77,25 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->defaultListable = $contentType->getDefaultListable();
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
+
             $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $contentType) &&
                 $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $contentType));
+
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentTypeInterface::ENTITY_TYPE));
+
+            $facade->addRight(
+                'can_create',
+                $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentTypeInterface::ENTITY_TYPE)
+            );
+
+            $content = $this->contentManager->initializeNewContent(
+                $contentType->getContentTypeId(), '', $contentType->isLinkedToSite() && $contentType->isAlwaysShared()
+            );
+            $facade->addRight(
+                'can_create_content',
+                $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, $content)
+            );
+
         }
 
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {

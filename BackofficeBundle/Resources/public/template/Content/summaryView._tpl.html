@@ -1,4 +1,4 @@
 <h1> <%= Translator.trans('open_orchestra_backoffice.content_types.title') %></h1>
 <% for (var index in contentTypes) { %>
-    <%= renderTemplate('Content/summaryElementView', {name: contentTypes[index].get('name'), contentTypeId: contentTypes[index].get('content_type_id'), language: Application.getContext().user.language.contribution}) %>
+    <%= renderTemplate('Content/summaryElementView', {name: contentTypes[index].get('name'), contentTypeId: contentTypes[index].get('content_type_id'), language: Application.getContext().user.language.contribution, can_create: contentTypes[index].get('rights').can_create_content }) %>
 <% } %>

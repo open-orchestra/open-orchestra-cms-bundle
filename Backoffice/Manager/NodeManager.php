@@ -16,6 +16,7 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OpenOrchestra\ModelInterface\Repository\BlockRepositoryInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class NodeManager
@@ -32,6 +33,7 @@ class NodeManager
     protected $nodeClass;
     protected $areaClass;
     protected $uniqueIdGenerator;
+    protected $tokenStorage;
 
     /**
      * Constructor
@@ -46,6 +48,7 @@ class NodeManager
      * @param EventDispatcherInterface   $eventDispatcher
      * @param TemplateManager            $templateManager
      * @param UniqueIdGenerator          $uniqueIdGenerator
+     * @param TokenStorage               $tokenStorage
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
@@ -57,7 +60,8 @@ class NodeManager
         $nodeClass,
         $areaClass,
         $eventDispatcher,
-        UniqueIdGenerator $uniqueIdGenerator
+        UniqueIdGenerator $uniqueIdGenerator,
+        TokenStorage $tokenStorage
     ){
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
@@ -69,6 +73,7 @@ class NodeManager
         $this->eventDispatcher = $eventDispatcher;
         $this->templateManager = $templateManager;
         $this->uniqueIdGenerator = $uniqueIdGenerator;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -257,6 +262,7 @@ class NodeManager
         $node->setParentId($parentId);
         $node->setOrder($order);
         $node->setVersion($this->uniqueIdGenerator->generateUniqueId());
+        $node->setCreatedBy($this->tokenStorage->getToken()->getUser()->getUsername());
 
         $parentNode = $this->nodeRepository->findInLastVersion($parentId, $language, $siteId);
         $status = $this->statusRepository->findOneByInitial();
@@ -264,6 +270,7 @@ class NodeManager
         $nodeType = NodeInterface::TYPE_DEFAULT;
         if ($parentNode instanceof NodeInterface) {
             $nodeType = $parentNode->getNodeType();
+            $node->setPath($parentNode->getPath());
         } else {
             $node->setNodeId(NodeInterface::ROOT_NODE_ID);
         }

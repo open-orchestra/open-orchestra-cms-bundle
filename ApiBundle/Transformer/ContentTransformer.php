@@ -42,8 +42,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         AuthorizationCheckerInterface $authorizationChecker,
         CurrentSiteIdInterface $contextManager,
         BusinessRulesManager $businessRulesManager
-    )
-    {
+    ) {
         $this->statusRepository = $statusRepository;
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
@@ -91,6 +90,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
                 $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $content)
             );
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
+            $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $content));
         }
 
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS_DELETE_VERSION)) {

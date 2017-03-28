@@ -36,6 +36,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     protected $blockRepository;
     protected $documentManager;
     protected $fakeVersion = 'fakeVersion';
+    protected $user;
 
     /**
      * Set up the test
@@ -75,6 +76,12 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         $this->uniqueIdGenerator = Phake::mock('OpenOrchestra\Backoffice\Util\UniqueIdGenerator');
         Phake::when($this->uniqueIdGenerator)->generateUniqueId()->thenReturn($this->fakeVersion);
+        $tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage');
+        $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $this->user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
+
+        Phake::when($tokenStorage)->getToken()->thenReturn($token);
+        Phake::when($token)->getUser()->thenReturn($this->user);
 
         $this->manager = new NodeManager(
             $this->nodeRepository,
@@ -86,7 +93,8 @@ class NodeManagerTest extends AbstractBaseTestCase
             $this->nodeClass,
             $this->areaClass,
             $this->eventDispatcher,
-            $this->uniqueIdGenerator
+            $this->uniqueIdGenerator,
+            $tokenStorage
         );
     }
 
@@ -200,6 +208,8 @@ class NodeManagerTest extends AbstractBaseTestCase
      */
     public function testInitializeNode($language, $siteId, NodeInterface $parentNode = null)
     {
+        $userName = 'fakeUserName';
+        Phake::when($this->user)->getUsername()->thenReturn($userName);
         Phake::when($this->nodeRepository)->findVersionNotDeleted(Phake::anyParameters())->thenReturn($parentNode);
         $node = $this->manager->initializeNode('fakeParentId', $language, $siteId);
 
@@ -207,6 +217,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals($siteId, $node->getSiteId());
         $this->assertEquals($language, $node->getLanguage());
         $this->assertEquals(0, $node->getOrder());
+        $this->assertEquals($userName, $node->getCreatedBy());
         if (is_null($parentNode)) {
             $this->assertSame(NodeInterface::ROOT_NODE_ID, $node->getNodeId());
             $this->assertSame(NodeInterface::TYPE_DEFAULT, $node->getNodeType());
