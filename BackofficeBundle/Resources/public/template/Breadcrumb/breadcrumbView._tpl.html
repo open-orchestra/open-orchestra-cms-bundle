@@ -5,18 +5,18 @@
             <li class="breadcrumb-tab">
                 <ul class="nav nav-tabs page-tabs" role="tablist">
                     <% _.each(item, function(tab) { %>
-                        <li id="<%= tab.id %>"><a href="<%= tab.link %>"><%= tab.label%></a></li>
+                        <li id="<%- tab.id %>"><a href="<%- tab.link %>"><%- tab.label%></a></li>
                     <% }); %>
                 </ul>
             </li>
 
         <% } else if (item.hasOwnProperty('link')) { %>
 
-            <li><a href="<%= item.link %>"><%= item.label %></a></li>
+            <li><a href="<%- item.link %>"><%- item.label %></a></li>
 
         <%} else {%>
 
-            <li><%= item.label %></li>
+            <li><%- item.label %></li>
 
         <%}%>
     <% }); %>

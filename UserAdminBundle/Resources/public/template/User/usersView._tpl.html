@@ -1,20 +1,20 @@
 <div class="top-action-buttons">
-    <a class="btn btn-info" href="#<%= Backbone.history.generateUrl('newUser') %>" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+    <a class="btn btn-info" href="#<%- Backbone.history.generateUrl('newUser') %>" role="button"><%- Translator.trans('open_orchestra_backoffice.add')%></a>
 </div>
-<h1> <%= Translator.trans('open_orchestra_user_admin.user.title_list') %></h1>
+<h1> <%- Translator.trans('open_orchestra_user_admin.user.title_list') %></h1>
 <form class="form-horizontal search-engine">
     <div class="form-group col-lg-6">
-        <label for="search" class="control-label col-md-4"><%= Translator.trans('open_orchestra_user_admin.user.search_engine.search')%></label>
+        <label for="search" class="control-label col-md-4"><%- Translator.trans('open_orchestra_user_admin.user.search_engine.search')%></label>
         <div class="col-md-8">
             <input type="text" name='search' class="form-control" id="search">
         </div>
     </div>
     <div class="form-group col-lg-6">
-        <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+        <button class="btn btn-info col-md-offset-4 submit"><%- Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
     </div>
 </form>
 <div class="users-list">
 </div>
 <div class="bottom-action-buttons">
-    <button class="btn btn-danger btn-delete disabled"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
+    <button class="btn btn-danger btn-delete disabled"><%- Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
 </div>

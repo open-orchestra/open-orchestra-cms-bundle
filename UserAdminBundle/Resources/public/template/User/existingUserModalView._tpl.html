@@ -1,13 +1,13 @@
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-body">
-            <h3><%= Translator.trans('open_orchestra_user_admin.user.new.user_found.title') %></h3>
+            <h3><%- Translator.trans('open_orchestra_user_admin.user.new.user_found.title') %></h3>
             <p>
-                <%= Translator.trans('open_orchestra_user_admin.user.new.user_found.message') %> :
-                <%= user.get('username')%>
+                <%- Translator.trans('open_orchestra_user_admin.user.new.user_found.message') %> :
+                <%- user.get('username')%>
             </p>
-            <a href="#<%= Backbone.history.generateUrl('editUser', {userId: user.get('id')}) %>" class="edit-user btn btn-primary">
-                <%= Translator.trans('open_orchestra_user_admin.user.new.user_found.associate') %>
+            <a href="#<%- Backbone.history.generateUrl('editUser', {userId: user.get('id')}) %>" class="edit-user btn btn-primary">
+                <%- Translator.trans('open_orchestra_user_admin.user.new.user_found.associate') %>
             </a>
         </div>
     </div>

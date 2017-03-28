@@ -1,7 +1,7 @@
 <div class="top-action-buttons">
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl(inPlatformContext ? 'listPlatformSite' : 'listSite') %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
+    <a class="btn btn-border btn-return" href="#<%- Backbone.history.generateUrl(inPlatformContext ? 'listPlatformSite' : 'listSite') %>" role="button">
+        <%- Translator.trans('open_orchestra_backoffice.back_to_list') %>
     </a>
 </div>
-<h1 id="page-name"><%= title %></h1>
+<h1 id="page-name"><%- title %></h1>
 <div class='form-edit'></div>

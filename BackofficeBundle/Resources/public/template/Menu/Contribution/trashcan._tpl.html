@@ -1,7 +1,7 @@
 <% if (access_section.trashcan) { %>
     <li>
-        <a href="#<%= Backbone.history.generateUrl('listTrashItem') %>" id="navigation-trashcan">
-            <%= Translator.trans('open_orchestra_backoffice.menu.contribution.trashcan') %>
+        <a href="#<%- Backbone.history.generateUrl('listTrashItem') %>" id="navigation-trashcan">
+            <%- Translator.trans('open_orchestra_backoffice.menu.contribution.trashcan') %>
         </a>
     </li>
 <% } %>

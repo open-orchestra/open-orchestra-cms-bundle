@@ -1,6 +1,6 @@
 <% _.each(flashMessages, function(messages, key) { %>
-    <div class="alert alert-<%= messages.getType() %> alert-dismissible">
+    <div class="alert alert-<%- messages.getType() %> alert-dismissible">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%= messages.getMessage() %>
+        <%- messages.getMessage() %>
     </div>
 <% }); %>

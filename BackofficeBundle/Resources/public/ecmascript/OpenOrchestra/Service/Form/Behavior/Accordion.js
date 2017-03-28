@@ -15,7 +15,6 @@ class Accordion extends AbstractBehavior
      * @return {Object}
      */
     getExtraEvents() {
-        console.log(this);
         return {
             'click .open-form': '_toggleForm',
             'click .close-form': '_toggleForm',

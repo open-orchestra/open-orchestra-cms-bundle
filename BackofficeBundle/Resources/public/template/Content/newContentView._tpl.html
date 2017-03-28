@@ -1,6 +1,6 @@
 <div class="top-action-buttons">
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
+    <a class="btn btn-border btn-return" href="#<%- Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language}) %>" role="button">
+        <%- Translator.trans('open_orchestra_backoffice.back_to_list') %>
     </a>
 </div>
 <div class="pull-right languages">
@@ -8,18 +8,18 @@
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
             <% if (siteLanguage === language) { %>
                 <li class="active">
-                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    <img src="/images/languages/<%- siteLanguage %>.png" alt="<%- siteLanguage %>" /><%- siteLanguage.toUpperCase() %>
                 </li>
             <% } else { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('newContent', {contentTypeId: contentTypeId, language: siteLanguage}) %>">
-                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    <a href="#<%- Backbone.history.generateUrl('newContent', {contentTypeId: contentTypeId, language: siteLanguage}) %>">
+                        <img src="/images/languages/<%- siteLanguage %>.png" alt="<%- siteLanguage %>" /><%- siteLanguage.toUpperCase() %>
                     </a>
                 </li>
             <% } %>
         <% }); %>
     </ul>
 </div>
-<h1> <%= Translator.trans('open_orchestra_backoffice.table.contents.new') %></h1>
+<h1> <%- Translator.trans('open_orchestra_backoffice.table.contents.new') %></h1>
 <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
 <div class='form-new'></div>

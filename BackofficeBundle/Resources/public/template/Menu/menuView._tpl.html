@@ -1,49 +1,49 @@
 <div class="btn-menu">
     <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-    <span><%= Translator.trans('open_orchestra_backoffice.menu.hide_menu') %></span>
+    <span><%- Translator.trans('open_orchestra_backoffice.menu.hide_menu') %></span>
 </div>
 
 <!-- Main menu -->
 <ul class="nav level1" role="tablist">
     <% if (user.access_section.dashboard) { %>
         <li>
-            <a href="#<%= Backbone.history.generateUrl('showDashboard') %>" role="tab" data-toggle="tab">
-                <img src="/images/menu/dashboard.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.menu.dashboard.title') %></span>
+            <a href="#<%- Backbone.history.generateUrl('showDashboard') %>" role="tab" data-toggle="tab">
+                <img src="/images/menu/dashboard.png" alt="" /><span><%- Translator.trans('open_orchestra_backoffice.menu.dashboard.title') %></span>
             </a>
         </li>
     <% } %>
     <% if (user.access_section.contribution) { %>
         <li>
             <a href="#menu-contribution" role="tab" data-toggle="tab">
-                <img src="/images/menu/contribution.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.menu.contribution.title') %></span>
+                <img src="/images/menu/contribution.png" alt="" /><span><%- Translator.trans('open_orchestra_backoffice.menu.contribution.title') %></span>
             </a>
         </li>
     <% } %>
     <% if (user.access_section.user) { %>
         <li>
             <a href="#menu-user" role="tab" data-toggle="tab">
-                <img src="/images/menu/user.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.menu.user.title') %></span>
+                <img src="/images/menu/user.png" alt="" /><span><%- Translator.trans('open_orchestra_backoffice.menu.user.title') %></span>
             </a>
         </li>
     <% }; %>
     <% if (user.access_section.configuration) { %>
         <li>
             <a href="#menu-configuration" role="tab" data-toggle="tab">
-                <img src="/images/menu/configuration.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.menu.configuration.title') %></span>
+                <img src="/images/menu/configuration.png" alt="" /><span><%- Translator.trans('open_orchestra_backoffice.menu.configuration.title') %></span>
             </a>
         </li>
     <% } %>
     <% if (user.access_section.platform) { %>
         <li>
             <a href="#menu-platform" role="tab" data-toggle="tab">
-                <img src="/images/menu/platform.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.menu.platform.title') %></span>
+                <img src="/images/menu/platform.png" alt="" /><span><%- Translator.trans('open_orchestra_backoffice.menu.platform.title') %></span>
             </a>
         </li>
     <% } %>
     <% if (user.access_section.developer) { %>
         <li>
             <a href="#menu-developer" role="tab" data-toggle="tab">
-                <img src="/images/menu/developer.png" alt="" /><span><%= Translator.trans('open_orchestra_backoffice.menu.developer.title') %></span>
+                <img src="/images/menu/developer.png" alt="" /><span><%- Translator.trans('open_orchestra_backoffice.menu.developer.title') %></span>
             </a>
         </li>
     <% } %>
@@ -54,7 +54,7 @@
     <!-- Contribution -->
     <% if (menuConfig.hasOwnProperty('contribution') && user.access_section.contribution) { %>
         <div role="tabpanel" class="tab-pane" id="menu-contribution">
-            <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.menu.contribution.title') %></a></div>
+            <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.contribution.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.contribution, function(entity, key) { %>
                     <%= renderTemplate(entity.template, {access_section: user.access_section}) %>
@@ -66,7 +66,7 @@
     <!-- User -->
     <% if (menuConfig.hasOwnProperty('user') && user.access_section.user) { %>
         <div role="tabpanel" class="tab-pane" id="menu-user">
-            <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.menu.user.title') %></a></div>
+            <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.user.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.user, function(entity, key) { %>
                     <%= renderTemplate(entity.template) %>
@@ -78,7 +78,7 @@
     <!-- Configuration -->
     <% if (menuConfig.hasOwnProperty('configuration') && user.access_section.configuration) { %>
         <div role="tabpanel" class="tab-pane" id="menu-configuration">
-            <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.menu.configuration.title') %></a></div>
+            <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.configuration.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.configuration, function(entity, key) { %>
                     <%= renderTemplate(entity.template) %>
@@ -90,7 +90,7 @@
     <!-- Platform -->
     <% if (menuConfig.hasOwnProperty('platform') && user.access_section.platform ) { %>
         <div role="tabpanel" class="tab-pane" id="menu-platform">
-            <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.menu.platform.title') %></a></div>
+            <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.platform.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.platform, function(entity, key) { %>
                     <%= renderTemplate(entity.template) %>
@@ -102,7 +102,7 @@
     <!-- Developer -->
     <% if (menuConfig.hasOwnProperty('developer') && user.access_section.developer) { %>
         <div role="tabpanel" class="tab-pane" id="menu-developer">
-            <div class="return"><a href="#"><%= Translator.trans('open_orchestra_backoffice.menu.developer.title') %></a></div>
+            <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.developer.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.developer, function(entity, key) { %>
                     <%= renderTemplate(entity.template) %>

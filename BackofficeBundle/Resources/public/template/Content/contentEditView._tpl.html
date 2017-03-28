@@ -11,19 +11,19 @@
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
             <% if (siteLanguage === content.get('language')) { %>
                 <li class="active">
-                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    <img src="/images/languages/<%- siteLanguage %>.png" alt="<%- siteLanguage %>" /><%- siteLanguage.toUpperCase() %>
                 </li>
             <% } else { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('editContent', {contentTypeId: contentType.get('content_type_id'), contentId: content.get('content_id'), language: siteLanguage}) %>">
-                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    <a href="#<%- Backbone.history.generateUrl('editContent', {contentTypeId: contentType.get('content_type_id'), contentId: content.get('content_id'), language: siteLanguage}) %>">
+                        <img src="/images/languages/<%- siteLanguage %>.png" alt="<%- siteLanguage %>" /><%- siteLanguage.toUpperCase() %>
                     </a>
                 </li>
             <% } %>
         <% }); %>
     </ul>
 </div>
-<h1> <%= content.get('name') %></h1>
+<h1> <%- content.get('name') %></h1>
 <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
 <div class="content-action-toolbar"></div>
 <div class='form-edit'></div>
