@@ -3,7 +3,7 @@
         <div class="alert alert-success alert-published-state" role="alert">
             <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
             <p>
-                <%- (Translator.trans('open_orchestra_backoffice.node.message_online.message').replace(/\\n/g, '<br>')) %>
+                <%= (Translator.trans('open_orchestra_backoffice.node.message_online.message').replace(/\\n/g, '<br>')) %>
             </p>
         </div>
     <% }; %>
