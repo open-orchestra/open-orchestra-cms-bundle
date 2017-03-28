@@ -84,10 +84,6 @@ class ContentVersionsView extends AbstractCollectionView
         let models = this._collection.where({'delete': true});
         this._collection.destroyModels(models, {
             apiContext: 'delete-multiple-version',
-            urlParameter: {
-                contentId: this._contentId,
-                language: this._language
-            },
             success: () => {
                 this._listView.api.clear();
                 this._listView.api.rows.add(this._collection.models);

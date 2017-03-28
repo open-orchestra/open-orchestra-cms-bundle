@@ -8,7 +8,7 @@ services:
     open_orchestra_group.perimeter_manager:
         class: '%open_orchestra_group.perimeter_manager.class%'
         arguments:
-            - '%open_orchestra_user.document.permieter.class%'
+            - '%open_orchestra_user.document.perimeter.class%'
     open_orchestra_group.perimeter.node:
         class: '%open_orchestra_group.perimeter.node.class%'
         tags:

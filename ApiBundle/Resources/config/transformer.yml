@@ -39,6 +39,7 @@ services:
             - '@event_dispatcher'
             - '@security.authorization_checker'
             - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_backoffice.business_rules_manager'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 
@@ -121,6 +122,7 @@ services:
             - '@open_orchestra_model.repository.content'
             - '@open_orchestra_model.repository.content_type'
             - '@security.authorization_checker'
+            - '@open_orchestra_backoffice.business_rules_manager'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 
@@ -139,6 +141,7 @@ services:
             - '@open_orchestra_model.repository.content'
             - '@security.authorization_checker'
             - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.business_rules_manager'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 
@@ -210,6 +213,7 @@ services:
             - '%open_orchestra_api.facade.keyword.class%'
             - '@security.authorization_checker'
             - '@open_orchestra_model.repository.keyword'
+            - '@open_orchestra_backoffice.business_rules_manager'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 

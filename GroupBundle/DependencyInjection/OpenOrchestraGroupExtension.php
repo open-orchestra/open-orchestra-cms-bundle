@@ -30,5 +30,6 @@ class OpenOrchestraGroupExtension extends Extension
         $loader->load('transformer.yml');
         $loader->load('subscriber.yml');
         $loader->load('generate_perimeter.yml');
+        $loader->load('business_rules.yml');
     }
 }

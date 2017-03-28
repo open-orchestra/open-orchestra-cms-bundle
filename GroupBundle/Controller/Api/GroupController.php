@@ -90,11 +90,11 @@ class GroupController extends BaseController
         $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups($filter);
         $groupIds = array();
         foreach ($groups as $group) {
-            if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
-                if ($nbrGroupsUsers[$group->getId()] == 0) {
-                    $groupIds[] = $group->getId();
-                    $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
-                }
+            if ($this->isGranted(ContributionActionInterface::DELETE, $group) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $group, $nbrGroupsUsers)
+            ) {
+                $groupIds[] = $group->getId();
+                $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
             }
         }
 
@@ -156,8 +156,7 @@ class GroupController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $group);
 
         if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
-            $nbrGroupsUsers = $this->get('open_orchestra_user.repository.user')->getCountsUsersByGroups(array($group->getId()));
-            if ($nbrGroupsUsers[$groupId] == 0 && $group instanceof GroupInterface) {
+            if ($group instanceof GroupInterface && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $group)) {
                 $objectManager = $this->get('object_manager');
                 $objectManager->remove($group);
                 $objectManager->flush();

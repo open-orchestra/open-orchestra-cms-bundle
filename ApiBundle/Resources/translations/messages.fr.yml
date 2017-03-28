@@ -3,3 +3,6 @@ open_orchestra_api:
         change_not_granted: Vous ne pouvez pas modifier le status en raison de limitation de droits
     content_type:
       select_not_granted : Ce type de contenu n'est pas autoriser sur ce site
+    node:
+        edit:
+            impossible: Ce node ne peut pas être éditer

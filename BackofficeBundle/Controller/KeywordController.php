@@ -33,7 +33,7 @@ class KeywordController extends AbstractAdminController
             'oo_keyword',
             $keyword,
             array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_keyword_form', array('keywordId' => $keywordId)),
+                'action' => $this->generateUrl('open_orchestra_backoffice_keyword_form', array('keywordId' => $keywordId))
             )
         );
 

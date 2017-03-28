@@ -33,15 +33,14 @@ class ContentController extends AbstractAdminController
      */
     public function formAction(Request $request, $contentId, $language, $version)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-
         $content = $this->get('open_orchestra_model.repository.content')->findOneByLanguageAndVersion($contentId, $language, $version);
         if (!$content instanceof ContentInterface) {
             throw new \UnexpectedValueException();
         }
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($content->getContentType());
-        if (!$contentType instanceof ContentTypeInterface || !in_array($contentType->getContentTypeId(), $site->getContentTypes())) {
+        if (!$contentType instanceof ContentTypeInterface &&
+            !$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $content)
+        ) {
             throw new \UnexpectedValueException();
         }
 
@@ -58,7 +57,8 @@ class ContentController extends AbstractAdminController
                 'language' => $content->getLanguage(),
                 'version' => $content->getVersion(),
             )),
-            'delete_button' => $this->canDeleteContent($content),
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $content) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $content),
             'need_link_to_site_defintion' => false,
             'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
         );
@@ -147,18 +147,6 @@ class ContentController extends AbstractAdminController
         }
 
         return $this->renderAdminForm($form);
-    }
-
-    /**
-     * @param ContentInterface $content
-     *
-     * @return bool
-     */
-    protected function canDeleteContent(ContentInterface $content) {
-        $contentRepository = $this->get('open_orchestra_model.repository.content');
-
-        return false === $contentRepository->hasContentIdWithoutAutoUnpublishToState($content->getContentId()) &&
-               $this->isGranted(ContributionActionInterface::DELETE, $content);
     }
 
     /**

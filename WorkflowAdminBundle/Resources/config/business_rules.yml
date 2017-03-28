@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_workflow_admin.business_rules_manager.status.class: OpenOrchestra\WorkflowAdminBundle\BusinessRules\Strategies\StatusStrategy
+
+services:
+    open_orchestra_workflow_admin.business_rules_manager.status:
+        class: '%open_orchestra_workflow_admin.business_rules_manager.status.class%'
+        arguments:
+            - '@open_orchestra_backoffice.usage_finder.status'
+        tags:
+            - { name: open_orchestra_backoffice.business_rules.strategy }

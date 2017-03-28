@@ -96,7 +96,7 @@ class ContentTypeController extends BaseController
         $contentTypeIds = array();
         foreach ($contentTypes as $contentType) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $contentType) &&
-                0 == $this->get('open_orchestra_model.repository.content')->countByContentType($contentType->getContentTypeId())
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $contentType)
             ) {
                 $contentTypeIds[] = $contentType->getContentTypeId();
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentType));
@@ -133,6 +133,7 @@ class ContentTypeController extends BaseController
      * @Config\Method({"DELETE"})
      *
      * @return Response
+     * @throws ContentTypeNotAllowedException
      */
     public function deleteAction($contentTypeId)
     {
@@ -142,6 +143,10 @@ class ContentTypeController extends BaseController
                 foreach ($contentTypes as $contentType) {
                     $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $contentType);
                 }
+                if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $contentTypes[0])) {
+                    $this->createAccessDeniedException();
+                }
+
                 $this->get('open_orchestra_backoffice.manager.content_type')->delete($contentTypes);
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentTypes[0]));
                 $this->get('object_manager')->flush();

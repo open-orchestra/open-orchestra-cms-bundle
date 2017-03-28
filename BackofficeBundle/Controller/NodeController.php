@@ -43,6 +43,7 @@ class NodeController extends AbstractAdminController
         if (!$node instanceof NodeInterface) {
             throw new \UnexpectedValueException();
         }
+
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array(
@@ -55,7 +56,8 @@ class NodeController extends AbstractAdminController
         $template = $node->getTemplate();
         $options = array(
             'action' => $url,
-            'delete_button' => $this->canDeleteNode($node)
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $node) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $node)
         );
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
 
@@ -174,21 +176,5 @@ class NodeController extends AbstractAdminController
         }
 
         return parent::createForm($type, $data, $options, $editionRole);
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return bool
-     */
-    protected function canDeleteNode(NodeInterface $node) {
-        $nodeRepository = $this->get('open_orchestra_model.repository.node');
-        $nodeId = $node->getNodeId();
-        $siteId = $node->getSiteId();
-
-        return $node->getNodeId() !== NodeInterface::ROOT_NODE_ID &&
-               false === $nodeRepository->hasNodeIdWithoutAutoUnpublishToState($nodeId, $siteId) &&
-               0 === $nodeRepository->countByParentId($nodeId, $siteId) &&
-               $this->isGranted(ContributionActionInterface::DELETE, $node);
     }
 }

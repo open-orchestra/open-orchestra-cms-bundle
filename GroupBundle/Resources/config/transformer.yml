@@ -18,6 +18,7 @@ services:
             - '@security.authorization_checker'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@open_orchestra_user.repository.group'
+            - '@open_orchestra_backoffice.business_rules_manager'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_group.transformer.group_collection:
