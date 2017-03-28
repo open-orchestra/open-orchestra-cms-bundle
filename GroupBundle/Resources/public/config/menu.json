@@ -1,7 +1,7 @@
 {
   "user": {
     "groups": {
-      "template": "Navigation/User/groups",
+      "template": "Menu/User/groups",
       "rank": 1
     }
   }

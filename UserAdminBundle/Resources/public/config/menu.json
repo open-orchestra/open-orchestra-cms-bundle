@@ -1,7 +1,7 @@
 {
   "user": {
     "users": {
-      "template": "Navigation/User/users",
+      "template": "Menu/User/users",
       "rank": 0
     }
   }
