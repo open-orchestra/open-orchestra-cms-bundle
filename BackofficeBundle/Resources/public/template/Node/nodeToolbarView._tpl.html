@@ -13,16 +13,18 @@
             <div class="styled-select">
                 <select class="form-control" id="select-version">
                     <% _.each(nodeVersions, function(nodeVersion, key) { %>
-                    <option value="<%= nodeVersion.get('version') %>" <% if(nodeVersion.get('version') == node.get('version')) {%> selected <% } %> >
-                        <%= nodeVersion.get('version_name') %>
-                    </option>
+                        <option value="<%= nodeVersion.get('version') %>" <% if(nodeVersion.get('version') == node.get('version')) {%> selected <% } %> >
+                            <%= nodeVersion.get('version_name') %>
+                        </option>
                     <% }); %>
                 </select>
             </div>
         </div>
-        <div class="form-group">
-            <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
-        </div>
+        <% if (true == node.get('rights').can_edit) { %>
+            <div class="form-group">
+                <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
+            </div>
+        <% } %>
     </div>
 
     <div class="pull-right">
@@ -49,17 +51,19 @@
                 <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span style="color: <%= node.get('status').get('code_color') %>"> <%= node.get('status').get('label') %></span>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <% _.each(statuses, function(status, key) { %>
-                        <% if (node.get('status').get('id') !== status.get('id')) { %>
-                            <li>
-                                <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
-                                    <%= status.get('label') %>
-                                </a>
-                            </li>
-                        <% } %>
-                    <% }); %>
-                </ul>
+                <% if (true == node.get('rights').can_edit) { %>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <% _.each(statuses, function(status, key) { %>
+                            <% if (node.get('status').get('id') !== status.get('id')) { %>
+                                <li>
+                                    <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
+                                        <%= status.get('label') %>
+                                    </a>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                <% } %>
             </div>
         </div>
     </div>
