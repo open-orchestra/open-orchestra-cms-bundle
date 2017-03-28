@@ -14,7 +14,6 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class AddGroupWorkflowProfileSubscriber
- *
  */
 class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
 {
@@ -48,7 +47,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     /**
      * add workflowProfile choice to group form
      *
-     * @param NodeEvent $event
+     * @param GroupFormEvent $event
      */
     public function addWorkflowProfile(GroupFormEvent $event)
     {

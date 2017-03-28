@@ -8,9 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use OpenOrchestra\Backoffice\Event\ContentFormEvent;
-use OpenOrchestra\Backoffice\ContentFormEvents;
 
 /**
  * Class ContentType
@@ -19,24 +16,20 @@ class ContentType extends AbstractType
 {
     protected $contentTypeSubscriber;
     protected $statusableChoiceStatusSubscriber;
-    protected $eventDispatcher;
     protected $contentClass;
 
     /**
      * @param EventSubscriberInterface $contentTypeSubscriber
      * @param EventSubscriberInterface $statusableChoiceStatusSubscriber
-     * @param EventDispatcherInterface $eventDispatcher
      * @param string                   $contentClass
      */
     public function __construct(
         EventSubscriberInterface $contentTypeSubscriber,
         EventSubscriberInterface $statusableChoiceStatusSubscriber,
-        EventDispatcherInterface $eventDispatcher,
         $contentClass
     ) {
         $this->contentTypeSubscriber = $contentTypeSubscriber;
         $this->statusableChoiceStatusSubscriber = $statusableChoiceStatusSubscriber;
-        $this->eventDispatcher = $eventDispatcher;
         $this->contentClass = $contentClass;
     }
 
@@ -86,7 +79,6 @@ class ContentType extends AbstractType
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
-        $this->eventDispatcher->dispatch(ContentFormEvents::CONTENT_FORM_CREATION, new ContentFormEvent($builder));
     }
 
     /**

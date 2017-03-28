@@ -1,7 +1,7 @@
-import SiteRouter  from './SiteRouter'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import SiteFormView    from '../../View/Site/SiteFormView'
+import SiteRouter   from './SiteRouter'
+import Application  from '../../Application'
+import FormBuilder  from '../../../Service/Form/Model/FormBuilder'
+import SiteFormView from '../../View/Site/SiteFormView'
 
 /**
  * @class SitePlatformRouter
