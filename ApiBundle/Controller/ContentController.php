@@ -348,7 +348,7 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
