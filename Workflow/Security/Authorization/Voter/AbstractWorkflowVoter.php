@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Workflow\Security\Authorization\Voter;
 
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\AbstractPerimeterVoter;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Perimeter\PerimeterManager;
@@ -120,6 +121,16 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
     }
 
     /**
+     * @param StatusableInterface $subject
+     *
+     * @return string
+     */
+    protected function getSubjectEntityType($subject)
+    {
+        return $subject::ENTITY_TYPE;
+    }
+
+    /**
      * Check if $user can update $subject to $status
      *
      * @param UserInterface       $user
@@ -130,9 +141,11 @@ abstract class AbstractWorkflowVoter extends AbstractPerimeterVoter
      */
     protected function userCanUpdateToStatus(UserInterface $user, StatusInterface $status, $subject)
     {
+        /** @var GroupInterface $group */
         foreach ($user->getGroups() as $group) {
-            if (!$group->isDeleted() && $group->getWorkflowProfileCollection($subject::ENTITY_TYPE)) {
-                foreach ($group->getWorkflowProfileCollection($subject::ENTITY_TYPE)->getProfiles() as $profile) {
+            $entityType = $this->getSubjectEntityType($subject);
+            if (!$group->isDeleted() && $group->getWorkflowProfileCollection($entityType)) {
+                foreach ($group->getWorkflowProfileCollection($entityType)->getProfiles() as $profile) {
                     if ($profile->hasTransition($subject->getStatus(), $status)) {
 
                         return true;
