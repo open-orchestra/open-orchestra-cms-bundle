@@ -20,6 +20,7 @@ parameters:
     open_orchestra_backoffice.subscriber.field_type.class                        : OpenOrchestra\Backoffice\EventSubscriber\FieldTypeTypeSubscriber
     open_orchestra_backoffice.subscriber.special_page_choice.class               : OpenOrchestra\Backoffice\EventSubscriber\SpecialPageChoiceSubscriber
     open_orchestra_backoffice.subscriber.website.class                           : OpenOrchestra\Backoffice\EventSubscriber\WebSiteSubscriber
+    open_orchestra_backoffice.subscriber.update_embedded_status.class            : OpenOrchestra\Backoffice\EventSubscriber\UpdateEmbeddedStatusSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -176,7 +177,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-
     open_orchestra_backoffice.subscriber.special_page_choice:
         class: '%open_orchestra_backoffice.subscriber.special_page_choice.class%'
         arguments:
@@ -190,3 +190,10 @@ services:
         class: '%open_orchestra_backoffice.subscriber.website.class%'
         arguments:
             - '@session'
+
+    open_orchestra_backoffice.subscriber.update_embedded_status:
+        class: '%open_orchestra_backoffice.subscriber.update_embedded_status.class%'
+        arguments:
+            - ['@open_orchestra_model.repository.node', '@open_orchestra_model.repository.content']
+        tags:
+            - { name: kernel.event_subscriber }
