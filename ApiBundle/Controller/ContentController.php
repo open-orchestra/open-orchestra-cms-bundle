@@ -186,7 +186,9 @@ class ContentController extends BaseController
                 $this->dispatchEvent(ContentEvents::CONTENT_DELETE_VERSION, new ContentEvent($content));
             }
         }
-        $this->get('open_orchestra_model.repository.content')->removeContentVersion($storageIds);
+        if (!empty($storageIds)) {
+            $this->get('open_orchestra_model.repository.content')->removeContentVersion($storageIds);
+        }
 
         return array();
     }

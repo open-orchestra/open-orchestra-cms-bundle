@@ -2,11 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
-use  OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * class NodeStrategy

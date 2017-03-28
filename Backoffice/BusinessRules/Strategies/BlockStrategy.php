@@ -11,7 +11,6 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
  */
 class BlockStrategy extends AbstractBusinessRulesStrategy
 {
-
     /**
      * @param NodeRepositoryInterface $nodeRepository
      */

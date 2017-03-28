@@ -623,8 +623,10 @@ class NodeController extends BaseController
                 $this->dispatchEvent(NodeEvents::NODE_DELETE_VERSION, new NodeEvent($node));
             }
         }
-        $nodeRepository->removeNodeVersions($nodeIds);
-        $this->get('object_manager')->flush();
+        if (!empty($nodeIds)) {
+            $nodeRepository->removeNodeVersions($nodeIds);
+            $this->get('object_manager')->flush();
+        }
 
         return array();
     }
