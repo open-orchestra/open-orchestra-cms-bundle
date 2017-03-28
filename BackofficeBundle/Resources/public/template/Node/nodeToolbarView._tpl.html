@@ -1,7 +1,7 @@
 <div class="form-inline row">
     <% if (true === node.get('status').get('published_state')) {%>
         <div class="alert alert-success alert-published-state" role="alert">
-            <div class="heading"><%= Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
+            <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
             <p>
                 <%= (Translator.trans('open_orchestra_backoffice.node.message_online.message').replace(/\\n/g, '<br>')) %>
             </p>
@@ -9,12 +9,12 @@
     <% }; %>
     <div class="pull-left">
         <div class="form-group">
-            <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
+            <label for="select-version" class="control-label"><%- Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
             <div class="styled-select">
                 <select class="form-control" id="select-version">
                     <% _.each(nodeVersions, function(nodeVersion, key) { %>
-                        <option value="<%= nodeVersion.get('version') %>" <% if(nodeVersion.get('version') == node.get('version')) {%> selected <% } %> >
-                            <%= nodeVersion.get('version_name') %>
+                        <option value="<%- nodeVersion.get('version') %>" <% if(nodeVersion.get('version') == node.get('version')) {%> selected <% } %> >
+                            <%- nodeVersion.get('version_name') %>
                         </option>
                     <% }); %>
                 </select>
@@ -22,7 +22,7 @@
         </div>
         <% if (true == node.get('rights').can_edit) { %>
             <div class="form-group">
-                <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
+                <button type="button" class="btn btn-info btn-new-version"><%- Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
             </div>
         <% } %>
     </div>
@@ -32,13 +32,13 @@
             <div class="form-group">
                 <div class="dropdown dropdown-preview">
                     <button class="dropdown-toggle btn btn-border btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <%= Translator.trans('open_orchestra_backoffice.node.preview') %>
+                        <%- Translator.trans('open_orchestra_backoffice.node.preview') %>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
                         <% _.each(node.get('preview_links'), function(previewLink, key) { %>
                         <li>
-                            <a href="<%= previewLink.link %>"><%= previewLink.name %></a>
+                            <a href="<%- previewLink.link %>"><%- previewLink.name %></a>
                         </li>
                         <% }); %>
                     </ul>
@@ -49,7 +49,7 @@
             <label for="select-workflow" class="control-label">Workflow</label>
             <div class="styled-select dropdown dropdown-workflow">
                 <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span style="color: <%= node.get('status').get('code_color') %>"> <%= node.get('status').get('label') %></span>
+                    <span style="color: <%- node.get('status').get('code_color') %>"> <%- node.get('status').get('label') %></span>
                 </button>
                 <% if (true == node.get('rights').can_edit) { %>
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -57,7 +57,7 @@
                             <% if (node.get('status').get('id') !== status.get('id')) { %>
                                 <li>
                                     <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
-                                        <%= status.get('label') %>
+                                        <%- status.get('label') %>
                                     </a>
                                 </li>
                             <% } %>

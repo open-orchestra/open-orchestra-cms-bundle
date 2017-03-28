@@ -1,45 +1,45 @@
 <div class="top-action-buttons">
-    <a class="btn btn-info" href="#<%= Backbone.history.generateUrl('newContentType') %>" role="button"><%= Translator.trans('open_orchestra_backoffice.add')%></a>
+    <a class="btn btn-info" href="#<%- Backbone.history.generateUrl('newContentType') %>" role="button"><%- Translator.trans('open_orchestra_backoffice.add')%></a>
 </div>
-<h1> <%= Translator.trans('open_orchestra_backoffice.content_type.title_list') %></h1>
+<h1> <%- Translator.trans('open_orchestra_backoffice.content_type.title_list') %></h1>
 <form class="form-horizontal search-engine">
     <div class="form-group col-lg-6">
-        <label for="name" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.content_type.search_engine.name')%></label>
+        <label for="name" class="control-label col-md-4"><%- Translator.trans('open_orchestra_backoffice.content_type.search_engine.name')%></label>
         <div class="col-md-8">
             <input type="text" name='name' class="form-control" id="name">
-            <input type="hidden" name='language' value="<%= language %>">
+            <input type="hidden" name='language' value="<%- language %>">
         </div>
     </div>
     <div class="form-group col-lg-6">
-        <label for="contentTypeId" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.content_type.search_engine.id')%></label>
+        <label for="contentTypeId" class="control-label col-md-4"><%- Translator.trans('open_orchestra_backoffice.content_type.search_engine.id')%></label>
         <div class="col-md-8">
             <input type="text" name='contentTypeId' class="form-control" id="contentTypeId">
         </div>
     </div>
     <div class="form-group col-lg-6">
-        <label for="linkedToSite" class="control-label col-md-4"><%= Translator.trans('open_orchestra_backoffice.content_type.search_engine.linked_to_site')%></label>
+        <label for="linkedToSite" class="control-label col-md-4"><%- Translator.trans('open_orchestra_backoffice.content_type.search_engine.linked_to_site')%></label>
         <div class="col-md-8">
             <div class="radio radio-inline">
                 <input id="inputRadio1" value="1" name="linkedToSite" type="radio">
-                <label for="inputRadio1"><%= Translator.trans('open_orchestra_backoffice.search_engine.yes')%></label>
+                <label for="inputRadio1"><%- Translator.trans('open_orchestra_backoffice.search_engine.yes')%></label>
             </div>
             <div class="radio radio-inline">
                 <input id="inputRadio2" value="0" name="linkedToSite" type="radio">
-                <label for="inputRadio2"><%= Translator.trans('open_orchestra_backoffice.search_engine.no')%></label>
+                <label for="inputRadio2"><%- Translator.trans('open_orchestra_backoffice.search_engine.no')%></label>
             </div>
             <div class="radio radio-inline">
                 <input id="inputRadio3" value="" name="linkedToSite" checked="checked" type="radio">
-                <label for="inputRadio3"><%= Translator.trans('open_orchestra_backoffice.node.search_engine.na')%></label>
+                <label for="inputRadio3"><%- Translator.trans('open_orchestra_backoffice.node.search_engine.na')%></label>
             </div>
         </div>
     </div>
     <span class="clearfix"></span>
     <div class="form-group col-lg-6">
-        <button class="btn btn-info col-md-offset-4 submit"><%= Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
+        <button class="btn btn-info col-md-offset-4 submit"><%- Translator.trans('open_orchestra_backoffice.search_engine.filter')%></button>
     </div>
 </form>
 <div class="content-types-list">
 </div>
 <div class="bottom-action-buttons">
-    <button class="btn btn-danger btn-delete disabled"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
+    <button class="btn btn-danger btn-delete disabled"><%- Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
 </div>

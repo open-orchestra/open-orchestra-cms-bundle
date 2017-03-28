@@ -1,14 +1,14 @@
 <div class="top-action-buttons">
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNodes', {language: language}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.back_to_list') %>
+    <a class="btn btn-border btn-return" href="#<%- Backbone.history.generateUrl('showNodes', {language: language}) %>" role="button">
+        <%- Translator.trans('open_orchestra_backoffice.back_to_list') %>
     </a>
-    <a class="btn <%= (type == 'parameterize') ? 'btn-blue' : 'btn-border' %> btn-set" role="button" href="#<%= Backbone.history.generateUrl('editNode', {nodeId: nodeId, language: language, version: version}) %>">
-        <%= Translator.trans('open_orchestra_backoffice.node.parameterize') %>
+    <a class="btn <%- (type == 'parameterize') ? 'btn-blue' : 'btn-border' %> btn-set" role="button" href="#<%- Backbone.history.generateUrl('editNode', {nodeId: nodeId, language: language, version: version}) %>">
+        <%- Translator.trans('open_orchestra_backoffice.node.parameterize') %>
     </a>
-    <a class="btn <%= (type == 'edit') ? 'btn-blue' : 'btn-border' %> btn-edit" role="button" href="#<%= Backbone.history.generateUrl('showNode', {nodeId: nodeId, language: language, version: version}) %>">
-        <%= Translator.trans('open_orchestra_backoffice.node.edit') %>
+    <a class="btn <%- (type == 'edit') ? 'btn-blue' : 'btn-border' %> btn-edit" role="button" href="#<%- Backbone.history.generateUrl('showNode', {nodeId: nodeId, language: language, version: version}) %>">
+        <%- Translator.trans('open_orchestra_backoffice.node.edit') %>
     </a>
-    <a class="btn <%= (type == 'version') ? 'btn-blue' : 'btn-border' %>" role="button" href="#<%= Backbone.history.generateUrl('manageVersionsNode', {nodeId: nodeId, language: language}) %>">
-        <%= Translator.trans('open_orchestra_backoffice.versionable.manage_version') %>
+    <a class="btn <%- (type == 'version') ? 'btn-blue' : 'btn-border' %>" role="button" href="#<%- Backbone.history.generateUrl('manageVersionsNode', {nodeId: nodeId, language: language}) %>">
+        <%- Translator.trans('open_orchestra_backoffice.versionable.manage_version') %>
     </a>
 </div>

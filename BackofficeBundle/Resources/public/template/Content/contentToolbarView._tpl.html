@@ -1,7 +1,7 @@
 <div class="form-inline">
     <% if (true === content.get('status').get('published_state') && contentType.get('defining_statusable') == true ) {%>
         <div class="alert alert-success alert-published-state" role="alert">
-            <div class="heading"><%= Translator.trans('open_orchestra_backoffice.content.message_online.title') %></div>
+            <div class="heading"><%- Translator.trans('open_orchestra_backoffice.content.message_online.title') %></div>
             <p>
                 <%= (Translator.trans('open_orchestra_backoffice.content.message_online.message').replace(/\\n/g, '<br>')) %>
             </p>
@@ -10,19 +10,19 @@
     <% if (contentType.get('defining_versionable') == true ) {%>
         <div class="pull-left">
             <div class="form-group">
-                <label for="select-version" class="control-label"><%= Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
+                <label for="select-version" class="control-label"><%- Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
                 <div class="styled-select">
                     <select class="form-control" id="select-version">
                         <% _.each(contentVersions, function(contentVersion, key) { %>
-                            <option value="<%= contentVersion.get('version') %>" <% if(contentVersion.get('version') == content.get('version')) {%> selected <% } %> >
-                                <%= contentVersion.get('version_name') %>
+                            <option value="<%- contentVersion.get('version') %>" <% if(contentVersion.get('version') == content.get('version')) {%> selected <% } %> >
+                                <%- contentVersion.get('version_name') %>
                             </option>
                         <% }); %>
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-info btn-new-version"><%= Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
+                <button type="button" class="btn btn-info btn-new-version"><%- Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
             </div>
         </div>
     <% } %>
@@ -32,14 +32,14 @@
                 <label for="select-workflow" class="control-label">Workflow</label>
                 <div class="styled-select dropdown dropdown-workflow">
                     <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <span style="color: <%= content.get('status').get('code_color') %>"> <%= content.get('status').get('label') %></span>
+                        <span style="color: <%- content.get('status').get('code_color') %>"> <%- content.get('status').get('label') %></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <% _.each(statuses, function(status, key) { %>
                         <% if (content.get('status').get('id') !== status.get('id')) { %>
                         <li>
-                            <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
-                                <%= status.get('label') %>
+                            <a data-id="<%- status.get('id')%>" style="color: <%- status.get('code_color') %>">
+                                <%- status.get('label') %>
                             </a>
                         </li>
                         <% } %>

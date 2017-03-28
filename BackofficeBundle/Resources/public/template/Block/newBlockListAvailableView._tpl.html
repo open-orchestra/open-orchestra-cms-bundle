@@ -1,30 +1,30 @@
 <div class="top-action-buttons">
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('newBlockListComponent', {nodeId: nodeId, nodeLanguage:nodeLanguage , nodeVersion: nodeVersion, areaName: areaName, position: position}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.back') %>
+    <a class="btn btn-border btn-return" href="#<%- Backbone.history.generateUrl('newBlockListComponent', {nodeId: nodeId, nodeLanguage:nodeLanguage , nodeVersion: nodeVersion, areaName: areaName, position: position}) %>" role="button">
+        <%- Translator.trans('open_orchestra_backoffice.back') %>
     </a>
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNode', {nodeId: nodeId, language:nodeLanguage , version: nodeVersion}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.block.back_to_node') %>
+    <a class="btn btn-border btn-return" href="#<%- Backbone.history.generateUrl('showNode', {nodeId: nodeId, language:nodeLanguage , version: nodeVersion}) %>" role="button">
+        <%- Translator.trans('open_orchestra_backoffice.block.back_to_node') %>
     </a>
 </div>
-<h1> <%= componentName %></h1>
+<h1> <%- componentName %></h1>
 
 <div class="header-results clearfix">
     <div class="nb-results pull-left">
-        <%= Translator.trans('open_orchestra_datatable.info', {total: '<span>'+blocks.length+'</span>'}) %>
+        <%- Translator.trans('open_orchestra_datatable.info', {total: '<span>'+blocks.length+'</span>'}) %>
     </div>
 </div>
 <div class="well add-block clearfix">
     <div class="col-lg-3">
-        <a class="block active" href="#<%= Backbone.history.generateUrl('newBlockForm', {nodeId: nodeId, nodeLanguage:nodeLanguage , nodeVersion: nodeVersion, component:component, componentName:componentName, areaName: areaName, position: position}) %>">
-            <span><%= Translator.trans('open_orchestra_backoffice.block.new_block') %></span>
-            <p><%= Translator.trans('open_orchestra_backoffice.block.display_new_block', {blockComponent: componentName }) %></p>
+        <a class="block active" href="#<%- Backbone.history.generateUrl('newBlockForm', {nodeId: nodeId, nodeLanguage:nodeLanguage , nodeVersion: nodeVersion, component:component, componentName:componentName, areaName: areaName, position: position}) %>">
+            <span><%- Translator.trans('open_orchestra_backoffice.block.new_block') %></span>
+            <p><%- Translator.trans('open_orchestra_backoffice.block.display_new_block', {blockComponent: componentName }) %></p>
         </a>
     </div>
     <% _.each(blocks.models, function(block, key) { %>
         <div class="col-lg-3">
-            <div class="block shared-block" data-block-id="<%= block.get('id')%>" >
-                <span><%= block.get('label')%></span>
-                <p><%= block.get('name')%></p>
+            <div class="block shared-block" data-block-id="<%- block.get('id')%>" >
+                <span><%- block.get('label')%></span>
+                <p><%- block.get('name')%></p>
             </div>
         </div>
     <% }); %>

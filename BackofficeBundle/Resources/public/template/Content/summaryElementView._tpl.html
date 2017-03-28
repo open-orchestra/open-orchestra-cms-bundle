@@ -1,16 +1,16 @@
 <div class="col-lg-6 col-sm-12">
     <div class="block">
-        <span><%= name %></span>
+        <span><%- name %></span>
         <ul class="action-links">
             <li>
-                <a href="#<%= Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language, contentTypeName: name}) %>">
-                    <%= Translator.trans('open_orchestra_backoffice.table.contents.list') %>
+                <a href="#<%- Backbone.history.generateUrl('listContent', {contentTypeId: contentTypeId, language: language, contentTypeName: name}) %>">
+                    <%- Translator.trans('open_orchestra_backoffice.table.contents.list') %>
                 </a>
             </li>
             <% if (can_create) { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('newContent', {contentTypeId: contentTypeId, language: language}) %>">
-                        <%= Translator.trans('open_orchestra_backoffice.table.contents.add') %>
+                    <a href="#<%- Backbone.history.generateUrl('newContent', {contentTypeId: contentTypeId, language: language}) %>">
+                        <%- Translator.trans('open_orchestra_backoffice.table.contents.add') %>
                     </a>
                 </li>
             <% } %>

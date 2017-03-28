@@ -1,7 +1,7 @@
 <div class="add-block">
     <span>
-        <a class="btn btn-border btn-add" href="#<%= Backbone.history.generateUrl('newBlockListComponent', {nodeId: node.get('node_id'), nodeLanguage: node.get('language'), nodeVersion: node.get('version'), areaName: areaName, position: position}) %>" role="button">
-            <%= Translator.trans('open_orchestra_backoffice.block.add_block') %>
+        <a class="btn btn-border btn-add" href="#<%- Backbone.history.generateUrl('newBlockListComponent', {nodeId: node.get('node_id'), nodeLanguage: node.get('language'), nodeVersion: node.get('version'), areaName: areaName, position: position}) %>" role="button">
+            <%- Translator.trans('open_orchestra_backoffice.block.add_block') %>
         </a>
     </span>
 </div>

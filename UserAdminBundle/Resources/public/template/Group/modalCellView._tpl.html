@@ -1,4 +1,4 @@
 <div class="form-group ">
-	<input type="checkbox" class="form-control" value="<%= id %>" name="group" id="group[<%= id %>]"<% if (is_blocked) { %> disabled="disabled"<% } %><% if (is_selected) { %> checked="checked"<% } %>>
-	<label for="group[<%= id %>]"></label>
+	<input type="checkbox" class="form-control" value="<%- id %>" name="group" id="group[<%- id %>]"<% if (is_blocked) { %> disabled="disabled"<% } %><% if (is_selected) { %> checked="checked"<% } %>>
+	<label for="group[<%- id %>]"></label>
 </div>

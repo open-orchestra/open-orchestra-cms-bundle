@@ -11,23 +11,23 @@
         <% _.each(siteLanguages, function(siteLanguage, key) { %>
             <% if (siteLanguage === language) { %>
                 <li class="active">
-                    <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    <img src="/images/languages/<%- siteLanguage %>.png" alt="<%- siteLanguage %>" /><%- siteLanguage.toUpperCase() %>
                 </li>
             <% } else { %>
                 <li>
-                    <a href="#<%= Backbone.history.generateUrl('manageVersionsContent', {contentTypeId: contentTypeId, contentId: contentId, language: siteLanguage}) %>">
-                        <img src="/images/languages/<%= siteLanguage %>.png" alt="<%= siteLanguage %>" /><%= siteLanguage.toUpperCase() %>
+                    <a href="#<%- Backbone.history.generateUrl('manageVersionsContent', {contentTypeId: contentTypeId, contentId: contentId, language: siteLanguage}) %>">
+                        <img src="/images/languages/<%- siteLanguage %>.png" alt="<%- siteLanguage %>" /><%- siteLanguage.toUpperCase() %>
                     </a>
                 </li>
             <% } %>
         <% }); %>
     </ul>
 </div>
-<h1> <%= title %></h1>
+<h1> <%- title %></h1>
 <div class="content-versions-list">
 </div>
 <% if(collection.length > 1) { %>
     <div class="bottom-action-buttons">
-        <button class="btn btn-danger btn-delete disabled"><%= Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
+        <button class="btn btn-danger btn-delete disabled"><%- Translator.trans('open_orchestra_backoffice.table.delete_button')%></button>
     </div>
 <% } %>

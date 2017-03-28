@@ -1,7 +1,7 @@
 <div class="top-action-buttons">
-    <a class="btn btn-border btn-return" href="#<%= Backbone.history.generateUrl('showNode', {nodeId: nodeId, language: nodeLanguage, version: nodeVersion}) %>" role="button">
-        <%= Translator.trans('open_orchestra_backoffice.block.back_to_node') %>
+    <a class="btn btn-border btn-return" href="#<%- Backbone.history.generateUrl('showNode', {nodeId: nodeId, language: nodeLanguage, version: nodeVersion}) %>" role="button">
+        <%- Translator.trans('open_orchestra_backoffice.block.back_to_node') %>
     </a>
 </div>
-<h1> <%= blockLabel %></h1>
+<h1> <%- blockLabel %></h1>
 <div class='form-edit'></div>
