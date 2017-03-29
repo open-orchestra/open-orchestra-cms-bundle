@@ -9,8 +9,12 @@ open_orchestra_group:
             site_name: Site name
             site: Site
             nbr_users: Number of members
+        members_list:
+            username: Username
+            email: Email
     group:
         title_list: Groups
         title_edit: Edit the group
+        tab_members_list: Members List
         search_engine:
-          search: Search
+            search: Search

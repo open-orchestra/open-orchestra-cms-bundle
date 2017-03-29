@@ -10,15 +10,10 @@ open_orchestra_group:
             name: Nom
             label: Libellé
             site: Site
-            user_name: Nom du membre
-            user_email: Email du membre
-            user_delete: Retirer le membre
-            member: Membres
             group:
                 property: Propriétés
                 right: Droits
                 perimeter: Périmètre
-                member: Liste des membres
             sub_group:
                 property: Propriété
                 right: Droits

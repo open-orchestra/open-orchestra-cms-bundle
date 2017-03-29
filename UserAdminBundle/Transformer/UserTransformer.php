@@ -58,6 +58,7 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->id = $user->getId();
         $facade->username = $user->getUsername();
+        $facade->email = $user->getEmail();
         $facade->roles = implode(',', $user->getRoles());
 
         $groups = $user->getGroups();

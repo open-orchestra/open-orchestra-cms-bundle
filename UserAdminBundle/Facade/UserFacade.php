@@ -24,4 +24,9 @@ class UserFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $groups;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $email;
 }

@@ -11,10 +11,12 @@ class UserFormView extends AbstractFormView
      * Initialize
      * @param {Form} form
      * @param {Boolean} activatePreferenceTab
+     * @param {Boolean} selfEdit
      */
-    initialize({form, activatePreferenceTab}) {
+    initialize({form, activatePreferenceTab, selfEdit = false}) {
         super.initialize({form: form});
         this._activatePreferenceTab = activatePreferenceTab;
+        this._selfEdit = selfEdit;
     }
 
     /**
@@ -51,8 +53,9 @@ class UserFormView extends AbstractFormView
      * @return {Object}
      */
     getStatusCodeForm() {
+        console.log(this._selfEdit);
         return {
-            '200': Application.getContext().refreshContext,
+            '200': (true === this._selfEdit) ? Application.getContext().refreshContext : $.proxy(this.refreshRender, this),
             '201': $.proxy(this.refreshRender, this),
             '422': $.proxy(this.refreshRender, this)
         }

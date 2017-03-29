@@ -101,8 +101,8 @@ class Accordion extends AbstractBehavior
     _confirmRemove(event) {
         event.stopPropagation();
         let confirmModalView = new ConfirmModalView({
-            confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove.title'),
-            confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove.message'),
+            confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove_prototype.title'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove_prototype.message'),
             yesCallback: this._removeForm,
             context: this,
             callbackParameter: [event]

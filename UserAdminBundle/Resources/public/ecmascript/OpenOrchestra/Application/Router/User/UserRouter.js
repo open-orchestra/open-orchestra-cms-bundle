@@ -64,7 +64,8 @@ class UserRouter extends OrchestraRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let userFormView = new UserFormView({
                 form : form,
-                activatePreferenceTab: activatePreferenceTab
+                activatePreferenceTab: activatePreferenceTab,
+                selfEdit: true
             });
             Application.getRegion('content').html(userFormView.render().$el);
         });
@@ -100,6 +101,7 @@ class UserRouter extends OrchestraRouter
         let pageLength = 10;
         page = Number(page) - 1;
         new Users().fetch({
+            apiContext: 'user_list',
             data : {
                 start: page * pageLength,
                 length: pageLength
