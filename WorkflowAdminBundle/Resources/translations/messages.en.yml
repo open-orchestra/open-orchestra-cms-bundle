@@ -48,3 +48,6 @@ open_orchestra_workflow_admin:
             from_to  : 'From %status% to ...'
     profile:
         page: Page
+    status:
+        delete:
+            impossible: This status could not be deleted because of used or particular flag

@@ -6,6 +6,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\WorkflowAdminBundle\Exceptions\HttpException\StatusNotDeletableException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -106,18 +107,21 @@ class StatusController extends BaseController
      * @Config\Method({"DELETE"})
      *
      * @return Response
+     * @throws StatusNotDeletableException
      */
     public function deleteAction($statusId)
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $status);
 
-        if ($this->isDeleteGranted($status)) {
-            $objectManager = $this->get('object_manager');
-            $objectManager->remove($status);
-            $objectManager->flush();
-            $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $status)) {
+            throw new StatusNotDeletableException();
         }
+
+        $objectManager = $this->get('object_manager');
+        $objectManager->remove($status);
+        $objectManager->flush();
+        $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusEvent($status));
 
         return array();
     }
