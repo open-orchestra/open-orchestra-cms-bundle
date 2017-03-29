@@ -20,7 +20,7 @@
                 </select>
             </div>
         </div>
-        <% if (true == node.get('rights').can_edit) { %>
+        <% if (true == node.get('rights').can_read) { %>
             <div class="form-group">
                 <button type="button" class="btn btn-info btn-new-version"><%- Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
             </div>
@@ -51,7 +51,7 @@
                 <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span style="color: <%- node.get('status').get('code_color') %>"> <%- node.get('status').get('label') %></span>
                 </button>
-                <% if (true == node.get('rights').can_edit) { %>
+                <% if (true == node.get('rights').can_read) { %>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <% _.each(statuses, function(status, key) { %>
                             <% if (node.get('status').get('id') !== status.get('id')) { %>
