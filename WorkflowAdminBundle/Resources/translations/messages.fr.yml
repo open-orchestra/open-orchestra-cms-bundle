@@ -48,3 +48,6 @@ open_orchestra_workflow_admin:
             from_to : 'De %status% vers ...'
     profile:
         page: Page
+    status:
+        delete:
+            impossible: Ce statut ne peut être supprimé en raison de son utilisation ou de ses états
