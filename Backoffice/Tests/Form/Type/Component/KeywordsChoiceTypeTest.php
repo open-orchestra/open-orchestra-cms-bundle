@@ -98,7 +98,6 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
                 );
                 return array_replace($default, $options['new_attr']);
             },
-            'name' => '',
             'new_attr' => array(),
             'is_condition' => false,
         ));
