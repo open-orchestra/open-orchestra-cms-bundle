@@ -77,7 +77,6 @@ class KeywordsChoiceType extends AbstractType
                 );
                 return array_replace($default, $options['new_attr']);
             },
-            'name' => '',
             'new_attr' => array(),
             'is_condition' => false,
         ));

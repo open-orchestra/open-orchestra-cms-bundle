@@ -53,7 +53,6 @@ class PatchSubmit extends AbstractBehavior
         $.each(containers, function(id, $container){
             context._displayLoader($container);
         });
-
         $form.ajaxSubmit({
             type: 'PATCH',
             context: this,
