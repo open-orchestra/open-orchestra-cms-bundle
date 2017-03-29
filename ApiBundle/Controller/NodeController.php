@@ -94,7 +94,6 @@ class NodeController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $node);
 
         if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $node)) {
-            var_dump('softDeleteNode');
             throw new NodeNotDeletableException();
         }
 
