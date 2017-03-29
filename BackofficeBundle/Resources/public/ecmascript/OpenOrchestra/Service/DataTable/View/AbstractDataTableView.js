@@ -82,7 +82,7 @@ class AbstractDataTableView extends OrchestraView
         return {
             serverSide: true,
             processing: true,
-            pageLength: 2,
+            pageLength: 10,
             page: 0,
             searching: true,
             ordering: true,
