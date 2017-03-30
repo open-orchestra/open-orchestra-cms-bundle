@@ -18,6 +18,9 @@ open_orchestra_backoffice:
     confirm_remove:
         title: Supprimer les éléments sélectionnés ?
         message: La suppression sera définitive
+    confirm_remove_prototype:
+        title: Supprimer cette élément ?
+        message: La suppression sera définitive aprés la sauvegarde du formulaire
     no_item: Il n’y a pas encore d’élément pour cette vue
     add: Ajouter
     back_to_list: Retour à la liste

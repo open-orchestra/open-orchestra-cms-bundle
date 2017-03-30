@@ -19,7 +19,6 @@ use Symfony\Component\Form\FormInterface;
  */
 class GroupType extends AbstractType
 {
-    protected $groupMemberSubscriber;
     protected $groupPerimeterSubscriber;
     protected $groupRoleTransformer;
     protected $groupClass;
@@ -29,7 +28,6 @@ class GroupType extends AbstractType
     protected $groupPerimeterTransformer;
 
     /**
-     * @param EventSubscriberInterface $groupMemberSubscriber
      * @param EventSubscriberInterface $groupPerimeterSubscriber
      * @param EventDispatcherInterface $eventDispatcher
      * @param DataTransformerInterface $groupRoleTransformer
@@ -39,7 +37,6 @@ class GroupType extends AbstractType
      * @param array                    $backOfficeLanguages
      */
     public function __construct(
-        EventSubscriberInterface $groupMemberSubscriber,
         EventSubscriberInterface $groupPerimeterSubscriber,
         EventDispatcherInterface $eventDispatcher,
         DataTransformerInterface $groupRoleTransformer,
@@ -48,7 +45,6 @@ class GroupType extends AbstractType
         $groupClass,
         array $backOfficeLanguages
     ) {
-        $this->groupMemberSubscriber = $groupMemberSubscriber;
         $this->groupPerimeterSubscriber = $groupPerimeterSubscriber;
         $this->eventDispatcher = $eventDispatcher;
         $this->groupRoleTransformer = $groupRoleTransformer;
@@ -100,7 +96,7 @@ class GroupType extends AbstractType
             ));
         $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
         $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);
-        $builder->addEventSubscriber($this->groupMemberSubscriber);
+
         $builder->addEventSubscriber($this->groupPerimeterSubscriber);
         $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder));
     }
@@ -128,11 +124,7 @@ class GroupType extends AbstractType
                     'perimeter' => array(
                         'rank' => 3,
                         'label' => 'open_orchestra_group.form.group.group.perimeter',
-                    ),
-                    'member' => array(
-                        'rank' => 4,
-                        'label' => 'open_orchestra_group.form.group.group.member',
-                    ),
+                    )
                 ),
                 'sub_group_render' => array(
                     'property' => array(

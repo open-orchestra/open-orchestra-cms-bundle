@@ -61,6 +61,15 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin,
 
         $(td).html(cellData)
     }
+
+    /**
+     * @inheritDoc
+     */
+    _getSyncOptions() {
+        return {
+            apiContext: 'user_list'
+        };
+    }
 }
 
 export default UserListView;

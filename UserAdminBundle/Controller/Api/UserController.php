@@ -4,6 +4,7 @@ namespace OpenOrchestra\UserAdminBundle\Controller\Api;
 
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\BaseApi\Exceptions\HttpException\UserNotFoundHttpException;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
@@ -79,6 +80,65 @@ class UserController extends BaseController
         $facade->recordsFiltered = $recordsFiltered;
 
         return $facade;
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $groupId
+     *
+     * @Config\Route("/members-group/{groupId}", name="open_orchestra_api_user_list_in_group")
+     * @Config\Method({"GET"})
+     *
+     * @return FacadeInterface
+     */
+    public function listInGroupAction(Request $request, $groupId)
+    {
+        $mapping = array(
+            'username' => 'username',
+            'email' => 'email'
+        );
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
+        $repository = $this->get('open_orchestra_user.repository.user');
+
+        $collection = $repository->findUsersByGroupsForPaginate($configuration, $groupId);
+        $recordsTotal = $repository->countFilterByGroups($groupId);
+
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
+        $facade = $collectionTransformer->transform($collection);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsTotal;
+
+        return $facade;
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $groupId
+     *
+     * @Config\Route("/remove-group/{groupId}", name="open_orchestra_api_user_remove_group")
+     * @Config\Method({"PUT", "GET"})
+     *
+     * @return FacadeInterface
+     * @throws UserNotFoundHttpException
+     */
+    public function removeGroupAction(Request $request, $groupId)
+    {
+        $format = $request->get('_format', 'json');
+
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_user_admin.facade.user.class'),
+            $format
+        );
+        $user = $this->get('open_orchestra_api.transformer_manager')->get('user')->reverseTransform($facade);
+        if (!$user instanceof UserInterface) {
+            throw new UserNotFoundHttpException();
+        }
+        $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $user);
+
+        $this->get('open_orchestra_user.repository.user')->removeGroup($user->getId(), $groupId);
+
+        return array();
     }
 
     /**

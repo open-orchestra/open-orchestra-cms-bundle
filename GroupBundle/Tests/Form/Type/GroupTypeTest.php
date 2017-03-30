@@ -24,7 +24,6 @@ class GroupTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $eventSubscriber0 = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
         $eventSubscriber1 = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $dataTransformer0 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
@@ -32,7 +31,6 @@ class GroupTypeTest extends AbstractBaseTestCase
         $generatePerimeterManager = Phake::mock('OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager');
         Phake::when($generatePerimeterManager)->getPerimetersConfiguration()->thenReturn(array());
         $this->form = new GroupType(
-            $eventSubscriber0,
             $eventSubscriber1,
             $this->eventDispatcher,
             $dataTransformer0,
@@ -72,7 +70,7 @@ class GroupTypeTest extends AbstractBaseTestCase
 
         Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addModelTransformer(Phake::anyParameters());
-        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
     }
 
@@ -102,11 +100,7 @@ class GroupTypeTest extends AbstractBaseTestCase
                     'perimeter' => array(
                         'rank' => 3,
                         'label' => 'open_orchestra_group.form.group.group.perimeter',
-                    ),
-                    'member' => array(
-                        'rank' => 4,
-                        'label' => 'open_orchestra_group.form.group.group.member',
-                    ),
+                    )
                 ),
                 'sub_group_render' => array(
                     'property' => array(

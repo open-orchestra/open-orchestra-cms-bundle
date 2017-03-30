@@ -1,7 +1,9 @@
 import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import Application          from '../../Application'
 import Group                from '../../Model/Group/Group'
+import Users                from '../../Collection/User/Users'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import MembersListView      from '../User/MembersListView'
 import ApplicationError     from '../../../Service/Error/ApplicationError'
 
 /**
@@ -9,15 +11,6 @@ import ApplicationError     from '../../../Service/Error/ApplicationError'
  */
 class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 {
-
-    /**
-     * Pre initialize
-     * @param {Object} options
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['click button.submit-form'] = '_refreshForm';
-    }
 
     /**
      * Initialize
@@ -45,6 +38,56 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         super.render();
 
         return this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    _renderForm() {
+        super._renderForm();
+        this._addTabMemberList();
+    }
+
+
+    /**
+     * Add tab pane member list
+     * @private
+     */
+    _addTabMemberList() {
+        let tabId = 'tab-members-list';
+        let $navTab = $('<li/>').append(
+            $('<a/>', {
+                text: Translator.trans('open_orchestra_group.group.tab_members_list'),
+                'data-toggle': 'tab',
+                role: 'tab',
+                href: '#'+tabId
+            })
+        );
+        let $tabContent = $('<div/>', {
+            class: 'tab-pane',
+            id: tabId,
+            role: 'tabpanel'
+        });
+
+        $('.nav-tabs', this._$formRegion).append($navTab);
+        $('form > .tab-content', this._$formRegion).append($tabContent);
+
+        let listView = this._createMembersListView();
+        $tabContent.html(listView.render().$el);
+    }
+
+    /**
+     * @returns {MembersListView}
+     *
+     * @private
+     */
+    _createMembersListView() {
+        let collection = new Users();
+
+        return new MembersListView({
+            collection: collection,
+            groupId: this._groupId
+        });
     }
 
     /**
@@ -78,19 +121,6 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
                 Backbone.history.navigate(url, true);
             }
         });
-    }
-
-    /**
-     * Refresh form
-     * @param {object} event
-     */
-    _refreshForm(event) {
-        event.preventDefault();
-        $('.group-user:checked', this.$el).each(function() {
-            let container = $(this).parents('tr').eq(0);
-            $('.hide', container).remove();
-        });
-        this._form.submit(this.getStatusCodeForm(event));
     }
 }
 
