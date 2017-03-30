@@ -538,7 +538,8 @@ class NodeController extends BaseController
      */
     public function updateChildrenOrderAction(Request $request, $nodeId)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeAndSite($nodeId, $siteId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
