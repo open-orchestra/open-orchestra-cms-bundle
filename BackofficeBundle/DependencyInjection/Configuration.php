@@ -230,7 +230,7 @@ class Configuration implements ConfigurationInterface
         $specialPageNames
             ->info('Array of available special page names')
             ->useAttributeAsKey('name')
-            ->prototype('array')
+            ->prototype('scalar')
             ->end();
         $specialPageNames->defaultValue(array(
             'DEFAULT' => 'open_orchestra_backoffice.node.special_page.default',
@@ -310,7 +310,8 @@ class Configuration implements ConfigurationInterface
 
         $configurationRole
             ->info('Configure front role configuration')
-                ->prototype('array')
+            ->useAttributeAsKey('name')
+            ->prototype('scalar')
             ->end();
 
         $configurationRole->defaultValue(array());
