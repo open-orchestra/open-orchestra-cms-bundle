@@ -112,7 +112,7 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
             contentId: rowData.get('content_id'),
             version: rowData.get('version')
         });
-        console.log(rowData.get('rights').can_edit);
+
         if (!rowData.get('status').blocked_edition && rowData.get('rights').can_edit) {
             cellData = $('<a>',{
                 text: cellData,
