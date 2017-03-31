@@ -58,7 +58,7 @@ class TagCondition extends AbstractBehavior
                         type: 'operator'
                     });
                 } else {
-                    element.tokenInput('add', _.findWhere(tags, {id: prepopulatedTag}));
+                    $element.tokenInput('add', _.findWhere(tags, {id: prepopulatedTag}));
                 }
             }
         }
@@ -85,7 +85,11 @@ class TagCondition extends AbstractBehavior
      * @param {Object} $element - jQuery object
      */
     deactivate($element) {
-        $element.tokenInput('destroy');
+        if ($element.data("tokenInputObject")) {
+            var closest = $element.parent();
+            closest.empty();
+            closest.append($element);
+        }
     }
 
     applicateSqlCss(obj) {

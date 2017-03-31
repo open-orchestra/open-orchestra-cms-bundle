@@ -55,7 +55,6 @@ class ContentSearchType extends AbstractType
             'is_condition' => true,
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
             'constraints' => array(new BooleanCondition()),
-            'name' => 'keywords',
             'new_attr' => $newAttr,
             'required' => $required,
         ));
