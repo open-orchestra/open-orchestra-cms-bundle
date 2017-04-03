@@ -180,19 +180,23 @@ class NodeType extends AbstractType
                 'group_id' => 'cache',
                 'sub_group_id' => 'cache',
                 'required' => false,
-            ))
-            ->add('frontRoles', 'choice', array(
-                'label' => false,
-                'choices_as_values' => true,
-                'choice_label' => function ($allChoices, $currentChoiceKey) {
-                    return 'open_orchestra_backoffice.form.role.' . $currentChoiceKey;
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'group_id' => 'cache',
-                'sub_group_id' => 'access',
-                'required' => false
             ));
+
+            if (!empty($this->frontRoles)) {
+                $builder->add('frontRoles', 'choice', array(
+                    'label' => false,
+                    'choices' => array_flip($this->frontRoles),
+                    'choices_as_values' => true,
+                    'choice_label' => function ($value, $key) {
+                        return 'open_orchestra_backoffice.form.role.' . $key;
+                    },
+                    'multiple' => true,
+                    'expanded' => true,
+                    'group_id' => 'cache',
+                    'sub_group_id' => 'access',
+                    'required' => false
+                ));
+            }
 
         $builder->addEventSubscriber($this->specialPageChoiceStatusSubscriber);
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
@@ -213,6 +217,43 @@ class NodeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $subGroupRender = array(
+            'properties' => array(
+                'rank' => 0,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.properties',
+            ),
+            'style' => array(
+                'rank' => 1,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.style',
+            ),
+            'publication' => array(
+                'rank' => 2,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.publication',
+            ),
+            'seo' => array(
+                'rank' => 0,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.seo',
+            ),
+            'canonical' => array(
+                'rank' => 1,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.canonical',
+            ),
+            'keywords' => array(
+                'rank' => 1,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.keywords',
+            ),
+            'cache' => array(
+                'rank' => 0,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
+            )
+        );
+        if (!empty($this->frontRoles)) {
+            $subGroupRender['access'] = array(
+                'rank' => 1,
+                'label' => 'open_orchestra_backoffice.form.node.sub_group.access',
+            );
+        }
+
         $resolver->setDefaults(array(
             'data_class' => $this->nodeClass,
             'group_enabled' => true,
