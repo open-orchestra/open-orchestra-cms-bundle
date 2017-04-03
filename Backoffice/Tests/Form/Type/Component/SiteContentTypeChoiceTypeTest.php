@@ -31,7 +31,7 @@ class SiteContentTypeChoiceTypeTest extends AbstractBaseTestCase
 
         $siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-        Phake::when($site)->getContentTypes()->thenReturn(array());
+        Phake::when($site)->getContentTypes()->thenReturn(array('content'));
         Phake::when($siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
 
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');

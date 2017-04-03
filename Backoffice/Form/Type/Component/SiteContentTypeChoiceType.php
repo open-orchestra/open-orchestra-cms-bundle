@@ -20,7 +20,7 @@ class SiteContentTypeChoiceType extends AbstractType
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
-     * @param SiteTypeRepositoryInterface    $siteRepository
+     * @param SiteRepositoryInterface        $siteRepository
      * @param ContextManager                 $context
      */
     public function __construct(
@@ -54,8 +54,10 @@ class SiteContentTypeChoiceType extends AbstractType
         $site = $this->siteRepository->findOneBySiteId($siteId);
 
         $currentLanguage = $this->context->getCurrentLocale();
-        $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
-
+        $contentTypes = array();
+        if (!empty($site->getContentTypes())) {
+            $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
+        }
         $choices = array_map(function (ContentTypeInterface $element) use ($currentLanguage) {
             return $element->getName($currentLanguage);
         }, $contentTypes);
