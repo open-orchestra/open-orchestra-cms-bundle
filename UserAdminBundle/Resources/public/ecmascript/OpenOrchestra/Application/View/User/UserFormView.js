@@ -53,7 +53,6 @@ class UserFormView extends AbstractFormView
      * @return {Object}
      */
     getStatusCodeForm() {
-        console.log(this._selfEdit);
         return {
             '200': (true === this._selfEdit) ? Application.getContext().refreshContext : $.proxy(this.refreshRender, this),
             '201': $.proxy(this.refreshRender, this),

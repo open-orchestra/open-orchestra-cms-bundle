@@ -124,7 +124,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
-            $facade->addRight('can_edit', $this->businessRulesManager->isGranted(ContributionActionInterface::EDIT, $node) && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
+            $facade->addRight('can_edit_data', $this->businessRulesManager->isGranted(ContributionActionInterface::EDIT, $node) && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
+            $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
         }
         return $facade;
     }

@@ -18,7 +18,7 @@
 </div>
 <h1> <%- node.get('name') %></h1>
 <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
-<div class="node-template movement <%- (node.get('rights').can_edit) ? '' : 'node-disabled' %>">
+<div class="node-template movement <%- (node.get('rights').can_edit_data) ? '' : 'node-disabled' %>">
     <div class="node-action-toolbar">
     </div>
     <div class="well">
