@@ -21,7 +21,6 @@
     "open-orchestra/open-orchestra-display-bundle": "self.version",
     "open-orchestra/open-orchestra-model-interface": "self.version",
     "open-orchestra/open-orchestra-user-bundle": "self.version",
-    "friendsofsymfony/user-bundle": "@alpha",
     "friendsofsymfony/jsrouting-bundle": "~1.6.0",
     "willdurand/js-translation-bundle": "~2.6.1"
   },
