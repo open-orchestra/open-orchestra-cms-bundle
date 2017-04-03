@@ -10,17 +10,6 @@ class ContentRestoreModalView extends AbstractRestoreModalView
     /**
      * @private
      */
-    _getEditModelUrl() {
-        new Content({id: this._model.get('entity_id') }).fetch({
-            success: (content) => {
-                console.log(content);
-            }
-        });
-    }
-
-    /**
-     * @private
-     */
     _validRestoreAndEdit() {
         let content = new Content({id: this._model.get('entity_id') });
         $.when(
