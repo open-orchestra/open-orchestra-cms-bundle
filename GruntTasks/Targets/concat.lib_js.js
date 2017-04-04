@@ -19,7 +19,7 @@ module.exports = {
     'vendor/bower_components/lodash/lodash.js',
     'vendor/bower_components/jquery-tokeninput/build/jquery.tokeninput.min.js',
     'vendor/bower_components/Nestable/dist/js/jquery.nestable.js',
-    'vendor/bower_components/jquery.nicescroll/dist/jquery.nicescroll.min.js',
+    'vendor/bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js',
     'vendor/bower_components/tinymce/tinymce.js',
     'vendor/bower_components/tinymce/jquery.tinymce.js',
     'vendor/bower_components/tinymce/themes/modern/theme.js',

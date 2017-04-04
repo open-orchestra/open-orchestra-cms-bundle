@@ -11,7 +11,8 @@ module.exports = {
     'vendor/bower_components/jquery-tokeninput/styles/token-input-facebook.css',
     'vendor/bower_components/Nestable/dist/css/jquery.nestable.css',
     'vendor/bower_components/Jcrop/css/jquery.Jcrop.css',
-    'vendor/bower_components/jquery-ui/themes/base/jquery-ui.css'
+    'vendor/bower_components/jquery-ui/themes/base/jquery-ui.css',
+    'vendor/bower_components/perfect-scrollbar/css/perfect-scrollbar.css'
   ],
   dest: 'web/built/lib.css'
 };
