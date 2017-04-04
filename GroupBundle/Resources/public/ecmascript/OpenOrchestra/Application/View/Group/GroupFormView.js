@@ -45,7 +45,9 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _renderForm() {
         super._renderForm();
-        this._addTabMemberList();
+        if (null !== this._groupId) {
+            this._addTabMemberList();
+        }
     }
 
 
