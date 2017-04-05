@@ -66,7 +66,6 @@ class BlockView extends OrchestraView
         }
         let url = Backbone.history.generateUrl('editBlock', {
             blockId: this._block.get('id'),
-            blockLabel: this._block.get('label'),
             nodeId: this._node.get('node_id'),
             nodeLanguage: this._node.get('language'),
             nodeVersion: this._node.get('version')
