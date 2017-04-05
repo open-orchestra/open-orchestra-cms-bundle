@@ -58,7 +58,7 @@ class BlockController extends AbstractAdminController
             $response = new Response(
                 $message,
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/plain; charset=utf-8', 'blockId' => $block->getId(), 'blockLabel' => $block->getLabel())
+                array('Content-type' => 'text/plain; charset=utf-8', 'blockId' => $block->getId())
             );
 
             return $response;
