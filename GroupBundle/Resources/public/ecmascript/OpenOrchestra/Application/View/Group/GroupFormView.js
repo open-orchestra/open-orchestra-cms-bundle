@@ -45,7 +45,9 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _renderForm() {
         super._renderForm();
-        this._addTabMemberList();
+        if (null !== this._groupId) {
+            this._addTabMemberList();
+        }
     }
 
 
@@ -69,7 +71,7 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             role: 'tabpanel'
         });
 
-        $('.nav-tabs', this._$formRegion).append($navTab);
+        $('form > .nav-tabs', this._$formRegion).append($navTab);
         $('form > .tab-content', this._$formRegion).append($tabContent);
 
         let listView = this._createMembersListView();
