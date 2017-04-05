@@ -22,6 +22,7 @@ class BlockTypeTest extends AbstractBaseTestCase
     protected $blockFormTypeSubscriber;
     protected $templateName = 'template';
     protected $siteRepository;
+    protected $displayBlockManager;
 
     /**
      * Set up the test
@@ -35,11 +36,13 @@ class BlockTypeTest extends AbstractBaseTestCase
         $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
         $this->blockToArrayTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer');
         $this->blockFormTypeSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber');
+        $this->displayBlockManager = Phake::mock('OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
 
         Phake::when($this->templateManager)->getTemplateSetParameters()->thenReturn(array('fakeTemplateSet' => array('styles' => array())));
         Phake::when($site)->getTemplateSet()->thenReturn('fakeTemplateSet');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
+        Phake::when($this->generateFormManager)->getTemplate(Phake::anyParameters())->thenReturn($this->templateName);
         Phake::when($this->generateFormManager)->getTemplate(Phake::anyParameters())->thenReturn($this->templateName);
 
         $this->blockType = new BlockType(
@@ -48,7 +51,8 @@ class BlockTypeTest extends AbstractBaseTestCase
             $this->siteRepository,
             $this->generateFormManager,
             $this->blockToArrayTransformer,
-            $this->blockFormTypeSubscriber
+            $this->blockFormTypeSubscriber,
+            $this->displayBlockManager
         );
     }
 
@@ -94,7 +98,6 @@ class BlockTypeTest extends AbstractBaseTestCase
         $this->blockType->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'blockPosition' => 0,
             'data_class' => null,
             'group_enabled' => true,
             'delete_button' => false,
@@ -153,13 +156,38 @@ class BlockTypeTest extends AbstractBaseTestCase
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $options = array_merge(array('blockPosition' => 0, 'data' => $block), $options);
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($this->displayBlockManager)->isPublic($block)->thenReturn(false);
+
+        $this->blockType->buildForm($builder, $options);
+
+        Phake::verify($builder, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($builder)->setAttribute('template', $this->templateName);
+        Phake::verify($builder)->addViewTransformer(Phake::anyParameters());
+        Phake::verify($builder, Phake::times($subscriberCount))->addEventSubscriber(Phake::anyParameters());
+    }
+
+    /**
+     * @param array $options
+     * @param int   $subscriberCount
+     *
+     * @dataProvider provideOptionsAndCount
+     */
+    public function testBuildFormWithCache(array $options, $subscriberCount)
+    {
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $options = array_merge(array('blockPosition' => 0, 'data' => $block), $options);
+        $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($this->displayBlockManager)->isPublic($block)->thenReturn(true);
 
         $this->blockType->buildForm($builder, $options);
 
         Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
-        Phake::verify($builder)->setAttribute('template', $this->templateName);
-        Phake::verify($builder)->addViewTransformer(Phake::anyParameters());
-        Phake::verify($builder, Phake::times($subscriberCount))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder)->add('maxAge', 'integer', array(
+            'label' => 'open_orchestra_backoffice.form.block.max_age',
+            'required' => false,
+            'group_id' => 'technical',
+            'sub_group_id' => 'cache',
+        ));
     }
 
     /**

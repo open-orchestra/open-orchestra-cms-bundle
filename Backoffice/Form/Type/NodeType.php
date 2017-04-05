@@ -3,6 +3,8 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,6 +30,7 @@ class NodeType extends AbstractType
     protected $schemeChoices;
     protected $specialPageChoiceStatusSubscriber;
     protected $frontRoles;
+    protected $displayBlockManager;
 
     /**
      * @param NodeManager              $nodeManager
@@ -37,6 +40,7 @@ class NodeType extends AbstractType
      * @param string                   $nodeClass
      * @param EventSubscriberInterface $specialPageChoiceStatusSubscriber
      * @param array                    $frontRoles
+     * @param DisplayBlockManager      $displayBlockManager
      */
     public function __construct(
         NodeManager $nodeManager,
@@ -45,7 +49,8 @@ class NodeType extends AbstractType
         TemplateManager $templateManager,
         $nodeClass,
         EventSubscriberInterface $specialPageChoiceStatusSubscriber,
-        array $frontRoles
+        array $frontRoles,
+        DisplayBlockManager $displayBlockManager
     ) {
         $this->nodeManager = $nodeManager;
         $this->contextManager = $contextManager;
@@ -59,6 +64,7 @@ class NodeType extends AbstractType
         );
         $this->specialPageChoiceStatusSubscriber = $specialPageChoiceStatusSubscriber;
         $this->frontRoles = $frontRoles;
+        $this->displayBlockManager = $displayBlockManager;
    }
 
     /**
@@ -173,14 +179,8 @@ class NodeType extends AbstractType
                 'group_id' => 'keywords',
                 'sub_group_id' => 'keywords',
                 'required' => false
-            ))
-
-            ->add('maxAge', 'integer', array(
-                'label' => 'open_orchestra_backoffice.form.node.max_age',
-                'group_id' => 'cache',
-                'sub_group_id' => 'cache',
-                'required' => false,
             ));
+            $this->addFieldMaxAge($builder, $options);
 
             if (!empty($this->frontRoles)) {
                 $builder->add('frontRoles', 'choice', array(
@@ -314,6 +314,54 @@ class NodeType extends AbstractType
     }
 
     /**
+     * @param NodeInterface $node
+     *
+     * @return bool
+     *
+     * @throws \OpenOrchestra\DisplayBundle\Exception\DisplayBlockStrategyNotFoundException
+     */
+    protected function hasPrivateBlock(NodeInterface $node)
+    {
+        $areas = $node->getAreas();
+
+        foreach ($areas as $area) {
+            $blocks = $area->getBlocks();
+            foreach ($blocks as $block) {
+                if (false === $this->displayBlockManager->isPublic($block)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    protected function addFieldMaxAge(FormBuilderInterface $builder, array $options)
+    {
+        $filedOptions = array(
+            'label' => 'open_orchestra_backoffice.form.node.max_age.name',
+            'group_id' => 'cache',
+            'sub_group_id' => 'cache',
+            'required' => false,
+        );
+        if (isset($options['data']) &&
+            $options['data'] instanceof NodeInterface &&
+            true === $this->hasPrivateBlock($options['data'])
+        ) {
+            $filedOptions['disabled'] = true;
+            $filedOptions['attr'] = array(
+                'help_text' => 'open_orchestra_backoffice.form.node.max_age.helper',
+            );
+        }
+
+        $builder->add('maxAge', 'integer', $filedOptions);
+    }
+
+    /**
      * @param FormView      $view
      * @param FormInterface $form
      * @param array         $options
@@ -323,7 +371,6 @@ class NodeType extends AbstractType
         parent::buildView($view, $form, $options);
         $view->vars['delete_button'] = $options['delete_button'];
     }
-
 
     /**
      * @return string
