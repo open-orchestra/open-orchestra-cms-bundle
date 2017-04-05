@@ -17,6 +17,7 @@ class NodeTypeTest extends AbstractBaseTestCase
     protected $contextManager;
     protected $siteRepository;
     protected $nodeClass = 'nodeClass';
+    protected $specialPageChoiceSubscriber;
 
     /**
      * Set up the test
@@ -27,7 +28,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
-        $specialPageChoiceSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        $this->specialPageChoiceSubscriber = Phake::mock('Symfony\Component\EventDispatcher\EventSubscriberInterface');
 
         $this->nodeType = new NodeType(
             $this->nodeManager,
@@ -35,7 +36,7 @@ class NodeTypeTest extends AbstractBaseTestCase
             $this->siteRepository,
             $this->templateManager,
             $this->nodeClass,
-            $specialPageChoiceSubscriber,
+            $this->specialPageChoiceSubscriber,
             array()
         );
     }
@@ -49,10 +50,31 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
         $this->nodeType->buildForm($formBuilderMock, array());
-        Phake::verify($formBuilderMock, Phake::times(18))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(17))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
+    }
+
+    /**
+     * Test build form with front role
+     */
+    public function testBuildFormWithFrontRole()
+    {
+        $form = new NodeType(
+            $this->nodeManager,
+            $this->contextManager,
+            $this->siteRepository,
+            $this->templateManager,
+            $this->nodeClass,
+            $this->specialPageChoiceSubscriber,
+            array('fakeRole' => 'fakeLabel')
+        );
+        $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
+
+        $form->buildForm($formBuilderMock, array());
+        Phake::verify($formBuilderMock, Phake::times(18))->add(Phake::anyParameters());
     }
 
     /**
