@@ -14,6 +14,8 @@ class NodeStrategy extends AbstractBusinessRulesStrategy
 
     CONST DELETE_VERSION = 'DELETE_VERSION';
 
+    protected $nodeRepository;
+
     /**
      * @param NodeRepositoryInterface $nodeRepository
      */

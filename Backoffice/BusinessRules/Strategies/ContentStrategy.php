@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -13,22 +13,25 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
  */
 class ContentStrategy extends AbstractBusinessRulesStrategy
 {
-
     CONST DELETE_VERSION = 'DELETE_VERSION';
+
+    protected $contentRepository;
+    protected $siteRepository;
+    protected $contextManager;
 
     /**
      * @param ContentRepositoryInterface $contentRepository
      * @param SiteRepositoryInterface    $siteRepository
-     * @param ContextManager             $contextManeger
+     * @param CurrentSiteIdInterface     $contextManager
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
         SiteRepositoryInterface $siteRepository,
-        ContextManager $contextManeger
+        CurrentSiteIdInterface   $contextManager
     ) {
         $this->contentRepository = $contentRepository;
         $this->siteRepository = $siteRepository;
-        $this->contextManeger = $contextManeger;
+        $this->contextManager = $contextManager;
     }
 
     /**
@@ -103,7 +106,7 @@ class ContentStrategy extends AbstractBusinessRulesStrategy
      */
     protected function isContentOnSiteAllowed(ContentInterface $content)
     {
-        $siteId = $this->contextManeger->getCurrentSiteId();
+        $siteId = $this->contextManager->getCurrentSiteId();
         $site = $this->siteRepository->findOneBySiteId($siteId);
 
         return in_array($content->getContentType(), $site->getContentTypes());

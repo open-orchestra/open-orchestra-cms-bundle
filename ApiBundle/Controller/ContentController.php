@@ -8,6 +8,7 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpExceptio
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentTypeNotAllowedException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentStrategy;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentTypeStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentDeleteEvent;
@@ -90,6 +91,9 @@ class ContentController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, ContentInterface::ENTITY_TYPE);
 
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContentTypeStrategy::READ_LIST, $contentType)) {
+            throw new ContentTypeNotAllowedException();
+        }
 
         $mapping = $this->getMappingContentType($language, $contentType);
 
@@ -103,10 +107,6 @@ class ContentController extends BaseController
         $repository =  $this->get('open_orchestra_model.repository.content');
 
         $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language, $searchTypes);
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $collection[0])) {
-            throw new ContentTypeNotAllowedException();
-        }
-
         $recordsTotal = $repository->countFilterByContentTypeSiteAndLanguage($contentTypeId, $siteId, $language);
         $recordsFiltered = $repository->countWithFilterAndContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language, $searchTypes);
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($collection);
