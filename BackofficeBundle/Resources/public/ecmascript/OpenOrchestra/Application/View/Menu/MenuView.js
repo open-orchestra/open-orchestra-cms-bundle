@@ -51,16 +51,11 @@ class MenuView extends OrchestraView
     }
 
     /**
-     * Enabled niceScroll on menu
+     * Enabled perfect scrollbar
      * @private
      */
     _enabledScroll() {
-        $('#left-column').niceScroll({
-            horizrailenabled: false,
-            cursorcolor: "#e6eef1",
-            railpadding: { top: 0, right: 1, left: 0, bottom: 0 },
-            cursorborder: 0
-        }).resize();
+        Application.getRegion('left_column').perfectScrollbar();
     }
 
     /**
