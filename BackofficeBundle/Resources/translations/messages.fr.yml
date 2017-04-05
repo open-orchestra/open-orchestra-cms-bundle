@@ -487,4 +487,5 @@ open_orchestra_backoffice:
             widget: Widget
             content: Texte et contenu
             media: Média
+            contact: Contact
             default: Défaut
