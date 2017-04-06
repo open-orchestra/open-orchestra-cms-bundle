@@ -27,6 +27,8 @@ services:
         class: '%open_orchestra_backoffice.business_rules_manager.content_type.class%'
         arguments:
             - '@open_orchestra_model.repository.content'
+            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_model.repository.site'
         tags:
             - { name: open_orchestra_backoffice.business_rules.strategy }
     open_orchestra_backoffice.business_rules_manager.keyword:

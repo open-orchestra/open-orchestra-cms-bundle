@@ -14,6 +14,8 @@ class ContentTypeStrategyTest extends AbstractBaseTestCase
 {
     protected $contentRepository;
     protected $strategy;
+    protected $siteRepository;
+    protected $contextManager;
 
     /**
      * setUp
@@ -21,13 +23,19 @@ class ContentTypeStrategyTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
 
         $this->strategy = new ContentTypeStrategy(
-            $this->contentRepository);
+            $this->contentRepository,
+            $this->contextManager,
+            $this->siteRepository
+        );
     }
 
     /**
-     * @param int $countByContentType
+     * @param int  $countByContentType
+     * @param bool $isGranted
      *
      * @dataProvider provideDeleteContentType
      */
@@ -51,12 +59,43 @@ class ContentTypeStrategyTest extends AbstractBaseTestCase
     }
 
     /**
+     * @param string $contentTypeId
+     * @param array  $availableContentType
+     * @param bool   $isGranted
+     *
+     * @dataProvider provideCanReadListContentType
+     */
+    public function testCanReadList($contentTypeId, array $availableContentType, $isGranted)
+    {
+        $contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        Phake::when($contentType )->getContentTypeId()->thenReturn($contentTypeId);
+
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site)->getContentTypes()->thenReturn($availableContentType);
+        Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
+        $this->assertSame($isGranted, $this->strategy->canReadList($contentType, array()));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCanReadListContentType()
+    {
+        return array(
+            array('test', array(), false),
+            array('test', array('other'), false),
+            array('test', array('other', 'test'), true),
+        );
+    }
+
+    /**
      * test getActions
      */
     public function testGetActions()
     {
         $this->assertEquals(array(
             ContributionActionInterface::DELETE => 'canDelete',
+            ContentTypeStrategy::READ_LIST => 'canReadList',
         ), $this->strategy->getActions());
     }
 
