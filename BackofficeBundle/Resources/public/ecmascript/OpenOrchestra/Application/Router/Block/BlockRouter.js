@@ -22,7 +22,7 @@ class BlockRouter extends AbstractBlockRouter
         this.routes = {
             'block/new/list/:nodeId/:nodeLanguage/:nodeVersion/:areaName/:position': 'newBlockListComponent',
             'block/new/list/available-component/:nodeId/:nodeLanguage/:nodeVersion/:component/:componentName/:areaName/:position': 'newBlockListAvailable',
-            'block/edit/:blockId/:blockLabel/:nodeId/:nodeLanguage/:nodeVersion': 'editBlock',
+            'block/edit/:blockId/:nodeId/:nodeLanguage/:nodeVersion': 'editBlock',
             'block/new/form/:nodeId/:nodeLanguage/:nodeVersion/:component/:componentName/:areaName/:position': 'newBlockForm'
         };
     }
@@ -140,12 +140,11 @@ class BlockRouter extends AbstractBlockRouter
      * Edit block
      *
      * @param {string} blockId
-     * @param {string} blockLabel
      * @param {string} nodeId
      * @param {string} nodeLanguage
      * @param {string} nodeVersion
      */
-    editBlock(blockId, blockLabel, nodeId, nodeLanguage, nodeVersion) {
+    editBlock(blockId, nodeId, nodeLanguage, nodeVersion) {
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_block_form', {
             blockId : blockId
@@ -153,7 +152,6 @@ class BlockRouter extends AbstractBlockRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let blockFormView = new BlockFormView({
                 form : form,
-                blockLabel: blockLabel,
                 blockId: blockId,
                 nodeId: nodeId,
                 nodeLanguage: nodeLanguage,

@@ -9,16 +9,14 @@ class BlockFormView extends AbstractFormView
 {
     /**
      * Initialize
-     * @param {Form} form
-     * @param {string} blockLabel
+     * @param {Form}   form
      * @param {string} blockId
      * @param {string} nodeId
      * @param {string} nodeLanguage
      * @param {string} nodeVersion
      */
-    initialize({form, blockLabel, blockId, nodeId, nodeLanguage, nodeVersion}) {
+    initialize({form, blockId, nodeId, nodeLanguage, nodeVersion}) {
         super.initialize({form: form});
-        this._blockLabel = blockLabel;
         this._blockId = blockId;
         this._nodeId = nodeId;
         this._nodeLanguage = nodeLanguage;
@@ -30,7 +28,7 @@ class BlockFormView extends AbstractFormView
      */
     render() {
         let template = this._renderTemplate('Block/blockEditView', {
-            blockLabel : this._blockLabel,
+            blockLabel : $("input[id*='_label']", this._form.$form).first().val(),
             nodeId: this._nodeId,
             nodeLanguage: this._nodeLanguage,
             nodeVersion: this._nodeVersion

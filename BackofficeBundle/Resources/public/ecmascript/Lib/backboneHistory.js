@@ -26,7 +26,7 @@ _.extend(Backbone.history, {
         let route = this.routePatterns[name];
         var replaceFunction = (match, previousKey, key) => {
             if (parameter[key]) {
-                return previousKey + parameter[key];
+                return previousKey + encodeURIComponent(parameter[key]);
             }
 
             if (null !== match.match(/\(.*:.*\)/g)) {
