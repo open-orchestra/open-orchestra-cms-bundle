@@ -69,7 +69,7 @@ class BlockType extends AbstractType
         $builder->add('style', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.block.style',
             'required' => false,
-            'choices' => $this->getStyleChoices(),
+            'choices' => $this->getStyleChoices($options),
             'group_id' => 'property',
             'sub_group_id' => 'style',
         ));
@@ -184,17 +184,31 @@ class BlockType extends AbstractType
     }
 
     /**
+     * @param array $options
+     *
      * @return array
      */
-    protected function getStyleChoices()
+    protected function getStyleChoices(array $options)
     {
-        $siteId = $this->contextManager->getCurrentSiteId();
-        $site = $this->siteRepository->findOneBySiteId($siteId);
-        $templateSetId = $site->getTemplateSet();
-        $templateSetParameters = $this->templateManager->getTemplateSetParameters();
         $choices = array();
-        foreach ($templateSetParameters[$templateSetId]['styles'] as $key => $label) {
-            $choices[$key] = $label;
+        if (
+            isset($options['data']) &&
+            $options['data'] instanceof BlockInterface
+        ) {
+            $siteId = $this->contextManager->getCurrentSiteId();
+            $site = $this->siteRepository->findOneBySiteId($siteId);
+            $templateSetId = $site->getTemplateSet();
+            $templateSetParameters = $this->templateManager->getTemplateSetParameters();
+            $blockComponent = $options['data']->getComponent();
+
+            foreach ($templateSetParameters[$templateSetId]['styles'] as $key => $configuration) {
+                if (
+                    (isset($configuration['allowed_blocks']) && isset($configuration['label'])) &&
+                    (empty($configuration['allowed_blocks']) || in_array($blockComponent, $configuration['allowed_blocks']))
+                ) {
+                    $choices[$key] = $configuration['label'];
+                }
+            }
         }
 
         return $choices;
