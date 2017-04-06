@@ -74,13 +74,11 @@ class NewSharedBlockFormView extends AbstractNewBlockFormView
      */
     _redirectEditSharedBlock(data, textStatus, jqXHR) {
         let blockId = jqXHR.getResponseHeader('blockId');
-        let blockLabel = jqXHR.getResponseHeader('blockLabel');
-        if (null === blockId || null === blockLabel) {
-            throw new ApplicationError('Invalid blockId or blockLabel');
+        if (null === blockId) {
+            throw new ApplicationError('Invalid blockId');
         }
         let url = Backbone.history.generateUrl('editSharedBlock', {
             blockId: blockId,
-            blockLabel: blockLabel,
             language: this._language
         });
         if (data != '') {
