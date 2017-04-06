@@ -69,7 +69,7 @@
             <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.user.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.user, function(entity, key) { %>
-                    <%= renderTemplate(entity.template) %>
+                    <%= renderTemplate(entity.template, {access_section: user.access_section}) %>
                 <% }); %>
             </ul>
         </div>
@@ -81,7 +81,7 @@
             <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.configuration.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.configuration, function(entity, key) { %>
-                    <%= renderTemplate(entity.template) %>
+                    <%= renderTemplate(entity.template, {access_section: user.access_section}) %>
                 <% }); %>
             </ul>
         </div>
@@ -93,7 +93,7 @@
             <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.platform.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.platform, function(entity, key) { %>
-                    <%= renderTemplate(entity.template) %>
+                    <%= renderTemplate(entity.template, {access_section: user.access_section}) %>
                 <% }); %>
             </ul>
         </div>
@@ -105,7 +105,7 @@
             <div class="return"><a href="#"><%- Translator.trans('open_orchestra_backoffice.menu.developer.title') %></a></div>
             <ul class="nav level2">
                 <% _.each(menuConfig.developer, function(entity, key) { %>
-                    <%= renderTemplate(entity.template) %>
+                    <%= renderTemplate(entity.template, {access_section: user.access_section}) %>
                 <% }); %>
             </ul>
         </div>
