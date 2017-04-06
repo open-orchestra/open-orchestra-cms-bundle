@@ -110,9 +110,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         ));
 
         $configurationFrontRoles = $config['front_roles'];
-        if ($container->hasParameter('open_orchestra_backoffice.configuration.front_roles')) {
-            $configurationFrontRoles = array_merge_recursive($container->getParameter('open_orchestra_backoffice.configuration.front_roles'), $configurationFrontRoles);
-        }
         $container->setParameter('open_orchestra_backoffice.configuration.front_roles', $configurationFrontRoles);
 
         $result = array();
