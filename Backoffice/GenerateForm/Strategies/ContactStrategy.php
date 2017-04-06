@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy as BaseContactStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -36,12 +37,9 @@ class ContactStrategy extends AbstractBlockStrategy
         ));
         $builder->add('signature', 'text', array(
             'label' => 'open_orchestra_backoffice.block.contact.signature',
-            'constraints' => new NotBlank(),
+            'constraints' => new Email(),
             'group_id' => 'data',
             'sub_group_id' => 'content',
-        ));
-        $builder->add('maxAge', 'hidden', array(
-            'group_id' => 'data',
         ));
     }
 

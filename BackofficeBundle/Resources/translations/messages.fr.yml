@@ -138,7 +138,7 @@ open_orchestra_backoffice:
             keywords: Mots-clé
             template:
                 label: Template personnalisé de formulaire d'édition
-                helper: "Utilisation avancée.\nTemplate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig"
+                helper: "Utilisation avancée. Template alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type. Format : MyBundle::myTemplate.html.twig"
             defining_versionable:
                 label: Autoriser les versions
                 helper: Si réglé à "Oui", les contenus ayant ce type de contenu pour définition seront versionables.
@@ -178,7 +178,10 @@ open_orchestra_backoffice:
             meta_index: Meta index
             meta_follow: Meta follow
             seo_title: Titre
-            max_age: Durée de mise en cache
+            max_age:
+              name: Durée de mise en cache
+              helper: |
+                  Pour modifier cette valeur la page ne doit pas contenir de bloc privé.
             node_source: La page source
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
@@ -484,4 +487,5 @@ open_orchestra_backoffice:
             widget: Widget
             content: Texte et contenu
             media: Média
+            contact: Contact
             default: Défaut

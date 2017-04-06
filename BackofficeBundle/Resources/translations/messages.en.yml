@@ -138,7 +138,7 @@ open_orchestra_backoffice:
             keywords: Keywords
             template:
                 label: Edit form custom template
-                helper: Advanced usage only.\nAlternate template to render the current content form.\nUse the Symfony2 format:\nMyBundle::myTemplate.html.twig
+                helper: Advanced usage only. Alternate template to render the current content form.\nUse the Symfony2 format: MyBundle::myTemplate.html.twig
             defining_versionable:
                 label: Authorize versions
                 helper: If set to "Yes", The contents with this content type for model will be versionable.
@@ -178,7 +178,10 @@ open_orchestra_backoffice:
             meta_index: Meta index
             meta_follow: Meta follow
             seo_title: Title
-            max_age: Cache time
+            max_age:
+              name: Cache time
+              helper: |
+                  To edit this value, the page should not content private block.
             node_source: The source page
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
@@ -484,4 +487,5 @@ open_orchestra_backoffice:
             widget: Widget
             content: Text and content
             media: Media
+            contact: Contact
             default: Default
