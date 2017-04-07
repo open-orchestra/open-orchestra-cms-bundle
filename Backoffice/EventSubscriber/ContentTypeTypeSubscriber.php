@@ -21,9 +21,11 @@ class ContentTypeTypeSubscriber implements EventSubscriberInterface
         if (null !== $data->getContentTypeId()) {
             $field = $form->get('contentTypeId');
             $config = $field->getConfig();
-            $form->add($field->getName(),
+            $form->add(
+                $field->getName(),
                 $config->getType()->getName(),
-                array_merge($config->getOptions(), array('disabled' => true)));
+                array_merge($config->getOptions(), array('disabled' => true))
+            );
         }
     }
 
