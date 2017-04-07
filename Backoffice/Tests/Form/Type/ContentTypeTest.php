@@ -59,10 +59,30 @@ class ContentTypeTest extends AbstractBaseTestCase
         $this->form->buildForm($builder, array(
             'is_blocked_edition' => true,
             'need_link_to_site_defintion' => true,
+            'is_statusable' => true,
         ));
 
         Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
+    }
+
+    /**
+     * Test builder with content no statusable
+     */
+    public function testBuilderNoStatusable()
+    {
+        $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
+
+        $this->form->buildForm($builder, array(
+            'is_blocked_edition' => true,
+            'need_link_to_site_defintion' => true,
+            'is_statusable' => false,
+        ));
+
+        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**
@@ -78,6 +98,7 @@ class ContentTypeTest extends AbstractBaseTestCase
             'data_class' => $this->contentClass,
             'is_blocked_edition' => false,
             'need_link_to_site_defintion' => false,
+            'is_statusable' => false,
             'delete_button' => false,
             'new_button' => false,
                 'group_enabled' => true,

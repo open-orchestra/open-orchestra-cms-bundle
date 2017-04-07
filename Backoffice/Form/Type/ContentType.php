@@ -74,7 +74,9 @@ class ContentType extends AbstractType
                 'required' => false
             ));
 
-        $builder->addEventSubscriber($this->statusableChoiceStatusSubscriber);
+        if (true === $options['is_statusable']) {
+            $builder->addEventSubscriber($this->statusableChoiceStatusSubscriber);
+        }
         $builder->addEventSubscriber($this->contentTypeSubscriber);
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
@@ -109,6 +111,7 @@ class ContentType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => $this->contentClass,
             'is_blocked_edition' => false,
+            'is_statusable' => false,
             'need_link_to_site_defintion' => false,
             'delete_button' => false,
             'new_button' => false,

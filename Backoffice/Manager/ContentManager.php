@@ -43,12 +43,17 @@ class ContentManager
      * @param string  $contentType
      * @param string  $language
      * @param boolean $isLinkedToSite
+     * @param boolean $isStatusable
      *
      * @return ContentInterface
      */
-    public function initializeNewContent($contentType, $language, $isLinkedToSite)
+    public function initializeNewContent($contentType, $language, $isLinkedToSite, $isStatusable)
     {
-        $initialStatus = $this->statusRepository->findOneByInitial();
+        if (true === $isStatusable) {
+            $initialStatus = $this->statusRepository->findOneByInitial();
+        } else {
+            $initialStatus = $this->statusRepository->findOneByOutOfWorkflow();
+        }
 
         $contentClass = $this->contentClass;
         /** @var ContentInterface $content */
@@ -139,10 +144,11 @@ class ContentManager
      */
     protected function cloneContent(ContentInterface $content)
     {
-        $status = $this->statusRepository->findOneByInitial();
-
         $newContent = clone $content;
-        $newContent->setStatus($status);
+        if (false === $content->getStatus()->isOutOfWorkflow()) {
+            $status = $this->statusRepository->findOneByInitial();
+            $newContent->setStatus($status);
+        }
         $newContent->setVersion($this->uniqueIdGenerator->generateUniqueId());
         foreach ($content->getKeywords() as $keyword) {
             $newContent->addKeyword($keyword);
