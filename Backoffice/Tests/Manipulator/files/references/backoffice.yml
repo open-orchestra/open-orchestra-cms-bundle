@@ -1,5 +1,0 @@
-services:
-    open_orchestra_backoffice.display.test:
-        class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\TestStrategy
-        tags:
-            - { name: open_orchestra_backoffice.display_block.strategy }

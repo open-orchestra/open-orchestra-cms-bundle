@@ -1,5 +1,0 @@
-services:
-    open_orchestra_display.display.test:
-        class: OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TestStrategy
-        tags:
-            - { name: open_orchestra_display.display_block.strategy }

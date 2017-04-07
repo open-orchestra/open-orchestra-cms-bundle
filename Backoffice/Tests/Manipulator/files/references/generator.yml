@@ -1,5 +1,0 @@
-services:
-    open_orchestra_backoffice.generate_form.test:
-        class: OpenOrchestra\Backoffice\GenerateForm\Strategies\TestStrategy
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
