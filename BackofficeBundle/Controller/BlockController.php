@@ -33,24 +33,16 @@ class BlockController extends AbstractAdminController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
 
-        $option["method"] = "POST";
-        $option["action"] = $this->generateUrl('open_orchestra_backoffice_shared_block_new', array(
-            'component' => $component,
-            'language' => $language,
-        ));
-        $option["new_button"] = true;
-        if ("PATCH" === $request->getMethod()) {
-            $option["validation_groups"] = false;
-            $option["method"] = "PATCH";
-        }
-
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $blockManager = $this->get('open_orchestra_backoffice.manager.block');
+        $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, true);
+        $form = $this->createBlockForm($request, array(
+            "action" => $this->generateUrl('open_orchestra_backoffice_shared_block_new', array(
+                'component' => $component,
+                'language' => $language,
+            )),
+            "new_button" => true
+        ), $block);
 
-        $block = $blockManager->initializeBlock($component, $siteId, $language, true);
-
-        $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
-        $form = $this->createForm($formType, $block, $option);
         $form->handleRequest($request);
 
         if ('PATCH' !== $request->getMethod() && $form->isValid()) {
@@ -92,26 +84,19 @@ class BlockController extends AbstractAdminController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
 
-        $option["method"] = "POST";
-        $option["action"] = $this->generateUrl('open_orchestra_backoffice_block_new_in_node', array(
-            'nodeId'    => $nodeId,
-            'language'  => $language,
-            'version'   => $version,
-            'areaId'    => $areaId,
-            'position'  => $position,
-            'component' => $component,
-        ));
-        if ("PATCH" === $request->getMethod()) {
-            $option["validation_groups"] = false;
-            $option["method"] = "PATCH";
-        }
-
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-
         $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, false);
+        $form = $this->createBlockForm($request, array(
+            "action" => $this->generateUrl('open_orchestra_backoffice_block_new_in_node', array(
+                'nodeId'    => $nodeId,
+                'language'  => $language,
+                'version'   => $version,
+                'areaId'    => $areaId,
+                'position'  => $position,
+                'component' => $component,
+            ))
+        ), $block);
 
-        $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
-        $form = $this->createForm($formType, $block, $option);
         $form->handleRequest($request);
 
         if ('PATCH' !== $request->getMethod() && $form->isValid()) {
@@ -143,21 +128,14 @@ class BlockController extends AbstractAdminController
         if (!$block instanceof BlockInterface) {
             throw new \UnexpectedValueException();
         }
-
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $block);
 
-        $option["method"] = "POST";
-        $option["action"] = $this->generateUrl('open_orchestra_backoffice_block_form', array(
-            'blockId' => $blockId
-        ));
-        $option["delete_button"] = $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block);
-        if ("PATCH" === $request->getMethod()) {
-            $option["validation_groups"] = false;
-            $option["method"] = "PATCH";
-        }
-
-        $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
-        $form = $this->createForm($formType, $block, $option);
+        $form = $this->createBlockForm($request, array(
+            "action" => $this->generateUrl('open_orchestra_backoffice_block_form', array(
+                'blockId' => $blockId
+            )),
+            "delete_button" => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block)
+        ), $block);
 
         $form->handleRequest($request);
         $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');
@@ -188,4 +166,24 @@ class BlockController extends AbstractAdminController
         $this->dispatchEvent(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $block));
     }
 
+    /**
+     * @param Request        $request
+     * @param string         $option
+     * @param BlockInterface $block
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createBlockForm(Request $request, $option, BlockInterface $block)
+    {
+        $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
+
+        $method = "POST";
+        if ("PATCH" === $request->getMethod()) {
+            $option["validation_groups"] = false;
+            $method = "PATCH";
+        }
+        $option["method"] = $method;
+
+        return $this->createForm($formType, $block, $option);
+    }
 }
