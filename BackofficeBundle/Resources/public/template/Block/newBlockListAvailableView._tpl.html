@@ -13,15 +13,15 @@
         <%= Translator.trans('open_orchestra_datatable.info', {total: '<span>'+blocks.length+'</span>'}) %>
     </div>
 </div>
-<div class="well add-block clearfix">
-    <div class="col-lg-3">
+<div class="well add-block clearfix grid">
+    <div class="col-lg-3 grid-item">
         <a class="block active" href="#<%- Backbone.history.generateUrl('newBlockForm', {nodeId: nodeId, nodeLanguage:nodeLanguage , nodeVersion: nodeVersion, component:component, componentName:componentName, areaName: areaName, position: position}) %>">
             <span><%- Translator.trans('open_orchestra_backoffice.block.new_block') %></span>
             <p><%- Translator.trans('open_orchestra_backoffice.block.display_new_block', {blockComponent: componentName }) %></p>
         </a>
     </div>
     <% _.each(blocks.models, function(block, key) { %>
-        <div class="col-lg-3">
+        <div class="col-lg-3 grid-item">
             <div class="block shared-block" data-block-id="<%- block.get('id')%>" >
                 <span><%- block.get('label')%></span>
                 <p><%- block.get('name')%></p>

@@ -895,6 +895,7 @@ a.btn.disabled {
     display: block;
     color: @baseColor;
     text-decoration: none;
+    height: 100%;
     &:hover, &:focus, &.active {
         cursor: pointer;
         background: #fff;
@@ -2287,6 +2288,21 @@ fieldset {
         transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
         -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     }
+}
+
+
+/* ===================================================================
+ * GRID
+ * =================================================================*/
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  .grid-item {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* ===================================================================
