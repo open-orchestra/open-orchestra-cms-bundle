@@ -61,6 +61,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         $builder->add('contentSearch', 'oo_content_search', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.content',
             'search_engine' => true,
+            'attr' => array('class' => 'form-to-patch'),
             'required' => true,
             'authorize_new' => false,
             'group_id' => 'data',

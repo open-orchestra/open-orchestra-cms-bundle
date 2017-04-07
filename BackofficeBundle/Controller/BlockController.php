@@ -25,30 +25,35 @@ class BlockController extends AbstractAdminController
      * @param string  $language
      *
      * @Config\Route("/block/new/shared/{component}/{language}", name="open_orchestra_backoffice_shared_block_new")
-     * @Config\Method({"GET", "POST"})
+     * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @return Response
      */
     public function newSharedBlockAction(Request $request, $component, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
+
+        $option["method"] = "POST";
+        $option["action"] = $this->generateUrl('open_orchestra_backoffice_shared_block_new', array(
+            'component' => $component,
+            'language' => $language,
+        ));
+        $option["new_button"] = true;
+        if ("PATCH" === $request->getMethod()) {
+            $option["validation_groups"] = false;
+            $option["method"] = "PATCH";
+        }
+
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $blockManager = $this->get('open_orchestra_backoffice.manager.block');
 
         $block = $blockManager->initializeBlock($component, $siteId, $language, true);
 
         $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
-        $form = $this->createForm($formType, $block, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_shared_block_new', array(
-                'component' => $component,
-                'language' => $language,
-            )),
-            'method' => 'POST',
-            'new_button' => true
-        ));
+        $form = $this->createForm($formType, $block, $option);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ('PATCH' !== $request->getMethod() && $form->isValid()) {
             $documentManager = $this->get('object_manager');
             $documentManager->persist($block);
             $documentManager->flush();
@@ -77,7 +82,7 @@ class BlockController extends AbstractAdminController
      * @param string  $component
      *
      * @Config\Route("/block/new-in-node/{nodeId}/{language}/{version}/{areaId}/{position}/{component}", name="open_orchestra_backoffice_block_new_in_node")
-     * @Config\Method({"GET", "POST"})
+     * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @return Response
      * @throws NodeNotFoundHttpException
@@ -86,25 +91,30 @@ class BlockController extends AbstractAdminController
     public function newAction(Request $request, $nodeId, $language, $version, $areaId, $position, $component)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
+
+        $option["method"] = "POST";
+        $option["action"] = $this->generateUrl('open_orchestra_backoffice_block_new_in_node', array(
+            'nodeId'    => $nodeId,
+            'language'  => $language,
+            'version'   => $version,
+            'areaId'    => $areaId,
+            'position'  => $position,
+            'component' => $component,
+        ));
+        if ("PATCH" === $request->getMethod()) {
+            $option["validation_groups"] = false;
+            $option["method"] = "PATCH";
+        }
+
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
 
         $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, false);
 
         $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
-        $form = $this->createForm($formType, $block, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_block_new_in_node', array(
-                'nodeId'    => $nodeId,
-                'language'  => $language,
-                'version'   => $version,
-                'areaId'    => $areaId,
-                'position'  => $position,
-                'component' => $component,
-            )),
-            'method' => 'POST',
-        ));
+        $form = $this->createForm($formType, $block, $option);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ('PATCH' !== $request->getMethod() && $form->isValid()) {
             $node = $this->get('open_orchestra_model.repository.node')->findVersionNotDeleted($nodeId, $language, $siteId, $version);
             if (!$node instanceof NodeInterface) {
                 throw new NodeNotFoundHttpException();
@@ -123,7 +133,7 @@ class BlockController extends AbstractAdminController
      * @param string  $blockId
      *
      * @Config\Route("/block/form/{blockId}", name="open_orchestra_backoffice_block_form")
-     * @Config\Method({"GET", "POST"})
+     * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @return Response
      */
@@ -136,18 +146,22 @@ class BlockController extends AbstractAdminController
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $block);
 
-        $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
-        $form = $this->createForm($formType, $block, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_block_form', array(
-                'blockId' => $blockId
-            )),
-            'method' => 'POST',
-            'delete_button' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block)
+        $option["method"] = "POST";
+        $option["action"] = $this->generateUrl('open_orchestra_backoffice_block_form', array(
+            'blockId' => $blockId
         ));
+        $option["delete_button"] = $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block);
+        if ("PATCH" === $request->getMethod()) {
+            $option["validation_groups"] = false;
+            $option["method"] = "PATCH";
+        }
+
+        $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
+        $form = $this->createForm($formType, $block, $option);
 
         $form->handleRequest($request);
         $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');
-        if ($this->handleForm($form, $message)) {
+        if ('PATCH' !== $request->getMethod() && $this->handleForm($form, $message)) {
             $this->dispatchEvent(BlockEvents::POST_BLOCK_UPDATE, new BlockEvent($block));
         }
 
