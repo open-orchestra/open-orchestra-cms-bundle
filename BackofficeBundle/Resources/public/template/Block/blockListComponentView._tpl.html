@@ -5,10 +5,10 @@
 </div>
 <div class="well add-block clearfix">
     <% _.each(orderedBlockComponents, function(blockComponents, category) { %>
-    <div class="group">
-        <div class="underline-label"><%- category %></div>
+    <div class="underline-label"><%- category %></div>
+    <div class="grid">
         <% _.each(blockComponents, function(blockComponent, key) { %>
-        <div class="col-lg-3">
+        <div class="col-lg-3 grid-item">
             <a class="block" href="#<%- addBlockUrl(blockComponent) %>">
                 <span><%- blockComponent.get('name')%></span>
                 <p><%- blockComponent.get('description')%></p>
