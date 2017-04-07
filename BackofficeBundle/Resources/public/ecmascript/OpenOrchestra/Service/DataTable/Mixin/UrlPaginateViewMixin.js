@@ -7,6 +7,7 @@ let UrlPaginateViewMixin = (superclass) => class extends superclass {
         super.preinitialize(options);
         this.events = this.events || {};
         this.events['draw.dt table'] = '_updatePage';
+        this._firstDraw = true;
     }
 
     /**
@@ -21,8 +22,12 @@ let UrlPaginateViewMixin = (superclass) => class extends superclass {
         if (page > pageInfo.pages && 0 !== pageInfo.pages) {
             api.page('last').draw('page');
         }
-        let url = this.generateUrlUpdatePage(page);
-        Backbone.history.navigate(url);
+        if (true === this._firstDraw) {
+            this._firstDraw = false;
+        } else {
+            let url = this.generateUrlUpdatePage(page);
+            Backbone.history.navigate(url);
+        }
     }
 
     /**
