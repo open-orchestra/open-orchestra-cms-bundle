@@ -30,7 +30,7 @@ class SiteController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $site);
 
         if ($site instanceof SiteInterface) {
-            $oldAliases = $site->getAliases();
+            $oldAliases = clone $site->getAliases();
             $form = $this->createForm(
                 'oo_site',
                 $site,

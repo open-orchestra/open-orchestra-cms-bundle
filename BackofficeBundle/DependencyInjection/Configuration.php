@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
                 ->defaultValue(array(
                     'en'=>'open_orchestra_backoffice.language.en',
                     'fr'=>'open_orchestra_backoffice.language.fr',
-                    'de' => 'open_orchestra_backoffice.language.de',
+                    'de' => 'open_orchestra_backoffice.language.de'
                 ))
                 ->prototype('scalar')->end()
             ->end()
