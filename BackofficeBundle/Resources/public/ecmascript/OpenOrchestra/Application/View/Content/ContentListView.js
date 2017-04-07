@@ -74,16 +74,18 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
     _generateFieldColumn() {
         let columnsDefinition = [];
         let fields = this._contentType.get('fields');
-        for (let field of fields) {
-            if (field.listable) {
-                columnsDefinition.push({
-                    name: "fields." + field.field_id + ".string_value",
-                    title: field.label,
-                    orderable: field.orderable,
-                    activateColvis: true,
-                    visible: true,
-                    createdCell: CellFormatterManager.format(field)
-                });
+        if (typeof fields !== "undefined") {
+            for (let field of fields) {
+                if (field.listable) {
+                    columnsDefinition.push({
+                        name: "fields." + field.field_id + ".string_value",
+                        title: field.label,
+                        orderable: field.orderable,
+                        activateColvis: true,
+                        visible: true,
+                        createdCell: CellFormatterManager.format(field)
+                    });
+                }
             }
         }
 
