@@ -80,7 +80,9 @@ class ContentManager
         $translationStatus = $this->statusRepository->findOneByTranslationState();
         $content = $this->cloneContent($contentSource);
         $content->setLanguage($language);
-        $content->setStatus($translationStatus);
+        if (false === $content->getStatus()->isOutOfWorkflow()) {
+            $content->setStatus($translationStatus);
+        }
 
         return $content;
     }
