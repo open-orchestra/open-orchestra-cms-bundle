@@ -47,15 +47,17 @@ class UpdateNodeSiteAliasSubscriber implements EventSubscriberInterface
         $languageReference = current($languages);
         $languages = array_diff($event->getSite()->getLanguages(), $languages);
 
-        $nodes = $this->nodeRepository->findLastVersionByLanguage($event->getSite()->getSiteId(), $languageReference);
+        if (count($languages) > 0) {
+            $nodes = $this->nodeRepository->findLastVersionByLanguage($event->getSite()->getSiteId(), $languageReference);
 
-        foreach ($languages as $language) {
-            foreach($nodes as $node) {
-                $this->objectManager->persist($this->nodeManager->createNewLanguageNode($node, $language));
+            foreach ($languages as $language) {
+                foreach ($nodes as $node) {
+                    $this->objectManager->persist($this->nodeManager->createNewLanguageNode($node, $language));
+                }
             }
-        }
 
-        $this->objectManager->flush();
+            $this->objectManager->flush();
+        }
     }
 
     /**
