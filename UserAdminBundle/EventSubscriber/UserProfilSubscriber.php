@@ -79,11 +79,19 @@ class UserProfilSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $user = $event->getForm()->getData();
         if ($user instanceof UserInterface) {
-            if ($this->allowedToSetPlatformAdmin && array_key_exists('platform_admin', $data) && $data['platform_admin']) {
-                $user->addRole(ContributionRoleInterface::PLATFORM_ADMIN);
+           if ($this->allowedToSetPlatformAdmin) {
+                if (array_key_exists('platform_admin', $data) && $data['platform_admin']) {
+                    $user->addRole(ContributionRoleInterface::PLATFORM_ADMIN);
+                } else {
+                    $user->removeRole(ContributionRoleInterface::PLATFORM_ADMIN);
+                }
             }
-            if ($this->allowedToSetDeveloper && array_key_exists('developer', $data) && $data['developer']) {
-                $user->addRole(ContributionRoleInterface::DEVELOPER);
+            if ($this->allowedToSetDeveloper) {
+                if (array_key_exists('developer', $data) && $data['developer']) {
+                    $user->addRole(ContributionRoleInterface::DEVELOPER);
+                } else {
+                    $user->removeRole(ContributionRoleInterface::DEVELOPER);
+                }
             }
         }
     }
