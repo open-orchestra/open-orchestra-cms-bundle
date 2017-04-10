@@ -84,7 +84,7 @@ open_orchestra_backoffice:
             new: New content
             name: Name
             status_label: Workflow state
-            linked_to_site: Shared
+            linked_to_site: Restricted to site
             created_at: Created at
             created_by: Author
             updated_at: Updated at
