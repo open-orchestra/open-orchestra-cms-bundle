@@ -92,13 +92,6 @@ class ContentTypeType extends AbstractType
                 'group_id' => 'property',
                 'sub_group_id' => 'visible',
             ))
-            ->add('version', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.version',
-                'required' => false,
-                'disabled' => true,
-                'group_id' => 'property',
-                'sub_group_id' => 'version',
-            ))
             ->add('fields', 'collection', array(
                 'type' => 'oo_field_type',
                 'allow_add' => true,

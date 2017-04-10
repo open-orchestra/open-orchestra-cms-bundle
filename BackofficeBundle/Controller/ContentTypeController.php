@@ -39,7 +39,13 @@ class ContentTypeController extends AbstractAdminController
 
         $form->handleRequest($request);
         if ('PATCH' !== $request->getMethod()) {
-            if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.success'), $newContentType)) {
+            if ($form->isValid()) {
+                $newContentType->setVersion(((int)$newContentType->getVersion()) + 1);
+                $documentManager = $this->get('object_manager');
+                $documentManager->persist($newContentType);
+                $documentManager->flush();
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.success'));
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_UPDATE, new ContentTypeEvent($newContentType));
             }
         }
@@ -70,6 +76,7 @@ class ContentTypeController extends AbstractAdminController
         $form->handleRequest($request);
         if ('PATCH' !== $request->getMethod()) {
             if ($form->isValid()) {
+                $contentType->setVersion(1);
                 $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale();
                 $documentManager = $this->get('object_manager');
                 $documentManager->persist($contentType);
