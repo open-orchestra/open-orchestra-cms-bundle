@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -26,6 +27,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     /**
      * @param WorkflowProfileRepositoryInterface $workflowProfileRepository
      * @param ContentTypeRepositoryInterface     $contentTypeRepository
+     * @param SiteRepositoryInterface            $siteRepository
      * @param DataTransformerInterface           $workflowProfileCollectionTransformer
      * @param CurrentSiteIdInterface             $contextManager
      * @param TranslatorInterface                $translator
@@ -33,12 +35,14 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     public function __construct(
         WorkflowProfileRepositoryInterface $workflowProfileRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
+        SiteRepositoryInterface $siteRepository,
         DataTransformerInterface $workflowProfileCollectionTransformer,
         CurrentSiteIdInterface $contextManager,
         TranslatorInterface $translator
     ) {
         $this->workflowProfileRepository = $workflowProfileRepository;
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->siteRepository = $siteRepository;
         $this->workflowProfileCollectionTransformer = $workflowProfileCollectionTransformer;
         $this->contextManager = $contextManager;
         $this->translator = $translator;
@@ -58,9 +62,14 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
         }
 
         $configuration['default']['column'][NodeInterface::ENTITY_TYPE] = $this->translator->trans('open_orchestra_workflow_admin.profile.page');
-        $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion();
-        foreach ($contentTypes as $contentType) {
-            $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getCurrentLocale());
+
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $site = $this->siteRepository->findOneBySiteId($siteId);
+        if (!empty($site->getContentTypes())) {
+            $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
+            foreach ($contentTypes as $contentType) {
+                $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getCurrentLocale());
+            }
         }
 
         $builder = $event->getBuilder();

@@ -36,16 +36,23 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
         Phake::when($contenType)->getContentTypeId()->thenReturn('fakeContentTypeId');
         Phake::when($contenType)->getName(Phake::anyParameters())->thenReturn('fakeName');
         $contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        Phake::when($contentTypeRepository)->findAllNotDeletedInLastVersion()->thenReturn(array($contenType));
+        Phake::when($contentTypeRepository)->findAllNotDeletedInLastVersion(Phake::anyParameters())->thenReturn(array($contenType));
 
         $workflowProfileCollectionTransformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         $translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($translator)->trans(Phake::anyParameters())->thenReturn('fakeTrans');
 
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site)->getContentTypes()->thenReturn(array($contenType));
+
+        $siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        Phake::when($siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
+
         $this->subscriber = new AddGroupWorkflowProfileSubscriber(
             $workflowProfileRepository,
             $contentTypeRepository,
+            $siteRepository,
             $workflowProfileCollectionTransformer,
             $contextManager,
             $translator
