@@ -82,7 +82,10 @@ class GroupType extends AbstractType
                 'group_id' => 'property',
                 'sub_group_id' => 'property',
                 'disabled' => !$options['new_button']
-            ))
+            ));
+
+        if (!$options['creation']) {
+            $builder
             ->add('roles', 'oo_group_role', array(
                 'label' => false,
                 'group_id' => 'right',
@@ -94,11 +97,12 @@ class GroupType extends AbstractType
                 'group_id' => 'perimeter',
                 'required' => false
             ));
-        $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
-        $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);
+            $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
+            $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);
 
-        $builder->addEventSubscriber($this->groupPerimeterSubscriber);
-        $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder));
+            $builder->addEventSubscriber($this->groupPerimeterSubscriber);
+            $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder));
+        }
     }
 
     /**
@@ -111,6 +115,7 @@ class GroupType extends AbstractType
                 'data_class' => $this->groupClass,
                 'delete_button' => false,
                 'new_button' => false,
+                'creation' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(

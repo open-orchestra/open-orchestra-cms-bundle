@@ -6,9 +6,6 @@ use OpenOrchestra\Backoffice\EventSubscriber\UpdateEmbeddedStatusSubscriber;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use Phake;
-use OpenOrchestra\Backoffice\EventSubscriber\UpdateSiteAliasRedirectionSiteSubscriber;
-use OpenOrchestra\ModelInterface\SiteEvents;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Test UpdateEmbeddedStatusSubscriberTest

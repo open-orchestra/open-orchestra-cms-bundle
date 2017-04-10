@@ -38,9 +38,9 @@ class GroupController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $group);
 
         $form = $this->createForm('oo_group', $group, array(
-            'action' => $this->generateUrl('open_orchestra_group_new'),
-            'method' => 'POST',
-            'new_button' => true
+            'action'     => $this->generateUrl('open_orchestra_group_new'),
+            'creation'   => true,
+            'method'     => 'POST'
         ));
 
         $form->handleRequest($request);

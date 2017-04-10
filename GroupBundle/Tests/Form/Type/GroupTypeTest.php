@@ -58,20 +58,41 @@ class GroupTypeTest extends AbstractBaseTestCase
 
     /**
      * Test builder
+     *
+     * @param bool $creation
+     * @param int  $formTimes
+     * @param int  $transformerTimes
+     * @param int  $subscriberTimes
+     * @param int  $dispatcherTimes
+     *
+     * @dataProvider provideBuilderParams
      */
-    public function testBuilder()
+    public function testBuilder($creation, $formTimes, $transformerTimes, $subscriberTimes, $dispatcherTimes)
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array('new_button' => true));
+        $this->form->buildForm($builder, array('new_button' => false, 'creation' => $creation));
 
-        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
-        Phake::verify($builder, Phake::times(2))->addModelTransformer(Phake::anyParameters());
-        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
-        Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
+        Phake::verify($builder, Phake::times($formTimes))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times($transformerTimes))->addModelTransformer(Phake::anyParameters());
+        Phake::verify($builder, Phake::times($subscriberTimes))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times($dispatcherTimes))->dispatch(Phake::anyParameters());
+    }
+
+    /**
+     * Provide builder params
+     *
+     * @return array
+     */
+    public function provideBuilderParams()
+    {
+        return array(
+            array(true , 3, 0, 0, 0),
+            array(false, 5, 2, 1, 1),
+        );
     }
 
     /**
@@ -83,10 +104,12 @@ class GroupTypeTest extends AbstractBaseTestCase
 
         $this->form->configureOptions($resolver);
 
-        Phake::verify($resolver)->setDefaults(array(
+        Phake::verify($resolver)->setDefaults(
+            array(
                 'data_class' => $this->groupClass,
                 'delete_button' => false,
                 'new_button' => false,
+                'creation' => false,
                 'group_enabled' => true,
                 'group_render' => array(
                     'property' => array(
@@ -125,10 +148,11 @@ class GroupTypeTest extends AbstractBaseTestCase
         $form = Phake::mock('Symfony\Component\Form\Form');
         $options = array(
             'delete_button' => true,
-            'new_button' => true,
+            'new_button'    => false,
+            'creation'      => true
         );
         $this->form->buildView($view, $form, $options);
         $this->assertTrue($view->vars['delete_button']);
-        $this->assertTrue($view->vars['new_button']);
+        $this->assertFalse($view->vars['new_button']);
     }
 }
