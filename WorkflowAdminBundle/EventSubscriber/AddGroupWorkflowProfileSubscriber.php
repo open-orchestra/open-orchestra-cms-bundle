@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -55,6 +56,10 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
      */
     public function addWorkflowProfile(GroupFormEvent $event)
     {
+        $builder = $event->getBuilder();
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $group = $builder->getData();
+        $site = ($group instanceof GroupInterface) ? $group->getSite() : $this->siteRepository->findOneBySiteId($siteId);
         $configuration = array();
         $workflowProfiles = $this->workflowProfileRepository->findAll();
         foreach ($workflowProfiles as $workflowProfile) {
@@ -62,9 +67,6 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
         }
 
         $configuration['default']['column'][NodeInterface::ENTITY_TYPE] = $this->translator->trans('open_orchestra_workflow_admin.profile.page');
-
-        $siteId = $this->contextManager->getCurrentSiteId();
-        $site = $this->siteRepository->findOneBySiteId($siteId);
         if (!empty($site->getContentTypes())) {
             $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
             foreach ($contentTypes as $contentType) {
@@ -72,7 +74,6 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
             }
         }
 
-        $builder = $event->getBuilder();
         $groupRender = $builder->getAttribute('group_render');
         $groupRender = array_merge($groupRender, array(
             'profile' => array(
