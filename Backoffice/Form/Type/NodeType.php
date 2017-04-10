@@ -30,7 +30,6 @@ class NodeType extends AbstractType
     protected $schemeChoices;
     protected $specialPageChoiceStatusSubscriber;
     protected $frontRoles;
-    protected $displayBlockManager;
 
     /**
      * @param NodeManager              $nodeManager
@@ -40,7 +39,6 @@ class NodeType extends AbstractType
      * @param string                   $nodeClass
      * @param EventSubscriberInterface $specialPageChoiceStatusSubscriber
      * @param array                    $frontRoles
-     * @param DisplayBlockManager      $displayBlockManager
      */
     public function __construct(
         NodeManager $nodeManager,
@@ -49,8 +47,7 @@ class NodeType extends AbstractType
         TemplateManager $templateManager,
         $nodeClass,
         EventSubscriberInterface $specialPageChoiceStatusSubscriber,
-        array $frontRoles,
-        DisplayBlockManager $displayBlockManager
+        array $frontRoles
     ) {
         $this->nodeManager = $nodeManager;
         $this->contextManager = $contextManager;
@@ -64,7 +61,6 @@ class NodeType extends AbstractType
         );
         $this->specialPageChoiceStatusSubscriber = $specialPageChoiceStatusSubscriber;
         $this->frontRoles = $frontRoles;
-        $this->displayBlockManager = $displayBlockManager;
    }
 
     /**
@@ -179,8 +175,13 @@ class NodeType extends AbstractType
                 'group_id' => 'keywords',
                 'sub_group_id' => 'keywords',
                 'required' => false
+            ))
+            ->add('maxAge', 'integer', array(
+                'label' => 'open_orchestra_backoffice.form.node.max_age',
+                'group_id' => 'cache',
+                'sub_group_id' => 'cache',
+                'required' => false,
             ));
-            $this->addFieldMaxAge($builder, $options);
 
             if (!empty($this->frontRoles)) {
                 $builder->add('frontRoles', 'choice', array(

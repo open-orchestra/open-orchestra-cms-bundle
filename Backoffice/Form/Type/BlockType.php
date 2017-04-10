@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCode;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -30,7 +29,6 @@ class BlockType extends AbstractType
     protected $siteRepository;
     protected $blockToArrayTransformer;
     protected $blockFormTypeSubscriber;
-    protected $displayBlockManager;
 
     /**
      * @param TemplateManager          $templateManager
@@ -39,7 +37,6 @@ class BlockType extends AbstractType
      * @param SiteRepositoryInterface  $siteRepository
      * @param BlockToArrayTransformer  $blockToArrayTransformer
      * @param EventSubscriberInterface $blockFormTypeSubscriber
-     * @param DisplayBlockManager      $displayBlockManager
      */
     public function __construct(
         TemplateManager $templateManager,
@@ -47,8 +44,7 @@ class BlockType extends AbstractType
         SiteRepositoryInterface $siteRepository,
         GenerateFormManager $generateFormManager,
         BlockToArrayTransformer $blockToArrayTransformer,
-        EventSubscriberInterface $blockFormTypeSubscriber,
-        DisplayBlockManager $displayBlockManager
+        EventSubscriberInterface $blockFormTypeSubscriber
     ) {
         $this->templateManager = $templateManager;
         $this->contextManager = $contextManager;
@@ -56,7 +52,6 @@ class BlockType extends AbstractType
         $this->generateFormManager = $generateFormManager;
         $this->blockToArrayTransformer = $blockToArrayTransformer;
         $this->blockFormTypeSubscriber = $blockFormTypeSubscriber;
-        $this->displayBlockManager = $displayBlockManager;
     }
 
     /**
@@ -70,15 +65,21 @@ class BlockType extends AbstractType
             'constraints' => new NotBlank(),
             'group_id' => 'property',
             'sub_group_id' => 'property',
-        ));
-        $builder->add('style', 'choice', array(
+        ))
+        ->add('style', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.block.style',
             'required' => false,
             'choices' => $this->getStyleChoices(),
             'group_id' => 'property',
             'sub_group_id' => 'style',
+        ))
+        ->add('maxAge', 'integer', array(
+            'label' => 'open_orchestra_backoffice.form.block.max_age',
+            'required' => false,
+            'group_id' => 'technical',
+            'sub_group_id' => 'cache',
         ));
-        $this->addFieldMaxAge($builder, $options);
+
         if (
             isset($options['data']) &&
             $options['data'] instanceof BlockInterface &&
@@ -197,25 +198,5 @@ class BlockType extends AbstractType
         }
 
         return $choices;
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    protected function addFieldMaxAge(FormBuilderInterface $builder, array $options)
-    {
-        if (
-            !isset($options['data']) || (
-            $options['data'] instanceof BlockInterface &&
-            true === $this->displayBlockManager->isPublic($options['data'])
-        )) {
-            $builder->add('maxAge', 'integer', array(
-                'label' => 'open_orchestra_backoffice.form.block.max_age',
-                'required' => false,
-                'group_id' => 'technical',
-                'sub_group_id' => 'cache',
-            ));
-        }
     }
 }
