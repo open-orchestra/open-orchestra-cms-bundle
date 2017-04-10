@@ -38,9 +38,10 @@ class GroupController extends AbstractAdminController
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $group);
 
         $form = $this->createForm('oo_group', $group, array(
-            'action'     => $this->generateUrl('open_orchestra_group_new'),
-            'creation'   => true,
-            'method'     => 'POST'
+            'action'   => $this->generateUrl('open_orchestra_group_new'),
+            'creation' => true,
+            'method'   => 'POST',
+            'siteId'   => null
         ));
 
         $form->handleRequest($request);
@@ -83,7 +84,12 @@ class GroupController extends AbstractAdminController
             'action' => $this->generateUrl('open_orchestra_group_form', array(
                 'groupId' => $groupId,
             )),
-            'delete_button' => ($this->isGranted(ContributionActionInterface::DELETE, $group) && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $group))
+            'delete_button' => (
+                $this->isGranted(ContributionActionInterface::DELETE, $group)
+                && $this->get('open_orchestra_backoffice.business_rules_manager')
+                    ->isGranted(ContributionActionInterface::DELETE, $group)
+            ),
+            'siteId' => $group->getSite()->getSiteId()
         ));
 
         $form->handleRequest($request);

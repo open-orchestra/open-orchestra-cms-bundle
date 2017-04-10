@@ -13,18 +13,16 @@ use OpenOrchestra\Backoffice\GeneratePerimeter\Strategy\GeneratePerimeterStrateg
 class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements GeneratePerimeterStrategyInterface
 {
     protected $nodeRepository;
+    protected $contextManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param CurrentSiteIdInterface $contextManager
      */
-    public function __construct(
-        NodeRepositoryInterface $nodeRepository,
-        CurrentSiteIdInterface $contextManager
-
-    ) {
+    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $contextManager)
+    {
         $this->nodeRepository = $nodeRepository;
-        parent::__construct($contextManager);
+        $this->contextManager = $contextManager;
     }
 
     /**
@@ -42,9 +40,13 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
      *
      * @return array
      */
-    public function generatePerimeter()
+    public function generatePerimeter($siteId)
     {
-        $treeNodes = $this->nodeRepository->findTreeNode($this->contextManager->getCurrentSiteId(), $this->contextManager->getUserCurrentSiteDefaultLanguage(), NodeInterface::ROOT_PARENT_ID);
+        $treeNodes = $this->nodeRepository->findTreeNode(
+            $siteId,
+            $this->contextManager->getUserCurrentSiteDefaultLanguage(),
+            NodeInterface::ROOT_PARENT_ID
+        );
 
         return $this->generateTreePerimeter($treeNodes);
     }
@@ -54,9 +56,13 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
      *
      * @return array
      */
-    public function getPerimeterConfiguration()
+    public function getPerimeterConfiguration($siteId)
     {
-        $treeNodes = $this->nodeRepository->findTreeNode($this->contextManager->getCurrentSiteId(), $this->contextManager->getUserCurrentSiteDefaultLanguage(), NodeInterface::ROOT_PARENT_ID);
+        $treeNodes = $this->nodeRepository->findTreeNode(
+            $siteId,
+            $this->contextManager->getUserCurrentSiteDefaultLanguage(),
+            NodeInterface::ROOT_PARENT_ID
+        );
 
         return $this->getTreePerimeterConfiguration($treeNodes);
     }

@@ -60,7 +60,7 @@ class GroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $configuration = $this->generatePerimeterManager->getPerimetersConfiguration();
+        $configuration = $this->generatePerimeterManager->getPerimetersConfiguration($options['siteId']);
         array_walk_recursive($configuration, function(&$path) {
             $path = GeneratePerimeterManager::changePathToName($path);
         });
@@ -110,6 +110,7 @@ class GroupType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired('siteId');
         $resolver->setDefaults(
             array(
                 'data_class' => $this->groupClass,

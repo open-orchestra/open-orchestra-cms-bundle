@@ -19,12 +19,12 @@ interface GeneratePerimeterStrategyInterface
      *
      * @return array
      */
-    public function generatePerimeter();
+    public function generatePerimeter($siteId);
 
     /**
      * get perimeter configuration
      *
      * @return array
      */
-    public function getPerimeterConfiguration();
+    public function getPerimeterConfiguration($siteId);
 }
