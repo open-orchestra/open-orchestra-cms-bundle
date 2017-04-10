@@ -235,10 +235,7 @@ class ContentController extends BaseController
      * @Config\Method({"DELETE"})
      *
      * @return Response
-<<<<<<< 207cbdd4284ce36395dd3bea442e14f65e84c0ed
-=======
      * @throws ContentTypeNotAllowedException,
->>>>>>> Fix edit owned content
      * @throws ContentNotDeletableException
      */
     public function deleteAction($contentId)
@@ -263,6 +260,10 @@ class ContentController extends BaseController
      * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_content_list_author_and_site_not_published", defaults={"published": false})
      * @Config\Route("/list/by-author", name="open_orchestra_api_content_list_author_and_site", defaults={"published": null})
      * @Config\Method({"GET"})
+     *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
+     * })
      *
      * @return FacadeInterface
      */

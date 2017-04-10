@@ -353,6 +353,10 @@ class NodeController extends BaseController
      * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author_and_site", defaults={"published": null})
      * @Config\Method({"GET"})
      *
+     * @Api\Groups({
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
+     * })
+     *
      * @Config\Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function listNodeByAuthorAndSiteIdAction($published)
