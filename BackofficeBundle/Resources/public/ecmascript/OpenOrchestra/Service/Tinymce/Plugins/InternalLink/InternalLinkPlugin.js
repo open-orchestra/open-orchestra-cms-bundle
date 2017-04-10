@@ -52,7 +52,6 @@ class InternalLinkPlugin
             infourl: 'www.open-orchestra.com'
         };
     }
-
 }
 
 tinymce.PluginManager.add('orchestra_internal_link', InternalLinkPlugin);
