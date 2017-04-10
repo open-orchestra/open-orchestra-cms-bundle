@@ -90,10 +90,11 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
      * @param bool    $adminPlatform
      * @param array   $data
      * @param integer $nbrAdd
+     * @param integer $nbrDelete
      *
      * @dataProvider provideSubmit
      */
-    public function testPreSubmit($developer, $adminPlatform, $data, $nbrAdd)
+    public function testPreSubmit($developer, $adminPlatform, $data, $nbrAdd, $nbrDelete)
     {
         Phake::when($this->authorizationChecker)->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)->thenReturn($developer);
         Phake::when($this->authorizationChecker)->isGranted(ContributionRoleInterface::DEVELOPER)->thenReturn($adminPlatform);
@@ -107,6 +108,7 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
         $subscriber->preSubmit($this->event);
 
         Phake::verify($fakeUser, Phake::times($nbrAdd))->addRole(Phake::anyParameters());
+        Phake::verify($fakeUser, Phake::times($nbrDelete))->removeRole(Phake::anyParameters());
     }
 
     /**
@@ -115,8 +117,9 @@ class UserProfilSubscriberTest extends AbstractBaseTestCase
     public function provideSubmit()
     {
         return array(
-            array(true, true, array('platform_admin' => true, 'developer' => true), 2),
-            array(false, true, array('platform_admin' => true, 'developer' => true), 1),
+            array(true, true, array('platform_admin' => true, 'developer' => true), 2, 0),
+            array(false, true, array('platform_admin' => true, 'developer' => true), 1, 0),
+            array(true, true, array(), 0, 2),
         );
     }
 
