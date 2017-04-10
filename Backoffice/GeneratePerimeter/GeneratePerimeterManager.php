@@ -25,6 +25,7 @@ class GeneratePerimeterManager
     /**
      * Generate perimeters
      *
+     * @param string $siteId
      * @return array
      */
     public function generatePerimeters($siteId)
@@ -40,6 +41,7 @@ class GeneratePerimeterManager
     /**
      * get perimeters configuration
      *
+     * @param string $siteId
      * @return array
      */
     public function getPerimetersConfiguration($siteId)

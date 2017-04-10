@@ -83,7 +83,7 @@ class NodeGeneratePerimeterStrategyTest extends AbstractBaseTestCase
      */
     public function testGetPerimeterConfiguration()
     {
-        $result = $this->strategy->getPerimeterConfiguration();
+        $result = $this->strategy->getPerimeterConfiguration('siteId');
 
         $this->assertEquals(array(
             array(
@@ -138,7 +138,7 @@ class NodeGeneratePerimeterStrategyTest extends AbstractBaseTestCase
      */
     public function testGeneratePerimeter()
     {
-        $result = $this->strategy->generatePerimeter();
+        $result = $this->strategy->generatePerimeter('siteId');
         $this->assertEquals(array(
             'root',
             'root/fixture_page_community',

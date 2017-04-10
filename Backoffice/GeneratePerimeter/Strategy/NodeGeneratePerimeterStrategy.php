@@ -38,6 +38,7 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
     /**
      * Generate perimeter
      *
+     * @param string $siteId
      * @return array
      */
     public function generatePerimeter($siteId)
@@ -54,6 +55,7 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
     /**
      * get perimeter configuration
      *
+     * @param string $siteId
      * @return array
      */
     public function getPerimeterConfiguration($siteId)

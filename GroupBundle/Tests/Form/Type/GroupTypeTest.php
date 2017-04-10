@@ -29,7 +29,7 @@ class GroupTypeTest extends AbstractBaseTestCase
         $dataTransformer0 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $dataTransformer1 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $generatePerimeterManager = Phake::mock('OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager');
-        Phake::when($generatePerimeterManager)->getPerimetersConfiguration()->thenReturn(array());
+        Phake::when($generatePerimeterManager)->getPerimetersConfiguration(Phake::anyParameters())->thenReturn(array());
         $this->form = new GroupType(
             $eventSubscriber1,
             $this->eventDispatcher,
@@ -37,7 +37,8 @@ class GroupTypeTest extends AbstractBaseTestCase
             $dataTransformer1,
             $generatePerimeterManager,
             $this->groupClass,
-            array('en', 'fr'));
+            array('en', 'fr')
+        );
     }
 
     /**
@@ -67,14 +68,14 @@ class GroupTypeTest extends AbstractBaseTestCase
      *
      * @dataProvider provideBuilderParams
      */
-    public function testBuilder($creation, $formTimes, $transformerTimes, $subscriberTimes, $dispatcherTimes)
+    public function testBuilder($siteId, $creation, $formTimes, $transformerTimes, $subscriberTimes, $dispatcherTimes)
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array('new_button' => false, 'creation' => $creation));
+        $this->form->buildForm($builder, array('new_button' => false, 'creation' => $creation, 'siteId' => $siteId));
 
         Phake::verify($builder, Phake::times($formTimes))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times($transformerTimes))->addModelTransformer(Phake::anyParameters());
@@ -90,8 +91,8 @@ class GroupTypeTest extends AbstractBaseTestCase
     public function provideBuilderParams()
     {
         return array(
-            array(true , 3, 0, 0, 0),
-            array(false, 5, 2, 1, 1),
+            array(null    , true , 3, 0, 0, 0),
+            array('siteId', false, 5, 2, 1, 1),
         );
     }
 

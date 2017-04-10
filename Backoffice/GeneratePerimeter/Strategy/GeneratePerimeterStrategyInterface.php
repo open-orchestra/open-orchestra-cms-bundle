@@ -17,6 +17,7 @@ interface GeneratePerimeterStrategyInterface
     /**
      * Generate perimeter
      *
+     * @param string $siteId
      * @return array
      */
     public function generatePerimeter($siteId);
@@ -24,6 +25,7 @@ interface GeneratePerimeterStrategyInterface
     /**
      * get perimeter configuration
      *
+     * @param string $siteId
      * @return array
      */
     public function getPerimeterConfiguration($siteId);

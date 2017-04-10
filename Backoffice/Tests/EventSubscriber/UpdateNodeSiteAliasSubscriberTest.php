@@ -6,7 +6,6 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use Phake;
 use OpenOrchestra\Backoffice\EventSubscriber\UpdateNodeSiteAliasSubscriber;
-use OpenOrchestra\ModelInterface\NodeEvents;
 
 /**
  * Test UpdateNodeSiteAliasSubscriberTest
