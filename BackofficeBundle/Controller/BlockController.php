@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\BlockNodeEvents;
 use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
@@ -134,7 +135,7 @@ class BlockController extends AbstractAdminController
             "action" => $this->generateUrl('open_orchestra_backoffice_block_form', array(
                 'blockId' => $blockId
             )),
-            "delete_button" => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block)
+            "delete_button" => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $block)
         ), $block);
 
         $form->handleRequest($request);

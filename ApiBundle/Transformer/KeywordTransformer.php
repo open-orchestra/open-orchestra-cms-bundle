@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -58,7 +59,7 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $keyword));
         $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $keyword) &&
-            $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $keyword));
+            $this->businessRulesManager->isGranted(BusinessActionInterface::DELETE, $keyword));
 
         return $facade;
     }

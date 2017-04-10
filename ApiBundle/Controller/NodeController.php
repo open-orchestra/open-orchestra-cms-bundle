@@ -10,6 +10,7 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotEditableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\NodeStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\BlockEvents;
@@ -93,7 +94,7 @@ class NodeController extends BaseController
         $node = $nodeRepository->findOneByNodeAndSite($nodeId, $siteId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $node);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $node)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $node)) {
             throw new NodeNotDeletableException();
         }
 
@@ -125,7 +126,7 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $node)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::EDIT, $node)) {
             return array();
         }
 
@@ -137,7 +138,7 @@ class NodeController extends BaseController
 
         $this->get('open_orchestra_model.repository.node')->removeBlockInArea($blockId, $areaName, $nodeId, $siteId, $language, $version);
 
-        if ($this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $block)) {
+        if ($this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $block)) {
             $objectManager = $this->get('object_manager');
             $objectManager->remove($block);
             $objectManager->flush();
@@ -178,7 +179,7 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $node)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::EDIT, $node)) {
             throw new NodeNotEditableException();
         }
 
@@ -274,7 +275,7 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::EDIT, $node)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::EDIT, $node)) {
             throw new NodeNotEditableException();
         }
 

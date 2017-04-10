@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\NodeStrategy;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -124,7 +125,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_read', $this->authorizationChecker->isGranted(ContributionActionInterface::READ, $node));
-            $facade->addRight('can_edit_data', $this->businessRulesManager->isGranted(ContributionActionInterface::EDIT, $node) && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
+            $facade->addRight('can_edit_data', $this->businessRulesManager->isGranted(BusinessActionInterface::EDIT, $node) && $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
             $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $node));
         }
         return $facade;

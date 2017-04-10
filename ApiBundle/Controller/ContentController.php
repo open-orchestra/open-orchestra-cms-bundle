@@ -7,6 +7,7 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotDeletableExceptio
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentTypeNotAllowedException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentStrategy;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentTypeStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -61,7 +62,7 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
@@ -136,7 +137,7 @@ class ContentController extends BaseController
         $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
@@ -217,7 +218,7 @@ class ContentController extends BaseController
             $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
             $contentId = $content->getContentId();
             if (
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $content) &&
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $content) &&
                 $this->isGranted(ContributionActionInterface::DELETE, $content)
             ) {
                 $repository->softDeleteContent($contentId);
@@ -244,7 +245,7 @@ class ContentController extends BaseController
         $content = $repository->findOneByContentId($contentId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $content);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $content)) {
             throw new ContentNotDeletableException();
         }
 
@@ -309,7 +310,7 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
@@ -349,7 +350,7 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
@@ -385,7 +386,7 @@ class ContentController extends BaseController
         $contents = $this->get('open_orchestra_model.repository.content')->findNotDeletedSortByUpdatedAt($contentId, $language);
 
         foreach ($contents as $content) {
-            if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
+            if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
                 throw new ContentTypeNotAllowedException();
             }
         }
@@ -415,7 +416,7 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
@@ -458,7 +459,7 @@ class ContentController extends BaseController
             throw new ContentNotFoundHttpException();
         }
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::READ, $content)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
             throw new ContentTypeNotAllowedException();
         }
 
