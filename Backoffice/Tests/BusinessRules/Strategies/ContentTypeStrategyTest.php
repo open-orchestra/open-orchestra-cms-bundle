@@ -1,7 +1,7 @@
 <?php
 namespace OpenOrchestra\BackOffice\Tests\BusinessRules\Strategies;
 
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Phake;
@@ -94,7 +94,7 @@ class ContentTypeStrategyTest extends AbstractBaseTestCase
     public function testGetActions()
     {
         $this->assertEquals(array(
-            ContributionActionInterface::DELETE => 'canDelete',
+            BusinessActionInterface::DELETE => 'canDelete',
             ContentTypeStrategy::READ_LIST => 'canReadList',
         ), $this->strategy->getActions());
     }
