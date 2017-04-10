@@ -45,13 +45,14 @@ class InternalLinkPlugin
     /**
      * Information plugin
      */
-    getInfo(){
+    getInfo() {
         return {
             longname: 'Orchestra Internal link Plugin',
             author: 'open orchestra',
             infourl: 'www.open-orchestra.com'
         };
     }
+
 }
 
 tinymce.PluginManager.add('orchestra_internal_link', InternalLinkPlugin);

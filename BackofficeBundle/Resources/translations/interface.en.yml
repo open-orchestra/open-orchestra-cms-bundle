@@ -225,6 +225,8 @@ open_orchestra_backoffice:
         swchoff:
             on: Yes
             off: No
+        valid:
+          not_blank: This value should not be blank.
     language:
         en: English
         fr: Français

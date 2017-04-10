@@ -36,7 +36,8 @@ class InternalLinkFormView extends AbstractFormView
         event.preventDefault();
         let formName = 'oo_internal_link';
         let inputText = $('#' + formName + '_label', this.$el);
-        if ('' !== inputText.val()) {
+
+        if (this._validForm()) {
             let serializeFields = $('form', this.$el).serializeArray();
             let fields = {};
             for (let field of serializeFields) {
@@ -53,6 +54,28 @@ class InternalLinkFormView extends AbstractFormView
             Backbone.Events.trigger('form:deactivate', this);
             this._modal.hide();
         }
+    }
+
+    /**
+     * @returns {boolean}
+     * @private
+     */
+    _validForm() {
+        let inputText = $('#oo_internal_link_label', this._$form);
+        $('.has-error ul.help-block').remove();
+        $(inputText).closest('.form-group').removeClass('has-error');
+
+        if ('' == inputText.val()) {
+            $(inputText).closest('.form-group').addClass('has-error');
+            let $ul = $("<ul></ul>");
+            $ul.addClass('error help-block').html("<li>"+Translator.trans('open_orchestra_backoffice.form.valid.not_blank')+"</li>");
+            $(inputText).after($ul);
+            $(inputText).focus();
+
+            return false;
+        }
+
+        return true;
     }
 }
 
