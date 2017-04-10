@@ -3,8 +3,8 @@
 namespace OpenOrchestra\GroupBundle\BusinessRules\Strategies;
 
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\AbstractBusinessRulesStrategy;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
 
 /**
@@ -35,7 +35,7 @@ class GroupStrategy extends AbstractBusinessRulesStrategy
     public function getActions()
     {
         return array(
-            ContributionActionInterface::DELETE => 'canDelete',
+            BusinessActionInterface::DELETE => 'canDelete',
         );
     }
 

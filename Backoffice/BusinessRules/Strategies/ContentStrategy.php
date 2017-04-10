@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
@@ -48,10 +47,10 @@ class ContentStrategy extends AbstractBusinessRulesStrategy
     public function getActions()
     {
         return array(
-            ContributionActionInterface::DELETE => 'canDelete',
+            BusinessActionInterface::DELETE => 'canDelete',
             self::DELETE_VERSION => 'canDeleteVersion',
-            ContributionActionInterface::EDIT => 'canEdit',
-            ContributionActionInterface::READ => 'canRead',
+            BusinessActionInterface::EDIT => 'canEdit',
+            BusinessActionInterface::READ => 'canRead',
         );
     }
 

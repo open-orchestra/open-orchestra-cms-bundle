@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 
 /**
  * class KeywordStrategy
@@ -24,7 +23,7 @@ class KeywordStrategy extends AbstractBusinessRulesStrategy
     public function getActions()
     {
         return array(
-            ContributionActionInterface::DELETE => 'canDelete',
+            BusinessActionInterface::DELETE => 'canDelete',
         );
     }
 
