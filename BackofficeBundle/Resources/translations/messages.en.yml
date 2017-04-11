@@ -178,10 +178,7 @@ open_orchestra_backoffice:
             meta_index: Meta index
             meta_follow: Meta follow
             seo_title: Title
-            max_age:
-              name: Cache time
-              helper: |
-                  To edit this value, the page should not content private block.
+            max_age: Cache time
             node_source: The source page
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)

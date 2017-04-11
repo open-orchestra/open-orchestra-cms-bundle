@@ -41,6 +41,7 @@ class ContactStrategy extends AbstractBlockStrategy
             'group_id' => 'data',
             'sub_group_id' => 'content',
         ));
+        $builder->remove('maxAge');
     }
 
     /**
