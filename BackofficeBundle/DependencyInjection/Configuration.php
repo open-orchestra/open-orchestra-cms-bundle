@@ -216,19 +216,24 @@ class Configuration implements ConfigurationInterface
                 ),
                 'styles' => array(
                     'default' => array(
-                        'label' => 'open_orchestra_backoffice.template_set.default.style.default'
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.default',
+                        'allowed_blocks' => array()
                     ),
                     'col-33'  => array(
-                        'label' => 'open_orchestra_backoffice.template_set.default.style.33%'
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.33%',
+                        'allowed_blocks' => array()
                     ),
                     'col-30'  => array(
-                        'label' => 'open_orchestra_backoffice.template_set.default.style.30%'
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.30%',
+                        'allowed_blocks' => array()
                     ),
                     'col-50'  => array(
-                        'label' => 'open_orchestra_backoffice.template_set.default.style.50%'
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.50%',
+                        'allowed_blocks' => array()
                     ),
                     'col-70'  => array(
-                        'label' => 'open_orchestra_backoffice.template_set.default.style.70%'
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.70%',
+                        'allowed_blocks' => array()
                     ),
                 )
             )
