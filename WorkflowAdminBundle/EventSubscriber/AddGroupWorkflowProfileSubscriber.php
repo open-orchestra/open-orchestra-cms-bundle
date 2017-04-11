@@ -57,9 +57,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     public function addWorkflowProfile(GroupFormEvent $event)
     {
         $builder = $event->getBuilder();
-        $siteId = $this->contextManager->getCurrentSiteId();
         $group = $builder->getData();
-        $site = ($group instanceof GroupInterface) ? $group->getSite() : $this->siteRepository->findOneBySiteId($siteId);
         $configuration = array();
         $workflowProfiles = $this->workflowProfileRepository->findAll();
         foreach ($workflowProfiles as $workflowProfile) {
@@ -67,13 +65,15 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
         }
 
         $configuration['default']['column'][NodeInterface::ENTITY_TYPE] = $this->translator->trans('open_orchestra_workflow_admin.profile.page');
-        if (!empty($site->getContentTypes())) {
-            $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
-            foreach ($contentTypes as $contentType) {
-                $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getCurrentLocale());
+        if ($group instanceof GroupInterface) {
+            $site = $group->getSite();
+            if (!empty($site->getContentTypes())) {
+                $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
+                foreach ($contentTypes as $contentType) {
+                    $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getCurrentLocale());
+                }
             }
         }
-
         $groupRender = $builder->getAttribute('group_render');
         $groupRender = array_merge($groupRender, array(
             'profile' => array(
@@ -99,7 +99,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
             'required' => false
         ));
         $builder->get('workflow_profile_collections')->addModelTransformer($this->workflowProfileCollectionTransformer);
-    }
+   }
 
     /**
      * @return array The event names to listen to
