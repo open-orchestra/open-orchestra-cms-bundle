@@ -1,4 +1,5 @@
 <?php
+
 namespace OpenOrchestra\Backoffice\Tests\Reference\Strategies;
 
 use Phake;
@@ -11,6 +12,7 @@ use OpenOrchestra\Backoffice\Reference\Strategies\ContentInBlockReferenceStrateg
 class ContentInBlockReferenceStrategyTest extends AbstractReferenceStrategyTest
 {
     protected $contentRepository;
+    protected $bbcodeParser;
 
     /**
      * setUp
@@ -18,8 +20,15 @@ class ContentInBlockReferenceStrategyTest extends AbstractReferenceStrategyTest
     public function setUp()
     {
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
+        $this->bbcodeParser = Phake::mock('OpenOrchestra\BBcodeBundle\Parser\BBcodeParserInterface');
+        $linkTag = Phake::mock('OpenOrchestra\BBcodeBundle\ElementNode\BBcodeElementNodeInterface');
+        Phake::when($linkTag)->getAttribute()->thenReturn(array('link'=> '{"label":"link","site_siteId":"2","site_nodeId":"nodeId4", "contentSearch_contentId":"contentId"}'));
+        Phake::when($this->bbcodeParser)->parse(Phake::anyParameters())->thenReturn($this->bbcodeParser);
+        Phake::when($this->bbcodeParser)->getElementByTagName(Phake::anyParameters())->thenReturn(
+            array($linkTag)
+        );
 
-        $this->strategy = new ContentInBlockReferenceStrategy($this->contentRepository);
+        $this->strategy = new ContentInBlockReferenceStrategy($this->contentRepository, $this->bbcodeParser);
     }
 
     /**
@@ -93,11 +102,18 @@ class ContentInBlockReferenceStrategyTest extends AbstractReferenceStrategyTest
         );
         Phake::when($blockWithContent)->getId()->thenReturn($blockWithContentId);
 
+        $blockWithContentTinymceId = 'blockIdTinymce';
+        $blockWithContentTinymce = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $bbCodeWithLink = 'Some [b]String[b] with [link={"label":"link","site_siteId":"2","site_nodeId":"nodeId4", "contentSearch_contentId":"'.$contentId.'"}]link[/link]';
+        Phake::when($blockWithContentTinymce)->getAttributes()->thenReturn(array($bbCodeWithLink));
+        Phake::when($blockWithContentTinymce)->getId()->thenReturn($blockWithContentTinymceId);
+
         return array(
-            'Content'              => array($content, $contentId, array()),
-            'Content type'         => array($contentType, $contentTypeId, array()),
-            'Block with no content' => array($blockWithoutContent, $blockWithoutContentId, array()),
-            'Block with content'    => array($blockWithContent, $blockWithContentId, array($contentId => $content)),
+            'Content'                    => array($content, $contentId, array()),
+            'Content type'               => array($contentType, $contentTypeId, array()),
+            'Block tinymce with content' => array($blockWithContentTinymce, $blockWithContentTinymceId, array($contentId => $content)),
+            'Block with no content'      => array($blockWithoutContent, $blockWithoutContentId, array()),
+            'Block with content'         => array($blockWithContent, $blockWithContentId, array($contentId => $content)),
         );
     }
 }
