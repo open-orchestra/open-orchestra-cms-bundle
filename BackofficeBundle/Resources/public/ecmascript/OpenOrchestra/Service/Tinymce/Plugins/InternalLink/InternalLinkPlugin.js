@@ -45,7 +45,7 @@ class InternalLinkPlugin
     /**
      * Information plugin
      */
-    getInfo(){
+    getInfo() {
         return {
             longname: 'Orchestra Internal link Plugin',
             author: 'open orchestra',
