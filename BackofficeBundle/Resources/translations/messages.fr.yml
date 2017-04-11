@@ -109,6 +109,7 @@ open_orchestra_backoffice:
             name: Nom du contenu
             status: Statut
             keywords: Mots-clé
+            linked_to_site: Restreint au site
             publish_date: Date de publication automatique
             unpublish_date: Date de dépublication automatique
             group:
