@@ -299,7 +299,7 @@
                 {% endfor %}
             </div>
         {% else %}
-            {{ block('choice_widget_collapsed') }}
+            {{ parent() }}
         {% endif %}
     {% endspaceless %}
 {% endblock choice_widget %}
@@ -487,6 +487,11 @@
 {% block radio_row %}
     {{ block('form_row') }}
 {% endblock radio_row %}
+
+{% block radio_widget %}
+    {{ parent() }}
+    <label for="{{ id }}"></label>
+{% endblock radio_widget %}
 
 {# Fix choice attr see https://github.com/braincrafted/bootstrap-bundle/pull/379 #}
 {% block choice_widget_options %}
