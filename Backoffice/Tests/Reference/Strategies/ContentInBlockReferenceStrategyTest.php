@@ -1,4 +1,5 @@
 <?php
+
 namespace OpenOrchestra\Backoffice\Tests\Reference\Strategies;
 
 use Phake;
