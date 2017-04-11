@@ -22,7 +22,12 @@ class LastContentsWidgetView extends AbstractWidgetView
      * @return {String}
      */
     getEditLink(entity) {
-        return '';
+        return Backbone.history.generateUrl('editContent', {
+            language: entity.get('language'),
+            contentTypeId: entity.get('content_type'),
+            contentId: entity.get('content_id'),
+            version: entity.get('version')
+        });
     }
 }
 
