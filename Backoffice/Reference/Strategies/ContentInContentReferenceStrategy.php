@@ -2,13 +2,12 @@
 
 namespace OpenOrchestra\Backoffice\Reference\Strategies;
 
-use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
- * Class ContentInBlockReferenceStrategy
+ * Class ContentInContentReferenceStrategy
  */
-class ContentInBlockReferenceStrategy extends AbstractContentReferenceStrategy
+class ContentInContentReferenceStrategy extends AbstractContentReferenceStrategy
 {
     /**
      * @param mixed $entity
@@ -17,7 +16,7 @@ class ContentInBlockReferenceStrategy extends AbstractContentReferenceStrategy
      */
     public function support($entity)
     {
-        return ($entity instanceof ReadBlockInterface);
+        return ($entity instanceof ContentInterface);
     }
 
     /**
@@ -26,14 +25,14 @@ class ContentInBlockReferenceStrategy extends AbstractContentReferenceStrategy
     public function addReferencesToEntity($entity)
     {
         if ($this->support($entity)) {
-            $element = $entity->getAttributes();
+            $element = $entity->getAttributes()->toArray();
             $contentIds = $this->extractContentsFromElement($element);
+
             foreach ($contentIds as $contentId) {
                 /** @var \OpenOrchestra\ModelInterface\Model\ContentInterface $content */
                 $contents = $this->contentRepository->findByContentId($contentId);
-
                 foreach ($contents as $content) {
-                    $content->addUseInEntity($entity->getId(), BlockInterface::ENTITY_TYPE);
+                    $content->addUseInEntity($entity->getId(), ContentInterface::ENTITY_TYPE);
                 }
             }
         }
@@ -45,12 +44,13 @@ class ContentInBlockReferenceStrategy extends AbstractContentReferenceStrategy
     public function removeReferencesToEntity($entity)
     {
         if ($this->support($entity)) {
-            $blockId = $entity->getId();
+            $contentId = $entity->getId();
 
-            $contentsUsedInBlock = $this->contentRepository->findByUsedInEntity($blockId, BlockInterface::ENTITY_TYPE);
+            $contentsUsedInContent = $this->contentRepository
+                ->findByUsedInEntity($contentId, ContentInterface::ENTITY_TYPE);
 
-            foreach ($contentsUsedInBlock as $content) {
-                $content->removeUseInEntity($blockId, BlockInterface::ENTITY_TYPE);
+            foreach ($contentsUsedInContent as $content) {
+                $content->removeUseInEntity($contentId, ContentInterface::ENTITY_TYPE);
             }
         }
     }

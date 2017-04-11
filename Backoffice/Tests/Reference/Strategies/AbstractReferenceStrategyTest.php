@@ -1,6 +1,7 @@
 <?php
 namespace OpenOrchestra\Backoffice\Tests\Reference\Strategies;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
@@ -92,7 +93,7 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
     {
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content)->getId()->thenReturn($contentId);
-        Phake::when($content)->getAttributes()->thenReturn($attributes);
+        Phake::when($content)->getAttributes()->thenReturn(new ArrayCollection($attributes));
 
         return $content;
     }
@@ -155,13 +156,15 @@ abstract class AbstractReferenceStrategyTest extends AbstractBaseTestCase
      * Create a Phake Content Attribute
      *
      * @param string $value
+     * @param string $type
      *
      * @return Phake_IMock
      */
-    protected function createPhakeContentAttribute($value = '')
+    protected function createPhakeContentAttribute($value = '', $type = '')
     {
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         Phake::when($attribute)->getValue()->thenReturn($value);
+        Phake::when($attribute)->getType()->thenReturn($type);
 
         return $attribute;
     }
