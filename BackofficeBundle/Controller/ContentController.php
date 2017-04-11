@@ -61,6 +61,7 @@ class ContentController extends AbstractAdminController
                 $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $content),
             'need_link_to_site_defintion' => false,
             'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
+            'is_statusable' => $contentType->isDefiningStatusable()
         );
         $form = $this->createForm('oo_content', $content, $options);
 
@@ -103,7 +104,12 @@ class ContentController extends AbstractAdminController
         if (!$contentType instanceof ContentTypeInterface || !in_array($contentType->getContentTypeId(), $site->getContentTypes())) {
             throw new \UnexpectedValueException();
         }
-        $content = $contentManager->initializeNewContent($contentTypeId, $language, $contentType->isLinkedToSite() && $contentType->isAlwaysShared());
+        $content = $contentManager->initializeNewContent(
+            $contentTypeId,
+            $language,
+            $contentType->isLinkedToSite() && $contentType->isAlwaysShared(),
+            $contentType->isDefiningStatusable()
+        );
         if (!$content instanceof ContentInterface) {
             throw new \UnexpectedValueException();
         }
@@ -118,6 +124,7 @@ class ContentController extends AbstractAdminController
             'new_button' => true,
             'need_link_to_site_defintion' => $contentType->isLinkedToSite() && !$contentType->isAlwaysShared(),
             'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
+            'is_statusable' => $contentType->isDefiningStatusable()
         ));
 
         $status = $content->getStatus();

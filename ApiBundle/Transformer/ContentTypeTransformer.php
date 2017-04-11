@@ -89,7 +89,10 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
             );
 
             $content = $this->contentManager->initializeNewContent(
-                $contentType->getContentTypeId(), '', $contentType->isLinkedToSite() && $contentType->isAlwaysShared()
+                $contentType->getContentTypeId(),
+                '',
+                $contentType->isLinkedToSite() && $contentType->isAlwaysShared(),
+                $contentType->isDefiningStatusable()
             );
             $facade->addRight(
                 'can_create_content',

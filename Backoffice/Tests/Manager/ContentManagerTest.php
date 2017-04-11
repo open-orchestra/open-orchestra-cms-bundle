@@ -26,8 +26,9 @@ class ContentManagerTest extends AbstractBaseTestCase
     protected $content;
     protected $statusInitialLabel = 'statusInitialLabel';
     protected $statusTranslationStateLabel = 'statusTranslationStateLabel';
-    protected $statusInitial = 'statusTranslationStateLabel';
-    protected $statusTranslationState = 'statusTranslationStateLabel';
+    protected $statusInitial;
+    protected $statusTranslationState;
+    protected $statusOutofWorkflow;
     protected $fakeVersion = 'fakeVersion';
     protected $user;
 
@@ -39,15 +40,23 @@ class ContentManagerTest extends AbstractBaseTestCase
         $this->statusInitial = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->statusInitial)->getLabels()->thenReturn(array());
         Phake::when($this->statusInitial)->getName()->thenReturn($this->statusInitialLabel);
+        Phake::when($this->statusInitial)->isOutOfWorkflow()->thenReturn(false);
+
         $this->statusTranslationState = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->statusTranslationState)->getLabels()->thenReturn(array());
         Phake::when($this->statusTranslationState)->getName()->thenReturn($this->statusTranslationStateLabel);
+        Phake::when($this->statusTranslationState)->isOutOfWorkflow()->thenReturn(false);
+
+        $this->statusOutofWorkflow = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($this->statusOutofWorkflow)->getLabels()->thenReturn(array());
+        Phake::when($this->statusOutofWorkflow)->isOutOfWorkflow()->thenReturn(true);
 
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
 
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($this->statusInitial);
         Phake::when($this->statusRepository)->findOneByTranslationState()->thenReturn($this->statusTranslationState);
+        Phake::when($this->statusRepository)->findOneByOutOfWorkflow()->thenReturn($this->statusOutofWorkflow);
 
         $this->keyword = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
         $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
@@ -55,6 +64,7 @@ class ContentManagerTest extends AbstractBaseTestCase
         $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($this->content)->getKeywords()->thenReturn(array($this->keyword));
         Phake::when($this->content)->getAttributes()->thenReturn(array($this->contentAttribute));
+        Phake::when($this->content)->getStatus()->thenReturn($this->statusInitial);
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
@@ -151,16 +161,17 @@ class ContentManagerTest extends AbstractBaseTestCase
      * @param string $language
      * @param bool   $linkedToSite
      * @param string $siteId
+     * @param bool $isStatusable
      *
      * @dataProvider provideContentTypeAndLanguage
      */
-    public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId)
+    public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId, $isStatusable)
     {
         $userName = 'fakeUserName';
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
         Phake::when($this->user)->getUsername()->thenReturn($userName);
 
-        $content = $this->manager->initializeNewContent($contentType, $language, $linkedToSite);
+        $content = $this->manager->initializeNewContent($contentType, $language, $linkedToSite, $isStatusable);
 
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
         $this->assertSame($language, $content->getLanguage());
@@ -168,7 +179,11 @@ class ContentManagerTest extends AbstractBaseTestCase
         $this->assertSame($linkedToSite, $content->isLinkedToSite());
         $this->assertSame($siteId, $content->getSiteId());
         $this->assertSame($userName, $content->getCreatedBy());
-        $this->assertEquals($this->statusInitialLabel, $content->getStatus()->getName());
+        if (true === $isStatusable) {
+            $this->assertEquals($this->statusInitialLabel, $content->getStatus()->getName());
+        } else {
+            $this->assertEquals($this->statusOutofWorkflow->isOutOfWorkflow(), true);
+        }
     }
 
     /**
@@ -177,10 +192,10 @@ class ContentManagerTest extends AbstractBaseTestCase
     public function provideContentTypeAndLanguage()
     {
         return array(
-            array('news', 'fr', true, '1'),
-            array('car', 'en', true, '2'),
-            array('news', 'fr', false, '3'),
-            array('car', 'en', false, '4'),
+            array('news', 'fr', true, '1', true),
+            array('car', 'en', true, '2', true),
+            array('news', 'fr', false, '3', false),
+            array('car', 'en', false, '4', false),
         );
     }
 }
