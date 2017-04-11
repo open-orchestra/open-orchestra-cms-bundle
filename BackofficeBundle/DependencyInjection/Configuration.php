@@ -181,8 +181,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->arrayNode('styles')
-                        ->useAttributeAsKey('name')
-                        ->prototype('scalar')->end()
+                        ->useAttributeAsKey('style')
+                        ->prototype('array')
+                            ->children()
+                                ->scalarNode('label')->isRequired()->end()
+                                ->arrayNode('allowed_blocks')
+                                    ->prototype('scalar')->defaultValue(array())->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end();
@@ -208,11 +215,21 @@ class Configuration implements ConfigurationInterface
                     )
                 ),
                 'styles' => array(
-                    'default' => 'open_orchestra_backoffice.template_set.default.style.default',
-                    'col-33'  => 'open_orchestra_backoffice.template_set.default.style.33%',
-                    'col-30'  => 'open_orchestra_backoffice.template_set.default.style.30%',
-                    'col-50'  => 'open_orchestra_backoffice.template_set.default.style.50%',
-                    'col-70'  => 'open_orchestra_backoffice.template_set.default.style.70%',
+                    'default' => array(
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.default'
+                    ),
+                    'col-33'  => array(
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.33%'
+                    ),
+                    'col-30'  => array(
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.30%'
+                    ),
+                    'col-50'  => array(
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.50%'
+                    ),
+                    'col-70'  => array(
+                        'label' => 'open_orchestra_backoffice.template_set.default.style.70%'
+                    ),
                 )
             )
         ));
