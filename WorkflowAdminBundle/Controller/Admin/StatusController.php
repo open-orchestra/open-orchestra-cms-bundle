@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Controller\Admin;
 
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
@@ -34,7 +35,7 @@ class StatusController extends AbstractAdminController
                 'statusId' => $statusId,
             )),
             'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $status) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $status)
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $status)
         ));
 
         $form->handleRequest($request);

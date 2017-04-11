@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Controller\Api;
 
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -91,7 +92,7 @@ class GroupController extends BaseController
         $groupIds = array();
         foreach ($groups as $group) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $group) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $group, $nbrGroupsUsers)
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $group, $nbrGroupsUsers)
             ) {
                 $groupIds[] = $group->getId();
                 $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
@@ -156,7 +157,7 @@ class GroupController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $group);
 
         if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
-            if ($group instanceof GroupInterface && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $group)) {
+            if ($group instanceof GroupInterface && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $group)) {
                 $objectManager = $this->get('object_manager');
                 $objectManager->remove($group);
                 $objectManager->flush();

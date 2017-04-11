@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\KeywordEvent;
 use OpenOrchestra\ModelInterface\KeywordEvents;
@@ -89,7 +90,7 @@ class KeywordController extends BaseController
         $keywordIds = array();
         foreach ($keywords as $keyword) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $keyword) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $keyword)
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $keyword)
             ) {
                 $keywordIds[] = $keyword->getId();
                 $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));

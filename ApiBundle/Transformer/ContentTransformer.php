@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentStrategy;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -87,7 +88,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $content) &&
-                $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $content)
+                $this->businessRulesManager->isGranted(BusinessActionInterface::DELETE, $content)
             );
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, ContentInterface::ENTITY_TYPE));
             $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $content));

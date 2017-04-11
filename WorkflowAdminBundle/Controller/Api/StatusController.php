@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Controller\Api;
 
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
@@ -114,7 +115,7 @@ class StatusController extends BaseController
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $status);
 
-        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $status)) {
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $status)) {
             throw new StatusNotDeletableException();
         }
 
@@ -136,6 +137,6 @@ class StatusController extends BaseController
     protected function isDeleteGranted(StatusInterface $status)
     {
         return $this->isGranted(ContributionActionInterface::DELETE, $status)
-            && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $status);
+            && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $status);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace OpenOrchestra\BackOffice\Tests\BusinessRules\Strategies;
 
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Phake;
@@ -66,7 +66,7 @@ class BlockStrategyTest extends AbstractBaseTestCase
     public function testGetActions()
     {
         $this->assertEquals(array(
-            ContributionActionInterface::DELETE => 'canDelete',
+            BusinessActionInterface::DELETE => 'canDelete',
         ), $this->strategy->getActions());
     }
 

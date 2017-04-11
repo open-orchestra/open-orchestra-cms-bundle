@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
@@ -57,7 +58,7 @@ class NodeController extends AbstractAdminController
         $options = array(
             'action' => $url,
             'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $node) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $node)
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $node)
         );
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
 

@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
@@ -35,7 +34,7 @@ class BlockStrategy extends AbstractBusinessRulesStrategy
     public function getActions()
     {
         return array(
-            ContributionActionInterface::DELETE => 'canDelete',
+            BusinessActionInterface::DELETE => 'canDelete',
         );
     }
 

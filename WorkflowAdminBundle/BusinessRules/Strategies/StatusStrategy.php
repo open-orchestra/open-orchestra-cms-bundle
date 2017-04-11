@@ -3,8 +3,8 @@
 namespace OpenOrchestra\WorkflowAdminBundle\BusinessRules\Strategies;
 
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\AbstractBusinessRulesStrategy;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder;
 
 /**
@@ -36,7 +36,7 @@ class StatusStrategy extends AbstractBusinessRulesStrategy
     public function getActions()
     {
         return array(
-            ContributionActionInterface::DELETE => 'canDelete',
+            BusinessActionInterface::DELETE => 'canDelete',
         );
     }
 

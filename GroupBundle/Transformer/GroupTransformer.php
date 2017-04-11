@@ -3,6 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Transformer;
 
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
@@ -112,7 +113,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
             $facade->addRight('can_delete',
                 $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $group) &&
-                $this->businessRulesManager->isGranted(ContributionActionInterface::DELETE, $group, $nbrGroupsUsers)
+                $this->businessRulesManager->isGranted(BusinessActionInterface::DELETE, $group, $nbrGroupsUsers)
             );
             $facade->addRight('can_duplicate', $this->authorizationChecker->isGranted(ContributionActionInterface::CREATE, GroupInterface::ENTITY_TYPE));
         }

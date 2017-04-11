@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
@@ -96,7 +97,7 @@ class ContentTypeController extends BaseController
         $contentTypeIds = array();
         foreach ($contentTypes as $contentType) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $contentType) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $contentType)
+                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $contentType)
             ) {
                 $contentTypeIds[] = $contentType->getContentTypeId();
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentType));
@@ -149,7 +150,7 @@ class ContentTypeController extends BaseController
                 foreach ($contentTypes as $contentType) {
                     $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $contentType);
                 }
-                if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $contentTypes[0])) {
+                if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $contentTypes[0])) {
                     $this->createAccessDeniedException();
                 }
 
