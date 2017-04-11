@@ -1,5 +1,0 @@
-services:
-    open_orchestra_backoffice.icon.test:
-        class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\TestStrategy
-        tags:
-            - { name: open_orchestra_backoffice.display_icon.strategy }
