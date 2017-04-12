@@ -16,7 +16,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 /**
  * Class AddGroupWorkflowProfileSubscriber
  */
-    class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
+class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
 {
     protected $workflowProfileRepository;
     protected $contentTypeRepository;
