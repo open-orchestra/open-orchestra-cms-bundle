@@ -3,7 +3,6 @@
 namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -17,7 +16,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 /**
  * Class AddGroupWorkflowProfileSubscriber
  */
-class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
+    class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
 {
     protected $workflowProfileRepository;
     protected $contentTypeRepository;
@@ -28,7 +27,6 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     /**
      * @param WorkflowProfileRepositoryInterface $workflowProfileRepository
      * @param ContentTypeRepositoryInterface     $contentTypeRepository
-     * @param SiteRepositoryInterface            $siteRepository
      * @param DataTransformerInterface           $workflowProfileCollectionTransformer
      * @param CurrentSiteIdInterface             $contextManager
      * @param TranslatorInterface                $translator
@@ -36,14 +34,12 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
     public function __construct(
         WorkflowProfileRepositoryInterface $workflowProfileRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
-        SiteRepositoryInterface $siteRepository,
         DataTransformerInterface $workflowProfileCollectionTransformer,
         CurrentSiteIdInterface $contextManager,
         TranslatorInterface $translator
     ) {
         $this->workflowProfileRepository = $workflowProfileRepository;
         $this->contentTypeRepository = $contentTypeRepository;
-        $this->siteRepository = $siteRepository;
         $this->workflowProfileCollectionTransformer = $workflowProfileCollectionTransformer;
         $this->contextManager = $contextManager;
         $this->translator = $translator;
