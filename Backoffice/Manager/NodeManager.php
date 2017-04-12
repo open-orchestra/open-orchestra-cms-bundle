@@ -306,30 +306,68 @@ class NodeManager
     public function setVersionName(NodeInterface $node)
     {
         $date = new \DateTime("now");
-        $versionName = $node->getName(). '_'. $date->format("Y-m-d_H:i:s");
+        $versionName = $node->getName() . '_' . $date->format("Y-m-d_H:i:s");
         $node->setVersionName($versionName);
 
         return $node;
     }
 
-   /**
-     * @param array         $orderedNode
-     * @param NodeInterface $node
+    /**
+     * 
+     * @param array         $orderedNodes
+     * @param NodeInterface $parentNode
      */
-    public function orderNodeChildren($orderedNode, NodeInterface $node)
+    public function reorderNodes($orderedNodes, NodeInterface $parentNode)
     {
-        $nodeId = $node->getNodeId();
-        foreach ($orderedNode as $position => $childNodeId) {
-            $siteId = $this->contextManager->getCurrentSiteId();
-            $children = $this->nodeRepository->findByNodeAndSite($childNodeId, $siteId);
-            $path = $node->getPath() . '/' . $childNodeId;
-            /** @var NodeInterface $child */
-            foreach ($children as $child) {
-                $child->setOrder($position);
-                $child->setParentId($nodeId);
-                $child->setPath($path);
+        foreach ($orderedNodes as $position => $nodeId) {
+            $nodeVersions = $this->nodeRepository->findByNodeAndSite($nodeId, $parentNode->getSiteId());
+
+            if (is_array($nodeVersions) && count($nodeVersions) > 0) {
+                $this->updateNodeVersionsOrder($nodeVersions, $position);
+
+                if ($nodeVersions[0]->getParentId() !== $parentNode->getNodeId()) {
+                    $this->moveNodeVersions($nodeVersions, $parentNode);
+                }
             }
-            $event = new NodeEvent($child);
+        }
+    }
+
+    /**
+     * @param array $nodeVersions
+     * @param int   $position
+     */
+    protected function updateNodeVersionsOrder($nodeVersions, $position)
+    {
+        foreach ($nodeVersions as $nodeVersion) {
+            if ($nodeVersion instanceof NodeInterface) {
+                $nodeVersion->setOrder($position);
+            }
+        }
+    }
+
+    /**
+     * @param array         $nodeVersions
+     * @param NodeInterface $parentNode
+     */
+    protected function moveNodeVersions($nodeVersions, $parentNode)
+    {
+        $event = null;
+
+        foreach ($nodeVersions as $nodeVersion) {
+            if ($nodeVersion instanceof NodeInterface) {
+                $oldPath = $nodeVersion->getPath();
+
+                $nodeVersion->setParentId($parentNode->getNodeId());
+                $nodeVersion->setPath($parentNode->getPath() . '/' . $nodeVersion->getNodeId());
+
+                if (is_null($event)) {
+                    $event = new NodeEvent($nodeVersion);
+                    $event->setPreviousPath($oldPath);
+                }
+            }
+        }
+
+        if (!is_null($event)) {
             $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
         }
     }

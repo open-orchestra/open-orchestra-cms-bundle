@@ -12,5 +12,8 @@ services:
 
     open_orchestra_group.subscriber.group_perimeter:
         class: '%open_orchestra_group.subscriber.group_perimeter.class%'
+        arguments:
+            - '@open_orchestra_user.repository.group'
+            - '@open_orchestra_model.repository.site'
         tags:
             - { name: kernel.event_subscriber }

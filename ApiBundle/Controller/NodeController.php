@@ -546,14 +546,16 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeAndSite($nodeId, $siteId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade',
             $request->get('_format', 'json')
         );
 
-        $orderedNode = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->reverseTransformOrder($facade);
-        $this->get('open_orchestra_backoffice.manager.node')->orderNodeChildren($orderedNode, $node);
+        $orderedNodes = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->getNodeIds($facade);
+
+        $this->get('open_orchestra_backoffice.manager.node')->reorderNodes($orderedNodes, $node);
 
         $this->get('object_manager')->flush();
 

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
@@ -21,13 +20,11 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
     /**
      * @param NodeRepositoryInterface  $nodeRepository
      * @param EventDispatcherInterface $eventDispatcher
-     * @param CurrentSiteIdInterface   $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, EventDispatcherInterface $eventDispatcher, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, EventDispatcherInterface $eventDispatcher)
     {
         $this->nodeRepository = $nodeRepository;
         $this->eventDispatcher = $eventDispatcher;
-        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -35,19 +32,22 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
      */
     public function updatePath(NodeEvent $event)
     {
-        $node = $event->getNode();
-        $parentPath = $node->getPath();
-        $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $sons = $this->nodeRepository->findByParent($node->getNodeId(), $siteId);
+        $parentNode = $event->getNode();
+        $events = array();
+        $nodesVersions = $this->nodeRepository->findByParent($parentNode->getNodeId(), $parentNode->getSiteId());
 
-        $sonsToUpdate = array();
-        foreach ($sons as $son) {
-            $son->setPath($parentPath . '/' . $son->getNodeId());
-            $sonsToUpdate[$son->getNodeId()] = $son;
+        foreach ($nodesVersions as $nodeVersion) {
+            $oldPath = $nodeVersion->getPath();
+            $nodeVersion->setPath($parentNode->getPath() . '/' . $nodeVersion->getNodeId());
+
+            if (!isset($events[$nodeVersion->getNodeId()])) {
+                $event = new NodeEvent($nodeVersion);
+                $event->setPreviousPath($oldPath);
+                $events[$nodeVersion->getNodeId()] = $event;
+            }
         }
 
-        foreach ($sonsToUpdate as $sonToUpdate) {
-            $event = new NodeEvent($sonToUpdate);
+        foreach ($events as $event) {
             $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
         }
     }

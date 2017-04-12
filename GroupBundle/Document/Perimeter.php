@@ -23,7 +23,7 @@ class Perimeter implements PerimeterInterface
      * @var array $items
      *
      * @ODM\Field(
-     *  type="hash"
+     *  type="collection"
      * )
      */
     protected $items;
