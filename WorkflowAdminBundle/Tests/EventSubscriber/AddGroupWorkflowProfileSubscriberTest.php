@@ -82,11 +82,15 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
     {
         $event = Phake::mock('OpenOrchestra\GroupBundle\Event\GroupFormEvent');
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        $site = Phake::mock('OpenOrchestra\Backoffice\Model\SiteInterface');
 
+        Phake::when($site)->getContentTypes()->thenReturn(array());
+        Phake::when($group)->getSite()->thenReturn($site);
         Phake::when($builder)->getAttribute(Phake::anyParameters())->thenReturn(array());
         Phake::when($builder)->getAttribute(Phake::anyParameters())->thenReturn(array());
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
-        Phake::when($builder)->getData()->thenReturn(Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface'));
+        Phake::when($builder)->getData()->thenReturn($group);
         Phake::when($event)->getBuilder()->thenReturn($builder);
 
         $this->subscriber->addWorkflowProfile($event);
