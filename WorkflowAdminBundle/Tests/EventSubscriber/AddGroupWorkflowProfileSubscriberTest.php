@@ -21,6 +21,7 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
     protected $event;
     protected $block;
     protected $fixedParameters;
+    protected $contenType;
 
     /**
      * Set up the test
@@ -32,11 +33,11 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
         $workflowProfileRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\WorkflowProfileRepository');
         Phake::when($workflowProfileRepository)->findAll()->thenReturn(array($workflowProfile));
 
-        $contenType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($contenType)->getContentTypeId()->thenReturn('fakeContentTypeId');
-        Phake::when($contenType)->getName(Phake::anyParameters())->thenReturn('fakeName');
+        $this->contenType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        Phake::when($this->contenType)->getContentTypeId()->thenReturn('fakeContentTypeId');
+        Phake::when($this->contenType)->getName(Phake::anyParameters())->thenReturn('fakeName');
         $contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        Phake::when($contentTypeRepository)->findAllNotDeletedInLastVersion()->thenReturn(array($contenType));
+        Phake::when($contentTypeRepository)->findAllNotDeletedInLastVersion(Phake::anyParameters())->thenReturn(array($this->contenType));
 
         $workflowProfileCollectionTransformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
@@ -75,9 +76,15 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
     {
         $event = Phake::mock('OpenOrchestra\GroupBundle\Event\GroupFormEvent');
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+
+        Phake::when($site)->getContentTypes()->thenReturn(array($this->contenType));
+        Phake::when($group)->getSite()->thenReturn($site);
         Phake::when($builder)->getAttribute(Phake::anyParameters())->thenReturn(array());
         Phake::when($builder)->getAttribute(Phake::anyParameters())->thenReturn(array());
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->getData()->thenReturn($group);
         Phake::when($event)->getBuilder()->thenReturn($builder);
 
         $this->subscriber->addWorkflowProfile($event);

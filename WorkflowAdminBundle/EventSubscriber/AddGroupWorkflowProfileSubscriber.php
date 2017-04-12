@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -51,36 +52,35 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
      */
     public function addWorkflowProfile(GroupFormEvent $event)
     {
+        $builder = $event->getBuilder();
+        $group = $builder->getData();
         $configuration = array();
         $workflowProfiles = $this->workflowProfileRepository->findAll();
         foreach ($workflowProfiles as $workflowProfile) {
             $configuration['default']['row'][] = $workflowProfile->getLabel($this->contextManager->getCurrentLocale());
         }
-
         $configuration['default']['column'][NodeInterface::ENTITY_TYPE] = $this->translator->trans('open_orchestra_workflow_admin.profile.page');
-        $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion();
-        foreach ($contentTypes as $contentType) {
-            $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getCurrentLocale());
+        if ($group instanceof GroupInterface) {
+            $site = $group->getSite();
+            if (!empty($site->getContentTypes())) {
+                $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
+                foreach ($contentTypes as $contentType) {
+                    $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getCurrentLocale());
+                }
+            }
         }
-
-        $builder = $event->getBuilder();
-        $groupRender = $builder->getAttribute('group_render');
-        $groupRender = array_merge($groupRender, array(
+        $builder->setAttribute('group_render', array_merge($builder->getAttribute('group_render'), array(
             'profile' => array(
                 'rank' => '2',
                 'label' => 'open_orchestra_workflow_admin.form.profile',
             )
-        ));
-        $builder->setAttribute('group_render', $groupRender);
-
-        $subGroupRender = $builder->getAttribute('sub_group_render');
-        $subGroupRender = array_merge($subGroupRender, array(
+        )));
+        $builder->setAttribute('sub_group_render', array_merge($builder->getAttribute('sub_group_render'), array(
             'backoffice' => array(
                 'rank' => '0',
                 'label' => 'open_orchestra_workflow_admin.form.backoffice',
             )
-        ));
-        $builder->setAttribute('sub_group_render', $subGroupRender);
+        )));
         $builder->add('workflow_profile_collections', 'oo_check_list_collection', array(
             'label' => false,
             'configuration' => $configuration,
@@ -89,7 +89,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
             'required' => false
         ));
         $builder->get('workflow_profile_collections')->addModelTransformer($this->workflowProfileCollectionTransformer);
-    }
+   }
 
     /**
      * @return array The event names to listen to
