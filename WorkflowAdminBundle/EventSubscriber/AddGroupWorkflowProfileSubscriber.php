@@ -63,7 +63,6 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
         foreach ($workflowProfiles as $workflowProfile) {
             $configuration['default']['row'][] = $workflowProfile->getLabel($this->contextManager->getCurrentLocale());
         }
-
         $configuration['default']['column'][NodeInterface::ENTITY_TYPE] = $this->translator->trans('open_orchestra_workflow_admin.profile.page');
         if ($group instanceof GroupInterface) {
             $site = $group->getSite();
@@ -74,23 +73,18 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
                 }
             }
         }
-        $groupRender = $builder->getAttribute('group_render');
-        $groupRender = array_merge($groupRender, array(
+        $builder->setAttribute('group_render', array_merge($builder->getAttribute('group_render'), array(
             'profile' => array(
                 'rank' => '2',
                 'label' => 'open_orchestra_workflow_admin.form.profile',
             )
-        ));
-        $builder->setAttribute('group_render', $groupRender);
-
-        $subGroupRender = $builder->getAttribute('sub_group_render');
-        $subGroupRender = array_merge($subGroupRender, array(
+        )));
+        $builder->setAttribute('sub_group_render', array_merge($builder->getAttribute('sub_group_render'), array(
             'backoffice' => array(
                 'rank' => '0',
                 'label' => 'open_orchestra_workflow_admin.form.backoffice',
             )
-        ));
-        $builder->setAttribute('sub_group_render', $subGroupRender);
+        )));
         $builder->add('workflow_profile_collections', 'oo_check_list_collection', array(
             'label' => false,
             'configuration' => $configuration,
