@@ -305,7 +305,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $siteId = $this->contextManager->getCurrentSiteId();
         Phake::when($this->nodeRepository)->findByNodeAndSite('son',$siteId)->thenReturn($sons);
 
-        $this->manager->orderNodeChildren($orderedNode, $parentNode);
+        $this->manager->reorderNodes($orderedNode, $parentNode);
 
         Phake::verify($this->node, Phake::times(4))->setParentId($nodeId);
         Phake::verify($this->node, Phake::times(4))->setOrder($position);
