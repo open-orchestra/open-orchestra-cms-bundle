@@ -1,6 +1,15 @@
 parameters:
     open_orchestra_backoffice.util.unique_id_generator.class: OpenOrchestra\Backoffice\Util\UniqueIdGenerator
+    open_orchestra_backoffice.command.orchestra_delete_site_tools.class: OpenOrchestra\Backoffice\Command\OrchestraDeleteSiteTools
 
 services:
     open_orchestra_backoffice.util.unique_id_generator:
         class: '%open_orchestra_backoffice.util.unique_id_generator.class%'
+
+    open_orchestra_backoffice.command.orchestra_delete_site_tools:
+        class: '%open_orchestra_backoffice.command.orchestra_delete_site_tools.class%'
+        arguments:
+            - '@open_orchestra_model.repository.content'
+            - '@open_orchestra_model.repository.block'
+            - '@object_manager'
+            - '@open_orchestra_backoffice.reference.manager'

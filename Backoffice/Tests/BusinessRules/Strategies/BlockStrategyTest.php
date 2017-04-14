@@ -1,4 +1,5 @@
 <?php
+
 namespace OpenOrchestra\BackOffice\Tests\BusinessRules\Strategies;
 
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
