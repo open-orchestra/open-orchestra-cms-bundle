@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Form\DataTransformer;
 use OpenOrchestra\GroupBundle\Form\DataTransformer\GroupPerimeterTransformer;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class GroupPerimeterTransformerTest
@@ -20,7 +19,7 @@ class GroupPerimeterTransformerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->generatePerimeterManager = Phake::mock('OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager');
-        Phake::when($this->generatePerimeterManager)->generatePerimeters()->thenReturn(array(
+        Phake::when($this->generatePerimeterManager)->generatePerimeters(Phake::anyParameters())->thenReturn(array(
             'node' => array(
                 'root',
                 'root/fixture_page_community',
@@ -54,13 +53,20 @@ class GroupPerimeterTransformerTest extends AbstractBaseTestCase
         $perimeter = Phake::mock('OpenOrchestra\GroupBundle\Document\Perimeter');
         Phake::when($perimeter)->getType()->thenReturn('node');
         Phake::when($perimeter)->getItems()->thenReturn($items);
-        $value = new ArrayCollection();
-        $value->set('node', $perimeter);
+
+        $site = Phake::mock('OpenOrchestra\ModelBundle\Document\Site');
+        Phake::when($site)->getSiteId()->thenReturn('siteId');
+
+        $group = Phake::mock('OpenOrchestra\GroupBundle\Document\Group');
+        Phake::when($group)->getSite()->thenReturn($site);
+
+        $value = Phake::mock('Doctrine\ODM\MongoDB\PersistentCollection');
+        Phake::when($value)->toArray()->thenReturn(array('node' => $perimeter));
+        Phake::when($value)->getOwner()->thenReturn($group);
 
         $result = $this->transformer->transform($value);
 
         $this->assertEquals($expectedResults, $result);
-
     }
 
     /**

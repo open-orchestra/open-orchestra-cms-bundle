@@ -1,10 +1,11 @@
 parameters:
-    open_orchestra_group.generate_perimeter_manager.class:      OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager
-    open_orchestra_group.generate_perimeter.node.class:         OpenOrchestra\Backoffice\GeneratePerimeter\Strategy\NodeGeneratePerimeterStrategy
+    open_orchestra_group.generate_perimeter_manager.class: OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager
+    open_orchestra_group.generate_perimeter.node.class   : OpenOrchestra\Backoffice\GeneratePerimeter\Strategy\NodeGeneratePerimeterStrategy
 
 services:
     open_orchestra_group.generate_perimeter_manager:
         class: '%open_orchestra_group.generate_perimeter_manager.class%'
+
     open_orchestra_group.generate_perimeter.node:
         class: '%open_orchestra_group.generate_perimeter.node.class%'
         arguments:

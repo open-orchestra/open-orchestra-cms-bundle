@@ -60,11 +60,6 @@ class GroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $configuration = $this->generatePerimeterManager->getPerimetersConfiguration();
-        array_walk_recursive($configuration, function(&$path) {
-            $path = GeneratePerimeterManager::changePathToName($path);
-        });
-
         $builder
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_group.form.group.name',
@@ -81,10 +76,16 @@ class GroupType extends AbstractType
                 'label' => 'open_orchestra_group.form.group.site',
                 'group_id' => 'property',
                 'sub_group_id' => 'property',
-                'disabled' => !$options['new_button']
+                'disabled' => !$options['creation']
             ));
 
         if (!$options['creation']) {
+            $group = $options['data'];
+            $configuration = $this->generatePerimeterManager->getPerimetersConfiguration($group->getSite()->getSiteId());
+            array_walk_recursive($configuration, function(&$path) {
+                $path = GeneratePerimeterManager::changePathToName($path);
+            });
+
             $builder
             ->add('roles', 'oo_group_role', array(
                 'label' => false,

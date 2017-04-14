@@ -25,13 +25,14 @@ class GeneratePerimeterManager
     /**
      * Generate perimeters
      *
+     * @param string $siteId
      * @return array
      */
-    public function generatePerimeters()
+    public function generatePerimeters($siteId)
     {
         $perimeters = array();
         foreach ($this->strategies as $strategy) {
-            $perimeters = array_merge($perimeters, array($strategy->getType() => $strategy->generatePerimeter()));
+            $perimeters = array_merge($perimeters, array($strategy->getType() => $strategy->generatePerimeter($siteId)));
         }
 
         return $perimeters;
@@ -40,23 +41,35 @@ class GeneratePerimeterManager
     /**
      * get perimeters configuration
      *
+     * @param string $siteId
      * @return array
      */
-    public function getPerimetersConfiguration()
+    public function getPerimetersConfiguration($siteId)
     {
         $perimetersConfiguration = array();
         foreach ($this->strategies as $strategy) {
-            $perimetersConfiguration = array_merge($perimetersConfiguration, array($strategy->getType() => $strategy->getPerimeterConfiguration()));
+            $perimetersConfiguration = array_merge(
+                $perimetersConfiguration,
+                array($strategy->getType() => $strategy->getPerimeterConfiguration($siteId))
+            );
         }
 
         return $perimetersConfiguration;
     }
 
-   static public function changePathToName($path) {
-       return str_replace('/', self::DELIMITER, $path);
-   }
+    /**
+     * @param string $path
+     * @return string
+     */
+    static public function changePathToName($path) {
+        return str_replace('/', self::DELIMITER, $path);
+    }
 
-   static public function changeNameToPath($name) {
-       return str_replace(self::DELIMITER, '/', $name);
-   }
+    /**
+     * @param string $name
+     * @return string
+     */
+    static public function changeNameToPath($name) {
+        return str_replace(self::DELIMITER, '/', $name);
+    }
 }

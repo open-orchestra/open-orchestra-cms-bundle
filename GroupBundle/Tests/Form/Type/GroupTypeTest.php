@@ -29,7 +29,7 @@ class GroupTypeTest extends AbstractBaseTestCase
         $dataTransformer0 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $dataTransformer1 = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
         $generatePerimeterManager = Phake::mock('OpenOrchestra\Backoffice\GeneratePerimeter\GeneratePerimeterManager');
-        Phake::when($generatePerimeterManager)->getPerimetersConfiguration()->thenReturn(array());
+        Phake::when($generatePerimeterManager)->getPerimetersConfiguration(Phake::anyParameters())->thenReturn(array());
         $this->form = new GroupType(
             $eventSubscriber1,
             $this->eventDispatcher,
@@ -37,7 +37,8 @@ class GroupTypeTest extends AbstractBaseTestCase
             $dataTransformer1,
             $generatePerimeterManager,
             $this->groupClass,
-            array('en', 'fr'));
+            array('en', 'fr')
+        );
     }
 
     /**
@@ -74,7 +75,19 @@ class GroupTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array('new_button' => false, 'creation' => $creation));
+        $site = Phake::mock('OpenOrchestra\ModelBundle\Document\Site');
+        Phake::when($site)->getSiteId()->thenReturn('siteId');
+        $group = Phake::mock('OpenOrchestra\GroupBundle\Document\Group');
+        Phake::when($group)->getSite()->thenReturn($site);
+
+        $this->form->buildForm(
+            $builder,
+            array(
+                'new_button' => false,
+                'creation'   => $creation,
+                'data'       => $group
+            )
+        );
 
         Phake::verify($builder, Phake::times($formTimes))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times($transformerTimes))->addModelTransformer(Phake::anyParameters());

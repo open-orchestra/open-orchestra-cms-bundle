@@ -9,8 +9,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 
-use Doctrine\ODM\MongoDB\PersistentCollection;
-
 /**
  * Class UpdateNodeSiteAliasSubscriber
  */

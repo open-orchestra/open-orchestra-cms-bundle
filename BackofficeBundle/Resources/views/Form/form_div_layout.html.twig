@@ -235,7 +235,9 @@
     {% spaceless %}
         {% set collection = form|first %}
         {% for name, configuration in form.vars.configuration %}
-            {{ form_widget(collection[name]) }}
+            {% if (collection[name] is defined) %}
+                {{ form_widget(collection[name]) }}
+            {% endif %}
         {% endfor %}
     {% endspaceless %}
 {% endblock oo_tree_list_collection_widget %}

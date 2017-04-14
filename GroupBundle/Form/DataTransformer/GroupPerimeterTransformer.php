@@ -17,9 +17,8 @@ class GroupPerimeterTransformer implements DataTransformerInterface
     /**
      * @param GeneratePerimeterManager $generatePerimeterManager
      */
-    public function __construct(
-        GeneratePerimeterManager $generatePerimeterManager
-    ) {
+    public function __construct(GeneratePerimeterManager $generatePerimeterManager)
+    {
         $this->generatePerimeterManager = $generatePerimeterManager;
     }
 
@@ -33,7 +32,7 @@ class GroupPerimeterTransformer implements DataTransformerInterface
     public function transform($value)
     {
         $result = array();
-        $configuration = $this->generatePerimeterManager->generatePerimeters();
+        $configuration = $this->generatePerimeterManager->generatePerimeters($value->getOwner()->getSite()->getSiteId());
         $value = $value->toArray();
 
         foreach ($configuration as $type => &$paths) {

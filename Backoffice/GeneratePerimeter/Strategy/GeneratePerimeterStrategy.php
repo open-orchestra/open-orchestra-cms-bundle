@@ -2,24 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\GeneratePerimeter\Strategy;
 
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-
 /**
  * Class GeneratePerimeterStrategy
  */
 abstract class GeneratePerimeterStrategy
 {
-    protected $contextManager;
-
-    /**
-     * @param CurrentSiteIdInterface $contextManager
-     */
-    public function __construct(
-        CurrentSiteIdInterface $contextManager
-    ) {
-        $this->contextManager = $contextManager;
-    }
-
     /**
      * @param array $tree
      *
