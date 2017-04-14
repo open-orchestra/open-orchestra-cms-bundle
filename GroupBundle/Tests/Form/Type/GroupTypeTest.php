@@ -68,14 +68,26 @@ class GroupTypeTest extends AbstractBaseTestCase
      *
      * @dataProvider provideBuilderParams
      */
-    public function testBuilder($siteId, $creation, $formTimes, $transformerTimes, $subscriberTimes, $dispatcherTimes)
+    public function testBuilder($creation, $formTimes, $transformerTimes, $subscriberTimes, $dispatcherTimes)
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->get(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array('new_button' => false, 'creation' => $creation, 'siteId' => $siteId));
+        $site = Phake::mock('OpenOrchestra\ModelBundle\Document\Site');
+        Phake::when($site)->getSiteId()->thenReturn('siteId');
+        $group = Phake::mock('OpenOrchestra\GroupBundle\Document\Group');
+        Phake::when($group)->getSite()->thenReturn($site);
+
+        $this->form->buildForm(
+            $builder,
+            array(
+                'new_button' => false,
+                'creation'   => $creation,
+                'data'       => $group
+            )
+        );
 
         Phake::verify($builder, Phake::times($formTimes))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times($transformerTimes))->addModelTransformer(Phake::anyParameters());
@@ -91,8 +103,8 @@ class GroupTypeTest extends AbstractBaseTestCase
     public function provideBuilderParams()
     {
         return array(
-            array(null    , true , 3, 0, 0, 0),
-            array('siteId', false, 5, 2, 1, 1),
+            array(true , 3, 0, 0, 0),
+            array(false, 5, 2, 1, 1),
         );
     }
 

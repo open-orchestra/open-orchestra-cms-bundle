@@ -80,7 +80,8 @@ class GroupType extends AbstractType
             ));
 
         if (!$options['creation']) {
-            $configuration = $this->generatePerimeterManager->getPerimetersConfiguration($options['siteId']);
+            $group = $options['data'];
+            $configuration = $this->generatePerimeterManager->getPerimetersConfiguration($group->getSite()->getSiteId());
             array_walk_recursive($configuration, function(&$path) {
                 $path = GeneratePerimeterManager::changePathToName($path);
             });
@@ -110,7 +111,6 @@ class GroupType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('siteId');
         $resolver->setDefaults(
             array(
                 'data_class' => $this->groupClass,

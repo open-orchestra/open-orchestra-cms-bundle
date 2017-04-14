@@ -40,8 +40,7 @@ class GroupController extends AbstractAdminController
         $form = $this->createForm('oo_group', $group, array(
             'action'   => $this->generateUrl('open_orchestra_group_new'),
             'creation' => true,
-            'method'   => 'POST',
-            'siteId'   => null
+            'method'   => 'POST'
         ));
 
         $form->handleRequest($request);
@@ -88,8 +87,7 @@ class GroupController extends AbstractAdminController
                 $this->isGranted(ContributionActionInterface::DELETE, $group)
                 && $this->get('open_orchestra_backoffice.business_rules_manager')
                     ->isGranted(ContributionActionInterface::DELETE, $group)
-            ),
-            'siteId' => $group->getSite()->getSiteId()
+            )
         ));
 
         $form->handleRequest($request);
