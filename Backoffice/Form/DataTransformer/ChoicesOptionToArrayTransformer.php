@@ -27,7 +27,7 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
      */
     public function transform($arrayChoices)
     {
-        if (null === $arrayChoices) {
+        if (!is_array($arrayChoices)) {
             return "";
         }
 
@@ -41,7 +41,7 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
      */
     public function reverseTransform($choices)
     {
-        if (null === $choices || '' === trim($choices)) {
+        if (!is_string($choices) || '' === trim($choices)) {
             return null;
         }
 
