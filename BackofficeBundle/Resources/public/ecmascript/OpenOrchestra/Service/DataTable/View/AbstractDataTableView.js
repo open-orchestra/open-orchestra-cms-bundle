@@ -307,9 +307,9 @@ class AbstractDataTableView extends OrchestraView
      * @private
      */
     _infoCallback(settings, start, end, max, total, pre) {
-        let totalHtml = '<span>'+total+'</span>';
+        let totalHtml = "<span>"+total+"</span>";
 
-        return Translator.trans('open_orchestra_datatable.info', {total: totalHtml});
+        return Translator.transChoice('open_orchestra_datatable.info', total, {total: totalHtml});
     }
 
     /**
