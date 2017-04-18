@@ -35,7 +35,7 @@
                         <%- Translator.trans('open_orchestra_backoffice.node.preview') %>
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-right">
                         <% _.each(node.get('preview_links'), function(previewLink, key) { %>
                         <li>
                             <a href="<%- previewLink.link %>"><%- previewLink.name %></a>
