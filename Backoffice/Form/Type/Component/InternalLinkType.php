@@ -16,12 +16,18 @@ class InternalLinkType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $builder->getData();
+        if (!array_key_exists('site', $data)) {
+            $data['site'] = array();
+        }
+
         $builder->add('label', 'text', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.label',
         ));
         $builder->add('site', 'oo_site_site_alias', array(
             'label' => false,
             'required' => true,
+            'data' => $data['site'],
         ));
         $builder->add('contentSearch', 'oo_content_search', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.content',

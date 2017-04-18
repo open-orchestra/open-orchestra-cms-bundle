@@ -63,7 +63,7 @@ class SiteSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        $siteId = is_array($data) && array_key_exists('siteId', $data) ? $data['siteId'] : $form->get('siteId')->getConfig()->getEmptyData();
+        $siteId = is_array($data) && array_key_exists('siteId', $data) ? $data['siteId'] : $form->get('siteId')->getConfig()->getData();
         $nodeId = is_array($data) && array_key_exists('nodeId', $data) ? $data['nodeId'] : '';
         $aliasId = is_array($data) && array_key_exists('aliasId', $data) ? $data['aliasId'] : '';
 

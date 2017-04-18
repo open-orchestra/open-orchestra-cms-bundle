@@ -33,9 +33,14 @@ class SiteSiteAliasType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $builder->getData();
+        if (!array_key_exists('siteId', $data)) {
+            $data['siteId'] = $this->currentSiteManager->getCurrentSiteId();
+        }
+
         $builder->add('siteId', 'oo_site_choice', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.site',
-            'empty_data' => $this->currentSiteManager->getCurrentSiteId(),
+            'data' => $data['siteId'],
             'attr' => array(
                 'class' => 'to-tinyMce patch-submit-change',
                 'data-key' => 'site'
