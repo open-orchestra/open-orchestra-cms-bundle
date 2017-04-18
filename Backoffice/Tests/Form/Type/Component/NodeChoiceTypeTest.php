@@ -89,9 +89,6 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
                     $this->nodeNodeId1 => ''.$this->nodeName1,
                     $this->nodeNodeId2 => '&#x2514;'.$this->nodeName2,
                 ),
-                'attr' => array(
-                    'class' => 'orchestra-node-choice'
-                )
         ));
     }
 }
