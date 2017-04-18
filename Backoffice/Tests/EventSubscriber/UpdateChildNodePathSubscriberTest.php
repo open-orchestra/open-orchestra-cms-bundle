@@ -21,6 +21,7 @@ class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
     protected $nodeRepository;
     protected $eventDispatcher;
     protected $currentSiteManager;
+    protected $siteId = 'fakeId';
 
     /**
      * Set up the test
@@ -32,7 +33,7 @@ class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcher');
 
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('fakeId');
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($this->siteId);
 
         $this->subscriber = new UpdateChildNodePathSubscriber($this->nodeRepository, $this->eventDispatcher, $this->currentSiteManager);
     }
@@ -58,7 +59,6 @@ class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdatePath()
     {
-        $siteId = $this->currentSiteManager->getCurrentSiteId();
         $parentNodeId = 'parent';
         $parentPath = 'parentPath';
         $son1NodeId = 'son1NodeId';
@@ -77,7 +77,7 @@ class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
         $sons->add($son1);
         $sons->add($son2);
         $sons->add($son3);
-        Phake::when($this->nodeRepository)->findByParent($parentNodeId, $siteId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByParent(Phake::anyParameters())->thenReturn($sons);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($event)->getNode()->thenReturn($parent);

@@ -25,7 +25,10 @@ class GroupPerimeterSubscriberTest extends AbstractBaseTestCase
     {
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
 
-        $this->subscriber = new GroupPerimeterSubscriber();
+        $groupRepository = Phake::mock('OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface');
+        $siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+
+        $this->subscriber = new GroupPerimeterSubscriber($groupRepository, $siteRepository);
     }
 
     /**
