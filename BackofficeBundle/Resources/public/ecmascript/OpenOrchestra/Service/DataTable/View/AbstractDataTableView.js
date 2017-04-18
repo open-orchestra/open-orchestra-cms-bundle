@@ -207,7 +207,7 @@ class AbstractDataTableView extends OrchestraView
     _getOrderSettings(settings) {
         let order = [];
         for (let column of settings.columnDefs) {
-            if (true === column.orderable && undefined !== column.orderDirection) {
+            if (true === column.orderable) {
                 order.push([column.targets, column.orderDirection])
             }
         }

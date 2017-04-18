@@ -33,7 +33,6 @@ class SiteListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin)
                 name: "name",
                 title: Translator.trans('open_orchestra_backoffice.table.sites.name'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true,
                 createdCell: $.proxy(this._createEditLink, this)
             },

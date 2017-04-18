@@ -35,8 +35,7 @@ class TrashItemListView extends mix(AbstractDataTableView).with(UrlPaginateViewM
             {
                 name: "name",
                 title: Translator.trans('open_orchestra_backoffice.table.trash_item.name'),
-                orderable: true,
-                orderDirection: 'asc'
+                orderable: true
             },
             {
                 name: "type",

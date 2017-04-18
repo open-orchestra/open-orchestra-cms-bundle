@@ -36,7 +36,6 @@ class GroupListForUserView extends AbstractDataTableView
                 name: "label",
                 title: Translator.trans('open_orchestra_user_admin.table.groups.name'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true
             },
             {

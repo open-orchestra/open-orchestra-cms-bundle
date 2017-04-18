@@ -24,7 +24,6 @@ class WorkflowProfileListView extends mix(AbstractDataTableView).with(UrlPaginat
                 name: "label",
                 title: Translator.trans('open_orchestra_workflow_admin.table.workflow_profile.label'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true,
                 createdCell: this._createEditLink
             },

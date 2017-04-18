@@ -24,7 +24,6 @@ class ContentTypesListView extends mix(AbstractDataTableView).with(UrlPaginateVi
                 name: "name",
                 title: Translator.trans('open_orchestra_backoffice.table.content_types.name'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true,
                 createdCell: this._createEditLink
             },

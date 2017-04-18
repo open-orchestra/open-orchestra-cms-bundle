@@ -24,7 +24,6 @@ class KeywordListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
                 name: "label",
                 title: Translator.trans('open_orchestra_backoffice.table.keyword.label'),
                 orderable: true,
-                orderDirection: 'asc',
                 createdCell: this._createEditLink
             },            {
                 name: "number_use",

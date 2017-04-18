@@ -36,7 +36,6 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         columnsDefinition = columnsDefinition.concat(this._generateListableColumn());
         columnsDefinition = columnsDefinition.concat(this._generateFieldColumn());
         columnsDefinition.push(this._getColumnsDefinitionDuplicateIcon());
-        columnsDefinition[1].orderDirection = 'desc';
         columnsDefinition[1].createdCell = this._createEditLink;
         
         return columnsDefinition;
