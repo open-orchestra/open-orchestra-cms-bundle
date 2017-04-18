@@ -74,7 +74,7 @@ open_orchestra_backoffice:
             new: Nouveau type de contenu
             name: Nom
             content_type_id: Id
-            linked_to_site: Partagé sur les autres sites
+            linked_to_site: Restreint au site
         shared_block:
             label: Libellé
             updated_at: Date de modification
