@@ -3,6 +3,8 @@
     <div class="no-item">
         <p><%- Translator.trans('open_orchestra_backoffice.no_item') %></p>
         <img src="/images/no-item.png" alt="" />
-        <a href="#<%- urlAdd %>" class="btn btn-info"><%- Translator.trans('open_orchestra_backoffice.add')%></a>
+        <% if ('' != urlAdd) { %>
+            <a href="#<%- urlAdd %>" class="btn btn-info"><%- Translator.trans('open_orchestra_backoffice.add')%></a>
+        <% } %>
     </div>
 </div>
