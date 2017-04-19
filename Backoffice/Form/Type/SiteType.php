@@ -93,6 +93,7 @@ class SiteType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.website.metaAuthor',
                 'group_id' => 'seo',
                 'sub_group_id' => 'meta',
+                'required' => false
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.changefreq.title',
