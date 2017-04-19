@@ -60,10 +60,6 @@ services:
         class: '%open_orchestra_backoffice.configurable_content.generate_form.class%'
         arguments:
             - '%open_orchestra_backoffice.block_default_configuration%'
-            - '@open_orchestra_model.repository.content_type'
-            - '@open_orchestra_model.repository.content'
-            - '@router'
-            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.sub_menu.generate_form:

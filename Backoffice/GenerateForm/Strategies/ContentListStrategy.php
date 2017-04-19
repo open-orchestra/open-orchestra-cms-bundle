@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\Backoffice\Validator\Constraints\ContentTemplate;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy as BaseContentListStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -49,20 +48,6 @@ class ContentListStrategy extends AbstractBlockStrategy
             'group_id' => 'data',
             'sub_group_id' => 'content',
         ));
-        $builder->add('contentTemplateEnabled', 'checkbox', array(
-            'label' => 'open_orchestra_backoffice.form.content_list.content_template_enabled.title',
-            'required' => false,
-            'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_list.content_template_enabled.helper'),
-            'group_id' => 'data',
-            'sub_group_id' => 'content',
-        ));
-        $builder->add('contentTemplate', 'oo_tinymce', array(
-            'required' => false,
-            'label' => 'open_orchestra_backoffice.form.content_list.content_template',
-            'constraints' => new ContentTemplate(),
-            'group_id' => 'data',
-            'sub_group_id' => 'content',
-        ));
     }
 
     /**
@@ -72,8 +57,7 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         return array(
             'contentNodeId' => NodeInterface::ROOT_NODE_ID,
-            'characterNumber' => 50,
-            'contentTemplate' => '',
+            'characterNumber' => 50
         );
     }
 

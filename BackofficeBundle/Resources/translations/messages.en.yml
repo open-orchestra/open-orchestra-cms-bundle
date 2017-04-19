@@ -237,10 +237,6 @@ open_orchestra_backoffice:
             choice_type: Type of choice
             choice_type_and: AND
             choice_type_or: OR
-            content_template: Template to use to display the content
-            content_template_enabled:
-                title: Template usage
-                helper: Template usage
         content_search:
             content_type: Content type to display
             content_keyword: Keyword to display
@@ -327,10 +323,6 @@ open_orchestra_backoffice:
             contentTypeId: Choose a content type
             contentId: Choose a content
             description: Display selected content.
-            content_template: Template to use to display the content
-            content_template_enabled:
-                title: Template usage
-                helper: Template usage
         contact:
             title: Contact
             description: Display a contact form.

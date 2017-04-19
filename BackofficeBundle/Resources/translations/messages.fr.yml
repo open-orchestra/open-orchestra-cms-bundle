@@ -237,10 +237,6 @@ open_orchestra_backoffice:
             choice_type: Type de choix
             choice_type_and: ET
             choice_type_or: OU
-            content_template: Gabarit à utiliser pour afficher un contenu
-            content_template_enabled:
-                title: Usage du gabarit
-                helper: Usage du gabarit
         content_search:
             content_type: Type de contenu à afficher
             content_keyword: Mot-clé à afficher
@@ -327,10 +323,6 @@ open_orchestra_backoffice:
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
             description: Affiche un contenu sélectionné.
-            content_template: Gabarit à utiliser pour afficher le contenu
-            content_template_enabled:
-                title: Usage du gabarit
-                helper: Usage du gabarit
         contact:
             title: Contact
             description: Affiche un formulaire de contact.
