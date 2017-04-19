@@ -28,7 +28,7 @@ class BooleanConditionValidator extends ConstraintValidator
      *
      * @return bool
      */
-    protected function validateCondition($condition)
+    public function validateCondition($condition)
     {
         $is_boolean = true;
         if (!empty($condition)) {
