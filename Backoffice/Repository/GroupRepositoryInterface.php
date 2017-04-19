@@ -46,4 +46,12 @@ interface GroupRepositoryInterface
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function softDeleteGroupsBySite(SiteInterface $site);
+
+    /**
+     * @param string $perimeterType
+     * @param string $oldItem
+     * @param string $newItem
+     * @param string $siteId
+     */
+    public function updatePerimeterItem($perimeterType, $oldItem, $newItem, $siteId);
 }

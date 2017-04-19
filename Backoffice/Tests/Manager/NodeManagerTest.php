@@ -37,6 +37,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     protected $documentManager;
     protected $fakeVersion = 'fakeVersion';
     protected $user;
+    protected $nodeId = 'nodeId';
 
     /**
      * Set up the test
@@ -70,6 +71,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($this->area)->getBlocks()->thenReturn(array($this->block, $this->blockTransverse));
         Phake::when($this->node)->getAreas()->thenReturn(array('fakeArea' => $this->area));
         Phake::when($this->node)->getTemplate()->thenReturn('fakeTemplate');
+        Phake::when($this->node)->getParentId()->thenReturn('nodeParentId');
+        Phake::when($this->node)->getNodeId()->thenReturn($this->nodeId);
         Phake::when($this->blockRepository)->getDocumentManager()->thenReturn($this->documentManager);
 
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
@@ -289,27 +292,25 @@ class NodeManagerTest extends AbstractBaseTestCase
      */
     public function testOrderNodeChildren($position, $nodeId, $parentPath)
     {
-        $sonNodeId = 'son';
-        $orderedNode = array($position => $sonNodeId);
+        $siteId = 'siteId';
+        $parentNodeId = 'parentNodeId';
+        $orderedNode = array($position => $this->nodeId);
 
         $parentNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($parentNode)->getNodeId()->thenReturn($nodeId);
+        Phake::when($parentNode)->getNodeId()->thenReturn($parentNodeId);
+        Phake::when($parentNode)->getSiteId()->thenReturn($siteId);
         Phake::when($parentNode)->getPath()->thenReturn($parentPath);
 
-        $sons = new ArrayCollection();
-        $sons->add($this->node);
-        $sons->add($this->node);
-        $sons->add($this->node);
-        $sons->add($this->node);
+        $sons = array($this->node, $this->node, $this->node, $this->node);
 
-        $siteId = $this->contextManager->getCurrentSiteId();
-        Phake::when($this->nodeRepository)->findByNodeAndSite('son',$siteId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByNodeAndSite($this->nodeId, $siteId)->thenReturn($sons);
 
-        $this->manager->orderNodeChildren($orderedNode, $parentNode);
+        $this->manager->reorderNodes($orderedNode, $parentNode);
 
-        Phake::verify($this->node, Phake::times(4))->setParentId($nodeId);
         Phake::verify($this->node, Phake::times(4))->setOrder($position);
-        Phake::verify($this->node, Phake::times(4))->setPath($parentPath . '/' . $sonNodeId);
+
+        Phake::verify($this->node, Phake::times(4))->setParentId($parentNodeId);
+        Phake::verify($this->node, Phake::times(4))->setPath($parentPath . '/' . $this->nodeId);
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 

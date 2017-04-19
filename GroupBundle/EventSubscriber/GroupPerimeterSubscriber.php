@@ -9,12 +9,29 @@ use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\GroupBundle\Document\Perimeter;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class GroupPerimeterSubscriber
  */
 class GroupPerimeterSubscriber implements EventSubscriberInterface
 {
+    protected $groupRepository;
+    protected $siteRepository;
+
+    /**
+     * @param GroupRepositoryInterface $groupRepository
+     */
+    public function __construct(GroupRepositoryInterface $groupRepository, SiteRepositoryInterface $siteRepository)
+    {
+        $this->groupRepository = $groupRepository;
+        $this->siteRepository = $siteRepository;
+    }
+
     /**
      * @param FormEvent $event
      */
@@ -41,12 +58,29 @@ class GroupPerimeterSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param NodeEvent $event
+     */
+    public function updateNodePerimeter(NodeEvent $event)
+    {
+        $node = $event->getNode();
+        $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
+
+        $this->groupRepository->updatePerimeterItem(
+            NodeInterface::ENTITY_TYPE,
+            $event->getPreviousPath(),
+            $node->getPath(),
+            $site->getId()
+        );
+    }
+
+    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::POST_SUBMIT => 'postSubmit',
+            FormEvents::POST_SUBMIT  => 'postSubmit',
+            NodeEvents::PATH_UPDATED => 'updateNodePerimeter',
         );
     }
 }

@@ -97,7 +97,7 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
         PaginateFinderConfiguration $configuration,
         array $siteIds,
         $order = array()
-    ){
+    ) {
         $qa = $this->createAggregationQueryBuilderWithSiteIds($siteIds);
         $filters = $this->getFilterSearch($configuration);
         if (!empty($filters)) {
@@ -148,5 +148,31 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
         }
 
         return $filter;
+    }
+
+    /**
+     * @param string $perimeterType
+     * @param string $oldItem
+     * @param string $newItem
+     * @param string $siteId
+     */
+    public function updatePerimeterItem($perimeterType, $oldItem, $newItem, $siteId)
+    {
+        $perimeterKey = 'perimeters.' . $perimeterType . '.items';
+
+        $this->createQueryBuilder()
+            ->updateMany()
+            ->field('site.$id')->equals(new \MongoId($siteId))
+            ->field($perimeterKey)->equals($oldItem)
+            ->field($perimeterKey)->push($newItem)
+            ->getQuery()
+            ->execute();
+
+        $this->createQueryBuilder()
+            ->updateMany()
+            ->field('site.$id')->equals(new \MongoId($siteId))
+            ->field($perimeterKey)->pull($oldItem)
+            ->getQuery()
+            ->execute();
     }
 }

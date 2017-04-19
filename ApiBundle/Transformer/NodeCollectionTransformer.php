@@ -36,7 +36,7 @@ class NodeCollectionTransformer extends AbstractTransformer
      *
      * @return array
      */
-    public function reverseTransformOrder($nodeCollection)
+    public function getNodeIds($nodeCollection)
     {
         $orderedNode = array();
 
