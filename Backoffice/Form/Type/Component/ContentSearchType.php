@@ -36,7 +36,7 @@ class ContentSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $newAttr = array('class' => 'select-boolean');
+        $newAttr = array();
         if (!is_null($options['authorize_new'])) {
             $newAttr['data-authorize-new'] = $options['authorize_new'];
         }

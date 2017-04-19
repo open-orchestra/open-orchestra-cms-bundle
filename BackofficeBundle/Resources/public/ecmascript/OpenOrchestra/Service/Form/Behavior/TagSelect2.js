@@ -15,6 +15,7 @@ class TagSelect2 extends AbstractBehavior
         $element.select2({
             tags: tags,
             containerCssClass: 'tags',
+            tokenSeparators: [','],
             createSearchChoice: (term, data) => {
                 if (!$element.data('authorize-new')) {
                     return false;
