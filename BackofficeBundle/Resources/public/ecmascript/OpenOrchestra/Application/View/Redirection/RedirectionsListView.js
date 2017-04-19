@@ -24,8 +24,7 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
                 name: "site_name",
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.site_name'),
                 orderable: true,
-                orderDirection: 'asc',
-                visibile: true,
+                visibile: true
             },
             {
                 name: "id",
@@ -36,26 +35,26 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.route_pattern'),
                 orderable: true,
                 visibile: true,
-                createdCell: this._createEditLink,
+                createdCell: this._createEditLink
             },
             {
                 name: "locale",
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.locale'),
                 orderable: true,
-                visibile: true,
+                visibile: true
             },
             {
                 name: "redirection",
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.redirection'),
                 orderable: false,
-                visibile: true,
+                visibile: true
             },
             {
                 name: "permanent",
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.permanent'),
                 orderable: true,
-                visibile: true,
-            },
+                visibile: true
+            }
         ];
     }
 

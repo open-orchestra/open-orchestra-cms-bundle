@@ -25,7 +25,6 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
                 name: "label",
                 title: Translator.trans('open_orchestra_group.table.groups.label'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true,
                 createdCell: this._createEditLink
             },
@@ -33,14 +32,12 @@ class GroupListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin
                 name: "nbr_users",
                 title: Translator.trans('open_orchestra_group.table.groups.nbr_users'),
                 orderable: true,
-                orderDirection: 'desc',
-                visibile: true,
+                visibile: true
             },
             {
                 name: "site.name",
                 title: Translator.trans('open_orchestra_group.table.groups.site_name'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true
             },
             this._getColumnsDefinitionDuplicateIcon()

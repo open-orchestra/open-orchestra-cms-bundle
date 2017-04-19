@@ -37,7 +37,6 @@ class MembersListView extends AbstractDataTableView
                 name: "username",
                 title: Translator.trans('open_orchestra_group.table.members_list.username'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true,
                 createdCell: this._createEditLink
             },

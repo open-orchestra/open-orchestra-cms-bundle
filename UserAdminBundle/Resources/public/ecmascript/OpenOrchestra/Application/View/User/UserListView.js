@@ -24,7 +24,6 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin,
                 name: "username",
                 title: Translator.trans('open_orchestra_user_admin.table.users.username'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true,
                 createdCell: this._createEditLink
             },

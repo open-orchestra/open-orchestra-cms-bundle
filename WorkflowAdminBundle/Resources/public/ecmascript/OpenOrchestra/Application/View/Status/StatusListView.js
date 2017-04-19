@@ -24,7 +24,6 @@ class StatusListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixi
                 name: "label",
                 title: Translator.trans('open_orchestra_workflow_admin.table.statuses.label'),
                 orderable: true,
-                orderDirection: 'desc',
                 visibile: true,
                 createdCell: this._createEditLink
             },
