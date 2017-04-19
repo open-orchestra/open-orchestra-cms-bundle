@@ -3,11 +3,12 @@ import Content                 from '../../Model/Content/Content'
 import ApplicationError        from '../../../Service/Error/ApplicationError'
 import ConfirmPublishModalView from '../Statusable/ConfirmPublishModalView'
 import Application             from '../../Application'
+import LoadingButtonMixin      from '../../../Service/Form/Mixin/LoadingButtonMixin'
 
 /**
  * @class ContentToolbarView
  */
-class ContentToolbarView extends OrchestraView
+class ContentToolbarView extends mix(OrchestraView).with(LoadingButtonMixin)
 {
     /**
      * @inheritdoc
@@ -143,12 +144,29 @@ class ContentToolbarView extends OrchestraView
         if (saveOldPublishedVersion) {
             apiContext = 'update_status_with_save_published';
         }
+        this._activateLoadingWorkflow();
         this._content.save({'status': status}, {
             apiContext: apiContext,
             success: () => {
                 Backbone.history.loadUrl(Backbone.history.fragment);
             }
-        });
+        }).always($.proxy(this._resetLoadingWorkflow, this));
+    }
+
+    /**
+     * @private
+     */
+    _activateLoadingWorkflow() {
+        this.activateLoading($('.dropdown-workflow button', this.$el));
+        $('.dropdown-workflow', this.$el).addClass('dropdown-loading');
+    }
+
+    /**
+     * @private
+     */
+    _resetLoadingWorkflow() {
+        this.resetLoadingButton($('.dropdown-workflow button', this.$el));
+        $('.dropdown-workflow', this.$el).removeClass('dropdown-loading');
     }
 }
 

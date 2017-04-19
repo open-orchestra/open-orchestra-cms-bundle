@@ -1172,9 +1172,6 @@ table.ui-sortable .fa.fa-arrows{
     table-layout: fixed;
 }
 
-/*.table-state {
-    .radioBouton('\f058', 22px, 0, 0, @baseColor);
-}*/
 /* ===================================================================
  * ACCORDION
  * =================================================================*/
@@ -2244,10 +2241,13 @@ fieldset {
 }
 
 /* ===================================================================
- * Node/Content version
+ * Node/Content toolbar
  * =================================================================*/
 .search-engine .version_name {
     min-width: 500px;
+}
+.dropdown-workflow.dropdown-loading::after {
+  content: '';
 }
 
 /* ===================================================================
