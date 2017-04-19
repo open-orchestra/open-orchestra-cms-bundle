@@ -1,6 +1,6 @@
 open_orchestra_datatable:
     empty_table: No data available in table
-    info: "{0} There is %total% result|[1,Inf] There are %total% results"
+    info: "{0} There is no result| {1} There is %total% result|[2,Inf] There are %total% results"
     length_menu: _MENU_
     loading_records: Loading...
     processing: Processing...

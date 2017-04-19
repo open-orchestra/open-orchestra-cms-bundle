@@ -1,6 +1,6 @@
 open_orchestra_datatable:
     empty_table: Aucune donnée disponible dans le tableau
-    info: Il y a %total% résultats
+    info: "{0} Il y n'a pas de résultat| {1} Il y a %total% résultat|[2,Inf] Il y a %total% résultats"
     length_menu: _MENU_
     loading_records: Chargement en cours...
     processing: Traitement en cours...
