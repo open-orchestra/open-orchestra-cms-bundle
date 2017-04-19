@@ -67,7 +67,7 @@ class SiteSiteAliasTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->getData()->thenReturn(array());
-        
+
         $this->form->buildForm($builder, array(
             'refresh' => true,
             'attr' => array()
