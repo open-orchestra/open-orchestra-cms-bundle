@@ -186,10 +186,10 @@ class NodeType extends AbstractType
             if (!empty($this->frontRoles)) {
                 $builder->add('frontRoles', 'choice', array(
                     'label' => false,
-                    'choices' => array_flip($this->frontRoles),
+                    'choices' => $this->frontRoles,
                     'choices_as_values' => true,
                     'choice_label' => function ($value, $key) {
-                        return 'open_orchestra_backoffice.form.role.' . $key;
+                        return 'open_orchestra_backoffice.form.role.' . $value;
                     },
                     'multiple' => true,
                     'expanded' => true,
