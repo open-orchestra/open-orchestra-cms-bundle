@@ -1,13 +1,4 @@
-open_orchestra_backoffice:
-    block:
-        login:
-            title: Login
-
 open_orchestra_user_admin:
-    block:
-        login:
-            title: Login
-            description: Display a log form.
     form:
         user:
             firstName: First name

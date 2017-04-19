@@ -1,13 +1,5 @@
-open_orchestra_backoffice:
-    block:
-        login:
-            title: Connexion
 
 open_orchestra_user_admin:
-    block:
-        login:
-            title: Connexion
-            description: Affiche un formulaire pour ce logger.
     form:
         user:
             firstName: Prénom
