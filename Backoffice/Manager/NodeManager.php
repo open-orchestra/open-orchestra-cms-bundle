@@ -336,7 +336,7 @@ class NodeManager
      * @param array $nodeVersions
      * @param int   $position
      */
-    protected function updateNodeVersionsOrder($nodeVersions, $position)
+    protected function updateNodeVersionsOrder(array $nodeVersions, $position)
     {
         foreach ($nodeVersions as $nodeVersion) {
             if ($nodeVersion instanceof NodeInterface) {
@@ -349,7 +349,7 @@ class NodeManager
      * @param array         $nodeVersions
      * @param NodeInterface $parentNode
      */
-    protected function moveNodeVersions($nodeVersions, $parentNode)
+    protected function moveNodeVersions(array $nodeVersions, NodeInterface $parentNode)
     {
         $event = null;
 
