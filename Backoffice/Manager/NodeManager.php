@@ -317,7 +317,7 @@ class NodeManager
      * @param array         $orderedNodes
      * @param NodeInterface $parentNode
      */
-    public function reorderNodes($orderedNodes, NodeInterface $parentNode)
+    public function reorderNodes(array $orderedNodes, NodeInterface $parentNode)
     {
         foreach ($orderedNodes as $position => $nodeId) {
             $nodeVersions = $this->nodeRepository->findByNodeAndSite($nodeId, $parentNode->getSiteId());
