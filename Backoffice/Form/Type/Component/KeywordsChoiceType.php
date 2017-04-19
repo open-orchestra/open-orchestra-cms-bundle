@@ -70,11 +70,11 @@ class KeywordsChoiceType extends AbstractType
         $resolver->setDefaults(array(
             'attr' => function(Options $options) use ($isGranted) {
                 $default = array(
-                    'class' => 'select2',
                     'data-tags' => $this->getTags(),
                     'data-authorize-new' => ($isGranted) ? "true" : "false",
                     'data-check' => $this->router->generate('open_orchestra_api_check_keyword', array()),
                 );
+                $default['class'] = $options['is_condition'] ? 'select-boolean' : 'select2';
                 return array_replace($default, $options['new_attr']);
             },
             'new_attr' => array(),
