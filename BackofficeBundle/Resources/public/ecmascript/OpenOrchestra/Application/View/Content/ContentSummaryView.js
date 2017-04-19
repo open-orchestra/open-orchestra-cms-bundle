@@ -23,15 +23,25 @@ class ContentSummaryView extends OrchestraView
     }
 
     /**
-     * Render node tree
+     * Render content type list
      */
     render() {
-        let template = this._renderTemplate('Content/summaryView',
-            {
-                contentTypes: this.contentTypes.models,
-                Application: Application
-            }
-        );
+        let template = '';
+        if (this.contentTypes.models.length > 0) {
+            template = this._renderTemplate('Content/summaryView',
+                {
+                    contentTypes: this.contentTypes.models,
+                    Application: Application
+                }
+            );
+        } else {
+            template = this._renderTemplate('List/emptyListView' ,
+                {
+                    title: Translator.trans('open_orchestra_backoffice.content_types.title'),
+                    urlAdd: '',
+                }
+            );
+        }
         this.$el.append(template);
 
         return this;
