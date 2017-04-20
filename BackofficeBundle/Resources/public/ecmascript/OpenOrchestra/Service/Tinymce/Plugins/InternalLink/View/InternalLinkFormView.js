@@ -34,23 +34,21 @@ class InternalLinkFormView extends AbstractFormView
      */
     _submit(event) {
         event.preventDefault();
-        let formName = 'oo_internal_link';
-        let inputText = $('#' + formName + '_label', this.$el);
-
         if (this._validForm()) {
             let serializeFields = $('form', this.$el).serializeArray();
-            let fields = {};
+            let oo_internal_link = {};
             for (let field of serializeFields) {
-                if ( '' !== field) {
-                    let fieldName = field.name.replace(formName, '').replace(/\]\[/g, '_').replace(/(\]|\[)/g, '');
-                    if (fieldName !== '_token') {
-                        fields[fieldName] = $("<div/>").text(field.value).html()
-                    }
-                }
+                let name = field.name.replace(/\[(.*?)\]/g, "['$1']");
+                let parent = name.replace(/(.*)\[.*?\]/, "$1");
+                let value = field.value.replace("'", "\\'");
+                eval("if (typeof(" + parent + ") == 'undefined') {" + parent + " = {};};" + name + "= '" + value + "';");
             }
-            let link = $('<a href="#">').html(inputText.val()).attr('data-options', JSON.stringify(fields));
-            let div = $('<div>').append(link);
-            this._editor.insertContent(div.html());
+            let label = oo_internal_link['label'];
+            delete(oo_internal_link['label']);
+            delete(oo_internal_link['_token']);
+            let link = $('<a href="#">').html(label).attr('data-options', JSON.stringify(oo_internal_link));
+            let $selection = $(this._editor.selection.getNode());
+            $selection.replaceWith(link);
             Backbone.Events.trigger('form:deactivate', this);
             this._modal.hide();
         }

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,15 +16,21 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 class SiteSiteAliasType extends AbstractType
 {
     protected $siteRepository;
+    protected $nodeRepository;
     protected $currentSiteManager;
 
     /**
      * @param SiteRepositoryInterface $siteRepository
+     * @param NodeRepositoryInterface $nodeRepository
      * @param CurrentSiteIdInterface  $currentSiteManager
      */
-    public function __construct(SiteRepositoryInterface $siteRepository, CurrentSiteIdInterface $currentSiteManager)
-    {
+    public function __construct(
+        SiteRepositoryInterface $siteRepository,
+        NodeRepositoryInterface $nodeRepository,
+        CurrentSiteIdInterface $currentSiteManager
+    ) {
         $this->siteRepository = $siteRepository;
+        $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
     }
 
@@ -42,7 +49,7 @@ class SiteSiteAliasType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.internal_link.site',
             'data' => $data['siteId'],
             'attr' => array(
-                'class' => 'to-tinyMce patch-submit-change',
+                'class' => 'patch-submit-change',
                 'data-key' => 'site'
             ),
             'required' => true,
@@ -50,6 +57,7 @@ class SiteSiteAliasType extends AbstractType
         $builder->addEventSubscriber(
             new SiteSubscriber(
                 $this->siteRepository,
+                $this->nodeRepository,
                 $options['attr']
         ));
     }

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -13,15 +14,21 @@ use Symfony\Component\Form\FormEvents;
 class SiteSubscriber implements EventSubscriberInterface
 {
     protected $siteRepository;
+    protected $nodeRepository;
     protected $attributes;
 
     /**
      * @param SiteRepositoryInterface $siteRepository
+     * @param NodeRepositoryInterface $nodeRepository
      * @param array                   $attributes
      */
-    public function __construct(SiteRepositoryInterface $siteRepository, array $attributes)
-    {
+    public function __construct(
+        SiteRepositoryInterface $siteRepository,
+        NodeRepositoryInterface $nodeRepository,
+        array $attributes
+    ) {
         $this->siteRepository = $siteRepository;
+        $this->nodeRepository = $nodeRepository;
         $this->attributes = $attributes;
     }
 
@@ -68,24 +75,48 @@ class SiteSubscriber implements EventSubscriberInterface
         $aliasId = is_array($data) && array_key_exists('aliasId', $data) ? $data['aliasId'] : '';
 
         if ($siteId != '') {
+            $site = $this->siteRepository->findOneBySiteId($siteId);
+            $form->add('aliasId', 'choice', array(
+                'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
+                'attr' => array('class' => 'subform-to-refresh patch-submit-change'),
+                'choices' => $this->getChoices($site),
+                'required' => true,
+            ));
+            $aliases = $form->get('aliasId')->getConfig()->getOption('choices');
+            if (!array_key_exists($aliasId, $aliases)) {
+                $data['aliasId'] = key($aliases);
+            }
             $form->add('nodeId', 'oo_node_choice', array(
                 'label' => 'open_orchestra_backoffice.form.internal_link.node',
                 'siteId' => $siteId,
-                'attr' => array('class' => 'orchestra-node-choice subform-to-refresh'),
+                'attr' => array('class' => 'orchestra-node-choice subform-to-refresh patch-submit-change'),
                 'required' => true,
             ));
-            $form->add('aliasId', 'choice', array(
-                'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
-                'attr' => array('class' => 'subform-to-refresh'),
-                'choices' => $this->getChoices($siteId),
-                'required' => false,
-            ));
-            if (!array_key_exists($nodeId, $form->get('nodeId')->getConfig()->getOption('choices'))) {
-                $data['nodeId'] = '';
+            $nodes = $form->get('nodeId')->getConfig()->getOption('choices');
+            if (!array_key_exists($nodeId, $nodes)) {
+                $data['nodeId'] = key($nodes);
             }
-            if (!array_key_exists($aliasId, $form->get('aliasId')->getConfig()->getOption('choices'))) {
-                $data['aliasId'] = '';
+
+            $node = $this->nodeRepository->findOnePublished($data['nodeId'], $site->getAliases()[$data['aliasId']]->getLanguage(), $siteId);
+            preg_match_all('/{(.*?)}/', $node->getRoutePattern(), $matches);
+
+            if (is_array($matches) && array_key_exists(1, $matches) && is_array($matches[1])) {
+                $result = array();
+                foreach ($matches[1] as $wildcard) {
+                    $result[$wildcard] = array_key_exists('wildcard', $data) && array_key_exists($wildcard, $data['wildcard']) ? $data['wildcard'][$wildcard] : '';
+                }
+                $data['wildcard'] = $result;
+                $form->add('wildcard', 'collection', array(
+                    'entry_type' => 'text',
+                    'label' => 'open_orchestra_backoffice.form.internal_link.wildcard',
+                    'attr' => array('class' => 'subform-to-refresh'),
+                    'data' => $data['wildcard'],
+                    'entry_options' => array(
+                        'required' => true,
+                    ),
+                ));
             }
+
             $event->setData($data);
         }
     }
@@ -95,18 +126,24 @@ class SiteSubscriber implements EventSubscriberInterface
      *
      * @return array
      */
-    protected function getChoices($siteId)
+    protected function getChoices($site)
     {
         $choices = array();
-        $site = $this->siteRepository->findOneBySiteId($siteId);
+        $index = array();
+
         foreach ($site->getAliases() as $aliasId => $alias) {
             $choices[$aliasId] = $alias->getDomain() . '(' . $alias->getLanguage();
             if ($alias->getPrefix() != '') {
                 $choices[$aliasId] .= ' - ' . $alias->getPrefix();
             }
             $choices[$aliasId] .= ')';
+            if ($alias->isMain()) {
+                array_unshift($index, $aliasId);
+            } else {
+                $index[] = $aliasId;
+            }
         }
 
-        return $choices;
+        return array_merge(array_flip($index), $choices);
     }
 }

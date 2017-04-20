@@ -49,13 +49,15 @@ class PatchSubmit extends AbstractBehavior
         let $form = $('form', this.$el);
         let $formToPatch = $(event.target).parents('.form-to-patch').eq(0);
         let containers = $formToPatch.data('subformToRefresh');
-        
+        let data = $form.serializeArray();
+
         $.each(containers, function(id, $container){
             context._displayLoader($container);
         });
         $form.ajaxSubmit({
             type: 'PATCH',
             context: this,
+            data: data,
             success: function(response) {
                 $.each(containers, function(id, $container){
                     let $subform = $('#' + id, response);

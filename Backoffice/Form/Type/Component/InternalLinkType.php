@@ -29,12 +29,6 @@ class InternalLinkType extends AbstractType
             'required' => true,
             'data' => $data['site'],
         ));
-        $builder->add('contentSearch', 'oo_content_search', array(
-            'label' => 'open_orchestra_backoffice.form.internal_link.content',
-            'search_engine' => true,
-            'required' => false,
-            'attr' => array('class' => 'form-to-patch'),
-        ));
         $builder->add('query', 'text', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.query',
             'required' => false,

@@ -26,6 +26,7 @@ class SiteSiteAliasTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
 
         $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
@@ -39,7 +40,7 @@ class SiteSiteAliasTypeTest extends AbstractBaseTestCase
             $site2
         ));
 
-        $this->form = new SiteSiteAliasType($siteRepository, $currentSiteManager);
+        $this->form = new SiteSiteAliasType($siteRepository, $nodeRepository, $currentSiteManager);
     }
 
     /**
