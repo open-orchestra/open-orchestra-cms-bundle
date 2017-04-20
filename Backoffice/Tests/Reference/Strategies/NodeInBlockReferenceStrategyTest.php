@@ -25,7 +25,7 @@ class NodeInBlockReferenceStrategyTest extends AbstractReferenceStrategyTest
         $this->bbcodeParser = Phake::mock('OpenOrchestra\BBcodeBundle\Parser\BBcodeParserInterface');
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         $linkTag = Phake::mock('OpenOrchestra\BBcodeBundle\ElementNode\BBcodeElementNodeInterface');
-        Phake::when($linkTag)->getAttribute()->thenReturn(array('link'=> '{"label":"link","site_siteId":"2","site_nodeId":"nodeId4"}'));
+        Phake::when($linkTag)->getAttribute()->thenReturn(array('link'=> '{"label":"link","site": {"siteId":"2","nodeId":"nodeId4"}}'));
         Phake::when($this->bbcodeParser)->parse(Phake::anyParameters())->thenReturn($this->bbcodeParser);
         Phake::when($this->bbcodeParser)->getElementByTagName(Phake::anyParameters())->thenReturn(
             array($linkTag)
@@ -126,7 +126,7 @@ class NodeInBlockReferenceStrategyTest extends AbstractReferenceStrategyTest
         $nodeId4 = 'nodeId4';
         $node4 = $this->createPhakeNode($nodeId4);
         $blockWithNodeTinymce = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
-        $bbCodeWithLink = 'Some [b]String[b] with [link={"label":"link","site_siteId":"2","site_nodeId":"nodeId4"}]link[/link]';
+        $bbCodeWithLink = 'Some [b]String[b] with [link={"label":"link","site": {"siteId":"2","nodeId":"nodeId4"}}]link[/link]';
         Phake::when($blockWithNodeTinymce)->getAttributes()->thenReturn(array($bbCodeWithLink));
         Phake::when($blockWithNodeTinymce)->getId()->thenReturn($blockWithNodeTinymceId);
 
