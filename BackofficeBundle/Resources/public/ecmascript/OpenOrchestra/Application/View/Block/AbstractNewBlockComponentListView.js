@@ -41,7 +41,12 @@ class AbstractNewBlockComponentListView extends OrchestraView
             }
         );
         this.$el.html(template);
-        this._renderListComponent();
+
+        if (this._listBlockComponents.length > 0) {
+            this._renderListComponent();
+        } else {
+            $('.list-block-component', this.$el).html(this._renderTemplate('List/emptyListView'));
+        }
 
         return this;
     }
@@ -60,6 +65,7 @@ class AbstractNewBlockComponentListView extends OrchestraView
                 addBlockUrl: $.proxy(this._getAddBlockUrl, this)
             }
         );
+
         $('.list-block-component', this.$el).html(template);
     }
 
