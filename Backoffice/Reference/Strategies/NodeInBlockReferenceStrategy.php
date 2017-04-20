@@ -120,8 +120,8 @@ class NodeInBlockReferenceStrategy implements ReferenceStrategyInterface
         /** @var \OpenOrchestra\BBcodeBundle\ElementNode\BBcodeElementNodeInterface $mediaTag */
         foreach ($nodeTags as $nodeTag) {
             $linkAttribute = json_decode(html_entity_decode($nodeTag->getAttribute()['link']), true);
-            $nodeId = $linkAttribute['site_nodeId'];
-            $siteId = $linkAttribute['site_siteId'];
+            $nodeId = $linkAttribute['site']['nodeId'];
+            $siteId = $linkAttribute['site']['siteId'];
             $references[] = array('nodeId' => $nodeId, 'siteId' => $siteId);
         }
         return $references;

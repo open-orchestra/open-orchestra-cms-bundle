@@ -98,6 +98,11 @@ class SiteSubscriber implements EventSubscriberInterface
             }
 
             $node = $this->nodeRepository->findOnePublished($data['nodeId'], $site->getAliases()[$data['aliasId']]->getLanguage(), $siteId);
+
+            if (is_null($node)) {
+                $node = $this->nodeRepository->findInLastVersion($data['nodeId'], $site->getAliases()[$data['aliasId']]->getLanguage(), $siteId);
+            }
+
             preg_match_all('/{(.*?)}/', $node->getRoutePattern(), $matches);
 
             if (is_array($matches) && array_key_exists(1, $matches) && is_array($matches[1])) {
