@@ -768,7 +768,7 @@
     {% spaceless %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
 
-        <div class="styled-select">
+        <div class="styled-select {% if multiple %} multiple{% endif %}">
             <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
                 {% if empty_value is not none %}
                     <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% endif %} value="">{{ empty_value|trans({}, translation_domain) }}</option>
