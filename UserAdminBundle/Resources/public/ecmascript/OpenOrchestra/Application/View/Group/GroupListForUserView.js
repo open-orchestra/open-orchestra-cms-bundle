@@ -24,7 +24,6 @@ class GroupListForUserView extends AbstractDataTableView
         super.initialize({collection: collection, settings: settings});
         this._blockedGroups = blockedGroups;
         this._selectedGroups = selectedGroups;
-
     }
 
     /**
