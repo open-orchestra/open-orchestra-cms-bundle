@@ -80,6 +80,7 @@ open_orchestra_backoffice:
             label: Libellé
             updated_at: Date de modification
             type: Type
+            category: Category
             number_use: Utilisation
             version: Version
         contents:
@@ -170,7 +171,7 @@ open_orchestra_backoffice:
         success_remove: Le bloc partagé a été correctement supprimé
         search_engine:
             label: Libellé
-            type: Type
+            category: Categorie
             name: Nom
     keyword:
         title_list: Tags
