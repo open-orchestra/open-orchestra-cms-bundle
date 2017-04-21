@@ -8,10 +8,23 @@ class GroupListForUserView extends AbstractDataTableView
     /**
      * @inheritDoc
      */
-    preinitialize({collection, blockedGroups, selectedGroups, settings}) {
-        super.initialize({collection, settings});
+    preinitialize(opions) {
+        super.preinitialize(opions);
+        this.events = {
+            'change #select-all-checkbox': '_changeSelectAllCheckbox'
+        };
+    }
+
+    /**
+     * @inheritDoc
+     */
+    initialize({collection, blockedGroups, selectedGroups, settings}) {
+        settings = settings || {};
+        settings['headerCallback'] = $.proxy(this._createHeaderCheckbox, this);
+        super.initialize({collection: collection, settings: settings});
         this._blockedGroups = blockedGroups;
         this._selectedGroups = selectedGroups;
+
     }
 
     /**
@@ -29,8 +42,10 @@ class GroupListForUserView extends AbstractDataTableView
             {
                 name: 'checkbox',
                 orderable: false,
+                visibile: true,
                 createdCell: this._addCheckbox.bind(this),
-                width: '20px'
+                width: '20px',
+                render: () => { return ''}
             },
             {
                 name: "label",
@@ -45,6 +60,33 @@ class GroupListForUserView extends AbstractDataTableView
                 visibile: true
             }
         ];
+    }
+
+    /**
+     * @param {Object} thead
+     */
+    _createHeaderCheckbox(thead) {
+        let index = this.$table.DataTable().column('checkbox:name').index('visible');
+        let $headerColumn = $(thead).find('th').eq(index);
+
+        let id = 'select-all-checkbox';
+        let attributes = {type: 'checkbox', id: id};
+        let $checkbox = $('<input>', attributes);
+        $headerColumn.html($checkbox);
+        $headerColumn.append($('<label>', {for: id}));
+    }
+
+    /**
+     * @param {Object} event
+     *
+     * @private
+     */
+    _changeSelectAllCheckbox(event) {
+        let index = this.$table.DataTable().column('checkbox:name').index('visible');
+        let checked = $(event.currentTarget).prop('checked');
+        let checkbox = $('tr td:nth-child('+(index+1)+') input[type="checkbox"]:enabled', this.$table);
+
+        checkbox.prop('checked', checked).change();
     }
 
     /**
