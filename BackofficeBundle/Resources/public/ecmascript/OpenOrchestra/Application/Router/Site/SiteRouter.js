@@ -53,11 +53,15 @@ class SiteRouter extends OrchestraRouter
         if (null === page) {
             page = 1
         }
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         this._displayLoader(Application.getRegion('content'));
         let collection = new Sites();
         let sitesView = new SitesView({
             collection: collection,
-            settings: {page: Number(page) - 1},
+            settings: {
+                page: Number(page) - 1,
+                pageLength: pageLength
+            },
             inPlatformContext : inPlatformContext
         });
         let el = sitesView.render().$el;

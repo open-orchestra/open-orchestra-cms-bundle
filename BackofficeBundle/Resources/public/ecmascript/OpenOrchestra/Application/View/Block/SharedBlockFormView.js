@@ -151,12 +151,16 @@ class SharedBlockFormView extends AbstractFormView
         let collection = new Nodes();
         let language = this._language;
         let siteId = Application.getContext().siteId;
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
 
         return new NodeUsageBlockListView({
             collection: collection,
             language: language,
             siteId: siteId,
-            blockId: this._blockId
+            blockId: this._blockId,
+            settings: {
+                pageLength: pageLength
+            }
         });
     }
 }

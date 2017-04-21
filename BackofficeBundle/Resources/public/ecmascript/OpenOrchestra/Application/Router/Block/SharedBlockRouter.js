@@ -65,7 +65,7 @@ class SharedBlockRouter extends AbstractBlockRouter
             page = 1
         }
         this._displayLoader(Application.getRegion('content'));
-        let pageLength = 10;
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         page = Number(page) - 1;
         let blocks = new Blocks();
         let blockComponents = new BlockComponents();

@@ -90,7 +90,7 @@ class ContentTypeRouter extends OrchestraRouter
             page = 1
         }
         this._displayLoader(Application.getRegion('content'));
-        let pageLength = 10;
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         page = Number(page) - 1;
         new ContentTypes().fetch({
             apiContext: 'list',

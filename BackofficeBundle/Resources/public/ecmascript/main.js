@@ -4,6 +4,7 @@ import Context       from './OpenOrchestra/Service/Context'
 
 // variable config and context is defined in layout.html.twig
 Application.setConfiguration(new Configuration(config));
+Application.getConfiguration().addParameter('datatable', {'pageLength': 50});
 Application.setContext(new Context(context));
 
 $(() => {

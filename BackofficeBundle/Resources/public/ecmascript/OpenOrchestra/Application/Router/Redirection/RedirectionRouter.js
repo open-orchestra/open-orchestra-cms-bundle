@@ -57,6 +57,7 @@ class RedirectionRouter extends OrchestraRouter
         this._displayLoader(Application.getRegion('content'));
         let redirections = new Redirections();
         page = Number(page) - 1;
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         $.when(
             redirections.fetch({apiContext: 'list'})
         ).done(() => {
@@ -66,7 +67,7 @@ class RedirectionRouter extends OrchestraRouter
                     page: page,
                     deferLoading: [redirections.recordsTotal, redirections.recordsFiltered],
                     data: redirections.models,
-                    pageLength: 10
+                    pageLength: pageLength
                 }
             });
             let el = redirectionsView.render().$el;

@@ -369,5 +369,4 @@ class AbstractDataTableView extends OrchestraView
         }
     }
 }
-
 export default AbstractDataTableView

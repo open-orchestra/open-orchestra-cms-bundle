@@ -81,7 +81,8 @@ class ContentRouter extends OrchestraRouter
                 let contentVersionsView = new ContentVersionsView({
                     collection: contentVersions,
                     settings: {
-                        page: page
+                        page: page,
+                        pageLength: Application.getConfiguration().getParameter('datatable').pageLength
                     },
                     contentId: contentId,
                     language: language,
@@ -185,7 +186,7 @@ class ContentRouter extends OrchestraRouter
             page = 1
         }
         this._displayLoader(Application.getRegion('content'));
-        let pageLength = 10;
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         page = Number(page) - 1;
         let urlParameter = {
             contentTypeId: contentTypeId,

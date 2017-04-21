@@ -52,10 +52,14 @@ class LogRouter extends OrchestraRouter
             page = 1
         }
         this._displayLoader(Application.getRegion('content'));
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         let collection = new Logs();
         let logsView = new LogsView({
             collection: collection,
-            settings: {page: Number(page) - 1}
+            settings: {
+                page: Number(page) - 1,
+                pageLength: pageLength
+            }
         });
         let el = logsView.render().$el;
         Application.getRegion('content').html(el);
