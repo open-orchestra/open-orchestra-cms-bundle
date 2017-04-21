@@ -1240,7 +1240,7 @@ table.ui-sortable .fa.fa-arrows{
     }
 
     i.fa {
-        cursor: pointer;
+        cursor: move;
         &.fa-arrows {
             color: @lightBlue;
         }
@@ -1495,7 +1495,11 @@ table.ui-sortable .fa.fa-arrows{
         padding: 15px 10px;
         .block-container .ui-sortable {
           min-height: 50px;
-          height: 100%
+          height: 100%;
+
+          .block-item .move-block i:hover {
+            cursor: move;
+          }
         }
         & > span {
             .Montserrat;
