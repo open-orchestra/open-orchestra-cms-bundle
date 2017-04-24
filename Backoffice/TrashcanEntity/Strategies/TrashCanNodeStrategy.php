@@ -23,15 +23,15 @@ class TrashCanNodeStrategy implements TrashCanEntityInterface
     protected $nodeManager;
 
     /**
-     * @param NodeRepositoryInterface      $nodeRepository
-     * @param EventDispatcherInterface     $eventDispatcher
-     * @param NodeManager                  $nodeManager
+     * @param NodeRepositoryInterface  $nodeRepository
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param NodeManager              $nodeManager
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
         EventDispatcherInterface $eventDispatcher,
         NodeManager $nodeManager
-    ){
+    ) {
         $this->nodeRepository = $nodeRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->nodeManager = $nodeManager;
@@ -53,14 +53,21 @@ class TrashCanNodeStrategy implements TrashCanEntityInterface
     public function remove(TrashItemInterface $trashItem)
     {
         $nodes = $this->nodeRepository->findByNodeAndSite($trashItem->getEntityId(), $trashItem->getSiteId());
-        $nodeIds = array();
-        /** @var NodeInterface $node */
-        foreach ($nodes as $node) {
+
+        if (is_array($nodes) && count($nodes) > 0) {
+            $nodeIds = array();
+
+            /** @var NodeInterface $node */
+            foreach ($nodes as $node) {
                 $this->nodeManager->deleteBlockInNode($node);
                 $nodeIds[] = $node->getId();
                 $this->eventDispatcher->dispatch(TrashcanEvents::TRASHCAN_REMOVE_ENTITY, new TrashcanEvent($node));
+            }
+
+            $this->nodeRepository->removeNodeVersions($nodeIds);
+
+            $this->eventDispatcher->dispatch(NodeEvents::NODE_REMOVED, new NodeEvent($nodes[0]));
         }
-        $this->nodeRepository->removeNodeVersions($nodeIds);
     }
 
     /**

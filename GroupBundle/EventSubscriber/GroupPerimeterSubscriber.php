@@ -60,7 +60,7 @@ class GroupPerimeterSubscriber implements EventSubscriberInterface
     /**
      * @param NodeEvent $event
      */
-    public function updateNodePerimeter(NodeEvent $event)
+    public function updateNodeInPerimeter(NodeEvent $event)
     {
         $node = $event->getNode();
         $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
@@ -74,13 +74,30 @@ class GroupPerimeterSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param NodeEvent $event
+     */
+    public function removeNodeFromPerimeter(NodeEvent $event)
+    {
+        $node = $event->getNode();
+
+        $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
+
+        $this->groupRepository->removePerimeterItem(
+            NodeInterface::ENTITY_TYPE,
+            $node->getPath(),
+            $site->getId()
+        );
+    }
+
+    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
     {
         return array(
             FormEvents::POST_SUBMIT  => 'postSubmit',
-            NodeEvents::PATH_UPDATED => 'updateNodePerimeter',
+            NodeEvents::PATH_UPDATED => 'updateNodeInPerimeter',
+            NodeEvents::NODE_REMOVED => 'removeNodeFromPerimeter',
         );
     }
 }
