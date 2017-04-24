@@ -73,7 +73,8 @@ class TrashCanNodeStrategy implements TrashCanEntityInterface
 
             $path = null;
             $parentId = $nodes[0]->getParentId();
-            $countParentNodes = $this->nodeRepository->countByParentId($parentId, $trashItem->getSiteId());
+            $countParentNodes = $this->nodeRepository->countById($parentId, $trashItem->getSiteId());
+
             if (0 === $countParentNodes) {
                 $parentId = NodeInterface::ROOT_NODE_ID;
                 $path = NodeInterface::ROOT_NODE_ID . '/'. $trashItem->getEntityId();
