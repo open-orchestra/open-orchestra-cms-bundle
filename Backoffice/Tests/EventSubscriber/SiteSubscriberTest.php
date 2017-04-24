@@ -16,6 +16,10 @@ class SiteSubscriberTest extends AbstractBaseTestCase
     protected $siteRepository;
     protected $siteDomain1 = 'fakeSiteDomain1';
     protected $siteDomain2 = 'fakeSiteDomain2';
+    protected $configAliasForm;
+    protected $thisconfigNodeForm;
+    protected $formAlias;
+    protected $formNode;
 
     /**
      * Set up the test
@@ -28,24 +32,43 @@ class SiteSubscriberTest extends AbstractBaseTestCase
         Phake::when($siteAlias2)->getDomain()->thenReturn($this->siteDomain2);
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site)->getAliases()->thenReturn(array(
-            $siteAlias1,
-            $siteAlias2
+            'alias1' => $siteAlias1,
+            'alias2' => $siteAlias2
         ));
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getRoutePattern()->thenReturn('/{contentId}');
+
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
 
-        $this->configForm = Phake::mock('Symfony\Component\Form\FormConfigInterface');
-        Phake::when($this->configForm)->getOption(Phake::anyParameters())->thenReturn(array());
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        Phake::when($this->nodeRepository)->findOnePublished(Phake::anyParameters())->thenReturn($node);
+
+        $this->configAliasForm = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($this->configAliasForm)->getOption(Phake::anyParameters())->thenReturn(array(
+            'alias1' => $siteAlias1,
+            'alias2' => $siteAlias2
+        ));
+
+        $this->configNodeForm = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($this->configNodeForm)->getOption(Phake::anyParameters())->thenReturn(array());
 
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
-        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
-        Phake::when($this->form)->getConfig()->thenReturn($this->configForm);
+        $this->formAlias = Phake::mock('Symfony\Component\Form\FormInterface');
+        $this->formNode = Phake::mock('Symfony\Component\Form\FormInterface');
+
+
+        Phake::when($this->formAlias)->getConfig()->thenReturn($this->configAliasForm);
+        Phake::when($this->formNode)->getConfig()->thenReturn($this->configNodeForm);
+
+        Phake::when($this->form)->get('aliasId')->thenReturn($this->formAlias);
+        Phake::when($this->form)->get('nodeId')->thenReturn($this->formNode);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn(array('siteId' => 'fakeSiteId'));
 
-        $this->subscriber = new SiteSubscriber($this->siteRepository, array());
+        $this->subscriber = new SiteSubscriber($this->siteRepository, $this->nodeRepository, array());
     }
 
     /**
@@ -86,21 +109,31 @@ class SiteSubscriberTest extends AbstractBaseTestCase
     {
         $this->subscriber->preSubmit($this->event);
 
-        Phake::verify($this->form)->add('nodeId', 'oo_node_choice', array(
-            'label' => 'open_orchestra_backoffice.form.internal_link.node',
-            'siteId' => 'fakeSiteId',
-            'attr' => array('class' => 'orchestra-node-choice subform-to-refresh'),
+        Phake::verify($this->form)->add('aliasId', 'choice', array(
+            'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
+            'attr' => array('class' => 'subform-to-refresh patch-submit-change'),
+            'choices' => array(
+                'alias1' => $this->siteDomain1 . '()',
+                'alias2' => $this->siteDomain2 . '()',
+            ),
             'required' => true,
         ));
 
-        Phake::verify($this->form)->add('aliasId', 'choice', array(
-            'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
-            'attr' => array('class' => 'subform-to-refresh'),
-            'choices' => array(
-                        0 => $this->siteDomain1 . '()',
-                        1 => $this->siteDomain2 . '()',
-                   ),
-            'required' => false,
+        Phake::verify($this->form)->add('nodeId', 'oo_node_choice', array(
+            'label' => 'open_orchestra_backoffice.form.internal_link.node',
+            'siteId' => 'fakeSiteId',
+            'attr' => array('class' => 'orchestra-node-choice subform-to-refresh patch-submit-change'),
+            'required' => true,
         ));
+        Phake::verify($this->form)->add('wildcard', 'collection', array(
+            'entry_type' => 'text',
+            'label' => 'open_orchestra_backoffice.form.internal_link.wildcard',
+            'attr' => array('class' => 'subform-to-refresh'),
+            'data' => array('contentId' => ''),
+            'entry_options' => array(
+                'required' => true,
+            ),
+        ));
+
     }
 }

@@ -17,17 +17,12 @@ class InternalLinkPlugin
             tooltip: 'Insert/edit internal link',
             stateSelector: 'a[href][data-options]',
             onclick: () => {
-                let selection = editor.selection.getNode();
-                let data = {};
-                if (typeof $(selection).attr('data-options') !== 'undefined') {
-                    let options = $(selection).attr('data-options');
+                let $selection = $(editor.selection.getNode());
+                let data = {label: $selection.text()};
+                if (typeof $selection.attr('data-options') !== 'undefined') {
+                    let options = $selection.attr('data-options');
                     options = JSON.parse(options);
                     $.each(options, (name, value) => {
-                        let splitName = name.split('_');
-                        name = splitName.join('[');
-                        if (splitName.length > 1) {
-                            name = name.concat(']');
-                        }
                         data[name] = value;
                     });
                 }
