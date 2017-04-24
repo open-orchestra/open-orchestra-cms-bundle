@@ -77,7 +77,7 @@ class TrashcanNodeStrategyTest extends AbstractBaseTestCase
     {
         $this->strategy->remove($this->trashItem);
 
-        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
         Phake::verify($this->nodeManager)->deleteBlockInNode(Phake::anyParameters());
         Phake::verify($this->nodeRepository)->removeNodeVersions(array('fake_node_id'));
     }
