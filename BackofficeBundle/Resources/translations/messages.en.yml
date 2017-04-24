@@ -303,7 +303,7 @@ open_orchestra_backoffice:
             content: Content
             query: Query string
             filter: Content filter
-            wildcard: Route parameter
+            wildcard: Route parameters
         alias:
             group:
                 information: Informations
