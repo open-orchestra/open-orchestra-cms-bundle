@@ -10,8 +10,8 @@ namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
  */
 interface BusinessActionInterface
 {
-    const READ          = 'ACTION_READ';
-    const CREATE        = 'ACTION_CREATE';
-    const EDIT          = 'ACTION_EDIT';
-    const DELETE        = 'ACTION_DELETE';
+    const READ   = 'ACTION_READ';
+    const CREATE = 'ACTION_CREATE';
+    const EDIT   = 'ACTION_EDIT';
+    const DELETE = 'ACTION_DELETE';
 }
