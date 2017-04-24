@@ -111,6 +111,29 @@ class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     }
 
     /**
+     * Show modal confirm to delete models
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _confirmDelete(event) {
+        event.stopPropagation();
+        let confirmModalView = new ConfirmModalView({
+            confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove.title'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove.trash'),
+            yesCallback: this._deleteElement,
+            context: this
+        });
+
+        Application.getRegion('modal').html(confirmModalView.render().$el);
+        confirmModalView.show();
+
+        return false;
+    }
+
+    /**
      * Delete
      * @param {event} event
      */
