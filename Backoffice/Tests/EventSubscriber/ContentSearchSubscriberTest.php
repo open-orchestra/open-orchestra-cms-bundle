@@ -41,6 +41,9 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         Phake::when($content2)->getContentId()->thenReturn($this->contentId2);
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
 
+        $booleanConditionValidator = Phake::mock('OpenOrchestra\Backoffice\Validator\Constraints\BooleanConditionValidator');
+        Phake::when($booleanConditionValidator)->validateCondition(Phake::anyParameters())->thenReturn(true);
+
         Phake::when($this->contentRepository)->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition, $siteId)->thenReturn(array(
                 $content1,
                 $content2
@@ -61,6 +64,7 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         ));
 
         $this->subscriber = new ContentSearchSubscriber(
+            $booleanConditionValidator,
             $this->contentRepository,
             $this->contextManager,
             true

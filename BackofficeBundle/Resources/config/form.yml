@@ -250,6 +250,7 @@ services:
     open_orchestra_backoffice.type.content_search:
         class: '%open_orchestra_backoffice.type.content_search.class%'
         arguments:
+            - '@open_orchestra_model.validator.boolean_condition'
             - '@open_orchestra_model.repository.content'
             - '@open_orchestra_backoffice.context_manager'
         tags:

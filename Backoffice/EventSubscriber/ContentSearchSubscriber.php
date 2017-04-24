@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Validator\Constraints\BooleanConditionValidator;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -14,20 +15,24 @@ use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
  */
 class ContentSearchSubscriber implements EventSubscriberInterface
 {
+    protected $booleanConditionValidator;
     protected $contentRepository;
     protected $contextManager;
     protected $required;
 
     /**
-     * @param ContentRepositoryInterface                    $contentRepository
-     * @param CurrentSiteIdInterface                        $contextManager
-     * @param boolean                                       $required
+     * @param BooleanConditionValidator  $booleanConditionValidator
+     * @param ContentRepositoryInterface $contentRepository
+     * @param CurrentSiteIdInterface     $contextManager
+     * @param boolean                    $required
      */
     public function __construct(
+        BooleanConditionValidator $booleanConditionValidator,
         ContentRepositoryInterface $contentRepository,
         CurrentSiteIdInterface $contextManager,
         $required
     ) {
+        $this->booleanConditionValidator = $booleanConditionValidator;
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
         $this->required = $required;
@@ -109,10 +114,12 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         $language = $this->contextManager->getCurrentSiteDefaultLanguage();
         $siteId = $this->contextManager->getCurrentSiteId();
 
-        $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition, $siteId);
-        foreach ($contents as $content) {
-            $choices[$content->getContentId()] = $content->getName();
-        }
+        if ($this->booleanConditionValidator->validateCondition($condition)) {
+            $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition, $siteId);
+            foreach ($contents as $content) {
+                $choices[$content->getContentId()] = $content->getName();
+            }
+        };
 
         return $choices;
     }
