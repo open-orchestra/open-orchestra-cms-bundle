@@ -54,7 +54,7 @@ class UniqueBlockCodeValidatorTest extends AbstractBaseTestCase
     {
         $constraint = Phake::mock('OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCode');
         $constraint->block = $block;
-        Phake::when($this->repository)->findOneTransverseBlockByCodeAndLanguage(Phake::anyParameters())->thenReturn($blockCode);
+        Phake::when($this->repository)->findOneTransverseBlockByCode(Phake::anyParameters())->thenReturn($blockCode);
 
         $this->validator->validate($code, $constraint);
 

@@ -32,7 +32,7 @@ class UniqueBlockCodeValidator extends ConstraintValidator
     {
         $block = $constraint->block;
         if ($block instanceof BlockInterface && true === $block->isTransverse() && !empty($value)) {
-            $blockCode = $this->repository->findOneTransverseBlockByCodeAndLanguage($value, $block->getLanguage());
+            $blockCode = $this->repository->findOneTransverseBlockByCode($value, $block->getLanguage(), $block->getSiteId());
             if (null !== $blockCode && $blockCode->getId() !== $block->getId()) {
                 $this->context->buildViolation($constraint->message)
                     ->atPath('code')
