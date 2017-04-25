@@ -1,12 +1,12 @@
-import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
-import Redirections           from '../../Collection/Redirection/Redirections'
-import RenderToolbarViewMixin from './Mixin/RenderToolbarViewMixin'
-import FormViewButtonsMixin   from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import AbstractFormView          from '../../../Service/Form/View/AbstractFormView'
+import Redirections              from '../../Collection/Redirection/Redirections'
+import RenderToolbarViewMixin    from './Mixin/RenderToolbarViewMixin'
+import TrashFormViewButtonsMixin from '../../../Service/Form/Mixin/TrashFormViewButtonsMixin'
 
 /**
  * @class NodeFormView
  */
-class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, FormViewButtonsMixin)
+class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, TrashFormViewButtonsMixin)
 {
     /**
      * Initialize
@@ -56,29 +56,6 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, Fo
                 }
             }
         });
-    }
-
-    /**
-     * Show modal confirm to delete models
-     *
-     * @param {Object} event
-     *
-     * @returns {boolean}
-     * @private
-     */
-    _confirmDelete(event) {
-        event.stopPropagation();
-        let confirmModalView = new ConfirmModalView({
-            confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove.title'),
-            confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove.trash'),
-            yesCallback: this._deleteElement,
-            context: this
-        });
-
-        Application.getRegion('modal').html(confirmModalView.render().$el);
-        confirmModalView.show();
-
-        return false;
     }
 
     /**
