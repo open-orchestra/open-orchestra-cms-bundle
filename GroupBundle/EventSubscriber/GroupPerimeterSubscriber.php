@@ -97,7 +97,7 @@ class GroupPerimeterSubscriber implements EventSubscriberInterface
         return array(
             FormEvents::POST_SUBMIT  => 'postSubmit',
             NodeEvents::PATH_UPDATED => 'updateNodeInPerimeter',
-            NodeEvents::NODE_REMOVED => 'removeNodeFromPerimeter',
+            NodeEvents::NODE_HARD_DELETED => 'removeNodeFromPerimeter',
         );
     }
 }

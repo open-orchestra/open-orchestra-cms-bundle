@@ -64,7 +64,7 @@ class GroupPerimeterSubscriberTest extends AbstractBaseTestCase
     {
         $this->assertArrayHasKey(FormEvents::POST_SUBMIT, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(NodeEvents::PATH_UPDATED, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(NodeEvents::NODE_REMOVED, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_HARD_DELETED, $this->subscriber->getSubscribedEvents());
     }
 
     /**

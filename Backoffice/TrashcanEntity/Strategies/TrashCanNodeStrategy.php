@@ -66,7 +66,7 @@ class TrashCanNodeStrategy implements TrashCanEntityInterface
 
             $this->nodeRepository->removeNodeVersions($nodeIds);
 
-            $this->eventDispatcher->dispatch(NodeEvents::NODE_REMOVED, new NodeEvent($nodes[0]));
+            $this->eventDispatcher->dispatch(NodeEvents::NODE_HARD_DELETED, new NodeEvent($nodes[0]));
         }
     }
 
