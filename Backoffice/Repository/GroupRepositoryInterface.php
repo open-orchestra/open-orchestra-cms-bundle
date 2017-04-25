@@ -54,4 +54,11 @@ interface GroupRepositoryInterface
      * @param string $siteId
      */
     public function updatePerimeterItem($perimeterType, $oldItem, $newItem, $siteId);
+
+    /**
+     * @param string $perimeterType
+     * @param string $item
+     * @param string $siteId
+     */
+    public function removePerimeterItem($perimeterType, $item, $siteId);
 }

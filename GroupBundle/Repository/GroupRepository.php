@@ -168,10 +168,30 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
             ->getQuery()
             ->execute();
 
+        $this->removeItemFromPerimeter($perimeterKey, $item, $siteId);
+    }
+
+    /**
+     * @param string $perimeterType
+     * @param string $item
+     * @param string $siteId
+     */
+    public function removePerimeterItem($perimeterType, $item, $siteId)
+    {
+        $this->removeItemFromPerimeter('perimeters.' . $perimeterType . '.items', $item, $siteId);
+    }
+
+    /**
+     * @param string $perimeterKey
+     * @param string $item
+     * @param string $siteId
+     */
+    protected function removeItemFromPerimeter($perimeterKey, $item, $siteId)
+    {
         $this->createQueryBuilder()
             ->updateMany()
             ->field('site.$id')->equals(new \MongoId($siteId))
-            ->field($perimeterKey)->pull($oldItem)
+            ->field($perimeterKey)->pull($item)
             ->getQuery()
             ->execute();
     }
