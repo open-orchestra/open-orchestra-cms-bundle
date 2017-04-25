@@ -1,6 +1,9 @@
 <div class="panel">
     <div class="panel-heading">
-        <strong><%- block.get('name') %> - <%- block.get('label') %></strong>
+        <strong><%- block.get('name') %> - <%- block.get('label') %> </strong>
+        <% if (false === _.isUndefined(block.get('style'))) {%>
+            - <%- Translator.trans('open_orchestra_backoffice.block.style') %> : <%- block.get('style') %>
+        <% } %>
         <ul class="toolbar pull-right">
             <% if (false === block.get('transverse')) { %>
                 <li class="edit-block" ><a href="#"><i class="fa fa-pencil"></i></a></li>
