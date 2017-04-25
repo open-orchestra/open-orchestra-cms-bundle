@@ -94,7 +94,7 @@ class MenuView extends OrchestraView
     _toggleSubLevel(event) {
         let target = $(event.currentTarget);
         let idSubMenu = target.attr('href');
-        target.addClass('active');
+
         let subMenu = $('.sublevels '+idSubMenu, this.$el);
         if (0 !== subMenu.length) {
             this.$el.addClass('sublevel-open').removeClass('sublevel-closed');
@@ -106,6 +106,9 @@ class MenuView extends OrchestraView
             this.$el.addClass('sublevel-closed').removeClass('sublevel-open');
             $('.tab-pane', this.$el).removeClass('active');
             $('.nav li', this.$el).removeClass('active');
+            $('.nav li a', this.$el).removeClass('active');
+            target.parent().addClass('active');
+
             event.stopPropagation();
         }
     }
@@ -119,12 +122,15 @@ class MenuView extends OrchestraView
         let target = $('#' + item, this.$el);
         $('.tab-pane', this.$el).removeClass('active');
         $('.nav li', this.$el).removeClass('active');
+        $('.nav li a', this.$el).removeClass('active');
+        target.parent().addClass('active');
 
         if (target.parents('.sublevels').length > 0) {
-            target.parent().addClass('active');
+            target.addClass('active');
             let tab = target.parents('.tab-pane').eq(0);
             tab.addClass('active');
             target = $('a[href="#' + tab.attr('id') + '"]', this.$el);
+            target.parent().addClass('active');
         }
         this._toggleSubLevel({currentTarget: target});
     }
