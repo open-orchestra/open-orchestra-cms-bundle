@@ -1,18 +1,17 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Application          from '../../Application'
-import ApplicationError     from '../../../Service/Error/ApplicationError'
-import Content              from '../../Model/Content/Content'
-import Contents             from '../../Collection/Content/Contents'
-import Statuses             from '../../Collection/Status/Statuses'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import ContentToolbarView   from './ContentToolbarView'
-import ContentVersionsView  from './ContentVersionsView'
-import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
+import AbstractFormView          from '../../../Service/Form/View/AbstractFormView'
+import Application               from '../../Application'
+import Content                   from '../../Model/Content/Content'
+import Contents                  from '../../Collection/Content/Contents'
+import Statuses                  from '../../Collection/Status/Statuses'
+import TrashFormViewButtonsMixin from '../../../Service/Form/Mixin/TrashFormViewButtonsMixin'
+import ContentToolbarView        from './ContentToolbarView'
+import ContentVersionsView       from './ContentVersionsView'
+import FlashMessageBag           from '../../../Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class ContentFormView
  */
-class ContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin) 
+class ContentFormView extends mix(AbstractFormView).with(TrashFormViewButtonsMixin)
 {
     /**
      * Initialize

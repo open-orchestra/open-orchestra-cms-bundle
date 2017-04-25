@@ -18,6 +18,7 @@ open_orchestra_backoffice:
     confirm_remove:
         title: Supprimer les éléments sélectionnés ?
         message: La suppression sera définitive
+        trash: Cet élément va être envoyé à la corbeile
     confirm_remove_prototype:
         title: Supprimer cette élément ?
         message: La suppression sera définitive aprés la sauvegarde du formulaire

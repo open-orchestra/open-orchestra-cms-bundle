@@ -1,12 +1,12 @@
-import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
-import Redirections           from '../../Collection/Redirection/Redirections'
-import RenderToolbarViewMixin from './Mixin/RenderToolbarViewMixin'
-import FormViewButtonsMixin   from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import AbstractFormView          from '../../../Service/Form/View/AbstractFormView'
+import Redirections              from '../../Collection/Redirection/Redirections'
+import RenderToolbarViewMixin    from './Mixin/RenderToolbarViewMixin'
+import TrashFormViewButtonsMixin from '../../../Service/Form/Mixin/TrashFormViewButtonsMixin'
 
 /**
  * @class NodeFormView
  */
-class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, FormViewButtonsMixin)
+class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, TrashFormViewButtonsMixin)
 {
     /**
      * Initialize
