@@ -53,12 +53,14 @@ class TrashItemRouter extends OrchestraRouter
             page = 1
         }
         page = Number(page) - 1;
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         this._displayLoader(Application.getRegion('content'));
         let collection = new TrashItems();
         let listView = new TrashItemsView({
             collection: collection,
             settings: {
-                page: page
+                page: page,
+                pageLength: pageLength
             }
         });
         let el = listView.render().$el;

@@ -134,6 +134,9 @@ class NodesView extends OrchestraView
         let collection = new Nodes();
         let listView = new NodeListView({
             collection: collection,
+            settings: {
+                pageLength:  Application.getConfiguration().getParameter('datatable').pageLength
+            },
             language: this._language,
             siteId: this._siteId
         });

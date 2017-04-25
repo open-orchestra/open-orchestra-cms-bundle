@@ -49,7 +49,7 @@ class WorkflowProfileRouter extends AbstractWorkflowRouter
             page = 1
         }
         this._displayLoader(Application.getRegion('content'));
-        let pageLength = 10;
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
         page = Number(page) - 1;
         new WorkflowProfiles().fetch({
             data : {

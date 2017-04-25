@@ -85,7 +85,9 @@ class NodeRouter extends OrchestraRouter
                 let nodeVersionsView = new NodeVersionsView({
                     collection: nodeVersions,
                     settings: {
-                        page: page
+                        page: page,
+                        pageLength: Application.getConfiguration().getParameter('datatable').pageLength
+
                     },
                     siteLanguages: Application.getContext().siteLanguages,
                     node: node

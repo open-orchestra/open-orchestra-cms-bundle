@@ -85,10 +85,14 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     _createMembersListView() {
         let collection = new Users();
+        let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
 
         return new MembersListView({
             collection: collection,
-            groupId: this._groupId
+            groupId: this._groupId,
+            settings: {
+                pageLength: pageLength
+            }
         });
     }
 
