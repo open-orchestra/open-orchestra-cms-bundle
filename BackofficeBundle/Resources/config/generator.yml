@@ -11,7 +11,6 @@ parameters:
     open_orchestra_backoffice.content_list.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ContentListStrategy
     open_orchestra_backoffice.content.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ContentStrategy
     open_orchestra_backoffice.language_list.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LanguageListStrategy
-    open_orchestra_backoffice.login.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LoginStrategy
     open_orchestra_backoffice.audience_analysis.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\AudienceAnalysisStrategy
     open_orchestra_backoffice.gmap.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\GmapStrategy
     open_orchestra_backoffice.add_this.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\AddThisStrategy
@@ -68,7 +67,7 @@ services:
             - '%open_orchestra_backoffice.block_default_configuration%'
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.content_lis.generate_form:
+    open_orchestra_backoffice.content_list.generate_form:
         class: '%open_orchestra_backoffice.content_list.generate_form.class%'
         arguments:
             - '%open_orchestra_backoffice.block_default_configuration%'
@@ -82,12 +81,6 @@ services:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.language_list.generate_form:
         class: '%open_orchestra_backoffice.language_list.generate_form.class%'
-        arguments:
-            - '%open_orchestra_backoffice.block_default_configuration%'
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.login.generate_form:
-        class: '%open_orchestra_backoffice.login.generate_form.class%'
         arguments:
             - '%open_orchestra_backoffice.block_default_configuration%'
         tags:
