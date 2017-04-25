@@ -1,5 +1,5 @@
-import ConfirmModalView from '../../ConfirmModal/View/ConfirmModalView'
-import Application      from '../../../Application/Application'
+import ConfirmModalView     from '../../ConfirmModal/View/ConfirmModalView'
+import Application          from '../../../Application/Application'
 import FormViewButtonsMixin from './FormViewButtonsMixin'
 
 let TrashFormViewButtonsMixin = (superclass) => class extends mix(superclass).with(FormViewButtonsMixin) {
