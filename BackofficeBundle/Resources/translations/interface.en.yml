@@ -137,6 +137,12 @@ open_orchestra_backoffice:
                 Editing an online page is not possible. \n
                 To modify the contents of the page please create a new version. \n
                 You can also modify the workflow of this version but the page will not be visible on the site
+        route_pattern_arguments:
+            title: Main url arguments missing.
+            message: |
+                This node cannot be published. \n
+                Certain blocks of this node need parameters to be correctly shown. \n
+                This parameters should be found in node's main URL. \n
         tree:
             open: Open the tree
             close: Close the tree

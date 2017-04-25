@@ -6,3 +6,5 @@ open_orchestra_api:
     node:
         edit:
             impossible: This node could not be edited
+        publish:
+            impossible: This node could not published because of main URL missing arguments

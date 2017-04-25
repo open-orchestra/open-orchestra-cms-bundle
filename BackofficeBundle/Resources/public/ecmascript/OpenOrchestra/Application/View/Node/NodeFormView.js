@@ -10,14 +10,16 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, Tr
 {
     /**
      * Initialize
-     * @param {Node}   node
-     * @param {Form}   form
-     * @param {Array}  siteLanguages
+     * @param {Node}    node
+     * @param {Array}   siteLanguages
+     * @param {Form}    form
+     * @param {boolean} canChangeStatus
      */
-    initialize({node, siteLanguages, form}) {
+    initialize({node, siteLanguages, form, canChangeStatus}) {
         super.initialize({form : form});
         this._node = node;
         this._siteLanguages = siteLanguages;
+        this._canChangeStatus = canChangeStatus;
     }
 
     /**
@@ -27,7 +29,8 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, Tr
         let template = this._renderTemplate('Node/nodeEditView',
             {
                 node : this._node,
-                siteLanguages: this._siteLanguages
+                siteLanguages: this._siteLanguages,
+                canChangeStatus: this._canChangeStatus
             }
         );
         this.$el.html(template);

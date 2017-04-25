@@ -9,6 +9,7 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\BlockNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotDeletableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotEditableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotPublishableException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\NodeStrategy;
@@ -479,9 +480,15 @@ class NodeController extends BaseController
             throw new NodeNotFoundHttpException();
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
+
         $nodeSource = clone $node;
         $this->get('open_orchestra_api.transformer_manager')->get('node')->reverseTransform($facade, $node);
         $status = $node->getStatus();
+
+        if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(NodeStrategy::CHANGE_STATUS, $node)) {
+            throw new NodeNotPublishableException();
+        }
+
         if ($status !== $nodeSource->getStatus()) {
             if (!$this->isGranted($status, $nodeSource)) {
                 throw new StatusChangeNotGrantedHttpException();

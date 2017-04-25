@@ -32,6 +32,13 @@ let RenderToolbarViewMixin = (superclass) => class extends superclass {
                 }
             })
         ).done( () => {
+            if(!this._node.get('rights').can_publish_node) {
+                for (let status of statuses.models) {
+                    if (status.get('published_state')) {
+                        statuses.remove(status);
+                    }
+                }
+            }
             let nodeToolbarView = new NodeToolbarView(
                 {
                     node: this._node,

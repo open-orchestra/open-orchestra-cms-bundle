@@ -7,6 +7,14 @@
             </p>
         </div>
     <% }; %>
+    <% if (false === node.get('rights').can_publish_node) {%>
+    <div class="alert alert-warning" role="warning">
+        <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.title') %></div>
+        <p>
+            <%= (Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.message').replace(/\\n/g, '<br>')) %>
+        </p>
+    </div>
+    <% }; %>
     <div class="pull-left">
         <div class="form-group">
             <label for="select-version" class="control-label"><%- Translator.trans('open_orchestra_backoffice.versionable.version') %></label>

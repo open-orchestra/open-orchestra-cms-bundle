@@ -1,5 +1,4 @@
 parameters:
-    open_orchestra_model.validator.block_node_pattern.class                  : OpenOrchestra\Backoffice\Validator\Constraints\BlockNodePatternValidator
     open_orchestra_model.validator.unique_node_order.class                   : OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeOrderValidator
     open_orchestra_model.validator.check_variable_route_pattern_in_menu.class: OpenOrchestra\Backoffice\Validator\Constraints\CheckVariableRoutePatternInMenuValidator
     open_orchestra_model.validator.trashitem_remove.class                    : OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveValidator
@@ -10,13 +9,6 @@ parameters:
     open_orchestra_model.validator.unique_block_code.class                   : OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCodeValidator
 
 services:
-    open_orchestra_model.validator.block_node_pattern:
-        class: '%open_orchestra_model.validator.block_node_pattern.class%'
-        arguments:
-            - '@open_orchestra_backoffice.generate_form_manager'
-        tags:
-            - { name: validator.constraint_validator, alias: block_node_pattern}
-
     open_orchestra_model.validator.unique_node_order:
         class: '%open_orchestra_model.validator.unique_node_order.class%'
         arguments:
