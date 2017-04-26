@@ -19,41 +19,38 @@ class PatchSubmit extends AbstractBehavior
     }
 
     /**
-     * activate behavior
-     *
-     * @param {Object} $element - jQuery object
-     */
-    activate($element) {
-        let $subforms = $('.subform-to-refresh', $element);
-        let containers = {};
-        $subforms.each(function(index, subform){
-            let $subform = $(subform);
-            let $container = $subform.parent();
-            if ($subform.attr('id') !== undefined) {
-                containers[$subform.attr('id')] = $container;
-            }            
-        });
-        $element.data('subformToRefresh', containers);
-    }
-
-    /**
      * Submit form with patch method to refresh form
      *
-     * @param event
+     * @param {Object} event
+     * @param {Object} context
      * @private
      */
-    _submitPatch(event) {
+    _submitPatch(event, context) {
         Backbone.Events.trigger('form:deactivate', this);
 
-        let context = this;
+        let formView = this;
         let $form = $('form', this.$el);
-        let $formToPatch = $(event.target).parents('.form-to-patch').eq(0);
-        let containers = $formToPatch.data('subformToRefresh');
-        let data = $form.serializeArray();
+        let $formToPatch = $(event.target).parents(context.getSelector()).eq(0);
+        let $subforms = $('.subform-to-refresh', $formToPatch);
+        let containers = {};
+        let data;
 
-        $.each(containers, function(id, $container){
-            context._displayLoader($container);
+        if ($formToPatch.hasClass('form-to-patch-and-send')) {
+            data = $form.serializeArray();
+        }
+
+        $subforms.each(function(index, subform){
+            let $subform = $(subform);
+            if ($subform.attr('id') !== undefined) {
+                formView._displayLoader($subform);
+                containers[$subform.attr('id')] = $subform.parent();
+            }
         });
+
+        if ($formToPatch.hasClass('form-to-patch')) {
+            data = $form.serializeArray();
+        }
+
         $form.ajaxSubmit({
             type: 'PATCH',
             context: this,
@@ -74,7 +71,7 @@ class PatchSubmit extends AbstractBehavior
      * @return {String}
      */
     getSelector() {
-        return '.form-to-patch';
+        return '.form-to-patch, .form-to-patch-and-send';
     }
 }
 

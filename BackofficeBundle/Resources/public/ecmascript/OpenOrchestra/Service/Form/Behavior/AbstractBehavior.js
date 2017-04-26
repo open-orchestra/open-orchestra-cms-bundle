@@ -25,7 +25,12 @@ class AbstractBehavior
             if (!_.isFunction(method)) method = this[method];
             if (!method) continue;
             let match = key.match(delegateEventSplitter);
-            view.delegate(match[1], this.getSelector() + ' ' + match[2], _.bind(method, view));
+            let context = this;
+            view.delegate(match[1], this.getSelector() + ' ' + match[2], function() {
+                let mainArguments = Array.prototype.slice.call(arguments);
+                mainArguments.push(context);
+                return method.apply(view, mainArguments);
+            });
         }
     }
 

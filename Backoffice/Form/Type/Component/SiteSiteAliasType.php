@@ -69,7 +69,7 @@ class SiteSiteAliasType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'attr' => array('class' => 'form-to-patch'),
+                'attr' => array('class' => 'form-to-patch-and-send'),
             )
         );
     }
