@@ -29,8 +29,7 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, Tr
         let template = this._renderTemplate('Node/nodeEditView',
             {
                 node : this._node,
-                siteLanguages: this._siteLanguages,
-                canChangeStatus: this._canChangeStatus
+                siteLanguages: this._siteLanguages
             }
         );
         this.$el.html(template);
