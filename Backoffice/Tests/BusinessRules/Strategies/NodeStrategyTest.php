@@ -154,23 +154,44 @@ class NodeStrategyTest extends AbstractBaseTestCase
     }
 
     /**
+     * @param NodeInterface $node
+     * @param boolean       $isGranted
+     *
+     * @dataProvider provideCanChangeToPublishStatus
+     */
+    public function testCanChangeStatus(NodeInterface $node, $isGranted)
+    {
+        $this->assertSame($isGranted, $this->strategy->canChangeStatus($node, array()));
+    }
+
+    /**
      * provide group and parameters
      *
      * @return array
      */
     public function provideCanChangeToPublishStatus()
     {
+        $mainUrlArguments = array();
+        foreach ($this->mainUrlArguments as $mainUrlArgument) {
+            $mainUrlArguments[] = '{' . $mainUrlArgument . '}';
+        }
+
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getBlocks()->thenReturn(array($block));
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->isPublishedState()->thenReturn(array(true));
+
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node0)->getAreas()->thenReturn(array($area));
+        Phake::when($node0)->getStatus()->thenReturn($status);
         Phake::when($node0)->getRoutePattern()->thenReturn('');
 
 
         $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node1)->getAreas()->thenReturn(array($area));
-        Phake::when($node1)->getRoutePattern()->thenReturn('/{mainUrlArgument0}/{mainUrlArgument1}');
+        Phake::when($node1)->getStatus()->thenReturn($status);
+        Phake::when($node1)->getRoutePattern()->thenReturn(implode($mainUrlArguments));
 
         return array(
             array($node0, false),
