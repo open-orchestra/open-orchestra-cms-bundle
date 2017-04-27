@@ -1,4 +1,5 @@
 import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
+import StatusFormatter       from '../../../Service/DataFormatter/StatusFormatter'
 
 /**
  * @class NodeListView
@@ -47,10 +48,11 @@ class NodeListView extends AbstractDataTableView
                 orderDirection: 'desc'
             },
             {
-                name: 'status.label',
+                name: 'status',
                 title: Translator.trans('open_orchestra_backoffice.table.node.current_status'),
                 orderable: true,
-                visibile: true
+                visibile: true,
+                createdCell: this._displayStatus
             }
         ];
     }
@@ -83,6 +85,18 @@ class NodeListView extends AbstractDataTableView
     }
 
     /**
+    *
+    * @param {Object} td
+    * @param {Object} cellData
+    * @param {Object} rowData
+    *
+    * @private
+    */
+    _displayStatus(td, cellData, rowData) {
+       $(td).html(StatusFormatter.format(cellData));
+   }
+
+   /**
      * @inheritDoc
      */
     _getSyncOptions() {
