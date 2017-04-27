@@ -29,14 +29,14 @@
             </div>
         </div>
     <% }; %>
-    <% if (contentType.default_listable.status_label) { %>
+    <% if (contentType.default_listable.status) { %>
         <div class="form-group col-lg-6">
-            <label for="status" class="control-label col-md-4"><%- Translator.trans('open_orchestra_backoffice.table.contents.status_label') %></label>
+            <label for="status" class="control-label col-md-4"><%- Translator.trans('open_orchestra_backoffice.table.contents.status') %></label>
             <div class="col-md-8 styled-select">
                 <select name="status" class="form-control" id="status">
                     <option value=''></option>
                     <% _.each(statuses, function(status) { %>
-                    <option value='<%- status.id %>'><%- status.label %></option>
+                    <option value='<%- status.id %>' style='color:<%- status.code_color %>;'><%- status.label %></option>
                     <% }); %>
                 </select>
             </div>
