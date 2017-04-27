@@ -129,7 +129,7 @@ open_orchestra_backoffice:
             always_shared: Always (or on demand)
             default_listable_label:
               name: Name
-              status_label: Workflow state
+              status: Workflow state
               linked_to_site: Shared on other sites
               created_at: Created at
               created_by: Author

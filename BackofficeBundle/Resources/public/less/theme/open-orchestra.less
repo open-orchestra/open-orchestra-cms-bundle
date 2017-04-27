@@ -1789,8 +1789,6 @@ input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + l
         cursor: pointer;
         background-color: #fff;
         border: 1px solid #d2e1ec;
-        -webkit-transition: .4s;
-        transition: .4s;
         &::before {
             position: absolute;
             content: "";
@@ -1801,6 +1799,7 @@ input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + l
             background-color: @lightGrey;
             -webkit-transition: .4s;
             transition: .4s;
+            transition-property: transform;
             border-radius: 50%;
         }
     }

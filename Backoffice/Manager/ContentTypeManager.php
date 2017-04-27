@@ -40,6 +40,7 @@ class ContentTypeManager
     public function duplicate(ContentTypeInterface $contentType)
     {
         $newContentType = clone $contentType;
+        $newContentType->setDefaultListable($this->updateDefaultListable($newContentType->getDefaultListable()));
 
         foreach ($contentType->getFields() as $field) {
             $newField = clone $field;
@@ -52,6 +53,21 @@ class ContentTypeManager
         }
 
         return $newContentType;
+    }
+
+    /**
+     * @param array $contentTypeDefaultListable
+     *
+     * @return array
+     */
+    protected function updateDefaultListable(array $contentTypeDefaultListable)
+    {
+        $defaultListable = $this->getDefaultListableColumns();
+
+        $toKeep = array_intersect_key($contentTypeDefaultListable, $defaultListable);
+        $toAdd = array_diff_key($defaultListable, $toKeep);
+
+        return array_merge($toKeep, $toAdd);
     }
 
     /**
@@ -74,12 +90,12 @@ class ContentTypeManager
     {
         return array(
             'name'           => true,
-            'status_label'   => false,
-            'linked_to_site' => true,
-            'created_at'     => true,
+            'linked_to_site' => false,
+            'created_at'     => false,
             'created_by'     => true,
-            'updated_at'     => false,
+            'updated_at'     => true,
             'updated_by'     => false,
+            'status'         => true,
         );
     }
 }

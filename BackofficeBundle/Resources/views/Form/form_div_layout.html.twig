@@ -310,7 +310,7 @@
     {% spaceless %}
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
         {% set class = 'col-' ~ col_size ~ '-6' %}
-        <div class="{{ class }} switch-button">
+        <div class="{{ class }} default-listable-option">
             {{ form_label(form, null, {label_col: 6}) }}
             {{ form_widget(form, {widget_col: 6}) }}
         </div>
