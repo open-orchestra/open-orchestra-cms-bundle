@@ -39,7 +39,7 @@ class ContentsView extends AbstractCollectionView
             prevText: '<i class="fa fa-chevron-left"></i>',
             nextText: '<i class="fa fa-chevron-right"></i>'
         });
-        
+
         this._listView = new ContentListView({
             collection: this._collection,
             settings: this._settings,

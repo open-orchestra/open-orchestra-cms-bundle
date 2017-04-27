@@ -5,6 +5,7 @@ import DuplicateIconListViewMixin  from '../../../Service/DataTable/Mixin/Duplic
 import CellFormatterManager        from '../../../Service/DataFormatter/Manager'
 import BooleanFormatter            from '../../../Service/DataFormatter/BooleanFormatter'
 import DateFormatter               from '../../../Service/DataFormatter/DateFormatter'
+import StatusFormatter             from '../../../Service/DataFormatter/StatusFormatter'
 
 /**
  * @class ContentListView
@@ -37,10 +38,10 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         columnsDefinition = columnsDefinition.concat(this._generateFieldColumn());
         columnsDefinition.push(this._getColumnsDefinitionDuplicateIcon());
         columnsDefinition[1].createdCell = this._createEditLink;
-        
+
         return columnsDefinition;
     }
-    
+
     /**
      * generate listable columns
      */
@@ -49,8 +50,9 @@ class ContentListView extends mix(AbstractDataTableView).with(UrlPaginateViewMix
         let defaultListable = this._contentType.get('default_listable');
         let createdCell = {
             'linked_to_site': BooleanFormatter.getType(),
-            'created_at': DateFormatter.getType(),
-            'updated_at': DateFormatter.getType()
+            'created_at'    : DateFormatter.getType(),
+            'updated_at'    : DateFormatter.getType(),
+            'status'        : StatusFormatter.getType()
         };
         for (let column in defaultListable) {
             if (defaultListable[column]) {

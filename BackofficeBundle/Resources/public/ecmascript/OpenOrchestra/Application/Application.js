@@ -35,6 +35,7 @@ import BlockVideoType          from '../Service/Form/Behavior/BlockVideoType'
 import ColorPicker             from '../Service/Form/Behavior/ColorPicker'
 import Tinymce                 from '../Service/Form/Behavior/Tinymce'
 import TagCondition            from '../Service/Form/Behavior/TagCondition'
+import ContentType             from '../Service/Form/Behavior/ContentType'
 
 import SearchFormGroupManager  from '../Service/SearchFormGroup/Manager'
 import DateSearchFormGroup     from '../Service/SearchFormGroup/DateForm'
@@ -45,6 +46,7 @@ import CellFormatterManager    from '../Service/DataFormatter/Manager'
 import TextFormatter           from '../Service/DataFormatter/TextFormatter'
 import BooleanFormatter        from '../Service/DataFormatter/BooleanFormatter'
 import DateFormatter           from '../Service/DataFormatter/DateFormatter'
+import StatusFormatter         from '../Service/DataFormatter/StatusFormatter'
 
 import ApplicationError        from '../Service/Error/ApplicationError'
 import TinymceManager          from '../Service/Tinymce/TinymceManager'
@@ -247,6 +249,7 @@ class Application
         FormBehaviorManager.add(BlockVideoType);
         FormBehaviorManager.add(ColorPicker);
         FormBehaviorManager.add(TagCondition);
+        FormBehaviorManager.add(ContentType);
 
         TinymceManager.setSetting('language', this.getContext().language);
         FormBehaviorManager.add(Tinymce);
@@ -270,6 +273,7 @@ class Application
         CellFormatterManager.add(TextFormatter);
         CellFormatterManager.add(BooleanFormatter);
         CellFormatterManager.add(DateFormatter);
+        CellFormatterManager.add(StatusFormatter);
     }
 }
 

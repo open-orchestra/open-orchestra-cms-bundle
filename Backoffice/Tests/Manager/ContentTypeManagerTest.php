@@ -49,12 +49,12 @@ class ContentTypeManagerTest extends AbstractBaseTestCase
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentTypeInterface', $contentType);
         $this->assertSame(array(
             'name'           => true,
-            'status_label'   => false,
-            'linked_to_site' => true,
-            'created_at'     => true,
+            'linked_to_site' => false,
+            'created_at'     => false,
             'created_by'     => true,
-            'updated_at'     => false,
-            'updated_by'     => false
+            'updated_at'     => true,
+            'updated_by'     => false,
+            'status'         => true,
         ), $contentType->getDefaultListable());
     }
 }

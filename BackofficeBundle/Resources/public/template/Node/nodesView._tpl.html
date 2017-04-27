@@ -30,7 +30,7 @@
                 <select class="form-control" name='status' id="select-state">
                     <option></option>
                     <% _.each(statuses, function(status, key) { %>
-                            <option value="<%- status.get('name') %>"><%- status.get('label') %></option>
+                            <option value="<%- status.get('name') %>" style='color:<%- status.get('code_color') %>;'><%- status.get('label') %></option>
                     <% }); %>
                 </select>
             </div>

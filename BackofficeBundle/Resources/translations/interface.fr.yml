@@ -86,7 +86,7 @@ open_orchestra_backoffice:
         contents:
             new: Nouveau contenu
             name: Nom
-            status_label: Etat workflow
+            status: Etat workflow
             linked_to_site: Restreint au site
             created_at: Date de création
             created_by: Auteur
