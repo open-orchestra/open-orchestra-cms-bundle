@@ -168,7 +168,7 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
             ->getQuery()
             ->execute();
 
-        $this->removeItemFromPerimeter($perimeterKey, $item, $siteId);
+        $this->removeItemFromPerimeter($perimeterKey, $oldItem, $siteId);
     }
 
     /**
