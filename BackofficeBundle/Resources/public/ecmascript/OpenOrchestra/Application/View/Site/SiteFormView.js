@@ -3,6 +3,7 @@ import Application          from '../../Application'
 import Site                 from '../../Model/Site/Site'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 import ApplicationError     from '../../../Service/Error/ApplicationError'
+import ConfirmModalView     from '../../../Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class SiteFormView
@@ -15,7 +16,8 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events['click button.submit-form'] = '_submitWithContextRefresh'
+        this.events['click button.submit-form'] = '_submitWithContextRefresh';
+        this.events['click .remove-form'] = '_confirmRemove';
     }
 
     /**
@@ -118,6 +120,46 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
             }
         })(this._form);
         this._form.submit(this.getStatusCodeForm(event));
+    }
+
+    /**
+     * Show modal confirm to remove
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _confirmRemove(event) {
+        console.log('_confirmRemove');
+        event.stopPropagation();
+        let confirmModalView = new ConfirmModalView({
+            confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove_prototype.title'),
+            confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove_prototype.message'),
+            yesCallback: this._removeForm,
+            context: this,
+            callbackParameter: [event]
+        });
+
+        Application.getRegion('modal').html(confirmModalView.render().$el);
+        confirmModalView.show();
+
+        return false;
+    }
+
+    /**
+     * remove a form
+     *
+     * {Object} event
+     */
+    _removeForm(event) {
+        let $table = $(event.target).closest('table');
+        let $form = $(event.target).closest('tbody');
+        let language = $('input[name^="oo_site[aliases]"][name$="[language]"]', $form).val();
+        $form.remove();
+        if ($table.children('tbody').length === 0) {
+            $('thead', $table).addClass('hide');
+        }
     }
 }
 

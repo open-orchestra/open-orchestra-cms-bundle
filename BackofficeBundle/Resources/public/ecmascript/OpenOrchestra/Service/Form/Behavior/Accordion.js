@@ -1,7 +1,5 @@
 import AbstractBehavior   from './AbstractBehavior'
 import Application        from '../../../Application/Application'
-import SitesAvailable     from '../../../Application/Collection/Site/SitesAvailable'
-import GroupListModalView from '../../../Application/View/Group/GroupListModalView'
 import ConfirmModalView   from '../../ConfirmModal/View/ConfirmModalView'
 
 /**
@@ -99,6 +97,7 @@ class Accordion extends AbstractBehavior
      * @private
      */
     _confirmRemove(event) {
+        console.log('_confirmRemove');
         event.stopPropagation();
         let confirmModalView = new ConfirmModalView({
             confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove_prototype.title'),
