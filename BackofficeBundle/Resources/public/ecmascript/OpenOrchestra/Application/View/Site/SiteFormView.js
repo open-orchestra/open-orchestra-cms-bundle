@@ -3,7 +3,6 @@ import Application          from '../../Application'
 import Site                 from '../../Model/Site/Site'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 import ApplicationError     from '../../../Service/Error/ApplicationError'
-import ConfirmModalView     from '../../../Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class SiteFormView
@@ -17,7 +16,6 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
     preinitialize(options) {
         super.preinitialize(options);
         this.events['click button.submit-form'] = '_submitWithContextRefresh';
-        this.events['click .remove-form'] = '_confirmRemove';
     }
 
     /**

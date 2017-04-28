@@ -42,7 +42,7 @@ class Accordion extends AbstractBehavior
      */
     _openForms(event) {
         event.preventDefault();
-        let $table = $(evenversaillaist.target).closest('.accordion').find('table').eq(0);
+        let $table = $(event.target).closest('.accordion').find('table').eq(0);
         $('.open-form', $table).addClass('hide');
         $('.close-form', $table).removeClass('hide');
         $('tbody > tr:nth-of-type(2n)', $table).removeClass('hide');

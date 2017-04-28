@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteNodeTemplateSubscriber;
 use OpenOrchestra\Backoffice\Manager\TemplateManager;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * Class SiteType
