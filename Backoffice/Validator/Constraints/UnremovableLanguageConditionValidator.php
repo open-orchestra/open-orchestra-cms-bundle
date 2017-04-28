@@ -17,15 +17,17 @@ class UnremovableLanguageConditionValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        foreach ($value as $alias) {
-            $languages[] = $alias->getLanguage();
-        }
-        $languages = array_unique($languages);
+        if ($constraint instanceof UnremovableLanguageConditionInterface) {
+            foreach ($value as $alias) {
+                $languages[] = $alias->getLanguage();
+            }
+            $languages = array_unique($languages);
 
-        if (count(array_diff($constraint->getLanguages(), $languages)) > 0) {
-            $this->context->buildViolation($constraint->message)
-                ->atPath('aliases')
-                ->addViolation();
+            if (count(array_diff($constraint->getLanguages(), $languages)) > 0) {
+                $this->context->buildViolation($constraint->message)
+                    ->atPath('aliases')
+                    ->addViolation();
+            }
         }
     }
 }
