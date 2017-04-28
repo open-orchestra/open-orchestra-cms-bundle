@@ -132,7 +132,7 @@ open_orchestra_backoffice:
             message: Do you want publish cette version, it will be visible in front ?
             save_old_published_version: Save a copy of the old published version
         message_online:
-            title: The node is actually online.
+            title: The page is actually online.
             message: |
                 Editing an online page is not possible. \n
                 To modify the contents of the page please create a new version. \n
@@ -140,9 +140,9 @@ open_orchestra_backoffice:
         route_pattern_arguments:
             title: Main url arguments missing.
             message: |
-                This node cannot be published. \n
-                Certain blocks of this node need parameters to be correctly shown. \n
-                This parameters should be found in node's main URL. \n
+                This page cannot be published. \n
+                Certain blocks of this page need parameters to be correctly shown. \n
+                This parameters should be found in page's main URL. \n
         tree:
             open: Open the tree
             close: Close the tree
@@ -198,9 +198,9 @@ open_orchestra_backoffice:
         add_block: Add a block
         copy_block: Copy blocks
         new_block: New
+        back_to_node: Back to page
         title_new: Parameterize the block
         display_new_block: Display a block of type %blockComponent%
-        back_to_node: Back to node
         confirm_remove:
             title: Remove this block ?
             message: The removal will be final
