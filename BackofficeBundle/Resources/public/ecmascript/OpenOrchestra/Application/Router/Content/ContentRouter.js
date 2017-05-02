@@ -24,11 +24,11 @@ class ContentRouter extends OrchestraRouter
      */
     preinitialize() {
         this.routes = {
-            'content/summary'                                                     : 'showContentSummary',
-            'content/list/:contentTypeId/:language(/:page)'                       : 'listContent',
-            'content/edit/:contentTypeId/:language/:contentId(/:version)'         : 'editContent',
-            'content/new/:contentTypeId/:language'                                : 'newContent',
-            'content/manage-versions/:contentTypeId/:language/:contentId(/:page)' : 'manageVersionsContent'
+            'content/summary'                                                    : 'showContentSummary',
+            'content/list/:contentTypeId/:language(/:page)'                      : 'listContent',
+            'content/edit/:contentTypeId/:language/:contentId(/:version)'        : 'editContent',
+            'content/new/:contentTypeId/:language'                               : 'newContent',
+            'content/manage-versions/:contentTypeId/:language/:contentId(/:page)': 'manageVersionsContent'
         };
     }
 
@@ -44,7 +44,7 @@ class ContentRouter extends OrchestraRouter
                 label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
                 link: '#'+Backbone.history.generateUrl('showContentSummary')
             }
-        ]
+        ];
     }
 
     /**
@@ -128,23 +128,27 @@ class ContentRouter extends OrchestraRouter
      * @param {int|null} version
      */
     editContent(contentTypeId, language, contentId, version = null) {
-        this._displayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_backoffice_content_form', {
-            contentId: contentId,
-            language: language,
-            version: version
-        });
         let contentType = new ContentType();
-        let content = new Content({id: contentId});
-
         $.when(
             contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
-            content.fetch({
-                urlParameter: {version: version, language: language},
-                enabledCallbackError: false
-            })
         ).done(() => {
-            FormBuilder.createFormFromUrl(url, (form) => {
+            this._updateBreadcrumb(this.getBreadcrumb().concat({label: contentType.get('name')}));
+
+            this._displayLoader(Application.getRegion('content'));
+            let url = Routing.generate('open_orchestra_backoffice_content_form', {
+                contentId: contentId,
+                language: language,
+                version: version
+            });
+
+            let content = new Content({id: contentId});
+            $.when(
+                content.fetch({
+                    urlParameter: {version: version, language: language},
+                    enabledCallbackError: false
+                })
+            ).done(() => {
+                FormBuilder.createFormFromUrl(url, (form) => {
                     let contentFormView = new ContentFormView({
                         form: form,
                         contentType: contentType,
@@ -153,10 +157,11 @@ class ContentRouter extends OrchestraRouter
                     });
                     Application.getRegion('content').html(contentFormView.render().$el);
                 })
-        })
-        .fail(() => {
-            this._errorCallbackEdit(contentTypeId, contentId, language);
-        })
+            })
+            .fail(() => {
+                this._errorCallbackEdit(contentTypeId, contentId, language);
+            });
+        });
     }
 
     /**
@@ -166,20 +171,28 @@ class ContentRouter extends OrchestraRouter
      * @param {string} language
      */
     newContent(contentTypeId, language) {
-        this._displayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_backoffice_content_new', {
-            contentTypeId: contentTypeId,
-            language: language
-        });
+        let contentType = new ContentType();
+        $.when(
+            contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
+        ).done(() => {
+            this._updateBreadcrumb(this.getBreadcrumb().concat({label: contentType.get('name')}));
 
-        FormBuilder.createFormFromUrl(url, (form) => {
-            let newContentFormView = new NewContentFormView({
-                form: form,
+            this._displayLoader(Application.getRegion('content'));
+            let url = Routing.generate('open_orchestra_backoffice_content_new', {
                 contentTypeId: contentTypeId,
-                language: language,
-                siteLanguages: Application.getContext().siteLanguages
+                language: language
             });
-            Application.getRegion('content').html(newContentFormView.render().$el);
+
+            FormBuilder.createFormFromUrl(url, (form) => {
+                let newContentFormView = new NewContentFormView({
+                    form           : form,
+                    contentTypeId  : contentTypeId,
+                    contentTypeName: contentType.get('name'),
+                    language       : language,
+                    siteLanguages  : Application.getContext().siteLanguages
+                });
+                Application.getRegion('content').html(newContentFormView.render().$el);
+            });
         });
     }
 
@@ -198,11 +211,11 @@ class ContentRouter extends OrchestraRouter
             siteId: Application.getContext().siteId,
             language: language
         };
-        
+
         let contentType = new ContentType();
         let statuses = new Statuses();
         let contents = new Contents();
-        
+
         $.when(
             statuses.fetch({apiContext: 'contents'}),
             contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),

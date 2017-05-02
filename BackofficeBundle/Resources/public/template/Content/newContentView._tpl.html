@@ -20,6 +20,6 @@
         <% }); %>
     </ul>
 </div>
-<h1> <%- Translator.trans('open_orchestra_backoffice.table.contents.new') %></h1>
+<h1> <%- Translator.trans('open_orchestra_backoffice.table.contents.new', {'contentTypeName': contentTypeName}) %></h1>
 <%= renderTemplate('FlashMessage/flashMessage', {flashMessages: messages}) %>
 <div class='form-new'></div>

@@ -84,7 +84,7 @@ open_orchestra_backoffice:
             number_use: Utilisation
             version: Version
         contents:
-            new: Nouveau contenu
+            new: Nouveau contenu %contentTypeName%
             name: Nom
             status: Etat workflow
             linked_to_site: Restreint au site
