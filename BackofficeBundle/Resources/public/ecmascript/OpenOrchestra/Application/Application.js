@@ -62,7 +62,9 @@ class Application
      */
     constructor() {
         this._regions = {};
+        this._menuView = null;
         window.addEventListener('error', this._applicationError);
+        window.addEventListener('resize', $.proxy(this._applicationResize, this));
         Backbone.Events.on('application:error', this._displayError, this);
     }
 
@@ -149,6 +151,14 @@ class Application
     }
 
     /**
+     * @param {Object} event - ResizeEvent
+     * @private
+     */
+    _applicationResize(event) {
+        this._menuView.resizeColumns();
+    }
+
+    /**
      * @param {Error} error
      * @private
      */
@@ -199,13 +209,13 @@ class Application
                 this.getRegion('header').html(headerView.render().$el);
             }
         });
-        let menuView = new MenuView();
-        this.getRegion('left_column').html(menuView.render().$el);
+        this._menuView = new MenuView();
+        this.getRegion('left_column').html(this._menuView.render().$el);
 
         let breadcrumbView = new BreadcrumbView();
         this.getRegion('breadcrumb').html(breadcrumbView.render().$el);
 
-        NavigationManager.initialize(menuView, breadcrumbView);
+        NavigationManager.initialize(this._menuView, breadcrumbView);
     }
 
     /**
