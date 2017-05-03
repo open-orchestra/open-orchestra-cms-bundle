@@ -199,7 +199,7 @@ class Application
                 this.getRegion('header').html(headerView.render().$el);
             }
         });
-        menuView = new MenuView();
+        let menuView = new MenuView();
         this.getRegion('left_column').html(menuView.render().$el);
 
         let breadcrumbView = new BreadcrumbView();
