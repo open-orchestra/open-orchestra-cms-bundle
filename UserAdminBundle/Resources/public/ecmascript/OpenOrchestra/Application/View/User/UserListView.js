@@ -1,6 +1,7 @@
 import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
 import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
+import CsvFormatter                from '../../../Service/DataFormatter/CsvFormatter'
 
 /**
  * @class UserListView
@@ -31,7 +32,8 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin,
                 name: "groups",
                 title: Translator.trans('open_orchestra_user_admin.table.users.groups'),
                 orderable: false,
-                visibile: true
+                visibile: true,
+                createdCell: this._displayGroupList
             }
         ];
     }
@@ -60,6 +62,19 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin,
 
         $(td).html(cellData)
     }
+
+    /**
+     *
+     * @param {Object} td
+     * @param {Object} cellData
+     * @param {Object} rowData
+     *
+     * @private
+     */
+    _displayGroupList(td, cellData, rowData) {
+        $(td).html(CsvFormatter.format(cellData));
+    }
+
 
     /**
      * @inheritDoc

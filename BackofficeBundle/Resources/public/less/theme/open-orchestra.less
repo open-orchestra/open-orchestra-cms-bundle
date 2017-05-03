@@ -1029,31 +1029,36 @@ button.active-loading {
     }
 }
 
-table.dataTable thead .sorting:after {
-    opacity: 0.2;
-    content: "\e150";
-    /* sort */
-}
-
-table.dataTable thead .sorting_asc:after {
-    content: "\e113";
-    /* sort-by-attributes */
-}
-
-table.dataTable thead .sorting_desc:after {
-    content: "\e114";
-    /* sort-by-attributes-alt */
-}
-
-table.dataTable i.duplicate-icon:hover,
-table.dataTable i.btn-restore:hover,
-table.dataTable i.delete-icon:hover {
-    cursor: pointer;
-}
-
-table.dataTable i.btn-restore.disabled {
-  cursor: not-allowed;
-  color: #999;
+table.dataTable {
+    i.btn-restore.disabled {
+        cursor: not-allowed;
+        color: #999;
+    }
+    i.duplicate-icon:hover, i.btn-restore:hover, i.delete-icon:hover {
+        cursor: pointer;
+    }
+    thead {
+        .sorting:after {
+            opacity: 0.2;
+            content: "\e150";
+            /* sort */
+        }
+        .sorting_asc:after {
+            content: "\e113";
+            /* sort-by-attributes */
+        }
+        .sorting_desc:after {
+            content: "\e114";
+            /* sort-by-attributes-alt */
+        }
+    }
+    .data-list-csv:not(:empty) {
+        background-color: #B4B8C1;
+        padding: 3px;
+        border-radius: 5px;
+        margin: 0 5px 5px 0;
+        display: inline-block;
+    }
 }
 
 table.ui-sortable .fa.fa-arrows {
