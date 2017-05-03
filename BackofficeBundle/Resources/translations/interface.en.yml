@@ -200,6 +200,7 @@ open_orchestra_backoffice:
             message: The removal will be final
         edit_title: Edit block
         creation: The block has been created
+        style: style
     area:
         copy_blocks:
             title: Copy blocks

@@ -201,6 +201,7 @@ open_orchestra_backoffice:
             message: La suppression sera définitive
         edit_title: Edition du bloc
         creation: Le bloc a été créé
+        style: style
     area:
         copy_blocks:
             title: Copier les blocs
