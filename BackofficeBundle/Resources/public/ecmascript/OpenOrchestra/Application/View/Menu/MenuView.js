@@ -42,7 +42,7 @@ class MenuView extends OrchestraView
             }
         );
 
-        this.resizeColumns();
+        this._resizeColumns();
         this._enabledScroll();
 
         this.$el.html(template);
@@ -62,7 +62,7 @@ class MenuView extends OrchestraView
      * Toggle menu according window width
      * @private
      */
-    resizeColumns() {
+    _resizeColumns() {
         let $selectorColumns = $('#left-column, #central-column');
         $selectorColumns.removeClass('toggle-left');
         if (this._isTablet()) {
