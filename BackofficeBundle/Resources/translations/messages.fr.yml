@@ -11,6 +11,8 @@ open_orchestra_backoffice:
     form:
         submit: Sauvegarder
         submit_continue: Sauvegarder et continuer
+        file:
+          choose: Choisissez un fichier
         delete: Supprimer
         delete_help_text: Toutes les versions dans toutes les langues doivent être hors ligne
         global_error: Le formulaire contient des erreurs

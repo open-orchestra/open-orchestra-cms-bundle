@@ -11,6 +11,8 @@ open_orchestra_backoffice:
     form:
         submit: Save
         submit_continue: Save and continue
+        file:
+          choose: Choose a file
         delete: Delete
         delete_help_text: All versions in all languages should be offline
         global_error: There are errors in the form

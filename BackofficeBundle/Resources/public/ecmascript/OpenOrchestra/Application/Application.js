@@ -36,6 +36,7 @@ import ColorPicker             from '../Service/Form/Behavior/ColorPicker'
 import Tinymce                 from '../Service/Form/Behavior/Tinymce'
 import TagCondition            from '../Service/Form/Behavior/TagCondition'
 import ContentType             from '../Service/Form/Behavior/ContentType'
+import InputFile               from '../Service/Form/Behavior/InputFile'
 
 import SearchFormGroupManager  from '../Service/SearchFormGroup/Manager'
 import DateSearchFormGroup     from '../Service/SearchFormGroup/DateForm'
@@ -250,6 +251,7 @@ class Application
         FormBehaviorManager.add(ColorPicker);
         FormBehaviorManager.add(TagCondition);
         FormBehaviorManager.add(ContentType);
+        FormBehaviorManager.add(InputFile);
 
         TinymceManager.setSetting('language', this.getContext().language);
         FormBehaviorManager.add(Tinymce);

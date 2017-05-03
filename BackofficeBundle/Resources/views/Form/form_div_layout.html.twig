@@ -787,3 +787,25 @@
 
     {% endspaceless %}
 {% endblock choice_widget_collapsed %}
+
+{% block file_widget %}
+    {% spaceless %}
+        {% set col_size = col_size|default(bootstrap_get_col_size()) %}
+
+        {% if attr.simple_col is defined and attr.simple_col is not empty %}
+            {% set simple_col = attr.simple_col %}
+        {% endif  %}
+
+        {% if attr.col_size is defined and attr.col_size is not empty %}
+            {% set col_size = attr.col_size %}
+        {% endif %}
+
+        <div class="oo-input-file{% if simple_col is defined %} col-{{ col_size }}-{{ simple_col }} {% endif %}">
+            <label class="btn btn-border">
+                {{ 'open_orchestra_backoffice.form.file.choose'|trans }} ...
+                <input type="file" class="sr-only" {{ block('widget_attributes') }} multiple>
+            </label >
+            <span class="upload-file-info"></span>
+        </div>
+    {% endspaceless %}
+{% endblock file_widget %}

@@ -230,6 +230,8 @@ open_orchestra_backoffice:
             off: No
         valid:
           not_blank: This value should not be blank.
+        file:
+            multiple: "%length% files"
     language:
         en: English
         fr: Français
