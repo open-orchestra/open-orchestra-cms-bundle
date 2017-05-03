@@ -87,10 +87,10 @@ class TinymceManager
      */
     _getDefaultSettings() {
         return {
-            plugins: 'advlist autolink lists image charmap print preview hr anchor pagebreak \
-                      searchreplace wordcount visualblocks visualchars code fullscreen \
-                      insertdatetime media nonbreaking save table contextmenu directionality \
-                      emoticons template paste textcolor link \
+            plugins: 'advlist autolink lists image charmap hr anchor pagebreak \
+                      searchreplace wordcount fullscreen \
+                      insertdatetime media nonbreaking table contextmenu directionality \
+                      emoticons paste textcolor link \
                       orchestra_internal_link orchestra_bbcode',
             toolbar: 'undo redo | styleselect bold italic forecolor backcolor |  \
                       alignleft aligncenter alignright alignjustify | \
