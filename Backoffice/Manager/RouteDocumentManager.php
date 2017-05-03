@@ -55,12 +55,18 @@ class RouteDocumentManager
      */
     public function createForSite(SiteInterface $site)
     {
-        $nodes = $this->nodeRepository->findPublishedByType($site->getSiteId());
         $listRedirection = $this->redirectionRepository->findBySiteId($site->getSiteId());
-
+        $siteLanguages = $site->getLanguages();
         $routes = array();
-        foreach ($nodes as $node) {
-            $routes = array_merge($this->generateRoutesForNode($node, $site), $routes);
+
+        foreach ($siteLanguages as $language) {
+            $nodes = $this->nodeRepository->findPublishedByLanguageAndSiteId($site->getSiteId(), $language);
+
+            $routePattern = $this->nodeRepository->findAllRoutePattern($language, $site->getSiteId());
+            $routePattern = $this->computeRoutePattern($routePattern);
+            foreach ($nodes as $node) {
+                $routes = array_merge($this->generateRoutesForNode($node, $site, $routePattern), $routes);
+            }
         }
 
         foreach ($listRedirection as $redirection) {
@@ -72,12 +78,10 @@ class RouteDocumentManager
 
     /**
      * @param SiteInterface $site
-     *
-     * @return array
      */
     public function clearForSite(SiteInterface $site)
     {
-        return $this->routeDocumentRepository->findBySite($site->getSiteId());
+        $this->routeDocumentRepository->removeBySiteId($site->getSiteId());
     }
 
     /**
@@ -88,12 +92,14 @@ class RouteDocumentManager
     public function createForNode(NodeInterface $node)
     {
         $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
-        $nodes = $this->getTreeNode($node, $site);
+        $nodes = $this->nodeRepository->findPublishedByPathAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage());
 
+        $routePattern = $this->nodeRepository->findAllRoutePattern($node->getLanguage(), $site->getSiteId());
+        $routePattern = $this->computeRoutePattern($routePattern);
         $routes = array();
 
         foreach ($nodes as $node) {
-            $routes = array_merge($this->generateRoutesForNode($node, $site), $routes);
+            $routes = array_merge($this->generateRoutesForNode($node, $site, $routePattern), $routes);
         }
 
         return $routes;
@@ -113,12 +119,10 @@ class RouteDocumentManager
 
     /**
      * @param RedirectionInterface $redirection
-     *
-     * @return array
      */
     public function deleteForRedirection(RedirectionInterface $redirection)
     {
-        return $this->routeDocumentRepository->findByRedirection($redirection->getId());
+        $this->routeDocumentRepository->removeByRedirectionId($redirection->getId());
     }
 
     /**
@@ -126,19 +130,20 @@ class RouteDocumentManager
      * @param string|null $suffix
      * @param string      $language
      * @param string      $siteId
+     * @param array       $routePattern
      *
      * @return string|null
      */
-    protected function completeRoutePattern($parentId = null, $suffix = null, $language, $siteId)
+    protected function completeRoutePattern($parentId = null, $suffix = null, $language, $siteId, array $routePattern)
     {
-        if (is_null($parentId) || '-' == $parentId || '' == $parentId || NodeInterface::ROOT_NODE_ID == $parentId || 0 === strpos($suffix, '/')) {
+        if (is_null($parentId) || NodeInterface::ROOT_PARENT_ID == $parentId || '' == $parentId || 0 === strpos($suffix, '/')) {
             return $suffix;
         }
 
-        $parent = $this->nodeRepository->findOnePublished($parentId, $language, $siteId);
+        if (isset($routePattern[$parentId])) {
+            $parent = $routePattern[$parentId];
 
-        if ($parent instanceof NodeInterface) {
-            return $this->suppressDoubleSlashes($this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language, $siteId));
+            return $this->suppressDoubleSlashes($this->completeRoutePattern($parent['parentId'], $parent['routePattern'] . '/' . $suffix, $language, $siteId, $routePattern));
         }
 
         return $suffix;
@@ -151,34 +156,14 @@ class RouteDocumentManager
      */
     public function clearForNode(NodeInterface $node)
     {
-        $nodes = $this->getTreeNode($node, null, true);
+        $nodeIds = $this->nodeRepository->findNodeIdByIncludedPathSiteIdAndLanguage(
+            $node->getPath(),
+            $node->getSiteId(),
+            $node->getLanguage()
+        );
 
-        $routes = array();
-
-        foreach ($nodes as $node) {
-            $routes = array_merge($this->routeDocumentRepository->findByNodeIdSiteIdAndLanguage($node->getNodeId(), $node->getSiteId(), $node->getLanguage()), $routes);
-        }
-
-        return $routes;
+        $this->routeDocumentRepository->removeByNodeIdsSiteIdAndLanguage($nodeIds, $node->getSiteId(), $node->getLanguage());
     }
-
-    /**
-     * @param NodeInterface      $node
-     * @param SiteInterface|null $site
-     * @param boolean            $all
-     *
-     * @return Collection
-     */
-    protected function getTreeNode(NodeInterface $node, $site = null, $all = false)
-    {
-        if (null === $site) {
-            $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
-        }
-
-        return $all ? $this->nodeRepository->findByIncludedPathSiteIdAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage()) : $this->nodeRepository->findPublishedByPathAndLanguage($node->getPath(), $site->getSiteId(), $node->getLanguage());
-
-    }
-
 
     /**
      * @param RedirectionInterface $redirection
@@ -211,12 +196,30 @@ class RouteDocumentManager
     }
 
     /**
-     * @param NodeInterface     $node
-     * @param ReadSiteInterface $site
+     * @param array $nodes
      *
      * @return array
      */
-    protected function generateRoutesForNode(NodeInterface $node, ReadSiteInterface $site)
+    protected function computeRoutePattern(array $nodes)
+    {
+        $routePattern = array();
+        foreach ($nodes as $node) {
+            if (isset($node['nodeId']) && isset($node['routePattern']) && isset($node['parentId'])) {
+                $routePattern[$node['nodeId']] = $node;
+            }
+        }
+
+        return $routePattern;
+    }
+
+    /**
+     * @param NodeInterface     $node
+     * @param ReadSiteInterface $site
+     * @param array             $routePattern
+     *
+     * @return array
+     */
+    protected function generateRoutesForNode(NodeInterface $node, ReadSiteInterface $site, array $routePattern)
     {
         $routes = array();
 
@@ -242,7 +245,7 @@ class RouteDocumentManager
                 $route->setNodeId($node->getNodeId());
                 $route->setSiteId($site->getSiteId());
                 $route->setAliasId($key);
-                $pattern = $this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage(), $site->getSiteId());
+                $pattern = $this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage(), $site->getSiteId(), $routePattern);
                 if ($alias->getPrefix()) {
                     $pattern = $this->suppressDoubleSlashes('/' . $alias->getPrefix() . '/' . $pattern);
                 }
