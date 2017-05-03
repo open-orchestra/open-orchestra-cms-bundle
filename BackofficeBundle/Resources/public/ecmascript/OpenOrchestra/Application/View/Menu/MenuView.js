@@ -42,8 +42,8 @@ class MenuView extends OrchestraView
             }
         );
 
-        this._enabledScroll();
         this.resizeColumns();
+        this._enabledScroll();
 
         this.$el.html(template);
 
