@@ -64,7 +64,6 @@ class Application
         this._regions = {};
         this._menuView = null;
         window.addEventListener('error', this._applicationError);
-        window.addEventListener('resize', $.proxy(this._applicationResize, this));
         Backbone.Events.on('application:error', this._displayError, this);
     }
 
@@ -148,14 +147,6 @@ class Application
     _applicationError(err) {
         let error = new ApplicationError(err.message);
         Backbone.Events.trigger('application:error', error);
-    }
-
-    /**
-     * @param {Object} event - ResizeEvent
-     * @private
-     */
-    _applicationResize(event) {
-        this._menuView.resizeColumns();
     }
 
     /**
