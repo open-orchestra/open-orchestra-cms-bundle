@@ -13,13 +13,11 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, Tr
      * @param {Node}    node
      * @param {Array}   siteLanguages
      * @param {Form}    form
-     * @param {boolean} canChangeStatus
      */
-    initialize({node, siteLanguages, form, canChangeStatus}) {
+    initialize({node, siteLanguages, form}) {
         super.initialize({form : form});
         this._node = node;
         this._siteLanguages = siteLanguages;
-        this._canChangeStatus = canChangeStatus;
     }
 
     /**

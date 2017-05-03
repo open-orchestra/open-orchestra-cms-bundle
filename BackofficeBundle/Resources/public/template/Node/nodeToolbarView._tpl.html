@@ -54,22 +54,20 @@
             </div>
         <% }; %>
         <div class="form-group">
-            <label for="select-workflow" class="control-label">Workflow</label>
-            <div class="styled-select dropdown dropdown-workflow">
+            <div class="<% if ('undefined' != typeof statuses) { %>styled-select <% } %>dropdown dropdown-workflow">
                 <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span style="color: <%- node.get('status').get('code_color') %>"> <%- node.get('status').get('label') %></span>
                 </button>
-                <% if (true == node.get('rights').can_edit) { %>
+                <% if ('undefined' != typeof statuses) { %>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <% _.each(statuses, function(status, key) { %>
-                            <% if (node.get('status').get('id') !== status.get('id')) { %>
-                                <li>
-                                    <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
-                                        <%- status.get('label') %>
-                                    </a>
-                                </li>
-                            <% } %>
-                        <% }); %>
+                        <% for (var index in statuses) { %>
+                            <% var status = statuses[index]; %>
+                            <li>
+                                <a data-id="<%= status.get('id')%>" style="color: <%= status.get('code_color') %>">
+                                    <%- status.get('label') %>
+                                </a>
+                            </li>
+                        <% } %>
                     </ul>
                 <% } %>
             </div>

@@ -45,7 +45,7 @@ class NodeToolbarView extends mix(OrchestraView).with(LoadingButtonMixin)
         let template = this._renderTemplate('Node/nodeToolbarView',
             {
                 node: this._node,
-                statuses: this._statuses.models,
+                statuses: this._statuses,
                 nodeVersions: this._nodeVersions.models
             }
         );

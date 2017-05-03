@@ -62,7 +62,7 @@ class NodeController extends BaseController
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AREAS,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_CHANGE_STATUS
      * })
      *
