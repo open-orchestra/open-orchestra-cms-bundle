@@ -21,13 +21,12 @@ class UnremovableLanguageConditionValidator extends ConstraintValidator
     {
         if ($constraint instanceof UnremovableLanguageConditionInterface) {
             $languages = array();
-            if (is_array($value)) {
-                foreach ($value as $alias) {
-                    if ($alias instanceof SiteAliasInterface) {
-                        $languages[] = $alias->getLanguage();
-                    }
+            foreach ($value as $alias) {
+                if ($alias instanceof SiteAliasInterface) {
+                    $languages[] = $alias->getLanguage();
                 }
             }
+
             $languages = array_unique($languages);
             if (count(array_diff($constraint->getLanguages(), $languages)) > 0) {
                 $this->context->buildViolation($constraint->message)
