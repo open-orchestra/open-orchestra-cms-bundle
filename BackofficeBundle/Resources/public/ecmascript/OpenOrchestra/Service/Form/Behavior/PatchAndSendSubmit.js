@@ -1,9 +1,9 @@
 import AbstractBehavior from './AbstractBehavior'
 
 /**
- * @class PatchSubmit
+ * @class PatchAndSendSubmit
  */
-class PatchSubmit extends AbstractBehavior
+class PatchAndSendSubmit extends AbstractBehavior
 {
     /**
      * get extra events
@@ -33,7 +33,7 @@ class PatchSubmit extends AbstractBehavior
         let $formToPatch = $(event.target).parents(context.getSelector()).eq(0);
         let $subforms = $('.subform-to-refresh', $formToPatch);
         let containers = {};
-        let data;
+        let data = $form.serializeArray();
 
         $subforms.each(function(index, subform){
             let $subform = $(subform);
@@ -42,8 +42,6 @@ class PatchSubmit extends AbstractBehavior
                 containers[$subform.attr('id')] = $subform.parent();
             }
         });
-
-        data = $form.serializeArray();
 
         $form.ajaxSubmit({
             type: 'PATCH',
@@ -65,8 +63,8 @@ class PatchSubmit extends AbstractBehavior
      * @return {String}
      */
     getSelector() {
-        return '.form-to-patch';
+        return '.form-to-patch-and-send';
     }
 }
 
-export default (new PatchSubmit);
+export default (new PatchAndSendSubmit);
