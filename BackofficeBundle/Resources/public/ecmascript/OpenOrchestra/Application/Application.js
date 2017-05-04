@@ -22,6 +22,7 @@ import SitesAvailable          from './Collection/Site/SitesAvailable'
 
 import FormBehaviorManager     from '../Service/Form/Behavior/Manager'
 import PatchSubmit             from '../Service/Form/Behavior/PatchSubmit'
+import PatchAndSendSubmit      from '../Service/Form/Behavior/PatchAndSendSubmit'
 import ScrollTable             from '../Service/Form/Behavior/ScrollTable'
 import Tooltip                 from '../Service/Form/Behavior/Tooltip'
 import TagSelect2              from '../Service/Form/Behavior/TagSelect2'
@@ -238,6 +239,7 @@ class Application
      */
     _initFormBehaviorManager() {
         FormBehaviorManager.add(PatchSubmit);
+        FormBehaviorManager.add(PatchAndSendSubmit);
         FormBehaviorManager.add(NodeTemplateSelection);
         FormBehaviorManager.add(ScrollTable);
         FormBehaviorManager.add(Tooltip);
