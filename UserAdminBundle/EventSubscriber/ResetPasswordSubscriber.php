@@ -42,5 +42,4 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
             FOSUserEvents::RESETTING_RESET_SUCCESS => 'onResettingResetSuccess',
         );
     }
-
 }
