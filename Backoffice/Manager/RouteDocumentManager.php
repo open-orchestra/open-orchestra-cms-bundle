@@ -60,8 +60,7 @@ class RouteDocumentManager
         $routes = array();
 
         foreach ($siteLanguages as $language) {
-            $nodes = $this->nodeRepository->findPublishedByLanguageAndSiteId($site->getSiteId(), $language);
-
+            $nodes = $this->nodeRepository->findPublishedByLanguageAndSiteId($language, $site->getSiteId());
             $routePattern = $this->nodeRepository->findAllRoutePattern($language, $site->getSiteId());
             $routePattern = $this->computeRoutePattern($routePattern);
             foreach ($nodes as $node) {
