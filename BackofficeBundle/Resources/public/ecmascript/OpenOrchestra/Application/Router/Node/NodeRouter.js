@@ -142,7 +142,8 @@ class NodeRouter extends OrchestraRouter
             urlParameter: {
                 'language': language,
                 'nodeId': nodeId,
-                'siteId': Application.getContext().siteId
+                'siteId': Application.getContext().siteId,
+                'version': version
             },
             success: () => {
                 FormBuilder.createFormFromUrl(url, (form) => {
