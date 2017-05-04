@@ -5,7 +5,7 @@ namespace OpenOrchestra\Backoffice\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class BlockNodePattern
+ * Class BooleanCondition
  */
 class BooleanCondition extends Constraint
 {

@@ -35,13 +35,35 @@ let RenderToolbarViewMixin = (superclass) => class extends superclass {
             let nodeToolbarView = new NodeToolbarView(
                 {
                     node: this._node,
-                    statuses: statuses,
+                    statuses: this._getAvailableStatuses(statuses),
                     nodeVersions: nodeVersions,
                     routeName: routeName
                 }
             );
             $selector.html(nodeToolbarView.render().$el);
         });
+    }
+
+    /**
+     * @param  {Array} statuses
+     * @return {Array}
+     * @private
+     */
+    _getAvailableStatuses(statuses) {
+        if (!this._node.get('rights').can_edit) {
+            return [];
+        }
+
+        let result = statuses.models;
+        for (let index in result) {
+            let status = result[index];
+            if (this._node.get('status').get('id') == status.get('id') ||
+                (!this._node.get('rights').can_publish_node && status.get('published_state'))) {
+                delete result[index];
+            }
+        }
+
+        return result;
     }
 };
 

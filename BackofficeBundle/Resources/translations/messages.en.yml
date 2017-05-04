@@ -281,7 +281,7 @@ open_orchestra_backoffice:
             site_name    : Site name
             locale       : Site language
             route_pattern: Url triggering the redirection
-            node_id      : Node to redirect
+            node_id      : Page to redirect
             url          : Url to redirect
             permanent    : Permanent redirection
             type         :
@@ -435,8 +435,8 @@ open_orchestra_backoffice:
             default: Defaut
     command:
         node:
-            success: Nodes references are consistent.
-            error: Nodes refercences are not consistent.
+            success: Pages references are consistent.
+            error: Pages refercences are not consistent.
         empty_choices: Choose which table to check.
     template_set:
         default:

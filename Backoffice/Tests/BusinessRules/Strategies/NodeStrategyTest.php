@@ -14,6 +14,10 @@ class NodeStrategyTest extends AbstractBaseTestCase
 {
     protected $nodeRepository;
     protected $strategy;
+    protected $mainUrlArguments = array(
+        'mainUrlArgument0',
+        'mainUrlArgument1'
+    );
 
     /**
      * setUp
@@ -21,7 +25,9 @@ class NodeStrategyTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->strategy = new NodeStrategy($this->nodeRepository);
+        $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
+        Phake::when($this->generateFormManager)->getRequiredUriParameter(Phake::anyParameters())->thenReturn($this->mainUrlArguments);
+        $this->strategy = new NodeStrategy($this->nodeRepository, $this->generateFormManager);
     }
 
     /**
@@ -137,6 +143,63 @@ class NodeStrategyTest extends AbstractBaseTestCase
     }
 
     /**
+     * @param NodeInterface $node
+     * @param boolean       $isGranted
+     *
+     * @dataProvider provideCanChangeToPublishStatus
+     */
+    public function testCanChangeToPublishStatus(NodeInterface $node, $isGranted)
+    {
+        $this->assertSame($isGranted, $this->strategy->canChangeToPublishStatus($node, array()));
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param boolean       $isGranted
+     *
+     * @dataProvider provideCanChangeToPublishStatus
+     */
+    public function testCanChangeStatus(NodeInterface $node, $isGranted)
+    {
+        $this->assertSame($isGranted, $this->strategy->canChangeStatus($node, array()));
+    }
+
+    /**
+     * provide group and parameters
+     *
+     * @return array
+     */
+    public function provideCanChangeToPublishStatus()
+    {
+        $mainUrlArguments = array();
+        foreach ($this->mainUrlArguments as $mainUrlArgument) {
+            $mainUrlArguments[] = '{' . $mainUrlArgument . '}';
+        }
+
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area)->getBlocks()->thenReturn(array($block));
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->isPublishedState()->thenReturn(array(true));
+
+        $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node0)->getAreas()->thenReturn(array($area));
+        Phake::when($node0)->getStatus()->thenReturn($status);
+        Phake::when($node0)->getRoutePattern()->thenReturn('');
+
+
+        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node1)->getAreas()->thenReturn(array($area));
+        Phake::when($node1)->getStatus()->thenReturn($status);
+        Phake::when($node1)->getRoutePattern()->thenReturn(implode($mainUrlArguments));
+
+        return array(
+            array($node0, false),
+            array($node1, true),
+        );
+    }
+
+    /**
      * test getActions
      */
     public function testGetActions()
@@ -145,6 +208,8 @@ class NodeStrategyTest extends AbstractBaseTestCase
             BusinessActionInterface::DELETE => 'canDelete',
             NodeStrategy::DELETE_VERSION => 'canDeleteVersion',
             BusinessActionInterface::EDIT => 'canEdit',
+            NodeStrategy::CHANGE_TO_PUBLISH_STATUS => 'canChangeToPublishStatus',
+            NodeStrategy::CHANGE_STATUS => 'canChangeStatus',
         ), $this->strategy->getActions());
     }
 

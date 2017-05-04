@@ -5,4 +5,6 @@ open_orchestra_api:
       select_not_granted : Ce type de contenu n'est pas autoriser sur ce site
     node:
         edit:
-            impossible: Ce node ne peut pas être éditer
+            impossible: Ce node ne peut pas être édité
+        publish:
+            impossible: Ce node ne peut pas être publié en raison de l'absence d'arguments nécessaires dans son URL principale

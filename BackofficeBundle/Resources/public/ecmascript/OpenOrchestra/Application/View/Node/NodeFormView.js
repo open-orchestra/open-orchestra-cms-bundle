@@ -10,9 +10,9 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, Tr
 {
     /**
      * Initialize
-     * @param {Node}   node
-     * @param {Form}   form
-     * @param {Array}  siteLanguages
+     * @param {Node}    node
+     * @param {Array}   siteLanguages
+     * @param {Form}    form
      */
     initialize({node, siteLanguages, form}) {
         super.initialize({form : form});

@@ -281,7 +281,7 @@ open_orchestra_backoffice:
             site_name    : Nom du site
             locale       : Langue du site
             route_pattern: Url déclenchant la redirection
-            node_id      : Node vers lequel rediriger
+            node_id      : Page vers lequel rediriger
             url          : Url vers laquelle rediriger
             permanent    : Redirection permanente
             type         :
