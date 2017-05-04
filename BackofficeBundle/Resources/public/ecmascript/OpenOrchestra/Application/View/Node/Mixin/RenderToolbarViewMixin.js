@@ -54,12 +54,11 @@ let RenderToolbarViewMixin = (superclass) => class extends superclass {
             return new Statuses([]);
         }
 
-        let result = statuses.models;
-        for (let index in result) {
-            let status = result[index];
-            if (this._node.get('status').get('id') == status.get('id') ||
-                (!this._node.get('rights').can_publish_node && status.get('published_state'))) {
-                delete result[index];
+        let result = [];
+        for (let status of statuses.models) {
+            if (this._node.get('status').get('id') != status.get('id') &&
+                (this._node.get('rights').can_publish_node || !status.get('published_state'))) {
+                result.push(status);
             }
         }
 
