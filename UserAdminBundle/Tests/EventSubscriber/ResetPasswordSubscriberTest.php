@@ -48,6 +48,7 @@ class ResetPasswordSubscriberTest extends AbstractBaseTestCase
      */
     public function testOnResettingResetSuccess()
     {
+        Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('fakeUrl');
         $this->subscriber->onResettingResetSuccess($this->event);
         Phake::verify($this->event)->setResponse(Phake::anyParameters());
     }
