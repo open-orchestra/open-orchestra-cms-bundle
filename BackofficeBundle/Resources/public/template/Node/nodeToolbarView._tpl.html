@@ -54,11 +54,11 @@
             </div>
         <% }; %>
         <div class="form-group">
-            <div class="<% if ('undefined' != typeof statuses) { %>styled-select <% } %>dropdown dropdown-workflow">
+            <div class="<% if (statuses.length > 0) { %>styled-select <% } %>dropdown dropdown-workflow">
                 <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span style="color: <%- node.get('status').get('code_color') %>"> <%- node.get('status').get('label') %></span>
                 </button>
-                <% if ('undefined' != typeof statuses) { %>
+                <% if (statuses.length > 0) { %>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <% for (var index in statuses) { %>
                             <% var status = statuses[index]; %>
