@@ -51,7 +51,7 @@ let RenderToolbarViewMixin = (superclass) => class extends superclass {
      */
     _getAvailableStatuses(statuses) {
         if (!this._node.get('rights').can_edit) {
-            return [];
+            return new Statuses([]);
         }
 
         let result = statuses.models;
@@ -63,7 +63,7 @@ let RenderToolbarViewMixin = (superclass) => class extends superclass {
             }
         }
 
-        return result;
+        return new Statuses(result);
     }
 };
 
