@@ -39,8 +39,8 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
 
         foreach ($routes as $route) {
             $this->objectManager->persist($route);
-            $this->objectManager->flush($route);
         }
+        $this->objectManager->flush();
     }
 
     /**
@@ -48,12 +48,7 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
      */
     public function deleteForRedirection(RedirectionEvent $event)
     {
-        $routes = $this->routeDocumentManager->deleteForRedirection($event->getRedirection());
-
-        foreach ($routes as $route) {
-            $this->objectManager->remove($route);
-        }
-        $this->objectManager->flush();
+        $this->routeDocumentManager->deleteForRedirection($event->getRedirection());
     }
 
     /**
@@ -61,13 +56,7 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
      */
     public function deleteRouteDocument(NodeEvent $event)
     {
-        $routesToClear = $this->routeDocumentManager->clearForNode($event->getNode());
-
-        foreach ($routesToClear as $route) {
-            $this->objectManager->remove($route);
-        }
-
-        $this->objectManager->flush();
+        $this->routeDocumentManager->clearForNode($event->getNode());
     }
 
     /**
@@ -75,7 +64,18 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
      */
     public function updateRouteDocument(NodeEvent $event)
     {
-        $this->updateRouteDocumentByType($event->getNode(), 'Node');
+        $node = $event->getNode();
+
+        if (true === $node->getStatus()->isPublishedState() ||
+            true === $event->getPreviousStatus()->isPublishedState()
+        ) {
+            $this->routeDocumentManager->clearForNode($node);
+            $routes = $this->routeDocumentManager->createForNode($node);
+            foreach ($routes as $routeDocument) {
+                $this->objectManager->persist($routeDocument);
+            }
+            $this->objectManager->flush();
+        }
     }
 
     /**
@@ -83,7 +83,15 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
      */
     public function updateRouteDocumentOnSiteUpdate(SiteEvent $event)
     {
-        $this->updateRouteDocumentByType($event->getSite(), 'Site');
+        $site = $event->getSite();
+        $this->routeDocumentManager->clearForSite($site);
+
+        $routes = $this->routeDocumentManager->createForSite($site);
+        foreach ($routes as $routeDocument) {
+            $this->objectManager->persist($routeDocument);
+        }
+
+        $this->objectManager->flush();
     }
 
     /**
@@ -91,13 +99,7 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
      */
     public function deleteRouteDocumentOnSiteDelete(SiteEvent $event)
     {
-        $routesToClear = $this->routeDocumentManager->clearForSite($event->getSite());
-
-        foreach ($routesToClear as $route) {
-            $this->objectManager->remove($route);
-        }
-
-        $this->objectManager->flush();
+        $this->routeDocumentManager->clearForSite($event->getSite());
     }
 
     /**
@@ -115,26 +117,5 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
             SiteEvents::SITE_UPDATE => 'updateRouteDocumentOnSiteUpdate',
             SiteEvents::SITE_DELETE => 'deleteRouteDocumentOnSiteDelete',
         );
-    }
-
-    /**
-     * @param mixed  $element
-     * @param string $type
-     */
-    protected function updateRouteDocumentByType($element, $type)
-    {
-        $routesToClear = $this->routeDocumentManager->{'clearFor' . $type}($element);
-
-        foreach ($routesToClear as $route) {
-            $this->objectManager->remove($route);
-        }
-
-        $routes = $this->routeDocumentManager->{'createFor' . $type}($element);
-
-        foreach ($routes as $routeDocument) {
-            $this->objectManager->persist($routeDocument);
-        }
-
-        $this->objectManager->flush();
     }
 }

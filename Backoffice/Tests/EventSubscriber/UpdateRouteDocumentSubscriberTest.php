@@ -71,15 +71,15 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
     {
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         Phake::when($this->routeDocumentManager)->createForNode(Phake::anyParameters())->thenReturn(array($route));
-        Phake::when($this->routeDocumentManager)->clearForNode(Phake::anyParameters())->thenReturn(array($route));
 
         Phake::when($this->status)->isPublishedState()->thenReturn($published);
+        Phake::when($this->event)->getPreviousStatus()->thenReturn($this->status);
 
         $this->subscriber->updateRouteDocument($this->event);
-
-        Phake::verify($this->objectManager)->persist($route);
-        Phake::verify($this->objectManager)->remove($route);
-        Phake::verify($this->objectManager)->flush();
+        $time = $published ? Phake::times(1) : Phake::never();
+        Phake::verify($this->routeDocumentManager, $time)->clearForNode(Phake::anyParameters());
+        Phake::verify($this->objectManager, $time)->persist($route);
+        Phake::verify($this->objectManager, $time)->flush();
     }
 
     /**
@@ -108,7 +108,7 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->createOrUpdateForRedirection($event);
 
         Phake::verify($this->objectManager)->persist($route);
-        Phake::verify($this->objectManager)->flush($route);
+        Phake::verify($this->objectManager)->flush();
     }
 
     /**
@@ -122,12 +122,11 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
 
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         Phake::when($this->routeDocumentManager)->createForSite(Phake::anyParameters())->thenReturn(array($route));
-        Phake::when($this->routeDocumentManager)->clearForSite(Phake::anyParameters())->thenReturn(array($route));
 
         $this->subscriber->updateRouteDocumentOnSiteUpdate($event);
 
+        Phake::verify($this->routeDocumentManager)->clearForSite(Phake::anyParameters());
         Phake::verify($this->objectManager)->persist($route);
-        Phake::verify($this->objectManager)->remove($route);
         Phake::verify($this->objectManager)->flush();
     }
 
@@ -140,13 +139,9 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteEvent');
         Phake::when($event)->getSite()->thenReturn($site);
 
-        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
-        Phake::when($this->routeDocumentManager)->clearForSite(Phake::anyParameters())->thenReturn(array($route));
-
         $this->subscriber->deleteRouteDocumentOnSiteDelete($event);
 
-        Phake::verify($this->objectManager)->remove($route);
-        Phake::verify($this->objectManager)->flush();
+        Phake::verify($this->routeDocumentManager)->clearForSite($site);
     }
 
     /**
@@ -156,15 +151,11 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
     {
         $redirection = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\RedirectionEvent');
-        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
-
         Phake::when($event)->getRedirection()->thenReturn($redirection);
-        Phake::when($this->routeDocumentManager)->deleteForRedirection(Phake::anyParameters())->thenReturn(array($route, $route));
 
         $this->subscriber->deleteForRedirection($event);
 
-        Phake::verify($this->objectManager, Phake::times(2))->remove($route);
-        Phake::verify($this->objectManager)->flush();
+        Phake::verify($this->routeDocumentManager)->deleteForRedirection($redirection);
     }
 
     /**
@@ -174,14 +165,10 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
-        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
 
         Phake::when($event)->getNode()->thenReturn($node);
-        Phake::when($this->routeDocumentManager)->clearForNode(Phake::anyParameters())->thenReturn(array($route, $route));
-
         $this->subscriber->deleteRouteDocument($event);
 
-        Phake::verify($this->objectManager, Phake::times(2))->remove($route);
-        Phake::verify($this->objectManager)->flush();
+        Phake::verify($this->routeDocumentManager)->clearForNode($node);
     }
 }
