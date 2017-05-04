@@ -2,6 +2,7 @@ parameters:
     open_orchestra_user_admin.subscriber.delete_group.class: OpenOrchestra\UserAdminBundle\EventSubscriber\DeleteGroupSubscriber
     open_orchestra_user_admin.subscriber.user_profile.class: OpenOrchestra\UserAdminBundle\EventSubscriber\UserProfilSubscriber
     open_orchestra_user_admin.subscriber.user_group.class: OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber
+    open_orchestra_user_admin.subscriber.reset_password.class: OpenOrchestra\UserAdminBundle\EventSubscriber\ResetPasswordSubscriber
 
 services:
     open_orchestra_user_admin.subscriber.delete_group:
@@ -17,3 +18,10 @@ services:
             - '@security.authorization_checker'
     open_orchestra_user_admin.subscriber.user_group:
         class: '%open_orchestra_user_admin.subscriber.user_group.class%'
+
+    open_orchestra_user_admin.subscriber.reset_password:
+        class: '%open_orchestra_user_admin.subscriber.reset_password.class%'
+        arguments:
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
