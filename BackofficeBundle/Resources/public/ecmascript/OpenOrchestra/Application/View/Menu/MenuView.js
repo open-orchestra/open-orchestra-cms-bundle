@@ -63,7 +63,6 @@ class MenuView extends OrchestraView
      * @private
      */
     _resizeColumns() {
-        this.$el.removeClass('sublevel-open');
         let $selectorColumns = $('#left-column, #central-column');
         $selectorColumns.removeClass('toggle-left');
         if (this._isTablet()) {
@@ -79,10 +78,6 @@ class MenuView extends OrchestraView
         $('.tab-pane', this.$el).removeClass('active');
         this.$el.addClass('sublevel-closed').removeClass('sublevel-open');
         $('#central-column, #left-column').toggleClass('toggle-left');
-
-        if (this._isTablet()) {
-            $('#central-column').toggleClass('wide');
-        }
     }
 
     /**
@@ -99,9 +94,6 @@ class MenuView extends OrchestraView
         if (0 !== subMenu.length) {
             this.$el.addClass('sublevel-open').removeClass('sublevel-closed');
             $('#central-column, #left-column').removeClass('toggle-left');
-            if (this._isTablet()) {
-                $('#central-column').addClass('wide');
-            }
         } else {
             this.$el.addClass('sublevel-closed').removeClass('sublevel-open');
             $('.tab-pane', this.$el).removeClass('active');
