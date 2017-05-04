@@ -56,21 +56,23 @@ class OrchestraDeleteSiteTools
                 'entity' => $entity,
                 'references' => array()
             );
-            foreach ($references as $type => $reference) {
-                if (in_array($type, $supportedEntities)) {
-                    $referenceIds = array_keys($reference);
-                    $repo = $this->getRepositoryByType($type);
-                    foreach ($referenceIds as $referenceId) {
-                        $referenceEntity = $repo->findById($referenceId);
-                        if (
-                            $siteId !== $referenceEntity->getSiteId()
-                        ) {
-                            $entityReferences['references'][$type][$referenceEntity->getId()] = $referenceEntity;
+            if (!empty($references)) {
+                foreach ($references as $type => $reference) {
+                    if (in_array($type, $supportedEntities)) {
+                        $referenceIds = array_keys($reference);
+                        $repo = $this->getRepositoryByType($type);
+                        foreach ($referenceIds as $referenceId) {
+                            $referenceEntity = $repo->findById($referenceId);
+                            if (
+                                $siteId !== $referenceEntity->getSiteId()
+                            ) {
+                                $entityReferences['references'][$type][$referenceEntity->getId()] = $referenceEntity;
+                            }
                         }
                     }
                 }
+                $usedOtherSite[] = $entityReferences;
             }
-            $usedOtherSite[] = $entityReferences;
         }
 
         return $usedOtherSite;

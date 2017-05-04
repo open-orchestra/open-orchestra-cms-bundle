@@ -15,7 +15,7 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events['click button.submit-form'] = '_submitWithContextRefresh'
+        this.events['click button.submit-form'] = '_submitWithContextRefresh';
     }
 
     /**
@@ -34,6 +34,7 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @inheritdoc
      */
     render() {
+        let context = this;
         let title = $('#oo_site_name', this._form.$form).val();
         if (null === this._siteId) {
             title = Translator.trans('open_orchestra_backoffice.table.sites.new');
@@ -45,6 +46,10 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
+
+        $('[name^="oo_site[aliases]"][name$="[language]"]', this.$el).each(function() {
+            context._hideRemoveButton($(this).val());
+        });
 
         return this;
     }
@@ -119,6 +124,37 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         })(this._form);
         this._form.submit(this.getStatusCodeForm(event));
     }
+
+    /**
+     * remove a form
+     *
+     * {Object} event
+     */
+    _removeForm(event) {
+        let $table = $(event.target).closest('table');
+        let $form = $(event.target).closest('tbody');
+        let language = $('[name^="oo_site[aliases]"][name$="[language]"]', $form).val();
+        $form.remove();
+        if ($table.children('tbody').length === 0) {
+            $('thead', $table).addClass('hide');
+        }
+        this._hideRemoveButton(language);
+    }
+
+    /**
+     * hide remove button
+     *
+     * {String} language
+     */
+    _hideRemoveButton(language) {
+        let $selects = $('[name^="oo_site[aliases]"][name$="[language]"]', this.$el).filter(function() {
+            return $(this).val() === language;
+        });
+        if ($selects.length == 1) {
+            $selects.closest('tbody').find('.remove-form').remove();
+        }
+    }
+
 }
 
 export default SiteFormView;

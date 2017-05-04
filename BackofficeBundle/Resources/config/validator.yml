@@ -7,6 +7,7 @@ parameters:
     open_orchestra_model.validator.unique_redirection.class                  : OpenOrchestra\Backoffice\Validator\Constraints\UniqueRedirectionValidator
     open_orchestra_model.validator.unique_node_special_page.class            : OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeSpecialPageValidator
     open_orchestra_model.validator.unique_block_code.class                   : OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCodeValidator
+    open_orchestra_model.validator.unremovable_language.class                : OpenOrchestra\Backoffice\Validator\Constraints\UnremovableLanguageConditionValidator
 
 services:
     open_orchestra_model.validator.unique_node_order:
@@ -56,3 +57,8 @@ services:
             - '@open_orchestra_model.repository.block'
         tags:
             - { name: validator.constraint_validator, alias: unique_block_code}
+
+    open_orchestra_model.validator.unremovable_language:
+        class: '%open_orchestra_model.validator.unremovable_language.class%'
+        tags:
+            - { name: validator.constraint_validator, alias: unremovable_language}

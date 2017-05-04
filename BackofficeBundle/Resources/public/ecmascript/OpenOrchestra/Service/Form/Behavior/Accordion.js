@@ -1,7 +1,5 @@
 import AbstractBehavior   from './AbstractBehavior'
 import Application        from '../../../Application/Application'
-import SitesAvailable     from '../../../Application/Collection/Site/SitesAvailable'
-import GroupListModalView from '../../../Application/View/Group/GroupListModalView'
 import ConfirmModalView   from '../../ConfirmModal/View/ConfirmModalView'
 
 /**
@@ -21,7 +19,7 @@ class Accordion extends AbstractBehavior
             'click .open-forms': '_openForms',
             'click .close-forms': '_closeForms',
             'click .add-form': '_addForm',
-            'click .remove-form': $.proxy(this._confirmRemove, this)
+            'click .remove-form': '_confirmRemove'
         }
     }
 
@@ -94,17 +92,18 @@ class Accordion extends AbstractBehavior
      * Show modal confirm to remove
      *
      * @param {Object} event
+     * @param {Object} context
      *
      * @returns {boolean}
      * @private
      */
-    _confirmRemove(event) {
+    _confirmRemove(event, context) {
         event.stopPropagation();
         let confirmModalView = new ConfirmModalView({
             confirmTitle: Translator.trans('open_orchestra_backoffice.confirm_remove_prototype.title'),
             confirmMessage: Translator.trans('open_orchestra_backoffice.confirm_remove_prototype.message'),
-            yesCallback: this._removeForm,
-            context: this,
+            yesCallback: $.proxy(context._removeForm, this),
+            context: context,
             callbackParameter: [event]
         });
 
@@ -120,12 +119,15 @@ class Accordion extends AbstractBehavior
      * {Object} event
      */
     _removeForm(event) {
-        let $table = $(event.target).closest('table');
-        $(event.target).closest('tbody').remove();
-        if ($table.children('tbody').length === 0) {
-            $('thead', $table).addClass('hide');
+        if (typeof this._removeForm !== 'undefined') {
+            this._removeForm(event);
+        } else {
+            let $table = $(event.target).closest('table');
+            $(event.target).closest('tbody').remove();
+            if ($table.children('tbody').length === 0) {
+                $('thead', $table).addClass('hide');
+            }
         }
-
     }
 
     /**

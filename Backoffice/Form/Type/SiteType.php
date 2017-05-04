@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\Event\SiteFormEvent;
 use OpenOrchestra\Backoffice\SiteFormEvents;
+use OpenOrchestra\Backoffice\Validator\Constraints\UnremovableLanguageCondition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -70,6 +71,7 @@ class SiteType extends AbstractType
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.website.add_alias'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.delete'),
                 ),
+                'constraints' => array(new UnremovableLanguageCondition($builder->getData())),
                 'options' => array( 'label' => false ),
                 'group_id' => 'alias',
             ))

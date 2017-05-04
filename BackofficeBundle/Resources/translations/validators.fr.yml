@@ -18,6 +18,7 @@ open_orchestra_backoffice_validators:
     website:
         exists_main_alias: Un alias doit être principal
         unique_main_alias: L'alias principal doit être unique
+        unremovable_language: Le dernier alias ayant une langue donnée ne peut être supprimé
     trashitem:
         remove_node_date: Vous devez attendre 7 jours pour pouvoir supprimer définitivement une page
     boolean_condition:

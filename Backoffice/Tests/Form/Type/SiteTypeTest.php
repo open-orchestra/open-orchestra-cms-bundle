@@ -66,6 +66,7 @@ class SiteTypeTest extends AbstractBaseTestCase
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->getData()->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface'));
 
         $this->form->buildForm($builder, array());
 
