@@ -461,7 +461,7 @@
 
         <div class="form-group{% if activeErrors %} has-error{% endif %} {{ form_group_class }}">
             {% if style == 'horizontal' %}
-                {{ form_label(form) }}
+                {% if no_label is not defined %}{{ form_label(form) }}{% endif %}
                 <div class="col-{{ col_size }}-{{ widget_col }}">
                     {% if form.vars.original_type is defined and form.vars.original_type == 'collection' %}
                         {{ form_errors(form) }}
@@ -472,7 +472,7 @@
                     {% endif %}
                 </div>
             {% else %}
-                {{ form_label(form) }}
+                {% if no_label is not defined %}{{ form_label(form) }}{% endif %}
                 {{ block('form_input_group') }}
                 {{ form_errors(form) }}
             {% endif %}
@@ -487,12 +487,14 @@
 {% endblock checkbox_row %}
 
 {% block radio_row %}
-    {{ block('form_row') }}
+    {% with {'no_label': true}%}
+        {{ block('form_row') }}
+    {% endwith %}
 {% endblock radio_row %}
 
 {% block radio_widget %}
     {{ parent() }}
-    <label for="{{ id }}"></label>
+    <label for="{{ id }}">{{ form.vars.label }}</label>
 {% endblock radio_widget %}
 
 {# Fix choice attr see https://github.com/braincrafted/bootstrap-bundle/pull/379 #}
