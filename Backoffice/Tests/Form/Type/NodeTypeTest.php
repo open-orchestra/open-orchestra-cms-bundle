@@ -137,10 +137,6 @@ class NodeTypeTest extends AbstractBaseTestCase
                 'cache' => array(
                     'rank' => 0,
                     'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
-                ),
-                'access' => array(
-                        'rank' => 1,
-                        'label' => 'open_orchestra_backoffice.form.node.sub_group.access',
                 )
             ),
         ));

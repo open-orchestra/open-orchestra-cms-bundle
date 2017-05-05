@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -277,40 +276,7 @@ class NodeType extends AbstractType
                     'label' => 'open_orchestra_backoffice.form.node.group.cache',
                 ),
             ),
-            'sub_group_render' => array(
-                'properties' => array(
-                    'rank' => 0,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.properties',
-                ),
-                'style' => array(
-                    'rank' => 1,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.style',
-                ),
-                'publication' => array(
-                    'rank' => 2,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.publication',
-                ),
-                'seo' => array(
-                    'rank' => 0,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.seo',
-                ),
-                'canonical' => array(
-                    'rank' => 1,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.canonical',
-                ),
-                'keywords' => array(
-                    'rank' => 1,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.keywords',
-                ),
-                'cache' => array(
-                    'rank' => 0,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.cache',
-                ),
-                'access' => array(
-                    'rank' => 1,
-                    'label' => 'open_orchestra_backoffice.form.node.sub_group.access',
-                )
-            ),
+            'sub_group_render' => $subGroupRender,
         ));
     }
 
