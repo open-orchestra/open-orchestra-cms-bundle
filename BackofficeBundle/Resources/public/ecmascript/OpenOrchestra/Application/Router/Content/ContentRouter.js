@@ -71,26 +71,31 @@ class ContentRouter extends OrchestraRouter
         page = Number(page) - 1;
         this._displayLoader(Application.getRegion('content'));
 
-        new Contents().fetch({
-            apiContext: 'list-version',
-            urlParameter: {
-                language: language,
-                contentId: contentId
-            },
-            success: (contentVersions) => {
-                let contentVersionsView = new ContentVersionsView({
-                    collection: contentVersions,
-                    settings: {
-                        page: page,
-                        pageLength: Application.getConfiguration().getParameter('datatable').pageLength
-                    },
-                    contentId: contentId,
+        let contentType = new ContentType();
+        let contents = new Contents();
+
+        $.when(
+            contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
+            contents.fetch({
+                apiContext: 'list-version',
+                urlParameter: {
                     language: language,
-                    contentTypeId: contentTypeId,
-                    siteLanguages: Application.getContext().siteLanguages
-                });
-                Application.getRegion('content').html(contentVersionsView.render().$el);
-            }
+                    contentId: contentId
+                }
+            })
+        ).done(() => {
+            let contentVersionsView = new ContentVersionsView({
+                collection: contents,
+                settings: {
+                    page: page,
+                    pageLength: Application.getConfiguration().getParameter('datatable').pageLength
+                },
+                contentId: contentId,
+                language: language,
+                contentType: contentType,
+                siteLanguages: Application.getContext().siteLanguages
+            });
+            Application.getRegion('content').html(contentVersionsView.render().$el);
         });
     }
 
