@@ -53,9 +53,18 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
                 name: "permanent",
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.permanent'),
                 orderable: true,
-                visibile: true
+                visibile: true,
+                render: this._translateLinkedToSite
             }
         ];
+    }
+
+    /**
+     * @param {Object|string} data
+     * @private
+     */
+    _translateLinkedToSite(data) {
+        return Translator.trans('open_orchestra_backoffice.table.' + data);
     }
 
     /**
