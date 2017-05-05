@@ -3,7 +3,6 @@ open_orchestra_datatable:
     info: "{0} Il y n'a pas de résultat| {1} Il y a %total% résultat|[2,Inf] Il y a %total% résultats"
     length_menu: _MENU_
     loading_records: Chargement en cours...
-    processing: Traitement en cours...
     search: ""
     zero_records: Aucun élément à afficher
     buttons:
