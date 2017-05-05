@@ -38,7 +38,6 @@ class ContentTypeController extends AbstractAdminController
         ), $newContentType);
 
         $form->handleRequest($request);
-
         if ('PATCH' !== $request->getMethod()) {
             if ($form->isValid()) {
                 $newContentType->setVersion(((int)$newContentType->getVersion()) + 1);
