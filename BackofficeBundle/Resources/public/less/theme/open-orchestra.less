@@ -1019,6 +1019,11 @@ button.active-loading {
     position: relative;
     & .table-responsive {
         position: relative;
+        min-height: 150px;
+
+      .spinner {
+        left: 50%
+      }
     }
     .header-results .list-length select {
         padding-right: 30px;
@@ -1706,6 +1711,11 @@ input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + l
 }
 
 .form-group {
+    .spinner {
+      position: relative;
+      margin: 0 auto;
+      left: auto;
+    }
     .control-label {
         font-weight: normal;
     }

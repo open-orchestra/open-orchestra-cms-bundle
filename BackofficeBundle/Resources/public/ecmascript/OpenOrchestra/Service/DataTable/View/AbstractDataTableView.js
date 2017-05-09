@@ -187,6 +187,7 @@ class AbstractDataTableView extends OrchestraView
     _getDomSettings() {
         $.fn.dataTableExt.classes.sPaging = 'content-pager ';
         $.fn.dataTableExt.classes.sLength = 'styled-select pull-right list-length';
+        $.fn.dataTableExt.classes.sProcessing = 'spinner';
         $.fn.dataTableExt.classes.sLengthSelect = 'form-control';
         $.fn.dataTable.Buttons.defaults.dom.container.className = 'pull-right';
         $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-border btn-large';
@@ -321,7 +322,7 @@ class AbstractDataTableView extends OrchestraView
             "emptyTable":     Translator.trans('open_orchestra_datatable.empty_table'),
             "lengthMenu":     Translator.trans('open_orchestra_datatable.length_menu'),
             "loadingRecords": Translator.trans('open_orchestra_datatable.loading_records'),
-            "processing":     Translator.trans('open_orchestra_datatable.processing'),
+            "processing":     "",
             "search":         Translator.trans('open_orchestra_datatable.search'),
             "zeroRecords":    Translator.trans('open_orchestra_datatable.zero_records'),
             "paginate": {
