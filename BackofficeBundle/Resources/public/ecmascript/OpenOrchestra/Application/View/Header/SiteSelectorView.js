@@ -63,7 +63,12 @@ class SiteSelectorView extends OrchestraView
      * @return Site|null
      */
     _getCurrentSite() {
-        let currentSiteId = Application.getContext().siteId;
+        let currentSiteId = Application.getContext().siteId
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&#039;/g, '\'');
         for (let site of this.sites.models) {
             if (currentSiteId === site.get('site_id')) {
                 return site;
