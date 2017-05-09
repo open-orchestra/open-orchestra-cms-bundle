@@ -8,11 +8,26 @@ class ContentVersionsListView extends AbstractVersionsListView
     /**
      * @inheritDoc
      */
-    initialize({collection, settings, contentTypeId, language, contentId}) {
-        super.initialize({collection: collection, settings: settings});
-        this._contentTypeId = contentTypeId;
+    preinitialize({collection, settings, contentType, language, contentId}) {
+        super.preinitialize({collection: collection, settings: settings});
+        this._contentType = contentType;
         this._language = language;
         this._contentId = contentId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    getColumnsDefinition() {
+        let columnsDefinition = super.getColumnsDefinition();
+        if (false === this._contentType.get('defining_statusable')) {
+            let indexStatus = _.findIndex(columnsDefinition, {name : 'status.label'});
+            if (-1 !== indexStatus) {
+                columnsDefinition.splice(indexStatus, 1);
+            }
+        }
+
+        return columnsDefinition;
     }
 
     /**
@@ -61,7 +76,7 @@ class ContentVersionsListView extends AbstractVersionsListView
     generateUrlUpdatePage(page) {
         return Backbone.history.generateUrl('manageVersionsContent', {
             contentId: this._contentId,
-            contentTypeId: this._contentTypeId,
+            contentTypeId: this._contentType.get("content_type_id"),
             language: this._language,
             page : page
         });

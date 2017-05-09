@@ -12,13 +12,13 @@ class ContentVersionsView extends AbstractCollectionView
      * @param {Object}              settings
      * @param {string}              contentId
      * @param {string}              language
-     * @param {string}              contentTypeId
+     * @param {ContentType}         contentType
      * @param {Object}              siteLanguages
      */
-    initialize({collection, settings, contentId, language, contentTypeId, siteLanguages}) {
+    initialize({collection, settings, contentId, language, contentType, siteLanguages}) {
         super.initialize({collection: collection, settings: settings});
         this._contentId = contentId;
-        this._contentTypeId = contentTypeId;
+        this._contentType = contentType;
         this._language = language;
         this._siteLanguages = siteLanguages;
     }
@@ -46,7 +46,7 @@ class ContentVersionsView extends AbstractCollectionView
         let template = this._renderTemplate('Content/contentVersionsView', {
             collection: this._collection,
             contentId: this._contentId,
-            contentTypeId: this._contentTypeId,
+            contentTypeId: this._contentType.get("content_type_id"),
             language: this._language,
             siteLanguages: this._siteLanguages,
             title: title
@@ -64,7 +64,7 @@ class ContentVersionsView extends AbstractCollectionView
             collection: this._collection,
             settings: settings,
             contentId: this._contentId,
-            contentTypeId: this._contentTypeId,
+            contentType: this._contentType,
             language: this._language
         });
         $('.content-versions-list', this.$el).html(this._listView.render().$el);
