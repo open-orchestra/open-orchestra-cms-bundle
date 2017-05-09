@@ -32,6 +32,16 @@ class ContentRouter extends OrchestraRouter
         };
 
         this._cachedContentTypes = {};
+
+        this._breadcrumbItems = [
+            {
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.title')
+            },
+            {
+                label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
+                link: '#content/summary'
+            }
+        ];
     }
 
     /**
@@ -59,38 +69,38 @@ class ContentRouter extends OrchestraRouter
      */
     getBreadcrumb(args, name) {
         let contentTypesRoute = ['newContent', 'editContent', 'manageVersionsContent'];
-        let items = [
-            {
-                label: Translator.trans('open_orchestra_backoffice.menu.contribution.title')
-            },
-            {
-                label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
-                link: '#' + Backbone.history.generateUrl('showContentSummary')
-            }
-        ];
 
         if (contentTypesRoute.indexOf(name) > -1) {
-            let contentType = this._getCachedContentType(args[0]);
-            if (typeof contentType === 'object') {
-
-                return items.concat([{label: contentType.get('name')}]);
-            }
-
-            let deferred = jQuery.Deferred();
-            contentType = new ContentType();
-
-            contentType.fetch({
-                urlParameter: {contentTypeId: args[0]},
-                success: () => {
-                    this._cacheContentType(contentType);
-                    deferred.resolve(items.concat([{label: contentType.get('name')}]));
-                }
-            });
-
-            return deferred.promise();
+            return this._getBreadcrumbWithContentType(args[0]);
         }
 
-        return items;
+        return this._breadcrumbItems;
+    }
+
+    /**
+     * Get breadcrumb with Content Type
+     * @param {string} contentTypeId
+     * @returns {Object}
+     */
+    _getBreadcrumbWithContentType(contentTypeId) {
+        let contentType = this._getCachedContentType(contentTypeId);
+        if (typeof contentType === 'object') {
+
+            return this._breadcrumbItems.concat([{label: contentType.get('name')}]);
+        }
+
+        let deferred = jQuery.Deferred();
+        contentType = new ContentType();
+
+        contentType.fetch({
+            urlParameter: {contentTypeId: contentTypeId},
+            success: () => {
+                this._cacheContentType(contentType);
+                deferred.resolve(this._breadcrumbItems.concat([{label: contentType.get('name')}]));
+            }
+        });
+
+        return deferred.promise();
     }
 
     /**
