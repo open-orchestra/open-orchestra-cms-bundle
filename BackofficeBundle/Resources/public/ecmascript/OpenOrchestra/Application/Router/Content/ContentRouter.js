@@ -30,21 +30,67 @@ class ContentRouter extends OrchestraRouter
             'content/new/:contentTypeId/:language'                               : 'newContent',
             'content/manage-versions/:contentTypeId/:language/:contentId(/:page)': 'manageVersionsContent'
         };
+
+        this._cachedContentTypes = {};
+    }
+
+    /**
+     * Get a cached content type
+     *
+     * @param {string} contentTypeId
+     * @returns {Object}
+     * private
+     */
+    _getCachedContentType(contentTypeId) {
+        return this._cachedContentTypes[contentTypeId];
+    }
+
+    /**
+     * Cache a content type
+     *
+     * @param {Object} contentType
+     */
+    _cacheContentType(contentType) {
+        this._cachedContentTypes[contentType.get('content_type_id')] = contentType;
     }
 
     /**
      * @inheritdoc
      */
-    getBreadcrumb() {
-        return [
+    getBreadcrumb(args, name) {
+        let contentTypesRoute = ['newContent', 'editContent', 'manageVersionsContent'];
+        let items = [
             {
                 label: Translator.trans('open_orchestra_backoffice.menu.contribution.title')
             },
             {
                 label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
-                link: '#'+Backbone.history.generateUrl('showContentSummary')
+                link: '#' + Backbone.history.generateUrl('showContentSummary')
             }
         ];
+
+        if (contentTypesRoute.indexOf(name) > -1) {
+            let contentType = this._getCachedContentType(args[0]);
+            if (typeof contentType === 'object') {
+
+                return items.concat([{label: contentType.get('name')}]);
+            }
+
+            let deferred = jQuery.Deferred();
+            contentType = new ContentType();
+
+            contentType.fetch({
+                urlParameter: {contentTypeId: args[0]},
+                success: () => {
+                    this._cacheContentType(contentType);
+                    deferred.resolve(items.concat([{label: contentType.get('name')}]));
+                }
+            });
+
+            return deferred.promise();
+        }
+
+        return items;
     }
 
     /**
@@ -54,27 +100,6 @@ class ContentRouter extends OrchestraRouter
         return {
             '*' : 'navigation-content'
         };
-    }
-
-    /**
-     * Update Breadcrumbe adding content type
-     *
-     * @param {string} contentTypeId
-     * @return {Object} jQuery.Deferred
-     */
-    _updateBreadcrumbWithContentType(contentTypeId) {
-        let deferred = jQuery.Deferred();
-        let contentType = new ContentType();
-
-        contentType.fetch({
-            urlParameter: {contentTypeId: contentTypeId},
-            success: () => {
-                this._updateBreadcrumb(this.getBreadcrumb().concat({label: contentType.get('name')}));
-                deferred.resolve(contentType);
-            }
-        });
-
-        return deferred.promise();
     }
 
     /**
@@ -95,28 +120,31 @@ class ContentRouter extends OrchestraRouter
 
         let contentVersions = new Contents();
 
-        $.when(
-            this._updateBreadcrumbWithContentType(contentTypeId),
-            contentVersions.fetch({
-                apiContext: 'list-version',
-                urlParameter: {
-                    language: language,
-                    contentId: contentId
-                },
-            })
-        ).done((contentType) => {
-            let contentVersionsView = new ContentVersionsView({
-                collection: contentVersions,
-                settings: {
-                    page: page,
-                    pageLength: Application.getConfiguration().getParameter('datatable').pageLength
-                },
-                contentId: contentId,
+        contentVersions.fetch({
+            apiContext: 'list-version',
+            urlParameter: {
                 language: language,
                 contentType: contentType,
                 siteLanguages: Application.getContext().siteLanguages
             });
             Application.getRegion('content').html(contentVersionsView.render().$el);
+                contentId: contentId
+            },
+            success: (contentType) => {
+                let contentVersionsView = new ContentVersionsView({
+                    collection: contentVersions,
+                    settings: {
+                        page: page,
+                        pageLength: Application.getConfiguration().getParameter('datatable').pageLength
+                    },
+                    contentId: contentId,
+                    language: language,
+                    contentType: contentType,
+                    siteLanguages: Application.getContext().siteLanguages
+                });
+
+                Application.getRegion('content').html(contentVersionsView.render().$el);
+            }
         });
     }
 
@@ -152,32 +180,30 @@ class ContentRouter extends OrchestraRouter
         this._displayLoader(Application.getRegion('content'));
 
         let content = new Content({id: contentId});
-        let url = Routing.generate('open_orchestra_backoffice_content_form', {
-            contentId: contentId,
-            language : language,
-            version  : version
-        });
 
-        $.when(
-            this._updateBreadcrumbWithContentType(contentTypeId),
-            content.fetch({
-                urlParameter: {version: version, language: language},
-                enabledCallbackError: false,
-                error: () => {
-                    this._errorCallbackEdit(contentTypeId, contentId, language);
-                }
-            })
-        ).done((contentType) => {
-            FormBuilder.createFormFromUrl(url, (form) => {
-                let contentFormView = new ContentFormView({
-                    form: form,
-                    contentType: contentType,
-                    content: content,
-                    siteLanguages: Application.getContext().siteLanguages
+        content.fetch({
+            urlParameter: {version: version, language: language},
+            enabledCallbackError: false,
+            success: () => {
+                let url = Routing.generate('open_orchestra_backoffice_content_form', {
+                    contentId: contentId,
+                    language : language,
+                    version  : version
                 });
-                Application.getRegion('content').html(contentFormView.render().$el);
-            });
-        });
+                FormBuilder.createFormFromUrl(url, (form) => {
+                    let contentFormView = new ContentFormView({
+                        form         : form,
+                        contentType  : this._getCachedContentType(contentTypeId),
+                        content      : content,
+                        siteLanguages: Application.getContext().siteLanguages
+                    });
+                    Application.getRegion('content').html(contentFormView.render().$el);
+                });
+            },
+            error: () => {
+                this._errorCallbackEdit(contentTypeId, contentId, language);
+            }
+        })
     }
 
     /**
@@ -194,19 +220,15 @@ class ContentRouter extends OrchestraRouter
             language     : language
         });
 
-        $.when(
-            this._updateBreadcrumbWithContentType(contentTypeId),
-        ).done((contentType) => {
-            FormBuilder.createFormFromUrl(url, (form) => {
-                let newContentFormView = new NewContentFormView({
-                    form           : form,
-                    contentTypeId  : contentTypeId,
-                    contentTypeName: contentType.get('name'),
-                    language       : language,
-                    siteLanguages  : Application.getContext().siteLanguages
-                });
-                Application.getRegion('content').html(newContentFormView.render().$el);
+        FormBuilder.createFormFromUrl(url, (form) => {
+            let newContentFormView = new NewContentFormView({
+                form           : form,
+                contentTypeId  : contentTypeId,
+                contentTypeName: this._getCachedContentType(contentTypeId).get('name'),
+                language       : language,
+                siteLanguages  : Application.getContext().siteLanguages
             });
+            Application.getRegion('content').html(newContentFormView.render().$el);
         });
     }
 
