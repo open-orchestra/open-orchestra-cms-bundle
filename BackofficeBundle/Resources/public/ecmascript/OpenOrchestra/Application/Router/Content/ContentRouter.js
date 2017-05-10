@@ -137,7 +137,7 @@ class ContentRouter extends OrchestraRouter
                 language: language,
                 contentId: contentId
             },
-            success: (contentType) => {
+            success: () => {
                 let contentVersionsView = new ContentVersionsView({
                     collection: contentVersions,
                     settings: {
