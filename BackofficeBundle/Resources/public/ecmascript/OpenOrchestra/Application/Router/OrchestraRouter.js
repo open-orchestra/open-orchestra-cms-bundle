@@ -29,17 +29,22 @@ class OrchestraRouter extends Backbone.Router
      * @param {string}   name
      */
     execute(callback, args, name) {
-        super.execute(callback, args, name);
-        let items = this.getBreadcrumb();
-        this._updateBreadcrumb(items);
-        this._highlight(name);
+        $.when(
+            this.getBreadcrumb(args, name),
+        ).done((items) => {
+            this._updateBreadcrumb(items);
+            this._highlight(name);
+            super.execute(callback, args, name);
+        });
     }
 
     /**
+     * @param {Array}  args
+     * @param {string} name
      * @returns {Array}
      * @private
      */
-    getBreadcrumb() {
+    getBreadcrumb(args, name) {
         return [];
     }
 

@@ -83,7 +83,7 @@ open_orchestra_backoffice:
             category: Category
             number_use: Use
         contents:
-            new: New content
+            new: New content %contentTypeName%
             name: Name
             status: Workflow state
             linked_to_site: Restricted to site

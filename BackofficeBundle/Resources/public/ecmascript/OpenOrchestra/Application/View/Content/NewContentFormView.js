@@ -17,12 +17,14 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
      * Initialize
      * @param {Form}   form
      * @param {String} contentTypeId
+     * @param {String} contentTypeName
      * @param {String} language
      * @param {Array}  siteLanguages
      */
-    initialize({form, contentTypeId, language, siteLanguages}) {
+    initialize({form, contentTypeId, contentTypeName, language, siteLanguages}) {
         super.initialize({form : form});
         this._contentTypeId = contentTypeId;
+        this._contentTypeName = contentTypeName;
         this._language = language;
         this._siteLanguages = siteLanguages;
     }
@@ -32,10 +34,11 @@ class NewContentFormView extends mix(AbstractFormView).with(FormViewButtonsMixin
      */
     render() {
         let template = this._renderTemplate('Content/newContentView', {
-            contentTypeId: this._contentTypeId,
-            language: this._language,
-            siteLanguages: this._siteLanguages,
-            messages: FlashMessageBag.getMessages()
+            contentTypeId  : this._contentTypeId,
+            contentTypeName: this._contentTypeName,
+            language       : this._language,
+            siteLanguages  : this._siteLanguages,
+            messages       : FlashMessageBag.getMessages()
         });
         this.$el.html(template);
         this._$formRegion = $('.form-new', this.$el);

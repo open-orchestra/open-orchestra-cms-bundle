@@ -23,28 +23,85 @@ class ContentRouter extends OrchestraRouter
      * @inheritdoc
      */
     preinitialize() {
-        this.routes = {
-            'content/summary'                                                     : 'showContentSummary',
-            'content/list/:contentTypeId/:language(/:page)'                       : 'listContent',
-            'content/edit/:contentTypeId/:language/:contentId(/:version)'         : 'editContent',
-            'content/new/:contentTypeId/:language'                                : 'newContent',
-            'content/manage-versions/:contentTypeId/:language/:contentId(/:page)' : 'manageVersionsContent'
-        };
-    }
+        let summaryRoute = 'content/summary';
 
-    /**
-     * @inheritdoc
-     */
-    getBreadcrumb() {
-        return [
+        this.routes = {
+            summaryRoute                                                         : 'showContentSummary',
+            'content/list/:contentTypeId/:language(/:page)'                      : 'listContent',
+            'content/edit/:contentTypeId/:language/:contentId(/:version)'        : 'editContent',
+            'content/new/:contentTypeId/:language'                               : 'newContent',
+            'content/manage-versions/:contentTypeId/:language/:contentId(/:page)': 'manageVersionsContent'
+        };
+
+        this._cachedContentTypes = {};
+
+        this._breadcrumbItems = [
             {
                 label: Translator.trans('open_orchestra_backoffice.menu.contribution.title')
             },
             {
                 label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
-                link: '#'+Backbone.history.generateUrl('showContentSummary')
+                link: '#' + summaryRoute
             }
-        ]
+        ];
+    }
+
+    /**
+     * Get a cached content type
+     *
+     * @param {string} contentTypeId
+     * @returns {Object}
+     * private
+     */
+    _getCachedContentType(contentTypeId) {
+        return this._cachedContentTypes[contentTypeId];
+    }
+
+    /**
+     * Cache a content type
+     *
+     * @param {Object} contentType
+     */
+    _cacheContentType(contentType) {
+        this._cachedContentTypes[contentType.get('content_type_id')] = contentType;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    getBreadcrumb(args, name) {
+        let contentTypesRoute = ['listContent', 'newContent', 'editContent', 'manageVersionsContent'];
+
+        if (contentTypesRoute.indexOf(name) > -1) {
+            return this._getBreadcrumbWithContentType(args[0]);
+        }
+
+        return this._breadcrumbItems;
+    }
+
+    /**
+     * Get breadcrumb with Content Type
+     * @param {string} contentTypeId
+     * @returns {Object}
+     */
+    _getBreadcrumbWithContentType(contentTypeId) {
+        let contentType = this._getCachedContentType(contentTypeId);
+        if (contentType instanceof ContentType) {
+            return this._breadcrumbItems.concat([{label: contentType.get('name')}]);
+        }
+
+        let deferred = jQuery.Deferred();
+        contentType = new ContentType();
+
+        contentType.fetch({
+            urlParameter: {contentTypeId: contentTypeId},
+            success: () => {
+                this._cacheContentType(contentType);
+                deferred.resolve(this._breadcrumbItems.concat([{label: contentType.get('name')}]));
+            }
+        });
+
+        return deferred.promise();
     }
 
     /**
@@ -65,37 +122,36 @@ class ContentRouter extends OrchestraRouter
      * @param {string} page
      */
     manageVersionsContent(contentTypeId, language, contentId, page) {
+        this._displayLoader(Application.getRegion('content'));
+
         if (null === page) {
             page = 1
         }
         page = Number(page) - 1;
-        this._displayLoader(Application.getRegion('content'));
 
-        let contentType = new ContentType();
-        let contents = new Contents();
+        let contentVersions = new Contents();
 
-        $.when(
-            contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
-            contents.fetch({
-                apiContext: 'list-version',
-                urlParameter: {
-                    language: language,
-                    contentId: contentId
-                }
-            })
-        ).done(() => {
-            let contentVersionsView = new ContentVersionsView({
-                collection: contents,
-                settings: {
-                    page: page,
-                    pageLength: Application.getConfiguration().getParameter('datatable').pageLength
-                },
-                contentId: contentId,
+        contentVersions.fetch({
+            apiContext: 'list-version',
+            urlParameter: {
                 language: language,
-                contentType: contentType,
-                siteLanguages: Application.getContext().siteLanguages
-            });
-            Application.getRegion('content').html(contentVersionsView.render().$el);
+                contentId: contentId
+            },
+            success: () => {
+                let contentVersionsView = new ContentVersionsView({
+                    collection: contentVersions,
+                    settings: {
+                        page: page,
+                        pageLength: Application.getConfiguration().getParameter('datatable').pageLength
+                    },
+                    contentId: contentId,
+                    language: language,
+                    contentType: this._getCachedContentType(contentTypeId),
+                    siteLanguages: Application.getContext().siteLanguages
+                });
+
+                Application.getRegion('content').html(contentVersionsView.render().$el);
+            }
         });
     }
 
@@ -129,33 +185,31 @@ class ContentRouter extends OrchestraRouter
      */
     editContent(contentTypeId, language, contentId, version = null) {
         this._displayLoader(Application.getRegion('content'));
-        let url = Routing.generate('open_orchestra_backoffice_content_form', {
-            contentId: contentId,
-            language: language,
-            version: version
-        });
-        let contentType = new ContentType();
+
         let content = new Content({id: contentId});
 
-        $.when(
-            contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
-            content.fetch({
-                urlParameter: {version: version, language: language},
-                enabledCallbackError: false
-            })
-        ).done(() => {
-            FormBuilder.createFormFromUrl(url, (form) => {
+        content.fetch({
+            urlParameter: {version: version, language: language},
+            enabledCallbackError: false,
+            success: () => {
+                let url = Routing.generate('open_orchestra_backoffice_content_form', {
+                    contentId: contentId,
+                    language : language,
+                    version  : version
+                });
+                FormBuilder.createFormFromUrl(url, (form) => {
                     let contentFormView = new ContentFormView({
-                        form: form,
-                        contentType: contentType,
-                        content: content,
+                        form         : form,
+                        contentType  : this._getCachedContentType(contentTypeId),
+                        content      : content,
                         siteLanguages: Application.getContext().siteLanguages
                     });
                     Application.getRegion('content').html(contentFormView.render().$el);
-                })
-        })
-        .fail(() => {
-            this._errorCallbackEdit(contentTypeId, contentId, language);
+                });
+            },
+            error: () => {
+                this._errorCallbackEdit(contentTypeId, contentId, language);
+            }
         })
     }
 
@@ -167,17 +221,19 @@ class ContentRouter extends OrchestraRouter
      */
     newContent(contentTypeId, language) {
         this._displayLoader(Application.getRegion('content'));
+
         let url = Routing.generate('open_orchestra_backoffice_content_new', {
             contentTypeId: contentTypeId,
-            language: language
+            language     : language
         });
 
         FormBuilder.createFormFromUrl(url, (form) => {
             let newContentFormView = new NewContentFormView({
-                form: form,
-                contentTypeId: contentTypeId,
-                language: language,
-                siteLanguages: Application.getContext().siteLanguages
+                form           : form,
+                contentTypeId  : contentTypeId,
+                contentTypeName: this._getCachedContentType(contentTypeId).get('name'),
+                language       : language,
+                siteLanguages  : Application.getContext().siteLanguages
             });
             Application.getRegion('content').html(newContentFormView.render().$el);
         });
@@ -198,11 +254,11 @@ class ContentRouter extends OrchestraRouter
             siteId: Application.getContext().siteId,
             language: language
         };
-        
+
         let contentType = new ContentType();
         let statuses = new Statuses();
         let contents = new Contents();
-        
+
         $.when(
             statuses.fetch({apiContext: 'contents'}),
             contentType.fetch({urlParameter: {contentTypeId: contentTypeId}}),
