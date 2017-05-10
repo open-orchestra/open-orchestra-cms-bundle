@@ -135,10 +135,6 @@ class ContentRouter extends OrchestraRouter
             apiContext: 'list-version',
             urlParameter: {
                 language: language,
-                contentType: contentType,
-                siteLanguages: Application.getContext().siteLanguages
-            });
-            Application.getRegion('content').html(contentVersionsView.render().$el);
                 contentId: contentId
             },
             success: (contentType) => {
@@ -150,7 +146,7 @@ class ContentRouter extends OrchestraRouter
                     },
                     contentId: contentId,
                     language: language,
-                    contentType: contentType,
+                    contentType: this._getCachedContentType(contentTypeId),
                     siteLanguages: Application.getContext().siteLanguages
                 });
 
