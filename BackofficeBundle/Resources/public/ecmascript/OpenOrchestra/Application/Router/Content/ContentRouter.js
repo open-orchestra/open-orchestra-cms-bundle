@@ -23,8 +23,10 @@ class ContentRouter extends OrchestraRouter
      * @inheritdoc
      */
     preinitialize() {
+        let summaryRoute = 'content/summary';
+
         this.routes = {
-            'content/summary'                                                    : 'showContentSummary',
+            summaryRoute                                                         : 'showContentSummary',
             'content/list/:contentTypeId/:language(/:page)'                      : 'listContent',
             'content/edit/:contentTypeId/:language/:contentId(/:version)'        : 'editContent',
             'content/new/:contentTypeId/:language'                               : 'newContent',
@@ -39,7 +41,7 @@ class ContentRouter extends OrchestraRouter
             },
             {
                 label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
-                link: '#content/summary'
+                link: '#' + summaryRoute
             }
         ];
     }
@@ -68,7 +70,7 @@ class ContentRouter extends OrchestraRouter
      * @inheritdoc
      */
     getBreadcrumb(args, name) {
-        let contentTypesRoute = ['newContent', 'editContent', 'manageVersionsContent'];
+        let contentTypesRoute = ['listContent', 'newContent', 'editContent', 'manageVersionsContent'];
 
         if (contentTypesRoute.indexOf(name) > -1) {
             return this._getBreadcrumbWithContentType(args[0]);
@@ -84,8 +86,7 @@ class ContentRouter extends OrchestraRouter
      */
     _getBreadcrumbWithContentType(contentTypeId) {
         let contentType = this._getCachedContentType(contentTypeId);
-        if (typeof contentType === 'object') {
-
+        if (contentType instanceof ContentType) {
             return this._breadcrumbItems.concat([{label: contentType.get('name')}]);
         }
 
