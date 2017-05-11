@@ -32,12 +32,20 @@ class TinyMCEWysiwygStrategy extends AbstractDisplayBlockStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        $htmlContent = $block->getAttribute('htmlContent');
-
         return $this->render(
             'OpenOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
-            array('htmlContent' => strip_tags($htmlContent))
+            array('htmlContent' => $this->toString($block))
         );
+    }
+
+    /**
+     * @param ReadBlockInterface $block
+     *
+     * @return string
+     */
+    public function toString(ReadBlockInterface $block)
+    {
+        return strip_tags($block->getAttribute('htmlContent'));
     }
 
     /**

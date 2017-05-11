@@ -29,6 +29,13 @@ interface DisplayBlockInterface
     public function show(ReadBlockInterface $block);
 
     /**
+     * @param ReadBlockInterface $block
+     *
+     * @return string
+     */
+    public function toString(ReadBlockInterface $block);
+
+    /**
      * Get the name of the strategy
      *
      * @return string

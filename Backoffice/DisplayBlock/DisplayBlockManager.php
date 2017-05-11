@@ -57,6 +57,23 @@ class DisplayBlockManager
     }
 
     /**
+     * @param ReadBlockInterface $block
+     *
+     * @return string
+     */
+    public function toString(ReadBlockInterface $block)
+    {
+        /** @var DisplayBlockInterface $strategy */
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->support($block)) {
+                return $strategy->toString($block);
+            }
+        }
+
+        return $this->defaultStrategy->toString($block);
+    }
+
+    /**
      * @return EngineInterface
      */
     public function getTemplating()
