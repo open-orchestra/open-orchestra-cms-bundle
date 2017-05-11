@@ -57,7 +57,6 @@ class ContentTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
         $this->form->buildForm($builder, array(
-            'is_blocked_edition' => true,
             'need_link_to_site_defintion' => true,
             'is_statusable' => true,
         ));
@@ -76,7 +75,6 @@ class ContentTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
         $this->form->buildForm($builder, array(
-            'is_blocked_edition' => true,
             'need_link_to_site_defintion' => true,
             'is_statusable' => false,
         ));
@@ -96,7 +94,6 @@ class ContentTypeTest extends AbstractBaseTestCase
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->contentClass,
-            'is_blocked_edition' => false,
             'need_link_to_site_defintion' => false,
             'is_statusable' => false,
             'delete_button' => false,
