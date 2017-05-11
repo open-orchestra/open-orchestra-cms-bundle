@@ -60,7 +60,6 @@ class BlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add('label', 'text', array(
             'label' => 'open_orchestra_backoffice.form.block.label',
             'constraints' => new NotBlank(),
