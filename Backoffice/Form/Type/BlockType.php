@@ -66,19 +66,23 @@ class BlockType extends AbstractType
             'group_id' => 'property',
             'sub_group_id' => 'property',
         ))
-        ->add('style', 'choice', array(
-            'label' => 'open_orchestra_backoffice.form.block.style',
-            'required' => false,
-            'choices' => $this->getStyleChoices($options),
-            'group_id' => 'property',
-            'sub_group_id' => 'style',
-        ))
         ->add('maxAge', 'integer', array(
             'label' => 'open_orchestra_backoffice.form.block.max_age',
             'required' => false,
             'group_id' => 'technical',
             'sub_group_id' => 'cache',
         ));
+
+        $styles = $this->getStyleChoices($options);
+        if (!empty($styles)) {
+            $builder->add('style', 'choice', array(
+                'label' => 'open_orchestra_backoffice.form.block.style',
+                'required' => false,
+                'choices' => $this->getStyleChoices($options),
+                'group_id' => 'property',
+                'sub_group_id' => 'style',
+            ));
+        }
 
         if (
             isset($options['data']) &&
