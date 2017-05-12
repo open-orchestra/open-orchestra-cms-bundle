@@ -38,6 +38,16 @@ class DefaultStrategy extends AbstractDisplayBlockStrategy
     }
 
     /**
+     * @param ReadBlockInterface $block
+     *
+     * @return string
+     */
+    public function toString(ReadBlockInterface $block)
+    {
+        return '';
+    }
+
+    /**
      * Get the name of the strategy
      *
      * @return string

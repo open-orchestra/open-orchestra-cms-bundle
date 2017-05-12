@@ -59,6 +59,17 @@ class DisplayBlockManagerTest extends AbstractBaseTestCase
     }
 
     /**
+     * Test to string
+     */
+    public function testToString()
+    {
+        $this->manager->toString($this->block);
+
+        Phake::verify($this->defaultStrategy, Phake::never())->toString(Phake::anyParameters());
+        Phake::verify($this->strategy)->toString(Phake::anyParameters());
+    }
+
+    /**
      * Test default strategy
      */
     public function testDefaultStrategy()
@@ -68,5 +79,12 @@ class DisplayBlockManagerTest extends AbstractBaseTestCase
 
         Phake::verify($this->defaultStrategy)->show(Phake::anyParameters());
         Phake::verify($this->strategy, Phake::never())->show(Phake::anyParameters());
+
+        $this->manager->toString($this->block);
+
+        Phake::verify($this->defaultStrategy)->toString(Phake::anyParameters());
+        Phake::verify($this->strategy, Phake::never())->toString(Phake::anyParameters());
+
+
     }
 }
