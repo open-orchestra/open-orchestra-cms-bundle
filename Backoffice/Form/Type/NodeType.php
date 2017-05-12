@@ -281,54 +281,6 @@ class NodeType extends AbstractType
     }
 
     /**
-     * @param NodeInterface $node
-     *
-     * @return bool
-     *
-     * @throws \OpenOrchestra\DisplayBundle\Exception\DisplayBlockStrategyNotFoundException
-     */
-    protected function hasPrivateBlock(NodeInterface $node)
-    {
-        $areas = $node->getAreas();
-
-        foreach ($areas as $area) {
-            $blocks = $area->getBlocks();
-            foreach ($blocks as $block) {
-                if (false === $this->displayBlockManager->isPublic($block)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    protected function addFieldMaxAge(FormBuilderInterface $builder, array $options)
-    {
-        $filedOptions = array(
-            'label' => 'open_orchestra_backoffice.form.node.max_age.name',
-            'group_id' => 'cache',
-            'sub_group_id' => 'cache',
-            'required' => false,
-        );
-        if (isset($options['data']) &&
-            $options['data'] instanceof NodeInterface &&
-            true === $this->hasPrivateBlock($options['data'])
-        ) {
-            $filedOptions['disabled'] = true;
-            $filedOptions['attr'] = array(
-                'help_text' => 'open_orchestra_backoffice.form.node.max_age.helper',
-            );
-        }
-
-        $builder->add('maxAge', 'integer', $filedOptions);
-    }
-
-    /**
      * @param FormView      $view
      * @param FormInterface $form
      * @param array         $options
