@@ -34,6 +34,8 @@ class ContentTypeSubscriber implements EventSubscriberInterface
     protected $fieldTypesConfiguration;
     protected $valueTransformerManager;
     protected $translator;
+    protected $eventDispatcher;
+    protected $statusRepository;
 
     /**
      * @param ContentTypeRepositoryInterface       $contentTypeRepository
@@ -43,6 +45,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      * @param array                                $fieldTypesConfiguration
      * @param ValueTransformerManager              $valueTransformerManager
      * @param TranslatorInterface                  $translator
+     * @param EventDispatcherInterface             $eventDispatcher
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
@@ -86,7 +89,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
         $content = $event->getData();
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
         if ($contentType instanceof ContentTypeInterface) {
-            $this->addContentTypeFieldsToForm($contentType->getFields(), $form, $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false);
+            $this->addContentTypeFieldsToForm($contentType->getFields(), $form);
         }
     }
 
@@ -168,15 +171,14 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      *
      * @param array<FieldTypeInterface> $contentTypeFields
      * @param FormInterface             $form
-     * @param boolean                   $blockedEdition
      */
-    protected function addContentTypeFieldsToForm($contentTypeFields, FormInterface $form, $blockedEdition)
+    protected function addContentTypeFieldsToForm($contentTypeFields, FormInterface $form)
     {
         /** @var FieldTypeInterface $contentTypeField */
         foreach ($contentTypeFields as $contentTypeField) {
 
             if (isset($this->fieldTypesConfiguration[$contentTypeField->getType()])) {
-                $this->addFieldToForm($contentTypeField, $form, $blockedEdition);
+                $this->addFieldToForm($contentTypeField, $form);
             }
         }
     }
@@ -186,9 +188,8 @@ class ContentTypeSubscriber implements EventSubscriberInterface
      *
      * @param FieldTypeInterface $contentTypeField
      * @param FormInterface      $form
-     * @param boolean            $blockedEdition
      */
-    protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form, $blockedEdition)
+    protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form)
     {
         $fieldTypeConfiguration = $this->fieldTypesConfiguration[$contentTypeField->getType()];
 
@@ -196,7 +197,6 @@ class ContentTypeSubscriber implements EventSubscriberInterface
             array(
                 'label' => $this->multiLanguagesChoiceManager->choose($contentTypeField->getLabels()),
                 'mapped' => false,
-                'disabled' => $blockedEdition,
                 'group_id' => 'data',
                 'sub_group_id' => 'data',
             ),

@@ -42,7 +42,6 @@ class ContentType extends AbstractType
         $builder
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.content.name',
-                'disabled' => $options['is_blocked_edition'],
                 'group_id' => 'property',
                 'sub_group_id' => 'information',
             ))
@@ -110,7 +109,6 @@ class ContentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->contentClass,
-            'is_blocked_edition' => false,
             'is_statusable' => false,
             'need_link_to_site_defintion' => false,
             'delete_button' => false,

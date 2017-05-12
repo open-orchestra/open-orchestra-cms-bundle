@@ -61,7 +61,7 @@ class ContentController extends AbstractAdminController
             'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $content) &&
                 $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $content),
             'need_link_to_site_defintion' => false,
-            'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
+            'disabled' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
             'is_statusable' => $contentType->isDefiningStatusable()
         );
         $form = $this->createForm('oo_content', $content, $options);
@@ -124,7 +124,6 @@ class ContentController extends AbstractAdminController
             'method' => 'POST',
             'new_button' => true,
             'need_link_to_site_defintion' => $contentType->isLinkedToSite() && !$contentType->isAlwaysShared(),
-            'is_blocked_edition' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
             'is_statusable' => $contentType->isDefiningStatusable()
         ));
 
