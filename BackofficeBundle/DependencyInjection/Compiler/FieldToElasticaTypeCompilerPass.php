@@ -15,11 +15,11 @@ class FieldToElasticaTypeCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('open_orchestra_elastica.mapper.form')) {
+        if (!$container->has('open_orchestra_elastica_admin.mapper.form')) {
             return ;
         }
 
-        $definition = $container->getDefinition('open_orchestra_elastica.mapper.form');
+        $definition = $container->getDefinition('open_orchestra_elastica_admin.mapper.form');
 
         $definition->addMethodCall('addMappingConfiguration', array('date', 'date'));
         $definition->addMethodCall('addMappingConfiguration', array('integer', 'double'));

@@ -45,7 +45,7 @@ class FieldToElasticaTypeCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         $this->compiler->process($this->containerBuilder);
 
-        Phake::verify($this->containerBuilder)->has('open_orchestra_elastica.mapper.form');
+        Phake::verify($this->containerBuilder)->has('open_orchestra_elastica_admin.mapper.form');
     }
 
     /**
