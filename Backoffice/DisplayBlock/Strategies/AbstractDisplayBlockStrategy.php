@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\Backoffice\DisplayBlock\DisplayBlockManager;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class AbstractDisplayBlockStrategy
@@ -15,11 +14,6 @@ abstract class AbstractDisplayBlockStrategy implements DisplayBlockInterface
      * @var DisplayBlockManager
      */
     protected $manager;
-
-    /**
-     * @var CurrentSiteIdInterface
-     */
-    protected $currentSiteManager;
 
     /**
      * @param DisplayBlockManager $manager
