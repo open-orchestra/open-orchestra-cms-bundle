@@ -2,6 +2,7 @@ import AbstractDataTableView       from '../../../Service/DataTable/View/Abstrac
 import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 import DateFormatter               from '../../../Service/DataFormatter/DateFormatter'
+import StatusFormatter             from '../../../Service/DataFormatter/StatusFormatter'
 
 /**
  * @class AbstractVersionsListView
@@ -39,10 +40,11 @@ class AbstractVersionsListView extends mix(AbstractDataTableView).with(UrlPagina
                 visibile: true
             },
             {
-                name: 'status.label',
+                name: 'status',
                 title: Translator.trans('open_orchestra_backoffice.table.versionable.status_label'),
                 orderable: true,
-                visibile: true
+                visibile: true,
+                createdCell: this._displayStatus
             }
         ]);
 
@@ -60,6 +62,30 @@ class AbstractVersionsListView extends mix(AbstractDataTableView).with(UrlPagina
     _createEditLink(td, cellData, rowData) {
         throw new TypeError("Please implement abstract method _createEditLink.");
     }
+
+    /**
+    *
+    * @param {Object} td
+    * @param {Object} cellData
+    * @param {Object} rowData
+    *
+    * @private
+    */
+    _displayStatus(td, cellData, rowData) {
+       $(td).html(StatusFormatter.format(cellData));
+   }
+
+    /**
+    *
+    * @param {Object} td
+    * @param {Object} cellData
+    * @param {Object} rowData
+    *
+    * @private
+    */
+    _displayStatus(td, cellData, rowData) {
+       $(td).html(StatusFormatter.format(cellData));
+   }
 }
 
 export default AbstractVersionsListView;
