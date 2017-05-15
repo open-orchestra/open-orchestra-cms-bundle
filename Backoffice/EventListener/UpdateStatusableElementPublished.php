@@ -39,7 +39,9 @@ class UpdateStatusableElementPublished
     {
         $statusableElement = $event->getStatusableElement();
 
-        if ($statusableElement->getStatus()->isPublishedState()) {
+        if (true === $statusableElement->getStatus()->isPublishedState() &&
+            false === $statusableElement->getStatus()->isOutOfWorkflow()
+        ) {
             $elementsPublished = $this->repository->findPublished($statusableElement);
             if (!empty($elementsPublished)) {
 

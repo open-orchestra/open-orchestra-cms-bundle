@@ -356,10 +356,8 @@ class ContentController extends BaseController
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
 
-        $newContent = $this->get('open_orchestra_backoffice.manager.content')->newVersionContent($content);
-        $status = $this->get('open_orchestra_model.repository.status')->findOneByTranslationState();
-        $newContent->setStatus($status);
-        $newContent->setLanguage($language);
+        $newContent = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($content, $language);
+
         $objectManager = $this->get('object_manager');
         $objectManager->persist($newContent);
         $objectManager->flush();
