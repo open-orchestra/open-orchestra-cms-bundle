@@ -23,10 +23,8 @@ class ContentRouter extends OrchestraRouter
      * @inheritdoc
      */
     preinitialize() {
-        let summaryRoute = 'content/summary';
-
         this.routes = {
-            summaryRoute                                                         : 'showContentSummary',
+            'content/summary'                                                    : 'showContentSummary',
             'content/list/:contentTypeId/:language(/:page)'                      : 'listContent',
             'content/edit/:contentTypeId/:language/:contentId(/:version)'        : 'editContent',
             'content/new/:contentTypeId/:language'                               : 'newContent',
@@ -41,7 +39,7 @@ class ContentRouter extends OrchestraRouter
             },
             {
                 label: Translator.trans('open_orchestra_backoffice.menu.contribution.content'),
-                link: '#' + summaryRoute
+                link: '#content/summary'
             }
         ];
     }
