@@ -15,7 +15,6 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
 {
     protected $nodeRepository;
     protected $eventDispatcher;
-    protected $currentSiteManager;
 
     /**
      * @param NodeRepositoryInterface  $nodeRepository
