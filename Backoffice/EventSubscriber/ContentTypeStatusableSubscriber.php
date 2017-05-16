@@ -42,9 +42,10 @@ class ContentTypeStatusableSubscriber implements EventSubscriberInterface
         if ($contentType instanceof ContentTypeInterface
             && $contentType->isDefiningStatusable() != $data['definingStatusable']
         ) {
-            $status = $this->statusRepository->findOneByOutOfWorkflow();
             if ($data['definingStatusable']) {
                 $status = $this->statusRepository->findOneByInitial();
+            } else {
+                $status = $this->statusRepository->findOneByOutOfWorkflow();
             }
             $this->contentRepository->updateStatusByContentType($status, $contentType->getContentTypeId());
         }

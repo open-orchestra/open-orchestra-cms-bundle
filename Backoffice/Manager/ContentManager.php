@@ -77,10 +77,10 @@ class ContentManager
      */
     public function createNewLanguageContent($contentSource, $language)
     {
-        $translationStatus = $this->statusRepository->findOneByTranslationState();
         $content = $this->cloneContent($contentSource);
         $content->setLanguage($language);
         if (false === $content->getStatus()->isOutOfWorkflow()) {
+            $translationStatus = $this->statusRepository->findOneByTranslationState();
             $content->setStatus($translationStatus);
         }
 

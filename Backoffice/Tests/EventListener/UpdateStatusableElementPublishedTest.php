@@ -58,6 +58,7 @@ class UpdateStatusableElementPublishedTest extends \PHPUnit_Framework_TestCase
         $status = Phake::mock(StatusInterface::CLASS);
         Phake::when($statusableElement)->getStatus()->thenReturn($status);
         Phake::when($status)->isPublishedState()->thenReturn($publishedStatus);
+        Phake::when($status)->isOutOfWorkflow()->thenReturn(false);
         Phake::when($this->event)->getStatusableElement()->thenReturn($statusableElement);
 
         $publishedElements = Phake::mock(StatusableInterface::CLASS);

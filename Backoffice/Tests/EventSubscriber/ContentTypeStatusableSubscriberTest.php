@@ -101,7 +101,7 @@ class ContentTypeStatusableSubscriberTest extends AbstractBaseTestCase
         Phake::when($event2)->getData()->thenReturn(array());
 
         return array(
-            array($event0, 1, 1, 1),
+            array($event0, 1, 0, 1),
             array($event1, 0, 1, 1),
             array($event2, 0, 0, 0),
         );

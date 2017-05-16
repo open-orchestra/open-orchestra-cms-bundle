@@ -79,7 +79,7 @@ class ContentTypeTest extends AbstractBaseTestCase
             'is_statusable' => false,
         ));
 
-        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
     }
 
