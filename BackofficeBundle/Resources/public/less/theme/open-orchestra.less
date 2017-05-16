@@ -1487,7 +1487,7 @@ table.ui-sortable .fa.fa-arrows{
  * MOVEMENT
  * =================================================================*/
 .node-action-toolbar .row, .content-action-toolbar .row {
-  padding: 10px;
+  padding: 0 10px;
   .pull-left, .pull-right {
     .form-group {
       margin-top: 6px;
@@ -1502,7 +1502,7 @@ table.ui-sortable .fa.fa-arrows{
         display: -ms-flexbox;
         display: flex;
     }
-    .row {
+    &>.well .row {
         padding: 10px;
     }
     .area {
@@ -1998,17 +1998,14 @@ fieldset {
         padding-left: 0;
     }
     &.form-inline, & > .form-inline {
-        .styled-select, .styled-select > select {
-            width: auto;
+        .styled-select, .styled-select > select, .dropdown-toggle {
+            width: 100%;
         }
         .styled-select {
             display: inline-block;
         }
-        .control-label {
-            padding: 0 10px 0 0;
-        }
         .form-group {
-            margin: 0 0 0 20px;
+            padding: 0 0 0 20px;
         }
     }
 }
@@ -2277,9 +2274,7 @@ fieldset {
 /* ===================================================================
  * Node/Content toolbar
  * =================================================================*/
-.search-engine .version_name {
-    min-width: 500px;
-}
+
 .dropdown-workflow.dropdown-loading::after {
   content: '';
 }
@@ -2431,7 +2426,6 @@ fieldset {
 
     /* header */
     .website {
-        width: 40%;
         .btn {
             width: 100%;
             overflow: hidden;

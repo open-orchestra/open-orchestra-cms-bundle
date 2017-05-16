@@ -15,27 +15,29 @@
         </p>
     </div>
     <% }; %>
-    <div class="pull-left">
-        <div class="form-group">
-            <label for="select-version" class="control-label"><%- Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
-            <div class="styled-select">
-                <select class="form-control" id="select-version">
-                    <% _.each(nodeVersions, function(nodeVersion, key) { %>
-                        <option value="<%- nodeVersion.get('version') %>" <% if(nodeVersion.get('version') == node.get('version')) {%> selected <% } %> >
-                            <%- nodeVersion.get('version_name') %>
-                        </option>
-                    <% }); %>
-                </select>
+    <div class="col-lg-8 row">
+        <div class="form-group col-sm-8 row">
+            <label for="select-version" class="col-sm-2 col-xs-12 control-label"><%- Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
+            <div class="col-sm-10 col-xs-9">
+                <div class="styled-select">
+                    <select class="form-control" id="select-version">
+                        <% _.each(nodeVersions, function(nodeVersion, key) { %>
+                            <option value="<%- nodeVersion.get('version') %>" <% if(nodeVersion.get('version') == node.get('version')) {%> selected <% } %> >
+                                <%- nodeVersion.get('version_name') %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
             </div>
         </div>
         <% if (true == node.get('rights').can_edit) { %>
-            <div class="form-group">
+            <div class="form-group col-sm-4">
                 <button type="button" class="btn btn-info btn-new-version"><%- Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
             </div>
         <% } %>
     </div>
 
-    <div class="pull-right">
+    <div class="col-lg-4 col-xs-8 row">
         <% if ( 0 !== node.get('preview_links').length) { %>
             <div class="form-group">
                 <div class="dropdown dropdown-preview">
@@ -74,4 +76,4 @@
         </div>
     </div>
 </div>
-<div class="new-version-form-region"></div>
+<div class="new-version-form-region form-inline"></div>
