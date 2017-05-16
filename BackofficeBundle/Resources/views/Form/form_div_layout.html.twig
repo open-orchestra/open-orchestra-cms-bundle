@@ -534,25 +534,19 @@
 
 {% block form_end %}
     {% if form_legend is not defined or form_legend == true %}
-        <div class="form-group">
-            <div class="col-lg-12">
-                {{ block('form_legend') }}
-            </div>
-        </div>
+        {{ block('form_legend') }}
     {% endif %}
     {% if no_submit_button is not defined or no_submit_button != true %}
         {% spaceless %}
-            <div class="form-group">
-                <div class="col-lg-12 bottom-action-buttons">
-                    {% set break = 0 %}
-                    {% for block_prefixes in form.vars.block_prefixes|reverse if break == 0 %}
-                        {% set blockSubmitWidget = block(block_prefixes ~ '_submit_widget') %}
-                        {% if blockSubmitWidget is not empty %}
-                            {{ blockSubmitWidget|raw }}
-                            {% set break = 1 %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
+            <div class="bottom-action-buttons">
+                {% set break = 0 %}
+                {% for block_prefixes in form.vars.block_prefixes|reverse if break == 0 %}
+                    {% set blockSubmitWidget = block(block_prefixes ~ '_submit_widget') %}
+                    {% if blockSubmitWidget is not empty %}
+                        {{ blockSubmitWidget|raw }}
+                        {% set break = 1 %}
+                    {% endif %}
+                {% endfor %}
             </div>
             {{ parent() }}
         {% endspaceless %}
