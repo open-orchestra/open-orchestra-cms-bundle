@@ -14,7 +14,7 @@ class ScrollTable extends AbstractBehavior
         let $fixedColumn = $element.clone().addClass('clone');
         $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
         $fixedColumn.insertBefore($element);
-        $element.wrap($('<div>').addClass('wraper'));
+        $element.wrap($('<div>').addClass('wraper table-responsive'));
         $fixedColumn.find('tr').each(function (i, elem) {
             $(this).height($element.find('tr:eq(' + i + ')').height());
         });
