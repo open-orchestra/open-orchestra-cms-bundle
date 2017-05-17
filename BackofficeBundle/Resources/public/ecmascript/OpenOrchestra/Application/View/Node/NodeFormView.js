@@ -40,6 +40,25 @@ class NodeFormView extends mix(AbstractFormView).with(RenderToolbarViewMixin, Tr
     }
 
     /**
+     * Refresh render
+     */
+    refreshRender() {
+        Backbone.Events.trigger('form:deactivate', this);
+        this._renderForm();
+        this._node.fetch({
+            urlParameter: {
+                'language': this._node.get('language'),
+                'nodeId': this._node.get('node_id'),
+                'siteId': this._node.get('site_id'),
+                'version': this._node.get('version')
+            },
+            success: () => {
+                this._renderMessageNodeActionToolbar($('.node-action-toolbar', this.$el));
+            }
+        });
+    }
+
+    /**
      * @private
      */
     _renderRedirections() {

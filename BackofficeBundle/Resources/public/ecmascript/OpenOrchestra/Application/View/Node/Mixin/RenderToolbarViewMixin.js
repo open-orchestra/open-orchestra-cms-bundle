@@ -41,7 +41,16 @@ let RenderToolbarViewMixin = (superclass) => class extends superclass {
                 }
             );
             $selector.html(nodeToolbarView.render().$el);
+            this._renderMessageNodeActionToolbar($selector);
         });
+    }
+
+    /**
+     * @param {Object} $selector
+     * @private
+     */
+    _renderMessageNodeActionToolbar($selector) {
+        $('#node-message', $selector).html(this._renderTemplate('Node/nodeMessageToolbarView', {node: this._node}));
     }
 
     /**
