@@ -1,0 +1,16 @@
+<% if (true === node.get('status').get('published_state')) {%>
+    <div class="alert alert-success alert-published-state" role="alert">
+        <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.message_online.title') %></div>
+        <p>
+            <%= (Translator.trans('open_orchestra_backoffice.node.message_online.message').replace(/\\n/g, '<br>')) %>
+        </p>
+    </div>
+<% }; %>
+<% if (false === node.get('rights').can_publish_node) {%>
+<div class="alert alert-warning" role="warning">
+    <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.title') %></div>
+    <p>
+        <%= (Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.message').replace(/\\n/g, '<br>')) %>
+    </p>
+</div>
+<% }; %>
