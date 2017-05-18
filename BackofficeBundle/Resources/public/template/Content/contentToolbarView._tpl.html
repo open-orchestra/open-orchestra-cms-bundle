@@ -8,28 +8,29 @@
         </div>
     <% } %>
     <% if (contentType.get('defining_versionable') == true ) {%>
-        <div class="pull-left">
-            <div class="form-group">
-                <label for="select-version" class="control-label"><%- Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
-                <div class="styled-select">
-                    <select class="form-control" id="select-version">
-                        <% _.each(contentVersions, function(contentVersion, key) { %>
-                            <option value="<%- contentVersion.get('version') %>" <% if(contentVersion.get('version') == content.get('version')) {%> selected <% } %> >
-                                <%- contentVersion.get('version_name') %>
-                            </option>
-                        <% }); %>
-                    </select>
+        <div class="col-lg-10 row">
+            <div class="form-group col-sm-8 row">
+                <label for="select-version" class="col-sm-2 col-xs-12 control-label"><%- Translator.trans('open_orchestra_backoffice.versionable.version') %></label>
+                <div class="col-sm-10 col-xs-9">
+                    <div class="styled-select">
+                        <select class="form-control" id="select-version">
+                            <% _.each(contentVersions, function(contentVersion, key) { %>
+                                <option value="<%- contentVersion.get('version') %>" <% if(contentVersion.get('version') == content.get('version')) {%> selected <% } %> >
+                                    <%- contentVersion.get('version_name') %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-4">
                 <button type="button" class="btn btn-info btn-new-version"><%- Translator.trans('open_orchestra_backoffice.versionable.new_version') %></button>
             </div>
         </div>
     <% } %>
     <% if (contentType.get('defining_statusable') == true ) {%>
-        <div class="pull-right">
+        <div class="col-lg-2 col-xs-12 row">
             <div class="form-group">
-                <label for="select-workflow" class="control-label">Workflow</label>
                 <div class="styled-select dropdown dropdown-workflow">
                     <button class="dropdown-toggle btn btn-large"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span style="color: <%- content.get('status').get('code_color') %>"> <%- content.get('status').get('label') %></span>
@@ -50,4 +51,4 @@
         </div>
     <% } %>
 </div>
-<div class="new-version-form-region"></div>
+<div class="new-version-form-region form-inline"></div>

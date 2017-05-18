@@ -75,7 +75,6 @@ class MenuView extends OrchestraView
      * @private
      */
     _toggleMenu() {
-        $('.tab-pane', this.$el).removeClass('active');
         this.$el.addClass('sublevel-closed').removeClass('sublevel-open');
         $('#central-column, #left-column').toggleClass('toggle-left');
     }
@@ -124,7 +123,9 @@ class MenuView extends OrchestraView
             target = $('a[href="#' + tab.attr('id') + '"]', this.$el);
             target.parent().addClass('active');
         }
-        this._toggleSubLevel({currentTarget: target});
+        if (false === $('#left-column').hasClass('toggle-left')) {
+            this._toggleSubLevel({currentTarget: target});
+        }
     }
 
     /**
