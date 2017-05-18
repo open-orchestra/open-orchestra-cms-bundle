@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCode;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -11,7 +12,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer;
 use OpenOrchestra\Backoffice\Manager\TemplateManager;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
@@ -31,16 +31,16 @@ class BlockType extends AbstractType
     protected $blockFormTypeSubscriber;
 
     /**
-     * @param TemplateManager          $templateManager
-     * @param CurrentSiteIdInterface   $contextManager
-     * @param GenerateFormManager      $generateFormManager
-     * @param SiteRepositoryInterface  $siteRepository
-     * @param BlockToArrayTransformer  $blockToArrayTransformer
-     * @param EventSubscriberInterface $blockFormTypeSubscriber
+     * @param TemplateManager            $templateManager
+     * @param ContextBackOfficeInterface $contextManager
+     * @param GenerateFormManager        $generateFormManager
+     * @param SiteRepositoryInterface    $siteRepository
+     * @param BlockToArrayTransformer    $blockToArrayTransformer
+     * @param EventSubscriberInterface   $blockFormTypeSubscriber
      */
     public function __construct(
         TemplateManager $templateManager,
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
         GenerateFormManager $generateFormManager,
         BlockToArrayTransformer $blockToArrayTransformer,
@@ -199,7 +199,7 @@ class BlockType extends AbstractType
             isset($options['data']) &&
             $options['data'] instanceof BlockInterface
         ) {
-            $siteId = $this->contextManager->getCurrentSiteId();
+            $siteId = $this->contextManager->getSiteId();
             $site = $this->siteRepository->findOneBySiteId($siteId);
             $templateSetId = $site->getTemplateSet();
             $templateSetParameters = $this->templateManager->getTemplateSetParameters();

@@ -34,7 +34,7 @@ class BlockController extends AbstractAdminController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
 
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, true);
         $form = $this->createBlockForm($request, array(
             "action" => $this->generateUrl('open_orchestra_backoffice_shared_block_new', array(
@@ -85,7 +85,7 @@ class BlockController extends AbstractAdminController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
 
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, false);
         $form = $this->createBlockForm($request, array(
             "action" => $this->generateUrl('open_orchestra_backoffice_block_new_in_node', array(

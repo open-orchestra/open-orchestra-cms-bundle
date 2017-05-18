@@ -40,9 +40,9 @@ class LogUserProcessorTest extends AbstractBaseTestCase
         Phake::when($this->request)->getClientIp()->thenReturn($this->ip);
         $this->requestStack = Phake::mock('Symfony\Component\HttpFoundation\RequestStack');
 
-        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($this->context)->getCurrentSiteName()->thenReturn($this->siteName);
-        Phake::when($this->context)->getCurrentSiteId()->thenReturn($this->siteId);
+        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->context)->getSiteName()->thenReturn($this->siteName);
+        Phake::when($this->context)->getSiteId()->thenReturn($this->siteId);
 
         $this->processor = new LogUserProcessor($this->security, $this->requestStack, $this->context);
     }

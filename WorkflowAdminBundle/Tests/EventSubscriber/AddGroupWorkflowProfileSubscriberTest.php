@@ -40,7 +40,7 @@ class AddGroupWorkflowProfileSubscriberTest extends AbstractBaseTestCase
         Phake::when($contentTypeRepository)->findAllNotDeletedInLastVersion(Phake::anyParameters())->thenReturn(array($this->contenType));
 
         $workflowProfileCollectionTransformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
-        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
         $translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($translator)->trans(Phake::anyParameters())->thenReturn('fakeTrans');
 

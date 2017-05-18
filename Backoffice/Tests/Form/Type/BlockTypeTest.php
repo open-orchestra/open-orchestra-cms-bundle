@@ -30,7 +30,7 @@ class BlockTypeTest extends AbstractBaseTestCase
     {
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
-        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
         $this->blockToArrayTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer');
@@ -39,7 +39,7 @@ class BlockTypeTest extends AbstractBaseTestCase
         Phake::when($this->templateManager)->getTemplateSetParameters()->thenReturn(array('fakeTemplateSet' => array('styles' => array())));
         Phake::when($site)->getTemplateSet()->thenReturn('fakeTemplateSet');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
-        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
+        Phake::when($this->contextManager)->getSiteId()->thenReturn('fakeSiteId');
         Phake::when($this->generateFormManager)->getTemplate(Phake::anyParameters())->thenReturn($this->templateName);
         Phake::when($this->generateFormManager)->getTemplate(Phake::anyParameters())->thenReturn($this->templateName);
 

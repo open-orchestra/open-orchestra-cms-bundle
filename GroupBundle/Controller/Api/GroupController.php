@@ -127,7 +127,7 @@ class GroupController extends BaseController
 
         $newGroup = clone $group;
 
-        $currentSiteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $currentSiteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
 
         $newGroup->setWorkflowProfileCollections($group->getWorkflowProfileCollections());
@@ -174,7 +174,7 @@ class GroupController extends BaseController
     protected function getAvailableSiteIds()
     {
         $sitesId = array();
-        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        $availableSites = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getAvailableSites();
         foreach ($availableSites as $site) {
             $sitesId[] = $site->getId();
         }

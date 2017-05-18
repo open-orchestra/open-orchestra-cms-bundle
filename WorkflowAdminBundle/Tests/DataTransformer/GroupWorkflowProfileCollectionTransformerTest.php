@@ -29,7 +29,7 @@ class GroupWorkflowProfileCollectionTransformerTest extends AbstractBaseTestCase
         $contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($contentTypeRepository)->findAllNotDeletedInLastVersion()->thenReturn(array($contenType));
 
-        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
 
         $this->transformer = new GroupWorkflowProfileCollectionTransformer(
             $workflowProfileRepository,

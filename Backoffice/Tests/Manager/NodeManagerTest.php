@@ -53,7 +53,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         $this->blockRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\BlockRepository');
-        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
         $this->documentManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->templateManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TemplateManager');
         $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
@@ -64,8 +64,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($this->status)->isPublishedState()->thenReturn(true);
         Phake::when($this->status)->getLabels()->thenReturn(array());
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($this->status);
-        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
-        Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn('fakeLanguage');
+        Phake::when($this->contextManager)->getSiteId()->thenReturn('fakeSiteId');
+        Phake::when($this->contextManager)->getSiteDefaultLanguage()->thenReturn('fakeLanguage');
         Phake::when($this->block)->isTransverse()->thenReturn(false);
         Phake::when($this->blockTransverse)->isTransverse()->thenReturn(true);
         Phake::when($this->area)->getBlocks()->thenReturn(array($this->block, $this->blockTransverse));

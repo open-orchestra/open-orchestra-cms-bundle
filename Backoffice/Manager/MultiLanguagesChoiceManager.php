@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
-use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -15,10 +15,10 @@ class MultiLanguagesChoiceManager implements MultiLanguagesChoiceManagerInterfac
     protected $translator;
 
     /**
-     * @param ContextManager      $contextManager
-     * @param TranslatorInterface $translator
+     * @param ContextBackOfficeInterface $contextManager
+     * @param TranslatorInterface        $translator
      */
-    public function __construct(ContextManager $contextManager, TranslatorInterface $translator)
+    public function __construct(ContextBackOfficeInterface $contextManager, TranslatorInterface $translator)
     {
         $this->contextManager = $contextManager;
         $this->translator = $translator;
@@ -33,7 +33,7 @@ class MultiLanguagesChoiceManager implements MultiLanguagesChoiceManagerInterfac
     public function choose(array $elements, $language = null)
     {
         if (null === $language) {
-            $language = $this->contextManager->getCurrentLocale();
+            $language = $this->contextManager->getBackOfficeLanguage();
         }
 
         if (!isset($elements[$language])) {

@@ -30,7 +30,7 @@ class RedirectionController extends AbstractAdminController
         $redirectionClass = $this->getParameter('open_orchestra_model.document.redirection.class');
         /** @var RedirectionInterface $redirection */
         $redirection = new $redirectionClass();
-        $redirection->setSiteId($this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId());
+        $redirection->setSiteId($this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId());
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $redirection);
 
         $form = $this->createForm('oo_redirection', $redirection, array(

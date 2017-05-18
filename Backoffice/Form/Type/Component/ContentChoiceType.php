@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\Backoffice\Form\DataTransformer\ReferenceToEmbedTransformer;
 use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
 
@@ -22,11 +22,11 @@ class ContentChoiceType extends AbstractType
 
     /**
      * @param ContentRepositoryInterface  $contentRepository
-     * @param CurrentSiteIdInterface      $contextManager
+     * @param ContextBackOfficeInterface  $contextManager
      * @param ReferenceToEmbedTransformer $referenceToEmbedTransformer
      * @param string                      $formTypeName
      */
-    public function __construct(ContentRepositoryInterface $contentRepository, CurrentSiteIdInterface $contextManager, ReferenceToEmbedTransformer $referenceToEmbedTransformer, $formTypeName)
+    public function __construct(ContentRepositoryInterface $contentRepository, ContextBackOfficeInterface $contextManager, ReferenceToEmbedTransformer $referenceToEmbedTransformer, $formTypeName)
     {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
@@ -60,8 +60,8 @@ class ContentChoiceType extends AbstractType
     {
         $choices = array();
 
-        $language = $this->contextManager->getCurrentSiteDefaultLanguage();
-        $siteId = $this->contextManager->getCurrentSiteId();
+        $language = $this->contextManager->getSiteDefaultLanguage();
+        $siteId = $this->contextManager->getSiteId();
         $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $operator, $keywords, $siteId);
 
         foreach ($contents as $content) {

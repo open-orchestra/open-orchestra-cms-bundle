@@ -23,11 +23,11 @@ class AdminController extends Controller
      */
     public function adminAction($siteId = null)
     {
-        $contextManager = $this->get('open_orchestra_backoffice.context_manager');
+        $contextManager = $this->get('open_orchestra_backoffice.context_backoffice_manager');
 
         if ($siteId) {
             $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-            $contextManager->setCurrentsite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage(), $site->getLanguages());
+            $contextManager->setSite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage(), $site->getLanguages());
         }
         $clientConfiguration = $this->get('open_orchestra_backoffice.manager.client_configuration');
 
@@ -42,7 +42,7 @@ class AdminController extends Controller
     public function cleanContextAction()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->get('open_orchestra_backoffice.context_manager')->clearContext();
+        $this->get('open_orchestra_backoffice.context_backoffice_manager')->clearContext();
 
         return new Response();
     }

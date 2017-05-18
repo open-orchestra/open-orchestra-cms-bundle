@@ -1,9 +1,12 @@
 parameters:
-    open_orchestra_backoffice.manager.context.class: OpenOrchestra\Backoffice\Context\TestContextManager
+    open_orchestra_backoffice.manager.context_backoffice.class: OpenOrchestra\Backoffice\Context\TestContextManager
 
 services:
-    open_orchestra_backoffice.context_manager:
-        class: '%open_orchestra_backoffice.manager.context.class%'
+    open_orchestra_backoffice.context_backoffice_manager:
+        class: '%open_orchestra_backoffice.manager.context_backoffice.class%'
         arguments:
-          - '@open_orchestra_model.repository.site'
+          - '@session'
+          - '@security.token_storage'
           - '%kernel.default_locale%'
+          - '@open_orchestra_model.repository.site'
+          - '@security.authorization_checker'

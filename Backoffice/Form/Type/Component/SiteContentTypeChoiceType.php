@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
-use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -21,12 +21,12 @@ class SiteContentTypeChoiceType extends AbstractType
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param SiteRepositoryInterface        $siteRepository
-     * @param ContextManager                 $context
+     * @param ContextBackOfficeInterface     $context
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
         SiteRepositoryInterface $siteRepository,
-        ContextManager $context
+        ContextBackOfficeInterface $context
     ) {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->siteRepository = $siteRepository;
@@ -50,10 +50,10 @@ class SiteContentTypeChoiceType extends AbstractType
      */
     protected function getChoices()
     {
-        $siteId = $this->context->getCurrentSiteId();
+        $siteId = $this->context->getSiteId();
         $site = $this->siteRepository->findOneBySiteId($siteId);
 
-        $currentLanguage = $this->context->getCurrentLocale();
+        $currentLanguage = $this->context->getBackOfficeLanguage();
         $contentTypes = array();
         if (!empty($site->getContentTypes())) {
             $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());

@@ -21,7 +21,7 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
-        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
         $booleanConditionValidator = Phake::mock('OpenOrchestra\Backoffice\Validator\Constraints\BooleanConditionValidator');
         $this->form = new ContentSearchType(
             $booleanConditionValidator,

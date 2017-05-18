@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentStrategy;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
@@ -15,7 +16,6 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 
 /**
@@ -33,7 +33,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusRepositoryInterface      $statusRepository
      * @param ContentRepositoryInterface     $contentRepository,
      * @param AuthorizationCheckerInterface  $authorizationChecker
-     * @param CurrentSiteIdInterface         $contextManager
+     * @param ContextBackOfficeInterface     $contextManager
      * @param BusinessRulesManager           $businessRulesManager
      */
     public function __construct(
@@ -41,7 +41,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         StatusRepositoryInterface $statusRepository,
         ContentRepositoryInterface $contentRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         BusinessRulesManager $businessRulesManager
     ) {
         $this->statusRepository = $statusRepository;
@@ -73,7 +73,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->versionName = $content->getVersionName();
         $facade->language = $content->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($content->getStatus());
-        $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getCurrentLocale());
+        $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getBackOfficeLanguage());
         $facade->createdAt = $content->getCreatedAt();
         $facade->updatedAt = $content->getUpdatedAt();
         $facade->createdBy = $content->getCreatedBy();

@@ -178,7 +178,7 @@ class UserController extends BaseController
     protected function getAvailableSiteIds()
     {
         $sitesId = array();
-        $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        $availableSites = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getAvailableSites();
         foreach ($availableSites as $site) {
             $sitesId[] = $site->getId();
         }

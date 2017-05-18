@@ -41,8 +41,8 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($contextManager)->getCurrentLocale()->thenReturn('en');
+        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($contextManager)->getBackOfficeLanguage()->thenReturn('en');
 
         $this->form = new FieldTypeType(
             $contextManager,

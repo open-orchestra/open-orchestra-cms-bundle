@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\Backoffice\Validator\Constraints\BooleanConditionValidator;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -23,13 +23,13 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     /**
      * @param BooleanConditionValidator  $booleanConditionValidator
      * @param ContentRepositoryInterface $contentRepository
-     * @param CurrentSiteIdInterface     $contextManager
+     * @param ContextBackOfficeInterface $contextManager
      * @param boolean                    $required
      */
     public function __construct(
         BooleanConditionValidator $booleanConditionValidator,
         ContentRepositoryInterface $contentRepository,
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         $required
     ) {
         $this->booleanConditionValidator = $booleanConditionValidator;
@@ -111,8 +111,8 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     protected function getChoices($contentType, $choiceType, $condition)
     {
         $choices = array();
-        $language = $this->contextManager->getCurrentSiteDefaultLanguage();
-        $siteId = $this->contextManager->getCurrentSiteId();
+        $language = $this->contextManager->getSiteDefaultLanguage();
+        $siteId = $this->contextManager->getSiteId();
 
         if ($this->booleanConditionValidator->validateCondition($condition)) {
             $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition, $siteId);

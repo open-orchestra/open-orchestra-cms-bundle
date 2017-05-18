@@ -133,7 +133,7 @@ class NodeController extends AbstractAdminController
             $documentManager->persist($node);
             $nodesEvent[] = new NodeEvent($node);
 
-            $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
+            $languages = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteLanguages();
             foreach ($languages as $siteLanguage) {
                 if ($language !== $siteLanguage) {
                     $translatedNode = $nodeManager->createNewLanguageNode($node, $siteLanguage);

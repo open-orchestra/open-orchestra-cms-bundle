@@ -64,8 +64,8 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::when($this->contentRepository)->findAllPublishedByContentId(Phake::anyParameters())->thenReturn(array());
         Phake::when($this->contentRepository)->findOneByContentId(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'));
 
-        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('en');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->contextManager)->getBackOfficeLanguage()->thenReturn('en');
 
         $this->businessRulesManager = Phake::mock('OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager');
         Phake::when($this->businessRulesManager)->isGranted(Phake::anyParameters())->thenReturn(true);

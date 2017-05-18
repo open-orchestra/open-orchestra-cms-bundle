@@ -118,7 +118,7 @@ class ContentTypeController extends BaseController
      */
     public function listForContentAction()
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         $repository = $this->get('open_orchestra_model.repository.content_type');

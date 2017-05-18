@@ -32,7 +32,7 @@ class SpecialPageChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $currentSiteManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
 
         $this->subscriber = new SpecialPageChoiceSubscriber(
             $this->nodeRepository,

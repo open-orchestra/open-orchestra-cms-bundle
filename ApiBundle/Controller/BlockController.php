@@ -45,7 +45,7 @@ class BlockController extends BaseController
         );
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_model.repository.block');
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         if ($configuration->getSearchIndex('category') && '' !== $configuration->getSearchIndex('category')) {
             $components = $this->get('open_orchestra_backoffice.manager.block_configuration')->getComponentsWithCategory($configuration->getSearchIndex('category'));
             $configuration->addSearch('components', $components);
@@ -72,7 +72,7 @@ class BlockController extends BaseController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, BlockInterface::ENTITY_TYPE);
 
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         $availableBlocks = $site->getBlocks();
@@ -121,7 +121,7 @@ class BlockController extends BaseController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, BlockInterface::ENTITY_TYPE);
         $repository = $this->get('open_orchestra_model.repository.block');
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $collection = $repository->findTransverseBlock($component, $siteId, $language);
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('block_collection');

@@ -21,7 +21,7 @@ class GroupListToArrayTransformerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->groupRepository = Phake::mock('OpenOrchestra\GroupBundle\Repository\GroupRepository');
-        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
         Phake::when($contextManager)->getAvailableSites()->thenReturn(array());;
 
         $this->transformer = new GroupListToArrayTransformer($this->groupRepository, $contextManager);

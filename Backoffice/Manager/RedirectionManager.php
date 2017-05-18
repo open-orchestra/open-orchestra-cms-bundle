@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -29,7 +29,7 @@ class RedirectionManager
 
     /**
      * @param string                         $redirectionClass
-     * @param CurrentSiteIdInterface         $contextManager
+     * @param ContextBackOfficeInterface     $contextManager
      * @param DocumentManager                $documentManager
      * @param EventDispatcherInterface       $eventDispatcher
      * @param SiteRepositoryInterface        $siteRepository
@@ -38,7 +38,7 @@ class RedirectionManager
      */
     public function __construct(
         $redirectionClass,
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         DocumentManager $documentManager,
         EventDispatcherInterface $eventDispatcher,
         SiteRepositoryInterface $siteRepository,
@@ -62,7 +62,7 @@ class RedirectionManager
     public function createRedirection($pattern, $nodeId, $language)
     {
         $redirectionClass = $this->redirectionClass;
-        $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
+        $site = $this->siteRepository->findOneBySiteId($this->contextManager->getSiteId());
         /** @var SiteAliasInterface $alias */
         foreach ($site->getAliases() as $alias) {
             if ($language == $alias->getLanguage()) {
@@ -107,7 +107,7 @@ class RedirectionManager
         if (is_null($parentId) || '-' == $parentId || '' == $parentId) {
             return $suffix;
         }
-        $siteId = $this->contextManager->getCurrentSiteId();
+        $siteId = $this->contextManager->getSiteId();
         $parent = $this->nodeRepository->findOnePublished($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {

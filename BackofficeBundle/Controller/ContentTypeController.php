@@ -77,7 +77,7 @@ class ContentTypeController extends AbstractAdminController
         if ('PATCH' !== $request->getMethod()) {
             if ($form->isValid()) {
                 $contentType->setVersion(1);
-                $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale();
+                $language = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getBackOfficeLanguage();
                 $documentManager = $this->get('object_manager');
                 $documentManager->persist($contentType);
                 $documentManager->flush();

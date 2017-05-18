@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\SiteSubscriber;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class SiteSiteAliasType
@@ -20,14 +20,14 @@ class SiteSiteAliasType extends AbstractType
     protected $currentSiteManager;
 
     /**
-     * @param SiteRepositoryInterface $siteRepository
-     * @param NodeRepositoryInterface $nodeRepository
-     * @param CurrentSiteIdInterface  $currentSiteManager
+     * @param SiteRepositoryInterface    $siteRepository
+     * @param NodeRepositoryInterface    $nodeRepository
+     * @param ContextBackOfficeInterface $currentSiteManager
      */
     public function __construct(
         SiteRepositoryInterface $siteRepository,
         NodeRepositoryInterface $nodeRepository,
-        CurrentSiteIdInterface $currentSiteManager
+        ContextBackOfficeInterface $currentSiteManager
     ) {
         $this->siteRepository = $siteRepository;
         $this->nodeRepository = $nodeRepository;
@@ -42,7 +42,7 @@ class SiteSiteAliasType extends AbstractType
     {
         $data = $builder->getData();
         if (!array_key_exists('siteId', $data)) {
-            $data['siteId'] = $this->currentSiteManager->getCurrentSiteId();
+            $data['siteId'] = $this->currentSiteManager->getSiteId();
         }
 
         $builder->add('siteId', 'oo_site_choice', array(

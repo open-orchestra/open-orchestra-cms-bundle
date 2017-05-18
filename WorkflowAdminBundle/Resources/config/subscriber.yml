@@ -9,7 +9,7 @@ services:
             - '@open_orchestra_model.repository.workflow_profile'
             - '@open_orchestra_model.repository.content_type'
             - '@open_orchestra_workflow_admin.transformer.group_workflow_profile_collection'
-            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
             - '@translator'
         tags:
             - { name: kernel.event_subscriber }

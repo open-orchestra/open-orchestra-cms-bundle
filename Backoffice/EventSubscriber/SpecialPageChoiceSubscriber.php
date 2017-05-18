@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,13 +19,13 @@ class SpecialPageChoiceSubscriber implements EventSubscriberInterface
     protected $contextManager;
 
     /**
-     * @param NodeRepositoryInterface $nodeRepository,
-     * @param CurrentSiteIdInterface  $contextManager,
-     * @param array                   $specialPageList
+     * @param NodeRepositoryInterface     $nodeRepository,
+     * @param ContextBackOfficeInterface  $contextManager,
+     * @param array                       $specialPageList
      */
      public function __construct(
          NodeRepositoryInterface $nodeRepository,
-         CurrentSiteIdInterface $contextManager,
+         ContextBackOfficeInterface $contextManager,
          array $specialPageList
     ) {
          $this->nodeRepository = $nodeRepository;
@@ -67,8 +67,8 @@ class SpecialPageChoiceSubscriber implements EventSubscriberInterface
      */
     protected function getSpecialPageList($node)
     {
-        $siteId = $this->contextManager->getCurrentSiteId();
-        $language = $this->contextManager->getCurrentSiteDefaultLanguage();
+        $siteId = $this->contextManager->getSiteId();
+        $language = $this->contextManager->getSiteDefaultLanguage();
         $specialPages = $this->nodeRepository->findAllSpecialPage($language, $siteId);
 
         $specialPageList = $this->specialPageList;

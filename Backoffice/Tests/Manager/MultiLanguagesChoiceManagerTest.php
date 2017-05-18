@@ -32,7 +32,7 @@ class MultiLanguagesChoiceManagerTest extends AbstractBaseTestCase
 
         $this->names = array("en" => $this->baseValue['en'], "fr" => $this->baseValue['fr']);
 
-        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->noTranslation);
 
@@ -46,7 +46,7 @@ class MultiLanguagesChoiceManagerTest extends AbstractBaseTestCase
      */
     public function testChooseMethod($lang)
     {
-        Phake::when($this->contextManager)->getCurrentLocale()->thenReturn($lang);
+        Phake::when($this->contextManager)->getBackOfficeLanguage()->thenReturn($lang);
 
         $returnedValue = $this->manager->choose($this->names);
 
@@ -77,7 +77,7 @@ class MultiLanguagesChoiceManagerTest extends AbstractBaseTestCase
      */
     public function testChooseWithNotIncludedLanguage()
     {
-        Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('de');
+        Phake::when($this->contextManager)->getBackOfficeLanguage()->thenReturn('de');
 
         $this->assertSame($this->noTranslation, $this->manager->choose($this->names));
     }

@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\LogBundle\Processor;
 
-use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -16,11 +16,11 @@ class LogUserProcessor
     protected $securityContext;
 
     /**
-     * @param TokenStorageInterface $securityContext
-     * @param RequestStack          $requestStack
-     * @param ContextManager        $context
+     * @param TokenStorageInterface      $securityContext
+     * @param RequestStack               $requestStack
+     * @param ContextBackOfficeInterface $context
      */
-    public function __construct(TokenStorageInterface $securityContext, RequestStack $requestStack, ContextManager $context)
+    public function __construct(TokenStorageInterface $securityContext, RequestStack $requestStack, ContextBackOfficeInterface $context)
     {
         $this->securityContext = $securityContext;
         $this->requestStack = $requestStack;
@@ -42,8 +42,8 @@ class LogUserProcessor
             $record['extra']['user_name'] = $this->securityContext->getToken()->getUsername();
         }
 
-        $record['extra']['site_name'] = $this->context->getCurrentSiteName();
-        $record['extra']['site_id'] = $this->context->getCurrentSiteId();
+        $record['extra']['site_name'] = $this->context->getSiteName();
+        $record['extra']['site_id'] = $this->context->getSiteId();
 
         return $record;
     }

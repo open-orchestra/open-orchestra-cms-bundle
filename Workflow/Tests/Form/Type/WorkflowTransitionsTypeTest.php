@@ -25,8 +25,8 @@ class WorkflowTransitionsTypeTest extends AbstractBaseTestCase
         $this->statuses = array($this->generateStatus('1'), $this->generateStatus('2'), $this->generateStatus('3'));
         Phake::when($this->statusRepository)->findNotOutOfWorkflow(Phake::anyParameters())->thenReturn($this->statuses);
 
-        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($contextManager)->getCurrentLocale()->thenReturn($this->locale);
+        $contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($contextManager)->getBackOfficeLanguage()->thenReturn($this->locale);
         $this->form = new WorkflowTransitionsType($this->statusRepository, $contextManager);
     }
 

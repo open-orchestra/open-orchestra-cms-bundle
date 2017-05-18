@@ -97,7 +97,7 @@ class ContentController extends AbstractAdminController
      */
     public function newAction(Request $request, $contentTypeId, $language)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         $contentManager = $this->get('open_orchestra_backoffice.manager.content');
@@ -186,7 +186,7 @@ class ContentController extends AbstractAdminController
      */
     protected function createContentInNewLanguage(ContentInterface $content, $currentLanguage)
     {
-        $languages = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteLanguages();
+        $languages = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteLanguages();
         foreach ($languages as $siteLanguage) {
             if ($currentLanguage !== $siteLanguage) {
                 $translatedContent = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($content, $siteLanguage);

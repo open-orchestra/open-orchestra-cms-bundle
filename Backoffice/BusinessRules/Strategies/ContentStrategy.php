@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -21,12 +21,12 @@ class ContentStrategy extends AbstractBusinessRulesStrategy
     /**
      * @param ContentRepositoryInterface $contentRepository
      * @param SiteRepositoryInterface    $siteRepository
-     * @param CurrentSiteIdInterface     $contextManager
+     * @param ContextBackOfficeInterface $contextManager
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
         SiteRepositoryInterface $siteRepository,
-        CurrentSiteIdInterface   $contextManager
+        ContextBackOfficeInterface $contextManager
     ) {
         $this->contentRepository = $contentRepository;
         $this->siteRepository = $siteRepository;
@@ -105,7 +105,7 @@ class ContentStrategy extends AbstractBusinessRulesStrategy
      */
     protected function isContentOnSiteAllowed(ContentInterface $content)
     {
-        $siteId = $this->contextManager->getCurrentSiteId();
+        $siteId = $this->contextManager->getSiteId();
         $site = $this->siteRepository->findOneBySiteId($siteId);
 
         return in_array($content->getContentType(), $site->getContentTypes());

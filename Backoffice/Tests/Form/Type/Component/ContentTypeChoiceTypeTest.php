@@ -25,8 +25,8 @@ class ContentTypeChoiceTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($this->context)->getCurrentLocale()->thenReturn($this->locale);
+        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->context)->getBackOfficeLanguage()->thenReturn($this->locale);
 
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         $this->contentType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');

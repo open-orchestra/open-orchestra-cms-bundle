@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
-use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteSubscriber;
@@ -90,6 +90,6 @@ class WebSiteSubscriberTest extends AbstractBaseTestCase
     public function testPreSubmit()
     {
         $this->subscriber->preSubmit($this->event);
-        Phake::verify($this->session)->remove(ContextManager::KEY_SITE);
+        Phake::verify($this->session)->remove(ContextBackOfficeInterface::KEY_SITE);
     }
 }

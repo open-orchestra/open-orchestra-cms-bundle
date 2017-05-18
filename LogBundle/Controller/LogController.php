@@ -38,7 +38,7 @@ class LogController extends BaseController
             'message'   => 'message'
         );
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $configuration->addSearch('site_id', $siteId);
 
         $repository =  $this->get('open_orchestra_log.repository.log');

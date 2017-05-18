@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\Backoffice\Manager\TemplateManager;
 
@@ -21,14 +21,14 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
     protected $templateManager;
 
     /**
-     * @param NodeManager             $nodeManager
-     * @param CurrentSiteIdInterface  $contextManager
-     * @param SiteRepositoryInterface $siteRepository
-     * @param TemplateManager         $templateManager
+     * @param NodeManager                $nodeManager
+     * @param ContextBackOfficeInterface $contextManager
+     * @param SiteRepositoryInterface    $siteRepository
+     * @param TemplateManager            $templateManager
      */
     public function __construct(
         NodeManager $nodeManager,
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
         TemplateManager $templateManager
     ) {
@@ -113,7 +113,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
      */
     protected function getTemplateChoices()
     {
-        $siteId = $this->contextManager->getCurrentSiteId();
+        $siteId = $this->contextManager->getSiteId();
         $site = $this->siteRepository->findOneBySiteId($siteId);
         $templateSetId = $site->getTemplateSet();
         $templateSetParameters = $this->templateManager->getTemplateSetParameters();
