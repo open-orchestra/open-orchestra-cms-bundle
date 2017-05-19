@@ -110,18 +110,16 @@ class SiteSubscriber implements EventSubscriberInterface
                 foreach ($matches[1] as $wildcard) {
                     $result[$wildcard] = array_key_exists('wildcard', $data) && array_key_exists($wildcard, $data['wildcard']) ? $data['wildcard'][$wildcard] : '';
                 }
-                if (count($result) > 0) {
-                    $data['wildcard'] = $result;
-                    $form->add('wildcard', 'collection', array(
-                        'entry_type' => 'text',
-                        'label' => 'open_orchestra_backoffice.form.internal_link.wildcard',
-                        'attr' => array('class' => 'subform-to-refresh'),
-                        'data' => $data['wildcard'],
-                        'entry_options' => array(
-                            'required' => true,
-                        ),
-                    ));
-                }
+                $data['wildcard'] = $result;
+                $form->add('wildcard', 'collection', array(
+                    'entry_type' => 'text',
+                    'label' => count($result) > 0 ? 'open_orchestra_backoffice.form.internal_link.wildcard' : false,
+                    'attr' => array('class' => 'subform-to-refresh'),
+                    'data' => $data['wildcard'],
+                    'entry_options' => array(
+                        'required' => true,
+                    ),
+                ));
             }
 
             $event->setData($data);
