@@ -32,8 +32,8 @@ class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
 
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcher');
 
-        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($this->siteId);
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->currentSiteManager)->getSiteId()->thenReturn($this->siteId);
 
         $this->subscriber = new UpdateChildNodePathSubscriber($this->nodeRepository, $this->eventDispatcher, $this->currentSiteManager);
     }

@@ -22,8 +22,8 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($this->context)->getCurrentLocale()->thenReturn($this->locale);
+        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->context)->getBackOfficeLanguage()->thenReturn($this->locale);
         $this->contentType = Phake::mock('OpenOrchestra\ModelBundle\Document\ContentType');
         $this->contentTypeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentTypeEvent');
         Phake::when($this->contentTypeEvent)->getContentType()->thenReturn($this->contentType);

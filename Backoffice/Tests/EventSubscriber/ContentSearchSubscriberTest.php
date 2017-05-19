@@ -48,9 +48,9 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
                 $content1,
                 $content2
         ));
-        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($language);
-        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->contextManager)->getSiteDefaultLanguage()->thenReturn($language);
+        Phake::when($this->contextManager)->getSiteId()->thenReturn($siteId);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');

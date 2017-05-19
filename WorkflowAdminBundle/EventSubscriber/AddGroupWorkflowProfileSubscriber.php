@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -10,7 +11,6 @@ use OpenOrchestra\GroupBundle\GroupFormEvents;
 use OpenOrchestra\GroupBundle\Event\GroupFormEvent;
 use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
@@ -28,14 +28,14 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
      * @param WorkflowProfileRepositoryInterface $workflowProfileRepository
      * @param ContentTypeRepositoryInterface     $contentTypeRepository
      * @param DataTransformerInterface           $workflowProfileCollectionTransformer
-     * @param CurrentSiteIdInterface             $contextManager
+     * @param ContextBackOfficeInterface         $contextManager
      * @param TranslatorInterface                $translator
      */
     public function __construct(
         WorkflowProfileRepositoryInterface $workflowProfileRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
         DataTransformerInterface $workflowProfileCollectionTransformer,
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         TranslatorInterface $translator
     ) {
         $this->workflowProfileRepository = $workflowProfileRepository;
@@ -57,7 +57,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
         $configuration = array();
         $workflowProfiles = $this->workflowProfileRepository->findAll();
         foreach ($workflowProfiles as $workflowProfile) {
-            $configuration['default']['row'][] = $workflowProfile->getLabel($this->contextManager->getCurrentLocale());
+            $configuration['default']['row'][] = $workflowProfile->getLabel($this->contextManager->getBackOfficeLanguage());
         }
         $configuration['default']['column'][NodeInterface::ENTITY_TYPE] = $this->translator->trans('open_orchestra_workflow_admin.profile.page');
         if ($group instanceof GroupInterface) {
@@ -65,7 +65,7 @@ class AddGroupWorkflowProfileSubscriber implements EventSubscriberInterface
             if (!empty($site->getContentTypes())) {
                 $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($site->getContentTypes());
                 foreach ($contentTypes as $contentType) {
-                    $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getCurrentLocale());
+                    $configuration['default']['column'][$contentType->getContentTypeId()] = $contentType->getName($this->contextManager->getBackOfficeLanguage());
                 }
             }
         }

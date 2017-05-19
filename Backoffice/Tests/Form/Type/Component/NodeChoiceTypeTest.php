@@ -33,7 +33,7 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
         Phake::when($this->node2)->getName()->thenReturn($this->nodeName2);
         Phake::when($this->node2)->getNodeId()->thenReturn($this->nodeNodeId2);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $currentSiteManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
 
         $this->orchestraNodeChoiceType = new NodeChoiceType($this->nodeRepository, $currentSiteManager);
     }

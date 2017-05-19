@@ -25,9 +25,9 @@ class SiteContentTypeChoiceTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($this->context)->getCurrentLocale()->thenReturn($this->locale);
-        Phake::when($this->context)->getCurrentSiteId()->thenReturn('fakeSiteId');
+        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->context)->getBackOfficeLanguage()->thenReturn($this->locale);
+        Phake::when($this->context)->getSiteId()->thenReturn('fakeSiteId');
 
         $siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');

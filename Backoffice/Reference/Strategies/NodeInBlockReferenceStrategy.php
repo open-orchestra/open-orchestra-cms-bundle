@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Reference\Strategies;
 
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\BBcodeBundle\Parser\BBcodeParserInterface;
 use OpenOrchestra\DisplayBundle\BBcode\InternalLinkDefinition;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -19,12 +19,12 @@ class NodeInBlockReferenceStrategy implements ReferenceStrategyInterface
     protected $nodeRepository;
 
     /**
-     * @param CurrentSiteIdInterface $currentSiteManager
-     * @param BBcodeParserInterface $bbcodeParser
-     * @param NodeRepositoryInterface $nodeRepository
+     * @param ContextBackOfficeInterface $currentSiteManager
+     * @param BBcodeParserInterface      $bbcodeParser
+     * @param NodeRepositoryInterface    $nodeRepository
      */
     public function __construct(
-        CurrentSiteIdInterface $currentSiteManager,
+        ContextBackOfficeInterface $currentSiteManager,
         BBcodeParserInterface $bbcodeParser,
         NodeRepositoryInterface $nodeRepository
     ) {
@@ -139,7 +139,7 @@ class NodeInBlockReferenceStrategy implements ReferenceStrategyInterface
         if (isset($element['siteId'])) {
             $siteId = $element['siteId'];
         } else {
-            $siteId = $this->currentSiteManager->getCurrentSiteId();
+            $siteId = $this->currentSiteManager->getSiteId();
         }
         return array('nodeId' => $nodeId, 'siteId' => $siteId);
     }

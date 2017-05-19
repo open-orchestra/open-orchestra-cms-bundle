@@ -44,8 +44,8 @@ class RedirectionManagerTest extends AbstractBaseTestCase
     {
         $this->redirectionClass = 'OpenOrchestra\ModelBundle\Document\Redirection';
 
-        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->contextManager)->getSiteId()->thenReturn($this->siteId);
 
         $this->siteAlias1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         Phake::when($this->siteAlias1)->getLanguage()->thenReturn($this->localeFr);

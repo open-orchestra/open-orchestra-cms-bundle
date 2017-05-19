@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="modal-region"></div>
-        {% set siteIdKey = constant('OpenOrchestra\\UserBundle\\Document\\User::SITE_ID_PREFIX') ~ context.currentSiteId %}
+        {% set siteIdKey = constant('OpenOrchestra\\UserBundle\\Document\\User::SITE_ID_PREFIX') ~ context.siteId %}
         <script>
             var config = {{ clientConfiguration|json_encode()|raw }}
             var context = {
@@ -37,16 +37,16 @@
                     scheme: '{{ app.request.scheme }}',
                     host: '{{ app.request.host }}'
                 },
-                siteId: '{{ context.currentSiteId }}',
-                siteLanguages: {{ context.currentSiteLanguages|json_encode()|raw }},
-                language: '{{ context.currentLocale }}',
+                siteId: '{{ context.siteId }}',
+                siteLanguages: {{ context.siteLanguages|json_encode()|raw }},
+                language: '{{ context.backOfficeLanguage }}',
                 user: {
                     id            : '{{ app.user.id }}',
                     username      : '{{ app.user.username }}',
                     firstName     : '{{ app.user.firstName }}',
                     lastName      : '{{ app.user.lastName }}',
                     language      : {
-                        contribution: {% if app.user.languageBySites[siteIdKey] is defined %} '{{ app.user.languageBySites[siteIdKey] }}' {% else %} '{{context.currentSiteDefaultLanguage}}' {% endif %}
+                        contribution: {% if app.user.languageBySites[siteIdKey] is defined %} '{{ app.user.languageBySites[siteIdKey] }}' {% else %} '{{context.siteDefaultLanguage}}' {% endif %}
                     },
                     roles         : {{ app.user.roles|json_encode()|raw }},
                     access_section: {

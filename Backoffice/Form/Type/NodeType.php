@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -12,7 +13,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\Backoffice\Manager\TemplateManager;
 
@@ -31,17 +31,17 @@ class NodeType extends AbstractType
     protected $frontRoles;
 
     /**
-     * @param NodeManager              $nodeManager
-     * @param CurrentSiteIdInterface   $contextManager
-     * @param SiteRepositoryInterface  $siteRepository
-     * @param TemplateManager          $templateManager
-     * @param string                   $nodeClass
-     * @param EventSubscriberInterface $specialPageChoiceStatusSubscriber
-     * @param array                    $frontRoles
+     * @param NodeManager                $nodeManager
+     * @param ContextBackOfficeInterface $contextManager
+     * @param SiteRepositoryInterface    $siteRepository
+     * @param TemplateManager            $templateManager
+     * @param string                     $nodeClass
+     * @param EventSubscriberInterface   $specialPageChoiceStatusSubscriber
+     * @param array                      $frontRoles
      */
     public function __construct(
         NodeManager $nodeManager,
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         SiteRepositoryInterface $siteRepository,
         TemplateManager $templateManager,
         $nodeClass,

@@ -19,7 +19,7 @@ class NodeGeneratePerimeterStrategyTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
 
         $repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         Phake::when($repository)->findTreeNode(Phake::anyParameters())->thenReturn(array(

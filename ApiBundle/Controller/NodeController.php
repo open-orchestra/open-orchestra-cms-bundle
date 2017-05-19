@@ -90,7 +90,7 @@ class NodeController extends BaseController
      */
     public function deleteAction($nodeId)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
 
         $node = $nodeRepository->findOneByNodeAndSite($nodeId, $siteId);
@@ -174,7 +174,7 @@ class NodeController extends BaseController
     public function addBlockInAreaAction($nodeId, $language, $version, $blockId, $areaId, $position)
     {
         $position = (int) $position;
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $version);
         if (!$node instanceof NodeInterface) {
             throw new NodeNotFoundHttpException();
@@ -226,7 +226,7 @@ class NodeController extends BaseController
      */
     public function copyTranslatedBlocksInAreaAction(Request $request, $nodeId, $language, $version, $areaId)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $version);
         if (!$node instanceof NodeInterface) {
             throw new NodeNotFoundHttpException();
@@ -324,7 +324,7 @@ class NodeController extends BaseController
      */
     public function newVersionAction(Request $request, $nodeId, $language, $originalVersion)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $originalNodeVersion = $this->findOneNode($nodeId, $language, $siteId, $originalVersion);
         if (!$originalNodeVersion instanceof NodeInterface) {
             throw new NodeNotFoundHttpException();
@@ -364,7 +364,7 @@ class NodeController extends BaseController
      */
     public function listNodeByAuthorAndSiteIdAction($published)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByHistoryAndSiteId(
             $user->getId(),
@@ -441,7 +441,7 @@ class NodeController extends BaseController
      */
     public function listVersionAction($nodeId, $language)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findNotDeletedSortByUpdatedAt($nodeId, $language, $siteId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
@@ -551,7 +551,7 @@ class NodeController extends BaseController
      */
     public function updateChildrenOrderAction(Request $request, $nodeId)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeAndSite($nodeId, $siteId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 

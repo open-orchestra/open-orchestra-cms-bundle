@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_backoffice.manager.context.class               : OpenOrchestra\Backoffice\Context\ContextManager
+    open_orchestra_backoffice.manager.context_backoffice.class    : OpenOrchestra\Backoffice\Context\ContextBackOfficeManager
     open_orchestra_backoffice.manager.multi_languages_choice.class: OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManager
     open_orchestra_backoffice.manager.node.class                  : OpenOrchestra\Backoffice\Manager\NodeManager
     open_orchestra_backoffice.manager.site.class                  : OpenOrchestra\Backoffice\Manager\SiteManager
@@ -16,6 +17,16 @@ parameters:
 services:
     open_orchestra_backoffice.context_manager:
         class: '%open_orchestra_backoffice.manager.context.class%'
+        deprecated: ~
+        arguments:
+            - '@session'
+            - '@security.token_storage'
+            - '%kernel.default_locale%'
+            - '@open_orchestra_model.repository.site'
+            - '@security.authorization_checker'
+
+    open_orchestra_backoffice.context_backoffice_manager:
+        class: '%open_orchestra_backoffice.manager.context_backoffice.class%'
         arguments:
             - '@session'
             - '@security.token_storage'
@@ -26,7 +37,7 @@ services:
     open_orchestra_backoffice.manager.multi_languages_choice:
         class: '%open_orchestra_backoffice.manager.multi_languages_choice.class%'
         arguments:
-            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
             - '@translator'
 
     open_orchestra_backoffice.manager.node:
@@ -36,7 +47,7 @@ services:
             - '@open_orchestra_model.repository.site'
             - '@open_orchestra_model.repository.status'
             - '@open_orchestra_model.repository.block'
-            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
             - '@open_orchestra_backoffice.manager.template'
             - '%open_orchestra_model.document.node.class%'
             - '%open_orchestra_model.document.area.class%'
@@ -58,7 +69,7 @@ services:
         class: '%open_orchestra_backoffice.manager.content.class%'
         arguments:
             - '@open_orchestra_model.repository.status'
-            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
             - '%open_orchestra_model.document.content.class%'
             - '@open_orchestra_backoffice.util.unique_id_generator'
             - '@security.token_storage'
@@ -67,7 +78,7 @@ services:
         class: '%open_orchestra_backoffice.manager.redirection.class%'
         arguments:
             - '%open_orchestra_model.document.redirection.class%'
-            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
             - '@object_manager'
             - '@event_dispatcher'
             - '@open_orchestra_model.repository.site'

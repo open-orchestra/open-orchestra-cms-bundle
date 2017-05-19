@@ -2,10 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\GeneratePerimeter\Strategy;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use OpenOrchestra\Backoffice\GeneratePerimeter\Strategy\GeneratePerimeterStrategy;
 
 /**
  * Class NodeGeneratePerimeterStrategy
@@ -16,10 +15,10 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
     protected $contextManager;
 
     /**
-     * @param NodeRepositoryInterface $nodeRepository
-     * @param CurrentSiteIdInterface $contextManager
+     * @param NodeRepositoryInterface    $nodeRepository
+     * @param ContextBackOfficeInterface $contextManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $contextManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, ContextBackOfficeInterface $contextManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->contextManager = $contextManager;
@@ -45,7 +44,7 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
     {
         $treeNodes = $this->nodeRepository->findTreeNode(
             $siteId,
-            $this->contextManager->getUserCurrentSiteDefaultLanguage(),
+            $this->contextManager->getSiteContributionLanguage(),
             NodeInterface::ROOT_PARENT_ID
         );
 
@@ -62,7 +61,7 @@ class NodeGeneratePerimeterStrategy extends GeneratePerimeterStrategy implements
     {
         $treeNodes = $this->nodeRepository->findTreeNode(
             $siteId,
-            $this->contextManager->getUserCurrentSiteDefaultLanguage(),
+            $this->contextManager->getSiteContributionLanguage(),
             NodeInterface::ROOT_PARENT_ID
         );
 

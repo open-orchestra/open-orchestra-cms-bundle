@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Form\DataTransformer;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelBundle\Document\WorkflowProfileCollection;
 
@@ -23,12 +23,12 @@ class GroupWorkflowProfileCollectionTransformer implements DataTransformerInterf
     /**
      * @param WorkflowProfileRepositoryInterface $workflowProfileRepository
      * @param ContentTypeRepositoryInterface     $contentTypeRepository
-     * @param CurrentSiteIdInterface             $contextManager
+     * @param ContextBackOfficeInterface         $contextManager
      */
     public function __construct(
         WorkflowProfileRepositoryInterface $workflowProfileRepository,
         ContentTypeRepositoryInterface $contentTypeRepository,
-        CurrentSiteIdInterface $contextManager
+        ContextBackOfficeInterface $contextManager
     ) {
         $this->workflowProfileRepository = $workflowProfileRepository;
         $this->contentTypeRepository = $contentTypeRepository;

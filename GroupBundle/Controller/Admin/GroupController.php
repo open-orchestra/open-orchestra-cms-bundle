@@ -32,7 +32,7 @@ class GroupController extends AbstractAdminController
         /** @var GroupInterface $group */
         $group = new $groupClass();
 
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $group->setSite($this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId));
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $group);

@@ -7,6 +7,6 @@ services:
         arguments:
             - '@security.token_storage'
             - '@request_stack'
-            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
         tags:
             - { name: monolog.processor, method: processRecord, channel: openorchestra }

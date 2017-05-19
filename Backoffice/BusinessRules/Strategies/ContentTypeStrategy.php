@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\BusinessRules\Strategies;
 
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -20,12 +20,12 @@ class ContentTypeStrategy extends AbstractBusinessRulesStrategy
 
     /**
      * @param ContentRepositoryInterface $contentRepository
-     * @param CurrentSiteIdInterface     $contextManager
+     * @param ContextBackOfficeInterface $contextManager
      * @param SiteRepositoryInterface    $siteRepository
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
-        CurrentSiteIdInterface     $contextManager,
+        ContextBackOfficeInterface $contextManager,
         SiteRepositoryInterface    $siteRepository
     ) {
         $this->contentRepository = $contentRepository;
@@ -71,7 +71,7 @@ class ContentTypeStrategy extends AbstractBusinessRulesStrategy
      */
     public function canReadList(ContentTypeInterface $contentType, array $parameters)
     {
-        $siteId = $this->contextManager->getCurrentSiteId();
+        $siteId = $this->contextManager->getSiteId();
         $site = $this->siteRepository->findOneBySiteId($siteId);
 
         return in_array($contentType->getContentTypeId(), $site->getContentTypes());

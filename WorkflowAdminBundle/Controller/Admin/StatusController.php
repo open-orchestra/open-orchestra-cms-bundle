@@ -81,7 +81,7 @@ class StatusController extends AbstractAdminController
             $response = new Response(
                 '',
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId(), 'name' => $status->getLabel($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
+                array('Content-type' => 'text/html; charset=utf-8', 'statusId' => $status->getId(), 'name' => $status->getLabel($this->get('open_orchestra_backoffice.context_backoffice_manager')->getBackOfficeLanguage()))
             );
 
             return $response;

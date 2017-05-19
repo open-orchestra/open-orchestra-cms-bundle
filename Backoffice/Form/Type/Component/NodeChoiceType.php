@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
@@ -19,9 +19,9 @@ class NodeChoiceType extends AbstractType
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
-     * @param CurrentSiteIdInterface $currentSiteManager
+     * @param ContextBackOfficeInterface $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, ContextBackOfficeInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
@@ -37,8 +37,8 @@ class NodeChoiceType extends AbstractType
                 'choices' => function(Options $options) {
                     return $this->getChoices($options['siteId'], $options['language']);
                 },
-                'siteId' => $this->currentSiteManager->getCurrentSiteId(),
-                'language' => $this->currentSiteManager->getCurrentSiteDefaultLanguage(),
+                'siteId' => $this->currentSiteManager->getSiteId(),
+                'language' => $this->currentSiteManager->getSiteDefaultLanguage(),
                 'attr' => array(
                     'class' => 'orchestra-node-choice'
                 )

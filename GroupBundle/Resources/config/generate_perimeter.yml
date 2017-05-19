@@ -10,6 +10,6 @@ services:
         class: '%open_orchestra_group.generate_perimeter.node.class%'
         arguments:
             - '@open_orchestra_model.repository.node'
-            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
         tags:
             - { name: open_orchestra_group.generate_perimeter.strategy }

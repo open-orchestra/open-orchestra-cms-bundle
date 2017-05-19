@@ -58,7 +58,7 @@
 
 {% block oo_workflow_status_parameters_widget %}
     {% spaceless %}
-        <td>{{ form.vars.value.getLabel(context.currentLocale) }}</td>
+        <td>{{ form.vars.value.getLabel(context.backOfficeLanguage) }}</td>
         {% for child in form %}
             <td class="workflow-cell-parameter">
                 <input type="radio"
@@ -103,7 +103,7 @@
     {% spaceless %}
         {% set profile = form.vars.value %}
         <td>
-            {{ profile.getLabel(context.currentLocale) }}
+            {{ profile.getLabel(context.backOfficeLanguage) }}
             {{ form_widget(form.children.transitions) }}
         </td>
     {% endspaceless %}

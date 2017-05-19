@@ -52,8 +52,8 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
 
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
 
-        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->contextManager)->getSiteId()->thenReturn($this->siteId);
 
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId($this->siteId)->thenReturn($site);

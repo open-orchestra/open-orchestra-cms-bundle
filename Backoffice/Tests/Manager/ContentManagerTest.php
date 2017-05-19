@@ -66,8 +66,8 @@ class ContentManagerTest extends AbstractBaseTestCase
         Phake::when($this->content)->getAttributes()->thenReturn(array($this->contentAttribute));
         Phake::when($this->content)->getStatus()->thenReturn($this->statusInitial);
 
-        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
+        Phake::when($this->contextManager)->getBackOfficeLanguage()->thenReturn('fakeLanguage');
 
         $this->contentClass = 'OpenOrchestra\ModelBundle\Document\Content';
 
@@ -168,7 +168,7 @@ class ContentManagerTest extends AbstractBaseTestCase
     public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId, $isStatusable)
     {
         $userName = 'fakeUserName';
-        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
+        Phake::when($this->contextManager)->getSiteId()->thenReturn($siteId);
         Phake::when($this->user)->getUsername()->thenReturn($userName);
 
         $content = $this->manager->initializeNewContent($contentType, $language, $linkedToSite, $isStatusable);

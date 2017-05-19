@@ -44,7 +44,7 @@ class SiteController extends BaseController
         $siteIds = null;
         if (false === $this->get('security.authorization_checker')->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
             $siteIds = array();
-            $availableSites = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+            $availableSites = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getAvailableSites();
             foreach ($availableSites as $site) {
                 $siteIds[] = $site->getSiteId();
             }
@@ -71,7 +71,7 @@ class SiteController extends BaseController
      */
     public function listAvailableSiteAction()
     {
-        $availableSite = $this->get('open_orchestra_backoffice.context_manager')->getAvailableSites();
+        $availableSite = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getAvailableSites();
 
         return $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($availableSite);
     }

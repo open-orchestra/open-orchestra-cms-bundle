@@ -2,42 +2,31 @@
 
 namespace OpenOrchestra\Backoffice\Context;
 
-use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-
 /**
  * Class TestContextManager
  */
-class TestContextManager extends ContextManager
+class TestContextManager extends ContextBackOfficeManager
 {
     protected $siteId = '2';
     protected $defaultLanguage = 'fr';
     protected $siteName = 'Demo site';
     protected $languages = array('fr', 'en', 'de');
-
-    /**
-     * @param SiteRepositoryInterface $siteRepository
-     * @param string                  $defaultLocale
-     */
-    public function __construct(SiteRepositoryInterface $siteRepository, $defaultLocale = 'en')
-    {
-        $this->siteRepository = $siteRepository;
-        $this->defaultLocal = $defaultLocale;
-    }
+    protected $defaultLocale;
 
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getBackOfficeLanguage()
     {
-        return $this->defaultLocal;
+        return $this->defaultLocale;
     }
 
     /**
      * @param string $locale
      */
-    public function setCurrentLocale($locale)
+    public function setBackOfficeLanguage($locale)
     {
-        $this->defaultLocal = $locale;
+        $this->defaultLocale = $locale;
     }
 
     /**
@@ -46,7 +35,7 @@ class TestContextManager extends ContextManager
      * @param string $defaultLanguage
      * @param array  $languages
      */
-    public function setCurrentSite($siteId, $siteDomain, $defaultLanguage, array $languages)
+    public function setSite($siteId, $siteDomain, $defaultLanguage, array $languages)
     {
         $this->siteId = $siteId;
         $this->siteDomain = $siteDomain;
@@ -57,7 +46,7 @@ class TestContextManager extends ContextManager
     /**
      * @return string
      */
-    public function getCurrentSiteId()
+    public function getSiteId()
     {
         return $this->siteId;
     }
@@ -65,7 +54,7 @@ class TestContextManager extends ContextManager
     /**
      * @return string
      */
-    public function getCurrentSiteName()
+    public function getSiteName()
     {
         return $this->siteName;
     }
@@ -73,7 +62,7 @@ class TestContextManager extends ContextManager
     /**
      * @return string
      */
-    public function getCurrentSiteDefaultLanguage()
+    public function getSiteDefaultLanguage()
     {
         return $this->defaultLanguage;
     }
@@ -81,7 +70,7 @@ class TestContextManager extends ContextManager
     /**
      * @return string
      */
-    public function getUserCurrentSiteDefaultLanguage()
+    public function getSiteContributionLanguage()
     {
         return $this->defaultLanguage;
     }
@@ -97,7 +86,7 @@ class TestContextManager extends ContextManager
     /**
      * @return array
      */
-    public function getCurrentSiteLanguages()
+    public function getSiteLanguages()
     {
         return $this->languages;
     }

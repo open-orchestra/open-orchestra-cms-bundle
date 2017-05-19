@@ -2,127 +2,43 @@
 
 namespace OpenOrchestra\Backoffice\Context;
 
-use FOS\UserBundle\Model\GroupableInterface;
-use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use OpenOrchestra\ModelInterface\Model\SiteInterface;
-use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-use OpenOrchestra\UserBundle\Model\UserInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Centralize app contextual datas
+ *
+ * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager
  */
-class ContextManager implements CurrentSiteIdInterface
+class ContextManager extends ContextBackOfficeManager implements CurrentSiteIdInterface
 {
-    const KEY_LOCALE = '_locale';
-    const KEY_SITE = '_site';
-
-    protected $siteId;
-    protected $session;
-    protected $tokenStorage;
-    protected $currentLanguage;
-    protected $currentSiteLanguages = array();
-    protected $defaultLocale;
-    protected $siteRepository;
-    protected $authorizationChecker;
-
-    /**
-     * Constructor
-     *
-     * @param Session                       $session
-     * @param TokenStorageInterface         $tokenStorage
-     * @param string                        $defaultLocale
-     * @param SiteRepositoryInterface       $siteRepository
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
-    public function __construct(
-        Session $session,
-        TokenStorageInterface $tokenStorage,
-        $defaultLocale,
-        SiteRepositoryInterface $siteRepository,
-        AuthorizationCheckerInterface $authorizationChecker
-    ) {
-        $this->session = $session;
-        $this->tokenStorage = $tokenStorage;
-        $this->defaultLocale = $defaultLocale;
-        $this->siteRepository = $siteRepository;
-        $this->authorizationChecker = $authorizationChecker;
-    }
-
     /**
      * Get current locale value
-     *
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::getBackOfficeLanguage
      * @return string
      */
     public function getCurrentLocale()
     {
-        $currentLanguage = $this->session->get(self::KEY_LOCALE);
-
-        if (!$currentLanguage) {
-            $currentLanguage = $this->getDefaultLocale();
-            $token = $this->tokenStorage->getToken();
-            if ($token && ($user = $token->getUser()) instanceof UserInterface) {
-                if (null !== $user->getLanguage()) {
-                    $currentLanguage = $user->getLanguage();
-                }
-                $this->setCurrentLocale($currentLanguage);
-            }
-        }
-
-        return $currentLanguage;
-
+        return parent::getBackOfficeLanguage();
     }
 
     /**
      * Set current locale
-     *
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::setBackOfficeLanguage
      * @param string $locale
      */
     public function setCurrentLocale($locale)
     {
-        $this->session->set(self::KEY_LOCALE, $locale);
+        parent::setBackOfficeLanguage($locale);
     }
 
     /**
      * Get default locale
-     *
+     * @deprecated
      * @return string
      */
     public function getDefaultLocale()
     {
         return $this->defaultLocale;
-    }
-
-    /**
-     * Get availables sites on platform
-     *
-     * @return array<SiteInterface>
-     */
-    public function getAvailableSites()
-    {
-        $sites = array();
-        $token = $this->tokenStorage->getToken();
-        if ($token instanceof TokenInterface) {
-            if ($this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
-                return $this->siteRepository->findByDeleted(false);
-            }
-
-            if (($user = $token->getUser()) instanceof GroupableInterface) {
-                foreach ($user->getGroups() as $group) {
-                    /** @var SiteInterface $site */
-                    $site = $group->getSite();
-                    if (null !== $site && !$group->isDeleted() && !$site->isDeleted()) {
-                        $sites[$site->getId()] = $site;
-                    }
-                }
-            }
-        }
-
-        return $sites;
     }
 
     /**
@@ -132,127 +48,61 @@ class ContextManager implements CurrentSiteIdInterface
      * @param string $siteName
      * @param string $siteDefaultLanguage
      * @param array $languages
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::setSite
      */
     public function setCurrentSite($siteId, $siteName, $siteDefaultLanguage, array $languages)
     {
-        $this->siteId = $siteId;
-        $this->session->set(
-            self::KEY_SITE,
-            array(
-                'siteId' => $siteId,
-                'name' => $siteName,
-                'defaultLanguage' => $siteDefaultLanguage,
-                'languages' => $languages,
-            )
-        );
+        parent::setSite($siteId, $siteName, $siteDefaultLanguage, $languages);
     }
 
     /**
      * Get the current site id
      *
-     * @return string
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::getSiteId
      */
     public function getCurrentSiteId()
     {
-        if (is_null($this->siteId)) {
-            $this->siteId = $this->getCurrentSite()['siteId'];
-        }
-
-        return $this->siteId;
+        return parent::getSiteId();
     }
 
     /**
      * Get the current domain
-     *
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::getSiteName
      * @return string
      */
     public function getCurrentSiteName()
     {
-        $site = $this->getCurrentSite();
-
-        return $site['name'];
+        return parent::getSiteName();
     }
 
     /**
      * Get the current default language of the current site
-     *
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::getSiteDefaultLanguage
      * @return string
      */
     public function getCurrentSiteDefaultLanguage()
     {
-        if (is_null($this->currentLanguage)) {
-            $this->currentLanguage = $this->getCurrentSite()['defaultLanguage'];
-        }
-
-        return $this->currentLanguage;
+        return parent::getSiteDefaultLanguage();
     }
 
     /**
      * Get the current default language setted by the user for the current site
-     *
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::getSiteContributionLanguage
      * @return string
      */
     public function getUserCurrentSiteDefaultLanguage()
     {
-        $currentLanguage = $this->getCurrentSite()['defaultLanguage'];
-
-        $token = $this->tokenStorage->getToken();
-        if ($token instanceof TokenInterface) {
-            if (($user = $token->getUser()) instanceof UserInterface && $user->hasLanguageBySite($this->getCurrentSiteId())) {
-                $currentLanguage = $user->getLanguageBySite($this->getCurrentSiteId());
-            }
-        }
-
-        return $currentLanguage;
+        return parent::getSiteContributionLanguage();
     }
 
 
     /**
      * Get languages of the current site
-     *
+     * @deprecated use OpenOrchestra\Backoffice\Context\ContextBackOfficeManager::getSiteLanguages
      * @return array
      */
     public function getCurrentSiteLanguages()
     {
-        if (empty($this->currentSiteLanguages)) {
-            $this->currentSiteLanguages = $this->getCurrentSite()['languages'];
-        }
-
-        return $this->currentSiteLanguages;
-    }
-
-    /**
-     * Clear saved context
-     */
-    public function clearContext()
-    {
-        $this->session->remove(self::KEY_SITE);
-        $this->session->remove(self::KEY_LOCALE);
-        $this->tokenStorage->getToken()->setAuthenticated(false);
-    }
-
-    /**
-     * Get current selected site (BO Context)
-     *
-     * @return array
-     */
-    protected function getCurrentSite()
-    {
-        $currentSite = $this->session->get(self::KEY_SITE);
-
-        if (!$currentSite || (is_integer($currentSite['siteId']) && $currentSite['siteId'] == 0)) {
-            $sites = $this->getAvailableSites();
-            if (count($sites) > 0) {
-                $site = array_shift($sites);
-                $siteId = $site->getSiteId();
-                $siteName = $site->getName();
-                $locale = $site->getDefaultLanguage();
-                $languages = $site->getLanguages();
-                $this->setCurrentSite($siteId, $siteName, $locale, $languages);
-                $currentSite = $this->session->get(self::KEY_SITE);
-            }
-        }
-
-        return $currentSite;
+        return parent::getSiteLanguages();
     }
 }

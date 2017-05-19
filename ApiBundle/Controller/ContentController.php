@@ -54,7 +54,7 @@ class ContentController extends BaseController
     public function showAction($contentId, $language, $version)
     {
         if (null === $language) {
-            $language = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
+            $language = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteDefaultLanguage();
         }
         $content = $this->findOneContent($contentId, $language, $version);
 
@@ -270,7 +270,7 @@ class ContentController extends BaseController
      */
     public function listContentByAuthorAndSiteIdAction($published)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
         $availableContentTypes = $site->getContentTypes();
         $user = $this->get('security.token_storage')->getToken()->getUser();

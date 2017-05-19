@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\Backoffice\Validator\Constraints\BooleanConditionValidator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentSearchSubscriber;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\Backoffice\Validator\Constraints\BooleanCondition;
 
 /**
@@ -18,16 +18,17 @@ class ContentSearchType extends AbstractType
 {
     protected $contentRepository;
     protected $contextManager;
+    protected $booleanConditionValidator;
 
     /**
      * @param BooleanConditionValidator  $booleanConditionValidator,
      * @param ContentRepositoryInterface $contentRepository
-     * @param CurrentSiteIdInterface     $contextManager
+     * @param ContextBackOfficeInterface $contextManager
      */
     public function __construct(
         BooleanConditionValidator $booleanConditionValidator,
         ContentRepositoryInterface $contentRepository,
-        CurrentSiteIdInterface $contextManager
+        ContextBackOfficeInterface $contextManager
     ) {
         $this->booleanConditionValidator = $booleanConditionValidator;
         $this->contentRepository = $contentRepository;

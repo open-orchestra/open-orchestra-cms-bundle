@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\Backoffice\Util\UniqueIdGenerator;
 use OpenOrchestra\ModelInterface\BlockEvents;
 use OpenOrchestra\ModelInterface\Event\BlockEvent;
@@ -10,7 +11,6 @@ use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
-use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
@@ -42,7 +42,7 @@ class NodeManager
      * @param SiteRepositoryInterface    $siteRepository
      * @param StatusRepositoryInterface  $statusRepository
      * @param BlockRepositoryInterface   $blockRepository
-     * @param ContextManager             $contextManager
+     * @param ContextBackOfficeInterface $contextManager
      * @param string                     $nodeClass
      * @param string                     $areaClass
      * @param EventDispatcherInterface   $eventDispatcher
@@ -55,7 +55,7 @@ class NodeManager
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         BlockRepositoryInterface  $blockRepository,
-        ContextManager $contextManager,
+        ContextBackOfficeInterface $contextManager,
         TemplateManager $templateManager,
         $nodeClass,
         $areaClass,
@@ -183,7 +183,7 @@ class NodeManager
      */
     public function hydrateNodeFromNodeId(NodeInterface $node, $nodeId)
     {
-        $siteId = $this->contextManager->getCurrentSiteId();
+        $siteId = $this->contextManager->getSiteId();
         $oldNode = $this->nodeRepository->findInLastVersion($nodeId, $node->getLanguage(), $siteId);
         if ($oldNode) {
             $node->setTemplate($oldNode->getTemplate());

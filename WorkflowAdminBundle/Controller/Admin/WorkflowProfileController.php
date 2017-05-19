@@ -49,7 +49,7 @@ class WorkflowProfileController extends AbstractAdminController
             $response = new Response(
                 '',
                 Response::HTTP_CREATED,
-                array('Content-type' => 'text/html; charset=utf-8', 'workflowProfileId' => $workflowProfile->getId(), 'name' => $workflowProfile->getLabel($this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale()))
+                array('Content-type' => 'text/html; charset=utf-8', 'workflowProfileId' => $workflowProfile->getId(), 'name' => $workflowProfile->getLabel($this->get('open_orchestra_backoffice.context_backoffice_manager')->getBackOfficeLanguage()))
                 );
 
             return $response;

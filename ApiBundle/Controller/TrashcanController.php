@@ -30,7 +30,7 @@ class TrashcanController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $mapping = array(
             'name' => 'name',
             'type' => 'type',

@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\GroupBundle\Form\DataTransformer;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\GroupBundle\Repository\GroupRepository;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class GroupListToArrayTransformer
@@ -17,12 +17,12 @@ class GroupListToArrayTransformer implements DataTransformerInterface
     protected $availableSiteIds;
 
     /**
-     * @param GroupRepository        $groupRepository
-     * @param CurrentSiteIdInterface $contextManager
+     * @param GroupRepository            $groupRepository
+     * @param ContextBackOfficeInterface $contextManager
      */
     public function __construct(
         GroupRepository $groupRepository,
-        CurrentSiteIdInterface $contextManager
+        ContextBackOfficeInterface $contextManager
     ) {
         $this->groupRepository = $groupRepository;
         $this->availableSiteIds = array();

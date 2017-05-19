@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 
 /**
  * Class FieldTypeType
@@ -22,14 +22,14 @@ class FieldTypeType extends AbstractType
     protected $fieldTypeClass;
 
     /**
-     * @param CurrentSiteIdInterface   $contextManager
-     * @param EventSubscriberInterface $fieldTypeTypeSubscriber
-     * @param array                    $backOfficeLanguages
-     * @param array                    $fieldTypeParameters
-     * @param string                   $fieldTypeClass
+     * @param ContextBackOfficeInterface $contextManager
+     * @param EventSubscriberInterface   $fieldTypeTypeSubscriber
+     * @param array                      $backOfficeLanguages
+     * @param array                      $fieldTypeParameters
+     * @param string                     $fieldTypeClass
      */
     public function __construct(
-        CurrentSiteIdInterface $contextManager,
+        ContextBackOfficeInterface $contextManager,
         EventSubscriberInterface $fieldTypeTypeSubscriber,
         array $backOfficeLanguages,
         array $fieldTypeParameters,
@@ -152,7 +152,7 @@ class FieldTypeType extends AbstractType
     {
         $data = $view->vars['columns']['labels']['data'];
 
-        $language = $this->contextManager->getCurrentLocale();
+        $language = $this->contextManager->getBackOfficeLanguage();
         $view->vars['columns']['labels']['data'] = (is_array($data) && array_key_exists($language, $data)) ? $data[$language] : '';
 
         $data = $view->vars['columns']['type']['data'];

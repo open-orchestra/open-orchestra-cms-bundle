@@ -24,7 +24,7 @@ class ContentTypeStrategyTest extends AbstractBaseTestCase
     {
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
-        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface');
 
         $this->strategy = new ContentTypeStrategy(
             $this->contentRepository,

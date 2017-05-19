@@ -27,7 +27,7 @@ class TransitionController extends AbstractAdminController
     public function formAction(Request $request)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, WorkflowProfile::ENTITY_TYPE);
-        $currentLocale = $this->get('open_orchestra_backoffice.context_manager')->getCurrentLocale();
+        $currentLocale = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getBackOfficeLanguage();
         $profiles = $this->get('open_orchestra_model.repository.workflow_profile')
             ->findAllOrderedByLocale($currentLocale);
 

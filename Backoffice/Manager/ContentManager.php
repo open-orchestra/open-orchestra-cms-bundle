@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
-use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\Backoffice\Util\UniqueIdGenerator;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
@@ -20,14 +20,14 @@ class ContentManager
 
     /**
      * @param StatusRepositoryInterface  $statusRepository
-     * @param ContextManager             $contextManager
+     * @param ContextBackOfficeInterface $contextManager
      * @param string                     $contentClass
      * @param UniqueIdGenerator          $uniqueIdGenerator
      * @param TokenStorage               $tokenStorage
      */
     public function __construct(
         StatusRepositoryInterface $statusRepository,
-        ContextManager $contextManager,
+        ContextBackOfficeInterface $contextManager,
         $contentClass,
         UniqueIdGenerator $uniqueIdGenerator,
         TokenStorage $tokenStorage
@@ -59,7 +59,7 @@ class ContentManager
         /** @var ContentInterface $content */
         $content = new $contentClass();
         $content->setLanguage($language);
-        $content->setSiteId($this->contextManager->getCurrentSiteId());
+        $content->setSiteId($this->contextManager->getSiteId());
         $content->setContentType($contentType);
         $content->setLinkedToSite($isLinkedToSite);
         $content->setStatus($initialStatus);
