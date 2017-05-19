@@ -18,13 +18,16 @@ class InternalLinkPlugin
             stateSelector: 'a[href][data-options]',
             onclick: () => {
                 let $selection = $(editor.selection.getNode());
-                let data = {label: $selection.text()};
-                if (typeof $selection.attr('data-options') !== 'undefined') {
+                let data = {};
+                if (typeof $selection.attr('data-options') !== 'undefined' && $selection.is('a')) {
+                    data.label = $(editor.selection.getNode()).text();
                     let options = $selection.attr('data-options');
                     options = JSON.parse(options);
                     $.each(options, (name, value) => {
                         data[name] = value;
                     });
+                } else{
+                    data.label = editor.selection.getContent({format : 'text'});
                 }
 
                 let internalLinkModalView = new InternalLinkModalView({editor: editor, data: data});
