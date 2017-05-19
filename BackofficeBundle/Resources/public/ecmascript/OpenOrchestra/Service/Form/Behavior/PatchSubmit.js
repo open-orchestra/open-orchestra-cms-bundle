@@ -45,7 +45,7 @@ class PatchSubmit extends AbstractBehavior
 
         data = $form.serializeArray();
 
-       $form.ajaxSubmit({
+        $form.ajaxSubmit({
             type: 'PATCH',
             context: this,
             data: data,

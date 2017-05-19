@@ -59,7 +59,7 @@ class SiteSiteAliasType extends AbstractType
                 $this->siteRepository,
                 $this->nodeRepository,
                 $options['attr']
-            ));
+        ));
     }
 
     /**
