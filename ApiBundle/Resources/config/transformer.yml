@@ -88,6 +88,7 @@ services:
             - '@translator'
             - '@open_orchestra_model.repository.node'
             - '@open_orchestra_model.repository.block'
+            - '@open_orchestra_backoffice.generate_form_manager'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
 

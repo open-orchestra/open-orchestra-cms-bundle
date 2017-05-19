@@ -50,7 +50,20 @@ let RenderToolbarViewMixin = (superclass) => class extends superclass {
      * @private
      */
     _renderMessageNodeActionToolbar($selector) {
-        $('#node-message', $selector).html(this._renderTemplate('Node/nodeMessageToolbarView', {node: this._node}));
+        let requiredUriParameters = [];
+
+        if (false === this._node.get('rights').can_publish_node) {
+            $.each(this._node.get('areas'), function(index, area) {
+                $.each(area.get('blocks').models, function(index, block) {
+                    requiredUriParameters = _.union(requiredUriParameters, block.get('required_uri_parameters'));
+                });
+            });
+        }
+
+        $('#node-message', $selector).html(this._renderTemplate('Node/nodeMessageToolbarView', {
+            node                 : this._node,
+            requiredUriParameters: requiredUriParameters
+        }));
     }
 
     /**

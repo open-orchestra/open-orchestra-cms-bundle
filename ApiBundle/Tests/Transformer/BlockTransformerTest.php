@@ -16,6 +16,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
     protected $blockTransformer;
     protected $blockConfigurationManager;
     protected $translator;
+    protected $generateFormManager;
 
     /**
      * Set up the test
@@ -31,6 +32,8 @@ class BlockTransformerTest extends AbstractBaseTestCase
         $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
         Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(false);
         Phake::when($context)->getGroupContext()->thenReturn($groupContext);
+        $generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
+        Phake::when($generateFormManager)->getRequiredUriParameter(Phake::anyParameters())->thenReturn(array());
 
         $this->blockTransformer = new BlockTransformer(
             $this->facadeClass,
@@ -38,7 +41,8 @@ class BlockTransformerTest extends AbstractBaseTestCase
             $this->blockConfigurationManager,
             $this->translator,
             $nodeRepository,
-            $blockRepository
+            $blockRepository,
+            $generateFormManager
         );
         $this->blockTransformer->setContext($context);
     }

@@ -8,9 +8,16 @@
 <% }; %>
 <% if (false === node.get('rights').can_publish_node) {%>
 <div class="alert alert-warning" role="warning">
-    <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.title') %></div>
-    <p>
-        <%= (Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.message').replace(/\\n/g, '<br>')) %>
-    </p>
+    <% if (1 == requiredUriParameters.length) { %>
+        <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.unique_title') %></div>
+        <p>
+            <%= (Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.unique_message').replace(/\\n/g, '<br>').replace('%s', '{' + requiredUriParameters.join('}, {') + '}')) %>
+        </p>
+    <% } else { %>
+        <div class="heading"><%- Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.multiple_title') %></div>
+        <p>
+            <%= (Translator.trans('open_orchestra_backoffice.node.route_pattern_arguments.multiple_message').replace(/\\n/g, '<br>').replace('%s', '{' + requiredUriParameters.join('}, {') + '}')) %>
+        </p>
+    <% } %>
 </div>
 <% }; %>

@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\Manager\BlockConfigurationManager;
+use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -31,6 +32,7 @@ class BlockTransformer extends AbstractTransformer
      * @param TranslatorInterface       $translator
      * @param NodeRepositoryInterface   $nodeRepository
      * @param BlockRepositoryInterface  $blockRepository
+     * @param GenerateFormManager       $generateFormManager
      */
     public function __construct(
         $facadeClass,
@@ -38,7 +40,8 @@ class BlockTransformer extends AbstractTransformer
         BlockConfigurationManager $blockConfigurationManager,
         TranslatorInterface $translator,
         NodeRepositoryInterface $nodeRepository,
-        BlockRepositoryInterface $blockRepository
+        BlockRepositoryInterface $blockRepository,
+        GenerateFormManager $generateFormManager
     ) {
         parent::__construct($facadeClass);
         $this->displayBlockManager = $displayBlockManager;
@@ -46,6 +49,7 @@ class BlockTransformer extends AbstractTransformer
         $this->translator = $translator;
         $this->nodeRepository = $nodeRepository;
         $this->blockRepository = $blockRepository;
+        $this->generateFormManager = $generateFormManager;
     }
 
     /**
@@ -88,6 +92,11 @@ class BlockTransformer extends AbstractTransformer
         if ($this->hasGroup(CMSGroupContext::BLOCKS_NUMBER_USE)) {
             $facade->numberUse = $this->nodeRepository->countBlockUsed($block->getId());
         }
+
+        if ($this->hasGroup(CMSGroupContext::BLOCK_REQUIRED_URI_PARAMETERS)) {
+            $facade->requiredUriParameters = $this->generateFormManager->getRequiredUriParameter($block);
+        }
+
 
         return $facade;
     }

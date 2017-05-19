@@ -138,11 +138,16 @@ open_orchestra_backoffice:
                 To modify the contents of the page please create a new version. \n
                 You can also modify the workflow of this version but the page will not be visible on the site
         route_pattern_arguments:
-            title: Main url arguments missing.
-            message: |
+            multiple_title: Main url arguments missing.
+            unique_title: Main url argument missing.
+            multiple_message: |
                 This page cannot be published. \n
                 Certain blocks of this page need parameters to be correctly shown. \n
-                This parameters should be found in page's main URL. \n
+                The parameters %s should be found in page's main URL. \n
+            unique_message: |
+                This page cannot be published. \n
+                Certain blocks of this page need a parameter to be correctly shown. \n
+                The parameter %s should be found in page's main URL. \n
         tree:
             open: Open the tree
             close: Close the tree

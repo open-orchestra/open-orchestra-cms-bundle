@@ -69,6 +69,11 @@ class BlockFacade extends AbstractFacade
     protected $attributes = array();
 
     /**
+     * @Serializer\Type("array")
+     */
+    public $requiredUriParameters = array();
+
+    /**
      * @param string $key
      * @param string $value
      */
