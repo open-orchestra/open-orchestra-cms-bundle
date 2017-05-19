@@ -41,7 +41,7 @@ class AdminController extends Controller
      */
     public function cleanContextAction()
     {
-        dump($this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'));
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->get('open_orchestra_backoffice.context_backoffice_manager')->clearContext();
 
         return new Response();
