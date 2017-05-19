@@ -46,9 +46,16 @@ class InternalLinkFormView extends AbstractFormView
             let label = oo_internal_link['label'];
             delete(oo_internal_link['label']);
             delete(oo_internal_link['_token']);
-            let link = $('<a href="#">').html(label).attr('data-options', JSON.stringify(oo_internal_link));
+
             let $selection = $(this._editor.selection.getNode());
-            $selection.replaceWith(link);
+            if (typeof $selection.attr('data-options') !== 'undefined' && $selection.is('a')) {
+                $selection.attr('data-options', JSON.stringify(oo_internal_link));
+                $selection.text(label);
+            } else {
+                let link = tinymce.activeEditor.dom.create('a', {href: '#', 'data-options': JSON.stringify(oo_internal_link)}, tinymce.activeEditor.dom.encode(label));
+                this._editor.selection.setNode(link);
+            }
+
             Backbone.Events.trigger('form:deactivate', this);
             this._modal.hide();
         }
