@@ -17,7 +17,7 @@ class AdminController extends Controller
      * @param string|null $siteId
      *
      * @Config\Route("", name="homepage")
-     * @Config\Route("/{siteId}/homepage/{_locale}", name="homepage_with_site_id_and_language")
+     * @Config\Route("/{siteId}/homepage", name="homepage_with_site_id_and_language")
      *
      * @return Response
      */
@@ -41,7 +41,7 @@ class AdminController extends Controller
      */
     public function cleanContextAction()
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        dump($this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'));
         $this->get('open_orchestra_backoffice.context_backoffice_manager')->clearContext();
 
         return new Response();
