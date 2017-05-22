@@ -133,58 +133,58 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
-                    <thead {% if form|length == 0 %} class="hide" {% endif %}>
-                    <tr>
-                        {% if form.vars.sortable is defined and form.vars.sortable %}
-                            <th>
-                                &nbsp;
-                            </th>
-                        {% endif %}
-                        {% for column in prototype.vars.columns %}
-                            <th>
-                                {{ column.label|trans }}
-                            </th>
+                        <thead {% if form|length == 0 %} class="hide" {% endif %}>
+                            <tr>
+                                {% if form.vars.sortable is defined and form.vars.sortable %}
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                {% endif %}
+                                {% for column in prototype.vars.columns %}
+                                    <th>
+                                        {{ column.label|trans }}
+                                    </th>
+                                {% endfor %}
+                                <th>&nbsp;</th>
+                                {% if form.vars.allow_delete %}
+                                    <th>&nbsp;</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        {% for field in form %}
+                            <tbody class="accordion-form" data-prototype-id="{{ field.vars.name }}">
+                                <tr>
+                                    {% if form.vars.sortable is defined and form.vars.sortable %}
+                                        <td>
+                                            <i class="fa fa-arrows"></i>
+                                        </td>
+                                    {% endif %}
+                                    {% for column in field.vars.columns %}
+                                        <td>
+                                            {{ column.data|trans }}
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        <button type="button" class="btn-nostyle fa fa-pencil btn-sm not open-form{% if not field.vars.valid %} hide{% endif %}"></button>
+                                        <button type="button" class="btn-nostyle fa fa-close btn-sm close-form{% if field.vars.valid %} hide{% endif %}"></button>
+                                    </td>
+                                    {% if form.vars.allow_delete %}
+                                        <td>
+                                            <button type="button" class="btn-nostyle fa fa-trash btn-sm remove-form"></button>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                                <tr class="accordion-formrow {% if field.vars.valid %}hide{% endif %}{% if field.vars.attr.class is defined %} {{ field.vars.attr.class }}{% endif %}">
+                                    <td colspan="{{ nbrColumn }}">
+                                        <div class="row">
+                                            {{ form_widget(field) }}
+                                            {{ form_errors(field) }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
                         {% endfor %}
-                        <th>&nbsp;</th>
-                        {% if form.vars.allow_delete %}
-                            <th>&nbsp;</th>
-                        {% endif %}
-                    </tr>
-                    </thead>
-                    {% for field in form %}
-                        <tbody class="accordion-form" data-prototype-id="{{ field.vars.name }}">
-                        <tr>
-                            {% if form.vars.sortable is defined and form.vars.sortable %}
-                                <td>
-                                    <i class="fa fa-arrows"></i>
-                                </td>
-                            {% endif %}
-                            {% for column in field.vars.columns %}
-                                <td>
-                                    {{ column.data|trans }}
-                                </td>
-                            {% endfor %}
-                            <td>
-                                <button type="button" class="btn-nostyle fa fa-pencil btn-sm not open-form{% if not field.vars.valid %} hide{% endif %}"></button>
-                                <button type="button" class="btn-nostyle fa fa-close btn-sm close-form{% if field.vars.valid %} hide{% endif %}"></button>
-                            </td>
-                            {% if form.vars.allow_delete %}
-                                <td>
-                                    <button type="button" class="btn-nostyle fa fa-trash btn-sm remove-form"></button>
-                                </td>
-                            {% endif %}
-                        </tr>
-                        <tr class="accordion-formrow {% if field.vars.valid %}hide{% endif %}{% if field.vars.attr.class is defined %} {{ field.vars.attr.class }}{% endif %}">
-                            <td colspan="{{ nbrColumn }}">
-                                <div class="row">
-                                    {{ form_widget(field) }}
-                                    {{ form_errors(field) }}
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    {% endfor %}
-                </table>
+                    </table>
                 </div>
             </div>
         {% else %}
@@ -199,26 +199,26 @@
         {% set width = form.vars.max_columns > 0 ? (100 / form.vars.max_columns)|number_format(4) ~ '%' : 'auto' %}
         <div class="table-responsive">
             <table class="table table-striped">
-            <thead>
-            <tr>
-                <th style="width:{{ width }}">&nbsp;</th>
-                {% for rank, cell in form.vars.configuration.row %}
-                    <th style="width:{{ width }}">{% if form.vars.configuration.icon[rank] is defined %} <i class="{{ form.vars.configuration.icon[rank] }}"></i>{% endif %}{{ cell }}{% if form.vars.configuration.help[rank] is defined %} <i class="form-help-tooltip icon-prepend fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" data-original-title="{{ form.vars.configuration.help[rank] }}"></i>{% endif %}
-                    </th>
-                {% endfor %}
-                <th>&nbsp;</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for name, cell in form.vars.configuration.column %}
+                <thead>
                 <tr>
-                    <td>{{ cell }}</td>
-                    {{ form_widget(collection[name]) }}
-                    <td>&nbsp;</td>
+                    <th style="width:{{ width }}">&nbsp;</th>
+                    {% for rank, cell in form.vars.configuration.row %}
+                        <th style="width:{{ width }}">{% if form.vars.configuration.icon[rank] is defined %} <i class="{{ form.vars.configuration.icon[rank] }}"></i>{% endif %}{{ cell }}{% if form.vars.configuration.help[rank] is defined %} <i class="form-help-tooltip icon-prepend fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" data-original-title="{{ form.vars.configuration.help[rank] }}"></i>{% endif %}
+                        </th>
+                    {% endfor %}
+                    <th>&nbsp;</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for name, cell in form.vars.configuration.column %}
+                    <tr>
+                        <td>{{ cell }}</td>
+                        {{ form_widget(collection[name]) }}
+                        <td>&nbsp;</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     {% endspaceless %}
 {% endblock oo_check_list_collection_widget %}
