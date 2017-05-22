@@ -1,9 +1,9 @@
 import AbstractBehavior from './AbstractBehavior'
 
 /**
- * @class NodeChoice
+ * @class TreeChoice
  */
-class NodeChoice extends AbstractBehavior
+class TreeChoice extends AbstractBehavior
 {
     /**
      * activate behavior
@@ -13,7 +13,13 @@ class NodeChoice extends AbstractBehavior
     activate($element) {
         let regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g');
         $('option', $element).each((index, element) => {
-            $(element).addClass('orchestra-node-option-choice')
+            let html = $(element).html();
+            let depth = $(element).data('depth');
+            if (depth > 0) {
+                html = Array(depth).join('\u2502') + ($(element).data('last') ? '\u2514' : '\u251C') + html;
+            }
+            $(element).html(html);
+            $(element).addClass('orchestra-tree-option-choice');
         });
 
         $element.select2({
@@ -42,8 +48,8 @@ class NodeChoice extends AbstractBehavior
      * @return {String}
      */
     getSelector() {
-        return '.orchestra-node-choice';
+        return '.orchestra-tree-choice';
     }
 }
 
-export default (new NodeChoice);
+export default (new TreeChoice);

@@ -89,7 +89,7 @@ class SiteSubscriber implements EventSubscriberInterface
             $form->add('nodeId', 'oo_node_choice', array(
                 'label' => 'open_orchestra_backoffice.form.internal_link.node',
                 'siteId' => $siteId,
-                'attr' => array('class' => 'orchestra-node-choice subform-to-refresh patch-submit-change'),
+                'attr' => array('class' => 'orchestra-tree-choice subform-to-refresh patch-submit-change'),
                 'required' => true,
             ));
             $nodes = $form->get('nodeId')->getConfig()->getOption('choices');

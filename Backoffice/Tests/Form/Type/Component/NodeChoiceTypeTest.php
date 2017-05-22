@@ -83,7 +83,7 @@ class NodeChoiceTypeTest extends AbstractBaseTestCase
                 'siteId' => null,
                 'language' => null,
                 'attr' => array(
-                    'class' => 'orchestra-node-choice'
+                    'class' => 'orchestra-tree-choice'
                 )
         ));
     }
