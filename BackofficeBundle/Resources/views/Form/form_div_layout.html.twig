@@ -56,11 +56,11 @@
                 {{ (groups|first).html }}
             </div>
         {%  else %}
-            <ul role="tablist" class="nav nav-tabs">
+            <ul role="tablist" class="nav nav-tabs nav-tabs-responsive">
                 {% for group in groups %}
                     <li class="{% if active == loop.index0 %}active{% endif %}">
                         <a data-toggle="tab" role="tab" href="#tab-{{ form.vars.name }}-{{ loop.index0 }}" class="{% if group.err %}has-error{% endif %}{% if group.req %} required{% endif %} nav-tab-{{ group.group_name }} ">
-                            {{ group.label|default(loop.index0)|trans }}
+                            <span class="text">{{ group.label|default(loop.index0)|trans }}</span>
                         </a>
                     </li>
                 {% endfor %}
@@ -131,7 +131,8 @@
                         <a href="#" class="btn btn-border add-form glyphicon glyphicon-plus">{{ form.vars.attr['data-prototype-label-add']|trans }}</a>
                     {% endif %}
                 </div>
-                <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
+                <div class="table-responsive">
+                    <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
                     <thead {% if form|length == 0 %} class="hide" {% endif %}>
                     <tr>
                         {% if form.vars.sortable is defined and form.vars.sortable %}
@@ -184,6 +185,7 @@
                         </tbody>
                     {% endfor %}
                 </table>
+                </div>
             </div>
         {% else %}
             {{ parent() }}
@@ -195,7 +197,8 @@
     {% spaceless %}
         {% set collection = form|first %}
         {% set width = form.vars.max_columns > 0 ? (100 / form.vars.max_columns)|number_format(4) ~ '%' : 'auto' %}
-        <table class="table table-striped">
+        <div class="table-responsive">
+            <table class="table table-striped">
             <thead>
             <tr>
                 <th style="width:{{ width }}">&nbsp;</th>
@@ -216,6 +219,7 @@
             {% endfor %}
             </tbody>
         </table>
+        </div>
     {% endspaceless %}
 {% endblock oo_check_list_collection_widget %}
 

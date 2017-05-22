@@ -36,23 +36,25 @@
 {% block oo_workflow_parameters_widget %}
     {% spaceless %}
         {{ block('global_form_errors') }}
-        <table class="table table-striped">
-            <thead>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        {% for label in form.vars.value.labels %}
+                            <th class="workflow-cell-parameter">{{ label }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+            {% for child in form.statuses %}
                 <tr>
-                    <th>&nbsp;</th>
-                    {% for label in form.vars.value.labels %}
-                        <th class="workflow-cell-parameter">{{ label }}</th>
-                    {% endfor %}
+                   {{ form_widget(child) }}
                 </tr>
-            </thead>
-            <tbody>
-        {% for child in form.statuses %}
-            <tr>
-               {{ form_widget(child) }}
-            </tr>
-        {% endfor %}
-            </tbody>
-        </table>
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endspaceless %}
 {% endblock oo_workflow_parameters_widget %}
 
@@ -77,25 +79,27 @@
 {% block oo_workflow_transitions_widget %}
     {% spaceless %}
         {{ block('global_form_errors') }}
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>{{ 'open_orchestra_workflow_admin.form.transitions.profiles'|trans() }}</th>
-                    {% for label in form.vars.statuses %}
-                        <th>
-                            {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label}) }}
-                        </th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-            {% for profile in form.children %}
-                <tr>
-                    {{ form_widget(profile) }}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ 'open_orchestra_workflow_admin.form.transitions.profiles'|trans() }}</th>
+                        {% for label in form.vars.statuses %}
+                            <th>
+                                {{ 'open_orchestra_workflow_admin.form.transitions.from_to'|trans({'%status%': label}) }}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for profile in form.children %}
+                    <tr>
+                        {{ form_widget(profile) }}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endspaceless %}
 {% endblock oo_workflow_transitions_widget %}
 
