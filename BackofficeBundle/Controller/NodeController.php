@@ -57,8 +57,8 @@ class NodeController extends AbstractAdminController
         $template = $node->getTemplate();
         $options = array(
             'action' => $url,
-            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $node) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $node)
+            'delete_business_rules' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $node),
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $node)
         );
         $form = $this->createForm('oo_node', $node, $options, ContributionActionInterface::EDIT, $node->getStatus());
 

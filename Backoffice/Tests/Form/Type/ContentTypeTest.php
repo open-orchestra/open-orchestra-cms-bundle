@@ -97,6 +97,8 @@ class ContentTypeTest extends AbstractBaseTestCase
             'need_link_to_site_defintion' => false,
             'is_statusable' => false,
             'delete_button' => false,
+            'delete_business_rules' => false,
+            'business_rules_help_text' => 'open_orchestra_backoffice.form.content.business_rules_help_text',
             'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(

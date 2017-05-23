@@ -258,6 +258,8 @@ class NodeType extends AbstractType
             'data_class' => $this->nodeClass,
             'group_enabled' => true,
             'delete_button' => false,
+            'delete_business_rules' => false,
+            'business_rules_help_text' => 'open_orchestra_backoffice.form.node.business_rules_help_text',
             'group_render' => array(
                 'properties' => array(
                     'rank' => 0,
@@ -289,6 +291,8 @@ class NodeType extends AbstractType
     {
         parent::buildView($view, $form, $options);
         $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['delete_business_rules'] = $options['delete_business_rules'];
+        $view->vars['business_rules_help_text'] = $options['business_rules_help_text'];
     }
 
     /**

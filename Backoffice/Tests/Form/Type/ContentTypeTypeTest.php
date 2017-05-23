@@ -83,6 +83,8 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
                 'data_class' => $this->class,
                 'need_link_to_site_defintion' => false,
                 'delete_button' => false,
+                'delete_business_rules' => false,
+                'business_rules_help_text' => 'open_orchestra_backoffice.form.content_type.business_rules_help_text',
                 'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(
@@ -131,9 +133,13 @@ class ContentTypeTypeTest extends AbstractBaseTestCase
         $options = array(
             'delete_button' => true,
             'new_button' => true,
+            'delete_business_rules' => true,
+            'business_rules_help_text' => 'test',
         );
         $this->form->buildView($view, $form, $options);
         $this->assertTrue($view->vars['delete_button']);
+        $this->assertTrue($view->vars['delete_business_rules']);
         $this->assertTrue($view->vars['new_button']);
+        $this->assertSame('test', $view->vars['business_rules_help_text']);
     }
 }

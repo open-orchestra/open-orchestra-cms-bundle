@@ -122,6 +122,8 @@ class GroupTypeTest extends AbstractBaseTestCase
                 'data_class' => $this->groupClass,
                 'delete_button' => false,
                 'new_button' => false,
+                'delete_business_rules' => false,
+                'business_rules_help_text' => 'open_orchestra_group.form.group.business_rules_help_text',
                 'creation' => false,
                 'group_enabled' => true,
                 'group_render' => array(
@@ -162,10 +164,14 @@ class GroupTypeTest extends AbstractBaseTestCase
         $options = array(
             'delete_button' => true,
             'new_button'    => false,
-            'creation'      => true
+            'creation'      => true,
+            'delete_business_rules' => true,
+            'business_rules_help_text' => 'test',
         );
         $this->form->buildView($view, $form, $options);
         $this->assertTrue($view->vars['delete_button']);
+        $this->assertTrue($view->vars['delete_business_rules']);
         $this->assertFalse($view->vars['new_button']);
+        $this->assertSame('test', $view->vars['business_rules_help_text']);
     }
 }

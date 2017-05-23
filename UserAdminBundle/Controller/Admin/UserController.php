@@ -4,6 +4,7 @@ namespace OpenOrchestra\UserAdminBundle\Controller\Admin;
 
 use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
 use OpenOrchestra\BaseApi\Exceptions\HttpException\UserNotFoundHttpException;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;

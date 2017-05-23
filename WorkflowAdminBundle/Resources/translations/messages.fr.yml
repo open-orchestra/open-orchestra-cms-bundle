@@ -1,6 +1,7 @@
 open_orchestra_workflow_admin:
     form:
         status:
+            business_rules_help_text: Le statut ne doit pas être utilisé
             creation     : Le nouveau statut a été créé
             success      : Le statut a été modifié
             name         : Nom
