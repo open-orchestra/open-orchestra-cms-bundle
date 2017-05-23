@@ -17,7 +17,7 @@ class AdminController extends Controller
      * @param string|null $siteId
      *
      * @Config\Route("", name="homepage")
-     * @Config\Route("/{siteId}/homepage/{_locale}", name="homepage_with_site_id_and_language")
+     * @Config\Route("/{siteId}/homepage", name="homepage_with_site_id_and_language")
      *
      * @return Response
      */
