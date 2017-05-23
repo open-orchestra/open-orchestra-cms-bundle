@@ -6,6 +6,9 @@ use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\View\ChoiceView;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -40,10 +43,31 @@ class NodeChoiceType extends AbstractType
                 'siteId' => $this->currentSiteManager->getSiteId(),
                 'language' => $this->currentSiteManager->getSiteDefaultLanguage(),
                 'attr' => array(
-                    'class' => 'orchestra-node-choice'
+                    'class' => 'orchestra-tree-choice'
                 )
             )
         );
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form ,array $options)
+    {
+        $orderedNodes = $this->nodeRepository->findTreeNode($options['siteId'], $options['language'], NodeInterface::ROOT_NODE_ID);
+        $orderedNodesAttributs = $this->getHierarchicalChoicesAttributes($orderedNodes);
+        $result = array();
+        foreach ($view->vars['choices'] as $node) {
+            $result[] = new ChoiceView(
+                $node->data,
+                $node->value,
+                $node->label,
+                $orderedNodesAttributs[$node->data]
+            );
+        }
+        $view->vars['choices'] = $result;
     }
 
     /**
@@ -69,22 +93,34 @@ class NodeChoiceType extends AbstractType
     {
         $choices = array();
         foreach ($nodes as $node) {
-            $pre = '';
-            if ($depth > 0) {
-                $pre = str_repeat('&#x2502;', $depth - 1).'&#x251C;';
-            }
-            $choices[$node['node']['nodeId']] = $pre.$node['node']['name'];
-
+            $choices[$node['node']['nodeId']] = $node['node']['name'];
             if (array_key_exists('child', $node)) {
                 $choices = array_merge($choices, $this->getHierarchicalChoices($node['child'], $depth + 1));
             }
         }
-        if (isset($node)) {
-            $pre = '';
-            if ($depth > 0) {
-                $pre = str_repeat('&#x2502;', $depth - 1).'&#x2514;';
+
+        return $choices;
+
+    }
+
+    /**
+     * @param array $nodes
+     * @param int   $depth
+     *
+     * @return array
+     */
+    protected function getHierarchicalChoicesAttributes($nodes, $depth = 0)
+    {
+        $choices = array();
+        $lastNode = end($nodes);
+        foreach ($nodes as $node) {
+            $choices[$node['node']['nodeId']] = array(
+                'data-depth' => $depth,
+                'data-last' => $node === $lastNode,
+            );
+            if (array_key_exists('child', $node)) {
+                $choices = array_merge($choices, $this->getHierarchicalChoicesAttributes($node['child'], $depth + 1));
             }
-            $choices[$node['node']['nodeId']] = $pre.$node['node']['name'];
         }
 
         return $choices;

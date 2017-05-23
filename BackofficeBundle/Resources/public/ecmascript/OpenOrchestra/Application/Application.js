@@ -27,7 +27,7 @@ import ScrollTable             from '../Service/Form/Behavior/ScrollTable'
 import Tooltip                 from '../Service/Form/Behavior/Tooltip'
 import TagSelect2              from '../Service/Form/Behavior/TagSelect2'
 import DatePicker              from '../Service/Form/Behavior/DatePicker'
-import NodeChoice              from '../Service/Form/Behavior/NodeChoice'
+import TreeChoice              from '../Service/Form/Behavior/TreeChoice'
 import NodeTemplateSelection   from '../Service/Form/Behavior/NodeTemplateSelection'
 import GenerateId              from '../Service/Form/Behavior/GenerateId'
 import CollectionSortable      from '../Service/Form/Behavior/CollectionSortable'
@@ -244,7 +244,7 @@ class Application
         FormBehaviorManager.add(ScrollTable);
         FormBehaviorManager.add(Tooltip);
         FormBehaviorManager.add(TagSelect2);
-        FormBehaviorManager.add(NodeChoice);
+        FormBehaviorManager.add(TreeChoice);
         FormBehaviorManager.add(DatePicker);
         FormBehaviorManager.add(GenerateId);
         FormBehaviorManager.add(CollectionSortable);

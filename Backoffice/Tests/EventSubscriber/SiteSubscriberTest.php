@@ -122,7 +122,7 @@ class SiteSubscriberTest extends AbstractBaseTestCase
         Phake::verify($this->form)->add('nodeId', 'oo_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.node',
             'siteId' => 'fakeSiteId',
-            'attr' => array('class' => 'orchestra-node-choice subform-to-refresh patch-submit-change'),
+            'attr' => array('class' => 'orchestra-tree-choice subform-to-refresh patch-submit-change'),
             'required' => true,
         ));
         Phake::verify($this->form)->add('wildcard', 'collection', array(
