@@ -111,7 +111,7 @@ class SiteSubscriber implements EventSubscriberInterface
                 $data['wildcard'] = $result;
                 $form->add('wildcard', 'collection', array(
                     'entry_type' => 'text',
-                    'label' => count($result) > 0 ? 'open_orchestra_backoffice.form.internal_link.wildcard' : false,
+                    'label' => false,
                     'attr' => array('class' => 'subform-to-refresh'),
                     'data' => $data['wildcard'],
                     'entry_options' => array(

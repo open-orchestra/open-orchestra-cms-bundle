@@ -305,7 +305,6 @@ open_orchestra_backoffice:
             content: Contenu
             query: Chaîne de requête
             filter: Filtrer les contenus
-            wildcard: Paramètres de route
         alias:
             group:
                 information: Informations
