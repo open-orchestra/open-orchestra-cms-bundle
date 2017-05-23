@@ -49,6 +49,11 @@ class NodeChoiceType extends AbstractType
         );
     }
 
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
     public function buildView(FormView $view, FormInterface $form ,array $options)
     {
         $orderedNodes = $this->nodeRepository->findTreeNode($options['siteId'], $options['language'], NodeInterface::ROOT_NODE_ID);
