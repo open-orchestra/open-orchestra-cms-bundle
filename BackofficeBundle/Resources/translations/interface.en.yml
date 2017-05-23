@@ -134,8 +134,8 @@ open_orchestra_backoffice:
         message_online:
             title: The page is actually online.
             message: >
-                Editing an online page is not possible.
-                To modify the contents of the page please create a new version.
+                Editing an online page is not possible.\n
+                To modify the contents of the page please create a new version.\n
                 You can also modify the workflow of this version but the page will not be visible on the site
         route_pattern_arguments:
             title: "{1} Main url argument missing.|[2,Inf] Main url arguments missing."
