@@ -567,10 +567,10 @@
 {% block delete_button %}
     {% set label = 'open_orchestra_backoffice.form.delete' %}
     {% set class = 'delete-button' %}
-    {% if form.vars.delete_business_rules is defined and not form.vars.delete_business_rules %}
+    {% if form.vars.enable_delete_button is defined and not form.vars.enable_delete_button %}
         {% set class = class ~ ' disabled' %}
-        {% if form.vars.business_rules_help_text is defined %}
-            {% set help_text = form.vars.business_rules_help_text %}
+        {% if form.vars.delete_help_text is defined %}
+            {% set help_text = form.vars.delete_help_text %}
             <i class='form-help-tooltip icon-prepend fa fa-question-circle-o' data-toggle="tooltip" data-placement="right" data-original-title="{{ help_text|trans }}"></i>
         {% endif %}
     {% endif %}

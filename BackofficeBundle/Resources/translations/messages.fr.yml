@@ -104,7 +104,7 @@ open_orchestra_backoffice:
                 block: Blocs
                 content_type: Types de contenu
         content:
-            business_rules_help_text: Toutes les versions dans toutes les langues doivent être hors ligne
+            delete_help_text: Toutes les versions dans toutes les langues doivent être hors ligne
             transformation_error: Impossible de charger la valeur de ce champ (le type ne correspond pas)
             success: Le contenu a été modifié
             creation: Le contenu a été créé
@@ -122,7 +122,7 @@ open_orchestra_backoffice:
                 publication: Publication
                 data: Données
         content_type:
-            business_rules_help_text: Le type de contenu ne doit pas être utilisé
+            delete_help_text: Le type de contenu ne doit pas être utilisé
             success: Le type de contenu a été modifié
             creation: Le type de contenu a été créé
             content_type_id: Id
@@ -159,7 +159,7 @@ open_orchestra_backoffice:
                 visible: Eléments à afficher dans la liste back-office
                 version: Version
         node:
-            business_rules_help_text: Toutes les versions dans toutes les langues doivent être hors ligne et la page ne doit pas avoir d'enfants
+            delete_help_text: Toutes les versions dans toutes les langues doivent être hors ligne et la page ne doit pas avoir d'enfants
             success: La page a été sauvegardée
             title: Titre
             scheme: Protocole

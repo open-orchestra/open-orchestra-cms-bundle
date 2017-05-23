@@ -3,7 +3,7 @@ open_orchestra_backoffice:
 open_orchestra_group:
     form:
         group:
-            business_rules_help_text: The group should not contain members
+            delete_help_text: The group should not contain members
             new:
                 success: The group has been successfully created
             edit:

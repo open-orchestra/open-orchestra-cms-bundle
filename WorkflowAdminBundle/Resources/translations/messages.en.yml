@@ -1,7 +1,7 @@
 open_orchestra_workflow_admin:
     form:
         status:
-            business_rules_help_text: The status should be not used
+            delete_help_text: The status should be not used
             creation     : The new status has been created
             success      : The status has been updated
             name         : Name

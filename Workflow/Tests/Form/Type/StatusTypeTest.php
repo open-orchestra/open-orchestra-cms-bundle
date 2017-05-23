@@ -85,16 +85,16 @@ class StatusTypeTest extends AbstractBaseTestCase
         $options = array(
             'delete_button' => true,
             'new_button' => true,
-            'delete_business_rules' => true,
-            'business_rules_help_text' => 'test',
+            'enable_delete_button' => true,
+            'delete_help_text' => 'test',
         );
         $this->form->buildView($view, $form, $options);
         $this->assertTrue($view->vars['delete_button']);
         $this->assertTrue($view->vars['new_button']);
         $this->assertSame(true, isset($view->vars['properties']));
         $this->assertSame($expectedProperties, $view->vars['properties']);
-        $this->assertTrue($view->vars['delete_business_rules']);
-        $this->assertSame('test', $view->vars['business_rules_help_text']);
+        $this->assertTrue($view->vars['enable_delete_button']);
+        $this->assertSame('test', $view->vars['delete_help_text']);
     }
 
     /**
@@ -136,8 +136,8 @@ class StatusTypeTest extends AbstractBaseTestCase
             'data_class'    => $this->statusClass,
             'delete_button' => false,
             'new_button' => false,
-            'delete_business_rules' => false,
-            'business_rules_help_text' => 'open_orchestra_workflow_admin.form.status.business_rules_help_text',
+            'enable_delete_button' => false,
+            'delete_help_text' => 'open_orchestra_workflow_admin.form.status.delete_help_text',
             'group_enabled' => true,
             'group_render'  => array(
                 'properties' => array(

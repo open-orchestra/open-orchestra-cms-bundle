@@ -90,8 +90,8 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->nodeClass,
             'delete_button' => false,
-            'delete_business_rules' => false,
-            'business_rules_help_text' => 'open_orchestra_backoffice.form.node.business_rules_help_text',
+            'enable_delete_button' => false,
+            'delete_help_text' => 'open_orchestra_backoffice.form.node.delete_help_text',
             'group_enabled' => true,
             'group_render' => array(
                 'properties' => array(
