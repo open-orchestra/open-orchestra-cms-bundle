@@ -63,7 +63,8 @@ class NodeController extends BaseController
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::PREVIEW,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::STATUS,
      *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS,
-     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_CHANGE_STATUS
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::AUTHORIZATIONS_CHANGE_STATUS,
+     *     OpenOrchestra\ApiBundle\Context\CMSGroupContext::BLOCK_REQUIRED_URI_PARAMETERS
      * })
      *
      * @throws NodeNotFoundHttpException

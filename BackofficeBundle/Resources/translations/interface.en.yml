@@ -133,16 +133,19 @@ open_orchestra_backoffice:
             save_old_published_version: Save a copy of the old published version
         message_online:
             title: The page is actually online.
-            message: |
-                Editing an online page is not possible. \n
-                To modify the contents of the page please create a new version. \n
+            message: >
+                Editing an online page is not possible.\n
+                To modify the contents of the page please create a new version.\n
                 You can also modify the workflow of this version but the page will not be visible on the site
         route_pattern_arguments:
-            title: Main url arguments missing.
-            message: |
-                This page cannot be published. \n
-                Certain blocks of this page need parameters to be correctly shown. \n
-                This parameters should be found in page's main URL. \n
+            title: "{1} Main url argument missing.|[2,Inf] Main url arguments missing."
+            message: >
+                    {1} This page cannot be published.\n
+                    Certain blocks of this page need a parameter to be correctly shown.\n
+                    The parameter %s should be found in page's main URL.
+                    |[2,Inf] This page cannot be published.\n
+                    Certain blocks of this page need parameters to be correctly shown.\n
+                    The parameters %s should be found in page's main URL.
         tree:
             open: Open the tree
             close: Close the tree

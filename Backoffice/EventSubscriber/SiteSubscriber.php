@@ -102,9 +102,7 @@ class SiteSubscriber implements EventSubscriberInterface
             if (is_null($node)) {
                 $node = $this->nodeRepository->findInLastVersion($data['nodeId'], $site->getAliases()[$data['aliasId']]->getLanguage(), $siteId);
             }
-
             preg_match_all('/{(.*?)}/', $node->getRoutePattern(), $matches);
-
             if (is_array($matches) && array_key_exists(1, $matches) && is_array($matches[1])) {
                 $result = array();
                 foreach ($matches[1] as $wildcard) {
@@ -121,7 +119,6 @@ class SiteSubscriber implements EventSubscriberInterface
                     ),
                 ));
             }
-
             $event->setData($data);
         }
     }

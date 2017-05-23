@@ -10,6 +10,7 @@ class CMSGroupContext
     const AREAS = 'areas';
     const BLOCKS = 'blocks';
     const BLOCKS_NUMBER_USE = 'blocks_number_use';
+    const BLOCK_REQUIRED_URI_PARAMETERS = 'block_required_uri_parameters';
     const FIELD_TYPES = 'field_types';
     const GROUP_ROLES = 'group_roles';
     const PREVIEW = 'preview';
