@@ -124,12 +124,14 @@
             {% endset %}
             {% set attr = attr|merge({'data-prototype': prototype_html|e }) %}
             <div class="accordion" {{ block('widget_container_attributes') }}>
-                <div class="action">
-                    <a href="#" class="btn btn-border close-forms glyphicon glyphicon-minus-sign">{{ 'open_orchestra_backoffice.form.collection.close_forms'|trans }}</a>
-                    <a href="#" class="btn btn-border open-forms glyphicon glyphicon-plus-sign">{{ 'open_orchestra_backoffice.form.collection.open_forms'|trans }}</a>
-                    {% if form.vars.allow_add %}
-                        <a href="#" class="btn btn-border add-form glyphicon glyphicon-plus">{{ form.vars.attr['data-prototype-label-add']|trans }}</a>
-                    {% endif %}
+                <div class="row">
+                    <div class="action">
+                        <a href="#" class="btn btn-border close-forms glyphicon glyphicon-minus-sign">{{ 'open_orchestra_backoffice.form.collection.close_forms'|trans }}</a>
+                        <a href="#" class="btn btn-border open-forms glyphicon glyphicon-plus-sign">{{ 'open_orchestra_backoffice.form.collection.open_forms'|trans }}</a>
+                        {% if form.vars.allow_add %}
+                            <a href="#" class="btn btn-border add-form glyphicon glyphicon-plus">{{ form.vars.attr['data-prototype-label-add']|trans }}</a>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hide-striped {% if form.vars.attr.class is defined %}{{ form.vars.attr.class }}{% endif %}">
