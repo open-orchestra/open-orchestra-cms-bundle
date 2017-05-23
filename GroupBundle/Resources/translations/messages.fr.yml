@@ -3,7 +3,7 @@ open_orchestra_backoffice:
 open_orchestra_group:
     form:
         group:
-            business_rules_help_text: Le group doit être vide
+            business_rules_help_text: Le groupe ne doit pas contenir de membres
             new:
                 success: Le groupe a été créé
             edit:

@@ -122,7 +122,7 @@ open_orchestra_backoffice:
                 publication: Publication
                 data: Data
         content_type:
-            business_rules_help_text: The content type should be not used
+            business_rules_help_text: The content type should not be used
             success: The content type has been modified
             creation: The content type has been created
             content_type_id: Id
