@@ -7,13 +7,15 @@
                     <button class="open-groups-list btn btn-border glyphicon glyphicon-plus" type="button">{{ 'open_orchestra_backoffice.form.add'|trans }}</button>
                 </div>
             </div>
-            <table class="table table-striped">
-                <tbody>
-            {% for child in collection %}
-                {{ form_widget(child) }}
-            {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                {% for child in collection %}
+                    {{ form_widget(child) }}
+                {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <div class="prototype hidden" data-prototype="{{ form_widget(collection.vars.prototype)|e('html') }}"></div>
         </div>
     {% endspaceless %}
