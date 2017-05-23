@@ -14,9 +14,9 @@ class TreeChoice extends AbstractBehavior
         let regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g');
         $('option', $element).each((index, element) => {
             let html = $(element).html();
-            let depth = $(element).attr('data-depth');
+            let depth = parseInt($(element).attr('data-depth'));
             if (depth > 0) {
-                html = Array(depth).join('\u2502') + ($(element).attr('data-last') ? '\u2514' : '\u251C') + html;
+                html = (new Array(depth)).join('\u2502') + ($(element).attr('data-last') ? '\u2514' : '\u251C') + html;
             }
             $(element).html(html);
             $(element).addClass('orchestra-tree-option-choice');
