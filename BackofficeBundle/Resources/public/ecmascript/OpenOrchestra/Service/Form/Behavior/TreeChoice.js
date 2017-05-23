@@ -16,7 +16,7 @@ class TreeChoice extends AbstractBehavior
             let html = $(element).html();
             let depth = parseInt($(element).attr('data-depth'));
             if (depth > 0) {
-                html = (new Array(depth)).join('\u2502') + ($(element).attr('data-last') ? '\u2514' : '\u251C') + html;
+                html = Array(depth).join('\u2502') + ($(element).attr('data-last') ? '\u2514' : '\u251C') + html;
             }
             $(element).html(html);
             $(element).addClass('orchestra-tree-option-choice');
