@@ -27,15 +27,23 @@ class SortableCollectionSubscriber implements EventSubscriberInterface
 
         if (is_array($event->getData())) {
             $order = array_flip(array_keys($event->getData()));
+            if (is_null($data)) {
+                $data = array();
+            }
+
             if ($data instanceof Collection) {
                 $dataClone = $data->toArray();
                 $data->clear();
                 foreach ($order as $key => $value) {
                     $data->set($key, array_key_exists($key, $dataClone) ? $dataClone[$key] : null);
                 }
-            }
-            if (is_array($data)) {
-                $data = array_merge($order, array_intersect_key($data, $order));
+            } elseif (is_array($data)) {
+                $oldData = array_merge(array(), $data);
+                $data = array();
+                foreach ($order as $key => $value) {
+                    $data[$key] = array_key_exists($key, $oldData) ? $oldData[$key] : null;
+                }
+
             }
             $form->setData($data);
         }
