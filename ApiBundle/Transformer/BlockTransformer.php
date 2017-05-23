@@ -24,6 +24,7 @@ class BlockTransformer extends AbstractTransformer
     protected $translator;
     protected $nodeRepository;
     protected $blockRepository;
+    protected $generateFormManager;
 
     /**
      * @param string                    $facadeClass
