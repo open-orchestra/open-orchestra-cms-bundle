@@ -139,16 +139,14 @@ open_orchestra_backoffice:
                 Pour modifier  le contenu de la page veuillez créer une révision. \n
                 Vous pouvez également modifier le workflow de cette version mais la page ne sera plus visible sur le site
         route_pattern_arguments:
-            multiple_title: arguments manquants dans l'URL principale.
-            unique_title: argument manquant dans l'URL principale.
-            multiple_message: |
-                Cette page ne peut pas être publiée. \n
-                Certains blocs de cette page ont besoin de paramètres pour être afficher correctement. \n
-                Les paramètres %s doivent être présents dans l'URL principale du page. \n
-            unique_message: |
-                Cette page ne peut pas être publiée. \n
-                Certains blocs de cette page ont besoin d'un paramètre pour être afficher correctement. \n
-                Le paramètre %s doit être présent dans l'URL principale du page. \n
+            title: "{1} Argument manquant dans l'URL principale.|[2,Inf] Arguments manquants dans l'URL principale.."
+            message: >
+                    {1} Cette page ne peut pas être publiée. \n
+                    Certains blocs de cette page ont besoin d'un paramètre pour être afficher correctement. \n
+                    Le paramètre %s doit être présent dans l'URL principale du page. \n
+                    |[2,Inf] Cette page ne peut pas être publiée.\n
+                     Certains blocs de cette page ont besoin de paramètres pour être afficher correctement.\n
+                     Les paramètres %s doivent être présents dans l'URL principale du page.
         tree:
             open: Déployer l'arborescence
             close: Fermer l'arborescence
