@@ -127,7 +127,7 @@ class SiteSubscriberTest extends AbstractBaseTestCase
         ));
         Phake::verify($this->form)->add('wildcard', 'collection', array(
             'entry_type' => 'text',
-            'label' => 'open_orchestra_backoffice.form.internal_link.wildcard',
+            'label' => false,
             'attr' => array('class' => 'subform-to-refresh'),
             'data' => array('contentId' => ''),
             'entry_options' => array(
