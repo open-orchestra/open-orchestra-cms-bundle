@@ -90,6 +90,8 @@ class ContentType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
+        $view->vars['enable_delete_button'] = $options['enable_delete_button'];
+        $view->vars['delete_help_text'] = $options['delete_help_text'];
         $view->vars['delete_button'] = $options['delete_button'];
         $view->vars['new_button'] = $options['new_button'];
     }
@@ -112,6 +114,8 @@ class ContentType extends AbstractType
             'is_statusable' => false,
             'need_link_to_site_defintion' => false,
             'delete_button' => false,
+            'enable_delete_button' => false,
+            'delete_help_text' => 'open_orchestra_backoffice.form.content.delete_help_text',
             'new_button' => false,
                 'group_enabled' => true,
                 'group_render' => array(

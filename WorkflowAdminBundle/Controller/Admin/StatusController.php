@@ -34,8 +34,8 @@ class StatusController extends AbstractAdminController
             'action' => $this->generateUrl('open_orchestra_workflow_admin_status_form', array(
                 'statusId' => $statusId,
             )),
-            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $status) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $status)
+            'enable_delete_button' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $status),
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $status)
         ));
 
         $form->handleRequest($request);

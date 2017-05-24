@@ -115,6 +115,8 @@ class GroupType extends AbstractType
             array(
                 'data_class' => $this->groupClass,
                 'delete_button' => false,
+                'enable_delete_button' => false,
+                'delete_help_text' => 'open_orchestra_group.form.group.delete_help_text',
                 'new_button' => false,
                 'creation' => false,
                 'group_enabled' => true,
@@ -155,6 +157,8 @@ class GroupType extends AbstractType
     {
         parent::buildView($view, $form, $options);
         $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['enable_delete_button'] = $options['enable_delete_button'];
+        $view->vars['delete_help_text'] = $options['delete_help_text'];
         $view->vars['new_button'] = $options['new_button'];
     }
 

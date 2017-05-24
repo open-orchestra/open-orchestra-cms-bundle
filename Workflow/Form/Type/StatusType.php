@@ -103,6 +103,8 @@ class StatusType extends AbstractType
         $view->vars['properties'] = $properties;
 
         $view->vars['delete_button'] = $options['delete_button'];
+        $view->vars['enable_delete_button'] = $options['enable_delete_button'];
+        $view->vars['delete_help_text'] = $options['delete_help_text'];
         $view->vars['new_button'] = $options['new_button'];
     }
 
@@ -114,6 +116,8 @@ class StatusType extends AbstractType
         $resolver->setDefaults(array(
             'data_class'    => $this->statusClass,
             'delete_button' => false,
+            'enable_delete_button' => false,
+            'delete_help_text' => 'open_orchestra_workflow_admin.form.status.delete_help_text',
             'new_button' => false,
             'group_enabled' => true,
             'group_render'  => array(

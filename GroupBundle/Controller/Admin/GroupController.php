@@ -83,11 +83,8 @@ class GroupController extends AbstractAdminController
             'action' => $this->generateUrl('open_orchestra_group_form', array(
                 'groupId' => $groupId,
             )),
-            'delete_button' => (
-                $this->isGranted(ContributionActionInterface::DELETE, $group)
-                && $this->get('open_orchestra_backoffice.business_rules_manager')
-                    ->isGranted(ContributionActionInterface::DELETE, $group)
-            )
+            'enable_delete_button' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(ContributionActionInterface::DELETE, $group),
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $group)
         ));
 
         $form->handleRequest($request);

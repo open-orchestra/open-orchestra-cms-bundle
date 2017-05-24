@@ -572,8 +572,16 @@
 
 {% block delete_button %}
     {% set label = 'open_orchestra_backoffice.form.delete' %}
-    {% set attr = {'class': 'delete-button'} %}
-    {% set button_class= 'danger' %}
+    {% set class = 'delete-button' %}
+    {% if form.vars.enable_delete_button is defined and not form.vars.enable_delete_button %}
+        {% set class = class ~ ' disabled' %}
+        {% if form.vars.delete_help_text is defined %}
+            {% set help_text = form.vars.delete_help_text %}
+            <i class='form-help-tooltip icon-prepend fa fa-question-circle-o' data-toggle="tooltip" data-placement="right" data-original-title="{{ help_text|trans }}"></i>
+        {% endif %}
+    {% endif %}
+    {% set attr = {'class': class} %}
+    {% set button_class = 'danger' %}
     {{ block('button_widget') }}
 {% endblock delete_button %}
 
@@ -593,41 +601,6 @@
     {% set button_class= 'success' %}
     {{ block('button_widget') }}
 {% endblock new_button %}
-
-{% block oo_node_submit_widget %}
-    {% spaceless %}
-        {{ block('save_button') }}
-        {% if form.vars.delete_button is defined and not form.vars.value.id is null%}
-            {{ block('trashcan_delete_button') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock oo_node_submit_widget %}
-
-{% block oo_content_submit_widget %}
-    {% spaceless %}
-        {{ block('save_button') }}
-        {% if(form.vars.new_button is defined and true == form.vars.new_button) %}
-            {{ block('new_button') }}
-        {% elseif form.vars.delete_button is defined %}
-            {{ block('trashcan_delete_button') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock oo_content_submit_widget %}
-
-{% block trashcan_delete_button %}
-
-    {% set label = 'open_orchestra_backoffice.form.delete' %}
-    {% set class = 'delete-button' %}
-    {% if not form.vars.delete_button %}
-        {% set class = class ~ ' disabled' %}
-        {% set help_text = 'open_orchestra_backoffice.form.delete_help_text' %}
-        <i class='form-help-tooltip icon-prepend fa fa-question-circle-o' data-toggle="tooltip" data-placement="right" data-original-title="{{ help_text|trans }}"></i>
-    {% endif %}
-    {% set attr = {'class': class} %}
-    {% set button_class = 'danger' %}
-    {{ block('button_widget') }}
-
-{% endblock trashcan_delete_button %}
 
 {% block form_start %}
     {% spaceless %}

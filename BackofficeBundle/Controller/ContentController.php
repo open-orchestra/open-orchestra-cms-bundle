@@ -58,8 +58,8 @@ class ContentController extends AbstractAdminController
                 'language' => $content->getLanguage(),
                 'version' => $content->getVersion(),
             )),
-            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $content) &&
-                $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $content),
+            'enable_delete_button' => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $content),
+            'delete_button' => $this->isGranted(ContributionActionInterface::DELETE, $content),
             'need_link_to_site_defintion' => false,
             'disabled' => $content->getStatus() ? $content->getStatus()->isBlockedEdition() : false,
             'is_statusable' => $contentType->isDefiningStatusable()
