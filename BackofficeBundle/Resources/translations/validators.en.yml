@@ -25,3 +25,5 @@ open_orchestra_backoffice_validators:
         pattern: Boolean condition is not correctly formated
     redirection:
         unique_pattern: A redirection with this pattern already exists
+    content_type:
+        disallowed_field_names: You can't use names used as common property in content

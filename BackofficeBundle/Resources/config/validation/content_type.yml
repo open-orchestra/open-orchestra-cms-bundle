@@ -1,0 +1,3 @@
+OpenOrchestra\ModelInterface\Model\ContentTypeInterface:
+    constraints:
+        - OpenOrchestra\Backoffice\Validator\Constraints\ContentTypeField: ~

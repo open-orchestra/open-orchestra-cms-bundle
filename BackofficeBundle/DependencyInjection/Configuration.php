@@ -81,6 +81,7 @@ class Configuration implements ConfigurationInterface
             ->append($this->addConfigurationRoleConfiguration())
             ->append($this->addBlockConfiguration())
             ->append($this->addConfigurationFrontRoleConfiguration())
+            ->append($this->addConfigurationDisallowedFieldNames())
         ->end();
 
         return $treeBuilder;
@@ -339,5 +340,22 @@ class Configuration implements ConfigurationInterface
         $configurationRole->defaultValue(array());
 
         return $configurationRole;
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public function addConfigurationDisallowedFieldNames()
+    {
+        $builder = new TreeBuilder();
+        $configuration = $builder->root('disallowed_field_names');
+
+        $configuration
+            ->info('Configure disallowed field name')
+            ->prototype('scalar')
+            ->end();
+        $configuration->defaultValue(array('name', 'keywords', 'linkedToSite', 'publishDate', 'unpublishDate'));
+
+        return $configuration;
     }
 }
