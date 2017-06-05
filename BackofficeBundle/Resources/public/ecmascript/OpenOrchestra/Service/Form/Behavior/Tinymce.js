@@ -13,7 +13,7 @@ class Tinymce extends AbstractBehavior
      * @param {AbstractFormView} view
      */
     activate($element, view) {
-        $('textarea#' + $element.attr('id')).initialize((index, textarea) => {
+        $(view.$el).initialize('textarea#' + $element.attr('id'), (index, textarea) => {
             let editor = TinymceManager.createEditor($element);
             if ('disabled' === $(textarea).attr('disabled')) {
                 editor.setMode('readonly');
