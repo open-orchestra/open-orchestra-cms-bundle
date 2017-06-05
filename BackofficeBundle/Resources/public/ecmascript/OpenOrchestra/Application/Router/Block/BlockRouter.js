@@ -1,7 +1,6 @@
 import AbstractBlockRouter       from './AbstractBlockRouter'
 import Application               from '../../Application'
 import FormBuilder               from '../../../Service/Form/Model/FormBuilder'
-import BlockComponents           from '../../Collection/Block/BlockComponents'
 import Blocks                    from '../../Collection/Block/Blocks'
 
 import NewBlockComponentListView from '../../View/Block/NewBlockComponentListView'

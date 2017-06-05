@@ -1,4 +1,3 @@
-import OrchestraView      from '../../OrchestraView'
 import AbstractWidgetView from '../AbstractWidgetView'
 
 /**

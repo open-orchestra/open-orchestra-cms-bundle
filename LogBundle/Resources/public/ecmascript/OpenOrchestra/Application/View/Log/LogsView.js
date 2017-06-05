@@ -1,6 +1,5 @@
 import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
 import LogListView            from '../../View/Log/LogListView'
-import Application            from '../../Application'
 import DatePicker             from '../../../Service/Form/Behavior/DatePicker'
 
 /**

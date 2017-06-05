@@ -5,7 +5,6 @@ import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
 import Users           from '../../Collection/User/Users'
 import UsersView       from '../../View/User/UsersView'
 import NewUserView     from '../../View/User/NewUserView'
-import NewUserFormView from '../../View/User/NewUserFormView'
 
 /**
  * @class UserRouter

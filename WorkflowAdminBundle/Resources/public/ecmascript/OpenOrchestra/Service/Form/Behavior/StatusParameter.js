@@ -1,4 +1,3 @@
-import TemplateManager  from '../../TemplateManager'
 import AbstractBehavior from './AbstractBehavior'
 
 /**

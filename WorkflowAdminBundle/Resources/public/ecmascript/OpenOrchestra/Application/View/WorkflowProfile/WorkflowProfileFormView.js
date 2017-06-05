@@ -1,5 +1,4 @@
 import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Application          from '../../Application'
 import WorkflowProfile      from '../../Model/WorkflowProfile/WorkflowProfile'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
 import ApplicationError     from '../../../Service/Error/ApplicationError'

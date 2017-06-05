@@ -1,6 +1,4 @@
 import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
-import Block                  from '../../Model/Block/Block'
-import Application            from '../../Application'
 
 /**
  * @class BlockFormView

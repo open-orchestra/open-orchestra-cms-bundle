@@ -1,5 +1,4 @@
 import AbstractBehavior   from './AbstractBehavior'
-import Application        from '../../../Application/Application'
 
 /**
  * @class HierarchicalCheck
