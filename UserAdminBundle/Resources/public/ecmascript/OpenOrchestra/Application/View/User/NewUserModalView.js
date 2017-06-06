@@ -1,4 +1,3 @@
-import OrchestraView   from '../OrchestraView'
 import ModalView       from '../../../Service/Modal/View/ModalView'
 import Application     from '../../Application'
 import FormBuilder     from '../../../Service/Form/Model/FormBuilder'

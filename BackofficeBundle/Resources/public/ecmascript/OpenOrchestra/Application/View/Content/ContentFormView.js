@@ -1,5 +1,4 @@
 import AbstractFormView          from '../../../Service/Form/View/AbstractFormView'
-import Application               from '../../Application'
 import Content                   from '../../Model/Content/Content'
 import Contents                  from '../../Collection/Content/Contents'
 import Statuses                  from '../../Collection/Status/Statuses'

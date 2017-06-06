@@ -10,7 +10,6 @@ import Contents            from '../../Collection/Content/Contents'
 import ContentType         from '../../Model/ContentType/ContentType'
 import Content             from '../../Model/Content/Content'
 import Statuses            from '../../Collection/Status/Statuses'
-import ApplicationError    from '../../../Service/Error/ApplicationError'
 import ConfirmModalView    from '../../../Service/ConfirmModal/View/ConfirmModalView'
 import ContentVersionsView from '../../View/Content/ContentVersionsView'
 

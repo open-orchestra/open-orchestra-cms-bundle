@@ -1,6 +1,5 @@
 import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import ApplicationError     from '../../../Service/Error/ApplicationError'
 
 /**
  * @class KeywordFormView

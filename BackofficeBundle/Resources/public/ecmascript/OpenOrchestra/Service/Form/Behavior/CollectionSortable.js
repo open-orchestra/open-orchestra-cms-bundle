@@ -1,7 +1,4 @@
 import AbstractBehavior   from './AbstractBehavior'
-import Application        from '../../../Application/Application'
-import SitesAvailable     from '../../../Application/Collection/Site/SitesAvailable'
-import GroupListModalView from '../../../Application/View/Group/GroupListModalView'
 
 /**
  * @class CollectionSortable

@@ -1,10 +1,6 @@
 import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Application          from '../../Application'
 import ApplicationError     from '../../../Service/Error/ApplicationError'
-import Content              from '../../Model/Content/Content'
-import Contents             from '../../Collection/Content/Contents'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import ContentToolbarView   from './ContentToolbarView'
 import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
 import FlashMessage         from '../../../Service/FlashMessage/FlashMessage'
 

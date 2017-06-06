@@ -1,5 +1,5 @@
 import OrchestraRouter from '../OrchestraRouter'
-import app             from '../../Application'
+import Application     from '../../Application'
 import DashboardView   from '../../View/Dashboard/DashboardView'
 
 /**
@@ -31,7 +31,7 @@ class DashboardRouter extends OrchestraRouter
      */
     showDashboard() {
         let dashboardView = new DashboardView();
-        app.getRegion('content').html(dashboardView.render().$el);
+        Application.getRegion('content').html(dashboardView.render().$el);
     }
 }
 
