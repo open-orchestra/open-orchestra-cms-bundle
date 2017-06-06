@@ -125,6 +125,15 @@ class OpenOrchestraBackofficeExtension extends Extension
         $configurationRoles = array_merge_recursive($configurationRoles, array('open_orchestra_backoffice.role.front_access' => array('fourthpackage' => $result)));
         $container->setParameter('open_orchestra_backoffice.configuration.roles', $configurationRoles);
 
+        $disallowedFieldNames = $config['disallowed_field_names'];
+        if ($container->hasParameter('disallowed_field_names')) {
+            $disallowedFieldNames = array_merge(
+                $disallowedFieldNames,
+                $container->getParameter('disallowed_field_names')
+            );
+        }
+        $container->setParameter('open_orchestra_backoffice.disallowed_field_names', $disallowedFieldNames);
+
         $loader->load('manager.yml');
         $loader->load('form.yml');
         $loader->load('generator.yml');

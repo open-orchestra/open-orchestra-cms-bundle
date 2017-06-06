@@ -8,6 +8,7 @@ parameters:
     open_orchestra_model.validator.unique_node_special_page.class            : OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeSpecialPageValidator
     open_orchestra_model.validator.unique_block_code.class                   : OpenOrchestra\Backoffice\Validator\Constraints\UniqueBlockCodeValidator
     open_orchestra_model.validator.unremovable_language.class                : OpenOrchestra\Backoffice\Validator\Constraints\UnremovableLanguageConditionValidator
+    open_orchestra_model.validator.content_type_field.class                  : OpenOrchestra\Backoffice\Validator\Constraints\ContentTypeFieldValidator
 
 services:
     open_orchestra_model.validator.unique_node_order:
@@ -62,3 +63,10 @@ services:
         class: '%open_orchestra_model.validator.unremovable_language.class%'
         tags:
             - { name: validator.constraint_validator, alias: unremovable_language}
+
+    open_orchestra_model.validator.content_type_field:
+        class: '%open_orchestra_model.validator.content_type_field.class%'
+        arguments:
+            - '%open_orchestra_backoffice.disallowed_field_names%'
+        tags:
+            - { name: validator.constraint_validator, alias: content_type_field}
