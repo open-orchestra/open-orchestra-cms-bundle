@@ -20,7 +20,7 @@ class KeywordsView extends AbstractCollectionView
         } else {
             let template = this._renderTemplate('Keyword/keywordsView',
                 {
-                    language: Application.getContext().language
+                    language: Application.getContext().get('language')
                 });
             this.$el.html(template);
             this._listView = new KeywordListView({

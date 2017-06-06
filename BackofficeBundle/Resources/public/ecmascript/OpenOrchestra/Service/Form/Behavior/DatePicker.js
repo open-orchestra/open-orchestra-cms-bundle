@@ -39,7 +39,7 @@ class DatePicker extends AbstractBehavior
             dataDateFormat = this._convertFormat(this._convertFormatYear, dataDateFormat);
             dataDateFormat = this._convertFormat(this._convertFormatMonth, dataDateFormat);
             dataDateFormat = this._convertFormat(this._convertFormatDay, dataDateFormat);
-            $.datepicker.setDefaults($.datepicker.regional[Application.getContext().language]);
+            $.datepicker.setDefaults($.datepicker.regional[Application.getContext().get('language')]);
             $element.datepicker({
                 dateFormat: dataDateFormat,
                 prevText: '<i class="fa fa-chevron-left"></i>',

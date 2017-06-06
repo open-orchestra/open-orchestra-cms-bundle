@@ -34,7 +34,7 @@ class HeaderView extends OrchestraView
         let template = this._renderTemplate(
             'Header/headerView',
             {
-                user: Application.getContext().user
+                user: Application.getContext().get('user')
             }
         );
         this.$el.html(template);

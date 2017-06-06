@@ -35,7 +35,7 @@ class SiteSelectorView extends OrchestraView
             {
                 currentSite: currentSite,
                 sites: _.without(this.sites.models, currentSite),
-                currentLocale: Application.getContext().language,
+                currentLocale: Application.getContext().get('language'),
                 linkMainAlias: linkMainAlias
             }
         );
@@ -63,7 +63,7 @@ class SiteSelectorView extends OrchestraView
      * @return Site|null
      */
     _getCurrentSite() {
-        let currentSiteId = Application.getContext().siteId;
+        let currentSiteId = Application.getContext().get('siteId');
         for (let site of this.sites.models) {
             if (currentSiteId === site.get('site_id')) {
                 return site;

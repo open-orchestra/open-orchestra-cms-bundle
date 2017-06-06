@@ -19,7 +19,7 @@ class ContentTypesView extends AbstractCollectionView
             this.$el.html(template);
         } else {
             let template = this._renderTemplate('ContentType/contentTypesView', {
-                language: Application.getContext().language
+                language: Application.getContext().get('language')
             });
             this.$el.html(template);
             this._listView = new ContentTypesListView({

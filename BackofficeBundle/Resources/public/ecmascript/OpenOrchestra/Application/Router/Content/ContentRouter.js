@@ -144,7 +144,7 @@ class ContentRouter extends OrchestraRouter
                     contentId: contentId,
                     language: language,
                     contentType: this._getCachedContentType(contentTypeId),
-                    siteLanguages: Application.getContext().siteLanguages
+                    siteLanguages: Application.getContext().get('siteLanguages')
                 });
 
                 Application.getRegion('content').html(contentVersionsView.render().$el);
@@ -199,7 +199,7 @@ class ContentRouter extends OrchestraRouter
                         form         : form,
                         contentType  : this._getCachedContentType(contentTypeId),
                         content      : content,
-                        siteLanguages: Application.getContext().siteLanguages
+                        siteLanguages: Application.getContext().get('siteLanguages')
                     });
                     Application.getRegion('content').html(contentFormView.render().$el);
                 });
@@ -230,7 +230,7 @@ class ContentRouter extends OrchestraRouter
                 contentTypeId  : contentTypeId,
                 contentTypeName: this._getCachedContentType(contentTypeId).get('name'),
                 language       : language,
-                siteLanguages  : Application.getContext().siteLanguages
+                siteLanguages  : Application.getContext().get('siteLanguages')
             });
             Application.getRegion('content').html(newContentFormView.render().$el);
         });
@@ -248,7 +248,7 @@ class ContentRouter extends OrchestraRouter
         page = Number(page) - 1;
         let urlParameter = {
             contentTypeId: contentTypeId,
-            siteId: Application.getContext().siteId,
+            siteId: Application.getContext().get('siteId'),
             language: language
         };
 

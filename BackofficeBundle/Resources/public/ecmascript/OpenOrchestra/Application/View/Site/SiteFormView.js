@@ -116,7 +116,7 @@ class SiteFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
                 let languages = jqXHR.getResponseHeader('languages');
                 if (null !== languages) {
                     let context = Application.getContext();
-                    context.siteLanguages = eval(languages);
+                    context.set('siteLanguages', eval(languages));
                     Application.setContext(context);
                 }
                 form._parseHtml(data);

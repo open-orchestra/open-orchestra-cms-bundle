@@ -214,7 +214,7 @@ class Application
      * @private
      */
     _initRouting() {
-        let routingConfiguration = this.getContext().routing;
+        let routingConfiguration = this.getContext().get('routing');
         fos.Router.setData({
             'base_url' : routingConfiguration.baseUrl,
             'scheme' : routingConfiguration.scheme,
@@ -229,7 +229,7 @@ class Application
      * @private
      */
     _initTranslator() {
-        Translator.locale = this.getContext().language;
+        Translator.locale = this.getContext().get('language');
         Translator.defaultDomain = 'interface';
     }
 
@@ -255,7 +255,7 @@ class Application
         FormBehaviorManager.add(ContentType);
         FormBehaviorManager.add(InputFile);
 
-        TinymceManager.setSetting('language', this.getContext().language);
+        TinymceManager.setSetting('language', this.getContext().get('language'));
         FormBehaviorManager.add(Tinymce);
     }
 

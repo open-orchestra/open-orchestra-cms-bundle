@@ -34,7 +34,7 @@ class DateFormatter extends AbstractDataFormatter
             .replace(/\:/g, '\\:'));
         };
 
-        let destinationDateFormat = $.datepicker.regional[Application.getContext().language].dateFormat + ' H:i:s';
+        let destinationDateFormat = $.datepicker.regional[Application.getContext().get('language')].dateFormat + ' H:i:s';
         let originDateFormat = Application.getConfiguration().getParameter('dateFormat');
 
         let dd = getGeneralPattern(originDateFormat.replace('d', '([0-9]{2})'));

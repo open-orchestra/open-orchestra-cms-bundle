@@ -16,10 +16,11 @@ class ContentRestoreModalView extends AbstractRestoreModalView
             this._model.destroy(),
             content.fetch()
         ).done( () => {
+            let user = Application.getContext().get('user');
             let url = Backbone.history.generateUrl('editContent', {
                 contentTypeId: content.get('content_type'),
                 contentId: content.get('content_id'),
-                language: Application.getContext().user.language.contribution
+                language: user.language.contribution
             });
             Backbone.history.navigate(url, true);
             this.hide();
