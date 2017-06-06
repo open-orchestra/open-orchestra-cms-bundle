@@ -42,7 +42,7 @@
         },
 
         'removeId': function(id) {
-            if (this.callbacks.hasOwnProperty(id) !== 'undefined') {
+            if (this.callbacks.hasOwnProperty(id)) {
                 delete(this.callbacks[id]);
             }
         }
