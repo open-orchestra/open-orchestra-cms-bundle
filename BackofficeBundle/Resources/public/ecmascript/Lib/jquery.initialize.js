@@ -37,7 +37,7 @@
         },
 
         'removeSelector': function(selector) {
-            if (this.callbacks.hasOwnProperty(selector)) {
+            if (this.callbacks.hasOwnProperty(selector) !== 'undefined') {
                 delete(this.callbacks[selector]);
             }
         }
