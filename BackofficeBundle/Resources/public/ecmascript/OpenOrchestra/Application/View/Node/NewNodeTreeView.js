@@ -34,7 +34,7 @@ class NewNodeTreeView extends OrchestraView
                 nodesTree : this._nodesTree.models,
                 language: this._language,
                 parentId: this._parentId,
-                siteLanguages: Application.getContext().siteLanguages
+                siteLanguages: Application.getContext().get('siteLanguages')
             }
         );
 

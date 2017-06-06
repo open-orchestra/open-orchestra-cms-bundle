@@ -22,13 +22,13 @@ class ContentsView extends AbstractCollectionView
      * Render contents view
      */
     render() {
-        $.datepicker.setDefaults($.datepicker.regional[Application.getContext().language]);
+        $.datepicker.setDefaults($.datepicker.regional[Application.getContext().get('language')]);
         let statuses = this._statuses.toJSON();
         statuses = statuses.hasOwnProperty('statuses') ? statuses.statuses : [];
         let template = this._renderTemplate('Content/contentsView', {
             contentType: this._contentType.toJSON(),
             language: this._urlParameter.language,
-            siteLanguages: Application.getContext().siteLanguages,
+            siteLanguages: Application.getContext().get('siteLanguages'),
             statuses: statuses,
             SearchFormGroupManager: SearchFormGroupManager,
             dateFormat: $.datepicker._defaults.dateFormat

@@ -47,7 +47,7 @@ class GroupListModalView extends ModalView
         let template = this._renderTemplate('User/groupListModalView',
             {
                 sites: this._sites.models,
-                language: Application.getContext().language
+                language: Application.getContext().get('language')
             }
         );
         this.$el.html(template);

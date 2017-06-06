@@ -59,7 +59,8 @@ class SharedBlockRouter extends AbstractBlockRouter
      */
     listSharedBlock(language, page) {
         if (null === language) {
-            language = Application.getContext().user.language.contribution
+            let user = Application.getContext().get('user');
+            language = user.language.contribution;
         }
         if (null === page) {
             page = 1
@@ -84,7 +85,7 @@ class SharedBlockRouter extends AbstractBlockRouter
                 collection: blocks,
                 blockComponents: blockComponents,
                 language: language,
-                siteLanguages: Application.getContext().siteLanguages,
+                siteLanguages: Application.getContext().get('siteLanguages'),
                 settings: {
                     page: page,
                     deferLoading: [blocks.recordsTotal, blocks.recordsFiltered],

@@ -38,7 +38,7 @@ class MenuView extends OrchestraView
         let template = this._renderTemplate('Menu/menuView',
             {
                 menuConfig: Orchestra.Config.Menu,
-                user: Application.getContext().user
+                user: Application.getContext().get('user')
             }
         );
 

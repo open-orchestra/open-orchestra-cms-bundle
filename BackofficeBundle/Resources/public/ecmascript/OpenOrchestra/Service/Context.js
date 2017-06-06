@@ -37,6 +37,29 @@ class Context
             this.user.access_section[section] = access;
         }
     }
+
+    /**
+     * Get a context property
+     * @param {String} property
+     *
+     * @return {mixed}
+     */
+    get(property) {
+        if (this.hasOwnProperty(property)) {
+            return this[property];
+        }
+
+        throw new Error('Missing property ' + property + ' in context');
+    }
+
+    /**
+     * Set a context property
+     * @param {String} property
+     * @param {mixed}  value
+     */
+    set(property, value) {
+        this[property] = value;
+    }
 }
 
 export default Context;

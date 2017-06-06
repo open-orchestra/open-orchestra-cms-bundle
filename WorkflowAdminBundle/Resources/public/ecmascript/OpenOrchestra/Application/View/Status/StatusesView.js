@@ -20,7 +20,7 @@ class StatusesView extends AbstractCollectionView
         } else {
             let template = this._renderTemplate('Status/statusesView',
             {
-                language: Application.getContext().language
+                language: Application.getContext().get('language')
             });
             this.$el.html(template);
             this._listView = new StatusListView({

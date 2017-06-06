@@ -89,7 +89,7 @@ class NodeRouter extends OrchestraRouter
                         pageLength: Application.getConfiguration().getParameter('datatable').pageLength
 
                     },
-                    siteLanguages: Application.getContext().siteLanguages,
+                    siteLanguages: Application.getContext().get('siteLanguages'),
                     node: node
                 });
                 Application.getRegion('content').html(nodeVersionsView.render().$el);
@@ -104,7 +104,8 @@ class NodeRouter extends OrchestraRouter
      */
     showNodes(language) {
         if (null === language) {
-            language = Application.getContext().user.language.contribution
+            let user = Application.getContext().get('user');
+            language = user.language.contribution;
         }
 
         this._displayLoader(Application.getRegion('content'));
@@ -114,8 +115,8 @@ class NodeRouter extends OrchestraRouter
                 let nodesView = new NodesView({
                     statuses: statuses,
                     language: language,
-                    siteLanguages: Application.getContext().siteLanguages,
-                    siteId: Application.getContext().siteId
+                    siteLanguages: Application.getContext().get('siteLanguages'),
+                    siteId: Application.getContext().get('siteId')
                 });
                 Application.getRegion('content').html(nodesView.render().$el);
             }
@@ -132,7 +133,7 @@ class NodeRouter extends OrchestraRouter
     editNode(nodeId, language, version = null) {
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_node_form', {
-            siteId : Application.getContext().siteId,
+            siteId : Application.getContext().get('siteId'),
             nodeId : nodeId,
             language: language,
             version: version
@@ -142,14 +143,14 @@ class NodeRouter extends OrchestraRouter
             urlParameter: {
                 'language': language,
                 'nodeId': nodeId,
-                'siteId': Application.getContext().siteId,
+                'siteId': Application.getContext().get('siteId'),
                 'version': version
             },
             success: () => {
                 FormBuilder.createFormFromUrl(url, (form) => {
                     let nodeFormView = new NodeFormView({
                         node: node,
-                        siteLanguages: Application.getContext().siteLanguages,
+                        siteLanguages: Application.getContext().get('siteLanguages'),
                         form : form
                     });
                     Application.getRegion('content').html(nodeFormView.render().$el);
@@ -169,7 +170,7 @@ class NodeRouter extends OrchestraRouter
         new NodesTree().fetch({
             urlParameter: {
                 'language': language,
-                'siteId': Application.getContext().siteId,
+                'siteId': Application.getContext().get('siteId'),
                 'parentId': parentId
             },
             success: (nodesTree) => {
@@ -193,7 +194,7 @@ class NodeRouter extends OrchestraRouter
     newNode(language, parentId, order) {
         this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_node_new', {
-            siteId : Application.getContext().siteId,
+            siteId : Application.getContext().get('siteId'),
             language: language,
             parentId: parentId,
             order: order
@@ -201,7 +202,7 @@ class NodeRouter extends OrchestraRouter
         FormBuilder.createFormFromUrl(url, (form) => {
             let nodeFormView = new NewNodeFormView({
                 form : form,
-                siteLanguages: Application.getContext().siteLanguages,
+                siteLanguages: Application.getContext().get('siteLanguages'),
                 parentId : parentId,
                 language: language,
                 order: order
@@ -222,13 +223,13 @@ class NodeRouter extends OrchestraRouter
             urlParameter: {
                 'language': language,
                 'nodeId': nodeId,
-                'siteId': Application.getContext().siteId,
+                'siteId': Application.getContext().get('siteId'),
                 'version': version
             },
             success: () => {
                 let nodeView = new NodeView({
                     node: node,
-                    siteLanguages: Application.getContext().siteLanguages
+                    siteLanguages: Application.getContext().get('siteLanguages')
                 });
                 Application.getRegion('content').html(nodeView.render().$el);
             }

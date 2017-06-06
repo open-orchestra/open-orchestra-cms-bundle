@@ -20,7 +20,7 @@ class WorkflowProfilesView extends AbstractCollectionView
         } else {
             let template = this._renderTemplate('WorkflowProfile/workflowProfileView',
             {
-                language: Application.getContext().language
+                language: Application.getContext().get('language')
             });
             this.$el.html(template);
             this._listView = new WorkflowProfileListView({

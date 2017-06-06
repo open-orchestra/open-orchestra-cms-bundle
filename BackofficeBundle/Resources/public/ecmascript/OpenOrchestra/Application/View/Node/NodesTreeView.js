@@ -39,7 +39,7 @@ class NodesTreeView extends AbstractTreeView
                 nodesTree : this._nodesTree.models,
                 statuses: this._statuses.models,
                 language: this._language,
-                siteLanguages: Application.getContext().siteLanguages
+                siteLanguages: Application.getContext().get('siteLanguages')
             }
         );
     }

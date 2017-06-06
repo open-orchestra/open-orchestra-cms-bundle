@@ -29,7 +29,7 @@ class GroupsView extends AbstractCollectionView
             let template = this._renderTemplate('Group/groupsView',
                 {
                     sites: this._sites.models,
-                    language: Application.getContext().language
+                    language: Application.getContext().get('language')
                 }
             );
             this.$el.html(template);
