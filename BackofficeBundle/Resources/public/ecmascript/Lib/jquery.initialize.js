@@ -79,10 +79,10 @@
     $.fn.initialize = function (selector, callback) {
         let id = $(this).attr('id');
         if (typeof id == 'undefined') {
-            while ($("#" + id).length > 0) {
+            do {
                 id = prefix + '_' + count;
                 count++;
-            }
+            } while ($("#" + id).length > 0);
         }
         $(this).attr('id', id);
         msobservers.initialize(id, selector, callback);
