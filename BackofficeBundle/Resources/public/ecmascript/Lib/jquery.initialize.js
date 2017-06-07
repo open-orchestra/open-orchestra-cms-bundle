@@ -89,7 +89,7 @@
     };
 
     // Handle manual .destroy() calls.
-    $.fn.destroy = function (selector) {
-        msobservers.removeSelector($(this), selector);
+    $.fn.destroy = function (id) {
+        msobservers.removeId(id);
     };
 })(jQuery);
