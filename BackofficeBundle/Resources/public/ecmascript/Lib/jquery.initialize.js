@@ -9,10 +9,12 @@
  * https://github.com/timpler/jquery.initialize/blob/master/LICENSE
  */
 ;(function ($) {
+    var prefix = 'jquery_initialize';
+    var count = 0;
     var msobservers = {
         'callbacks': {},
 
-        'initialize': function (selector, callback) {
+        'initialize': function (id, selector, callback) {
             // Wrap the callback so that we can ensure that it is only called once per element.
             var seen = [];
             callbackOnce = function () {
@@ -23,22 +25,25 @@
             };
 
             // See if the selector matches any elements already on the page.
-            $(selector).each(callbackOnce);
+            $('#' + id + ' ' + selector).each(callbackOnce);
 
             // Then, add it to the list of selector observers.
-            this.addCallback(selector, callbackOnce);
+            this.addCallback(id, selector, callbackOnce);
         },
 
-        'addCallback': function (selector, callback) {
-            if (typeof this.callbacks[selector] == 'undefined') {
-                this.callbacks[selector] = [];
+        'addCallback': function (id, selector, callback) {
+            if (typeof this.callbacks[id] == 'undefined') {
+                this.callbacks[id] = [];
             }
-            this.callbacks[selector].push(callback);
+            if (typeof this.callbacks[id][selector] == 'undefined') {
+                this.callbacks[id][selector] = [];
+            }
+            this.callbacks[id][selector].push(callback);
         },
 
-        'removeSelector': function(selector) {
-            if (this.callbacks.hasOwnProperty(selector) !== 'undefined') {
-                delete(this.callbacks[selector]);
+        'removeId': function(id) {
+            if (this.callbacks.hasOwnProperty(id)) {
+                delete(this.callbacks[id]);
             }
         }
     };
@@ -47,11 +52,10 @@
         // Stop watching selectors when they disappear from the DOM
         mutations.forEach(function(mutation) {
             if (mutation.type == 'childList' && mutation.removedNodes.length > 0) {
-                for (selector in msobservers.callbacks) {
+                for (id in msobservers.callbacks) {
                     for (var index = 0; index < mutation.removedNodes.length; index++) {
-                        if ($(selector, $(mutation.removedNodes[index])).length > 0) {
-                            msobservers.removeSelector(selector);
-                            break;
+                        if ($(mutation.removedNodes[index]).attr('id') == id) {
+                            msobservers.removeId(id);
                         }
                     }
                 }
@@ -59,9 +63,11 @@
         });
 
         // The MutationObserver watches for when new elements are added to the DOM.
-        for (selector in msobservers.callbacks) {
-            for (var i = 0; i < msobservers.callbacks[selector].length; i++) {
-                $(selector).each(msobservers.callbacks[selector][i]);
+        for (id in msobservers.callbacks) {
+            for (selector in msobservers.callbacks[id]) {
+                for (var i = 0; i < msobservers.callbacks[id][selector].length; i++) {
+                    $('#' + id + ' ' + selector).each(msobservers.callbacks[id][selector][i]);
+                }
             }
         }
     });
@@ -70,12 +76,20 @@
     observer.observe(document.documentElement, {childList: true, subtree: true, attributes: true});
 
     // Handle .initialize() calls.
-    $.fn.initialize = function (callback) {
-        msobservers.initialize(this.selector, callback);
+    $.fn.initialize = function (selector, callback) {
+        let id = $(this).attr('id');
+        if (typeof id == 'undefined') {
+            while ($("#" + id).length > 0) {
+                id = prefix + '_' + count;
+                count++;
+            }
+        }
+        $(this).attr('id', id);
+        msobservers.initialize(id, selector, callback);
     };
 
     // Handle manual .destroy() calls.
-    $.fn.destroy = function () {
-        msobservers.removeSelector(this.selector);
+    $.fn.destroy = function (id) {
+        msobservers.removeId(id);
     };
 })(jQuery);
