@@ -79,7 +79,7 @@
     $.fn.initialize = function (selector, callback) {
         let id = $(this).attr('id');
         if (typeof id == 'undefined') {
-            while($("#" + id).length > 0) {
+            while ($("#" + id).length > 0) {
                 id = prefix + '_' + count;
                 count++;
             }
