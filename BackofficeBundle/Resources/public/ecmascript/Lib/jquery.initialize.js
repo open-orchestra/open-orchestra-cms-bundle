@@ -78,9 +78,11 @@
     // Handle .initialize() calls.
     $.fn.initialize = function (selector, callback) {
         let id = $(this).attr('id');
-        while(typeof id == 'undefined' || $("#" + id).length > 0) {
-            id = prefix + '_' + count;
-            count++;
+        if (typeof id == 'undefined') {
+            while($("#" + id).length > 0) {
+                id = prefix + '_' + count;
+                count++;
+            }
         }
         $(this).attr('id', id);
         msobservers.initialize(id, selector, callback);

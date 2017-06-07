@@ -28,6 +28,9 @@ class ContentTypeController extends AbstractAdminController
     public function formAction(Request $request, $contentTypeId)
     {
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
+
+
+        var_dump($contentType->getId());
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $contentType);
 
         $newContentType = $this->get('open_orchestra_backoffice.manager.content_type')->duplicate($contentType);
