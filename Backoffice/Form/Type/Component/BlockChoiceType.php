@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Form\Type;
+namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +18,7 @@ class BlockChoiceType extends AbstractType
     public function __construct(array $choices)
     {
         $this->choices = $choices;
+        var_dump($choices);
     }
 
     /**
@@ -38,8 +39,9 @@ class BlockChoiceType extends AbstractType
     protected function getChoices()
     {
         $choices = array();
-        foreach ($this->choices as $choice) {
-            $choices[$choice] = 'open_orchestra_backoffice.block.' . $choice . '.title';
+
+        foreach ($this->choices as $key => $configuration) {
+            $choices[$key] = $configuration['name'];
         }
 
         return $choices;
