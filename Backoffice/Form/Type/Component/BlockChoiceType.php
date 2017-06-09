@@ -18,7 +18,6 @@ class BlockChoiceType extends AbstractType
     public function __construct(array $choices)
     {
         $this->choices = $choices;
-        var_dump($choices);
     }
 
     /**
