@@ -31,7 +31,6 @@ class GroupController extends AbstractAdminController
         $groupClass = $this->getParameter('open_orchestra_user.document.group.class');
         /** @var GroupInterface $group */
         $group = new $groupClass();
-
         $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $group->setSite($this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId));
 

@@ -45,7 +45,7 @@ class LoadGroupData extends AbstractLoadGroupData implements OrchestraFunctional
             $this->getReference('site2')->getSiteId()
         ));
 
-        $sadmin2 = new Group('Site Admin demo');
+        $sadmin2 = new Group();
         $sadmin2->addLabel('en', 'Site admin demo');
         $sadmin2->addLabel('fr', 'Admin site demo');
         $sadmin2->setSite($this->getReference('site2'));
@@ -68,7 +68,7 @@ class LoadGroupData extends AbstractLoadGroupData implements OrchestraFunctional
         ));
         $nodeProfileCollection = $this->createProfileCollection(array('profile-Contributor'));
 
-        $group = new Group('Demo group');
+        $group = new Group();
         $group->addLabel('en', 'Demo group');
         $group->addLabel('fr', 'Groupe de démo');
         $group->setSite($this->getReference('site2'));
@@ -80,7 +80,7 @@ class LoadGroupData extends AbstractLoadGroupData implements OrchestraFunctional
 
     protected function createEmptyGroup()
     {
-        $group = new Group('Empty group');
+        $group = new Group();
         $group->addLabel('en', 'Empty group');
         $group->addLabel('fr', 'Groupe vide');
         $group->setSite($this->getReference('site3'));

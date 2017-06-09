@@ -26,9 +26,13 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
      * @inheritdoc
      */
     render() {
-        let title = $('#oo_group_name', this._form.$form).val();
-        if (null === this._groupId) {
-            title = Translator.trans('open_orchestra_group.table.groups.new');
+        let title = Translator.trans('open_orchestra_group.table.groups.new');
+        if (null !== this._groupId) {
+            title = $("input[id*='oo_group_labels_']", this._form.$form).first().val();
+            let currentTitle = $("input[id='oo_group_labels_" + Application.getContext().get('language') + "']", this._form.$form);
+            if (currentTitle.length > 0) {
+                title = currentTitle.val();
+            }
         }
         let template = this._renderTemplate('Group/groupFormView', {
             title: title
