@@ -103,8 +103,8 @@ class GroupTypeTest extends AbstractBaseTestCase
     public function provideBuilderParams()
     {
         return array(
-            array(true , 3, 0, 0, 0),
-            array(false, 5, 2, 1, 1),
+            array(true , 2, 0, 0, 0),
+            array(false, 4, 2, 1, 1),
         );
     }
 
