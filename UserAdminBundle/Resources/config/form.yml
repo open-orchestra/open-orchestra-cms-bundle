@@ -11,6 +11,7 @@ services:
             - '@open_orchestra_user_admin.subscriber.user_profile'
             - '@open_orchestra_user_admin.subscriber.user_group'
             - '@translator'
+            - '@security.authorization_checker'
         tags:
             - { name: form.type, alias: oo_user}
     open_orchestra_user_admin.type.registration_user:
