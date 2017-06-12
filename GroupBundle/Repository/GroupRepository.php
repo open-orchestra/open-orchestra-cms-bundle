@@ -64,11 +64,12 @@ class GroupRepository extends AbstractAggregateRepository implements GroupReposi
     {
         array_walk($groupIds, function(&$item) {$item = new \MongoId($item);});
 
-        $qb = $this->createQueryBuilder();
-        $qb->remove()
-        ->field('id')->in($groupIds)
-        ->getQuery()
-        ->execute();
+        $this->createQueryBuilder()
+            ->updateMany()
+            ->field('id')->in($groupIds)
+            ->field('deleted')->set(true)
+            ->getQuery()
+            ->execute();
     }
 
     /**
