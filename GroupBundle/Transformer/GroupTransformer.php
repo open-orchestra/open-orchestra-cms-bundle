@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Transformer;
 
+use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -22,6 +23,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $multiLanguagesChoiceManager;
 
     /**
+     * @param ArrayCache                           $arrayCache
      * @param string                               $facadeClass
      * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
@@ -29,13 +31,14 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param BusinessRulesManager                 $businessRulesManager
      */
     public function __construct(
+        ArrayCache $arrayCache,
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         GroupRepositoryInterface $groupRepository,
         BusinessRulesManager $businessRulesManager
     ){
-        parent::__construct($facadeClass, $authorizationChecker);
+        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->groupRepository = $groupRepository;
         $this->businessRulesManager = $businessRulesManager;
@@ -95,7 +98,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     protected function addSite(FacadeInterface $facade, GroupInterface $group)
     {
         if ($this->hasGroup(CMSGroupContext::SITE) && $site = $group->getSite()) {
-            $facade->site = $this->getTransformer('site')->transform($site);
+            $facade->site = $this->getTransformer('site')->cacheTransform($site);
         }
 
         return $facade;

@@ -50,6 +50,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
         Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
 
         $this->transformer = new GroupTransformer(
+            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $this->authorizationChecker,
             $this->multiLanguagesChoiceManager,

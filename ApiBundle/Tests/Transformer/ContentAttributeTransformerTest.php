@@ -22,7 +22,10 @@ class ContentAttributeTransformerTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->transformer = new ContentAttributeTransformer($this->facadeClass);
+        $this->transformer = new ContentAttributeTransformer(
+            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
+            $this->facadeClass
+        );
     }
 
     /**

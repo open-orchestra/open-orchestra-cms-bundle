@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -20,18 +21,20 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $validator;
 
     /**
+     * @param ArrayCache                    $arrayCache
      * @param string                        $facadeClass
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TrashItemRepositoryInterface  $trashItemRepository
      * @param ValidatorInterface            $validator
      */
     public function __construct(
+        ArrayCache $arrayCache,
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         TrashItemRepositoryInterface  $trashItemRepository,
         ValidatorInterface  $validator
     ) {
-        parent::__construct($facadeClass, $authorizationChecker);
+        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
         $this->trashItemRepository = $trashItemRepository;
         $this->validator = $validator;
     }

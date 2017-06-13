@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -16,16 +17,18 @@ class FieldTypeTransformer extends AbstractTransformer
     protected $multiLanguagesChoiceManagerInterface;
 
     /**
+     * @param ArrayCache                           $arrayCache
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManagerInterface
      * @param array                                $fieldsParameters
      */
     public function __construct(
+        ArrayCache $arrayCache,
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManagerInterface,
         array $fieldsParameters
     ) {
-        parent::__construct($facadeClass);
+        parent::__construct($arrayCache, $facadeClass);
         $this->multiLanguagesChoiceManagerInterface = $multiLanguagesChoiceManagerInterface;
         $this->fieldsParameters = $fieldsParameters;
     }

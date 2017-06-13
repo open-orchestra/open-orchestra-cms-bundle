@@ -48,6 +48,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $facade->label = 'fakeStatus';
         $facade->name = 'name';
         $transformer = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
+        Phake::when($transformer)->cacheTransform(Phake::anyParameters())->thenReturn($facade);
         Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($transformer);
@@ -71,6 +72,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::when($this->businessRulesManager)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->contentTransformer = new ContentTransformer(
+            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $this->statusRepository,
             $this->contentRepository,

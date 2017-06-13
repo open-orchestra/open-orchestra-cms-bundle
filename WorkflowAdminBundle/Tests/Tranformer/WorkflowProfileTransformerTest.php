@@ -41,6 +41,7 @@ class WorkflowProfileTransformerTest extends AbstractBaseTestCase
         Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
 
         $this->transformer = new WorkflowProfileTransformer(
+            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $authorizationChecker,
             $this->multiLanguagesChoiceManager,

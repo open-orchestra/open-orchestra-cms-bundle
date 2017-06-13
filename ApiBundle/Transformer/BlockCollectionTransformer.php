@@ -13,22 +13,15 @@ class BlockCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection      $blockCollection
-     * @param Collection|null $generateMixed
      *
      * @return FacadeInterface
      */
-    public function transform($blockCollection, $generateMixed = null)
+    public function transform($blockCollection)
     {
         $facade = $this->newFacade();
 
-        if (null !== $generateMixed) {
-            foreach($generateMixed as $block) {
-                $facade->addBlock($this->getTransformer('block')->transform($block, true));
-            }
-        }
-
         foreach ($blockCollection as $block) {
-            $facade->addBlock($this->getTransformer('block')->transform($block, false));
+            $facade->addBlock($this->getTransformer('block')->transform($block));
         }
 
         return $facade;

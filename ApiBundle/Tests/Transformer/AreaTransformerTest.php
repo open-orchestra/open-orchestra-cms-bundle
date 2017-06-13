@@ -43,6 +43,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->areaTransformer = new AreaTransformer(
+            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $this->authorizationChecker,
             $this->areaClass
@@ -57,12 +58,12 @@ class AreaTransformerTest extends AbstractBaseTestCase
     public function testTransform()
     {
         $blockFacade = new BlockFacade();
-        Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($blockFacade);
+        Phake::when($this->transformer)->cacheTransform(Phake::anyParameters())->thenReturn($blockFacade);
 
         $areaFacade = $this->areaTransformer->transform($this->area);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
-        Phake::verify($this->transformer, Phake::times(3))->transform($this->block);
+        Phake::verify($this->transformer, Phake::times(3))->cacheTransform($this->block);
     }
 
     /**

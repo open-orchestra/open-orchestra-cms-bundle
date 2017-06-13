@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
@@ -36,6 +37,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $businessRulesManager;
 
     /**
+     * @param ArrayCache                    $arrayCache
      * @param string                        $facadeClass
      * @param EncryptionManager             $encrypter
      * @param SiteRepositoryInterface       $siteRepository
@@ -46,6 +48,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param BusinessRulesManager          $businessRulesManager
      */
     public function __construct(
+        ArrayCache $arrayCache,
         $facadeClass,
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
@@ -61,7 +64,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $this->eventDispatcher = $eventDispatcher;
         $this->nodeRepository = $nodeRepository;
         $this->businessRulesManager = $businessRulesManager;
-        parent::__construct($facadeClass, $authorizationChecker);
+        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
     }
 
     /**
@@ -161,7 +164,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected function addStatus(FacadeInterface $facade, NodeInterface $node)
     {
         if ($this->hasGroup(CMSGroupContext::STATUS)) {
-            $facade->status = $this->getTransformer('status')->transform($node->getStatus());
+            $facade->status = $this->getTransformer('status')->cacheTransform($node->getStatus());
         }
 
         return $facade;

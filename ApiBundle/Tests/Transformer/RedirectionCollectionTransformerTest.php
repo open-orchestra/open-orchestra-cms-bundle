@@ -30,7 +30,11 @@ class RedirectionCollectionTransformerTest extends AbstractBaseTestCase
         $transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($transformerManager)->get('redirection')->thenReturn($this->redirectionTransformer);
 
-        $this->transformer = new RedirectionCollectionTransformer($this->facadeClass, $authorizationChecker);
+        $this->transformer = new RedirectionCollectionTransformer(
+            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
+            $this->facadeClass,
+            $authorizationChecker
+        );
         $this->transformer->setContext($transformerManager);
     }
 

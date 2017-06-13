@@ -11,6 +11,7 @@ services:
     open_orchestra_workflow_admin.transformer.status:
         class: '%open_orchestra_workflow_admin.transformer.status.class%'
         arguments:
+            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_workflow_admin.facade.status.class%'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
             - '@translator'
@@ -23,6 +24,7 @@ services:
     open_orchestra_workflow_admin.transformer.status_collection:
         class: '%open_orchestra_workflow_admin.transformer.status_collection.class%'
         arguments:
+            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_workflow_admin.facade.status_collection.class%'
             - '@security.authorization_checker'
         tags:
@@ -31,6 +33,7 @@ services:
     open_orchestra_workflow_admin.transformer.status_node_tree:
         class: '%open_orchestra_workflow_admin.transformer.status_node_tree.class%'
         arguments:
+            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_workflow_admin.facade.status.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
@@ -38,6 +41,7 @@ services:
     open_orchestra_workflow_admin.transformer.workflow_profile:
         class: '%open_orchestra_workflow_admin.transformer.workflow_profile.class%'
         arguments:
+            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_workflow_admin.facade.workflow_profile.class%'
             - '@security.authorization_checker'
             - '@open_orchestra_backoffice.manager.multi_languages_choice'
@@ -48,6 +52,7 @@ services:
     open_orchestra_workflow_admin.transformer.workflow_profile_collection:
         class: '%open_orchestra_workflow_admin.transformer.workflow_profile_collection.class%'
         arguments:
+            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_workflow_admin.facade.workflow_profile_collection.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}

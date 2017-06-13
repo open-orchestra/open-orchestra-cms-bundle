@@ -13,12 +13,11 @@ use OpenOrchestra\UserBundle\Document\User;
 class UserListGroupTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
-     * @param User                $mixed
-     * @param GroupInterface|null $group
+     * @param User $mixed
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, GroupInterface $group = null)
+    public function transform($mixed)
     {
         $facade = $this->newFacade();
 

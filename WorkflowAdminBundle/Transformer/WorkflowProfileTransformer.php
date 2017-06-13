@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Transformer;
 
+use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
@@ -21,18 +22,20 @@ class WorkflowProfileTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $workflowProfileRepository;
 
     /**
+     * @param ArrayCache                           $arrayCache
      * @param string                               $facadeClass
      * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param WorkflowProfileRepositoryInterface   $workflowProfileRepository
      */
     public function __construct(
+        ArrayCache $arrayCache,
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         WorkflowProfileRepositoryInterface   $workflowProfileRepository
     ) {
-        parent::__construct($facadeClass, $authorizationChecker);
+        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->workflowProfileRepository = $workflowProfileRepository;
     }

@@ -36,6 +36,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
         Phake::when($generateFormManager)->getRequiredUriParameter(Phake::anyParameters())->thenReturn(array());
 
         $this->blockTransformer = new BlockTransformer(
+            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $this->displayBlockManager,
             $this->blockConfigurationManager,
