@@ -8,7 +8,6 @@ services:
     open_orchestra_user_admin.transformer.user:
         class: '%open_orchestra_user_admin.transformer.user.class%'
         arguments:
-            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_user_admin.facade.user.class%'
             - '@security.authorization_checker'
             - '@event_dispatcher'
@@ -19,7 +18,6 @@ services:
     open_orchestra_user_admin.transformer.user_collection:
         class: '%open_orchestra_user_admin.transformer.user_collection.class%'
         arguments:
-            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_user_admin.facade.user_collection.class%'
             - '@security.authorization_checker'
         tags:
@@ -28,7 +26,6 @@ services:
     open_orchestra_user_admin.transformer.user_list_group:
         class: '%open_orchestra_user_admin.transformer.user_list_group.class%'
         arguments:
-            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_user_admin.facade.user_list_group.class%'
             - '@security.authorization_checker'
         tags:
@@ -36,7 +33,6 @@ services:
     open_orchestra_user_admin.transformer.user_list_group_collection:
         class: '%open_orchestra_user_admin.transformer.user_list_group_collection.class%'
         arguments:
-            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_user_admin.facade.user_list_group_collection.class%'
             - '@security.authorization_checker'
         tags:

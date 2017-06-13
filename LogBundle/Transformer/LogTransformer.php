@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\LogBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\LogBundle\Model\LogInterface;
@@ -16,16 +15,14 @@ class LogTransformer extends AbstractTransformer
     protected $translator;
 
     /**
-     * @param ArrayCache          $arrayCache
      * @param string              $facadeClass
      * @param TranslatorInterface $translator
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         TranslatorInterface $translator
     ) {
-        parent::__construct($arrayCache, $facadeClass);
+        parent::__construct($facadeClass);
         $this->translator = $translator;
     }
 

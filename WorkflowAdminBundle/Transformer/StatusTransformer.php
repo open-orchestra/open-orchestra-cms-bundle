@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\WorkflowAdminBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -26,7 +25,6 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $statusRepository;
 
     /**
-     * @param ArrayCache                           $arrayCache
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param TranslatorInterface                  $translator
@@ -35,7 +33,6 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusRepositoryInterface            $statusRepository
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         TranslatorInterface $translator,
@@ -43,7 +40,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         StatusUsageFinder $usageFinder,
         StatusRepositoryInterface $statusRepository
     ) {
-        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->translator = $translator;
         $this->usageFinder = $usageFinder;

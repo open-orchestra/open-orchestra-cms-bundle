@@ -43,7 +43,6 @@ class AreaTransformerTest extends AbstractBaseTestCase
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->areaTransformer = new AreaTransformer(
-            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $this->authorizationChecker,
             $this->areaClass

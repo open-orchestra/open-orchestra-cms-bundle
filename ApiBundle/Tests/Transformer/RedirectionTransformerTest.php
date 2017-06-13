@@ -32,7 +32,6 @@ class RedirectionTransformerTest extends AbstractBaseTestCase
         Phake::when($this->redirectionRepository)->find(Phake::anyParameters())->thenReturn('ok');
 
         $this->transformer = new RedirectionTransformer(
-            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $authorizationChecker,
             $this->redirectionRepository

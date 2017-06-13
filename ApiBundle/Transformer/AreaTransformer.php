@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -17,18 +16,16 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $areaClass;
 
     /**
-     * @param ArrayCache                    $arrayCache
      * @param string                        $facadeClass
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param string                        $areaClass
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         $areaClass
     ) {
-        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->areaClass = $areaClass;
     }
 

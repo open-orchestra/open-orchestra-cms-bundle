@@ -6,14 +6,12 @@ services:
     open_orchestra_log.transformer.log_collection:
         class: '%open_orchestra_log.transformer.log_collection.class%'
         arguments:
-            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_log.facade.log_collection.class%'
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_log.transformer.log:
         class: '%open_orchestra_log.transformer.log.class%'
         arguments:
-            - '@doctrine_mongodb.odm.cache.array'
             - '%open_orchestra_log.facade.log.class%'
             - '@translator'
         tags:

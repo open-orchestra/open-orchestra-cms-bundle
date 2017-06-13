@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\Manager\BlockConfigurationManager;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
@@ -28,7 +27,6 @@ class BlockTransformer extends AbstractTransformer
     protected $generateFormManager;
 
     /**
-     * @param ArrayCache                $arrayCache
      * @param string                    $facadeClass
      * @param DisplayBlockManager       $displayBlockManager
      * @param BlockConfigurationManager $blockConfigurationManager
@@ -38,7 +36,6 @@ class BlockTransformer extends AbstractTransformer
      * @param GenerateFormManager       $generateFormManager
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         DisplayBlockManager      $displayBlockManager,
         BlockConfigurationManager $blockConfigurationManager,
@@ -47,7 +44,7 @@ class BlockTransformer extends AbstractTransformer
         BlockRepositoryInterface $blockRepository,
         GenerateFormManager $generateFormManager
     ) {
-        parent::__construct($arrayCache, $facadeClass);
+        parent::__construct($facadeClass);
         $this->displayBlockManager = $displayBlockManager;
         $this->blockConfigurationManager = $blockConfigurationManager;
         $this->translator = $translator;

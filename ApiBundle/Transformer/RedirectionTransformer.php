@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -19,18 +18,16 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $redirectionRepository;
 
     /**
-     * @param ArrayCache                     $arrayCache
      * @param string                         $facadeClass
      * @param AuthorizationCheckerInterface  $authorizationChecker
      * @param RedirectionRepositoryInterface $redirectionRepository
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         RedirectionRepositoryInterface $redirectionRepository
     ) {
-        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->redirectionRepository = $redirectionRepository;
     }
 

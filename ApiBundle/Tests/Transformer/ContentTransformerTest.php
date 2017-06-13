@@ -72,7 +72,6 @@ class ContentTransformerTest extends AbstractBaseTestCase
         Phake::when($this->businessRulesManager)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->contentTransformer = new ContentTransformer(
-            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $this->statusRepository,
             $this->contentRepository,

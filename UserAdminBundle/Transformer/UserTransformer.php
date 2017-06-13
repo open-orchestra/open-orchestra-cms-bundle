@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
@@ -24,7 +23,6 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $userRepository;
 
     /**
-     * @param ArrayCache                           $arrayCache
      * @param string                               $facadeClass
      * @param AuthorizationCheckerInterface        $authorizationChecker
      * @param EventDispatcherInterface             $eventDispatcher
@@ -32,14 +30,13 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param UserRepositoryInterface              $userRepository
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         UserRepositoryInterface $userRepository
     ) {
-        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->eventDispatcher = $eventDispatcher;
         $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->userRepository = $userRepository;

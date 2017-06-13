@@ -81,7 +81,6 @@ class NodeTransformerTest extends AbstractBaseTestCase
         Phake::when($this->businessRulesManager)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->nodeTransformer = new NodeTransformer(
-            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $this->encryptionManager,
             $this->siteRepository,

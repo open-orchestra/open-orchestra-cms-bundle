@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
@@ -22,14 +21,12 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $businessRulesManager;
 
     /**
-     * @param ArrayCache                    $arrayCache
      * @param string                        $facadeClass
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param KeywordRepositoryInterface    $keywordRepository
      * @param BusinessRulesManager          $businessRulesManager
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         KeywordRepositoryInterface $keywordRepository,
@@ -37,7 +34,7 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
     ) {
         $this->keywordRepository = $keywordRepository;
         $this->businessRulesManager = $businessRulesManager;
-        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
     }
 
     /**

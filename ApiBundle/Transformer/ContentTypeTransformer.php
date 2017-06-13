@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -29,7 +28,6 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $businessRulesManager;
 
     /**
-     * @param ArrayCache                           $arrayCache
      * @param string                               $facadeClass
      * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      * @param ContentRepositoryInterface           $contentRepository
@@ -39,7 +37,6 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param ContentManager                       $contentManager
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager,
         ContentRepositoryInterface $contentRepository,
@@ -53,7 +50,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
         $this->contentTypeRepository = $contentTypeRepository;
         $this->businessRulesManager = $businessRulesManager;
         $this->contentManager = $contentManager;
-        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
     }
 
     /**

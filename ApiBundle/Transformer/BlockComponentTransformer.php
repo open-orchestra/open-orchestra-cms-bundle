@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\Backoffice\Manager\BlockConfigurationManager;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -17,18 +16,16 @@ class BlockComponentTransformer extends AbstractTransformer
     protected $translator;
 
     /**
-     * @param ArrayCache                $arrayCache
      * @param string                    $facadeClass
      * @param BlockConfigurationManager $blockConfigurationManager
      * @param TranslatorInterface       $translator
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         BlockConfigurationManager $blockConfigurationManager,
         TranslatorInterface $translator
     ) {
-        parent::__construct($arrayCache, $facadeClass);
+        parent::__construct($facadeClass);
         $this->blockConfigurationManager = $blockConfigurationManager;
         $this->translator = $translator;
     }

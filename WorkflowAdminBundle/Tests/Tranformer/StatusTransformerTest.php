@@ -54,7 +54,6 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($this->usageFinder)->hasUsage(Phake::anyParameters())->thenReturn(false);
 
         $this->transformer = new StatusTransformer(
-            Phake::mock('Doctrine\Common\Cache\ArrayCache'),
             $this->facadeClass,
             $multiLanguagesChoiceManager,
             $this->translator,

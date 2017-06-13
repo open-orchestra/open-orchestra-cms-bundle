@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Cache\ArrayCache;
 use OpenOrchestra\Backoffice\BusinessRules\BusinessRulesManager;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\ContentStrategy;
@@ -30,7 +29,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $businessRulesManager;
 
     /**
-     * @param ArrayCache                     $arrayCache
      * @param string                         $facadeClass
      * @param StatusRepositoryInterface      $statusRepository
      * @param ContentRepositoryInterface     $contentRepository,
@@ -39,7 +37,6 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param BusinessRulesManager           $businessRulesManager
      */
     public function __construct(
-        ArrayCache $arrayCache,
         $facadeClass,
         StatusRepositoryInterface $statusRepository,
         ContentRepositoryInterface $contentRepository,
@@ -51,7 +48,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
         $this->businessRulesManager = $businessRulesManager;
-        parent::__construct($arrayCache, $facadeClass, $authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
     }
 
     /**
