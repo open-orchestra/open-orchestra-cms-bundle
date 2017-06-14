@@ -21,6 +21,7 @@ class UserType extends AbstractType
     protected $userProfileSubscriber;
     protected $userGroupSubscriber;
     protected $translator;
+    protected $authorizationChecker;
 
     /**
      * @param string                        $class
@@ -43,8 +44,7 @@ class UserType extends AbstractType
         $this->userProfileSubscriber = $userProfilSubscriber;
         $this->userGroupSubscriber = $userGroupSubscriber;
         $this->translator = $translator;
-        $this->allowedToSetPlatformAdmin = $authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN);
-        $this->allowedToSetDeveloper = $authorizationChecker->isGranted(ContributionRoleInterface::DEVELOPER);
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -53,6 +53,9 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $allowedToSetPlatformAdmin = $this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN);
+        $allowedToSetDeveloper = $this->authorizationChecker->isGranted(ContributionRoleInterface::DEVELOPER);
+
         $sitesId = array();
         $disabled = false;
         if (array_key_exists('data', $options) && ($user = $options['data']) instanceof UserInterface) {
@@ -114,7 +117,7 @@ class UserType extends AbstractType
                 ));
             $builder->addEventSubscriber($this->userProfileSubscriber);
             $builder->addEventSubscriber($this->userGroupSubscriber);
-            if ($this->allowedToSetPlatformAdmin || $this->allowedToSetDeveloper) {
+            if ($allowedToSetPlatformAdmin || $allowedToSetDeveloper) {
                 $builder->add('accountLocked', 'checkbox', array(
                     'label' => 'open_orchestra_user_admin.form.user.account_locked',
                     'required' => false,
