@@ -31,9 +31,13 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      * @inheritdoc
      */
     render() {
-        let title = $("input[id*='oo_content_type_names_']", this._form.$form).first().val();
-        if (null === this._contentTypeId) {
-            title = Translator.trans('open_orchestra_backoffice.table.content_types.new');
+        let title = Translator.trans('open_orchestra_backoffice.table.content_types.new');
+        if (null !== this._contentTypeId) {
+            title = $("input[id*='oo_content_type_names_']", this._form.$form).first().val();
+            let currentTitle = $("input[id='oo_content_type_names_" + Application.getContext().get('language') + "']", this._form.$form);
+            if (currentTitle.length > 0) {
+                title = currentTitle.val();
+            }
         }
         let template = this._renderTemplate('ContentType/contentTypeEditView', {
             title: title

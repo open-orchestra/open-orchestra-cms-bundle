@@ -61,11 +61,6 @@ class GroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
-                'label' => 'open_orchestra_group.form.group.name',
-                'group_id' => 'property',
-                'sub_group_id' => 'property',
-            ))
             ->add('labels', 'oo_multi_languages', array(
                 'label' => 'open_orchestra_group.form.group.label',
                 'languages' => $this->backOfficeLanguages,

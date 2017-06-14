@@ -61,9 +61,9 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * Constructor
      */
-    public function __construct($name = '', $roles = array())
+    public function __construct($roles = array())
     {
-        parent::__construct($name, $roles);
+        parent::__construct($roles);
 
         $this->initCollections();
         $this->labels = array();
@@ -76,7 +76,7 @@ class Group extends BaseGroup implements GroupInterface
     {
         $this->id = null;
         $this->initCollections();
-        $this->setName($this->name . '_' . uniqid());
+        $this->setName(uniqid(self::PREFIX_GROUP_NAME));
 
         foreach ($this->getLabels() as $language => $label) {
             $this->addLabel($language, $label);

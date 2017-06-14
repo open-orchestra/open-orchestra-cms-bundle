@@ -61,17 +61,17 @@ class UserController extends BaseController
         );
         $configuration = PaginateFinderConfiguration::generateFromRequest($request, $mapping);
         $repository = $this->get('open_orchestra_user.repository.user');
+        $language = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getBackOfficeLanguage();
 
         if ($this->get('security.authorization_checker')->isGranted(ContributionRoleInterface::PLATFORM_ADMIN)) {
-            $collection = $repository->findForPaginate($configuration);
+            $collection = $repository->findForPaginate($configuration, $language);
             $recordsTotal = $repository->count();
-            $recordsFiltered = $repository->countWithFilter($configuration);
+            $recordsFiltered = $repository->countWithFilter($configuration, $language);
         } else {
             $sitesId = $this->getAvailableSiteIds();
-
-            $collection = $repository->findForPaginateFilterBySiteIds($configuration, $sitesId);
+            $collection = $repository->findForPaginateFilterBySiteIds($configuration, $language, $sitesId);
             $recordsTotal = $repository->countFilterBySiteIds($sitesId);
-            $recordsFiltered = $repository->countWithFilterAndSiteIds($configuration, $sitesId);
+            $recordsFiltered = $repository->countWithFilterAndSiteIds($configuration, $language, $sitesId);
         }
 
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
