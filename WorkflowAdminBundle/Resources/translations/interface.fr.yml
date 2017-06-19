@@ -20,6 +20,7 @@ open_orchestra_workflow_admin:
         title: Paramètres
     transition:
         title: Transitions
+        graphic_title: Vue graphique des transitions
     table:
         statuses:
             label        : Libellé

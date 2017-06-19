@@ -23,6 +23,10 @@ module.exports = {
     'vendor/bower_components/tinymce/tinymce.js',
     'vendor/bower_components/tinymce/jquery.tinymce.js',
     'vendor/bower_components/tinymce/themes/modern/theme.js',
+    'vendor/bower_components/d3/d3.js',
+    'vendor/bower_components/graphlib/dist/graphlib.core.js',
+    'vendor/bower_components/dagre/dist/dagre.core.js',
+    'vendor/bower_components/dagre-d3/dist/dagre-d3.core.js',
     'vendor/braincrafted/bootstrap-bundle/Braincrafted/Bundle/BootstrapBundle/Resources/js/bc-bootstrap-collection.js',
     'web/bundles/fosjsrouting/js/router.js',
     'web/bundles/bazingajstranslation/js/translator.min.js'
