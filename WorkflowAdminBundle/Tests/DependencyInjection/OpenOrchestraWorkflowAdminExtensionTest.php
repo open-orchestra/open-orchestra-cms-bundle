@@ -24,7 +24,7 @@ class OpenOrchestraWorkflowAdminExtensionTest extends AbstractBaseTestCase
             'turquoise' => 'open_orchestra_workflow_admin.form.status.color.turquoise',
             'green'     => 'open_orchestra_workflow_admin.form.status.color.green',
             'blue'      => 'open_orchestra_workflow_admin.form.status.color.blue',
-            'purplue'   => 'open_orchestra_workflow_admin.form.status.color.purple',
+            'purple'   => 'open_orchestra_workflow_admin.form.status.color.purple',
             'dark-grey' => 'open_orchestra_workflow_admin.form.status.color.dark-grey',
             'yellow'    => 'open_orchestra_workflow_admin.form.status.color.yellow',
             'orange'    => 'open_orchestra_workflow_admin.form.status.color.orange',

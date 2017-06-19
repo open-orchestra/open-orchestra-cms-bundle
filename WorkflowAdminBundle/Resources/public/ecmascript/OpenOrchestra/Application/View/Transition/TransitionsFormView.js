@@ -31,7 +31,6 @@ class TransitionsFormView extends AbstractFormView
             success : () => {
                 super.render();
                 this._drawGraphic();
-                $('.workflow-preview',  this.$el).show();
             }
         });
 
@@ -75,6 +74,7 @@ class TransitionsFormView extends AbstractFormView
         var render = dagreD3.render();
 
         $(this.$el).initialize('.workflow-preview', () => {
+            $('.workflow-preview',  this.$el).show();
             let $svg = $('.workflow-preview svg', this.$el);
             $svg.empty();
             let svg = d3.select("svg"),
