@@ -53,9 +53,6 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $allowedToSetPlatformAdmin = $this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN);
-        $allowedToSetDeveloper = $this->authorizationChecker->isGranted(ContributionRoleInterface::DEVELOPER);
-
         $sitesId = array();
         $disabled = false;
         if (array_key_exists('data', $options) && ($user = $options['data']) instanceof UserInterface) {
@@ -107,6 +104,8 @@ class UserType extends AbstractType
                     'sub_group_id' => 'language',
                 ));
         } else {
+            $allowedToSetPlatformAdmin = $this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN);
+            $allowedToSetDeveloper = $this->authorizationChecker->isGranted(ContributionRoleInterface::DEVELOPER);
             $this
                 ->addPlainPasswordField($builder, $options)
                 ->add('editAllowed', 'checkbox', array(
