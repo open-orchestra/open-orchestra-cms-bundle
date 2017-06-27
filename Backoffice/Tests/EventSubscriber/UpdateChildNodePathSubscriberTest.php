@@ -77,7 +77,7 @@ class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
         $sons->add($son1);
         $sons->add($son2);
         $sons->add($son3);
-        Phake::when($this->nodeRepository)->findByParent(Phake::anyParameters())->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findNodeIdByIncludedPathSiteId(Phake::anyParameters())->thenReturn($sons);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($event)->getNode()->thenReturn($parent);
@@ -88,6 +88,6 @@ class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
         Phake::verify($son2)->setPath($parentPath . '/' . $son2NodeId);
         Phake::verify($son3)->setPath($parentPath . '/' . $son2NodeId);
 
-        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
     }
 }

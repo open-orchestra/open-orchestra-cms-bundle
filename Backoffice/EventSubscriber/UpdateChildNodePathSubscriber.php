@@ -32,22 +32,14 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
     public function updatePath(NodeEvent $event)
     {
         $parentNode = $event->getNode();
-        $events = array();
-        $nodesVersions = $this->nodeRepository->findByParent($parentNode->getNodeId(), $parentNode->getSiteId());
+        $nodesVersions = $this->nodeRepository->findNodeIdByIncludedPathSiteId($parentNode->getPath(), $parentNode->getSiteId());
 
         foreach ($nodesVersions as $nodeVersion) {
             $oldPath = $nodeVersion->getPath();
             $nodeVersion->setPath($parentNode->getPath() . '/' . $nodeVersion->getNodeId());
-
-            if (!isset($events[$nodeVersion->getNodeId()])) {
-                $event = new NodeEvent($nodeVersion);
-                $event->setPreviousPath($oldPath);
-                $events[$nodeVersion->getNodeId()] = $event;
-            }
-        }
-
-        foreach ($events as $event) {
-            $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
+            $event = new NodeEvent($nodeVersion);
+            $event->setPreviousPath($oldPath);
+            $this->eventDispatcher->dispatch(NodeEvents::CHILD_PATH_UPDATED, $event);
         }
     }
 
