@@ -45,8 +45,7 @@ class LogController extends BaseController
         $collection = $repository->findForPaginate($configuration);
         $recordsTotal = $repository->count();
         $recordsFiltered = $repository->countWithFilter($configuration);
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('log_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('log_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 

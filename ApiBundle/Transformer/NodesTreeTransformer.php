@@ -19,7 +19,7 @@ class NodesTreeTransformer extends AbstractTransformer
     {
         $tree = array();
         foreach ($nodesTree as $node) {
-            $tree[] = $this->getTransformer('node_tree')->transform($node);
+            $tree[] = $this->getContext()->transform('node_tree', $node);
         }
 
         return $tree;

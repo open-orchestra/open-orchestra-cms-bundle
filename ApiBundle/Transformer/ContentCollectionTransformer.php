@@ -22,7 +22,7 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
         $facade = $this->newFacade();
 
         foreach ($contentCollection as $content) {
-            $facade->addContent($this->getTransformer('content')->transform($content));
+            $facade->addContent($this->getContext()->transform('content', $content));
         }
 
         return $facade;
@@ -39,7 +39,7 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
         $contents = array();
         $contentsFacade = $facade->getContents();
         foreach ($contentsFacade as $contentFacade) {
-            $content = $this->getTransformer('content')->reverseTransform($contentFacade);
+            $content = $this->getContext()->reverseTransform('content', $contentFacade);
             if (null !== $content) {
                 $contents[] = $content;
             }

@@ -21,7 +21,7 @@ class TrashItemCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($trashItemCollection as $trashItem) {
-            $facade->addElement($this->getTransformer('trash_item')->transform($trashItem));
+            $facade->addElement($this->getContext()->transform('trash_item', $trashItem));
         }
 
         return $facade;
@@ -38,7 +38,7 @@ class TrashItemCollectionTransformer extends AbstractTransformer
         $trashItems = array();
         $trashItemsFacade = $facade->getTrashItems();
         foreach ($trashItemsFacade as $trashItemFacade) {
-            $trashItem = $this->getTransformer('trash_item')->reverseTransform($trashItemFacade);
+            $trashItem = $this->getContext()->reverseTransform('trash_item', $trashItemFacade);
             if (null !== $trashItem) {
                 $trashItems[] = $trashItem;
             }

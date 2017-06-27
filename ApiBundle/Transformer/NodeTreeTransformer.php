@@ -19,10 +19,10 @@ class NodeTreeTransformer extends AbstractTransformer
     {
         $facade = $this->newFacade();
 
-        $facade->node = $this->getTransformer('node_tree_leaf')->transform($nodeTree['node']);
+        $facade->node = $this->getContext()->transform('node_tree_leaf', $nodeTree['node']);
         if (array_key_exists('child', $nodeTree)) {
             foreach ($nodeTree['child'] as $child) {
-                $facade->addChild($this->getTransformer('node_tree')->transform($child));
+                $facade->addChild($this->getContext()->transform('node_tree', $child));
             }
         }
 

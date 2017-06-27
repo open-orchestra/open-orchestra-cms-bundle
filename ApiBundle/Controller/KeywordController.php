@@ -62,8 +62,7 @@ class KeywordController extends BaseController
         $collection = $repository->findForPaginate($configuration);
         $recordsTotal = $repository->count();
         $recordsFiltered = $repository->countWithFilter($configuration);
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('keyword_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -86,7 +85,7 @@ class KeywordController extends BaseController
             $this->getParameter('open_orchestra_api.facade.keyword_collection.class'),
             $format
         );
-        $keywords = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection')->reverseTransform($facade);
+        $keywords = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('keyword_collection', $facade);
         $keywordIds = array();
         foreach ($keywords as $keyword) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $keyword) &&

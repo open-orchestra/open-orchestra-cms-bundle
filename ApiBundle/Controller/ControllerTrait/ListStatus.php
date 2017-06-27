@@ -27,6 +27,6 @@ trait ListStatus
             }
         }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('status_collection', $possibleStatuses);
     }
 }

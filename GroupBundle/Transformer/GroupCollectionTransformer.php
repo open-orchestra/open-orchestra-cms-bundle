@@ -22,7 +22,7 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade = $this->newFacade();
 
         foreach ($groupCollection as $group) {
-            $facade->addGroup($this->getTransformer('group')->transform($group, $nbrGroupsUsers));
+            $facade->addGroup($this->getContext()->transform('group', $group, $nbrGroupsUsers));
         }
 
         return $facade;
@@ -39,7 +39,7 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
         $groups = array();
         $groupsFacade = $facade->getGroups();
         foreach ($groupsFacade as $groupFacade) {
-            $group = $this->getTransformer('group')->reverseTransform($groupFacade);
+            $group = $this->getContext()->reverseTransform('group', $groupFacade);
             if (null !== $group) {
                 $groups[] = $group;
             }

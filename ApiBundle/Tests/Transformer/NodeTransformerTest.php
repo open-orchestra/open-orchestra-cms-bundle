@@ -101,15 +101,18 @@ class NodeTransformerTest extends AbstractBaseTestCase
     {
         $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
 
-        Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
+        Phake::when($this->transformerManager)->transform(Phake::anyParameters())->thenReturn($facade);
+        Phake::when($this->transformer)->getContext()->thenReturn($this->transformerManager);
+
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
 
         Phake::when($this->node)->getAreas()->thenReturn(array($area));
+
         $facade = $this->nodeTransformer->transform($this->node);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         Phake::verify($this->router, Phake::times(1))->generate(Phake::anyParameters());
-        Phake::verify($this->transformer)->transform($area);
+        Phake::verify($this->transformerManager)->transform('area', $area);
         Phake::verify($this->siteRepository, Phake::times(2))->findOneBySiteId(Phake::anyParameters());
     }
 
@@ -121,7 +124,9 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(false);
 
-        Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
+        Phake::when($this->transformerManager)->transform(Phake::anyParameters())->thenReturn($facade);
+        Phake::when($this->transformer)->getContext()->thenReturn($this->transformerManager);
+
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
 
         Phake::when($this->node)->getAreas()->thenReturn(array($area));
@@ -130,7 +135,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->assertSame($facade->getRights()['can_read'], false);
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         Phake::verify($this->router, Phake::times(1))->generate(Phake::anyParameters());
-        Phake::verify($this->transformer)->transform($area);
+        Phake::verify($this->transformerManager)->transform('area', $area);
         Phake::verify($this->siteRepository, Phake::times(2))->findOneBySiteId(Phake::anyParameters());
     }
 

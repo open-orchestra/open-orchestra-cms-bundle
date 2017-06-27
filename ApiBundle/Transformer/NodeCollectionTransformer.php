@@ -25,26 +25,10 @@ class NodeCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($nodeCollection as $node) {
-            $facade->addNode($this->getTransformer('node')->transform($node));
+            $facade->addNode($this->getContetx()->transform('node', $node));
         }
 
         return $facade;
-    }
-
-    /**
-     * @param Collection $nodeCollection
-     *
-     * @return array
-     */
-    public function getNodeIds($nodeCollection)
-    {
-        $orderedNode = array();
-
-        foreach ($nodeCollection->getNodes() as $node) {
-            $orderedNode[] = $node->nodeId;
-        }
-
-        return $orderedNode;
     }
 
     /**
@@ -58,7 +42,7 @@ class NodeCollectionTransformer extends AbstractTransformer
         $nodes = array();
         $nodesFacade = $facade->getNodes();
         foreach ($nodesFacade as $nodeFacade) {
-            $node = $this->getTransformer('node')->reverseTransform($nodeFacade);
+            $node = $this->getContext()->reverseTransform('node', $nodeFacade);
             if (null !== $node) {
                 $nodes[] = $node;
             }

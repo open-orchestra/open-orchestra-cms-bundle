@@ -54,8 +54,7 @@ class BlockController extends BaseController
         $recordsTotal = $repository->countBySiteIdAndLanguage($siteId, $language, true);
         $recordsFiltered = $repository->countWithFilterBySiteIdAndLanguage($configuration, $siteId, $language, true);
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('block_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('block_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -77,7 +76,7 @@ class BlockController extends BaseController
 
         $availableBlocks = $site->getBlocks();
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('block_component_collection')->transform($availableBlocks);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('block_component_collection', $availableBlocks);
     }
 
     /**
@@ -124,8 +123,6 @@ class BlockController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $collection = $repository->findTransverseBlock($component, $siteId, $language);
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('block_collection');
-
-        return $collectionTransformer->transform($collection);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('block_collection', $collection);
     }
 }

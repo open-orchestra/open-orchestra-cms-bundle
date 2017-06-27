@@ -40,7 +40,7 @@ class ContentTypeController extends BaseController
     {
         $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_type')->transform($contentType);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('content_type', $contentType);
     }
 
     /**
@@ -67,8 +67,7 @@ class ContentTypeController extends BaseController
         $collection = $repository->findAllNotDeletedInLastVersionForPaginate($configuration);
         $recordsTotal = $repository->countByContentTypeInLastVersion();
         $recordsFiltered = $repository->countNotDeletedInLastVersionWithSearchFilter($configuration);
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('content_type_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -93,7 +92,7 @@ class ContentTypeController extends BaseController
             $format
         );
         $contentTypeRepository = $this->get('open_orchestra_model.repository.content_type');
-        $contentTypes = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection')->reverseTransform($facade);
+        $contentTypes = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('content_type_collection', $facade);
         $contentTypeIds = array();
         foreach ($contentTypes as $contentType) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $contentType) &&
@@ -127,8 +126,7 @@ class ContentTypeController extends BaseController
             $collection = $repository->findAllNotDeletedInLastVersion($site->getContentTypes());
         }
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('content_type_collection', $collection);
 
         return $facade;
     }

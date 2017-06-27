@@ -22,7 +22,7 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade = $this->newFacade();
 
         foreach ($mixed as $user) {
-            $facade->addUser($this->getTransformer('user')->transform($user));
+            $facade->addUser($this->getContext()->transform('user', $user));
         }
 
         return $facade;
@@ -39,7 +39,7 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
         $users = array();
         $usersFacade = $facade->getUsers();
         foreach ($usersFacade as $userFacade) {
-            $user = $this->getTransformer('user')->reverseTransform($userFacade);
+            $user = $this->getContext()->reverseTransform('user', $userFacade);
             if (null !== $user) {
                 $users[] = $user;
             }

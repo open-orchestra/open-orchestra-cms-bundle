@@ -145,7 +145,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         if ($this->hasGroup(CMSGroupContext::AREAS)) {
             foreach ($node->getAreas() as $key => $area) {
-                $facade->setAreas($this->getTransformer('area')->transform($area), $key);
+                $facade->setAreas($this->getContext()->transform('area', $area), $key);
             }
         }
 
@@ -161,7 +161,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected function addStatus(FacadeInterface $facade, NodeInterface $node)
     {
         if ($this->hasGroup(CMSGroupContext::STATUS)) {
-            $facade->status = $this->getTransformer('status')->cacheTransform($node->getStatus());
+            $facade->status = $this->getContext()->transform('status', $node->getStatus());
         }
 
         return $facade;
@@ -220,7 +220,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $previewLink['link'] = $domain . $this->generateRoute($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
 
-        return $this->getTransformer('link')->transform($previewLink);
+        return $this->getContext()->transform('link', $previewLink);
     }
 
     /**

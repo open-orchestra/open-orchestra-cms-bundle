@@ -21,7 +21,7 @@ class BlockCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($blockCollection as $block) {
-            $facade->addBlock($this->getTransformer('block')->transform($block));
+            $facade->addBlock($this->getContext()->transform('block', $block));
         }
 
         return $facade;

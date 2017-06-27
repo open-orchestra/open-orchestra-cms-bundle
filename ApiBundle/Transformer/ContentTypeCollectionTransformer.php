@@ -22,7 +22,7 @@ class ContentTypeCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($contentTypeCollection as $contentType) {
-            $facade->addContentType($this->getTransformer('content_type')->transform($contentType));
+            $facade->addContentType($this->getContext()->transform('content_type', $contentType));
         }
 
         return $facade;
@@ -39,7 +39,7 @@ class ContentTypeCollectionTransformer extends AbstractTransformer
         $contentTypes = array();
         $contentTypesFacade = $facade->getContentTypes();
         foreach ($contentTypesFacade as $contentTypeFacade) {
-            $contentType = $this->getTransformer('content_type')->reverseTransform($contentTypeFacade);
+            $contentType = $this->getContext()->reverseTransform('content_type', $contentTypeFacade);
             if (null !== $contentType) {
                 $contentTypes[] = $contentType;
             }

@@ -104,7 +104,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {
             foreach ($contentType->getFields() as $field) {
-                $facade->addField($this->getTransformer('field_type')->transform($field));
+                $facade->addField($this->getContext()->transform('field_type', $field));
             }
         }
 

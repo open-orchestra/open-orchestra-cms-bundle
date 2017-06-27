@@ -22,7 +22,7 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
         $facade = $this->newFacade();
 
         foreach ($redirectionCollection as $redirection) {
-            $facade->addRedirection($this->getTransformer('redirection')->transform($redirection));
+            $facade->addRedirection($this->getContext()->transform('redirection', $redirection));
         }
 
         return $facade;
@@ -39,7 +39,7 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
         $redirections = array();
         $redirectionsFacade = $facade->getRedirections();
         foreach ($redirectionsFacade as $redirectionFacade) {
-            $redirection = $this->getTransformer('redirection')->reverseTransform($redirectionFacade);
+            $redirection = $this->getContext()->reverseTransform('redirection', $redirectionFacade);
             if (null !== $redirection) {
                 $redirections[] = $redirection;
             }

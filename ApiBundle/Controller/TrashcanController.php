@@ -42,8 +42,7 @@ class TrashcanController extends BaseController
         $collection = $repository->findForPaginate($configuration, $siteId);
         $recordsTotal = $repository->countBySite($siteId);
         $recordsFiltered = $repository->countWithFilter($configuration, $siteId);
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('trash_item_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('trash_item_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -93,7 +92,7 @@ class TrashcanController extends BaseController
             $this->getParameter('open_orchestra_api.facade.trash_item_collection.class'),
             $format
         );
-        $trashItems = $this->get('open_orchestra_api.transformer_manager')->get('trash_item_collection')->reverseTransform($facade);
+        $trashItems = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('trash_item_collection', $facade);
         $trashItemIds = array();
 
         foreach ($trashItems as $trashItem) {

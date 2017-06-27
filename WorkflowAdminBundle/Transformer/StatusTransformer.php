@@ -107,6 +107,14 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @return string
      */
+    public function isCached()
+    {
+        return $this->hasGroup(CMSGroupContext::STATUS);
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'status';

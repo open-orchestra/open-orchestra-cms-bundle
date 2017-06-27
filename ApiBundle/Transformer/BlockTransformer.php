@@ -116,6 +116,14 @@ class BlockTransformer extends AbstractTransformer
     /**
      * @return string
      */
+    public function isCached()
+    {
+        return $this->hasGroup(CMSGroupContext::AREAS);
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'block';

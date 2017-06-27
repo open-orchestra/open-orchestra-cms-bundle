@@ -18,6 +18,7 @@ class RedirectionCollectionTransformerTest extends AbstractBaseTestCase
 
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\RedirectionCollectionFacade';
     protected $redirectionTransformer;
+    protected $transformerManager;
 
     /**
      * Set up the test
@@ -27,14 +28,14 @@ class RedirectionCollectionTransformerTest extends AbstractBaseTestCase
         $authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $this->redirectionTransformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer');
-        $transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
-        Phake::when($transformerManager)->get('redirection')->thenReturn($this->redirectionTransformer);
+        $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
+        Phake::when($this->transformerManager)->get('redirection')->thenReturn($this->redirectionTransformer);
 
         $this->transformer = new RedirectionCollectionTransformer(
             $this->facadeClass,
             $authorizationChecker
         );
-        $this->transformer->setContext($transformerManager);
+        $this->transformer->setContext($this->transformerManager);
     }
 
     /**
@@ -51,15 +52,15 @@ class RedirectionCollectionTransformerTest extends AbstractBaseTestCase
     {
         foreach ($facadeCollection->getRedirections() as $key => $facade) {
             if (0 == $key && $withFirstTransfoNull) {
-                Phake::when($this->redirectionTransformer)->reverseTransform($facade)->thenReturn(null);
+                Phake::when($this->transformerManager)->reverseTransform('redirection', $facade)->thenReturn(null);
             } else {
-                Phake::when($this->redirectionTransformer)->reverseTransform($facade)->thenReturn('ok');
+                Phake::when($this->transformerManager)->reverseTransform('redirection', $facade)->thenReturn('ok');
             }
         }
 
         $collection = $this->transformer->reverseTransform($facadeCollection, null);
 
-        Phake::verify($this->redirectionTransformer, Phake::times($transformationCount))->reverseTransform(Phake::anyParameters());
+        Phake::verify($this->transformerManager, Phake::times($transformationCount))->reverseTransform(Phake::anyParameters());
         $this->assertCount($expectedSize, $collection);
     }
 

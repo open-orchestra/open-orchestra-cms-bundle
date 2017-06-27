@@ -21,7 +21,7 @@ class LogCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($mixed as $log) {
-            $facade->addLog($this->getTransformer('log')->transform($log));
+            $facade->addLog($this->getContext()->transform('log', $log));
         }
 
         return $facade;

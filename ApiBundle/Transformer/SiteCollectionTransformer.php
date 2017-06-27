@@ -21,7 +21,7 @@ class SiteCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($siteCollection as $site) {
-            $facade->addSite($this->getTransformer('site')->transform($site));
+            $facade->addSite($this->getContext()->transform('site', $site));
         }
 
         return $facade;

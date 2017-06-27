@@ -38,7 +38,7 @@ class UserController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, UserInterface::ENTITY_TYPE);
         $user = $this->get('open_orchestra_user.repository.user')->findOneByEmail($email);
         if ($user instanceof UserInterface) {
-            return $this->get('open_orchestra_api.transformer_manager')->get('user')->transform($user);
+            return $this->get('open_orchestra_api.transformer_manager')->transform('user', $user);
         }
 
         return array();
@@ -74,8 +74,7 @@ class UserController extends BaseController
             $recordsFiltered = $repository->countWithFilterAndSiteIds($configuration, $language, $sitesId);
         }
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('user_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -103,8 +102,7 @@ class UserController extends BaseController
         $collection = $repository->findUsersByGroupsForPaginate($configuration, $groupId);
         $recordsTotal = $repository->countFilterByGroups($groupId);
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('user_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsTotal;
 
@@ -130,7 +128,7 @@ class UserController extends BaseController
             $this->getParameter('open_orchestra_user_admin.facade.user.class'),
             $format
         );
-        $user = $this->get('open_orchestra_api.transformer_manager')->get('user')->reverseTransform($facade);
+        $user = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('user', $facade);
         if (!$user instanceof UserInterface) {
             throw new UserNotFoundHttpException();
         }
@@ -185,7 +183,7 @@ class UserController extends BaseController
             $format
         );
         $userRepository = $this->get('open_orchestra_user.repository.user');
-        $users = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->reverseTransform($facade);
+        $users = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('user_collection', $facade);
         $userIds = array();
         foreach ($users as $user) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $user)) {

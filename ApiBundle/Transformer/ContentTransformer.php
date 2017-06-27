@@ -72,7 +72,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $content->getVersion();
         $facade->versionName = $content->getVersionName();
         $facade->language = $content->getLanguage();
-        $facade->status = $this->getTransformer('status')->cacheTransform($content->getStatus());
+        $facade->status = $this->getContext()->transform('status', $content->getStatus());
         $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getBackOfficeLanguage());
         $facade->createdAt = $content->getCreatedAt();
         $facade->updatedAt = $content->getUpdatedAt();
@@ -83,7 +83,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->used = $content->isUsed();
 
         foreach ($content->getAttributes() as $attribute) {
-            $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
+            $contentAttribute = $this->getContext()->transform('content_attribute', $attribute);
             $facade->addAttribute($contentAttribute);
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {

@@ -22,7 +22,7 @@ class WorkflowProfileCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($workflowProfileCollection as $workflowProfile) {
-            $facade->addWorkflowProfile($this->getTransformer('workflow_profile')->transform($workflowProfile));
+            $facade->addWorkflowProfile($this->getContext()->transform('workflow_profile', $workflowProfile));
         }
 
         return $facade;
@@ -39,7 +39,7 @@ class WorkflowProfileCollectionTransformer extends AbstractTransformer
         $workflowProfiles = array();
         $workflowProfilesFacade = $facade->getWorkflowProfiles();
         foreach ($workflowProfilesFacade as $workflowProfileFacade) {
-            $workflowProfile = $this->getTransformer('workflow_profile')->reverseTransform($workflowProfileFacade);
+            $workflowProfile = $this->getContext()->reverseTransform('workflow_profile', $workflowProfileFacade);
             if (null !== $workflowProfile) {
                 $workflowProfiles[] = $workflowProfile;
             }

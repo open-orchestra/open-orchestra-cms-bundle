@@ -46,8 +46,7 @@ class StatusController extends BaseController
         $collection = $repository->findForPaginate($configuration);
         $recordsTotal = $repository->countNotOutOfWorkflow();
         $recordsFiltered = $repository->countWithFilter($configuration);
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('status_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -66,7 +65,7 @@ class StatusController extends BaseController
     {
         $status = $this->get('open_orchestra_model.repository.status')->findNotOutOfWorkflow();
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($status);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('status_collection', $status);
     }
 
     /**
@@ -87,7 +86,7 @@ class StatusController extends BaseController
             $format
         );
         $statusRepository = $this->get('open_orchestra_model.repository.status');
-        $statuses = $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->reverseTransform($facade);
+        $statuses = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('status_collection', $facade);
 
         $statusIds = array();
         foreach ($statuses as $status) {

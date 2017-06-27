@@ -53,7 +53,7 @@ class SiteController extends BaseController
         $collection = $repository->findForPaginateFilterBySiteIds($configuration, $siteIds);
         $recordsTotal = $repository->countFilterBySiteIds($siteIds);
         $recordsFiltered = $repository->countWithFilterAndSiteIds($configuration, $siteIds);
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('site_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -73,7 +73,7 @@ class SiteController extends BaseController
     {
         $availableSite = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getAvailableSites();
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($availableSite);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('site_collection', $availableSite);
     }
 
     /**

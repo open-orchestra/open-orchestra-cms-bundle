@@ -21,7 +21,7 @@ class ApiClientCollectionTransformer extends AbstractSecurityCheckerAwareTransfo
         $facade = $this->newFacade();
 
         foreach ($apiClientCollection as $apiClient) {
-            $facade->addApiClient($this->getTransformer('api_client')->transform($apiClient));
+            $facade->addApiClient($this->getContext()->transform('api_client', $apiClient));
         }
 
         return $facade;

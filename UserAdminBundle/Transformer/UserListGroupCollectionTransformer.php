@@ -23,7 +23,7 @@ class UserListGroupCollectionTransformer extends AbstractSecurityCheckerAwareTra
         $facade = $this->newFacade();
 
         foreach ($mixed as $user) {
-            $facade->addUser($this->getTransformer('user_list_group')->cacheTransform($user));
+            $facade->addUser($this->getContext()->transform('user_list_group', $user));
         }
 
         return $facade;

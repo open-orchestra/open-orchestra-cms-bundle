@@ -23,7 +23,7 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
         $facade = $this->newFacade();
 
         foreach ($statusCollection as $status) {
-            $facade->addStatus($this->getTransformer('status')->transform($status));
+            $facade->addStatus($this->getContext()->transform('status', $status));
         }
 
         $facade->addRight(
@@ -45,7 +45,7 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
         $statuses = array();
         $statusesFacade = $facade->getStatuses();
         foreach ($statusesFacade as $statusFacade) {
-            $status = $this->getTransformer('status')->reverseTransform($statusFacade);
+            $status = $this->getContext()->reverseTransform('status', $statusFacade);
             if (null !== $status) {
                 $statuses[] = $status;
             }

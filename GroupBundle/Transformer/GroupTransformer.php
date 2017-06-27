@@ -95,7 +95,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     protected function addSite(FacadeInterface $facade, GroupInterface $group)
     {
         if ($this->hasGroup(CMSGroupContext::SITE) && $site = $group->getSite()) {
-            $facade->site = $this->getTransformer('site')->cacheTransform($site);
+            $facade->site = $this->getContext()->transform('site', $site);
         }
 
         return $facade;
