@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\GroupBundle\Form\Type;
 
-use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
