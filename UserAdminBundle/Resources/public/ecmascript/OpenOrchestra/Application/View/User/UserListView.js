@@ -42,7 +42,7 @@ class UserListView extends mix(AbstractDataTableView).with(UrlPaginateViewMixin,
      * @inheritDoc
      */
     generateUrlUpdatePage(page) {
-       return Backbone.history.generateUrl('listUser', {page : page});
+       return Backbone.history.getFragment();
     }
 
     /**

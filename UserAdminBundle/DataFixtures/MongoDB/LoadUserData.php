@@ -29,6 +29,12 @@ class LoadUserData extends AbstractLoadUserData implements OrchestraFunctionalFi
         $sadmin->addRole(ContributionRoleInterface::SITE_ADMIN);
         $manager->persist($sadmin);
 
+        for($i = 0; $i < 10; $i++) {
+            $sadmin = $this->generate('s-admin' . $i, 's-admin-demo');
+            $sadmin->addRole(ContributionRoleInterface::SITE_ADMIN);
+            $manager->persist($sadmin);
+        }
+
         $demoUser = $this->generate('demo', 'group2');
         $this->addReference('user-demo', $demoUser);
         $demoUser->addGroup($this->getReference('group3'));

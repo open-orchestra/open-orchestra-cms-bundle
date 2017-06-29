@@ -3,7 +3,7 @@ import Application          from '../../Application'
 import Group                from '../../Model/Group/Group'
 import Users                from '../../Collection/User/Users'
 import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import MembersListView      from '../User/MembersListView'
+import MembersView          from '../User/MembersView'
 import ApplicationError     from '../../../Service/Error/ApplicationError'
 
 /**
@@ -11,7 +11,6 @@ import ApplicationError     from '../../../Service/Error/ApplicationError'
  */
 class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
 {
-
     /**
      * Initialize
      * @param {Form}   form
@@ -54,7 +53,6 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         }
     }
 
-
     /**
      * Add tab pane member list
      * @private
@@ -91,7 +89,7 @@ class GroupFormView extends mix(AbstractFormView).with(FormViewButtonsMixin)
         let collection = new Users();
         let pageLength = Application.getConfiguration().getParameter('datatable').pageLength;
 
-        return new MembersListView({
+        return new MembersView({
             collection: collection,
             groupId: this._groupId,
             settings: {

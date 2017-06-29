@@ -15,6 +15,7 @@ open_orchestra_group:
                 property: Properties
                 right: Rights
                 perimeter: Perimeter
+                member: Members list
             sub_group:
                 property: Property
                 right: Rights

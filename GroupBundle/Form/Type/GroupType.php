@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Form\Type;
 
+use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,12 +21,13 @@ use Symfony\Component\Form\FormInterface;
 class GroupType extends AbstractType
 {
     protected $groupPerimeterSubscriber;
+    protected $groupMemberSubscriber;
+    protected $eventDispatcher;
     protected $groupRoleTransformer;
+    protected $groupPerimeterTransformer;
+    protected $generatePerimeterManager;
     protected $groupClass;
     protected $backOfficeLanguages;
-    protected $generatePerimeterManager;
-    protected $eventDispatcher;
-    protected $groupPerimeterTransformer;
 
     /**
      * @param EventSubscriberInterface $groupPerimeterSubscriber
@@ -93,10 +95,11 @@ class GroupType extends AbstractType
                 'group_id' => 'perimeter',
                 'required' => false
             ));
+
             $builder->get('roles')->addModelTransformer($this->groupRoleTransformer);
             $builder->get('perimeters')->addModelTransformer($this->groupPerimeterTransformer);
-
             $builder->addEventSubscriber($this->groupPerimeterSubscriber);
+
             $this->eventDispatcher->dispatch(GroupFormEvents::GROUP_FORM_CREATION, new GroupFormEvent($builder));
         }
     }
@@ -127,6 +130,10 @@ class GroupType extends AbstractType
                     'perimeter' => array(
                         'rank' => 3,
                         'label' => 'open_orchestra_group.form.group.group.perimeter',
+                    ),
+                    'members' => array(
+                        'rank' => 4,
+                        'label' => 'open_orchestra_group.form.group.group.member',
                     )
                 ),
                 'sub_group_render' => array(
