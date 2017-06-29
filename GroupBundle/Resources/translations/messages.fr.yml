@@ -15,7 +15,6 @@ open_orchestra_group:
                 property: Propriétés
                 right: Droits
                 perimeter: Périmètre
-                member: Liste des membres
             sub_group:
                 property: Propriété
                 right: Droits

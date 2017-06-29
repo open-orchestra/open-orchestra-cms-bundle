@@ -131,10 +131,6 @@ class GroupType extends AbstractType
                         'rank' => 3,
                         'label' => 'open_orchestra_group.form.group.group.perimeter',
                     ),
-                    'members' => array(
-                        'rank' => 4,
-                        'label' => 'open_orchestra_group.form.group.group.member',
-                    )
                 ),
                 'sub_group_render' => array(
                     'property' => array(
