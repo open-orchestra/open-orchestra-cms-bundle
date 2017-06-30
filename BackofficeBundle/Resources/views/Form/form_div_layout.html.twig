@@ -561,12 +561,24 @@
 
 {% block form_submit_widget %}
     {% spaceless %}
-        {{ block('save_button') }}
-        {% if(form.vars.new_button is defined and true == form.vars.new_button) %}
-            {{ block('new_button') }}
-        {% elseif(form.vars.delete_button is defined and true == form.vars.delete_button) %}
-            {{ block('delete_button') }}
-        {% endif %}
+        <div>
+            <div class = "btn-group">
+                {{ block('save_button') }}
+
+                {% if(form.vars.new_button is defined and true == form.vars.new_button) %}
+                    <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown">
+                        <span class = "caret"></span>
+                        <span class = "sr-only">Toggle Dropdown</span>
+                    </button>
+
+                    <ul class="dropdown-menu" role = "menu">
+                        <li>{{ block('new_button') }}</li>
+                    </ul>
+                {% elseif(form.vars.delete_button is defined and true == form.vars.delete_button) %}
+                    {{ block('delete_button') }}
+                {% endif %}
+            </div>
+        </div>
     {% endspaceless %}
 {% endblock form_submit_widget %}
 
