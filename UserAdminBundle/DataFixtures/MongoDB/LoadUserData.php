@@ -35,7 +35,7 @@ class LoadUserData extends AbstractLoadUserData implements OrchestraFunctionalFi
         $manager->persist($demoUser);
 
         $userNoAccess = $this->generate('userNoAccess');
-        $userNoAccess->addGroup($this->getReference('group3'));
+        $userNoAccess->addRole('fakeRole');
         $manager->persist($userNoAccess);
 
         $manager->flush();
