@@ -146,7 +146,7 @@ class UserController extends BaseController
      * @param string  $groupId
      *
      * @Config\Route("/add-group/{groupId}", name="open_orchestra_api_user_add_group")
-     * @Config\Method({"PUT", "GET"})
+     * @Config\Method({"PUT"})
      *
      * @return FacadeInterface
      * @throws UserNotFoundHttpException

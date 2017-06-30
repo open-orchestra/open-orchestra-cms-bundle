@@ -47,7 +47,7 @@ class MembersView extends AbstractCollectionView
     }
 
     /**
-     * copy block from an other language
+     * show users modal
      *
      * @private
      */
