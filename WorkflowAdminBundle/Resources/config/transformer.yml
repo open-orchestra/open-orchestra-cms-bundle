@@ -5,7 +5,7 @@ parameters:
     open_orchestra_workflow_admin.transformer.workflow_profile.class:                  OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowProfileTransformer
     open_orchestra_workflow_admin.transformer.workflow_profile_collection.class:       OpenOrchestra\WorkflowAdminBundle\Transformer\WorkflowProfileCollectionTransformer
     open_orchestra_workflow_admin.transformer.group_workflow_profile_collection.class: OpenOrchestra\WorkflowAdminBundle\Form\DataTransformer\GroupWorkflowProfileCollectionTransformer
-    open_orchestra_workflow_admin.transformer.profile_transitions.class              : OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer
+    open_orchestra_workflow_admin.transformer.profile_transitions.class:               OpenOrchestra\Workflow\Form\DataTransformer\ProfileTransitionsTransformer
 
 services:
     open_orchestra_workflow_admin.transformer.status:

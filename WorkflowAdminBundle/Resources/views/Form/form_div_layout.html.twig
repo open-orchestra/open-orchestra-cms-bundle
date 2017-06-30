@@ -126,11 +126,13 @@
             id="{{ transition.vars.id }}"
             name="{{ transition.vars.full_name }}"
             value="{{ transition.vars.value }}"
+            data-status-from="{{ currentTransition[0] }}"
+            data-status-to="{{ currentTransition[1] }}"
             {% if (transition.vars.checked) %} checked="checked"{% endif %}
             {% if (currentTransition[0] == currentTransition[1]) %} disabled="disabled"{% endif %}
         >
         <label for="{{ transition.vars.id }}">
-            {{ form.vars.statuses[currentTransition[1]] }}
+            {{ form.vars.statuses[currentTransition[1]]}}
         </label><br />
     {% endfor %}
 {% endblock oo_workflow_transitions_collection_widget %}
