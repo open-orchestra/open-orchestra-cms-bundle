@@ -45,7 +45,7 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
         $event->setPreviousPath($oldPath);
         $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
 
-        $children = $this->nodeRepository->findNodeIdByIncludedPathSiteId($node->getPath(), $node->getSiteId());
+        $children = $this->nodeRepository->findNodeIdByIncludedPathSiteId($oldPath, $node->getSiteId());
 
         $childrenNodeId = array();
         foreach ($children as $child) {
@@ -53,7 +53,7 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
             $childNodeId = $child->getNodeId();
             $child->setPath(str_replace($oldPath, $newPath, $childOldPath));
             if (!in_array($childNodeId, $childrenNodeId)) {
-                $events[] = $childNodeId;
+                $childrenNodeId[] = $childNodeId;
                 $event = new NodeEvent($child);
                 $event->setPreviousPath($childOldPath);
                 $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
