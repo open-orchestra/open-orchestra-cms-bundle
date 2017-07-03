@@ -28,7 +28,7 @@ class NodeTreeLeafTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $node['version'];
         $facade->siteId = $node['siteId'];
         $facade->order = $node['order'];
-        $facade->status = $this->getCotnext()->transform('status_node_tree', $node['status']);
+        $facade->status = $this->getContext()->transform('status_node_tree', $node['status']);
         $facade->nodeType = $node['nodeType'];
 
         $facade->addRight('can_create', (

@@ -26,7 +26,7 @@ class NodeCollectionTransformer extends AbstractTransformer
         $facade = $this->newFacade();
 
         foreach ($nodeCollection as $node) {
-            $facade->addNode($this->getContetx()->transform('node', $node));
+            $facade->addNode($this->getContext()->transform('node', $node));
         }
 
         return $facade;

@@ -19,7 +19,7 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($groupCollection, array $params = null)
     {
-        $nbrGroupsUsers = is_array($params) && array_key_exists('nbrGroupsUsers') ? $params['nbrGroupsUsers'] : array();
+        $nbrGroupsUsers = is_array($params) && array_key_exists('nbrGroupsUsers', $params) ? $params['nbrGroupsUsers'] : array();
         $facade = $this->newFacade();
 
         foreach ($groupCollection as $group) {
