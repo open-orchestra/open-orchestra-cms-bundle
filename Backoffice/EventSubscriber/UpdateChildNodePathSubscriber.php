@@ -51,7 +51,7 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
         foreach ($children as $child) {
             $childOldPath = $child->getPath();
             $childNodeId = $child->getNodeId();
-            $child->setPath(str_replace($oldPath, $newPath, $childOldPath));
+            $child->setPath(preg_replace('/^' . $oldPath . '\//', $newPath . '/', $childOldPath));
             if (!in_array($childNodeId, $childrenNodeId)) {
                 $childrenNodeId[] = $childNodeId;
                 $event = new NodeEvent($child);
