@@ -13,16 +13,18 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param Collection $groupCollection
-     * @param array      $nbrGroupsUsers
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($groupCollection, array $nbrGroupsUsers = array())
+    public function transform($groupCollection, array $params = null)
     {
+        $nbrGroupsUsers = is_array($params) && array_key_exists('nbrGroupsUsers') ? $params['nbrGroupsUsers'] : array();
         $facade = $this->newFacade();
 
         foreach ($groupCollection as $group) {
-            $facade->addGroup($this->getContext()->transform('group', $group, $nbrGroupsUsers));
+            $nbrGroupUsers = array_key_exists($group->getId(), $nbrGroupsUsers) ? $nbrGroupsUsers[$group->getId()] : 0;
+            $facade->addGroup($this->getContext()->transform('group', $group, array('$nbrGroupUsers' => $nbrGroupUsers)));
         }
 
         return $facade;
@@ -30,11 +32,11 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null            $source
+     * @param array|null      $params
      *
      * @return array
      */
-    public function reverseTransform(FacadeInterface $facade, $source = NULL)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         $groups = array();
         $groupsFacade = $facade->getGroups();

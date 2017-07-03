@@ -13,10 +13,11 @@ class TrashItemCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $trashItemCollection
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($trashItemCollection)
+    public function transform($trashItemCollection, array $params = null)
     {
         $facade = $this->newFacade();
 
@@ -29,11 +30,11 @@ class TrashItemCollectionTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null            $source
+     * @param array|null      $params
      *
      * @return array
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         $trashItems = array();
         $trashItemsFacade = $facade->getTrashItems();

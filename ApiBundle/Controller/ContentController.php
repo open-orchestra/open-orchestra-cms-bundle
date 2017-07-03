@@ -467,7 +467,7 @@ class ContentController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
         $contentSource = clone $content;
 
-        $this->get('open_orchestra_api.transformer_manager')->reverseTransform('content', $facade, $content);
+        $this->get('open_orchestra_api.transformer_manager')->reverseTransform('content', $facade, array('source' => $content));
         $status = $content->getStatus();
         if ($status !== $contentSource->getStatus()) {
             if (!$this->isGranted($status, $contentSource)) {

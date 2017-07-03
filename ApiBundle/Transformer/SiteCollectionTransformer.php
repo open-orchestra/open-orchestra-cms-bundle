@@ -13,10 +13,11 @@ class SiteCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $siteCollection
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($siteCollection)
+    public function transform($siteCollection, array $params = null)
     {
         $facade = $this->newFacade();
 

@@ -48,13 +48,14 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param StatusInterface          $status
+     * @param StatusInterface $status
+     * @param array|null      $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($status)
+    public function transform($status, array $params = null)
     {
         if (!$status instanceof StatusInterface) {
             throw new TransformerParameterTypeException();
@@ -91,11 +92,11 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array|null      $params
      *
      * @return UserInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         if (null !== $facade->id) {
             return $this->statusRepository->find($facade->id);

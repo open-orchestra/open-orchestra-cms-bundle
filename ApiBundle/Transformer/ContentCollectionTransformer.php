@@ -13,11 +13,11 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
 {
     /**
      * @param Collection  $contentCollection
-     * @param string|null $contentType
+     * @param array|null  $params
      *
      * @return FacadeInterface
      */
-    public function transform($contentCollection, $contentType = null)
+    public function transform($contentCollection, array $params = null)
     {
         $facade = $this->newFacade();
 
@@ -30,11 +30,11 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
 
     /**
      * @param FacadeInterface $facade
-     * @param null            $source
+     * @param array|null      $params
      *
      * @return array
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         $contents = array();
         $contentsFacade = $facade->getContents();

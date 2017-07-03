@@ -14,11 +14,12 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
-     * @param Collection               $statusCollection
+     * @param Collection $statusCollection
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($statusCollection)
+    public function transform($statusCollection, array $params = null)
     {
         $facade = $this->newFacade();
 
@@ -36,11 +37,11 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array|null      $params
      *
      * @return UserInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         $statuses = array();
         $statusesFacade = $facade->getStatuses();

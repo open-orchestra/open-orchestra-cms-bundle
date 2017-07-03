@@ -14,12 +14,13 @@ class ApiClientTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param ApiClientInterface $apiClient
+     * @param array|null         $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($apiClient)
+    public function transform($apiClient, array $params = null)
     {
         if (!$apiClient instanceof ApiClientInterface) {
             throw new TransformerParameterTypeException();

@@ -13,10 +13,11 @@ class LogCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param ArrayCollection $mixed
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($mixed, array $params = null)
     {
         $facade = $this->newFacade();
 

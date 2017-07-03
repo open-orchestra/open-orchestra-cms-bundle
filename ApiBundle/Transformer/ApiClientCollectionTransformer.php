@@ -13,10 +13,11 @@ class ApiClientCollectionTransformer extends AbstractSecurityCheckerAwareTransfo
 {
     /**
      * @param Collection $apiClientCollection
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($apiClientCollection)
+    public function transform($apiClientCollection, array $params = null)
     {
         $facade = $this->newFacade();
 

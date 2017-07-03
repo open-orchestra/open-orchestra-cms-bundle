@@ -14,12 +14,13 @@ class SiteAliasTransformer extends AbstractTransformer
 {
     /**
      * @param SiteAliasInterface $siteAlias
+     * @param array|null         $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($siteAlias)
+    public function transform($siteAlias, array $params = null)
     {
         if (!$siteAlias instanceof SiteAliasInterface) {
             throw new TransformerParameterTypeException();

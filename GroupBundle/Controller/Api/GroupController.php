@@ -59,7 +59,7 @@ class GroupController extends BaseController
         $recordsTotal = $repository->count($siteIds);
         $recordsFiltered = $repository->countWithFilter($configuration, $siteIds);
 
-        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('group_collection', $collection, $nbrGroupsUsers);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('group_collection', $collection, array('nbrGroupsUsers' => $nbrGroupsUsers));
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 

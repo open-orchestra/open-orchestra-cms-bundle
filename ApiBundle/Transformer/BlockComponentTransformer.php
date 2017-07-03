@@ -31,11 +31,12 @@ class BlockComponentTransformer extends AbstractTransformer
     }
 
     /**
-     * @param string $blockComponent
+     * @param string     $blockComponent
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($blockComponent)
+    public function transform($blockComponent, array $params = null)
     {
         $facade = $this->newFacade();
 

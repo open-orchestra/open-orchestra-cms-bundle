@@ -233,7 +233,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
-        if (array_keys_exists('source', $params) &&
+        if (is_array($params) &&
+            array_keys_exists('source', $params) &&
             $params['source'] instanceof NodeInterface &&
             null !== $facade->status &&
             null !== $facade->status->id &&

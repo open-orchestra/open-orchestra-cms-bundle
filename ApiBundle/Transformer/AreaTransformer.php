@@ -32,12 +32,13 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param AreaInterface $area
+     * @param array|null    $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($area)
+    public function transform($area, array $params = null)
     {
         $facade = $this->newFacade();
 
@@ -54,11 +55,11 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array|null      $params
      *
      * @return AreaInterface
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         /** @var AreaInterface $area */
         $area = new $this->areaClass();

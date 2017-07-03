@@ -55,12 +55,13 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param ContentTypeInterface $contentType
+     * @param array|null           $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($contentType)
+    public function transform($contentType, array $params = null)
     {
         if (!$contentType instanceof ContentTypeInterface) {
             throw new TransformerParameterTypeException();
@@ -113,11 +114,11 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array|null      $params
      *
      * @return ContentTypeInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         if (null !== $facade->contentTypeId) {
             return $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($facade->contentTypeId);

@@ -13,10 +13,11 @@ class KeywordCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $keywordCollection
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($keywordCollection)
+    public function transform($keywordCollection, array $params = null)
     {
         $facade = $this->newFacade();
 
@@ -29,11 +30,11 @@ class KeywordCollectionTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null            $source
+     * @param array|null      $params
      *
      * @return array
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         $keywords = array();
         $keywordsFacade = $facade->getKeywords();

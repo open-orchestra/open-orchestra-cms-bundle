@@ -484,7 +484,7 @@ class NodeController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
         $nodeSource = clone $node;
-        $this->get('open_orchestra_api.transformer_manager')->reverseTransform('node', $facade, $node);
+        $this->get('open_orchestra_api.transformer_manager')->reverseTransform('node', $facade, array('source' => $node));
         $status = $node->getStatus();
 
         if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(NodeStrategy::CHANGE_STATUS, $node)) {

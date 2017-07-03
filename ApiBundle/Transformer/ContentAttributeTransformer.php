@@ -14,12 +14,13 @@ class ContentAttributeTransformer extends AbstractTransformer
 {
     /**
      * @param ContentAttributeInterface $contentAttribute
+     * @param array|null                $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($contentAttribute)
+    public function transform($contentAttribute, array $params = null)
     {
         if (!$contentAttribute instanceof ContentAttributeInterface) {
             throw new TransformerParameterTypeException();

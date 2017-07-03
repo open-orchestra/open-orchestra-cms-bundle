@@ -14,10 +14,11 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
 {
     /**
      * @param Collection $redirectionCollection
+     * @param array|null $params
      *
      * @return FacadeInterface
      */
-    public function transform($redirectionCollection)
+    public function transform($redirectionCollection, array $params = null)
     {
         $facade = $this->newFacade();
 
@@ -30,11 +31,11 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array|null      $params
      *
      * @return RedirectionInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         $redirections = array();
         $redirectionsFacade = $facade->getRedirections();

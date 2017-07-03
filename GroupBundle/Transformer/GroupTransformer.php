@@ -43,24 +43,26 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param GroupInterface $group
-     * @param array          $nbrGroupsUsers
+     * @param array|null     $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($group, $nbrGroupsUsers = array())
+    public function transform($group, array $params = null)
     {
         if (!$group instanceof GroupInterface) {
             throw new TransformerParameterTypeException();
         }
+
+        $nbrGroupUsers = is_array($params) && array_key_exists('nbrGroupUsers') ? $params['nbrGroupUsers'] : 0;
 
         $facade = $this->newFacade();
 
         $facade->id = $group->getId();
         $facade->name = $group->getName();
         $facade->label = $this->multiLanguagesChoiceManager->choose($group->getLabels());
-        $facade->nbrUsers = array_key_exists($group->getId(), $nbrGroupsUsers) ? $nbrGroupsUsers[$group->getId()] : 0;
+        $facade->nbrUsers = $nbrGroupUsers;
 
         $facade = $this->addSite($facade, $group);
         $facade = $this->addRoles($facade, $group);
@@ -123,11 +125,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null            $source
+     * @param array|null      $params
      *
      * @return GroupInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         if (null !== $facade->id) {
             return $this->groupRepository->find($facade->id);
