@@ -271,6 +271,9 @@ class ContentController extends BaseController
     public function listContentByAuthorAndSiteIdAction($published)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
+        if (null === $siteId) {
+            return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform(array());
+        }
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
         $availableContentTypes = $site->getContentTypes();
         $user = $this->get('security.token_storage')->getToken()->getUser();
