@@ -66,12 +66,13 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param NodeInterface $node
+     * @param array|null    $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($node)
+    public function transform($node, array $params = null)
     {
         if (!$node instanceof NodeInterface) {
             throw new TransformerParameterTypeException();
@@ -225,21 +226,22 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface    $facade
-     * @param NodeInterface|null $source
+     * @param array|null         $params
      *
      * @return mixed
      * @throws StatusChangeNotGrantedHttpException
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
-        if ($source instanceof NodeInterface &&
+        if (array_keys_exists('source', $params) &&
+            $params['source'] instanceof NodeInterface &&
             null !== $facade->status &&
             null !== $facade->status->id &&
-            $source->getStatus()->getId() !== $facade->status->id
+            $params['source']->getStatus()->getId() !== $facade->status->id
         ) {
             $status = $this->statusRepository->find($facade->status->id);
             if ($status instanceof StatusInterface) {
-                $source->setStatus($status);
+                $params['source']->setStatus($status);
             }
         }
 

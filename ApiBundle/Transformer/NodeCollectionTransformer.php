@@ -15,12 +15,13 @@ class NodeCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $nodeCollection
+     * @param array|null $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($nodeCollection)
+    public function transform($nodeCollection, array $params = null)
     {
         $facade = $this->newFacade();
 
@@ -33,11 +34,11 @@ class NodeCollectionTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array|null      $params
      *
      * @return NodeInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         $nodes = array();
         $nodesFacade = $facade->getNodes();
