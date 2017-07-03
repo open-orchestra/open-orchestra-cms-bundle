@@ -4,9 +4,9 @@ import ConfirmModalView      from '../../../Service/ConfirmModal/View/ConfirmMod
 import User                  from '../../Model/User/User'
 
 /**
- * @class MembersListView
+ * @class MemberListView
  */
-class MembersListView extends AbstractDataTableView
+class MemberListView extends AbstractDataTableView
 {
     /**
      * @param {Object} collection
@@ -56,6 +56,7 @@ class MembersListView extends AbstractDataTableView
             }
         ];
     }
+
 
     /**
      * @param {Object} td
@@ -146,4 +147,4 @@ class MembersListView extends AbstractDataTableView
     }
 }
 
-export default MembersListView;
+export default MemberListView;

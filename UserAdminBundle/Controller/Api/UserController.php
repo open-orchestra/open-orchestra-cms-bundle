@@ -143,6 +143,32 @@ class UserController extends BaseController
 
     /**
      * @param Request $request
+     * @param string  $groupId
+     *
+     * @Config\Route("/add-group/{groupId}", name="open_orchestra_api_user_add_group")
+     * @Config\Method({"PUT"})
+     *
+     * @return FacadeInterface
+     * @throws UserNotFoundHttpException
+     */
+    public function addGroupAction(Request $request, $groupId)
+    {
+        $format = $request->get('_format', 'json');
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $this->getParameter('open_orchestra_user_admin.facade.user_collection.class'),
+            $format
+        );
+        $users = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->reverseTransform($facade);
+        $group =  $this->get('open_orchestra_user.repository.group')->find($groupId);
+
+        $this->get('open_orchestra_user.repository.user')->addGroup($users, $group);
+
+        return array();
+    }
+
+    /**
+     * @param Request $request
      *
      * @Config\Route("/delete-multiple", name="open_orchestra_api_user_delete_multiple")
      * @Config\Method({"DELETE"})

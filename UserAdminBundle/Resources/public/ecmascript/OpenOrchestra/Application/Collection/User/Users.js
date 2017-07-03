@@ -30,9 +30,10 @@ class Users extends DataTableCollection
         switch (method) {
             case "read":
                 return this._getSyncReadUrl(options, urlParameter);
-
             case "delete":
                 return Routing.generate('open_orchestra_api_user_delete_multiple');
+            case "update":
+                return Routing.generate('open_orchestra_api_user_add_group', urlParameter);
         }
     }
 
@@ -45,7 +46,6 @@ class Users extends DataTableCollection
      */
     _getSyncReadUrl(options, urlParameter) {
         let apiContext = options.apiContext || null;
-
         switch (apiContext) {
             case "user_list":
                 return Routing.generate('open_orchestra_api_user_list');

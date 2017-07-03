@@ -1,4 +1,5 @@
 open_orchestra_user_admin:
+    select: Select
     menu:
         user:
           title: User
@@ -14,7 +15,6 @@ open_orchestra_user_admin:
             groups: Groups
     user:
         add_group: Add a group to user
-        select: Select
         title_list: Users
         title_new: New user
         title_edit: Edit the user
