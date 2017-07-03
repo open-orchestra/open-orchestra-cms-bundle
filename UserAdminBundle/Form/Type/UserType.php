@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\UserBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -19,26 +21,30 @@ class UserType extends AbstractType
     protected $userProfileSubscriber;
     protected $userGroupSubscriber;
     protected $translator;
+    protected $authorizationChecker;
 
     /**
-     * @param string                   $class
-     * @param array                    $availableLanguages
-     * @param EventSubscriberInterface $userProfilSubscriber,
-     * @param EventSubscriberInterface $userGroupSubscriber,
-     * @param TranslatorInterface      $translator,
+     * @param string                        $class
+     * @param array                         $availableLanguages
+     * @param EventSubscriberInterface      $userProfilSubscriber,
+     * @param EventSubscriberInterface      $userGroupSubscriber,
+     * @param TranslatorInterface           $translator,
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         $class,
         array $availableLanguages,
         EventSubscriberInterface $userProfilSubscriber,
         EventSubscriberInterface $userGroupSubscriber,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->class = $class;
         $this->availableLanguages = $availableLanguages;
         $this->userProfileSubscriber = $userProfilSubscriber;
         $this->userGroupSubscriber = $userGroupSubscriber;
         $this->translator = $translator;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -98,6 +104,8 @@ class UserType extends AbstractType
                     'sub_group_id' => 'language',
                 ));
         } else {
+            $allowedToSetPlatformAdmin = $this->authorizationChecker->isGranted(ContributionRoleInterface::PLATFORM_ADMIN);
+            $allowedToSetDeveloper = $this->authorizationChecker->isGranted(ContributionRoleInterface::DEVELOPER);
             $this
                 ->addPlainPasswordField($builder, $options)
                 ->add('editAllowed', 'checkbox', array(
@@ -108,6 +116,14 @@ class UserType extends AbstractType
                 ));
             $builder->addEventSubscriber($this->userProfileSubscriber);
             $builder->addEventSubscriber($this->userGroupSubscriber);
+            if ($allowedToSetPlatformAdmin || $allowedToSetDeveloper) {
+                $builder->add('accountLocked', 'checkbox', array(
+                    'label' => 'open_orchestra_user_admin.form.user.account_locked',
+                    'required' => false,
+                    'group_id' => 'information',
+                    'sub_group_id' => 'profil',
+                ));
+            }
         }
 
         if (array_key_exists('disabled', $options)) {

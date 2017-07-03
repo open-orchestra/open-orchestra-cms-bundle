@@ -29,8 +29,10 @@ class UserTypeTest extends AbstractUserTypeTest
         $userProfilSubscriber = Phake::mock(UserProfilSubscriber::class);
         $userGroupSubscriber = Phake::mock(UserGroupsSubscriber::class);
         $translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        Phake::when($authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->form = new UserType($this->class, $parameters, $userProfilSubscriber, $userGroupSubscriber, $translator);
+        $this->form = new UserType($this->class, $parameters, $userProfilSubscriber, $userGroupSubscriber, $translator, $authorizationChecker);
     }
 
     /**
@@ -71,7 +73,7 @@ class UserTypeTest extends AbstractUserTypeTest
         Phake::when($site)->getLanguageBySites()->thenReturn(array('en' => 'fakeLanguage', 'fr' => 'fakeLanguage'));
 
         return array(
-            'without_groups_edition' => array(array('edit_groups' => 'false', 'required_password' => false, 'self_editing' => false, 'data' => $site,), true, 5),
+            'without_groups_edition' => array(array('edit_groups' => 'false', 'required_password' => false, 'self_editing' => false, 'data' => $site,), true, 6),
             'with_groups_edition' => array(array('edit_groups' => 'true', 'required_password' => false, 'self_editing' => true, 'data' => $site), false, 7)
         );
     }

@@ -6,6 +6,7 @@ open_orchestra_user_admin:
             email: Email
             groups: Group(s) of membership
             language: Default language
+            account_locked: Account locked
             group:
                 information: Informations
                 authentication: Authentication
