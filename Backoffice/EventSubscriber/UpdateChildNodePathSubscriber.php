@@ -31,23 +31,33 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
      */
     public function updatePath(NodeEvent $event)
     {
-        $parentNode = $event->getNode();
-        $events = array();
-        $nodesVersions = $this->nodeRepository->findByParent($parentNode->getNodeId(), $parentNode->getSiteId());
+        $node = $event->getNode();
+        $nodeVersions = $this->nodeRepository->findByNodeAndSite($node->getNodeId(), $node->getSiteId());
+        $parentNode = $this->nodeRepository->findOneByNodeAndSite($node->getParentId(), $node->getSiteId());
+        $oldPath = $node->getPath();
+        $newPath = $parentNode->getPath() . '/' . $node->getNodeId();
 
-        foreach ($nodesVersions as $nodeVersion) {
-            $oldPath = $nodeVersion->getPath();
-            $nodeVersion->setPath($parentNode->getPath() . '/' . $nodeVersion->getNodeId());
-
-            if (!isset($events[$nodeVersion->getNodeId()])) {
-                $event = new NodeEvent($nodeVersion);
-                $event->setPreviousPath($oldPath);
-                $events[$nodeVersion->getNodeId()] = $event;
-            }
+        foreach($nodeVersions as $nodeVersion) {
+            $nodeVersion->setPath($newPath);
         }
 
-        foreach ($events as $event) {
-            $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
+        $event = new NodeEvent($node);
+        $event->setPreviousPath($oldPath);
+        $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
+
+        $children = $this->nodeRepository->findNodeIdByIncludedPathSiteId($oldPath, $node->getSiteId());
+
+        $childrenNodeId = array();
+        foreach ($children as $child) {
+            $childOldPath = $child->getPath();
+            $childNodeId = $child->getNodeId();
+            $child->setPath(preg_replace('/^' . preg_quote($oldPath, '/') . '\//', $newPath . '/', $childOldPath));
+            if (!in_array($childNodeId, $childrenNodeId)) {
+                $childrenNodeId[] = $childNodeId;
+                $event = new NodeEvent($child);
+                $event->setPreviousPath($childOldPath);
+                $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
+            }
         }
     }
 
@@ -57,7 +67,7 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            NodeEvents::PATH_UPDATED => 'updatePath',
+            NodeEvents::NODE_MOVE => 'updatePath',
         );
     }
 }

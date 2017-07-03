@@ -351,24 +351,11 @@ class NodeManager
      */
     protected function moveNodeVersions(array $nodeVersions, NodeInterface $parentNode)
     {
-        $event = null;
-
         foreach ($nodeVersions as $nodeVersion) {
             if ($nodeVersion instanceof NodeInterface) {
-                $oldPath = $nodeVersion->getPath();
-
                 $nodeVersion->setParentId($parentNode->getNodeId());
-                $nodeVersion->setPath($parentNode->getPath() . '/' . $nodeVersion->getNodeId());
-
-                if (is_null($event)) {
-                    $event = new NodeEvent($nodeVersion);
-                    $event->setPreviousPath($oldPath);
-                }
             }
         }
-
-        if (!is_null($event)) {
-            $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
-        }
+        $this->eventDispatcher->dispatch(NodeEvents::NODE_MOVE, new NodeEvent($nodeVersion));
     }
 }

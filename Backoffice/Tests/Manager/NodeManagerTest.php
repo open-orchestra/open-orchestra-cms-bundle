@@ -310,7 +310,6 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::verify($this->node, Phake::times(4))->setOrder($position);
 
         Phake::verify($this->node, Phake::times(4))->setParentId($parentNodeId);
-        Phake::verify($this->node, Phake::times(4))->setPath($parentPath . '/' . $this->nodeId);
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
