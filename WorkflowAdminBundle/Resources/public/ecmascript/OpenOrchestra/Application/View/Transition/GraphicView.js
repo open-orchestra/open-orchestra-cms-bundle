@@ -1,36 +1,18 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import Statuses         from '../../Collection/Status/Statuses'
+import OrchestraView    from '../../../Application/View/OrchestraView'
+import WorkflowProfiles from '../../Collection/WorkflowProfiles/WorkflowProfiles'
 
 /**
- * @class TransitionsFormView
+ * @class GraphicView
  */
-class TransitionsFormView extends AbstractFormView
+class GraphicView extends OrchestraView
 {
-    /**
-     * Pre initialize
-     * @param {Object} options
-     */
-    preinitialize(options) {
-        super.preinitialize(options);
-        this.events['change .workflow-transition input[type="checkbox"]'] = '_drawGraphic';
-    }
-
     /**
      * @inheritdoc
      */
     render() {
-        let template = this._renderTemplate('Transition/transitionsFormView');
-        this.$el.html(template);
-        this._$formRegion = $('.form-edit', this.$el);
-        this._displayLoader(this._$formRegion);
-        $('.workflow-preview',  this.$el).hide();
-
-        this._statuses = new Statuses();
-        this._statuses.fetch({
-            apiContext : "nodes",
-            success : () => {
-                super.render();
-                this._drawGraphic();
+        let workflowProfiles = new WorkflowProfiles().fetch({
+            success: (workflowProfiles) => {
+                console.log(workflowProfiles);
             }
         });
 
@@ -108,19 +90,8 @@ class TransitionsFormView extends AbstractFormView
             svg.attr("height", g.graph().height + 40);
         });
 
-}
-
-
-    /**
-     * @return {Object}
-     */
-    getStatusCodeForm() {
-        return {
-            '200': $.proxy(this.refreshRender, this),
-            '201': $.proxy(this.refreshRender, this),
-            '422': $.proxy(this.refreshRender, this)
-        }
     }
+
 }
 
-export default TransitionsFormView;
+export default GraphicView;

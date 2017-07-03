@@ -1,5 +1,6 @@
 import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
 import WorkflowProfileListView from '../../View/WorkflowProfile/WorkflowProfileListView'
+import GraphicView             from '../../View/Transition/GraphicView'
 import Application             from '../../Application'
 
 /**
@@ -29,6 +30,9 @@ class WorkflowProfilesView extends AbstractCollectionView
             });
             $('.workflow-profile-list', this.$el).html(this._listView.render().$el);
         }
+
+        let grapgicView = new GraphicView();
+        grapgicView.render();
 
         return this;
     }
