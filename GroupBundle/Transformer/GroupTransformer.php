@@ -54,15 +54,14 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if (!$group instanceof GroupInterface) {
             throw new TransformerParameterTypeException();
         }
-
-        $nbrGroupUsers = is_array($params) && array_key_exists('nbrGroupUsers') ? $params['nbrGroupUsers'] : 0;
+        $nbrGroupsUsers = is_array($params) && array_key_exists('$nbrGroupsUsers') ? $params['$nbrGroupsUsers'] : array();
 
         $facade = $this->newFacade();
 
         $facade->id = $group->getId();
         $facade->name = $group->getName();
         $facade->label = $this->multiLanguagesChoiceManager->choose($group->getLabels());
-        $facade->nbrUsers = $nbrGroupUsers;
+        $facade->nbrUsers = array_key_exists($group->getId(), $nbrGroupsUsers) ? $nbrGroupsUsers[$group->getId()] : 0;
 
         $facade = $this->addSite($facade, $group);
         $facade = $this->addRoles($facade, $group);

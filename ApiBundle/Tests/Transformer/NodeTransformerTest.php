@@ -149,7 +149,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
      */
     public function testReverseTransform($facade, $source, $searchCount, $setCount)
     {
-        $this->nodeTransformer->reverseTransform($facade, $source);
+        $this->nodeTransformer->reverseTransform($facade, array('source' => $source));
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
         if (null !== $source) {

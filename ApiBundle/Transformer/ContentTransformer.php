@@ -114,7 +114,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     public function reverseTransform(FacadeInterface $facade, array $params = null)
     {
         if (is_array($params) &&
-            array_keys_exists('source', $params) &&
+            array_key_exists('source', $params) &&
             $params['source'] instanceof ContentInterface &&
             null !== $facade->status &&
             null !== $facade->status->id &&
