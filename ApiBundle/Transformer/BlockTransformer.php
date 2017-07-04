@@ -55,12 +55,13 @@ class BlockTransformer extends AbstractTransformer
 
     /**
      * @param BlockInterface $block
+     * @param array          $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($block)
+    public function transform($block, array $params = array())
     {
         if (!$block instanceof BlockInterface) {
             throw new TransformerParameterTypeException();
@@ -104,13 +105,21 @@ class BlockTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array           $params
      *
      * @return BlockInterface
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         return $this->blockRepository->findById($facade->id);
+    }
+
+    /**
+     * @return string
+     */
+    public function isCached()
+    {
+        return $this->hasGroup(CMSGroupContext::AREAS);
     }
 
     /**

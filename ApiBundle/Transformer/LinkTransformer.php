@@ -12,10 +12,11 @@ class LinkTransformer extends AbstractTransformer
 {
     /**
      * @param array $link
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($link)
+    public function transform($link, array $params = array())
     {
         $facade = $this->newFacade();
 

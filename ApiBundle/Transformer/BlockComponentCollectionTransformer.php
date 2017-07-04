@@ -12,15 +12,16 @@ class BlockComponentCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param array $blockComponentCollection
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($blockComponentCollection)
+    public function transform($blockComponentCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
         foreach ($blockComponentCollection as $blockComponent) {
-            $facade->addBlockComponents($this->getTransformer('block_component')->transform($blockComponent));
+            $facade->addBlockComponents($this->getContext()->transform('block_component', $blockComponent));
         }
 
         return $facade;

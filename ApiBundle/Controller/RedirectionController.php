@@ -49,8 +49,7 @@ class RedirectionController extends BaseController
 
         $recordsTotal = $repository->count();
         $recordsFiltered = $repository->countWithFilter($configuration);
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('redirection_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -78,7 +77,7 @@ class RedirectionController extends BaseController
         $repository = $this->get('open_orchestra_model.repository.redirection');
         $redirectionList = $repository->findByNode($nodeId, $locale, $siteId);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection')->transform($redirectionList);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('redirection_collection', $redirectionList);
     }
 
     /**
@@ -98,7 +97,7 @@ class RedirectionController extends BaseController
             $this->getParameter('open_orchestra_api.facade.redirection_collection.class'),
             $format
         );
-        $redirections = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection')->reverseTransform($facade);
+        $redirections = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('redirection_collection', $facade);
 
         $redirectionRepository = $this->get('open_orchestra_model.repository.redirection');
         $redirectionIds = array();

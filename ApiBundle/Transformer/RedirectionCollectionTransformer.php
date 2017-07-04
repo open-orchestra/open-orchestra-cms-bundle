@@ -14,15 +14,16 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
 {
     /**
      * @param Collection $redirectionCollection
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($redirectionCollection)
+    public function transform($redirectionCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
         foreach ($redirectionCollection as $redirection) {
-            $facade->addRedirection($this->getTransformer('redirection')->transform($redirection));
+            $facade->addRedirection($this->getContext()->transform('redirection', $redirection));
         }
 
         return $facade;
@@ -30,16 +31,16 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array           $params
      *
      * @return RedirectionInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         $redirections = array();
         $redirectionsFacade = $facade->getRedirections();
         foreach ($redirectionsFacade as $redirectionFacade) {
-            $redirection = $this->getTransformer('redirection')->reverseTransform($redirectionFacade);
+            $redirection = $this->getContext()->reverseTransform('redirection', $redirectionFacade);
             if (null !== $redirection) {
                 $redirections[] = $redirection;
             }

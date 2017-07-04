@@ -53,12 +53,13 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param ContentInterface $content
+     * @param array            $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($content)
+    public function transform($content, array $params = array())
     {
         if (!$content instanceof ContentInterface) {
             throw new TransformerParameterTypeException();
@@ -72,7 +73,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $content->getVersion();
         $facade->versionName = $content->getVersionName();
         $facade->language = $content->getLanguage();
-        $facade->status = $this->getTransformer('status')->transform($content->getStatus());
+        $facade->status = $this->getContext()->transform('status', $content->getStatus());
         $facade->statusLabel = $content->getStatus()->getLabel($this->contextManager->getBackOfficeLanguage());
         $facade->createdAt = $content->getCreatedAt();
         $facade->updatedAt = $content->getUpdatedAt();
@@ -83,7 +84,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->used = $content->isUsed();
 
         foreach ($content->getAttributes() as $attribute) {
-            $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
+            $contentAttribute = $this->getContext()->transform('content_attribute', $attribute);
             $facade->addAttribute($contentAttribute);
         }
         if ($this->hasGroup(CMSGroupContext::AUTHORIZATIONS)) {
@@ -105,21 +106,22 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param ContentInterface|null         $source
+     * @param array           $params
      *
      * @return mixed
      * @throws StatusChangeNotGrantedHttpException
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
-        if ($source instanceof ContentInterface &&
+        if (array_key_exists('source', $params) &&
+            $params['source'] instanceof ContentInterface &&
             null !== $facade->status &&
             null !== $facade->status->id &&
-            $source->getStatus()->getId() !== $facade->status->id
+            $params['source']->getStatus()->getId() !== $facade->status->id
         ) {
             $status = $this->statusRepository->find($facade->status->id);
             if ($status instanceof StatusInterface) {
-                $source->setStatus($status);
+                $params['source']->setStatus($status);
             }
         }
 

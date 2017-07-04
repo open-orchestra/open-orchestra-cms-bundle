@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Context\CMSGroupContext;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -31,12 +32,13 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param AreaInterface $area
+     * @param array         $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($area)
+    public function transform($area, array $params = array())
     {
         $facade = $this->newFacade();
 
@@ -45,7 +47,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         foreach ($area->getBlocks() as $block) {
-            $facade->addBlock($this->getTransformer('block')->transform($block));
+            $facade->addBlock($this->getContext()->transform('block', $block));
         }
 
         return $facade;
@@ -53,19 +55,27 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array           $params
      *
      * @return AreaInterface
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         /** @var AreaInterface $area */
         $area = new $this->areaClass();
         foreach ($facade->getBlocks() as $block) {
-            $area->addBlock($this->getTransformer('block')->reverseTransform($block));
+            $area->addBlock($this->getContext()->reverseTransform('block', $block));
         }
 
         return $area;
+    }
+
+    /**
+     * @return string
+     */
+    public function isCached()
+    {
+        return $this->hasGroup(CMSGroupContext::AREAS);
     }
 
     /**

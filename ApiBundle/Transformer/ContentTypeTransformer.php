@@ -55,12 +55,13 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param ContentTypeInterface $contentType
+     * @param array                $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($contentType)
+    public function transform($contentType, array $params = array())
     {
         if (!$contentType instanceof ContentTypeInterface) {
             throw new TransformerParameterTypeException();
@@ -104,7 +105,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         if ($this->hasGroup(CMSGroupContext::FIELD_TYPES)) {
             foreach ($contentType->getFields() as $field) {
-                $facade->addField($this->getTransformer('field_type')->transform($field));
+                $facade->addField($this->getContext()->transform('field_type', $field));
             }
         }
 
@@ -113,11 +114,11 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array           $params
      *
      * @return ContentTypeInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->contentTypeId) {
             return $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($facade->contentTypeId);

@@ -12,14 +12,15 @@ class NodesTreeTransformer extends AbstractTransformer
 {
     /**
      * @param array $nodesTree
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($nodesTree)
+    public function transform($nodesTree, array $params = array())
     {
         $tree = array();
         foreach ($nodesTree as $node) {
-            $tree[] = $this->getTransformer('node_tree')->transform($node);
+            $tree[] = $this->getContext()->transform('node_tree', $node);
         }
 
         return $tree;

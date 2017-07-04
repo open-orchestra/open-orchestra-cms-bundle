@@ -77,7 +77,7 @@ class NodeController extends BaseController
         }
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $node);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('node', $node);
     }
 
     /**
@@ -245,14 +245,14 @@ class NodeController extends BaseController
         }
 
         $areaFacade = $facade->getAreas()[$areaId];
-        $area = $this->get('open_orchestra_api.transformer_manager')->get('area')->reverseTransform($areaFacade);
+        $area = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('area', $areaFacade);
         $this->copyTranslatedBlocks($node, $area, $language, $areaId);
         $objectManager = $this->get('object_manager');
 
         $objectManager->persist($node);
         $objectManager->flush();
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('node', $node);
     }
 
     /**
@@ -376,7 +376,7 @@ class NodeController extends BaseController
             array('histories.updatedAt' => -1)
         );
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('node_collection', $nodes);
     }
 
     /**
@@ -398,7 +398,7 @@ class NodeController extends BaseController
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $nodes = $nodeRepository->findByNodeIdAndSiteIdWithBlocksInArea($nodeId, $siteId, $areaId);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('node_collection', $nodes);
     }
 
     /**
@@ -423,7 +423,7 @@ class NodeController extends BaseController
             return array();
         }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('nodes_tree')->transform($nodes);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('nodes_tree', $nodes);
     }
 
     /**
@@ -445,7 +445,7 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findNotDeletedSortByUpdatedAt($nodeId, $language, $siteId);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('node_collection', $nodes);
     }
 
     /**
@@ -484,7 +484,7 @@ class NodeController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $node);
 
         $nodeSource = clone $node;
-        $this->get('open_orchestra_api.transformer_manager')->get('node')->reverseTransform($facade, $node);
+        $this->get('open_orchestra_api.transformer_manager')->reverseTransform('node', $facade, array('source' => $node));
         $status = $node->getStatus();
 
         if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(NodeStrategy::CHANGE_STATUS, $node)) {
@@ -562,7 +562,11 @@ class NodeController extends BaseController
             $request->get('_format', 'json')
         );
 
-        $orderedNodes = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->getNodeIds($facade);
+        $orderedNodes = array();
+
+        foreach ($facade->getNodes() as $node) {
+            $orderedNodes[] = $node->nodeId;
+        }
 
         $this->get('open_orchestra_backoffice.manager.node')->reorderNodes($orderedNodes, $node);
 
@@ -602,8 +606,7 @@ class NodeController extends BaseController
         $recordsTotal = $repository->count($siteId, $language);
         $recordsFiltered = $repository->countWithFilter($configuration, $siteId, $language);
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('node_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('node_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -627,7 +630,7 @@ class NodeController extends BaseController
             $this->getParameter('open_orchestra_api.facade.node_collection.class'),
             $format
         );
-        $nodes = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->reverseTransform($facade);
+        $nodes = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('node_collection', $facade);
 
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $nodeIds = array();
@@ -680,8 +683,7 @@ class NodeController extends BaseController
         $recordsTotal = $repository->countWithBlockUsed($siteId, $language, $blockId);
         $recordsFiltered = $recordsTotal;
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('node_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('node_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 

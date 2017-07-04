@@ -47,11 +47,13 @@ class ContentTransformerTest extends AbstractBaseTestCase
         $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
         $facade->label = 'fakeStatus';
         $facade->name = 'name';
-        $transformer = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
-        Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
+
+
         $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
-        Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($transformer);
+        Phake::when($this->transformerManager)->transform(Phake::anyParameters())->thenReturn($facade);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($router);
+        $transformer = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
+        Phake::when($transformer)->getContext()->thenReturn($this->transformerManager);
         $groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
         Phake::when($groupContext)->hasGroup(Phake::anyParameters())->thenReturn(true);
         Phake::when($this->transformerManager)->getGroupContext()->thenReturn($groupContext);

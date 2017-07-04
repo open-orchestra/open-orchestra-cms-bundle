@@ -13,17 +13,17 @@ use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 class UserListGroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
-     * @param Collection          $mixed
-     * @param GroupInterface|null $group
+     * @param Collection $mixed
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, GroupInterface $group = null)
+    public function transform($mixed, array $params = array())
     {
         $facade = $this->newFacade();
 
         foreach ($mixed as $user) {
-            $facade->addUser($this->getTransformer('user_list_group')->transform($user, $group));
+            $facade->addUser($this->getContext()->transform('user_list_group', $user));
         }
 
         return $facade;

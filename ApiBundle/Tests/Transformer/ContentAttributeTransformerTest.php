@@ -22,7 +22,9 @@ class ContentAttributeTransformerTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->transformer = new ContentAttributeTransformer($this->facadeClass);
+        $this->transformer = new ContentAttributeTransformer(
+            $this->facadeClass
+        );
     }
 
     /**

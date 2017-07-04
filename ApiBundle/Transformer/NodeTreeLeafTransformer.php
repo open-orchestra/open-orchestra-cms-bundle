@@ -14,10 +14,11 @@ class NodeTreeLeafTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param array $node
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($node)
+    public function transform($node, array $params = array())
     {
         $facade = $this->newFacade();
 
@@ -27,7 +28,7 @@ class NodeTreeLeafTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->version = $node['version'];
         $facade->siteId = $node['siteId'];
         $facade->order = $node['order'];
-        $facade->status = $this->getTransformer('status_node_tree')->transform($node['status']);
+        $facade->status = $this->getContext()->transform('status_node_tree', $node['status']);
         $facade->nodeType = $node['nodeType'];
 
         $facade->addRight('can_create', (

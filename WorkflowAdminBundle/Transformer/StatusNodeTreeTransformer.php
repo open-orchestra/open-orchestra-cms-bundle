@@ -12,10 +12,11 @@ class StatusNodeTreeTransformer extends AbstractTransformer
 {
     /**
      * @param array $status
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($status)
+    public function transform($status, array $params = array())
     {
         $facade = $this->newFacade();
 

@@ -43,8 +43,7 @@ class WorkflowProfileController extends BaseController
         $collection = $repository->findForPaginate($configuration);
         $recordsTotal = $repository->count();
         $recordsFiltered = $repository->countWithFilter($configuration);
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('workflow_profile_collection');
-        $facade = $collectionTransformer->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('workflow_profile_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -67,7 +66,7 @@ class WorkflowProfileController extends BaseController
             $this->getParameter('open_orchestra_workflow_admin.facade.workflow_profile_collection.class'),
             $format
         );
-        $workflowProfiles = $this->get('open_orchestra_api.transformer_manager')->get('workflow_profile_collection')->reverseTransform($facade);
+        $workflowProfiles = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('workflow_profile_collection', $facade);
         $workflowProfileIds = array();
         foreach ($workflowProfiles as $workflowProfile) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $workflowProfile)) {

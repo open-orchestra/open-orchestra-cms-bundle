@@ -27,7 +27,10 @@ class LogTransformerTest extends AbstractBaseTestCase
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->log = Phake::mock('OpenOrchestra\LogBundle\Model\LogInterface');
-        $this->transformer = new LogTransformer($this->facadeClass, $this->translator);
+        $this->transformer = new LogTransformer(
+            $this->facadeClass,
+            $this->translator
+        );
     }
 
     /**

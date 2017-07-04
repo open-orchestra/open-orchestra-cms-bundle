@@ -31,7 +31,11 @@ class RedirectionTransformerTest extends AbstractBaseTestCase
         $this->redirectionRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RedirectionRepositoryInterface');
         Phake::when($this->redirectionRepository)->find(Phake::anyParameters())->thenReturn('ok');
 
-        $this->transformer = new RedirectionTransformer($this->facadeClass, $authorizationChecker, $this->redirectionRepository);
+        $this->transformer = new RedirectionTransformer(
+            $this->facadeClass,
+            $authorizationChecker,
+            $this->redirectionRepository
+        );
     }
 
     /**
@@ -46,7 +50,7 @@ class RedirectionTransformerTest extends AbstractBaseTestCase
      */
     public function testReverseTransform($facade, $searchCount, $nullReturn)
     {
-        $redirection = $this->transformer->reverseTransform($facade, null);
+        $redirection = $this->transformer->reverseTransform($facade);
 
         Phake::verify($this->redirectionRepository, Phake::times($searchCount))->find(Phake::anyParameters());
         if ($nullReturn) {

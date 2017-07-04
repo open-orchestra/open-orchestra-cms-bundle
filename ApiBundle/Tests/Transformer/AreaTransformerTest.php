@@ -34,10 +34,12 @@ class AreaTransformerTest extends AbstractBaseTestCase
         $this->area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($this->area)->getBlocks()->thenReturn(array($this->block, $this->block, $this->block));
 
-        $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\BlockTransformer');
-
+        $blockFacade = new BlockFacade();
         $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
-        Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
+        Phake::when($this->transformerManager)->transform(Phake::anyParameters())->thenReturn($blockFacade);
+
+        $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\BlockTransformer');
+        Phake::when($this->transformer)->getContext()->thenReturn($this->transformerManager);
 
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
@@ -56,13 +58,10 @@ class AreaTransformerTest extends AbstractBaseTestCase
      */
     public function testTransform()
     {
-        $blockFacade = new BlockFacade();
-        Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($blockFacade);
-
         $areaFacade = $this->areaTransformer->transform($this->area);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
-        Phake::verify($this->transformer, Phake::times(3))->transform($this->block);
+        Phake::verify($this->transformerManager, Phake::times(3))->transform('block', $this->block);
     }
 
     /**

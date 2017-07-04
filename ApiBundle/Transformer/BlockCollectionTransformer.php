@@ -12,23 +12,17 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class BlockCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param Collection      $blockCollection
-     * @param Collection|null $generateMixed
+     * @param Collection $blockCollection
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($blockCollection, $generateMixed = null)
+    public function transform($blockCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
-        if (null !== $generateMixed) {
-            foreach($generateMixed as $block) {
-                $facade->addBlock($this->getTransformer('block')->transform($block, true));
-            }
-        }
-
         foreach ($blockCollection as $block) {
-            $facade->addBlock($this->getTransformer('block')->transform($block, false));
+            $facade->addBlock($this->getContext()->transform('block', $block));
         }
 
         return $facade;

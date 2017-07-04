@@ -75,10 +75,8 @@ class StatusTransformerTest extends AbstractBaseTestCase
     public function testTransform($publishedState, $initialState, $isGranted, $hasGroup)
     {
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
 
-        Phake::when($this->authorizationChecker)->isGranted($this->status, $document)->thenReturn($isGranted);
         Phake::when($this->authorizationChecker)->isGranted(ContributionActionInterface::DELETE, $this->status)->thenReturn($isGranted);
         Phake::when($this->authorizationChecker)->isGranted(ContributionActionInterface::EDIT, $this->status)->thenReturn($isGranted);
         Phake::when($this->groupContext)->hasGroup(Phake::anyParameters())->thenReturn($hasGroup);
@@ -89,7 +87,7 @@ class StatusTransformerTest extends AbstractBaseTestCase
         Phake::when($this->status)->getLabels()->thenReturn(array());
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
 
-        $facade = $this->transformer->transform($this->status, $document);
+        $facade = $this->transformer->transform($this->status);
 
         $this->assertInstanceOf('OpenOrchestra\BaseApi\Facade\FacadeInterface', $facade);
         $this->assertSame($publishedState, $facade->publishedState);

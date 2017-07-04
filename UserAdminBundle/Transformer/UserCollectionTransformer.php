@@ -14,15 +14,16 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param Collection $mixed
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($mixed, array $params = array())
     {
         $facade = $this->newFacade();
 
         foreach ($mixed as $user) {
-            $facade->addUser($this->getTransformer('user')->transform($user));
+            $facade->addUser($this->getContext()->transform('user', $user));
         }
 
         return $facade;
@@ -30,16 +31,16 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array           $params
      *
      * @return UserInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         $users = array();
         $usersFacade = $facade->getUsers();
         foreach ($usersFacade as $userFacade) {
-            $user = $this->getTransformer('user')->reverseTransform($userFacade);
+            $user = $this->getContext()->reverseTransform('user', $userFacade);
             if (null !== $user) {
                 $users[] = $user;
             }

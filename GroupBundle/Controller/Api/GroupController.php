@@ -59,8 +59,7 @@ class GroupController extends BaseController
         $recordsTotal = $repository->count($siteIds);
         $recordsFiltered = $repository->countWithFilter($configuration, $siteIds);
 
-        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
-        $facade = $collectionTransformer->transform($collection, $nbrGroupsUsers);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('group_collection', $collection, array('nbrGroupsUsers' => $nbrGroupsUsers));
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -84,7 +83,7 @@ class GroupController extends BaseController
             $format
         );
         $groupRepository = $this->get('open_orchestra_user.repository.group');
-        $groups = $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->reverseTransform($facade);
+        $groups = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('group_collection', $facade);
 
         $filter = $groups;
         array_walk($filter, function(&$item) {$item = $item->getId();});
@@ -123,7 +122,7 @@ class GroupController extends BaseController
             $format
         );
 
-        $group = $this->get('open_orchestra_api.transformer_manager')->get('group')->reverseTransform($facade);
+        $group = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('group', $facade);
 
         $newGroup = clone $group;
 

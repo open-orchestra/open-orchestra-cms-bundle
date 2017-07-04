@@ -18,18 +18,21 @@ class LogTransformer extends AbstractTransformer
      * @param string              $facadeClass
      * @param TranslatorInterface $translator
      */
-    public function __construct($facadeClass, TranslatorInterface $translator)
-    {
+    public function __construct(
+        $facadeClass,
+        TranslatorInterface $translator
+    ) {
         parent::__construct($facadeClass);
         $this->translator = $translator;
     }
 
     /**
      * @param LogInterface $mixed
+     * @param array        $params
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($mixed, array $params = array())
     {
         $facade = $this->newFacade();
 

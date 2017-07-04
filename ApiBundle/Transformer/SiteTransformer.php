@@ -15,12 +15,13 @@ class SiteTransformer extends AbstractTransformer
 {
     /**
      * @param SiteInterface $site
+     * @param array         $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($site)
+    public function transform($site, array $params = array())
     {
         if (!$site instanceof SiteInterface) {
             throw new TransformerParameterTypeException();
@@ -33,7 +34,7 @@ class SiteTransformer extends AbstractTransformer
         $facade->name = $site->getName();
 
         if ($this->hasGroup(CMSGroupContext::SITE_MAIN_ALIAS)) {
-            $facade->mainAlias = $this->getTransformer('site_alias')->transform($site->getMainAlias());
+            $facade->mainAlias = $this->getContext()->transform('site_alias', $site->getMainAlias());
         }
 
         foreach ($site->getLanguages() as $language) {
@@ -47,6 +48,14 @@ class SiteTransformer extends AbstractTransformer
         }
 
         return $facade;
+    }
+
+    /**
+     * @return string
+     */
+    public function isCached()
+    {
+        return $this->hasGroup(CMSGroupContext::SITE);
     }
 
     /**

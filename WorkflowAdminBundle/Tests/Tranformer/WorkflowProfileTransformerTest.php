@@ -83,7 +83,7 @@ class WorkflowProfileTransformerTest extends AbstractBaseTestCase
     {
         $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
         $facade->id = $this->workflowProfileId;
-        $this->transformer->reverseTransform($facade, null);
+        $this->transformer->reverseTransform($facade);
 
         Phake::verify($this->workflowProfileRepository)->find(Phake::anyParameters());
     }

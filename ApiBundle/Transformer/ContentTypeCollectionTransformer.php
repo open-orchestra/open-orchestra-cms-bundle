@@ -14,15 +14,16 @@ class ContentTypeCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $contentTypeCollection
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($contentTypeCollection)
+    public function transform($contentTypeCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
         foreach ($contentTypeCollection as $contentType) {
-            $facade->addContentType($this->getTransformer('content_type')->transform($contentType));
+            $facade->addContentType($this->getContext()->transform('content_type', $contentType));
         }
 
         return $facade;
@@ -30,16 +31,16 @@ class ContentTypeCollectionTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param null $source
+     * @param array           $params
      *
      * @return ContentTypeInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         $contentTypes = array();
         $contentTypesFacade = $facade->getContentTypes();
         foreach ($contentTypesFacade as $contentTypeFacade) {
-            $contentType = $this->getTransformer('content_type')->reverseTransform($contentTypeFacade);
+            $contentType = $this->getContext()->reverseTransform('content_type', $contentTypeFacade);
             if (null !== $contentType) {
                 $contentTypes[] = $contentType;
             }

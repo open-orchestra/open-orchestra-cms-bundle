@@ -13,15 +13,16 @@ class ApiClientCollectionTransformer extends AbstractSecurityCheckerAwareTransfo
 {
     /**
      * @param Collection $apiClientCollection
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($apiClientCollection)
+    public function transform($apiClientCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
         foreach ($apiClientCollection as $apiClient) {
-            $facade->addApiClient($this->getTransformer('api_client')->transform($apiClient));
+            $facade->addApiClient($this->getContext()->transform('api_client', $apiClient));
         }
 
         return $facade;

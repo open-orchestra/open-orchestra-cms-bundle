@@ -18,8 +18,8 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $redirectionRepository;
 
     /**
-     * @param string                        $facadeClass
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param string                         $facadeClass
+     * @param AuthorizationCheckerInterface  $authorizationChecker
      * @param RedirectionRepositoryInterface $redirectionRepository
      */
     public function __construct(
@@ -33,12 +33,13 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param RedirectionInterface $redirection
+     * @param array                $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($redirection)
+    public function transform($redirection, array $params = array())
     {
         if (!$redirection instanceof RedirectionInterface) {
             throw new TransformerParameterTypeException();
@@ -62,12 +63,12 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param FacadeInterface           $facade
-     * @param RedirectionInterface|null $source
+     * @param FacadeInterface $facade
+     * @param array           $params
      *
      * @return mixed
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->id) {
             return $this->redirectionRepository->find($facade->id);

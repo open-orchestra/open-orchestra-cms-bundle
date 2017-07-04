@@ -68,7 +68,7 @@ class ContentController extends BaseController
 
         $this->denyAccessUnlessGranted(ContributionActionInterface::READ, $content);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('content', $content);
     }
 
     /**
@@ -110,7 +110,7 @@ class ContentController extends BaseController
         $collection = $repository->findForPaginateFilterByContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language, $searchTypes);
         $recordsTotal = $repository->countFilterByContentTypeSiteAndLanguage($contentTypeId, $siteId, $language);
         $recordsFiltered = $repository->countWithFilterAndContentTypeSiteAndLanguage($configuration, $contentTypeId, $siteId, $language, $searchTypes);
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($collection);
+        $facade = $this->get('open_orchestra_api.transformer_manager')->transform('content_collection', $collection);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 
@@ -134,7 +134,7 @@ class ContentController extends BaseController
             $this->getParameter('open_orchestra_api.facade.content.class'),
             $format
         );
-        $content = $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade);
+        $content = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('content', $facade);
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, $content);
 
         if (!$this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::READ, $content)) {
@@ -178,7 +178,7 @@ class ContentController extends BaseController
             $this->getParameter('open_orchestra_api.facade.content_collection.class'),
             $format
         );
-        $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
+        $contents = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('content_collection', $facade);
         $storageIds = array();
         foreach ($contents as $content) {
             if ($this->isGranted(ContributionActionInterface::DELETE, $content) &&
@@ -211,7 +211,7 @@ class ContentController extends BaseController
             $this->getParameter('open_orchestra_api.facade.content_collection.class'),
             $format
         );
-        $contents = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->reverseTransform($facade);
+        $contents = $this->get('open_orchestra_api.transformer_manager')->reverseTransform('content_collection', $facade);
         $repository = $this->get('open_orchestra_model.repository.content');
 
         foreach ($contents as $content) {
@@ -288,7 +288,7 @@ class ContentController extends BaseController
             $availableContentTypes
         );
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('content_collection', $contents);
     }
 
     /**
@@ -392,7 +392,7 @@ class ContentController extends BaseController
             }
         }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
+        return $this->get('open_orchestra_api.transformer_manager')->transform('content_collection', $contents);
     }
 
     /**
@@ -467,7 +467,7 @@ class ContentController extends BaseController
         $this->denyAccessUnlessGranted(ContributionActionInterface::EDIT, $content);
         $contentSource = clone $content;
 
-        $this->get('open_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade, $content);
+        $this->get('open_orchestra_api.transformer_manager')->reverseTransform('content', $facade, array('source' => $content));
         $status = $content->getStatus();
         if ($status !== $contentSource->getStatus()) {
             if (!$this->isGranted($status, $contentSource)) {

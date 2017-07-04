@@ -66,12 +66,13 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param NodeInterface $node
+     * @param array         $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($node)
+    public function transform($node, array $params = array())
     {
         if (!$node instanceof NodeInterface) {
             throw new TransformerParameterTypeException();
@@ -145,7 +146,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         if ($this->hasGroup(CMSGroupContext::AREAS)) {
             foreach ($node->getAreas() as $key => $area) {
-                $facade->setAreas($this->getTransformer('area')->transform($area), $key);
+                $facade->setAreas($this->getContext()->transform('area', $area), $key);
             }
         }
 
@@ -161,7 +162,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected function addStatus(FacadeInterface $facade, NodeInterface $node)
     {
         if ($this->hasGroup(CMSGroupContext::STATUS)) {
-            $facade->status = $this->getTransformer('status')->transform($node->getStatus());
+            $facade->status = $this->getContext()->transform('status', $node->getStatus());
         }
 
         return $facade;
@@ -220,26 +221,27 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $previewLink['link'] = $domain . $this->generateRoute($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
 
-        return $this->getTransformer('link')->transform($previewLink);
+        return $this->getContext()->transform('link', $previewLink);
     }
 
     /**
-     * @param FacadeInterface    $facade
-     * @param NodeInterface|null $source
+     * @param FacadeInterface $facade
+     * @param array           $params
      *
      * @return mixed
      * @throws StatusChangeNotGrantedHttpException
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
-        if ($source instanceof NodeInterface &&
+        if (array_key_exists('source', $params) &&
+            $params['source'] instanceof NodeInterface &&
             null !== $facade->status &&
             null !== $facade->status->id &&
-            $source->getStatus()->getId() !== $facade->status->id
+            $params['source']->getStatus()->getId() !== $facade->status->id
         ) {
             $status = $this->statusRepository->find($facade->status->id);
             if ($status instanceof StatusInterface) {
-                $source->setStatus($status);
+                $params['source']->setStatus($status);
             }
         }
 
@@ -247,7 +249,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             return $this->nodeRepository->find($facade->id);
         }
 
-        return $source;
+        return array_key_exists('source', $params) ? $params['source'] : null;
     }
 
     /**
