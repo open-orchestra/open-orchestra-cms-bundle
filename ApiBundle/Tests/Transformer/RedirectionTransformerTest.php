@@ -50,7 +50,7 @@ class RedirectionTransformerTest extends AbstractBaseTestCase
      */
     public function testReverseTransform($facade, $searchCount, $nullReturn)
     {
-        $redirection = $this->transformer->reverseTransform($facade, null);
+        $redirection = $this->transformer->reverseTransform($facade);
 
         Phake::verify($this->redirectionRepository, Phake::times($searchCount))->find(Phake::anyParameters());
         if ($nullReturn) {

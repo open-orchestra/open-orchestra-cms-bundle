@@ -58,7 +58,7 @@ class RedirectionCollectionTransformerTest extends AbstractBaseTestCase
             }
         }
 
-        $collection = $this->transformer->reverseTransform($facadeCollection, null);
+        $collection = $this->transformer->reverseTransform($facadeCollection);
 
         Phake::verify($this->transformerManager, Phake::times($transformationCount))->reverseTransform(Phake::anyParameters());
         $this->assertCount($expectedSize, $collection);
