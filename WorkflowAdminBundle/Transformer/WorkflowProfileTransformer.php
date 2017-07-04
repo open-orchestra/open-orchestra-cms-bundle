@@ -39,13 +39,13 @@ class WorkflowProfileTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param WorkflowProfileInterface $workflowProfile
-     * @param array|null               $params
+     * @param array                    $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($workflowProfile, array $params = null)
+    public function transform($workflowProfile, array $params = array())
     {
         if (!$workflowProfile instanceof WorkflowProfileInterface) {
             throw new TransformerParameterTypeException();
@@ -66,11 +66,11 @@ class WorkflowProfileTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return WorkflowProfileInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->id) {
             return $this->workflowProfileRepository->find($facade->id);

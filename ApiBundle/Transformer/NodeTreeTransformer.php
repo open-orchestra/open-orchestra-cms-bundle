@@ -11,12 +11,12 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class NodeTreeTransformer extends AbstractTransformer
 {
     /**
-     * @param array      $nodeTree
-     * @param array|null $params
+     * @param array $nodeTree
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($nodeTree, array $params = null)
+    public function transform($nodeTree, array $params = array())
     {
         $facade = $this->newFacade();
 

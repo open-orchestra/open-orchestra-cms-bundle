@@ -13,11 +13,11 @@ class BlockCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $blockCollection
-     * @param array|null $params
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($blockCollection, array $params = null)
+    public function transform($blockCollection, array $params = array())
     {
         $facade = $this->newFacade();
 

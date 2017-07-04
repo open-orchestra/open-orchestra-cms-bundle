@@ -11,12 +11,12 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class BlockComponentCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param array      $blockComponentCollection
-     * @param array|null $params
+     * @param array $blockComponentCollection
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($blockComponentCollection, array $params = null)
+    public function transform($blockComponentCollection, array $params = array())
     {
         $facade = $this->newFacade();
 

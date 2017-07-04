@@ -28,11 +28,11 @@ class LogTransformer extends AbstractTransformer
 
     /**
      * @param LogInterface $mixed
-     * @param array|null   $params
+     * @param array        $params
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, array $params = null)
+    public function transform($mixed, array $params = array())
     {
         $facade = $this->newFacade();
 

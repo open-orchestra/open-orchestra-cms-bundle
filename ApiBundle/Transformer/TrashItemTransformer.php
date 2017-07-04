@@ -38,12 +38,12 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param mixed $trashItem
-     * @param array|null $params
+     * @param array $params
      *
      * @return FacadeInterface
      * @throws TransformerParameterTypeException
      */
-    public function transform($trashItem, array $params = null)
+    public function transform($trashItem, array $params = array())
     {
         if (!$trashItem instanceof TrashItemInterface) {
             throw new TransformerParameterTypeException();
@@ -68,11 +68,11 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return TrashItemInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->id) {
             return $this->trashItemRepository->find($facade->id);

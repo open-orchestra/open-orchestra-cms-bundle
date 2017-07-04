@@ -13,12 +13,12 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 class NodeTreeLeafTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
-     * @param array      $node
-     * @param array|null $params
+     * @param array $node
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($node, array $params = null)
+    public function transform($node, array $params = array())
     {
         $facade = $this->newFacade();
 

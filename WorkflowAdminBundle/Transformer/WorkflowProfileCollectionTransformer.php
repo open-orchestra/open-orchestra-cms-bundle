@@ -14,11 +14,11 @@ class WorkflowProfileCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $workflowProfileCollection
-     * @param array|null $params
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($workflowProfileCollection, array $params = null)
+    public function transform($workflowProfileCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
@@ -31,11 +31,11 @@ class WorkflowProfileCollectionTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return WorkflowProfileInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         $workflowProfiles = array();
         $workflowProfilesFacade = $facade->getWorkflowProfiles();

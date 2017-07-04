@@ -15,13 +15,13 @@ class SiteTransformer extends AbstractTransformer
 {
     /**
      * @param SiteInterface $site
-     * @param array|null    $params
+     * @param array         $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($site, array $params = null)
+    public function transform($site, array $params = array())
     {
         if (!$site instanceof SiteInterface) {
             throw new TransformerParameterTypeException();

@@ -66,13 +66,13 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param NodeInterface $node
-     * @param array|null    $params
+     * @param array         $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($node, array $params = null)
+    public function transform($node, array $params = array())
     {
         if (!$node instanceof NodeInterface) {
             throw new TransformerParameterTypeException();
@@ -225,16 +225,15 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param FacadeInterface    $facade
-     * @param array|null         $params
+     * @param FacadeInterface $facade
+     * @param array           $params
      *
      * @return mixed
      * @throws StatusChangeNotGrantedHttpException
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
-        if (is_array($params) &&
-            array_key_exists('source', $params) &&
+        if (array_key_exists('source', $params) &&
             $params['source'] instanceof NodeInterface &&
             null !== $facade->status &&
             null !== $facade->status->id &&
@@ -250,7 +249,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             return $this->nodeRepository->find($facade->id);
         }
 
-        return is_array($params) && array_key_exists('source', $params) ? $params['source'] : null;
+        return array_key_exists('source', $params) ? $params['source'] : null;
     }
 
     /**

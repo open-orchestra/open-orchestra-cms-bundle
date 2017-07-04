@@ -53,13 +53,13 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param ContentInterface $content
-     * @param array|null       $params
+     * @param array            $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($content, array $params = null)
+    public function transform($content, array $params = array())
     {
         if (!$content instanceof ContentInterface) {
             throw new TransformerParameterTypeException();
@@ -106,15 +106,14 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return mixed
      * @throws StatusChangeNotGrantedHttpException
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
-        if (is_array($params) &&
-            array_key_exists('source', $params) &&
+        if (array_key_exists('source', $params) &&
             $params['source'] instanceof ContentInterface &&
             null !== $facade->status &&
             null !== $facade->status->id &&

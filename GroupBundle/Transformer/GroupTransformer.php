@@ -43,18 +43,18 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param GroupInterface $group
-     * @param array|null     $params
+     * @param array          $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($group, array $params = null)
+    public function transform($group, array $params = array())
     {
         if (!$group instanceof GroupInterface) {
             throw new TransformerParameterTypeException();
         }
-        $nbrGroupsUsers = is_array($params) && array_key_exists('$nbrGroupsUsers', $params) ? $params['$nbrGroupsUsers'] : array();
+        $nbrGroupsUsers = array_key_exists('$nbrGroupsUsers', $params) ? $params['$nbrGroupsUsers'] : array();
 
         $facade = $this->newFacade();
 
@@ -124,11 +124,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return GroupInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->id) {
             return $this->groupRepository->find($facade->id);

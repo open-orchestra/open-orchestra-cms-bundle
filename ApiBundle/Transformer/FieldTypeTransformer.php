@@ -32,13 +32,13 @@ class FieldTypeTransformer extends AbstractTransformer
 
     /**
      * @param FieldTypeInterface $fieldType
-     * @param array|null         $params
+     * @param array              $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($fieldType, array $params = null)
+    public function transform($fieldType, array $params = array())
     {
         if (!$fieldType instanceof FieldTypeInterface) {
             throw new TransformerParameterTypeException();

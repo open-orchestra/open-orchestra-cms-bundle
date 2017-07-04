@@ -14,11 +14,11 @@ class ContentTypeCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $contentTypeCollection
-     * @param array|null $params
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($contentTypeCollection, array $params = null)
+    public function transform($contentTypeCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
@@ -31,11 +31,11 @@ class ContentTypeCollectionTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return ContentTypeInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         $contentTypes = array();
         $contentTypesFacade = $facade->getContentTypes();

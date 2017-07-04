@@ -33,13 +33,13 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param RedirectionInterface $redirection
-     * @param array|null           $params
+     * @param array                $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($redirection, array $params = null)
+    public function transform($redirection, array $params = array())
     {
         if (!$redirection instanceof RedirectionInterface) {
             throw new TransformerParameterTypeException();
@@ -64,11 +64,11 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return mixed
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->id) {
             return $this->redirectionRepository->find($facade->id);

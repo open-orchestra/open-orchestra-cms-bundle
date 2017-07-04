@@ -39,13 +39,13 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param KeywordInterface $keyword
-     * @param array|null       $params
+     * @param array            $params
      *
      * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($keyword, array $params = null)
+    public function transform($keyword, array $params = array())
     {
         if (!$keyword instanceof KeywordInterface) {
             throw new TransformerParameterTypeException();
@@ -67,11 +67,11 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return KeywordInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->id) {
             return $this->keywordRepository->find($facade->id);

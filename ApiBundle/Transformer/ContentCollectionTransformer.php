@@ -12,12 +12,12 @@ use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
-     * @param Collection  $contentCollection
-     * @param array|null  $params
+     * @param Collection $contentCollection
+     * @param array      $params
      *
      * @return FacadeInterface
      */
-    public function transform($contentCollection, array $params = null)
+    public function transform($contentCollection, array $params = array())
     {
         $facade = $this->newFacade();
 
@@ -30,11 +30,11 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return array
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         $contents = array();
         $contentsFacade = $facade->getContents();

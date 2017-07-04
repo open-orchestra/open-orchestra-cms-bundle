@@ -44,12 +44,12 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param UserInterface $user
-     * @param array|null    $params
+     * @param array         $params
      *
      * @return FacadeInterface
      * @throws TransformerParameterTypeException
      */
-    public function transform($user, array $params = null)
+    public function transform($user, array $params = array())
     {
         if (!$user instanceof UserInterface) {
             throw new TransformerParameterTypeException();
@@ -82,11 +82,11 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param array|null      $params
+     * @param array           $params
      *
      * @return UserInterface|null
      */
-    public function reverseTransform(FacadeInterface $facade, array $params = null)
+    public function reverseTransform(FacadeInterface $facade, array $params = array())
     {
         if (null !== $facade->id) {
             return $this->userRepository->find($facade->id);

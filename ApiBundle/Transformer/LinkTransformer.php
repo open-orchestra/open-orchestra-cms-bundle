@@ -11,12 +11,12 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class LinkTransformer extends AbstractTransformer
 {
     /**
-     * @param array      $link
-     * @param array|null $params
+     * @param array $link
+     * @param array $params
      *
      * @return FacadeInterface
      */
-    public function transform($link, array $params = null)
+    public function transform($link, array $params = array())
     {
         $facade = $this->newFacade();
 
