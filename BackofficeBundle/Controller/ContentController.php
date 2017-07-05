@@ -123,7 +123,7 @@ class ContentController extends AbstractAdminController
             )),
             'method' => 'POST',
             'new_button' => true,
-            'need_link_to_site_defintion' => $contentType->isLinkedToSite() && !$contentType->isAlwaysShared(),
+            'need_link_to_site_defintion' => !$contentType->isLinkedToSite() && !$contentType->isAlwaysShared(),
             'is_statusable' => $contentType->isDefiningStatusable()
         ));
 

@@ -55,9 +55,9 @@ class ContentTypeFormView extends mix(AbstractFormView).with(FormViewButtonsMixi
      */
     _toggleAlwaysShared() {
         if ($('#oo_content_type_linkedToSite:checked', this._$formRegion).length == 0) {
-            $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').hide();
-        } else {
             $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').show();
+        } else {
+            $('#oo_content_type_alwaysShared', this._$formRegion).closest('div.form-group').hide();
         }
     }
 

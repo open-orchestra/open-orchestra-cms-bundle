@@ -128,12 +128,12 @@ open_orchestra_backoffice:
             content_type_id: Id
             names: Back office name
             version: Version
-            linked_to_site: Shared on other sites
-            always_shared: Always (or on demand)
+            linked_to_site: Restricted to site
+            always_shared: Always shared ("no" for on demand)
             default_listable_label:
               name: Name
               status: Workflow state
-              linked_to_site: Shared on other sites
+              linked_to_site: Restricted to site
               created_at: Created at
               created_by: Author
               updated_at: Updated at

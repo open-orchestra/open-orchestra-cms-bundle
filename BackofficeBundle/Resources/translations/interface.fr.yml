@@ -169,7 +169,7 @@ open_orchestra_backoffice:
         search_engine:
             name: Nom
             id: Id
-            linked_to_site: Partagé sur les autres sites
+            linked_to_site: Restreint au site
     shared_block:
         title_list: Blocs partagés
         title_list_new: Sélectionner un bloc à paramétrer
