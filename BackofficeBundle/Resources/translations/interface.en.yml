@@ -168,7 +168,7 @@ open_orchestra_backoffice:
         search_engine:
             name: Name
             id: Id
-            linked_to_site: Shared on other sites
+            linked_to_site: Restricted to site
     shared_block:
         title_list: shared blocks
         title_list_new: Select a block to parameterize
