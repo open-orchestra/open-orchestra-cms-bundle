@@ -61,10 +61,6 @@ let DrawGraphicMixin = (superclass) => class extends superclass {
             if ( g.graph().width > $svg.width()) {
                 initialScale = $svg.width()/g.graph().width;
             }
-            console.log( $svg.width());
-            console.log( g.graph().width);
-            console.log( g.graph().width/$svg.width());
-            console.log( $svg.width()/g.graph().width);
             let xCenterOffset = ($svg.width() - g.graph().width * initialScale) / 2;
             inner.attr("transform", "translate(" + xCenterOffset + ", 20)scale(" + initialScale + ")");
             svg.attr("height", g.graph().height + 40);
