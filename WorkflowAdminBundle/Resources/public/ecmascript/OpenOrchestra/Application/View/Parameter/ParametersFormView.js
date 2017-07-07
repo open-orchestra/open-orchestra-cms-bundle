@@ -1,4 +1,5 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
+import GraphicView      from '../../View/Transition/GraphicView'
 
 /**
  * @class ParametersFormView
@@ -13,6 +14,7 @@ class ParametersFormView extends AbstractFormView
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         super.render();
+        $('.graphic-workflow-preview', this.$el).html(new GraphicView().render().$el);
 
         return this;
     }

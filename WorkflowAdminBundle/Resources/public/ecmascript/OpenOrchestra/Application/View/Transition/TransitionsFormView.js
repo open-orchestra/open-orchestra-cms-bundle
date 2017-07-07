@@ -1,10 +1,11 @@
 import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
 import Statuses         from '../../Collection/Status/Statuses'
+import DrawGraphicMixin from './Mixin/DrawGraphicMixin'
 
 /**
  * @class TransitionsFormView
  */
-class TransitionsFormView extends AbstractFormView
+class TransitionsFormView extends mix(AbstractFormView).with(DrawGraphicMixin)
 {
     /**
      * Pre initialize
@@ -12,7 +13,7 @@ class TransitionsFormView extends AbstractFormView
      */
     preinitialize(options) {
         super.preinitialize(options);
-        this.events['change .workflow-transition input[type="checkbox"]'] = '_drawGraphic';
+        this.events['change .workflow-transition input[type="checkbox"]'] = '_updateGraphic';
     }
 
     /**
@@ -23,93 +24,50 @@ class TransitionsFormView extends AbstractFormView
         this.$el.html(template);
         this._$formRegion = $('.form-edit', this.$el);
         this._displayLoader(this._$formRegion);
-        $('.workflow-preview',  this.$el).hide();
 
         this._statuses = new Statuses();
         this._statuses.fetch({
             apiContext : "nodes",
             success : () => {
                 super.render();
-                this._drawGraphic();
+                this._updateGraphic();
             }
         });
 
         return this;
     }
 
-    /***
-     * Draw graphic
-     * @private
+    /**
+     * @return {Array}
      */
-    _drawGraphic() {
-        this._displayLoader($('.workflow-preview svg', this.$el));
+    _transformTransitions() {
         let transitions = [];
         $('input[type="checkbox"]:checked', this._$formRegion).each( (index, checkbox) => {
-            transitions.push({
-                'statusFrom': $(checkbox).attr('data-status-from'),
-                'statusTo':   $(checkbox).attr('data-status-to'),
-                'label': $(checkbox).closest('tr').children('td').first().text().trim()
-            });
-        });
-
-        var g = new dagreD3.graphlib.Graph().setGraph({});
-        g.graph().rankdir = 'LR';
-
-        for (let transition of transitions) {
-            let statusFrom = this._statuses.findWhere( {'id' : transition.statusFrom });
-            let statusTo = this._statuses.findWhere( {'id' : transition.statusTo });
-            if (typeof statusFrom !== "undefined" && typeof statusTo !== "undefined")
-            {
-                g.setNode(statusFrom.get('id'),  { label: statusFrom.get('label'), shape: "circle" ,class:"node-workflow-"+statusFrom.get('code_color')} );
-
-                g.setNode(statusTo.get('id'),  { label: statusTo.get('label'), shape: "circle" , class:"node-workflow-"+statusTo.get('code_color')} );
-                let label = transition.label;
-                let edge = g.edge(statusFrom.get('id'), statusTo.get('id'));
-                if (typeof edge !== "undefined") {
-                    label = edge.label + ', ' + label
-                }
-                g.setEdge(statusFrom.get('id'), statusTo.get('id'), { label: label });
-            }
-        }
-
-        let maxWidthLabel = 0;
-        let paddingLabel = 10;
-        g.nodes().forEach(function(v) {
-            var node = g.node(v);
-            let widthLabel = node.label.length*5+paddingLabel;
-            if (widthLabel  > maxWidthLabel) {
-                maxWidthLabel = widthLabel;
+            let statusFrom = this._statuses.findWhere({'id' : $(checkbox).attr('data-status-from')});
+            let statusTo = this._statuses.findWhere({'id' : $(checkbox).attr('data-status-to')});
+            if (typeof statusFrom !== "undefined" && typeof statusTo !== "undefined") {
+                transitions.push({
+                    'statusFrom': statusFrom,
+                    'statusTo': statusTo,
+                    'label': $(checkbox).closest('tr').children('td').first().text().trim()
+                });
             }
         });
-        g.nodes().forEach(function(v) {
-            var node = g.node(v);
-            node.width = maxWidthLabel;
-            node.height = maxWidthLabel;
-        });
 
 
-        var render = dagreD3.render();
+        return transitions;
+    }
 
-        $(this.$el).initialize('.workflow-preview', () => {
-            $('.workflow-preview',  this.$el).show();
-            let $svg = $('.workflow-preview svg', this.$el);
-            $svg.empty();
-            let svg = d3.select("svg"),
-                inner = svg.append("g");
-            let zoom = d3.behavior.zoom().on("zoom", function() {
-                inner.attr("transform", "translate(" + d3.event.translate + ")" +
-                    "scale(" + d3.event.scale + ")");
-            });
-
-            render(inner, g);
-
-            let xCenterOffset = ($svg.width() - g.graph().width) / 2;
-            inner.attr("transform", "translate(" + xCenterOffset + ", 20)");
-            svg.attr("height", g.graph().height + 40);
-        });
-
-}
-
+    /**
+     * Update graphic workflow
+     *
+     * @private
+     */
+    _updateGraphic()
+    {
+        let transitions = this._transformTransitions();
+        this._drawGraphic(transitions, '.workflow-preview svg');
+    }
 
     /**
      * @return {Object}

@@ -1,10 +1,25 @@
-import OrchestraModel from '../OrchestraModel'
+import OrchestraModel      from '../OrchestraModel'
+import WorkflowTransitions from '../../Collection/WorkflowTransitions/WorkflowTransitions'
 
 /**
  * @class WorkflowProfile
  */
 class WorkflowProfile extends OrchestraModel
 {
+    /**
+     * Parse server response to create nested object
+     * @param response
+     *
+     * @returns {Object}
+     */
+    parse(response) {
+        if (response.hasOwnProperty('transitions')) {
+            response.transitions = new WorkflowTransitions(response.transitions, {parse: true});
+        }
+
+        return response;
+    }
+
     /**
      * @inheritdoc
      */

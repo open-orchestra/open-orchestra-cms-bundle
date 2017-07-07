@@ -29,10 +29,10 @@ class WorkflowProfilesView extends AbstractCollectionView
                 settings: this._settings
             });
             $('.workflow-profile-list', this.$el).html(this._listView.render().$el);
+            $('.graphic-workflow-preview', this.$el).html(new GraphicView().render().$el);
         }
 
-        let grapgicView = new GraphicView();
-        grapgicView.render();
+
 
         return this;
     }

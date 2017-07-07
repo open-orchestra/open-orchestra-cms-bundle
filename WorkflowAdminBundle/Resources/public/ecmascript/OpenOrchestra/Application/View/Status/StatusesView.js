@@ -1,6 +1,7 @@
 import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
 import StatusListView         from '../../View/Status/StatusListView'
 import Application            from '../../Application'
+import GraphicView            from '../../View/Transition/GraphicView'
 
 /**
  * @class StatusesView
@@ -28,6 +29,7 @@ class StatusesView extends AbstractCollectionView
                 settings: this._settings
             });
             $('.statuses-list', this.$el).html(this._listView.render().$el);
+            $('.graphic-workflow-preview', this.$el).html(new GraphicView().render().$el);
         }
 
         return this;

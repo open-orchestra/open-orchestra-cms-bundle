@@ -19,15 +19,15 @@ class WorkflowTransitionTransformer extends AbstractTransformer
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($workflowTransition)
+    public function transform($workflowTransition, array $params = array())
     {
         if (!$workflowTransition instanceof WorkflowTransitionInterface) {
             throw new TransformerParameterTypeException();
         }
 
         $facade = $this->newFacade();
-        $facade->statusFrom = $this->getTransformer('status')->transform($workflowTransition->getStatusFrom());
-        $facade->statusTo = $this->getTransformer('status')->transform($workflowTransition->getStatusTo());
+        $facade->statusFrom = $this->getContext()->transform('status', $workflowTransition->getStatusFrom());
+        $facade->statusTo = $this->getContext()->transform('status', $workflowTransition->getStatusTo());
 
         return $facade;
     }
