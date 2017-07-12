@@ -155,13 +155,11 @@ class GroupController extends BaseController
         $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
         $this->denyAccessUnlessGranted(ContributionActionInterface::DELETE, $group);
 
-        if ($this->isGranted(ContributionActionInterface::DELETE, $group)) {
-            if ($group instanceof GroupInterface && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $group)) {
-                $objectManager = $this->get('object_manager');
-                $objectManager->remove($group);
-                $objectManager->flush();
-                $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
-            }
+        if ($group instanceof GroupInterface && $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $group)) {
+            $objectManager = $this->get('object_manager');
+            $objectManager->remove($group);
+            $objectManager->flush();
+            $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
         }
 
         return array();
