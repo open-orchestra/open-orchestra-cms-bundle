@@ -24,7 +24,10 @@ class CollectionSortable extends AbstractBehavior
         if ($('.bc-collection', $element).length > 0) {
             $element = $('.bc-collection', $element);
         }
-        $element.sortable();
+        $element.sortable({
+            axis: "y",
+            handle: $('i.fa.fa-arrows-v', $element).length > 0 ? "i.fa.fa-arrows-v" : false,
+        });
     }
 }
 
