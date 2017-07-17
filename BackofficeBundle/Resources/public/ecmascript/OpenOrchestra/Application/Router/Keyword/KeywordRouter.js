@@ -1,11 +1,11 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
+import OrchestraRouter from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application     from 'OpenOrchestra/Application/Application'
+import FormBuilder     from 'OpenOrchestra/Service/Form/Model/FormBuilder'
 
-import KeywordsView    from '../../View/Keyword/KeywordsView'
-import KeywordFormView from '../../View/Keyword/KeywordFormView'
+import KeywordsView    from 'OpenOrchestra/Application/View/Keyword/KeywordsView'
+import KeywordFormView from 'OpenOrchestra/Application/View/Keyword/KeywordFormView'
 
-import Keywords        from '../../Collection/Keyword/Keywords'
+import Keywords        from 'OpenOrchestra/Application/Collection/Keyword/Keywords'
 
 /**
  * @class KeywordRouter

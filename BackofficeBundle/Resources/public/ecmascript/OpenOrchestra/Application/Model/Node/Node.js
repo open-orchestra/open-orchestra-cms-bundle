@@ -1,7 +1,7 @@
-import OrchestraModel   from '../OrchestraModel'
-import Status           from '../Status/Status'
-import Area             from '../Area/Area'
-import ApplicationError from '../../../Service/Error/ApplicationError'
+import OrchestraModel   from 'OpenOrchestra/Application/Model/OrchestraModel'
+import Status           from 'OpenOrchestra/Application/Model/Status/Status'
+import Area             from 'OpenOrchestra/Application/Model/Area/Area'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class Node

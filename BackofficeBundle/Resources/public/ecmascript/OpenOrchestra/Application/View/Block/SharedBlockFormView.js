@@ -1,11 +1,11 @@
-import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
-import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage           from '../../../Service/FlashMessage/FlashMessage'
-import Block                  from '../../Model/Block/Block'
-import Nodes                  from '../../Collection/Node/Nodes'
-import NodeUsageBlockListView from '../Node/NodeUsageBlockListView'
-import Application            from '../../Application'
-import ConfirmModalView       from '../../../Service/ConfirmModal/View/ConfirmModalView'
+import AbstractFormView       from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import FlashMessageBag        from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
+import FlashMessage           from 'OpenOrchestra/Service/FlashMessage/FlashMessage'
+import Block                  from 'OpenOrchestra/Application/Model/Block/Block'
+import Nodes                  from 'OpenOrchestra/Application/Collection/Node/Nodes'
+import NodeUsageBlockListView from 'OpenOrchestra/Application/View/Node/NodeUsageBlockListView'
+import Application            from 'OpenOrchestra/Application/Application'
+import ConfirmModalView       from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class SharedBlockFormView

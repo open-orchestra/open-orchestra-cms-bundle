@@ -1,5 +1,5 @@
-import AbstractDataFormatter  from './AbstractDataFormatter'
-import Application            from '../../Application/Application'
+import AbstractDataFormatter  from 'OpenOrchestra/Service/DataFormatter/AbstractDataFormatter'
+import Application            from 'OpenOrchestra/Application/Application'
 
 /**
  * @class DateFormatter

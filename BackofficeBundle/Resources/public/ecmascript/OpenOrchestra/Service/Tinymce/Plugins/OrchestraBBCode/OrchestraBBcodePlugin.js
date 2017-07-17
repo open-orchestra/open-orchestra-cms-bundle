@@ -1,4 +1,4 @@
-import BBcodeTransformerManager from './BBcodeTransformerManager'
+import BBcodeTransformerManager from 'OpenOrchestra/Service/Tinymce/Plugins/OrchestraBBCode/BBcodeTransformerManager'
 
 /**
  * BBcode plugin to convert html to bbcode when

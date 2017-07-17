@@ -1,4 +1,4 @@
-import OrchestraView from '../../../Application/View/OrchestraView'
+import OrchestraView from 'OpenOrchestra/Application/View/OrchestraView'
 
 /**
  * @class ModalView

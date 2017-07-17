@@ -1,9 +1,9 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import Sites           from '../../Collection/Site/Sites'
-import SitesView       from '../../View/Site/SitesView'
-import SiteFormView    from '../../View/Site/SiteFormView'
+import OrchestraRouter from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application     from 'OpenOrchestra/Application/Application'
+import FormBuilder     from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import Sites           from 'OpenOrchestra/Application/Collection/Site/Sites'
+import SitesView       from 'OpenOrchestra/Application/View/Site/SitesView'
+import SiteFormView    from 'OpenOrchestra/Application/View/Site/SiteFormView'
 
 /**
  * @class SiteRouter

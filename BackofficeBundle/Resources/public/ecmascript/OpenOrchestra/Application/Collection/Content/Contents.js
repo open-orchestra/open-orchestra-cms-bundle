@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Content             from '../../Model/Content/Content'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Content             from 'OpenOrchestra/Application/Model/Content/Content'
 
 /**
  * @class Contents

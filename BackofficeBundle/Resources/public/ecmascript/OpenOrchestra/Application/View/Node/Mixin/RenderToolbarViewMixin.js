@@ -1,7 +1,7 @@
-import Statuses         from '../../../Collection/Status/Statuses'
-import Nodes            from '../../../Collection/Node/Nodes'
+import Statuses         from 'OpenOrchestra/Application/Collection/Status/Statuses'
+import Nodes            from 'OpenOrchestra/Application/Collection/Node/Nodes'
 
-import NodeToolbarView  from '../NodeToolbarView'
+import NodeToolbarView  from 'OpenOrchestra/Application/View/Node/NodeToolbarView'
 
 let RenderToolbarViewMixin = (superclass) => class extends superclass {
 

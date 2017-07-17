@@ -1,4 +1,4 @@
-import AbstractDataFormatter from './AbstractDataFormatter'
+import AbstractDataFormatter from 'OpenOrchestra/Service/DataFormatter/AbstractDataFormatter'
 
 /**
  * @class Manager

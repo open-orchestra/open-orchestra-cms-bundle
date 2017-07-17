@@ -1,7 +1,7 @@
-import AbstractTreeView from '../Tree/AbstractTreeView'
-import Nodes            from '../../Collection/Node/Nodes'
-import ApplicationError from '../../../Service/Error/ApplicationError'
-import Application      from '../../Application'
+import AbstractTreeView from 'OpenOrchestra/Application/View/Tree/AbstractTreeView'
+import Nodes            from 'OpenOrchestra/Application/Collection/Node/Nodes'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
+import Application      from 'OpenOrchestra/Application/Application'
 
 /**
  * @class NodesTreeView

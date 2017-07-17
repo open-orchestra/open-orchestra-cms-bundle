@@ -1,11 +1,11 @@
-import AbstractFormView          from '../../../Service/Form/View/AbstractFormView'
-import Content                   from '../../Model/Content/Content'
-import Contents                  from '../../Collection/Content/Contents'
-import Statuses                  from '../../Collection/Status/Statuses'
-import TrashFormViewButtonsMixin from '../../../Service/Form/Mixin/TrashFormViewButtonsMixin'
-import ContentToolbarView        from './ContentToolbarView'
-import ContentVersionsView       from './ContentVersionsView'
-import FlashMessageBag           from '../../../Service/FlashMessage/FlashMessageBag'
+import AbstractFormView          from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import Content                   from 'OpenOrchestra/Application/Model/Content/Content'
+import Contents                  from 'OpenOrchestra/Application/Collection/Content/Contents'
+import Statuses                  from 'OpenOrchestra/Application/Collection/Status/Statuses'
+import TrashFormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/TrashFormViewButtonsMixin'
+import ContentToolbarView        from 'OpenOrchestra/Application/View/Content/ContentToolbarView'
+import ContentVersionsView       from 'OpenOrchestra/Application/View/Content/ContentVersionsView'
+import FlashMessageBag           from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class ContentFormView

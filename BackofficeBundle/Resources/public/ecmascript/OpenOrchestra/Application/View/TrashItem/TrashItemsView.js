@@ -1,7 +1,7 @@
-import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
-import Application             from '../../Application'
-import TrashItemListView       from './TrashItemListView'
-import DatePicker              from '../../../Service/Form/Behavior/DatePicker'
+import AbstractCollectionView  from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import Application             from 'OpenOrchestra/Application/Application'
+import TrashItemListView       from 'OpenOrchestra/Application/View/TrashItem/TrashItemListView'
+import DatePicker              from 'OpenOrchestra/Service/Form/Behavior/DatePicker'
 
 /**
  * @class TrashItemsView

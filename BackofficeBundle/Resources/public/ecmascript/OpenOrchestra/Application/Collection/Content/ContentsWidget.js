@@ -1,5 +1,5 @@
-import OrchestraCollection from '../OrchestraCollection'
-import Content             from '../../Model/Content/Content'
+import OrchestraCollection from 'OpenOrchestra/Application/Collection/OrchestraCollection'
+import Content             from 'OpenOrchestra/Application/Model/Content/Content'
 
 /**
  * @class ContentsWidget

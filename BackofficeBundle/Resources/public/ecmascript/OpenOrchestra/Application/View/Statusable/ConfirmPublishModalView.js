@@ -1,4 +1,4 @@
-import ModalView from '../../../Service/Modal/View/ModalView'
+import ModalView from 'OpenOrchestra/Service/Modal/View/ModalView'
 
 /**
  * @class ConfirmPublishModalView

@@ -1,7 +1,7 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import FlashMessageBag      from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage         from '../../../Service/FlashMessage/FlashMessage'
+import AbstractFormView     from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import FormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/FormViewButtonsMixin'
+import FlashMessageBag      from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
+import FlashMessage         from 'OpenOrchestra/Service/FlashMessage/FlashMessage'
 
 /**
  * @class RedirectionFormView

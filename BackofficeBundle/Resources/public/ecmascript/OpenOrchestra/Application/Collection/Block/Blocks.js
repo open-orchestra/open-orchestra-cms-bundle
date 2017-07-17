@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Block               from '../../Model/Block/Block'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Block               from 'OpenOrchestra/Application/Model/Block/Block'
 
 /**
  * @class Blocks

@@ -1,7 +1,7 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import ApplicationError from '../../../Service/Error/ApplicationError'
-import FlashMessage     from '../../../Service/FlashMessage/FlashMessage'
-import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
+import AbstractFormView from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
+import FlashMessage     from 'OpenOrchestra/Service/FlashMessage/FlashMessage'
+import FlashMessageBag  from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class NewNodeFormView

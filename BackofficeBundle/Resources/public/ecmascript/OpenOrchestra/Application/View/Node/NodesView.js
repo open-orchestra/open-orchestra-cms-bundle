@@ -1,9 +1,9 @@
-import Application   from '../../Application'
-import OrchestraView from '../OrchestraView'
-import NodesTreeView from './NodesTreeView'
-import NodeListView  from './NodeListView'
-import NodesTree     from '../../Collection/Node/NodesTree'
-import Nodes         from '../../Collection/Node/Nodes'
+import Application   from 'OpenOrchestra/Application/Application'
+import OrchestraView from 'OpenOrchestra/Application/View/OrchestraView'
+import NodesTreeView from 'OpenOrchestra/Application/View/Node/NodesTreeView'
+import NodeListView  from 'OpenOrchestra/Application/View/Node/NodeListView'
+import NodesTree     from 'OpenOrchestra/Application/Collection/Node/NodesTree'
+import Nodes         from 'OpenOrchestra/Application/Collection/Node/Nodes'
 
 /**
  * @class NodesView

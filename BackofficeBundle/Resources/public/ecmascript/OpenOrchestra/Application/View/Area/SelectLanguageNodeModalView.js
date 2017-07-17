@@ -1,5 +1,5 @@
-import ModalView          from '../../../Service/Modal/View/ModalView'
-import ApplicationError   from '../../../Service/Error/ApplicationError'
+import ModalView          from 'OpenOrchestra/Service/Modal/View/ModalView'
+import ApplicationError   from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class SelectLanguageNodeModalView

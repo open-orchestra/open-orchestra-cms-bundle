@@ -1,10 +1,10 @@
-import OrchestraView           from '../OrchestraView'
-import Application             from '../../Application'
-import Status                  from '../../Model/Status/Status'
-import Node                    from '../../Model/Node/Node'
-import ApplicationError        from '../../../Service/Error/ApplicationError'
-import ConfirmPublishModalView from '../Statusable/ConfirmPublishModalView'
-import LoadingButtonMixin      from '../../../Service/Form/Mixin/LoadingButtonMixin'
+import OrchestraView           from 'OpenOrchestra/Application/View/OrchestraView'
+import Application             from 'OpenOrchestra/Application/Application'
+import Status                  from 'OpenOrchestra/Application/Model/Status/Status'
+import Node                    from 'OpenOrchestra/Application/Model/Node/Node'
+import ApplicationError        from 'OpenOrchestra/Service/Error/ApplicationError'
+import ConfirmPublishModalView from 'OpenOrchestra/Application/View/Statusable/ConfirmPublishModalView'
+import LoadingButtonMixin      from 'OpenOrchestra/Service/Form/Mixin/LoadingButtonMixin'
 
 /**
  * @class NodeToolbarView

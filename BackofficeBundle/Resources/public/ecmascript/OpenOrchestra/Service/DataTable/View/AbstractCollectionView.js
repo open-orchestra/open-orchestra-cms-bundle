@@ -1,6 +1,6 @@
-import OrchestraView    from '../../../Application/View/OrchestraView'
-import Application      from '../../../Application/Application'
-import ConfirmModalView from '../../ConfirmModal/View/ConfirmModalView'
+import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
+import Application      from 'OpenOrchestra/Application/Application'
+import ConfirmModalView from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class AbstractCollectionView

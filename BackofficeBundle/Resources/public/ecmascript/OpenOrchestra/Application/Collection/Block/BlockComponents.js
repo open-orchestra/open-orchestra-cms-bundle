@@ -1,5 +1,5 @@
-import OrchestraCollection  from '../OrchestraCollection'
-import BlockComponent       from '../../Model/Block/BlockComponent'
+import OrchestraCollection  from 'OpenOrchestra/Application/Collection/OrchestraCollection'
+import BlockComponent       from 'OpenOrchestra/Application/Model/Block/BlockComponent'
 
 /**
  * @class BlockComponents

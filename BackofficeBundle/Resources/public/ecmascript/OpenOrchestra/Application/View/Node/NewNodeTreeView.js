@@ -1,5 +1,5 @@
-import OrchestraView    from '../OrchestraView'
-import Application      from '../../Application'
+import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
+import Application      from 'OpenOrchestra/Application/Application'
 
 /**
  * @class NewNodeTreeView

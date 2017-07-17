@@ -1,4 +1,4 @@
-import AbstractFormView from '../../../../Form/View/AbstractFormView'
+import AbstractFormView from 'OpenOrchestra/Service/Form/View/AbstractFormView'
 
 /**
  * InternalLinkFormView

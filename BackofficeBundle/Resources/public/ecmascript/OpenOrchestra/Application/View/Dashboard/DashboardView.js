@@ -1,10 +1,10 @@
-import OrchestraView           from '../OrchestraView'
-import NodesWidget             from '../../Collection/Node/NodesWidget'
-import ContentsWidget          from '../../Collection/Content/ContentsWidget'
-import LastNodesWidgetView     from '../../View/Dashboard/Widget/LastNodesWidgetView'
-import DraftNodesWidgetView    from '../../View/Dashboard/Widget/DraftNodesWidgetView'
-import LastContentsWidgetView  from '../../View/Dashboard/Widget/LastContentsWidgetView'
-import DraftContentsWidgetView from '../../View/Dashboard/Widget/DraftContentsWidgetView'
+import OrchestraView           from 'OpenOrchestra/Application/View/OrchestraView'
+import NodesWidget             from 'OpenOrchestra/Application/Collection/Node/NodesWidget'
+import ContentsWidget          from 'OpenOrchestra/Application/Collection/Content/ContentsWidget'
+import LastNodesWidgetView     from 'OpenOrchestra/Application/View/Dashboard/Widget/LastNodesWidgetView'
+import DraftNodesWidgetView    from 'OpenOrchestra/Application/View/Dashboard/Widget/DraftNodesWidgetView'
+import LastContentsWidgetView  from 'OpenOrchestra/Application/View/Dashboard/Widget/LastContentsWidgetView'
+import DraftContentsWidgetView from 'OpenOrchestra/Application/View/Dashboard/Widget/DraftContentsWidgetView'
 
 /**
  * @class DashboardView

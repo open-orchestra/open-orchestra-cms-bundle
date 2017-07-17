@@ -1,8 +1,8 @@
-import OrchestraView    from '../OrchestraView'
-import ApplicationError from '../../../Service/Error/ApplicationError'
-import Node             from '../../Model/Node/Node'
-import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage     from '../../../Service/FlashMessage/FlashMessage'
+import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
+import Node             from 'OpenOrchestra/Application/Model/Node/Node'
+import FlashMessageBag  from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
+import FlashMessage     from 'OpenOrchestra/Service/FlashMessage/FlashMessage'
 
 /**
  * @class NewBlockListAvailableView

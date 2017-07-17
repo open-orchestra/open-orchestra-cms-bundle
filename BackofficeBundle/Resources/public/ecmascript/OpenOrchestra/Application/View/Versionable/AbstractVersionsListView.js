@@ -1,8 +1,8 @@
-import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
-import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
-import DateFormatter               from '../../../Service/DataFormatter/DateFormatter'
-import StatusFormatter             from '../../../Service/DataFormatter/StatusFormatter'
+import AbstractDataTableView       from 'OpenOrchestra/Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from 'OpenOrchestra/Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from 'OpenOrchestra/Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
+import DateFormatter               from 'OpenOrchestra/Service/DataFormatter/DateFormatter'
+import StatusFormatter             from 'OpenOrchestra/Service/DataFormatter/StatusFormatter'
 
 /**
  * @class AbstractVersionsListView

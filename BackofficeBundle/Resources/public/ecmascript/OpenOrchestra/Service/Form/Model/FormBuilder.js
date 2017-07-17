@@ -1,5 +1,5 @@
-import Form        from './Form'
-import ServerError from '../../Error/ServerError'
+import Form        from 'OpenOrchestra/Service/Form/Model/Form'
+import ServerError from 'OpenOrchestra/Service/Error/ServerError'
 
 /**
  * @class FormBuilder

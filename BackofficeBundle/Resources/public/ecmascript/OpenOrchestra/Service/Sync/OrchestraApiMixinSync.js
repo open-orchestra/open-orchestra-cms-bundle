@@ -1,5 +1,5 @@
-import ApiError              from '../Error/ApiError';
-import ServerError           from '../Error/ServerError';
+import ApiError              from 'OpenOrchestra/Service/Error/ApiError';
+import ServerError           from 'OpenOrchestra/Service/Error/ServerError';
 
 let OrchestraApiSyncMixin = (superclass) => class extends superclass {
 

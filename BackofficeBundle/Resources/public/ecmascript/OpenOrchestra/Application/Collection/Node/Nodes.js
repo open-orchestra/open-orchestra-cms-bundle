@@ -1,5 +1,5 @@
-import Node                from '../../Model/Node/Node'
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
+import Node                from 'OpenOrchestra/Application/Model/Node/Node'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
 
 /**
  * @class Nodes

@@ -1,9 +1,9 @@
-import OrchestraView           from '../OrchestraView'
-import Content                 from '../../Model/Content/Content'
-import ApplicationError        from '../../../Service/Error/ApplicationError'
-import ConfirmPublishModalView from '../Statusable/ConfirmPublishModalView'
-import Application             from '../../Application'
-import LoadingButtonMixin      from '../../../Service/Form/Mixin/LoadingButtonMixin'
+import OrchestraView           from 'OpenOrchestra/Application/View/OrchestraView'
+import Content                 from 'OpenOrchestra/Application/Model/Content/Content'
+import ApplicationError        from 'OpenOrchestra/Service/Error/ApplicationError'
+import ConfirmPublishModalView from 'OpenOrchestra/Application/View/Statusable/ConfirmPublishModalView'
+import Application             from 'OpenOrchestra/Application/Application'
+import LoadingButtonMixin      from 'OpenOrchestra/Service/Form/Mixin/LoadingButtonMixin'
 
 /**
  * @class ContentToolbarView

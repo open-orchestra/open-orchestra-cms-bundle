@@ -1,4 +1,4 @@
-import OrchestraCollection from '../../../Application/Collection/OrchestraCollection'
+import OrchestraCollection from 'OpenOrchestra/Application/Collection/OrchestraCollection'
 
 /**
  * @class DataTableCollection

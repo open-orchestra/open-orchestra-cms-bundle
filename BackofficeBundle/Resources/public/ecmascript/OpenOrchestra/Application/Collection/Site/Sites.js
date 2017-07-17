@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Site                from '../../Model/Site/Site'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Site                from 'OpenOrchestra/Application/Model/Site/Site'
 
 /**
  * @class Sites

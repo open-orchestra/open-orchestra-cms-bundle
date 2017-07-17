@@ -1,7 +1,7 @@
-import OrchestraView    from '../OrchestraView'
-import Application      from '../../Application'
-import SiteSelectorView from './SiteSelectorView'
-import ConfirmModalView from '../../../Service/ConfirmModal/View/ConfirmModalView'
+import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
+import Application      from 'OpenOrchestra/Application/Application'
+import SiteSelectorView from 'OpenOrchestra/Application/View/Header/SiteSelectorView'
+import ConfirmModalView from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class HeaderView

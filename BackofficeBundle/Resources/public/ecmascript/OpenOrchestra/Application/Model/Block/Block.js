@@ -1,5 +1,5 @@
-import OrchestraModel from '../OrchestraModel'
-import BlockCategory  from './BlockCategory'
+import OrchestraModel from 'OpenOrchestra/Application/Model/OrchestraModel'
+import BlockCategory  from 'OpenOrchestra/Application/Model/Block/BlockCategory'
 
 /**
  * @class Block

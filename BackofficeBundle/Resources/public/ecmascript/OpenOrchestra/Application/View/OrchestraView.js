@@ -1,5 +1,5 @@
-import TemplateManager from '../../Service/TemplateManager'
-import LoaderView      from '../View/Loader/LoaderView'
+import TemplateManager from 'OpenOrchestra/Service/TemplateManager'
+import LoaderView      from 'OpenOrchestra/Application/View/Loader/LoaderView'
 
 /**
  * @class OrchestraView

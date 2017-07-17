@@ -1,7 +1,7 @@
-import OrchestraView    from '../OrchestraView'
-import Application      from '../../Application'
-import ConfirmModalView from '../../../Service/ConfirmModal/View/ConfirmModalView'
-import ApplicationError from '../../../Service/Error/ApplicationError'
+import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
+import Application      from 'OpenOrchestra/Application/Application'
+import ConfirmModalView from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class BlockView

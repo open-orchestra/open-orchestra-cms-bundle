@@ -1,12 +1,12 @@
-import OrchestraView                    from '../OrchestraView'
-import BlockView                        from '../Block/BlockView'
-import SelectLanguageNodeModalView      from './SelectLanguageNodeModalView'
-import MessageCopySharedBlocksModalView from './MessageCopySharedBlocksModalView'
+import OrchestraView                    from 'OpenOrchestra/Application/View/OrchestraView'
+import BlockView                        from 'OpenOrchestra/Application/View/Block/BlockView'
+import SelectLanguageNodeModalView      from 'OpenOrchestra/Application/View/Area/SelectLanguageNodeModalView'
+import MessageCopySharedBlocksModalView from 'OpenOrchestra/Application/View/Area/MessageCopySharedBlocksModalView'
 
-import Nodes                            from '../../Collection/Node/Nodes'
-import Node                             from '../../Model/Node/Node'
+import Nodes                            from 'OpenOrchestra/Application/Collection/Node/Nodes'
+import Node                             from 'OpenOrchestra/Application/Model/Node/Node'
 
-import Application                      from '../../Application'
+import Application                      from 'OpenOrchestra/Application/Application'
 
 /**
  * @class AreaView

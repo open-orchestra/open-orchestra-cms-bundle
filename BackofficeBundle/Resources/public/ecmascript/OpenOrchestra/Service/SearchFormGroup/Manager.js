@@ -1,4 +1,4 @@
-import AbstractSearchFormGroup from './AbstractSearchFormGroup'
+import AbstractSearchFormGroup from 'OpenOrchestra/Service/SearchFormGroup/AbstractSearchFormGroup'
 
 /**
  * @class Manager

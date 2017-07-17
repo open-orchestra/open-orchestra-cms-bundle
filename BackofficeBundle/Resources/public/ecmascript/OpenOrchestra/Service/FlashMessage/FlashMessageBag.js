@@ -1,4 +1,4 @@
-import FlashMessage from './FlashMessage'
+import FlashMessage from 'OpenOrchestra/Service/FlashMessage/FlashMessage'
 
 /**
  * @class FlashMessageBag

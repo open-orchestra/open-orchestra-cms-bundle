@@ -1,6 +1,6 @@
-import ConfirmModalView     from '../../ConfirmModal/View/ConfirmModalView'
-import Application          from '../../../Application/Application'
-import FormViewButtonsMixin from './FormViewButtonsMixin'
+import ConfirmModalView     from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
+import Application          from 'OpenOrchestra/Application/Application'
+import FormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/FormViewButtonsMixin'
 
 let TrashFormViewButtonsMixin = (superclass) => class extends mix(superclass).with(FormViewButtonsMixin) {
 

@@ -1,4 +1,4 @@
-import OrchestraApiSyncMixin from '../../Service/Sync/OrchestraApiMixinSync'
+import OrchestraApiSyncMixin from 'OpenOrchestra/Service/Sync/OrchestraApiMixinSync'
 
 /**
  * @class OrchestraModel

@@ -1,4 +1,4 @@
-import AjaxError from './AjaxError'
+import AjaxError from 'OpenOrchestra/Service/Error/AjaxError'
 
 /**
  * @class ApiError

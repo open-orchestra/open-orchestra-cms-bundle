@@ -1,5 +1,5 @@
-import TemplateManager         from '../TemplateManager'
-import AbstractSearchFormGroup from './AbstractSearchFormGroup'
+import TemplateManager         from 'OpenOrchestra/Service/TemplateManager'
+import AbstractSearchFormGroup from 'OpenOrchestra/Service/SearchFormGroup/AbstractSearchFormGroup'
 
 /**
  * @class NumberForm

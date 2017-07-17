@@ -1,4 +1,4 @@
-import ServerError from '../../Error/ServerError'
+import ServerError from 'OpenOrchestra/Service/Error/ServerError'
 
 /**
  * @class Form

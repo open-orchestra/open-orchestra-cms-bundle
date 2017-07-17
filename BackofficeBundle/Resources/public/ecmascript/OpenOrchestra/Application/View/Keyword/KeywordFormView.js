@@ -1,5 +1,5 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
+import AbstractFormView     from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import FormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/FormViewButtonsMixin'
 
 /**
  * @class KeywordFormView

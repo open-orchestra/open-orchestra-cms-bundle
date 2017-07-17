@@ -1,9 +1,9 @@
-import OrchestraRouter     from '../OrchestraRouter'
-import Application         from '../../Application'
-import FormBuilder         from '../../../Service/Form/Model/FormBuilder'
-import ContentTypeFormView from '../../View/ContentType/ContentTypeFormView'
-import ContentTypes        from '../../Collection/ContentType/ContentTypes'
-import ContentTypesView    from '../../View/ContentType/ContentTypesView'
+import OrchestraRouter     from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application         from 'OpenOrchestra/Application/Application'
+import FormBuilder         from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import ContentTypeFormView from 'OpenOrchestra/Application/View/ContentType/ContentTypeFormView'
+import ContentTypes        from 'OpenOrchestra/Application/Collection/ContentType/ContentTypes'
+import ContentTypesView    from 'OpenOrchestra/Application/View/ContentType/ContentTypesView'
 
 
 /**

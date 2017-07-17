@@ -1,5 +1,5 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import StatusFormatter       from '../../../Service/DataFormatter/StatusFormatter'
+import AbstractDataTableView from 'OpenOrchestra/Service/DataTable/View/AbstractDataTableView'
+import StatusFormatter       from 'OpenOrchestra/Service/DataFormatter/StatusFormatter'
 
 /**
  * @class NodeListView

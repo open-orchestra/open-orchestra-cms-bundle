@@ -1,5 +1,5 @@
-import OrchestraView from '../OrchestraView'
-import DateFormatter from '../../../Service/DataFormatter/DateFormatter'
+import OrchestraView from 'OpenOrchestra/Application/View/OrchestraView'
+import DateFormatter from 'OpenOrchestra/Service/DataFormatter/DateFormatter'
 
 /**
  * @class AbstractWidgetView

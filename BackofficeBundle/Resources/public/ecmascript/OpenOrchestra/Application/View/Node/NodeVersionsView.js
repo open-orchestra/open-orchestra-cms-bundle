@@ -1,7 +1,5 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import NodeVersionsListView   from './NodeVersionsListView'
-import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage           from '../../../Service/FlashMessage/FlashMessage'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import NodeVersionsListView   from 'OpenOrchestra/Application/View/Node/NodeVersionsListView'
 
 /**
  * @class NodeVersionsView
