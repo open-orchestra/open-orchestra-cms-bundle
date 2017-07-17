@@ -583,17 +583,13 @@
 {% endblock form_submit_widget %}
 
 {% block delete_button %}
+    {% set disabled = form.vars.enable_delete_button is defined and not form.vars.enable_delete_button %}
     {% set label = 'open_orchestra_backoffice.form.delete' %}
-    {% set class = 'delete-button' %}
-    {% set attr = {'class': class} %}
+    {% set attr = {'class': 'delete-button'  ~ (disabled ? ' disabled' : '')} %}
     {% set button_class = 'danger' %}
     {{ block('button_widget') }}
-    {% if form.vars.enable_delete_button is defined and not form.vars.enable_delete_button %}
-        {% set class = class ~ ' disabled' %}
-        {% if form.vars.delete_help_text is defined %}
-            {% set help_text = form.vars.delete_help_text %}
-            <i class='form-help-tooltip icon-prepend fa fa-question-circle-o' data-toggle="tooltip" data-placement="right" data-original-title="{{ help_text|trans }}"></i>
-        {% endif %}
+    {% if disabled and form.vars.delete_help_text is defined %}
+        <i class='form-help-tooltip icon-prepend fa fa-question-circle-o' data-toggle="tooltip" data-placement="right" data-original-title="{{ form.vars.delete_help_text|trans }}"></i>
     {% endif %}
 {% endblock delete_button %}
 
