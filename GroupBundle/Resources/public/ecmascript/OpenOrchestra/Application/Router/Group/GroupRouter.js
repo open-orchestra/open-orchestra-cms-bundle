@@ -1,10 +1,10 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import Groups          from '../../Collection/Group/Groups'
-import GroupsView      from '../../View/Group/GroupsView'
-import GroupFormView   from '../../View/Group/GroupFormView'
-import SitesAvailable  from '../../../Application/Collection/Site/SitesAvailable'
+import OrchestraRouter from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application     from 'OpenOrchestra/Application/Application'
+import FormBuilder     from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import Groups          from 'OpenOrchestra/Application/Collection/Group/Groups'
+import GroupsView      from 'OpenOrchestra/Application/View/Group/GroupsView'
+import GroupFormView   from 'OpenOrchestra/Application/View/Group/GroupFormView'
+import SitesAvailable  from 'OpenOrchestra/Application/Collection/Site/SitesAvailable'
 
 /**
  * @class GroupRouter

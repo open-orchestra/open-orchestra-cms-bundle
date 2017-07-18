@@ -1,7 +1,7 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
-import Application           from '../../Application'
-import ConfirmModalView      from '../../../Service/ConfirmModal/View/ConfirmModalView'
-import User                  from '../../Model/User/User'
+import AbstractDataTableView from 'OpenOrchestra/Service/DataTable/View/AbstractDataTableView'
+import Application           from 'OpenOrchestra/Application/Application'
+import ConfirmModalView      from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
+import User                  from 'OpenOrchestra/Application/Model/User/User'
 
 /**
  * @class MemberListView

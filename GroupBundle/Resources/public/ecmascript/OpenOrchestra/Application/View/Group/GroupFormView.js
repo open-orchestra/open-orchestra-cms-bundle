@@ -1,10 +1,10 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Application          from '../../Application'
-import Group                from '../../Model/Group/Group'
-import Users                from '../../Collection/User/Users'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import MembersView          from '../User/MembersView'
-import ApplicationError     from '../../../Service/Error/ApplicationError'
+import AbstractFormView     from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import Application          from 'OpenOrchestra/Application/Application'
+import Group                from 'OpenOrchestra/Application/Model/Group/Group'
+import Users                from 'OpenOrchestra/Application/Collection/User/Users'
+import FormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/FormViewButtonsMixin'
+import MembersView          from 'OpenOrchestra/Application/View/User/MembersView'
+import ApplicationError     from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class GroupFormView

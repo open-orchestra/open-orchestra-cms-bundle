@@ -1,8 +1,8 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import Application            from '../../Application'
-import MemberListView         from './MemberListView'
-import UsersModalView         from '../User/UsersModalView'
-import Users                  from '../../Collection/User/Users'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import Application            from 'OpenOrchestra/Application/Application'
+import MemberListView         from 'OpenOrchestra/Application/View/User/MemberListView'
+import UsersModalView         from 'OpenOrchestra/Application/View/User/UsersModalView'
+import Users                  from 'OpenOrchestra/Application/Collection/User/Users'
 
 /**
  * @class MembersView

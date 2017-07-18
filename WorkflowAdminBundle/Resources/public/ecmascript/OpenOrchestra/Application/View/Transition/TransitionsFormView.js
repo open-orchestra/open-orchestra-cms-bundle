@@ -1,6 +1,6 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import Statuses         from '../../Collection/Status/Statuses'
-import DrawGraphicMixin from './Mixin/DrawGraphicMixin'
+import AbstractFormView from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import Statuses         from 'OpenOrchestra/Application/Collection/Status/Statuses'
+import DrawGraphicMixin from 'OpenOrchestra/Application/View/Transition/Mixin/DrawGraphicMixin'
 
 /**
  * @class TransitionsFormView

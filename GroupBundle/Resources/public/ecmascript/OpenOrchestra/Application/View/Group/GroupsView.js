@@ -1,6 +1,6 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import GroupListView          from '../../View/Group/GroupListView'
-import Application            from '../../Application'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import GroupListView          from 'OpenOrchestra/Application/View/Group/GroupListView'
+import Application            from 'OpenOrchestra/Application/Application'
 
 /**
  * @class GroupsView

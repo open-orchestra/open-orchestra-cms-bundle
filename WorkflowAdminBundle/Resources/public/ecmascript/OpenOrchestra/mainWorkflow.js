@@ -1,4 +1,4 @@
-import WorkflowSubApplication from './Application/WorkflowSubApplication'
+import WorkflowSubApplication from 'OpenOrchestra/Application/WorkflowSubApplication'
 
 $(() => {
     Backbone.Events.on('application:before:start', () => {

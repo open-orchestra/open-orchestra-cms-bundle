@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import WorkflowProfile     from '../../Model/WorkflowProfile/WorkflowProfile'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import WorkflowProfile     from 'OpenOrchestra/Application/Model/WorkflowProfile/WorkflowProfile'
 
 /**
  * @class WorkflowProfiles

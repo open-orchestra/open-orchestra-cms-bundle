@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Group               from '../../Model/Group/Group'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Group               from 'OpenOrchestra/Application/Model/Group/Group'
 
 /**
  * @class Groups

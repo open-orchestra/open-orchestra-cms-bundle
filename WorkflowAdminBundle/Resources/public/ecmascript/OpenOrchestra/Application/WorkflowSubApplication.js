@@ -1,9 +1,9 @@
-import StatusRouter          from './Router/Status/StatusRouter'
-import ParameterRouter       from './Router/Parameter/ParameterRouter'
-import WorkflowProfileRouter from './Router/WorkflowProfile/WorkflowProfileRouter'
-import TransitionRouter      from './Router/Transition/TransitionRouter'
-import FormBehaviorManager   from '../Service/Form/Behavior/Manager'
-import StatusParameter       from '../Service/Form/Behavior/StatusParameter'
+import StatusRouter          from 'OpenOrchestra/Application/Router/Status/StatusRouter'
+import ParameterRouter       from 'OpenOrchestra/Application/Router/Parameter/ParameterRouter'
+import WorkflowProfileRouter from 'OpenOrchestra/Application/Router/WorkflowProfile/WorkflowProfileRouter'
+import TransitionRouter      from 'OpenOrchestra/Application/Router/Transition/TransitionRouter'
+import FormBehaviorManager   from 'OpenOrchestra/Service/Form/Behavior/Manager'
+import StatusParameter       from 'OpenOrchestra/Service/Form/Behavior/StatusParameter'
 
 /**
  * @class WorkflowSubApplication

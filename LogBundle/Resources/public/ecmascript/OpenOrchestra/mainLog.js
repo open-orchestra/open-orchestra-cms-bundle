@@ -1,4 +1,4 @@
-import LogSubApplication from './Application/LogSubApplication'
+import LogSubApplication from 'OpenOrchestra/Application/LogSubApplication'
 
 $(() => {
     Backbone.Events.on('application:before:start', () => {

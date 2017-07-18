@@ -1,9 +1,9 @@
-import OrchestraView         from '../OrchestraView'
-import Application           from '../../Application'
-import User                  from '../../Model/User/User'
-import NewUserModalView      from './NewUserModalView'
-import ExistingUserModalView from './ExistingUserModalView'
-import FlashMessageBag       from '../../../Service/FlashMessage/FlashMessageBag'
+import OrchestraView         from 'OpenOrchestra/Application/View/OrchestraView'
+import Application           from 'OpenOrchestra/Application/Application'
+import User                  from 'OpenOrchestra/Application/Model/User/User'
+import NewUserModalView      from 'OpenOrchestra/Application/View/User/NewUserModalView'
+import ExistingUserModalView from 'OpenOrchestra/Application/View/User/ExistingUserModalView'
+import FlashMessageBag       from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
 
 
 /**

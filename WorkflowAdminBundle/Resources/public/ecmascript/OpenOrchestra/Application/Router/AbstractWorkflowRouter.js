@@ -1,4 +1,4 @@
-import OrchestraRouter from './OrchestraRouter'
+import OrchestraRouter from 'OpenOrchestra/Application/Router/OrchestraRouter'
 
 /**
  * @class AbstractWorkflowRouter

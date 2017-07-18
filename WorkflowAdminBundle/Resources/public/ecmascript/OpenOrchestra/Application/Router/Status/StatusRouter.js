@@ -1,9 +1,9 @@
-import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
-import Application            from '../../Application'
-import StatusFormView         from '../../View/Status/StatusFormView'
-import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
-import Statuses               from '../../Collection/Status/Statuses'
-import StatusesView           from '../../View/Status/StatusesView'
+import AbstractWorkflowRouter from 'OpenOrchestra/Application/Router/AbstractWorkflowRouter'
+import Application            from 'OpenOrchestra/Application/Application'
+import StatusFormView         from 'OpenOrchestra/Application/View/Status/StatusFormView'
+import FormBuilder            from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import Statuses               from 'OpenOrchestra/Application/Collection/Status/Statuses'
+import StatusesView           from 'OpenOrchestra/Application/View/Status/StatusesView'
 
 /**
  * @class StatusRouter

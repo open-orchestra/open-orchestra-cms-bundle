@@ -1,7 +1,7 @@
-import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
-import Application            from '../../Application'
-import TransitionsFormView    from '../../View/Transition/TransitionsFormView'
-import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
+import AbstractWorkflowRouter from 'OpenOrchestra/Application/Router/AbstractWorkflowRouter'
+import Application            from 'OpenOrchestra/Application/Application'
+import TransitionsFormView    from 'OpenOrchestra/Application/View/Transition/TransitionsFormView'
+import FormBuilder            from 'OpenOrchestra/Service/Form/Model/FormBuilder'
 
 /**
  * @class TransitionRouter

@@ -1,4 +1,4 @@
-import OrchestraModel from '../OrchestraModel'
+import OrchestraModel from 'OpenOrchestra/Application/Model/OrchestraModel'
 
 /**
  * @class User

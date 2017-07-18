@@ -1,7 +1,7 @@
-import UserRouter           from './Router/User/UserRouter'
-import FormBehaviorManager  from '../Service/Form/Behavior/Manager'
-import GroupTable           from '../Service/Form/Behavior/GroupTable'
-import UserTable           from '../Service/Form/Behavior/UserTable'
+import UserRouter           from 'OpenOrchestra/Application/Router/User/UserRouter'
+import FormBehaviorManager  from 'OpenOrchestra/Service/Form/Behavior/Manager'
+import GroupTable           from 'OpenOrchestra/Service/Form/Behavior/GroupTable'
+import UserTable           from 'OpenOrchestra/Service/Form/Behavior/UserTable'
 
 /**
  * @class UserSubApplication

@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Status              from '../../Model/Status/Status'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Status              from 'OpenOrchestra/Application/Model/Status/Status'
 
 /**
  * @class Statuses

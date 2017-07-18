@@ -1,4 +1,4 @@
-import GroupSubApplication from './Application/GroupSubApplication'
+import GroupSubApplication from 'OpenOrchestra/Application/GroupSubApplication'
 
 $(() => {
     Backbone.Events.on('application:before:start', () => {

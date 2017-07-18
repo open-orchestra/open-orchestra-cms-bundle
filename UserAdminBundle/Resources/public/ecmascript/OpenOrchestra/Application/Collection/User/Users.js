@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import User                from '../../Model/User/User'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import User                from 'OpenOrchestra/Application/Model/User/User'
 
 /**
  * @class Users
