@@ -61,6 +61,10 @@ class WorkflowProfileTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addRight('can_delete', $canDelete);
         }
 
+        foreach ($workflowProfile->getTransitions() as $transition) {
+            $facade->addTransition($this->getTransformer('workflow_transition')->transform($transition));
+        }
+
         return $facade;
     }
 

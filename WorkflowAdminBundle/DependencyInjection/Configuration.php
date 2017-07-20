@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('status_collection')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\StatusCollectionFacade')->end()
                     ->scalarNode('workflow_profile')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowProfileFacade')->end()
                     ->scalarNode('workflow_profile_collection')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowProfileCollectionFacade')->end()
+                    ->scalarNode('workflow_transition')->defaultValue('OpenOrchestra\WorkflowAdminBundle\Facade\WorkflowTransitionFacade')->end()
                 ->end()
             ->end()
             ->arrayNode('available_color')

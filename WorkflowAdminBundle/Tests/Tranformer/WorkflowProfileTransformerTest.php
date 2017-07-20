@@ -58,6 +58,7 @@ class WorkflowProfileTransformerTest extends AbstractBaseTestCase
         Phake::when($this->multiLanguagesChoiceManager)->choose(Phake::anyParameters())->thenReturn($fakeString);
         Phake::when($this->workflowProfile)->getLabels()->thenReturn(array());
         Phake::when($this->workflowProfile)->getDescriptions()->thenReturn(array());
+        Phake::when($this->workflowProfile)->getTransitions()->thenReturn(array());
 
         $facade = $this->transformer->transform($this->workflowProfile);
 
