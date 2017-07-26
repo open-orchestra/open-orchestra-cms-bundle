@@ -564,8 +564,8 @@ class NodeController extends BaseController
 
         $orderedNodes = array();
 
-        foreach ($facade->getNodes() as $node) {
-            $orderedNodes[] = $node->nodeId;
+        foreach ($facade->getNodes() as $orderedNode) {
+            $orderedNodes[] = $orderedNode->nodeId;
         }
 
         $this->get('open_orchestra_backoffice.manager.node')->reorderNodes($orderedNodes, $node);
