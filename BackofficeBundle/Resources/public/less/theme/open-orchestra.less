@@ -1080,8 +1080,11 @@ table.dataTable {
     }
 }
 
-table.ui-sortable .fa.fa-arrows-v{
-    cursor: pointer;
+form {
+    i.fa.fa-arrows {
+        cursor: move;
+        color: @lightBlue;
+    }
 }
 
 .table {
@@ -1263,8 +1266,8 @@ table.ui-sortable .fa.fa-arrows-v{
     }
 
     i.fa {
-        cursor: move;
         &.fa-arrows {
+            cursor: move;
             color: @lightBlue;
         }
         &.fa-square-o {

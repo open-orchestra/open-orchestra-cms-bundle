@@ -31,7 +31,6 @@ class Accordion extends AbstractBehavior
     _toggleForm(event) {
         let $td = $(event.target).parent();
         $td.children().toggleClass('hide');
-        $('i.fa.fa-arrows-v', $td.parent()).toggleClass('hide');
         $td.parent().next().toggleClass('hide');
         $td.parent().parent('.accordion-formrow-container').toggleClass('active');
     }
@@ -46,7 +45,6 @@ class Accordion extends AbstractBehavior
         let $table = $(event.target).closest('.accordion').find('table').eq(0);
         $('.open-form', $table).addClass('hide');
         $('.close-form', $table).removeClass('hide');
-        $('tbody i.fa.fa-arrows-v', $table).addClass('hide');
         $('tbody > tr:nth-of-type(2n)', $table).removeClass('hide');
         $table.find('.accordion-formrow-container').addClass('active');
     }
@@ -62,7 +60,6 @@ class Accordion extends AbstractBehavior
         $('.open-form', $table).removeClass('hide');
         $('.close-form', $table).addClass('hide');
         $('tbody > tr:nth-of-type(2n)', $table).addClass('hide');
-        $('tbody i.fa.fa-arrows-v', $table).removeClass('hide');
         $table.find('.accordion-formrow-container').removeClass('active');
     }
 
@@ -84,7 +81,6 @@ class Accordion extends AbstractBehavior
         rank++;
         let regularExpression = new RegExp(prototypeName, 'g');
         let $prototype = $(_.unescape(prototype.replace(regularExpression, rank)));
-        $('i.fa.fa-arrows-v', $prototype).addClass('hide');
         $table.append($prototype);
         $('thead', $table).removeClass('hide');
         Backbone.Events.trigger('form:deactivate', this);

@@ -89,7 +89,7 @@
                         {% if form.vars.sortable is defined and form.vars.sortable %}
                             <td>
                                 {% set nbrColumn = nbrColumn + 1 %}
-                                <i class="fa fa-arrows-v"></i>
+                                <i class="fa fa-arrows sortable-handler"></i>
                             </td>
                         {% endif %}
                         {% for column in prototype.vars.columns %}
@@ -158,7 +158,7 @@
                                 <tr>
                                     {% if form.vars.sortable is defined and form.vars.sortable %}
                                         <td>
-                                            <i class="fa fa-arrows-v"></i>
+                                            <i class="fa fa-arrows sortable-handler"></i>
                                         </td>
                                     {% endif %}
                                     {% for column in field.vars.columns %}
