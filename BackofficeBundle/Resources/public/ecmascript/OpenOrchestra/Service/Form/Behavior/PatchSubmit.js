@@ -58,7 +58,7 @@ class PatchSubmit extends AbstractBehavior
             }
         });
     }
-    
+
     /**
      * return selector
      *
