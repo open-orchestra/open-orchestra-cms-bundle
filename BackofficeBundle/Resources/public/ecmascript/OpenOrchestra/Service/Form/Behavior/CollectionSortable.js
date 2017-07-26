@@ -26,7 +26,7 @@ class CollectionSortable extends AbstractBehavior
         }
         $element.sortable({
             axis: "y",
-            handle: $('i.fa.fa-arrows-v', $element).length > 0 ? "i.fa.fa-arrows-v" : false,
+            handle: $('.sortable-handle', $element).length > 0 ? ".sortable-handle" : false,
         });
     }
 }

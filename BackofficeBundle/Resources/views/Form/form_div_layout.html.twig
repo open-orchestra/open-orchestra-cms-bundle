@@ -87,7 +87,7 @@
                     <tbody data-prototype-id="{{ prototype.vars.name }}">
                     <tr>
                         {% if form.vars.sortable is defined and form.vars.sortable %}
-                            <td>
+                            <td class="sortable-handle">
                                 {% set nbrColumn = nbrColumn + 1 %}
                                 <i class="fa fa-arrows-v"></i>
                             </td>
@@ -157,7 +157,7 @@
                             <tbody class="accordion-form" data-prototype-id="{{ field.vars.name }}">
                                 <tr>
                                     {% if form.vars.sortable is defined and form.vars.sortable %}
-                                        <td>
+                                        <td class="sortable-handle">
                                             <i class="fa fa-arrows-v"></i>
                                         </td>
                                     {% endif %}
