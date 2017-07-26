@@ -1,7 +1,7 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import Logs            from '../../Collection/Log/Logs'
-import LogsView        from '../../View/Log/LogsView'
+import OrchestraRouter from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application     from 'OpenOrchestra/Application/Application'
+import Logs            from 'OpenOrchestra/Application/Collection/Log/Logs'
+import LogsView        from 'OpenOrchestra/Application/View/Log/LogsView'
 
 /**
  * @class LogRouter

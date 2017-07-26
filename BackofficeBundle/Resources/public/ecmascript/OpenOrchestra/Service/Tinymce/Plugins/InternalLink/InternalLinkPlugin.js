@@ -1,6 +1,6 @@
-import BBcodeTransformerManager from '../OrchestraBBCode/BBcodeTransformerManager'
-import Application              from '../../../../Application/Application'
-import InternalLinkModalView    from './View/InternalLinkModalView'
+import BBcodeTransformerManager from 'OpenOrchestra/Service/Tinymce/Plugins/OrchestraBBCode/BBcodeTransformerManager'
+import Application              from 'OpenOrchestra/Application/Application'
+import InternalLinkModalView    from 'OpenOrchestra/Service/Tinymce/Plugins/InternalLink/View/InternalLinkModalView'
 
 /**
  * @class InternalLinkPlugin

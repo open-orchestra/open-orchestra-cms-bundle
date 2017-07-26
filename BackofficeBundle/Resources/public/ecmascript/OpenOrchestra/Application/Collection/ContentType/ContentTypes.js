@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import ContentType         from '../../Model/ContentType/ContentType'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import ContentType         from 'OpenOrchestra/Application/Model/ContentType/ContentType'
 
 /**
  * @class ContentTypes

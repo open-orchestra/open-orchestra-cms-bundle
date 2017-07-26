@@ -1,4 +1,4 @@
-import AbstractNewBlockComponentListView from './AbstractNewBlockComponentListView'
+import AbstractNewBlockComponentListView from 'OpenOrchestra/Application/View/Block/AbstractNewBlockComponentListView'
 
 /**
  * @class NewSharedBlockComponentListView

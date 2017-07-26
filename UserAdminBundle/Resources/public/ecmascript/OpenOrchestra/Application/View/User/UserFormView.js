@@ -1,6 +1,6 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
-import Application      from '../../../Application/Application'
+import AbstractFormView from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import FlashMessageBag  from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
+import Application      from 'OpenOrchestra/Application/Application'
 
 /**
  * @class UserFormView

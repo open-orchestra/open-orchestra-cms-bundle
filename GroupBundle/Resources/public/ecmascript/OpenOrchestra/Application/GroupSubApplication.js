@@ -1,7 +1,7 @@
-import GroupRouter         from './Router/Group/GroupRouter'
-import FormBehaviorManager from '../Service/Form/Behavior/Manager'
-import HierarchicalCheck   from '../Service/Form/Behavior/HierarchicalCheck'
-import TreeCheck           from '../Service/Form/Behavior/TreeCheck'
+import GroupRouter         from 'OpenOrchestra/Application/Router/Group/GroupRouter'
+import FormBehaviorManager from 'OpenOrchestra/Service/Form/Behavior/Manager'
+import HierarchicalCheck   from 'OpenOrchestra/Service/Form/Behavior/HierarchicalCheck'
+import TreeCheck           from 'OpenOrchestra/Service/Form/Behavior/TreeCheck'
 
 /**
  * @class GroupSubApplication

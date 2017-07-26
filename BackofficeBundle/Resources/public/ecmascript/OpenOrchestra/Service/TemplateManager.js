@@ -1,4 +1,4 @@
-import ApplicationError from './Error/ApplicationError'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class TemplateManager

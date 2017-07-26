@@ -1,6 +1,6 @@
-import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
-import Application             from '../../Application'
-import KeywordListView         from './KeywordListView'
+import AbstractCollectionView  from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import Application             from 'OpenOrchestra/Application/Application'
+import KeywordListView         from 'OpenOrchestra/Application/View/Keyword/KeywordListView'
 
 /**
  * @class KeywordsView

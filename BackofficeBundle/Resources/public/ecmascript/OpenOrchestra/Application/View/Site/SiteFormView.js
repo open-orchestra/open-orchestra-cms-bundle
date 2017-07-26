@@ -1,8 +1,8 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Application          from '../../Application'
-import Site                 from '../../Model/Site/Site'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import ApplicationError     from '../../../Service/Error/ApplicationError'
+import AbstractFormView     from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import Application          from 'OpenOrchestra/Application/Application'
+import Site                 from 'OpenOrchestra/Application/Model/Site/Site'
+import FormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/FormViewButtonsMixin'
+import ApplicationError     from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class SiteFormView

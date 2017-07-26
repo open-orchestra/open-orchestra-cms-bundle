@@ -1,6 +1,6 @@
-import OrchestraView    from '../OrchestraView'
-import Application      from '../../Application'
-import ApplicationError from '../../../Service/Error/ApplicationError'
+import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
+import Application      from 'OpenOrchestra/Application/Application'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class MenuView

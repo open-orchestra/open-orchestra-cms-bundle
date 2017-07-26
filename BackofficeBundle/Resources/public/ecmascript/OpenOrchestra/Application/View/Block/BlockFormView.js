@@ -1,4 +1,4 @@
-import AbstractFormView       from '../../../Service/Form/View/AbstractFormView'
+import AbstractFormView       from 'OpenOrchestra/Service/Form/View/AbstractFormView'
 
 /**
  * @class BlockFormView

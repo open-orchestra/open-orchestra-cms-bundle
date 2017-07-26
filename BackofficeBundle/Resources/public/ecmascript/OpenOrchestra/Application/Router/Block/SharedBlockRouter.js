@@ -1,14 +1,14 @@
-import AbstractBlockRouter             from './AbstractBlockRouter'
+import AbstractBlockRouter             from 'OpenOrchestra/Application/Router/Block/AbstractBlockRouter'
 
-import Application                     from '../../Application'
-import Blocks                          from '../../Collection/Block/Blocks'
-import FormBuilder                     from '../../../Service/Form/Model/FormBuilder'
-import BlockComponents                 from '../../Collection/Block/BlockComponents'
+import Application                     from 'OpenOrchestra/Application/Application'
+import Blocks                          from 'OpenOrchestra/Application/Collection/Block/Blocks'
+import FormBuilder                     from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import BlockComponents                 from 'OpenOrchestra/Application/Collection/Block/BlockComponents'
 
-import SharedBlockFormView             from '../../View/Block/SharedBlockFormView'
-import NewSharedBlockFormView          from '../../View/Block/NewSharedBlockFormView'
-import NewSharedBlockComponentListView from '../../View/Block/NewSharedBlockComponentListView'
-import SharedBlocksView                from '../../View/Block/SharedBlocksView'
+import SharedBlockFormView             from 'OpenOrchestra/Application/View/Block/SharedBlockFormView'
+import NewSharedBlockFormView          from 'OpenOrchestra/Application/View/Block/NewSharedBlockFormView'
+import NewSharedBlockComponentListView from 'OpenOrchestra/Application/View/Block/NewSharedBlockComponentListView'
+import SharedBlocksView                from 'OpenOrchestra/Application/View/Block/SharedBlocksView'
 
 /**
  * @class SharedBlockRouter

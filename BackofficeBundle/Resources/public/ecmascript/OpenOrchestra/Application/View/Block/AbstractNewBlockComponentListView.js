@@ -1,5 +1,5 @@
-import OrchestraView from '../OrchestraView'
-import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
+import OrchestraView from 'OpenOrchestra/Application/View/OrchestraView'
+import FlashMessageBag  from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class AbstractNewBlockComponentListView

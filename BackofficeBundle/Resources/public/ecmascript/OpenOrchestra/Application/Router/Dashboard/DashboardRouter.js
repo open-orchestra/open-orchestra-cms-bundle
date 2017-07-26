@@ -1,6 +1,6 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import DashboardView   from '../../View/Dashboard/DashboardView'
+import OrchestraRouter from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application     from 'OpenOrchestra/Application/Application'
+import DashboardView   from 'OpenOrchestra/Application/View/Dashboard/DashboardView'
 
 /**
  * @class DashboardRouter

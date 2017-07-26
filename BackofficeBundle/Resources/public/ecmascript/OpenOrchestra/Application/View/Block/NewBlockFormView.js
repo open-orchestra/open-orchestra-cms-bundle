@@ -1,6 +1,6 @@
-import AbstractNewBlockFormView from './AbstractNewBlockFormView'
-import FlashMessageBag          from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage             from '../../../Service/FlashMessage/FlashMessage'
+import AbstractNewBlockFormView from 'OpenOrchestra/Application/View/Block/AbstractNewBlockFormView'
+import FlashMessageBag          from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
+import FlashMessage             from 'OpenOrchestra/Service/FlashMessage/FlashMessage'
 
 /**
  * @class NewBlockFormView

@@ -1,7 +1,7 @@
-import SiteRouter   from './SiteRouter'
-import Application  from '../../Application'
-import FormBuilder  from '../../../Service/Form/Model/FormBuilder'
-import SiteFormView from '../../View/Site/SiteFormView'
+import SiteRouter   from 'OpenOrchestra/Application/Router/Site/SiteRouter'
+import Application  from 'OpenOrchestra/Application/Application'
+import FormBuilder  from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import SiteFormView from 'OpenOrchestra/Application/View/Site/SiteFormView'
 
 /**
  * @class SitePlatformRouter

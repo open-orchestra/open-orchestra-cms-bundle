@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import TrashItem           from '../../Model/TrashItem/TrashItem'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import TrashItem           from 'OpenOrchestra/Application/Model/TrashItem/TrashItem'
 
 /**
  * @class TrashItems

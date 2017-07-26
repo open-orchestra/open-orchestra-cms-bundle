@@ -1,5 +1,5 @@
-import AbstractBehavior from './AbstractBehavior'
-import Application      from '../../../Application/Application'
+import AbstractBehavior from 'OpenOrchestra/Service/Form/Behavior/AbstractBehavior'
+import Application      from 'OpenOrchestra/Application/Application'
 
 /**
  * @class DatePicker

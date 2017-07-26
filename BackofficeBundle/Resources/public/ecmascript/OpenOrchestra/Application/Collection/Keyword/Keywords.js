@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Keyword             from '../../Model/Keyword/Keyword'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Keyword             from 'OpenOrchestra/Application/Model/Keyword/Keyword'
 
 /**
  * @class Keywords

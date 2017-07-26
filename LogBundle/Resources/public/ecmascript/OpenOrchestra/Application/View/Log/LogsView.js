@@ -1,6 +1,6 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import LogListView            from '../../View/Log/LogListView'
-import DatePicker             from '../../../Service/Form/Behavior/DatePicker'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import LogListView            from 'OpenOrchestra/Application/View/Log/LogListView'
+import DatePicker             from 'OpenOrchestra/Service/Form/Behavior/DatePicker'
 
 /**
  * @class LogsView

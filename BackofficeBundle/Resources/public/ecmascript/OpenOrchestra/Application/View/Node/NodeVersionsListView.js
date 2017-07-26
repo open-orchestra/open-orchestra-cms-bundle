@@ -1,4 +1,4 @@
-import AbstractVersionsListView from '../Versionable/AbstractVersionsListView'
+import AbstractVersionsListView from 'OpenOrchestra/Application/View/Versionable/AbstractVersionsListView'
 
 /**
  * @class NodeVersionsListView

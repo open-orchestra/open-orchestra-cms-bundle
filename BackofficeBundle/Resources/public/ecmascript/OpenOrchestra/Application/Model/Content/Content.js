@@ -1,6 +1,6 @@
-import OrchestraModel from '../OrchestraModel'
-import Fields         from './Fields'
-import Status         from '../Status/Status'
+import OrchestraModel from 'OpenOrchestra/Application/Model/OrchestraModel'
+import Fields         from 'OpenOrchestra/Application/Model/Content/Fields'
+import Status         from 'OpenOrchestra/Application/Model/Status/Status'
 
 /**
  * @class Content

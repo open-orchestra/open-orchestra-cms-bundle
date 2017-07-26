@@ -1,5 +1,5 @@
-import OrchestraView      from '../../../Application/View/OrchestraView'
-import LoadingButtonMixin from '../Mixin/LoadingButtonMixin'
+import OrchestraView      from 'OpenOrchestra/Application/View/OrchestraView'
+import LoadingButtonMixin from 'OpenOrchestra/Service/Form/Mixin/LoadingButtonMixin'
 
 /**
  * @class AbstractFormView

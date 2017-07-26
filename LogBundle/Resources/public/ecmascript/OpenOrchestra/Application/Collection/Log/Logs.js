@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Log                 from '../../Model/Log/Log'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Log                 from 'OpenOrchestra/Application/Model/Log/Log'
 
 /**
  * @class Logs

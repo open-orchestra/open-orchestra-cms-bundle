@@ -1,5 +1,5 @@
-import LoaderView        from '../View/Loader/LoaderView'
-import NavigationManager from '../../Service/NavigationManager'
+import LoaderView        from 'OpenOrchestra/Application/View/Loader/LoaderView'
+import NavigationManager from 'OpenOrchestra/Service/NavigationManager'
 
 /**
  * @class OrchestraRouter

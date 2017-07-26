@@ -1,5 +1,5 @@
-import OrchestraModel from '../OrchestraModel'
-import Blocks         from '../../Collection/Block/Blocks'
+import OrchestraModel from 'OpenOrchestra/Application/Model/OrchestraModel'
+import Blocks         from 'OpenOrchestra/Application/Collection/Block/Blocks'
 
 /**
  * @class Area

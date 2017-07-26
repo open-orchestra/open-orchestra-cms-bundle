@@ -1,12 +1,12 @@
-import AbstractBlockRouter       from './AbstractBlockRouter'
-import Application               from '../../Application'
-import FormBuilder               from '../../../Service/Form/Model/FormBuilder'
-import Blocks                    from '../../Collection/Block/Blocks'
+import AbstractBlockRouter       from 'OpenOrchestra/Application/Router/Block/AbstractBlockRouter'
+import Application               from 'OpenOrchestra/Application/Application'
+import FormBuilder               from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import Blocks                    from 'OpenOrchestra/Application/Collection/Block/Blocks'
 
-import NewBlockComponentListView from '../../View/Block/NewBlockComponentListView'
-import BlockFormView             from '../../View/Block/BlockFormView'
-import NewBlockListAvailableView from '../../View/Block/NewBlockListAvailableView'
-import NewBlockFormView          from '../../View/Block/NewBlockFormView'
+import NewBlockComponentListView from 'OpenOrchestra/Application/View/Block/NewBlockComponentListView'
+import BlockFormView             from 'OpenOrchestra/Application/View/Block/BlockFormView'
+import NewBlockListAvailableView from 'OpenOrchestra/Application/View/Block/NewBlockListAvailableView'
+import NewBlockFormView          from 'OpenOrchestra/Application/View/Block/NewBlockFormView'
 
 /**
  * @class BlockRouter

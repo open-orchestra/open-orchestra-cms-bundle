@@ -1,5 +1,5 @@
-import ModalView         from '../../../Service/Modal/View/ModalView'
-import UserListModalView from '../../View/User/UserListModalView'
+import ModalView         from 'OpenOrchestra/Service/Modal/View/ModalView'
+import UserListModalView from 'OpenOrchestra/Application/View/User/UserListModalView'
 
 /**
  * @class UsersModalView

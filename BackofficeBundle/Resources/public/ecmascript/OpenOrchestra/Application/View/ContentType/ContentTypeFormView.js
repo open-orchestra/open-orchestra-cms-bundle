@@ -1,8 +1,8 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Application          from '../../Application'
-import ContentType          from '../../Model/ContentType/ContentType'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import ApplicationError     from '../../../Service/Error/ApplicationError'
+import AbstractFormView     from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import Application          from 'OpenOrchestra/Application/Application'
+import ContentType          from 'OpenOrchestra/Application/Model/ContentType/ContentType'
+import FormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/FormViewButtonsMixin'
+import ApplicationError     from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class ContentTypeFormView

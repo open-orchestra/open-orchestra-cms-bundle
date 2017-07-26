@@ -1,6 +1,6 @@
-import AbstractBehavior   from './AbstractBehavior'
-import Application        from '../../../Application/Application'
-import ConfirmModalView   from '../../ConfirmModal/View/ConfirmModalView'
+import AbstractBehavior   from 'OpenOrchestra/Service/Form/Behavior/AbstractBehavior'
+import Application        from 'OpenOrchestra/Application/Application'
+import ConfirmModalView   from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
 
 /**
  * @class Accordion

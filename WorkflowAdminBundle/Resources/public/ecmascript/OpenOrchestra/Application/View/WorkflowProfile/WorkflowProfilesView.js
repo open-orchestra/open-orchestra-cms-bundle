@@ -1,7 +1,7 @@
-import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
-import WorkflowProfileListView from '../../View/WorkflowProfile/WorkflowProfileListView'
-import GraphicView             from '../../View/Transition/GraphicView'
-import Application             from '../../Application'
+import AbstractCollectionView  from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import WorkflowProfileListView from 'OpenOrchestra/Application/View/WorkflowProfile/WorkflowProfileListView'
+import GraphicView             from 'OpenOrchestra/Application/View/Transition/GraphicView'
+import Application             from 'OpenOrchestra/Application/Application'
 
 /**
  * @class WorkflowProfilesView

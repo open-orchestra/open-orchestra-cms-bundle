@@ -1,5 +1,5 @@
-import OrchestraModel      from '../OrchestraModel'
-import WorkflowTransitions from '../../Collection/WorkflowTransitions/WorkflowTransitions'
+import OrchestraModel from 'OpenOrchestra/Application/Model/OrchestraModel'
+import WorkflowTransitions from 'OpenOrchestra/Application/Collection/WorkflowTransitions/WorkflowTransitions'
 
 /**
  * @class WorkflowProfile

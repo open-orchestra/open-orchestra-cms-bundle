@@ -1,9 +1,9 @@
-import OrchestraRouter    from '../OrchestraRouter'
-import Application        from '../../Application'
+import OrchestraRouter    from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application        from 'OpenOrchestra/Application/Application'
 
-import TrashItemsView     from '../../View/TrashItem/TrashItemsView'
+import TrashItemsView     from 'OpenOrchestra/Application/View/TrashItem/TrashItemsView'
 
-import TrashItems         from '../../Collection/TrashItem/TrashItems'
+import TrashItems         from 'OpenOrchestra/Application/Collection/TrashItem/TrashItems'
 
 /**
  * @class TrashItemRouter

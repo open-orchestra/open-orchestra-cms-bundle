@@ -1,9 +1,9 @@
-import OrchestraRouter     from '../OrchestraRouter'
-import Application         from '../../Application'
-import FormBuilder         from '../../../Service/Form/Model/FormBuilder'
-import Redirections        from '../../Collection/Redirection/Redirections'
-import RedirectionsView    from '../../View/Redirection/RedirectionsView'
-import RedirectionFormView from '../../View/Redirection/RedirectionFormView'
+import OrchestraRouter     from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application         from 'OpenOrchestra/Application/Application'
+import FormBuilder         from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import Redirections        from 'OpenOrchestra/Application/Collection/Redirection/Redirections'
+import RedirectionsView    from 'OpenOrchestra/Application/View/Redirection/RedirectionsView'
+import RedirectionFormView from 'OpenOrchestra/Application/View/Redirection/RedirectionFormView'
 
 /**
  * @class RedirectionRouter

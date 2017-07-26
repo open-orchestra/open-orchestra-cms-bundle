@@ -1,7 +1,7 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import SearchFormGroupManager from '../../../Service/SearchFormGroup/Manager'
-import Application            from '../../Application'
-import ContentListView        from '../../View/Content/ContentListView'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import SearchFormGroupManager from 'OpenOrchestra/Service/SearchFormGroup/Manager'
+import Application            from 'OpenOrchestra/Application/Application'
+import ContentListView        from 'OpenOrchestra/Application/View/Content/ContentListView'
 
 /**
  * @class ContentsView

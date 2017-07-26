@@ -1,5 +1,5 @@
-import TemplateManager  from '../../TemplateManager'
-import AbstractBehavior from './AbstractBehavior'
+import TemplateManager  from 'OpenOrchestra/Service/TemplateManager'
+import AbstractBehavior from 'OpenOrchestra/Service/Form/Behavior/AbstractBehavior'
 
 /**
  * @class NodeTemplateSelection

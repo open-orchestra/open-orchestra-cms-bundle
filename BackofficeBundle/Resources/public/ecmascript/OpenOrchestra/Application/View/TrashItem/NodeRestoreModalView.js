@@ -1,5 +1,5 @@
-import AbstractRestoreModalView from './AbstractRestoreModalView'
-import Application              from '../../Application'
+import AbstractRestoreModalView from 'OpenOrchestra/Application/View/TrashItem/AbstractRestoreModalView'
+import Application              from 'OpenOrchestra/Application/Application'
 
 /**
  * @class NodeRestoreModalView

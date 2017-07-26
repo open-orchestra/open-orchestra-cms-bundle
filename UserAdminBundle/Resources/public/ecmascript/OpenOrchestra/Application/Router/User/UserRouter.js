@@ -1,10 +1,10 @@
-import OrchestraRouter from '../OrchestraRouter'
-import Application     from '../../Application'
-import UserFormView    from '../../View/User/UserFormView'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import Users           from '../../Collection/User/Users'
-import UsersView       from '../../View/User/UsersView'
-import NewUserView     from '../../View/User/NewUserView'
+import OrchestraRouter from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application     from 'OpenOrchestra/Application/Application'
+import UserFormView    from 'OpenOrchestra/Application/View/User/UserFormView'
+import FormBuilder     from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import Users           from 'OpenOrchestra/Application/Collection/User/Users'
+import UsersView       from 'OpenOrchestra/Application/View/User/UsersView'
+import NewUserView     from 'OpenOrchestra/Application/View/User/NewUserView'
 
 /**
  * @class UserRouter

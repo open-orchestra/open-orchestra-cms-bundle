@@ -1,6 +1,6 @@
-import OrchestraRouter                 from '../OrchestraRouter'
-import Application                     from '../../Application'
-import BlockComponents                 from '../../Collection/Block/BlockComponents'
+import OrchestraRouter                 from 'OpenOrchestra/Application/Router/OrchestraRouter'
+import Application                     from 'OpenOrchestra/Application/Application'
+import BlockComponents                 from 'OpenOrchestra/Application/Collection/Block/BlockComponents'
 
 /**
  * @class AbstractBlockRouter

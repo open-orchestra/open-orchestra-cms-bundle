@@ -1,6 +1,6 @@
-import AbstractCollectionView  from '../../../Service/DataTable/View/AbstractCollectionView'
-import ContentVersionsListView from './ContentVersionsListView'
-import ApplicationError        from '../../../Service/Error/ApplicationError'
+import AbstractCollectionView  from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import ContentVersionsListView from 'OpenOrchestra/Application/View/Content/ContentVersionsListView'
+import ApplicationError        from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class ContentVersionsView

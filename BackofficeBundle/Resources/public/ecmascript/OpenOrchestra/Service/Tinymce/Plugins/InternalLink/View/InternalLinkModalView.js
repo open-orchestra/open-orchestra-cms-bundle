@@ -1,6 +1,6 @@
-import ModalView            from '../../../../Modal/View/ModalView'
-import FormBuilder          from '../../../../Form/Model/FormBuilder'
-import InternalLinkFormView from './InternalLinkFormView'
+import ModalView            from 'OpenOrchestra/Service/Modal/View/ModalView'
+import FormBuilder          from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import InternalLinkFormView from 'OpenOrchestra/Service/Tinymce/Plugins/InternalLink/View/InternalLinkFormView'
 
 /**
  * InternalLinkModalView

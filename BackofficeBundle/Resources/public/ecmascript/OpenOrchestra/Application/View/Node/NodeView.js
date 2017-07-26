@@ -1,11 +1,11 @@
-import OrchestraView          from '../OrchestraView'
-import Application            from '../../Application'
-import ServerError            from '../../../Service/Error/ServerError'
-import ApplicationError       from '../../../Service/Error/ApplicationError'
-import AreaView               from '../Area/AreaView'
-import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
-import Node                   from '../../Model/Node/Node'
-import RenderToolbarViewMixin from './Mixin/RenderToolbarViewMixin'
+import OrchestraView          from 'OpenOrchestra/Application/View/OrchestraView'
+import Application            from 'OpenOrchestra/Application/Application'
+import ServerError            from 'OpenOrchestra/Service/Error/ServerError'
+import ApplicationError       from 'OpenOrchestra/Service/Error/ApplicationError'
+import AreaView               from 'OpenOrchestra/Application/View/Area/AreaView'
+import FlashMessageBag        from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
+import Node                   from 'OpenOrchestra/Application/Model/Node/Node'
+import RenderToolbarViewMixin from 'OpenOrchestra/Application/View/Node/Mixin/RenderToolbarViewMixin'
 
 /**
  * @class NodeView

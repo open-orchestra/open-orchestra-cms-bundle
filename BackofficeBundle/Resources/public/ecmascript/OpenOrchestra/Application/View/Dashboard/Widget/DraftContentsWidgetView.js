@@ -1,4 +1,4 @@
-import AbstractWidgetView from '../AbstractWidgetView'
+import AbstractWidgetView from 'OpenOrchestra/Application/View/Dashboard/AbstractWidgetView'
 
 /**
  * @class DraftContentsWidgetView

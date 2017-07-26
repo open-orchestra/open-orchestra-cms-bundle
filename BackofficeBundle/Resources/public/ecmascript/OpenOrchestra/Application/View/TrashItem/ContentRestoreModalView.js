@@ -1,6 +1,6 @@
-import AbstractRestoreModalView from './AbstractRestoreModalView'
-import Content                  from '../../Model/Content/Content'
-import Application              from '../../Application'
+import AbstractRestoreModalView from 'OpenOrchestra/Application/View/TrashItem/AbstractRestoreModalView'
+import Content                  from 'OpenOrchestra/Application/Model/Content/Content'
+import Application              from 'OpenOrchestra/Application/Application'
 
 /**
  * @class ContentRestoreModalView

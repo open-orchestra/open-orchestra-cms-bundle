@@ -1,5 +1,5 @@
-import DataTableCollection from '../../../Service/DataTable/Collection/DataTableCollection'
-import Redirection         from '../../Model/Redirection/Redirection'
+import DataTableCollection from 'OpenOrchestra/Service/DataTable/Collection/DataTableCollection'
+import Redirection         from 'OpenOrchestra/Application/Model/Redirection/Redirection'
 
 /**
  * @class Redirections

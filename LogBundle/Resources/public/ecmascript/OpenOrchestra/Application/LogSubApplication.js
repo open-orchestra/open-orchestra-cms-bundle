@@ -1,4 +1,4 @@
-import LogRouter from './Router/Log/LogRouter'
+import LogRouter from 'OpenOrchestra/Application/Router/Log/LogRouter'
 
 /**
  * @class LogSubApplication

@@ -1,5 +1,5 @@
-import OrchestraModel from '../OrchestraModel'
-import SiteAlias      from './SiteAlias'
+import OrchestraModel from 'OpenOrchestra/Application/Model/OrchestraModel'
+import SiteAlias      from 'OpenOrchestra/Application/Model/Site/SiteAlias'
 
 /**
  * @class Site

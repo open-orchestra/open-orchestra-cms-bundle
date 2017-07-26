@@ -1,7 +1,7 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import StatusListView         from '../../View/Status/StatusListView'
-import Application            from '../../Application'
-import GraphicView            from '../../View/Transition/GraphicView'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import StatusListView         from 'OpenOrchestra/Application/View/Status/StatusListView'
+import Application            from 'OpenOrchestra/Application/Application'
+import GraphicView            from '.OpenOrchestra/Application/View/Transition/GraphicView'
 
 /**
  * @class StatusesView

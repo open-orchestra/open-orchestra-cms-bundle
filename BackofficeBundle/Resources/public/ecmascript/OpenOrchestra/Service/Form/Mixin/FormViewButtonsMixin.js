@@ -1,8 +1,8 @@
-import FlashMessageBag  from '../../../Service/FlashMessage/FlashMessageBag'
-import FlashMessage     from '../../../Service/FlashMessage/FlashMessage'
-import ApplicationError from '../../../Service/Error/ApplicationError'
-import ConfirmModalView from '../../ConfirmModal/View/ConfirmModalView'
-import Application      from '../../../Application/Application'
+import FlashMessageBag  from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
+import FlashMessage     from 'OpenOrchestra/Service/FlashMessage/FlashMessage'
+import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
+import ConfirmModalView from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
+import Application      from 'OpenOrchestra/Application/Application'
 
 let FormViewButtonsMixin = (superclass) => class extends superclass {
 

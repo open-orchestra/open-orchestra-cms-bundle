@@ -1,4 +1,4 @@
-import NodeListView from './NodeListView'
+import NodeListView from 'OpenOrchestra/Application/View/Node/NodeListView'
 
 /**
  * @class NodeUsageBlockListView

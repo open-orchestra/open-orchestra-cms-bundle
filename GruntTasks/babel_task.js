@@ -26,7 +26,26 @@ module.exports = function(grunt) {
             filesEs6[value.dest] = value.src[0];
         });
 
-        var babelConfig = {es6: {options: {presets: ['es2015']}, files: filesEs6}};
+        var babelConfig = {
+            es6: {
+                options: {
+                    presets: ['es2015'],
+                    plugins: [
+                        [
+                            "module-resolver",
+                            {
+                                root: [config.application.dest.javascript],
+                                alias: {
+                                    OpenOrchestra: 'js/OpenOrchestra',
+                                }
+                            }
+                        ]
+                    ]
+                },
+                files: filesEs6
+            },
+        };
+
         grunt.config('babel', babelConfig);
     });
 };

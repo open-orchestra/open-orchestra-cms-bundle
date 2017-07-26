@@ -1,7 +1,7 @@
-import AbstractBehavior   from './AbstractBehavior'
-import Application        from '../../../Application/Application'
-import SitesAvailable     from '../../../Application/Collection/Site/SitesAvailable'
-import GroupListModalView from '../../../Application/View/Group/GroupListModalView'
+import AbstractBehavior   from 'OpenOrchestra/Service/Form/Behavior/AbstractBehavior'
+import Application        from 'OpenOrchestra/Application/Application'
+import SitesAvailable     from 'OpenOrchestra/Application/Collection/Site/SitesAvailable'
+import GroupListModalView from 'OpenOrchestra/Application/View/Group/GroupListModalView'
 
 /**
  * @class GroupTable

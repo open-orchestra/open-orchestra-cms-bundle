@@ -1,5 +1,5 @@
-import AbstractBehavior from './AbstractBehavior'
-import TinymceManager   from '../../Tinymce/TinymceManager'
+import AbstractBehavior from 'OpenOrchestra/Service/Form/Behavior/AbstractBehavior'
+import TinymceManager   from 'OpenOrchestra/Service/Tinymce/TinymceManager'
 
 /**
  * @class Tinymce

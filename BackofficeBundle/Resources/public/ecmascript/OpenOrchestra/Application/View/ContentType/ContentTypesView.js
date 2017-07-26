@@ -1,6 +1,6 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import ContentTypesListView   from './ContentTypesListView'
-import Application            from '../../Application'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import ContentTypesListView   from 'OpenOrchestra/Application/View/ContentType/ContentTypesListView'
+import Application            from 'OpenOrchestra/Application/Application'
 
 /**
  * @class ContentTypesView

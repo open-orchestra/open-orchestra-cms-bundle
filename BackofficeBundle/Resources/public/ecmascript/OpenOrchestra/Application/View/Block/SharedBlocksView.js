@@ -1,6 +1,6 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import SharedBlockListView    from './SharedBlockListView'
-import FlashMessageBag        from '../../../Service/FlashMessage/FlashMessageBag'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import SharedBlockListView    from 'OpenOrchestra/Application/View/Block/SharedBlockListView'
+import FlashMessageBag        from 'OpenOrchestra/Service/FlashMessage/FlashMessageBag'
 
 /**
  * @class SharedBlocksView

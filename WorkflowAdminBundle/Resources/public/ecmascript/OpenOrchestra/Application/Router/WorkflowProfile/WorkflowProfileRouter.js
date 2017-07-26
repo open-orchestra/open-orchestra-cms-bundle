@@ -1,9 +1,9 @@
-import AbstractWorkflowRouter  from '../AbstractWorkflowRouter'
-import Application             from '../../Application'
-import WorkflowProfiles        from '../../Collection/WorkflowProfiles/WorkflowProfiles'
-import WorkflowProfilesView    from '../../View/WorkflowProfile/WorkflowProfilesView'
-import FormBuilder             from '../../../Service/Form/Model/FormBuilder'
-import WorkflowProfileFormView from '../../View/WorkflowProfile/WorkflowProfileFormView'
+import AbstractWorkflowRouter  from 'OpenOrchestra/Application/Router/AbstractWorkflowRouter'
+import Application             from 'OpenOrchestra/Application/Application'
+import WorkflowProfiles        from 'OpenOrchestra/Application/Collection/WorkflowProfiles/WorkflowProfiles'
+import WorkflowProfilesView    from 'OpenOrchestra/Application/View/WorkflowProfile/WorkflowProfilesView'
+import FormBuilder             from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import WorkflowProfileFormView from 'OpenOrchestra/Application/View/WorkflowProfile/WorkflowProfileFormView'
 
 /**
  * @class WorkflowProfileRouter

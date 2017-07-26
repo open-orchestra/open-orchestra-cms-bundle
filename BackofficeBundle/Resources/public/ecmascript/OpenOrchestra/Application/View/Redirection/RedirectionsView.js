@@ -1,5 +1,5 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import RedirectionsListView   from '../../View/Redirection/RedirectionsListView'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import RedirectionsListView   from 'OpenOrchestra/Application/View/Redirection/RedirectionsListView'
 
 /**
  * @class RedirectionsView

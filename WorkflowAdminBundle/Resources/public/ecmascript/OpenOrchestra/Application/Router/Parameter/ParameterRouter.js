@@ -1,7 +1,7 @@
-import AbstractWorkflowRouter from '../AbstractWorkflowRouter'
-import Application            from '../../Application'
-import FormBuilder            from '../../../Service/Form/Model/FormBuilder'
-import ParametersFormView     from '../../View/Parameter/ParametersFormView'
+import AbstractWorkflowRouter from 'OpenOrchestra/Application/Router/AbstractWorkflowRouter'
+import Application            from 'OpenOrchestra/Application/Application'
+import FormBuilder            from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import ParametersFormView     from 'OpenOrchestra/Application/View/Parameter/ParametersFormView'
 
 /**
  * @class ParameterRouter

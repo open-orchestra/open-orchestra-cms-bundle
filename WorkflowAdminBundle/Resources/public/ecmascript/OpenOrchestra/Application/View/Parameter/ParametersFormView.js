@@ -1,5 +1,5 @@
-import AbstractFormView from '../../../Service/Form/View/AbstractFormView'
-import GraphicView      from '../../View/Transition/GraphicView'
+import AbstractFormView from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import GraphicView      from '.OpenOrchestra/Application/View/Transition/GraphicView'
 
 /**
  * @class ParametersFormView

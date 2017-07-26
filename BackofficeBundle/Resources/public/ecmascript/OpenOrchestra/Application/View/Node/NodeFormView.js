@@ -1,7 +1,7 @@
-import AbstractFormView          from '../../../Service/Form/View/AbstractFormView'
-import Redirections              from '../../Collection/Redirection/Redirections'
-import RenderToolbarViewMixin    from './Mixin/RenderToolbarViewMixin'
-import TrashFormViewButtonsMixin from '../../../Service/Form/Mixin/TrashFormViewButtonsMixin'
+import AbstractFormView          from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import Redirections              from 'OpenOrchestra/Application/Collection/Redirection/Redirections'
+import RenderToolbarViewMixin    from 'OpenOrchestra/Application/View/Node/Mixin/RenderToolbarViewMixin'
+import TrashFormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/TrashFormViewButtonsMixin'
 
 /**
  * @class NodeFormView

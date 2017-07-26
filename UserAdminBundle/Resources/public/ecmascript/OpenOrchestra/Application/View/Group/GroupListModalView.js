@@ -1,7 +1,7 @@
-import ModalView            from '../../../Service/Modal/View/ModalView'
-import UserGroups           from '../../Collection/Group/UserGroups'
-import GroupListForUserView from './GroupListForUserView'
-import Application          from '../../Application'
+import ModalView            from 'OpenOrchestra/Service/Modal/View/ModalView'
+import UserGroups           from 'OpenOrchestra/Application/Collection/Group/UserGroups'
+import GroupListForUserView from 'OpenOrchestra/Application/View/Group/GroupListForUserView'
+import Application          from 'OpenOrchestra/Application/Application'
 
 /**
  * @class GroupListModalView

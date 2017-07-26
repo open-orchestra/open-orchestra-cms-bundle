@@ -1,4 +1,4 @@
-import AbstractDataTableView from '../../../Service/DataTable/View/AbstractDataTableView'
+import AbstractDataTableView from 'OpenOrchestra/Service/DataTable/View/AbstractDataTableView'
 
 /**
  * @class GroupListForUserView

@@ -1,7 +1,7 @@
-import AbstractFormView     from '../../../Service/Form/View/AbstractFormView'
-import Status               from '../../Model/Status/Status'
-import FormViewButtonsMixin from '../../../Service/Form/Mixin/FormViewButtonsMixin'
-import ApplicationError     from '../../../Service/Error/ApplicationError'
+import AbstractFormView     from 'OpenOrchestra/Service/Form/View/AbstractFormView'
+import Status               from 'OpenOrchestra/Application/Model/Status/Status'
+import FormViewButtonsMixin from 'OpenOrchestra/Service/Form/Mixin/FormViewButtonsMixin'
+import ApplicationError     from 'OpenOrchestra/Service/Error/ApplicationError'
 
 /**
  * @class StatusFormView

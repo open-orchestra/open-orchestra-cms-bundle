@@ -1,5 +1,5 @@
-import OrchestraCollection from '../OrchestraCollection'
-import NodeTree            from '../../Model/Node/NodeTree'
+import OrchestraCollection from 'OpenOrchestra/Application/Collection/OrchestraCollection'
+import NodeTree            from 'OpenOrchestra/Application/Model/Node/NodeTree'
 
 /**
  * @class NodesTree

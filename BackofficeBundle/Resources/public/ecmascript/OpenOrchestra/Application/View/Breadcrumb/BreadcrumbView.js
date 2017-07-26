@@ -1,4 +1,4 @@
-import OrchestraView from '../OrchestraView'
+import OrchestraView from 'OpenOrchestra/Application/View/OrchestraView'
 
 /**
  * @class BreadcrumbView

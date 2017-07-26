@@ -1,8 +1,8 @@
-import ModalView       from '../../../Service/Modal/View/ModalView'
-import Application     from '../../Application'
-import FormBuilder     from '../../../Service/Form/Model/FormBuilder'
-import LoaderView      from '../Loader/LoaderView'
-import NewUserFormView from './NewUserFormView'
+import ModalView       from 'OpenOrchestra/Service/Modal/View/ModalView'
+import Application     from 'OpenOrchestra/Application/Application'
+import FormBuilder     from 'OpenOrchestra/Service/Form/Model/FormBuilder'
+import LoaderView      from 'OpenOrchestra/Application/View/Loader/LoaderView'
+import NewUserFormView from 'OpenOrchestra/Application/View/User/NewUserFormView'
 
 /**
  * @class NewUserModalView

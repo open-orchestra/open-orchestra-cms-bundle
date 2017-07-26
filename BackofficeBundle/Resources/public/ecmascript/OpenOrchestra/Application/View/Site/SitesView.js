@@ -1,5 +1,5 @@
-import AbstractCollectionView from '../../../Service/DataTable/View/AbstractCollectionView'
-import SiteListView           from '../../View/Site/SiteListView'
+import AbstractCollectionView from 'OpenOrchestra/Service/DataTable/View/AbstractCollectionView'
+import SiteListView           from 'OpenOrchestra/Application/View/Site/SiteListView'
 
 /**
  * @class SitesView

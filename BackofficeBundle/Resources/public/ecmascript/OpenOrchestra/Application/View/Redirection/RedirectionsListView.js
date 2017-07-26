@@ -1,6 +1,6 @@
-import AbstractDataTableView       from '../../../Service/DataTable/View/AbstractDataTableView'
-import UrlPaginateViewMixin        from '../../../Service/DataTable/Mixin/UrlPaginateViewMixin'
-import DeleteCheckboxListViewMixin from '../../../Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
+import AbstractDataTableView       from 'OpenOrchestra/Service/DataTable/View/AbstractDataTableView'
+import UrlPaginateViewMixin        from 'OpenOrchestra/Service/DataTable/Mixin/UrlPaginateViewMixin'
+import DeleteCheckboxListViewMixin from 'OpenOrchestra/Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
 
 /**
  * @class RedirectionsListView

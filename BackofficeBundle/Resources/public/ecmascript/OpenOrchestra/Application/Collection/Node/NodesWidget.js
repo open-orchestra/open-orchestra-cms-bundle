@@ -1,5 +1,5 @@
-import OrchestraCollection from '../OrchestraCollection'
-import Node                from '../../Model/Node/Node'
+import OrchestraCollection from 'OpenOrchestra/Application/Collection/OrchestraCollection'
+import Node                from 'OpenOrchestra/Application/Model/Node/Node'
 
 /**
  * @class NodesWidgets
