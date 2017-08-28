@@ -8,7 +8,18 @@ module.exports = function(grunt) {
         var browserifyConfig = {
             dist: {
                 src: browserifyFile,
-                dest: config.browserify.dest + 'oo_application.js'
+                dest: config.browserify.dest + 'oo_application.js',
+                options: {
+                    transform: [
+                        ["aliasify", {
+                            "global": true,
+                            "debug": true,
+                            replacements: {
+                                "OpenOrchestra/(\\w+)": "./"+ config.browserify.dest + "openorchestra/js/OpenOrchestra/$1"
+                            }
+                        }]
+                    ]
+                }
             }
         };
 
