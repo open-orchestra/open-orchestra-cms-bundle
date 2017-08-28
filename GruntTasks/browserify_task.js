@@ -12,8 +12,7 @@ module.exports = function(grunt) {
                 options: {
                     transform: [
                         ["aliasify", {
-                            "global": true,
-                            "debug": true,
+                            global: true,
                             replacements: {
                                 "OpenOrchestra/(\\w+)": "./"+ config.browserify.dest + "openorchestra/js/OpenOrchestra/$1"
                             }
