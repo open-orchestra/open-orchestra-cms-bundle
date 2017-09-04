@@ -1587,13 +1587,34 @@ form {
                 display: block;
             }
         }
-    }
-    &:not(.node-disabled) {
-        .area {
-            &:not(.disabled):not(.active):hover {
-                background-color: @paleBlue;
-                cursor: pointer;
+        &.read {
+            border-color: #8e8e8e;
+            background-color: @paleBlue;
+
+            &::before {
+                color: #fff;
+                position: absolute;
+                left: -15px;
+                top: -15px;
+                background: #8e8e8e;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: block;
+                text-align: center;
+                line-height: 30px;
+                .FontAwesome;
+                content: "\f06e";
             }
+            .toolbar-read {
+                display: block;
+            }
+        }
+    }
+    .area {
+        &:not(.disabled):not(.active):hover {
+            background-color: @paleBlue;
+            cursor: pointer;
         }
     }
     .add-block {
@@ -1644,7 +1665,7 @@ form {
     }
 }
 
-.toolbar {
+.toolbar, .toolbar-read {
     display: none;
     float: right;
     .fontSize(18);

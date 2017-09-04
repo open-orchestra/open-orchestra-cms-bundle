@@ -119,11 +119,12 @@ class BlockController extends AbstractAdminController
      * @param string  $blockId
      *
      * @Config\Route("/block/form/{blockId}", name="open_orchestra_backoffice_block_form")
+     * @Config\Route("/block/read/{blockId}", name="open_orchestra_backoffice_block_read", defaults={"read": true})
      * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @return Response
      */
-    public function formAction(Request $request, $blockId)
+    public function formAction(Request $request, $blockId, $read = false)
     {
         $block = $this->get('open_orchestra_model.repository.block')->findById($blockId);
         if (!$block instanceof BlockInterface) {
@@ -135,7 +136,8 @@ class BlockController extends AbstractAdminController
             "action" => $this->generateUrl('open_orchestra_backoffice_block_form', array(
                 'blockId' => $blockId
             )),
-            "delete_button" => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $block)
+            "delete_button" => $this->get('open_orchestra_backoffice.business_rules_manager')->isGranted(BusinessActionInterface::DELETE, $block) && !$read,
+            "disabled" => $read
         ), $block);
 
         $form->handleRequest($request);
