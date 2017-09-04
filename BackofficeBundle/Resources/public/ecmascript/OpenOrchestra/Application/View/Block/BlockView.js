@@ -61,19 +61,7 @@ class BlockView extends OrchestraView
      * @private
      */
     _editBlock(event) {
-        event.stopPropagation();
-        if (true === this._block.get('transverse')) {
-            throw new ApplicationError('Block transverse is not editable in this context');
-        }
-        let url = Backbone.history.generateUrl('editBlock', {
-            blockId: this._block.get('id'),
-            nodeId: this._node.get('node_id'),
-            nodeLanguage: this._node.get('language'),
-            nodeVersion: this._node.get('version')
-        });
-        Backbone.history.navigate(url, true);
-
-        return false;
+        return this._actionBlock('editBlock', event);
     }
 
     /**
@@ -85,11 +73,24 @@ class BlockView extends OrchestraView
      * @private
      */
     _readBlock(event) {
+        return this._actionBlock('readBlock', event);
+    }
+
+    /**
+     * action required for block
+     *
+     * @param {String} route
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _actionBlock(route, event){
         event.stopPropagation();
         if (true === this._block.get('transverse')) {
             throw new ApplicationError('Block transverse is not editable in this context');
         }
-        let url = Backbone.history.generateUrl('readBlock', {
+        let url = Backbone.history.generateUrl(route, {
             blockId: this._block.get('id'),
             nodeId: this._node.get('node_id'),
             nodeLanguage: this._node.get('language'),

@@ -1563,7 +1563,7 @@ form {
                 content: "\f18e";
             }
         }
-        &.active {
+        &.active, &.read {
             border-color: #8e8e8e;
             background-color: @paleBlue;
 
@@ -1580,30 +1580,18 @@ form {
                 text-align: center;
                 line-height: 30px;
                 .FontAwesome;
+            }
+        }
+        &.active {
+            &::before {
                 content: "\f040";
             }
-
             .toolbar, .add-block {
                 display: block;
             }
         }
         &.read {
-            border-color: #8e8e8e;
-            background-color: @paleBlue;
-
             &::before {
-                color: #fff;
-                position: absolute;
-                left: -15px;
-                top: -15px;
-                background: #8e8e8e;
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                display: block;
-                text-align: center;
-                line-height: 30px;
-                .FontAwesome;
                 content: "\f06e";
             }
             .toolbar-read {

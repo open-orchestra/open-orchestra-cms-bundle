@@ -145,20 +145,10 @@ class BlockRouter extends AbstractBlockRouter
      * @param {string} nodeVersion
      */
     editBlock(blockId, nodeId, nodeLanguage, nodeVersion) {
-        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_block_form', {
             blockId : blockId
         });
-        FormBuilder.createFormFromUrl(url, (form) => {
-            let blockFormView = new BlockFormView({
-                form : form,
-                blockId: blockId,
-                nodeId: nodeId,
-                nodeLanguage: nodeLanguage,
-                nodeVersion: nodeVersion
-            });
-            Application.getRegion('content').html(blockFormView.render().$el);
-        });
+        this._createForm(url, blockId, nodeId, nodeLanguage, nodeVersion);
     }
 
     /**
@@ -170,10 +160,23 @@ class BlockRouter extends AbstractBlockRouter
      * @param {string} nodeVersion
      */
     readBlock(blockId, nodeId, nodeLanguage, nodeVersion) {
-        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_block_read', {
             blockId : blockId
         });
+        this._createForm(url, blockId, nodeId, nodeLanguage, nodeVersion);
+    }
+
+    /**
+     * create block form
+     *
+     * @param {string} url
+     * @param {string} blockId
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
+     */
+    _createForm(url, blockId, nodeId, nodeLanguage, nodeVersion) {
+        this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let blockFormView = new BlockFormView({
                 form : form,
