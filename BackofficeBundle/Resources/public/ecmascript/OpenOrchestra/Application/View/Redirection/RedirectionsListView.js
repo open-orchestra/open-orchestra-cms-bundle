@@ -1,6 +1,8 @@
 import AbstractDataTableView       from 'OpenOrchestra/Service/DataTable/View/AbstractDataTableView'
 import UrlPaginateViewMixin        from 'OpenOrchestra/Service/DataTable/Mixin/UrlPaginateViewMixin'
 import DeleteCheckboxListViewMixin from 'OpenOrchestra/Service/DataTable/Mixin/DeleteCheckboxListViewMixin'
+import CellFormatterManager        from 'OpenOrchestra/Service/DataFormatter/Manager'
+import SiteFormatter               from 'OpenOrchestra/Service/DataFormatter/SiteFormatter'
 
 /**
  * @class RedirectionsListView
@@ -21,10 +23,11 @@ class RedirectionsListView extends mix(AbstractDataTableView).with(UrlPaginateVi
         return [
             this._getColumnsDefinitionDeleteCheckbox(),
             {
-                name: "site_name",
+                name: "site_id",
                 title: Translator.trans('open_orchestra_backoffice.table.redirections.site_name'),
                 orderable: true,
-                visibile: true
+                visibile: true,
+                createdCell: CellFormatterManager.format({type: 'site'})
             },
             {
                 name: "id",

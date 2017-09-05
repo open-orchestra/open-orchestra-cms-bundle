@@ -37,9 +37,10 @@ class PatchAndSendSubmit extends AbstractBehavior
 
         $subforms.each(function(index, subform){
             let $subform = $(subform);
+            let $container = $subform.parent();
             if ($subform.attr('id') !== undefined) {
-                formView._displayLoader($subform);
-                containers[$subform.attr('id')] = $subform.parent();
+                formView._displayLoader($container);
+                containers[$subform.attr('id')] = $container;
             }
         });
 

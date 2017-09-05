@@ -19,6 +19,7 @@ class Manager
         if (!(dataFormatter instanceof AbstractDataFormatter)) {
             throw TypeError("Manager accept only instance of AbstractDataFormatter");
         }
+        dataFormatter.initialize();
         this._dataFormatters.push(dataFormatter);
     }
 

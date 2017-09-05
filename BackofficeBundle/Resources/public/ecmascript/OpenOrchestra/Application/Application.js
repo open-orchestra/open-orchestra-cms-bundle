@@ -49,6 +49,7 @@ import TextFormatter           from 'OpenOrchestra/Service/DataFormatter/TextFor
 import BooleanFormatter        from 'OpenOrchestra/Service/DataFormatter/BooleanFormatter'
 import DateFormatter           from 'OpenOrchestra/Service/DataFormatter/DateFormatter'
 import StatusFormatter         from 'OpenOrchestra/Service/DataFormatter/StatusFormatter'
+import SiteFormatter           from 'OpenOrchestra/Service/DataFormatter/SiteFormatter'
 
 import ApplicationError        from 'OpenOrchestra/Service/Error/ApplicationError'
 import TinymceManager          from 'OpenOrchestra/Service/Tinymce/TinymceManager'
@@ -278,6 +279,7 @@ class Application
         CellFormatterManager.add(BooleanFormatter);
         CellFormatterManager.add(DateFormatter);
         CellFormatterManager.add(StatusFormatter);
+        CellFormatterManager.add(SiteFormatter);
     }
 }
 

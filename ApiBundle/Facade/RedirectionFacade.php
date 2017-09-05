@@ -13,7 +13,22 @@ class RedirectionFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $siteName;
+    public $siteId;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $aliasId;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $nodeId;
+
+    /**
+     * @Serializer\Type("array<string,string>")
+     */
+    public $wildcard = array();
 
     /**
      * @Serializer\Type("string")
@@ -23,12 +38,7 @@ class RedirectionFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $locale;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $redirection;
+    public $url;
 
     /**
      * @Serializer\Type("boolean")

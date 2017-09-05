@@ -44,37 +44,19 @@ class RedirectionType extends AbstractType
             'group_id'     => 'redirection',
             'sub_group_id' => 'properties',
         ));
-        $builder->add('type', 'choice', array(
-            'label'        => 'open_orchestra_backoffice.form.redirection.type.label',
-            'group_id'     => 'redirection',
-            'sub_group_id' => 'redirection',
-            'choices'      => array(
-                self::TYPE_INTERNAL => 'open_orchestra_backoffice.form.redirection.type.internal',
-                self::TYPE_EXTERNAL => 'open_orchestra_backoffice.form.redirection.type.external'
-            ),
-            'expanded'     => true,
-            'multiple'     => false,
-            'mapped'       => false,
-        ));
         $builder->add('routePattern', 'text', array(
             'label'        => 'open_orchestra_backoffice.form.redirection.route_pattern',
             'group_id'     => 'redirection',
             'sub_group_id' => 'redirection',
         ));
-        $builder->add('nodeId', 'oo_node_choice', array(
-            'label'        => 'open_orchestra_backoffice.form.redirection.node_id',
-            'required'     => false,
-            'group_id'     => 'redirection',
-            'sub_group_id' => 'redirection',
-        ));
-        $builder->add('url', 'text', array(
-            'label'        => 'open_orchestra_backoffice.form.redirection.url',
-            'required'     => false,
-            'group_id'     => 'redirection',
-            'sub_group_id' => 'redirection',
-        ));
         $builder->add('permanent', 'checkbox', array(
             'label'        => 'open_orchestra_backoffice.form.redirection.permanent',
+            'required'     => false,
+            'group_id'     => 'redirection',
+            'sub_group_id' => 'redirection',
+        ));
+        $builder->add('tmp', 'oo_internal_external_link', array(
+            'label'        => false,
             'required'     => false,
             'group_id'     => 'redirection',
             'sub_group_id' => 'redirection',
@@ -123,14 +105,6 @@ class RedirectionType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['new_button'] = $options['new_button'];
-        if (is_null($form->get('type')->getData())) {
-            $type = self::TYPE_INTERNAL;
-            if ('' !== trim($form->get('url')->getData())) {
-                $type = self::TYPE_EXTERNAL;
-            }
-
-            $form->get('type')->setData($type);
-        }
     }
 
     /**

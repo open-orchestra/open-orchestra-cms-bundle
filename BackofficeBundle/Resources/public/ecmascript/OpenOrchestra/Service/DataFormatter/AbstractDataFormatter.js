@@ -4,6 +4,12 @@
 class AbstractDataFormatter
 {
     /**
+     * Initialize
+     */
+    initialize() {
+    }
+
+    /**
      * return supported type
      *
      * @return string

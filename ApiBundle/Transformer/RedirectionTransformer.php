@@ -48,13 +48,12 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade = $this->newFacade();
 
         $facade->id = $redirection->getId();
-        $facade->siteName = $redirection->getSiteName();
+        $facade->siteId = $redirection->getSiteId();
+        $facade->aliasId = $redirection->getAliasId();
+        $facade->nodeId = $redirection->getNodeId();
+        $facade->wildcard = $redirection->getWildcard();
         $facade->routePattern = $redirection->getRoutePattern();
-        $facade->locale = $redirection->getLocale();
-        $facade->redirection = $redirection->getUrl();
-        if ($redirection->getNodeId()) {
-            $facade->redirection = $redirection->getNodeId();
-        }
+        $facade->url = $redirection->getUrl();
         $facade->permanent = $redirection->isPermanent();
         $facade->addRight('can_edit', $this->authorizationChecker->isGranted(ContributionActionInterface::EDIT, $redirection));
         $facade->addRight('can_delete', $this->authorizationChecker->isGranted(ContributionActionInterface::DELETE, $redirection));

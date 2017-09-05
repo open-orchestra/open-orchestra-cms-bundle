@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class InternalLinkType
@@ -17,21 +18,34 @@ class InternalLinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $data = $builder->getData();
-        if (!array_key_exists('site', $data)) {
+        if (!is_array($data) || !array_key_exists('site', $data)) {
             $data['site'] = array();
         }
 
-        $builder->add('label', 'text', array(
-            'label' => 'open_orchestra_backoffice.form.internal_link.label',
-        ));
+        if ($options['with_label']) {
+            $builder->add('label', 'text', array(
+                'label' => 'open_orchestra_backoffice.form.internal_link.label',
+            ));
+        }
         $builder->add('site', 'oo_site_site_alias', array(
             'label' => false,
             'required' => true,
             'data' => $data['site'],
-        ));
-        $builder->add('query', 'text', array(
+        ))
+        ->add('query', 'text', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.query',
             'required' => false,
+        ));
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'with_label' => true,
+            'inherit_data' => true,
         ));
     }
 
