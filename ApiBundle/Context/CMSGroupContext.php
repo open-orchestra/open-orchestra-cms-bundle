@@ -20,4 +20,5 @@ class CMSGroupContext
     const AUTHORIZATIONS_DELETE_VERSION = 'authorizations_delete_node_version';
     const AUTHORIZATIONS_CHANGE_STATUS = 'authorizations_change_node_status';
     const SITE_MAIN_ALIAS = 'site_main_alias';
+    const SITE_ALIASES = 'site_aliases';
 }

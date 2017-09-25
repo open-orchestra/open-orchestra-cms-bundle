@@ -38,7 +38,7 @@ class SiteTransformer extends AbstractTransformer
         }
 
         if ($this->hasGroup(CMSGroupContext::SITE_ALIASES)) {
-            $facade->mainAlias = $this->getContext()->transform('site_alias', $site->getMainAlias());
+            $facade->aliases = $this->getContext()->transform('site_alias_collection', $site->getAliases());
         }
 
         foreach ($site->getLanguages() as $language) {
