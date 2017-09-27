@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventSubscriber\RedirectionTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,7 +46,7 @@ class RedirectionType extends AbstractType
         $builder->add('routePattern', 'text', array(
             'label'        => 'open_orchestra_backoffice.form.redirection.route_pattern',
             'group_id'     => 'redirection',
-            'sub_group_id' => 'redirection',
+            'sub_group_id' => 'properties',
         ));
         $builder->add('permanent', 'checkbox', array(
             'label'        => 'open_orchestra_backoffice.form.redirection.permanent',
@@ -57,12 +56,11 @@ class RedirectionType extends AbstractType
         ));
         $builder->add('tmp', 'oo_internal_external_link', array(
             'label'        => false,
-            'required'     => false,
+            'required'     => true,
             'group_id'     => 'redirection',
-            'sub_group_id' => 'redirection',
+            'sub_group_id' => 'redirection'
         ));
 
-        $builder->addEventSubscriber(new RedirectionTypeSubscriber());
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }

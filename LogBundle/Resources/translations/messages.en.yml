@@ -35,9 +35,9 @@ open_orchestra_log:
         delete: Delete a group with group name group_name
         update: Update a group with group name group_name
     redirection:
-        create: Create a new redirection for redirection_pattern of the redirection_site_name site
-        delete: Delete a redirection for redirection_pattern of the redirection_site_name site
-        update: Update a redirection for redirection_pattern of the redirection_site_name site
+        create: Create a new redirection for redirection_pattern of the redirection_site_id site
+        delete: Delete a redirection for redirection_pattern of the redirection_site_id site
+        update: Update a redirection for redirection_pattern of the redirection_site_id site
     site:
         create: Create a new site with site id site_id and name site_name
         delete: delete a site with site id site_id and name site_name

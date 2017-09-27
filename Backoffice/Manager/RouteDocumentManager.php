@@ -112,7 +112,6 @@ class RouteDocumentManager
     public function createOrUpdateForRedirection(RedirectionInterface $redirection)
     {
         $site = $this->siteRepository->findOneBySiteId($redirection->getSiteId());
-
         return $this->generateRoutesForRedirection($redirection, $site);
     }
 
@@ -162,26 +161,6 @@ class RouteDocumentManager
         );
 
         $this->routeDocumentRepository->removeByNodeIdsSiteIdAndLanguage($nodeIds, $node->getSiteId(), $node->getLanguage());
-    }
-
-    /**
-     * @param RedirectionInterface $redirection
-     *
-     * @return NodeInterface|null
-     */
-    protected function getNodeForRedirection(RedirectionInterface $redirection)
-    {
-        if (is_null($redirection->getNodeId())) {
-            return null;
-        }
-
-        $node = $this->nodeRepository->findOnePublished(
-            $redirection->getNodeId(),
-            $redirection->getLocale(),
-            $redirection->getSiteId()
-        );
-
-        return $node;
     }
 
     /**
@@ -264,15 +243,18 @@ class RouteDocumentManager
      */
     protected function generateRoutesForRedirection(RedirectionInterface $redirection, ReadSiteInterface $site)
     {
-        $routes = array();
-
-        $node = $this->getNodeForRedirection($redirection);
-        $controller = 'FrameworkBundle:Redirect:urlRedirect';
-        $paramKey = 'path';
-        if ($node instanceof NodeInterface) {
-            $controller = 'FrameworkBundle:Redirect:redirect';
-            $paramKey = 'route';
+        $node = null;
+        if (!is_null($redirection->getInternalUrl())) {
+            $targetSite = $this->siteRepository->findOneBySiteId($redirection->getInternalUrl()->getSiteId());
+            $aliases = $targetSite->getAliases();
+            $node = $this->nodeRepository->findOnePublished(
+                $redirection->getInternalUrl()->getNodeId(),
+                $aliases[$redirection->getInternalUrl()->getAliasId()]->getLanguage(),
+                $targetSite->getSiteId()
+            );
         }
+        $routes = array();
+        list($controller, $paramKey) = ($node instanceof NodeInterface) ? array('FrameworkBundle:Redirect:redirect', 'route') : array('FrameworkBundle:Redirect:urlRedirect', 'path');
 
         /** @var SiteAliasInterface $alias */
         foreach ($site->getAliases() as $key => $alias) {

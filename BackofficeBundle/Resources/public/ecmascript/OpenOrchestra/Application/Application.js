@@ -38,6 +38,7 @@ import Tinymce                 from 'OpenOrchestra/Service/Form/Behavior/Tinymce
 import TagCondition            from 'OpenOrchestra/Service/Form/Behavior/TagCondition'
 import ContentType             from 'OpenOrchestra/Service/Form/Behavior/ContentType'
 import InputFile               from 'OpenOrchestra/Service/Form/Behavior/InputFile'
+import ShowHide                from 'OpenOrchestra/Service/Form/Behavior/ShowHide'
 
 import SearchFormGroupManager  from 'OpenOrchestra/Service/SearchFormGroup/Manager'
 import DateSearchFormGroup     from 'OpenOrchestra/Service/SearchFormGroup/DateForm'
@@ -255,6 +256,7 @@ class Application
         FormBehaviorManager.add(TagCondition);
         FormBehaviorManager.add(ContentType);
         FormBehaviorManager.add(InputFile);
+        FormBehaviorManager.add(ShowHide);
 
         TinymceManager.setSetting('language', this.getContext().get('language'));
         FormBehaviorManager.add(Tinymce);

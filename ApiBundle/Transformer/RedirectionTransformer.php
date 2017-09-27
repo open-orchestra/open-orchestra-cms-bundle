@@ -49,9 +49,9 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade->id = $redirection->getId();
         $facade->siteId = $redirection->getSiteId();
-        $facade->aliasId = $redirection->getAliasId();
+/*        $facade->aliasId = $redirection->getAliasId();
         $facade->nodeId = $redirection->getNodeId();
-        $facade->wildcard = $redirection->getWildcard();
+        $facade->wildcard = $redirection->getWildcard();*/
         $facade->routePattern = $redirection->getRoutePattern();
         $facade->url = $redirection->getUrl();
         $facade->permanent = $redirection->isPermanent();

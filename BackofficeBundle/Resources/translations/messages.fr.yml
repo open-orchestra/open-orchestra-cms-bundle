@@ -62,6 +62,12 @@ open_orchestra_backoffice:
             sub_group:
                 property: Propriétés
                 parameter: Paramètres
+        internal_external:
+            type:
+                label: Type de lien
+                internal: Interne
+                external: Externe
+            url: Url
         website:
             success: Le site a été modifié
             creation: Le site a été créé

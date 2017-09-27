@@ -13,8 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class InternalExternalLinkType extends AbstractType
 {
-    const TYPE_INTERNAL = 'internal';
-    const TYPE_EXTERNAL = 'external';
+    const TYPE_INTERNAL = 'show-hide-internal';
+    const TYPE_EXTERNAL = 'show-hide-external';
 
     /**
      * @param FormBuilderInterface $builder
@@ -29,10 +29,6 @@ class InternalExternalLinkType extends AbstractType
                 self::TYPE_INTERNAL => 'open_orchestra_backoffice.form.internal_external.type.internal',
                 self::TYPE_EXTERNAL => 'open_orchestra_backoffice.form.internal_external.type.external'
             ),
-            'choice_attr' => array(
-                self::TYPE_INTERNAL => array('class' => self::TYPE_INTERNAL),
-                self::TYPE_EXTERNAL => array('class' => self::TYPE_EXTERNAL),
-            ),
             'expanded'     => true,
             'multiple'     => false,
             'mapped'       => false,
@@ -40,18 +36,14 @@ class InternalExternalLinkType extends AbstractType
                 'class' => 'show-hide'
             )
         ))
-        ->add('tmp', 'oo_internal_link', array(
-            'label' => 'open_orchestra_backoffice.form.internal_external.node_link',
+        ->add('internalUrl', 'oo_internal_url', array(
+            'label' => 'open_orchestra_backoffice.form.internal_external.url',
             'required' => false,
-            'with_label' => false,
-            'attr' => array(
-                'class' => self::TYPE_INTERNAL
-            ),
-            'mapped' => false,
+            'attr_class' => self::TYPE_INTERNAL,
         ))
         ->add('url', 'text', array(
-            'label'        => 'open_orchestra_backoffice.form.internal_external.url',
-            'required'     => false,
+            'label' => 'open_orchestra_backoffice.form.internal_external.url',
+            'required' => false,
             'attr' => array(
                 'class' => self::TYPE_EXTERNAL
             )
@@ -65,7 +57,6 @@ class InternalExternalLinkType extends AbstractType
         ));
     }
 
-
     /**
      * @param FormView      $view
      * @param FormInterface $form
@@ -78,7 +69,6 @@ class InternalExternalLinkType extends AbstractType
             if ('' !== trim($form->get('url')->getData())) {
                 $type = self::TYPE_EXTERNAL;
             }
-
             $form->get('type')->setData($type);
         }
     }

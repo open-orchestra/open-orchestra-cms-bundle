@@ -500,7 +500,7 @@
 
 {% block radio_widget %}
     {{ parent() }}
-    <label for="{{ id }}">{{ form.vars.label }}</label>
+    <label for="{{ id }}">{{ form.vars.label|trans }}</label>
 {% endblock radio_widget %}
 
 {# Fix choice attr see https://github.com/braincrafted/bootstrap-bundle/pull/379 #}

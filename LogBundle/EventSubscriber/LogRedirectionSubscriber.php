@@ -55,7 +55,7 @@ class LogRedirectionSubscriber extends AbstractLogSubscriber
     {
         $this->logger->info($message, array(
             'redirection_pattern' => $redirection->getRoutePattern(),
-            'redirection_site_name' => $redirection->getSiteName()
+            'redirection_site_id' => $redirection->getSiteId()
         ));
     }
 }

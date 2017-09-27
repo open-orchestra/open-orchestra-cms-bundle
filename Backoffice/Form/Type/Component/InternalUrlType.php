@@ -7,17 +7,19 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\Backoffice\EventSubscriber\SiteSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\InternalUrlSubscriber;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SiteSiteAliasType
+ * Class InternalUrlType
  */
-class SiteSiteAliasType extends AbstractType
+class InternalUrlType extends AbstractType
 {
     protected $siteRepository;
     protected $nodeRepository;
     protected $currentSiteManager;
+    protected $internalUrlClass;
 
     /**
      * @param SiteRepositoryInterface    $siteRepository
@@ -27,11 +29,13 @@ class SiteSiteAliasType extends AbstractType
     public function __construct(
         SiteRepositoryInterface $siteRepository,
         NodeRepositoryInterface $nodeRepository,
-        ContextBackOfficeInterface $currentSiteManager
+        ContextBackOfficeInterface $currentSiteManager,
+        $internalUrlClass
     ) {
         $this->siteRepository = $siteRepository;
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
+        $this->internalUrlClass = $internalUrlClass;
     }
 
     /**
@@ -40,14 +44,12 @@ class SiteSiteAliasType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        if (!array_key_exists('siteId', $data)) {
-            $data['siteId'] = $this->currentSiteManager->getSiteId();
-        }
-
-        $builder->add('siteId', 'oo_site_choice', array(
+        $builder->add('query', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.internal_link.query',
+            'required' => false,
+        ))
+        ->add('siteId', 'oo_site_choice', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.site',
-            'data' => $data['siteId'],
             'attr' => array(
                 'class' => 'patch-submit-change',
                 'data-key' => 'site'
@@ -55,11 +57,11 @@ class SiteSiteAliasType extends AbstractType
             'required' => true,
         ));
         $builder->addEventSubscriber(
-            new SiteSubscriber(
+            new InternalUrlSubscriber(
                 $this->siteRepository,
                 $this->nodeRepository,
                 $options['attr']
-            ));
+        ));
     }
 
     /**
@@ -67,12 +69,14 @@ class SiteSiteAliasType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'attr' => array('class' => 'form-to-patch-and-send'),
-                'inherit_data' => true,
-            )
-        );
+        $resolver->setDefaults(array(
+            'data_class' => $this->internalUrlClass,
+            'attr' => function(Options $options) {
+                return array('class' => 'form-to-patch-and-send ' . $options['attr_class']);
+            },
+            'attr_class' => '',
+        ));
+
     }
 
     /**
@@ -82,6 +86,6 @@ class SiteSiteAliasType extends AbstractType
      */
     public function getName()
     {
-        return 'oo_site_site_alias';
+        return 'oo_internal_url';
     }
 }

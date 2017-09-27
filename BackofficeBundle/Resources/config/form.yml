@@ -29,7 +29,7 @@ parameters:
     open_orchestra_backoffice.type.content_search.class           : OpenOrchestra\Backoffice\Form\Type\Component\ContentSearchType
     open_orchestra_backoffice.type.internal_link.class            : OpenOrchestra\Backoffice\Form\Type\Component\InternalLinkType
     open_orchestra_backoffice.type.internal_external_link.class   : OpenOrchestra\Backoffice\Form\Type\Component\InternalExternalLinkType
-    open_orchestra_backoffice.type.site_site_alias.class          : OpenOrchestra\Backoffice\Form\Type\Component\SiteSiteAliasType
+    open_orchestra_backoffice.type.internal_url.class             : OpenOrchestra\Backoffice\Form\Type\Component\InternalUrlType
     open_orchestra_backoffice.type.default_listable_checkbox.class: OpenOrchestra\Backoffice\Form\Type\Component\DefaultListableCheckboxType
     open_orchestra_backoffice.type.multi_languages.class          : OpenOrchestra\Backoffice\Form\Type\Component\MultiLanguagesType
     open_orchestra_backoffice.type.language_by_sites.class        : OpenOrchestra\Backoffice\Form\Type\Component\LanguageBySitesType
@@ -286,14 +286,15 @@ services:
         tags:
             - { name: form.type, alias: oo_internal_external_link}
 
-    open_orchestra_backoffice.type.site_site_alias:
-        class: '%open_orchestra_backoffice.type.site_site_alias.class%'
+    open_orchestra_backoffice.type.internal_url:
+        class: '%open_orchestra_backoffice.type.internal_url.class%'
         arguments:
             - '@open_orchestra_model.repository.site'
             - '@open_orchestra_model.repository.node'
             - '@open_orchestra_backoffice.context_backoffice_manager'
+            - '%open_orchestra_model.document.internal_url.class%'
         tags:
-            - { name: form.type, alias: oo_site_site_alias}
+            - { name: form.type, alias: oo_internal_url}
 
     open_orchestra_backoffice.type.default_listable_checkbox:
         class: '%open_orchestra_backoffice.type.default_listable_checkbox.class%'

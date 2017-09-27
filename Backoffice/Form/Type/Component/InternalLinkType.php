@@ -18,23 +18,18 @@ class InternalLinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $data = $builder->getData();
-        if (!is_array($data) || !array_key_exists('site', $data)) {
-            $data['site'] = array();
+        if (!is_array($data) || !array_key_exists('siteId', $data)) {
+            $data['siteId'] = $this->currentSiteManager->getSiteId();
         }
 
-        if ($options['with_label']) {
-            $builder->add('label', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.internal_link.label',
-            ));
-        }
-        $builder->add('site', 'oo_site_site_alias', array(
-            'label' => false,
-            'required' => true,
-            'data' => $data['site'],
+        $builder
+        ->add('label', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.internal_link.label',
         ))
-        ->add('query', 'text', array(
-            'label' => 'open_orchestra_backoffice.form.internal_link.query',
-            'required' => false,
+        ->add('internalUrl', 'oo_internal_url', array(
+            'label' => 'open_orchestra_backoffice.form.internal_link.url',
+            'required' => true,
+            'data' => $data['siteId'],
         ));
     }
 
@@ -44,7 +39,6 @@ class InternalLinkType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'with_label' => true,
             'inherit_data' => true,
         ));
     }
