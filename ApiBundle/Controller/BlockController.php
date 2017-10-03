@@ -125,4 +125,27 @@ class BlockController extends BaseController
 
         return $this->get('open_orchestra_api.transformer_manager')->transform('block_collection', $collection);
     }
+
+    /**
+     * @param string  $blockId
+     *
+     * @Config\Route("/share/block/{blockId}", name="open_orchestra_api_block_share")
+     * @Config\Method({"PUT"})
+     *
+     * @return FacadeInterface
+     */
+    public function shareBlockAction($blockId)
+    {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
+
+        $repository = $this->get('open_orchestra_model.repository.block');
+        $block = $repository->find($blockId);
+        $block->setTransverse(true);
+
+        $objectManager = $this->get('object_manager');
+        $objectManager->persist($block);
+        $objectManager->flush();
+
+        return $this->get('open_orchestra_api.transformer_manager')->transform('block', $block);
+    }
 }

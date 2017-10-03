@@ -2,6 +2,7 @@ import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
 import Application      from 'OpenOrchestra/Application/Application'
 import ConfirmModalView from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
 import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
+import Block            from 'OpenOrchestra/Application/Model/Block/Block'
 
 /**
  * @class BlockView
@@ -16,7 +17,8 @@ class BlockView extends OrchestraView
         this.events = {
             'click .delete-block': '_confirmDeleteBlock',
             'click .edit-block': '_editBlock',
-            'click .read-block': '_readBlock'
+            'click .read-block': '_readBlock',
+            'click .share-block': '_shareBlock'
         }
     }
 
@@ -30,6 +32,7 @@ class BlockView extends OrchestraView
         this._node = node;
         this._block = block;
         this._area = area;
+        _.bindAll(this, "_shareBlockSuccess");
     }
 
     /**
@@ -99,6 +102,41 @@ class BlockView extends OrchestraView
         Backbone.history.navigate(url, true);
 
         return false;
+    }
+
+    /**
+     * show form edit block
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _shareBlock(event) {
+        event.stopPropagation();
+        this._displayLoader(this.$el);
+        let context = this;
+        let response = this._block.save({id: this._block.get('id')}, {
+            urlParameter: {
+                'blockId': this._block.get('id')
+            },
+            success: this._shareBlockSuccess
+        });
+
+        return false;
+    }
+
+    /**
+     * success share block
+     *
+     * @param {Block} model
+     * @param {Array} response
+     *
+     * @private
+     */
+    _shareBlockSuccess(model, response) {
+        this._block = model;
+        this.render();
     }
 
     /**
