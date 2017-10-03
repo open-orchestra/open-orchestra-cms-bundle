@@ -2,7 +2,6 @@ import OrchestraView    from 'OpenOrchestra/Application/View/OrchestraView'
 import Application      from 'OpenOrchestra/Application/Application'
 import ConfirmModalView from 'OpenOrchestra/Service/ConfirmModal/View/ConfirmModalView'
 import ApplicationError from 'OpenOrchestra/Service/Error/ApplicationError'
-import Block            from 'OpenOrchestra/Application/Model/Block/Block'
 
 /**
  * @class BlockView
