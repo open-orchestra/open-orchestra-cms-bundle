@@ -58,6 +58,9 @@ class NodeView extends mix(OrchestraView).with(RenderToolbarViewMixin)
         let templateNodeUrl =  this._getTemplatePath();
         $.get(templateNodeUrl)
             .done((data) => {
+                data = data.replace(/\{\{(.*)\}\}/g, function(match, item){
+                    return Translator.trans(item.trim());
+                });
                 let $template = $(data);
                 this._renderAreas($template);
                 if (false === this._node.get('status').get('published_state')) {

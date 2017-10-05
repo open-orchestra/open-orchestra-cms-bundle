@@ -1,5 +1,12 @@
 open_orchestra_backoffice:
     date_format: yy/mm/dd
+    template_set:
+        header: Header
+        main: Main
+        footer: Footer
+        transverse_navigation: Transverse Navigation
+        right_column: Right Column
+        left_column: Left Column
     header:
         site: Site
         sign_out: Sign out
