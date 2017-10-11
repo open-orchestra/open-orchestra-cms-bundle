@@ -133,6 +133,8 @@ class BlockController extends BaseController
      * @Config\Method({"PUT"})
      *
      * @return FacadeInterface
+     *
+     * @throws UnexpectedValueException
      */
     public function shareBlockAction($blockId)
     {
@@ -140,6 +142,11 @@ class BlockController extends BaseController
 
         $repository = $this->get('open_orchestra_model.repository.block');
         $block = $repository->find($blockId);
+
+        if (!$block instanceof BlockInterface) {
+            throw new \UnexpectedValueException();
+        }
+
         $block->setTransverse(true);
 
         $objectManager = $this->get('object_manager');
