@@ -1563,7 +1563,7 @@ form {
                 content: "\f18e";
             }
         }
-        &.active {
+        &.active, &.read {
             border-color: #8e8e8e;
             background-color: @paleBlue;
 
@@ -1580,20 +1580,29 @@ form {
                 text-align: center;
                 line-height: 30px;
                 .FontAwesome;
+            }
+        }
+        &.active {
+            &::before {
                 content: "\f040";
             }
-
             .toolbar, .add-block {
                 display: block;
             }
         }
-    }
-    &:not(.node-disabled) {
-        .area {
-            &:not(.disabled):not(.active):hover {
-                background-color: @paleBlue;
-                cursor: pointer;
+        &.read {
+            &::before {
+                content: "\f06e";
             }
+            .toolbar-read {
+                display: block;
+            }
+        }
+    }
+    .area {
+        &:not(.disabled):not(.active):hover {
+            background-color: @paleBlue;
+            cursor: pointer;
         }
     }
     .add-block {
@@ -1644,7 +1653,7 @@ form {
     }
 }
 
-.toolbar {
+.toolbar, .toolbar-read {
     display: none;
     float: right;
     .fontSize(18);

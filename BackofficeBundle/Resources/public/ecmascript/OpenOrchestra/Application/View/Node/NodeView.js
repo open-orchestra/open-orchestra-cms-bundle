@@ -131,6 +131,8 @@ class NodeView extends mix(OrchestraView).with(RenderToolbarViewMixin)
         $('.area', this.$el).removeClass('active');
         if (this._node.get('rights').can_edit_data) {
             $(event.currentTarget).addClass('active');
+        } else {
+            $(event.currentTarget).addClass('read');
         }
     }
 

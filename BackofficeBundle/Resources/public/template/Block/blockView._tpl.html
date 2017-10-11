@@ -11,6 +11,11 @@
             <li class="delete-block" ><a href="#"><i class="fa fa-trash"></i></a></li>
             <li class="move-block" ><i class="fa fa-arrows"></i></li>
         </ul>
+        <ul class="toolbar-read pull-right">
+            <% if (false === block.get('transverse')) { %>
+            <li class="read-block" ><a href="#"><i class="fa fa-eye"></i></a></li>
+            <% } %>
+        </ul>
     </div>
     <div class="panel-body">
         <%= block.get('preview_content') %>

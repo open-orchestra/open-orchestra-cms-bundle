@@ -15,7 +15,8 @@ class BlockView extends OrchestraView
         this.className = 'block-item';
         this.events = {
             'click .delete-block': '_confirmDeleteBlock',
-            'click .edit-block': '_editBlock'
+            'click .edit-block': '_editBlock',
+            'click .read-block': '_readBlock'
         }
     }
 
@@ -60,11 +61,36 @@ class BlockView extends OrchestraView
      * @private
      */
     _editBlock(event) {
+        return this._actionBlock('editBlock', event);
+    }
+
+    /**
+     * show disabled form edit block
+     *
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _readBlock(event) {
+        return this._actionBlock('readBlock', event);
+    }
+
+    /**
+     * action required for block
+     *
+     * @param {String} route
+     * @param {Object} event
+     *
+     * @returns {boolean}
+     * @private
+     */
+    _actionBlock(route, event){
         event.stopPropagation();
         if (true === this._block.get('transverse')) {
             throw new ApplicationError('Block transverse is not editable in this context');
         }
-        let url = Backbone.history.generateUrl('editBlock', {
+        let url = Backbone.history.generateUrl(route, {
             blockId: this._block.get('id'),
             nodeId: this._node.get('node_id'),
             nodeLanguage: this._node.get('language'),

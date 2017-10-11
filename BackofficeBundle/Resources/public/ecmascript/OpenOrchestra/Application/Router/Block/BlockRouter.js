@@ -22,6 +22,7 @@ class BlockRouter extends AbstractBlockRouter
             'block/new/list/:nodeId/:nodeLanguage/:nodeVersion/:areaName/:position': 'newBlockListComponent',
             'block/new/list/available-component/:nodeId/:nodeLanguage/:nodeVersion/:component/:componentName/:areaName/:position': 'newBlockListAvailable',
             'block/edit/:blockId/:nodeId/:nodeLanguage/:nodeVersion': 'editBlock',
+            'block/read/:blockId/:nodeId/:nodeLanguage/:nodeVersion': 'readBlock',
             'block/new/form/:nodeId/:nodeLanguage/:nodeVersion/:component/:componentName/:areaName/:position': 'newBlockForm'
         };
     }
@@ -144,10 +145,38 @@ class BlockRouter extends AbstractBlockRouter
      * @param {string} nodeVersion
      */
     editBlock(blockId, nodeId, nodeLanguage, nodeVersion) {
-        this._displayLoader(Application.getRegion('content'));
         let url = Routing.generate('open_orchestra_backoffice_block_form', {
             blockId : blockId
         });
+        this._createForm(url, blockId, nodeId, nodeLanguage, nodeVersion);
+    }
+
+    /**
+     * Read block
+     *
+     * @param {string} blockId
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
+     */
+    readBlock(blockId, nodeId, nodeLanguage, nodeVersion) {
+        let url = Routing.generate('open_orchestra_backoffice_block_read', {
+            blockId : blockId
+        });
+        this._createForm(url, blockId, nodeId, nodeLanguage, nodeVersion);
+    }
+
+    /**
+     * create block form
+     *
+     * @param {string} url
+     * @param {string} blockId
+     * @param {string} nodeId
+     * @param {string} nodeLanguage
+     * @param {string} nodeVersion
+     */
+    _createForm(url, blockId, nodeId, nodeLanguage, nodeVersion) {
+        this._displayLoader(Application.getRegion('content'));
         FormBuilder.createFormFromUrl(url, (form) => {
             let blockFormView = new BlockFormView({
                 form : form,
