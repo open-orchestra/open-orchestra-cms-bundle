@@ -38,12 +38,6 @@ class BlockController extends AbstractAdminController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
 
-        if (!$this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER) &&
-            !$this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) &&
-            !$this->getUser()->hasRole(ContributionRoleInterface::SITE_ADMIN)) {
-            throw new ClientAccessDeniedHttpException();
-        }
-
         $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, true);
         $form = $this->createBlockForm($request, array(

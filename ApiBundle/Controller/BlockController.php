@@ -143,12 +143,6 @@ class BlockController extends BaseController
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
 
-        if (!$this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER) &&
-            !$this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) &&
-            !$this->getUser()->hasRole(ContributionRoleInterface::SITE_ADMIN)) {
-            throw new ClientAccessDeniedHttpException();
-        }
-
         $repository = $this->get('open_orchestra_model.repository.block');
         $block = $repository->find($blockId);
 
