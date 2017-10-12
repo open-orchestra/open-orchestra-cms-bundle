@@ -44,7 +44,8 @@ class BlockView extends OrchestraView
                 block: this._block,
                 node: this._node,
                 area: this._area,
-                position: position
+                position: position,
+                user: Application.getContext().get('user')
             }
         );
         this.$el.html(template);

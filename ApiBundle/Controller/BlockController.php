@@ -4,6 +4,8 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\BaseApi\Exceptions\HttpException\ClientAccessDeniedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\ModelInterface\BlockEvents;
@@ -135,10 +137,17 @@ class BlockController extends BaseController
      * @return FacadeInterface
      *
      * @throws UnexpectedValueException
+     * @throws ClientAccessDeniedHttpException
      */
     public function shareBlockAction($blockId)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
+
+        if (!$this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER) &&
+            !$this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) &&
+            !$this->getUser()->hasRole(ContributionRoleInterface::SITE_ADMIN)) {
+            throw new ClientAccessDeniedHttpException();
+        }
 
         $repository = $this->get('open_orchestra_model.repository.block');
         $block = $repository->find($blockId);

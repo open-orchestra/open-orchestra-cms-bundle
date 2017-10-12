@@ -5,6 +5,8 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\NodeNotFoundHttpException;
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\BaseApi\Exceptions\HttpException\ClientAccessDeniedHttpException;
 use OpenOrchestra\ModelInterface\BlockNodeEvents;
 use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -29,10 +31,18 @@ class BlockController extends AbstractAdminController
      * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @return Response
+     *
+     * @throws ClientAccessDeniedHttpException
      */
     public function newSharedBlockAction(Request $request, $component, $language)
     {
         $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
+
+        if (!$this->getUser()->hasRole(ContributionRoleInterface::DEVELOPER) &&
+            !$this->getUser()->hasRole(ContributionRoleInterface::PLATFORM_ADMIN) &&
+            !$this->getUser()->hasRole(ContributionRoleInterface::SITE_ADMIN)) {
+            throw new ClientAccessDeniedHttpException();
+        }
 
         $siteId = $this->get('open_orchestra_backoffice.context_backoffice_manager')->getSiteId();
         $block = $this->get('open_orchestra_backoffice.manager.block')->initializeBlock($component, $siteId, $language, true);

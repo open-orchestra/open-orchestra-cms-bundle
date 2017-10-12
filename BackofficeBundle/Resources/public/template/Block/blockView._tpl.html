@@ -6,7 +6,9 @@
         <% } %>
         <ul class="toolbar pull-right">
             <% if (false === block.get('transverse')) { %>
-                <li class="share-block" ><a href="#"><i class="fa fa-share-alt"></i></a></li>
+                <% if (user.access_section.contribution) { %>
+                    <li class="share-block" ><a href="#"><i class="fa fa-share-alt"></i></a></li>
+                <% } %>
                 <li class="edit-block" ><a href="#"><i class="fa fa-pencil"></i></a></li>
             <% } %>
             <li class="delete-block" ><a href="#"><i class="fa fa-trash"></i></a></li>
