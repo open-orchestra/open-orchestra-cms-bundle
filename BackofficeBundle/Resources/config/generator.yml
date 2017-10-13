@@ -46,6 +46,8 @@ services:
     open_orchestra_backoffice.search.generate_form:
         class: '%open_orchestra_backoffice.search.generate_form.class%'
         arguments:
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_backoffice.context_backoffice_manager'
             - '%open_orchestra_backoffice.block_default_configuration%'
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
