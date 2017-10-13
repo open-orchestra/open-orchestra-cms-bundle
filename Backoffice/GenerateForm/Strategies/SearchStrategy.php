@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class SearchStrategy extends AbstractBlockStrategy
 {
     protected $nodeRepository;
-    protected $specialPageList;
     protected $contextManager;
 
     /**
