@@ -34,7 +34,6 @@
     "phpunit/phpunit": "~5.5.0",
     "phake/phake": "~2.3.0",
     "codeclimate/php-test-reporter": "~0.3.2",
-
     "open-orchestra/open-orchestra-bbcode-bundle": "self.version",
     "open-orchestra/open-orchestra-model-bundle": "self.version",
     "open-orchestra/open-orchestra-libs": "self.version",

@@ -2,7 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
+use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -10,6 +12,24 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class SearchStrategy extends AbstractBlockStrategy
 {
+    protected $nodeRepository;
+    protected $contextManager;
+
+    /**
+     * @param NodeRepositoryInterface     $nodeRepository,
+     * @param ContextBackOfficeInterface  $contextManager,
+     * @param array                       $basicBlockConfiguration
+     */
+    public function __construct(
+        NodeRepositoryInterface $nodeRepository,
+        ContextBackOfficeInterface $contextManager,
+        array $basicBlockConfiguration
+    ) {
+        $this->nodeRepository = $nodeRepository;
+        $this->contextManager = $contextManager;
+        parent::__construct($basicBlockConfiguration);
+    }
+
     /**
      * @param BlockInterface $block
      *
@@ -30,7 +50,8 @@ class SearchStrategy extends AbstractBlockStrategy
             'group_id' => 'data',
             'sub_group_id' => 'content',
         ));
-        $builder->add('nodeId', 'oo_node_choice', array(
+        $builder->add('nodeId', 'choice', array(
+            'choices' => $this->getSpecialPageList(),
             'group_id' => 'data',
             'sub_group_id' => 'content',
         ));
@@ -46,6 +67,24 @@ class SearchStrategy extends AbstractBlockStrategy
     public function getDefaultConfiguration()
     {
         return array('limit' => 7);
+    }
+
+    /**
+     * get special pages list
+     *
+     * @return array
+     */
+    protected function getSpecialPageList() {
+        $siteId = $this->contextManager->getSiteId();
+        $language = $this->contextManager->getSiteDefaultLanguage();
+        $specialPages = $this->nodeRepository->findAllSpecialPage($language, $siteId);
+
+        $specialPageChoice = array();
+        foreach ($specialPages as $node) {
+            $specialPageChoice[$node->getId()] = $node->getSpecialPageName();
+        }
+
+        return $specialPageChoice;
     }
 
     /**
