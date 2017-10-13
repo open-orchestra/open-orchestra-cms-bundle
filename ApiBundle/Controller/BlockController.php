@@ -4,6 +4,8 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\Backoffice\BusinessRules\Strategies\BusinessActionInterface;
 use OpenOrchestra\Backoffice\Security\ContributionActionInterface;
+use OpenOrchestra\Backoffice\Security\ContributionRoleInterface;
+use OpenOrchestra\BaseApi\Exceptions\HttpException\ClientAccessDeniedHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\ModelInterface\BlockEvents;
@@ -124,5 +126,36 @@ class BlockController extends BaseController
         $collection = $repository->findTransverseBlock($component, $siteId, $language);
 
         return $this->get('open_orchestra_api.transformer_manager')->transform('block_collection', $collection);
+    }
+
+    /**
+     * @param string  $blockId
+     *
+     * @Config\Route("/share/block/{blockId}", name="open_orchestra_api_block_share")
+     * @Config\Method({"PUT"})
+     *
+     * @return FacadeInterface
+     *
+     * @throws UnexpectedValueException
+     * @throws ClientAccessDeniedHttpException
+     */
+    public function shareBlockAction($blockId)
+    {
+        $this->denyAccessUnlessGranted(ContributionActionInterface::CREATE, BlockInterface::ENTITY_TYPE);
+
+        $repository = $this->get('open_orchestra_model.repository.block');
+        $block = $repository->find($blockId);
+
+        if (!$block instanceof BlockInterface) {
+            throw new \UnexpectedValueException();
+        }
+
+        $block->setTransverse(true);
+
+        $objectManager = $this->get('object_manager');
+        $objectManager->persist($block);
+        $objectManager->flush();
+
+        return $this->get('open_orchestra_api.transformer_manager')->transform('block', $block);
     }
 }

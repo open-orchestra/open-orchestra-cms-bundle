@@ -24,7 +24,10 @@ class Block extends OrchestraModel
      * @inheritdoc
      */
     _getSyncUrl(method, options) {
+        let urlParameter = options.urlParameter || {};
         switch (method) {
+            case "update":
+                return Routing.generate('open_orchestra_api_block_share', urlParameter);
             case "delete":
                 return this._getSyncDeleteUrl(options);
         }
