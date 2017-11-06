@@ -8,7 +8,7 @@ services:
             - '@open_orchestra_api.repository.api_client'
             - '@open_orchestra_user.repository.user'
             - '@security.encoder_factory'
-            - '@serializer'
+            - '@jms_serializer'
             - '@validator'
             - '@open_orchestra_api.manager.access_token'
             - '@open_orchestra_api.repository.access_token'
