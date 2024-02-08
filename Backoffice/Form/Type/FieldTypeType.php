@@ -3,6 +3,9 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\Context\ContextBackOfficeInterface;
+use OpenOrchestra\Backoffice\Event\FieldFormEvent;
+use OpenOrchestra\Backoffice\Form\FieldFormEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,13 +30,15 @@ class FieldTypeType extends AbstractType
      * @param array                      $backOfficeLanguages
      * @param array                      $fieldTypeParameters
      * @param string                     $fieldTypeClass
+     * @param EventDispatcherInterface   $eventDispatcher
      */
     public function __construct(
         ContextBackOfficeInterface $contextManager,
         EventSubscriberInterface $fieldTypeTypeSubscriber,
         array $backOfficeLanguages,
         array $fieldTypeParameters,
-        $fieldTypeClass
+        $fieldTypeClass,
+        EventDispatcherInterface $eventDispatcher
     )
     {
         $this->contextManager = $contextManager;
@@ -41,6 +46,7 @@ class FieldTypeType extends AbstractType
         $this->backOfficeLanguages = $backOfficeLanguages;
         $this->fieldTypeParameters = $fieldTypeParameters;
         $this->fieldTypeClass = $fieldTypeClass;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -101,6 +107,7 @@ class FieldTypeType extends AbstractType
                 'attr' => array('class' => 'subform-to-refresh'),
             ));
         $builder->addEventSubscriber($this->fieldTypeTypeSubscriber);
+        $this->eventDispatcher->dispatch(FieldFormEvents::FIELD_FORM_CREATION, new FieldFormEvent($builder));
     }
 
     /**

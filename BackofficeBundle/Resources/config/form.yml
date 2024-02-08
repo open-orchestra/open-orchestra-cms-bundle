@@ -113,6 +113,7 @@ services:
             - '%open_orchestra_base.administration_languages%'
             - '%open_orchestra_backoffice.field_types%'
             - '%open_orchestra_model.document.field_type.class%'
+            - '@event_dispatcher'
         tags:
             - { name: form.type, alias: oo_field_type }
 
